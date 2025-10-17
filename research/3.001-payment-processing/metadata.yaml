@@ -1,0 +1,9 @@
+---
+experiment_number: "3.001"
+experiment_sequence: 1
+experiment_date: "2025-10-07"
+experiment_status: complete
+discovery_method: consolidated
+migrated_from: "2.001"
+notes: "First MPSE experiment - payment processing with MoR discovery. Renumbered from 2.001 to 3.001 in October 2025 to create control-to-convenience spectrum (1.XXX DIY → 2.XXX Open Standards → 3.XXX Managed Services)"
+---
