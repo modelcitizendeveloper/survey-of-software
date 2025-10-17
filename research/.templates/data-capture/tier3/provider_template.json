@@ -1,0 +1,96 @@
+{
+  "_comment": "Template for capturing provider information during Tier 3 research",
+  "_usage": "Copy this template for each provider discovered. Fill in fields as research progresses.",
+
+  "provider_name": "Provider Name Here",
+  "provider_url": "https://provider.com",
+  "database_type": "PostgreSQL|MySQL|MongoDB|Redis|etc",
+  "tier2_compliant": true,
+  "tier2_standard_id": "2.XXX (if applicable, null if proprietary)",
+
+  "features": {
+    "standard_features": [
+      "Feature 1 (portable, based on open standard)",
+      "Feature 2 (portable)"
+    ],
+    "proprietary_features": [
+      "Feature 1 (vendor-specific, creates lock-in)",
+      "Feature 2 (vendor-specific)"
+    ]
+  },
+
+  "pricing": {
+    "free_tier": {
+      "cost_usd_monthly": 0,
+      "limits": {
+        "storage_gb": 0,
+        "compute_hours_monthly": 0,
+        "requests_monthly": 0
+      },
+      "note": "What does free tier support?"
+    },
+    "paid_tiers": [
+      {
+        "tier_name": "Pro/Launch/Standard",
+        "cost_usd_monthly": 0,
+        "limits": {},
+        "use_case": "1K-10K users or similar scale"
+      }
+    ]
+  },
+
+  "lock_in_assessment": {
+    "overall_lock_in": "ZERO|LOW|MEDIUM|HIGH",
+    "standard_features_portable": true,
+    "proprietary_feature_migration_hours": {
+      "min": 0,
+      "max": 0,
+      "affected_features": ["list features that create lock-in"]
+    },
+    "database_migration_hours": {
+      "min": 0,
+      "max": 0,
+      "method": "pg_dump/pg_restore, API export, manual, etc"
+    },
+    "note": "What makes migration easy/hard?"
+  },
+
+  "use_cases": [
+    "Primary use case 1",
+    "Primary use case 2"
+  ],
+
+  "when_to_choose": [
+    "Reason 1 to choose this provider",
+    "Reason 2 to choose this provider"
+  ],
+
+  "when_to_avoid": [
+    "Reason 1 to avoid this provider",
+    "Reason 2 to avoid this provider"
+  ],
+
+  "data_lineage": {
+    "source_documents": [
+      "research/X.XXX-research-name/SECTION_0_STANDARDS.md"
+    ],
+    "source_urls": [
+      {
+        "url": "https://provider.com/pricing",
+        "accessed_at": "2025-10-17T00:00:00Z",
+        "purpose": "Pricing information",
+        "status_code": 200
+      }
+    ],
+    "extracted_at": "2025-10-17T00:00:00Z",
+    "extraction_method": "manual_research|llm_extraction|web_scraping",
+    "llm_attribution": {
+      "model": "claude-sonnet-3.5|gpt-4|etc",
+      "prompt_id": "discover_providers_v1 (if using templated prompt)",
+      "response_id": "resp_abc123 (if available)",
+      "timestamp": "2025-10-17T10:00:00Z"
+    },
+    "credibility": "first_party|second_party|third_party",
+    "notes": "Any caveats about data quality, staleness, etc"
+  }
+}
