@@ -1,0 +1,128 @@
+{
+  "_comment": "Template for S4 Strategic vendor risk assessment",
+  "_usage": "Fill in during S4 Strategic Discovery phase",
+
+  "provider_name": "Provider Name",
+  "assessment_date": "2025-10-17",
+  "next_review_date": "2026-01-17 (quarterly recommended)",
+
+  "financial_health": {
+    "funding_status": "bootstrapped|seed|series_a|series_b|series_c|public|acquired",
+    "last_funding_date": "2025-01-01 or null",
+    "last_funding_amount_usd": 0,
+    "runway_estimate_months": 0,
+    "revenue_status": "pre-revenue|<1M|1-10M|10-50M|50M+|unknown",
+    "profitability": "profitable|path_to_profitability|burn_rate_high|unknown",
+    "red_flags": [
+      "Layoffs",
+      "Pivot announcements",
+      "Pricing changes indicating desperation"
+    ]
+  },
+
+  "acquisition_risk": {
+    "probability": "0-100 (percentage)",
+    "timeline": "6-12 months|1-2 years|2-3 years|unlikely",
+    "potential_acquirers": [
+      "Company 1",
+      "Company 2"
+    ],
+    "acquisition_impact": {
+      "price_change_expected": "increase|decrease|neutral",
+      "price_change_percent_estimate": "0-100",
+      "feature_continuity_risk": "LOW|MEDIUM|HIGH",
+      "migration_necessity": "unlikely|possible|likely",
+      "migration_cost_hours": {
+        "min": 0,
+        "max": 0
+      }
+    }
+  },
+
+  "lock_in_severity": {
+    "overall": "ZERO|LOW|MEDIUM|HIGH",
+    "data_portability": "ZERO|LOW|MEDIUM|HIGH",
+    "api_portability": "ZERO|LOW|MEDIUM|HIGH",
+    "feature_portability": "ZERO|LOW|MEDIUM|HIGH",
+    "migration_cost_hours": {
+      "min": 0,
+      "max": 0
+    },
+    "mitigation_strategies": [
+      "Use database abstraction layer",
+      "Avoid proprietary features",
+      "Regular export tests"
+    ]
+  },
+
+  "pricing_trajectory": {
+    "historical_changes": [
+      {
+        "date": "2024-01-01",
+        "change": "Free tier reduced from 1GB to 500MB",
+        "impact": "Users forced to upgrade",
+        "source_url": "https://provider.com/changelog"
+      }
+    ],
+    "expected_changes": [
+      {
+        "timeframe": "2026 Q1",
+        "change": "Post-acquisition price increase expected",
+        "probability": "HIGH|MEDIUM|LOW",
+        "estimated_impact_percent": 20
+      }
+    ]
+  },
+
+  "market_position": {
+    "competitive_advantage": [
+      "Unique feature 1",
+      "Unique feature 2"
+    ],
+    "competitive_threats": [
+      "Competitor 1 with similar offering",
+      "New entrant with better pricing"
+    ],
+    "market_share_trend": "growing|stable|declining",
+    "developer_mindshare": "growing|stable|declining"
+  },
+
+  "operational_risk": {
+    "uptime_sla": "99.9%|99.95%|99.99%|none",
+    "actual_uptime_last_12mo": "percentage or unknown",
+    "incident_frequency": "LOW|MEDIUM|HIGH",
+    "incident_severity": "LOW|MEDIUM|HIGH",
+    "support_quality": "excellent|good|adequate|poor",
+    "documentation_quality": "excellent|good|adequate|poor"
+  },
+
+  "strategic_recommendation": {
+    "risk_tier": "LOW|MEDIUM|HIGH",
+    "recommended_action": "use_confidently|use_with_mitigation|avoid_for_critical|avoid_entirely",
+    "mitigation_steps": [
+      "Step 1 to reduce risk",
+      "Step 2 to reduce risk"
+    ],
+    "monitoring_schedule": "monthly|quarterly|semi-annually",
+    "exit_triggers": [
+      "Trigger 1 that should prompt migration planning",
+      "Trigger 2 that should prompt immediate action"
+    ]
+  },
+
+  "data_lineage": {
+    "source_documents": [
+      "research/X.XXX-research-name/01-discovery/S4-strategic/"
+    ],
+    "source_urls": [
+      {
+        "url": "https://crunchbase.com/organization/provider",
+        "accessed_at": "2025-10-17T00:00:00Z",
+        "purpose": "Funding information"
+      }
+    ],
+    "extracted_at": "2025-10-17T00:00:00Z",
+    "extraction_method": "manual_research|llm_extraction",
+    "credibility": "first_party|second_party|third_party"
+  }
+}

@@ -1,0 +1,87 @@
+{
+  "_comment": "Template for Section 0: Open Standards Evaluation",
+  "_usage": "Fill this in during Section 0 analysis of Tier 3 research",
+
+  "research_id": "X.XXX",
+  "research_title": "Research Title",
+  "tier2_standard_id": "2.XXX or null",
+  "tier2_standard_name": "Standard Name or null",
+  "date_assessed": "2025-10-17",
+  "standard_exists": true,
+  "standard_type": "database_portability|authentication|observability|storage|etc or null",
+
+  "what_it_standardizes": [
+    "Thing 1 that the standard covers",
+    "Thing 2 that the standard covers"
+  ],
+
+  "governance": {
+    "body": "CNCF|W3C|IETF|Community-led|etc",
+    "type": "foundation|community-led|vendor-consortium|proprietary",
+    "stability_years": 0,
+    "status": "stable|evolving|declining|emerging"
+  },
+
+  "portability_assessment": {
+    "portability_level": "ZERO|LOW|MEDIUM|HIGH|VERY_HIGH",
+    "compatible_providers_count": "NN+ (e.g., 50+)",
+    "migration_complexity_hours": {
+      "min": 0,
+      "max": 0,
+      "method": "How to migrate (pg_dump, API export, etc)"
+    },
+    "lock_in_risk": "ZERO|LOW|MEDIUM|HIGH",
+    "gotchas": [
+      {
+        "issue": "Portability limitation",
+        "detail": "What creates friction in migration?"
+      }
+    ]
+  },
+
+  "path_comparison": {
+    "path1_diy": {
+      "viable": true,
+      "complexity": "LOW|MEDIUM|HIGH",
+      "cost_monthly_usd_range": {"min": 0, "max": 0},
+      "when_to_use": "When is DIY the right choice?"
+    },
+    "path2_standard": {
+      "viable": true,
+      "providers_available": 0,
+      "cost_monthly_usd_range": {"min": 0, "max": 0},
+      "when_to_use": "When is open standard the right choice?"
+    },
+    "path3_proprietary": {
+      "alternatives_exist": true,
+      "lock_in_severity": "LOW|MEDIUM|HIGH",
+      "cost_monthly_usd_range": {"min": 0, "max": 0},
+      "when_justified": "When does proprietary make sense?"
+    }
+  },
+
+  "recommendation": {
+    "default_choice": "Path 1|Path 2|Path 3",
+    "rationale": [
+      "Reason 1",
+      "Reason 2"
+    ],
+    "avoid_when": [
+      "Scenario where default doesn't apply"
+    ]
+  },
+
+  "data_lineage": {
+    "source_document": "research/X.XXX-research-name/SECTION_0_STANDARDS.md",
+    "source_urls": [
+      {
+        "url": "https://standard-body.org/standard",
+        "accessed_at": "2025-10-17T00:00:00Z",
+        "purpose": "Standard specification"
+      }
+    ],
+    "extracted_at": "2025-10-17T00:00:00Z",
+    "extraction_method": "manual_research|llm_extraction",
+    "credibility": "first_party|second_party|third_party"
+  }
+}

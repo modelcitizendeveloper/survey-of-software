@@ -1,0 +1,104 @@
+{
+  "_comment": "Template for migration scenarios between providers",
+  "_usage": "Create one file per migration path (e.g., provider_a_to_provider_b.json)",
+
+  "migration_id": "from_provider_to_provider",
+  "from_provider": "Source Provider Name",
+  "to_provider": "Destination Provider Name",
+  "migration_type": "postgresql_to_postgresql|mysql_to_mysql|proprietary_to_standard|standard_to_proprietary",
+  "motivation": "Why would someone migrate? (cost, features, vendor risk, etc)",
+
+  "effort": {
+    "total_hours_min": 0,
+    "total_hours_max": 0,
+    "confidence": "LOW|MEDIUM|HIGH",
+    "steps": [
+      {
+        "step": "Step description",
+        "hours_min": 0,
+        "hours_max": 0,
+        "note": "Details, gotchas, dependencies"
+      }
+    ]
+  },
+
+  "complexity_factors": [
+    {
+      "factor": "Database size",
+      "impact": "Small DB (<10GB) = fast, Large DB (>1TB) = slow",
+      "hours_added": "0-X hours"
+    },
+    {
+      "factor": "Schema complexity",
+      "impact": "Simple schema = easy, Complex (triggers, stored procedures) = hard",
+      "hours_added": "0-X hours"
+    }
+  ],
+
+  "gotchas": [
+    {
+      "issue": "Problem that complicates migration",
+      "detail": "Explanation of the issue",
+      "impact": "How much extra time or risk?",
+      "mitigation": "How to handle it"
+    }
+  ],
+
+  "code_changes": {
+    "required": true,
+    "scope": "ZERO|MINIMAL|MODERATE|EXTENSIVE",
+    "affected_areas": [
+      "Database queries",
+      "Connection configuration",
+      "Feature-specific code (e.g., proprietary features)"
+    ],
+    "note": "What code needs to change?"
+  },
+
+  "data_migration": {
+    "method": "pg_dump/pg_restore|API export|manual ETL|live replication",
+    "downtime_required": true,
+    "downtime_hours_min": 0,
+    "downtime_hours_max": 0,
+    "data_loss_risk": "ZERO|LOW|MEDIUM|HIGH",
+    "rollback_possible": true,
+    "rollback_hours": 0
+  },
+
+  "when_worth_it": {
+    "cost_savings_monthly_usd": 0,
+    "cost_savings_annual_usd": 0,
+    "payback_period_months": 0,
+    "non_financial_benefits": [
+      "Reduced vendor lock-in",
+      "Better features",
+      "Improved reliability"
+    ]
+  },
+
+  "when_not_worth_it": [
+    "Scenario where migration doesn't make sense",
+    "Risk factors that outweigh benefits"
+  ],
+
+  "data_lineage": {
+    "source_documents": [
+      "research/X.XXX-research-name/SECTION_0_STANDARDS.md"
+    ],
+    "source_urls": [
+      {
+        "url": "https://provider.com/docs/migration",
+        "accessed_at": "2025-10-17T00:00:00Z",
+        "purpose": "Official migration guide"
+      }
+    ],
+    "extracted_at": "2025-10-17T00:00:00Z",
+    "extraction_method": "manual_research|llm_extraction",
+    "credibility": "first_party|second_party|third_party",
+    "validation": {
+      "tested": false,
+      "test_date": null,
+      "test_notes": "Have we actually done this migration or is it theoretical?"
+    }
+  }
+}
