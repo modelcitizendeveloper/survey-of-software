@@ -1,0 +1,243 @@
+---
+experiment_number: "3.004"
+experiment_sequence: 4
+experiment_date: "2025-10-22"
+experiment_completed: "2025-10-22"
+experiment_status: complete
+discovery_method: mpse_v2_monolithic
+tier: 3
+category: "Cash Flow & Financial Planning SaaS"
+migrated_from: null
+notes: "First Tier 3 experiment using MPSE v2.0 monolithic format (single files per methodology vs. multiple files). Research conducted top-down (Tier 3 before Tier 1) per framework design. Data source limitations documented (G2/Capterra blocked, used technical documentation instead)."
+
+summary: |
+  Comprehensive analysis of 8 cash flow and FP&A SaaS platforms across 3 market tiers (Small Business: Pulse/Fathom $29-150/mo, Startup/SMB: Finmark/Jirav/Causal $100-800/mo, Mid-Market: Mosaic/Dryrun $500-2,000/mo). Research validated top-down discovery approach (start at Tier 3 SaaS, work down to Tier 1 libraries), documented data source limitations (respect T&C restrictions on review sites), and mapped 15 business scenarios to specific platforms. Strategic finding: Context determines optimal platform - no universal winner. Key variables: company size (1-500 employees), existing tools (QuickBooks vs. NetSuite vs. Snowflake), primary need (cash visibility vs. full FP&A), budget ($29-2,000/mo), lock-in tolerance ($750-$9K escape cost), vendor stability preference (95% vs. 60% 5-year confidence).
+
+key_findings:
+  market_structure:
+    tier_1_small_business: "Pulse ($29-89/mo), Fathom ($100-150/mo) - 1-20 employees, cash flow focus, QuickBooks integration"
+    tier_2_startup_smb: "Finmark ($100-300/mo), Jirav ($50-750/mo), Causal ($500-800/mo) - 20-100 employees, full FP&A, modern integrations"
+    tier_3_mid_market: "Mosaic ($1,500-2,000/mo), Dryrun ($500-1,000/mo), PlanGuru ($300-500/yr) - 100-500 employees, strategic finance, enterprise ERP"
+    no_universal_winner: "Market highly segmented - different platforms for different contexts"
+
+  integration_ecosystem:
+    tier_1_universal: "QuickBooks Online, Xero (all platforms support)"
+    tier_2_growth: "Stripe (revenue), Gusto/ADP (payroll), Excel/Sheets (flexibility)"
+    tier_3_enterprise: "NetSuite (ERP), Sage Intacct (mid-market), Salesforce/HubSpot (CRM), Snowflake/BigQuery (data warehouse)"
+    integration_count_correlates_price: "1 integration = $29/mo (Pulse), 25+ integrations = $1,500/mo (Mosaic)"
+    integration_drives_platform_choice: "NetSuite/Snowflake users → Causal or Mosaic ONLY, Sage Intacct users → Dryrun or Mosaic ONLY"
+
+  pricing_transparency:
+    transparent: "Pulse ($29-89/mo published), Jirav ($50-750/mo published)"
+    opaque: "Causal, Mosaic, Dryrun, Fathom, PlanGuru (demo required)"
+    pattern: "Small business platforms publish pricing (self-service), enterprise platforms hide pricing (sales-driven)"
+    user_seat_economics: "Only Pulse, Finmark, Fathom offer unlimited users (no per-seat pricing)"
+
+  total_cost_ownership_3yr:
+    solo_founder: "$1,044 (Pulse Basics) to $3,600 (Finmark)"
+    small_business_5_users: "$3,204 (Pulse Premium) to $5,400 (Jirav CFO)"
+    startup_20_employees: "$7,200 (Finmark) to $18,000 (Causal)"
+    mid_market_100_employees: "$28,800 (Causal) to $54,000 (Mosaic)"
+
+  lock_in_spectrum:
+    very_low: "Pulse ($750-1,500 escape cost, 5-10 hours migration)"
+    low: "Fathom ($1,500-3K, 10-20 hours), PlanGuru ($1,500-3K, 10-20 hours)"
+    medium: "Finmark ($1,500-3K, 10-20 hours), Jirav ($2,250-4,500, 15-30 hours)"
+    medium_high: "Causal ($3K-6K, 20-40 hours), Dryrun ($3,750-7,500, 25-50 hours)"
+    high: "Mosaic ($4,500-9K, 30-60 hours)"
+    lock_in_is_feature_tradeoff: "Low lock-in = fewer features (Pulse simple), High lock-in = more features (Causal/Mosaic comprehensive)"
+
+  vendor_stability_5yr_confidence:
+    95_percent: "Pulse (10+ years, bootstrapped, simple product), PlanGuru (15+ years, traditional, accountant channel), Fathom (10+ years, accountant channel, international)"
+    70_85_percent: "Jirav (4,000+ customers, accountant channel, VC-backed), Causal (technical moat, VC-backed, acquisition target)"
+    60_70_percent: "Finmark (newer, competitive, VC-backed), Mosaic (high burn, premium positioning, VC-backed), Dryrun (lower visibility, mid-market ERP dependency)"
+    stability_correlates_age_channel: "Older platforms with accountant channel = most stable"
+
+  build_vs_buy_economics:
+    diy_3yr_total_cost: "$27K-45K (100-200 hours initial + 20 hours/year maintenance)"
+    hybrid_3yr_total_cost: "$8,250-11,250 (Excel + automation scripts, 25-45 hours initial + 10 hours/year)"
+    breakeven_monthly_saas: "$750-1,250/month SaaS cost"
+    recommendation_below_750mo: "Buy SaaS (DIY doesn't break even)"
+    recommendation_above_1250mo: "Consider build (DIY 3-year TCO favorable)"
+    recommendation_750_1250mo: "Depends on customization needs"
+
+  ma_predictions_5yr:
+    likely_acquirers: "Intuit, Xero, Sage (Tier 1-2), Oracle, SAP, Workday (Tier 3), Snowflake, Databricks (data platforms)"
+    highest_ma_risk: "Jirav (4,000 customers = attractive), Mosaic (VC-backed, high burn, must exit), Causal (technical moat, data warehouse positioning)"
+    lowest_ma_risk: "Pulse, Fathom, PlanGuru (bootstrapped/stable, no exit pressure)"
+    ma_impact_depends_lock_in: "Low lock-in = low impact (easy switch), High lock-in = plan for 'stay' or 'migrate' (20-60 hours)"
+
+  future_trends_3_5yr:
+    ai_commoditization: "Don't overpay for AI today (Mosaic Arc AI, Jirav AI budgeting) - will be table-stakes by 2027-2028"
+    real_time_data_standardization: "Mosaic's real-time advantage shrinks as others catch up"
+    data_warehouse_expansion: "More platforms will add Snowflake/BigQuery support (currently only Causal/Mosaic)"
+    embedded_fpa_threat: "QuickBooks/Xero may bundle cash flow (threat to standalone Pulse/Fathom)"
+    price_compression_tier_1_2: "Competitive pressure drives prices down or value inflation (more features same price)"
+
+  scenario_based_recommendations:
+    solo_founder_pre_revenue: "Finmark ($100/mo) - scenario modeling, modern UX, affordable"
+    small_business_qb_cash_visibility: "Pulse ($59/mo) - simplest, QB sync, stable"
+    accounting_firm_20_clients: "Jirav ($150-300/mo) - white-label, multi-client, accountant channel"
+    saas_startup_series_a_30_employees: "Causal ($500-800/mo) - SaaS metrics, hiring plans, modern"
+    restaurant_3_locations: "Pulse ($89/mo) - daily granularity, multi-location"
+    manufacturing_sage_intacct: "Dryrun ($800/mo) - Sage Intacct integration, scenario modeling"
+    nonprofit_grant_funded: "PlanGuru ($300-400/yr) - budget vs actuals, annual licensing, affordable"
+    high_growth_rapid_hiring_netsuite: "Causal ($500-800/mo) - hiring plans, NetSuite integration"
+    bootstrap_saas_profitable: "Finmark ($100-200/mo) - affordable, SaaS metrics, unlimited users"
+    real_estate_construction_draws: "Dryrun ($500-800/mo) - multi-entity, scenario-heavy, professional"
+    data_driven_cfo_snowflake: "Causal ($800-1,200/mo) - Snowflake integration, technical finance team"
+
+  methodology_validation:
+    mpse_v2_monolithic_format: "Single files per methodology (S1-RAPID.md, S2-COMPREHENSIVE.md, S3-NEED-DRIVEN.md, S4-STRATEGIC.md) vs. multiple files per methodology - reduced file count from 30-40 to 5 files"
+    top_down_discovery_validated: "Starting at Tier 3 (SaaS) before Tier 1 (libraries) works - most companies buy SaaS, not DIY"
+    data_source_limitations_documented: "G2/Capterra blocked (403 errors, T&C restrictions) - used technical docs, pricing pages, platform specifications instead"
+    technical_docs_superior_signal: "Technical documentation reveals actual capabilities, limitations, architecture - more valuable than review aggregation"
+    multi_methodology_value_confirmed: "S1 found market structure, S2 quantified TCO/lock-in, S3 mapped scenarios, S4 assessed vendor stability - no single methodology sufficient"
+
+data_sources:
+  accessible:
+    - "Platform websites (public marketing content)"
+    - "Pricing pages (public pricing - 3 of 8 platforms)"
+    - "Technical documentation (API docs, integration guides, data models)"
+    - "Platform blog posts and case studies"
+    - "Integration marketplace data (QuickBooks/Xero app stores)"
+
+  blocked_restricted:
+    - "G2.com (403 error - automated access prohibited by T&C)"
+    - "Capterra (403 error - automated access prohibited by T&C)"
+
+  impact_of_limitations:
+    - "Cannot provide aggregated user review scores"
+    - "Cannot quantify 'most popular by review count'"
+    - "Relying on platform-published materials (inherent bias toward positive)"
+    - "S1 'popularity' signals from ecosystem size, not review counts"
+
+  why_technical_docs_better:
+    - "Factual capabilities vs. subjective opinions"
+    - "Actual limitations revealed (what it CAN'T do)"
+    - "API quality and extensibility visible"
+    - "Integration depth measurable"
+    - "Data models and architecture documented"
+
+platforms_analyzed:
+  tier_1:
+    - name: "Pulse"
+      pricing: "$29-89/mo"
+      target: "Small business (1-20 employees)"
+      integrations: "1 (QuickBooks)"
+      lock_in: "$750-1,500 escape cost"
+      stability: "95%+ 5-year confidence"
+
+    - name: "Fathom"
+      pricing: "$100-150/mo (estimated)"
+      target: "SMB + accountants"
+      integrations: "6+ (QB, Xero, MYOB, Sage, Excel, Sheets)"
+      lock_in: "$1,500-3K escape cost"
+      stability: "95%+ 5-year confidence"
+
+  tier_2:
+    - name: "Finmark"
+      pricing: "$100-300/mo (revenue-based)"
+      target: "Startups/SMBs (20-100 employees)"
+      integrations: "5 (QB, Xero, Stripe, Gusto, ADP)"
+      lock_in: "$1,500-3K escape cost"
+      stability: "70-85% 5-year confidence"
+
+    - name: "Jirav"
+      pricing: "$50-750/mo"
+      target: "Accounting firms + VC-funded companies"
+      integrations: "8+ (accounting, workforce, Google/Excel)"
+      lock_in: "$2,250-4,500 escape cost"
+      stability: "70-85% 5-year confidence"
+
+    - name: "Causal"
+      pricing: "$500-800/mo (estimated)"
+      target: "Startups Series A+ (50-300 employees)"
+      integrations: "15+ (QB, Xero, NetSuite, Stripe, HRIS, CRM, data warehouses)"
+      lock_in: "$3K-6K escape cost"
+      stability: "70-85% 5-year confidence"
+
+  tier_3:
+    - name: "Mosaic"
+      pricing: "$1,500-2,000/mo (estimated)"
+      target: "Mid-market (100-500 employees)"
+      integrations: "25+ (ERP, HRIS, CRM, billing, data warehouse)"
+      lock_in: "$4,500-9K escape cost"
+      stability: "60-70% 5-year confidence"
+
+    - name: "Dryrun"
+      pricing: "$500-1,000/mo (estimated)"
+      target: "Mid-market CFOs, Sage Intacct users"
+      integrations: "5 (QB, Xero, Sage Intacct, Dynamics, Excel)"
+      lock_in: "$3,750-7,500 escape cost"
+      stability: "60-70% 5-year confidence"
+
+    - name: "PlanGuru"
+      pricing: "$300-500/yr"
+      target: "Nonprofits, small businesses, accountants"
+      integrations: "2 (QB, Xero, Excel)"
+      lock_in: "$1,500-3K escape cost"
+      stability: "95%+ 5-year confidence"
+
+next_research_steps:
+  tier_4_architecture: "Create 4.0XX Cash Flow Analysis Architecture decision framework (do you need formal cash flow management?)"
+  tier_2_open_standards: "Research if open standards exist for cash flow data (OFX format, likely sparse tier)"
+  tier_1_libraries: "Run MPSE on 1.127 Financial Simulation libraries (QuantLib, numpy-financial, pandas, Prophet)"
+  client_application: "Apply 3.004 research to specific client context (WeRise-style strategic analysis)"
+
+related_research:
+  tier_3_managed_services:
+    - "3.001: Payment Processing (completed)"
+    - "3.012: Authentication (completed)"
+    - "3.020: Email Communication (completed)"
+    - "3.040: Database Services (completed)"
+    - "3.050: Platform-as-a-Service (completed)"
+    - "3.501: CRM Platforms (in progress)"
+
+  tier_4_architecture:
+    - "4.090: Customer Relationship Management Architecture (completed - includes CRM decision patterns)"
+
+  tier_1_libraries:
+    - "1.127: Financial Simulation (planned - QuantLib, numpy-financial, pandas financial modeling)"
+
+files_created:
+  discovery:
+    - "01-discovery/S1-RAPID.md (8,000 words - market structure, 8 platforms, 3 tiers)"
+    - "01-discovery/S2-COMPREHENSIVE.md (15,000 words - feature matrix, TCO, lock-in spectrum)"
+    - "01-discovery/S3-NEED-DRIVEN.md (12,000 words - 15 scenarios mapped to platforms)"
+    - "01-discovery/S4-STRATEGIC.md (14,000 words - vendor stability, build-vs-buy, M&A predictions)"
+
+  synthesis:
+    - "SYNTHESIS.md (10,000 words - integrated findings, unified recommendations, methodology validation)"
+
+  metadata:
+    - "metadata.yaml (this file - structured data, key findings, data sources)"
+
+  total: "6 files, ~60,000 words, comprehensive research"
+
+client_engagement_models:
+  cfo_market:
+    entry_point: "How should we think about cash flow management?"
+    deliverable: "4.0XX architecture → 3.004 evaluation → implementation roadmap"
+    pricing: "$5,000 strategic framework"
+    outcome: "Methodology ownership, vendor selection confidence"
+
+  small_business_market:
+    entry_point: "Pulse vs. Fathom vs. Finmark - which one?"
+    deliverable: "S3 scenario match → pricing analysis → clear recommendation"
+    pricing: "$250 consultation"
+    outcome: "Platform selection in 1-hour consultation"
+
+  accounting_firm_market:
+    entry_point: "Should we offer FP&A services? Which platform?"
+    deliverable: "Jirav vs. Fathom analysis → white-label setup → client onboarding"
+    pricing: "$1,000 advisory package"
+    outcome: "New service line, recurring revenue model"
+
+framework_insights:
+  top_down_discovery_works: "Starting at Tier 3 (SaaS) before Tier 1 (libraries) is optimal - most companies buy, not build"
+  hardware_store_model_validated: "Generic catalog (3.004) + application-specific analysis (client context) = timeless value"
+  data_source_respect: "Respecting T&C restrictions (no G2/Capterra scraping) is correct approach - technical docs provide better signal anyway"
+  multi_methodology_essential: "S1-S4 each revealed different dimension - no single methodology sufficient for complete picture"
+  context_dependent_recommendations: "No universal 'best' platform - segment matching (size, tools, budget, lock-in tolerance) determines optimal choice"
+---
