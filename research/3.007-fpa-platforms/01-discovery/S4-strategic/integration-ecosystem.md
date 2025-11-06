@@ -104,6 +104,26 @@ This document analyzes the integration ecosystem dynamics shaping FP&A platform 
 
 ---
 
+### Tier 2.5: Mid-Market HRIS (Emerging Partnerships)
+
+**Mid-Market HRIS Landscape**:
+- **Workday HCM**: 3,800+ customers (Adaptive partnership dominates)
+- **ADP Workforce Now**: 1,000+ customers (no dominant FP&A partner)
+- **BambooHR**: 30,000+ SMB customers (no dominant FP&A partner)
+
+**Cube HRIS Integration Strategy**:
+- **Workday HRIS**: Documented integration (mid-tier, 5-7 day setup)
+- **Rippling/Gusto**: Not native (vs Runway gold-tier), manual CSV sync required
+- **BambooHR/ADP**: API-based (not native), 5-10 day setup
+- **Trade-off**: Cube prioritizes data warehouse + ERP (NetSuite) over HRIS depth
+
+**Competitive Position**:
+- **Strong**: NetSuite ERP, data warehouse (Snowflake, BigQuery, Redshift)
+- **Mid-tier**: Workday HRIS (documented but not native)
+- **Weak**: Rippling/Gusto HRIS (vs Runway native)
+
+---
+
 ### Tier 3: Enterprise HRIS Fragmentation (No Clear Winner)
 
 **Enterprise HRIS Landscape**:
@@ -123,15 +143,24 @@ This document analyzes the integration ecosystem dynamics shaping FP&A platform 
 
 ## ERP Partnership Patterns
 
-### Planful-NetSuite Partnership (600+ Customers)
+### NetSuite Partnership Landscape
 
-#### Partnership Profile
+#### Planful-NetSuite Partnership (600+ Customers)
 
 **Planful + NetSuite Integration**:
 - **Launch**: 2010s (long-standing partnership)
 - **Customer count**: 600+ joint customers (Planful's largest ERP integration)
 - **Integration depth**: Gold-tier native (2-3 day setup)
 - **Data sync**: Chart of accounts, GL actuals, budgets, multi-currency
+
+#### Cube-NetSuite Partnership (Growing)
+
+**Cube + NetSuite Integration**:
+- **Launch**: 2020-2021 (newer partnership)
+- **Customer count**: <100 estimated (smaller but growing)
+- **Integration depth**: Native connector (2-3 day setup)
+- **Data sync**: Chart of accounts, GL actuals, budgets, multi-currency
+- **Differentiation**: Spreadsheet-native (Excel/Google Sheets) + data warehouse integration
 
 **Why Planful-NetSuite Dominates Mid-Market**:
 1. **Target market alignment**: Both target 500-2,000 employee companies
@@ -270,6 +299,7 @@ This document analyzes the integration ecosystem dynamics shaping FP&A platform 
 **Architecture**: Customer data warehouse → FP&A platform queries → UI/planning layer
 
 **Adopters**:
+- **Cube**: Data-warehouse-native (Snowflake, BigQuery, Redshift native) + spreadsheet interface
 - **Causal**: Data-warehouse-native from founding
 - **Runway**: Gold-tier Snowflake, BigQuery, Redshift integrations (2023-2024)
 - **Anaplan**: CloudWorks supports warehouse connectors (2020+)
@@ -536,11 +566,17 @@ This document analyzes the integration ecosystem dynamics shaping FP&A platform 
 3. Pricing (TCO)
 
 **Modern selection criteria** (2025+):
-1. **ERP/HRIS ecosystem fit** (Rippling → Runway, Workday → Adaptive, NetSuite → Planful)
+1. **ERP/HRIS ecosystem fit** (Rippling → Runway, Workday → Adaptive, NetSuite → Planful/Cube, Data Warehouse → Cube/Causal)
 2. Feature depth (secondary)
 3. Pricing (tertiary)
 
 **Insight**: Integration ecosystem > standalone features (ecosystem fit = 50% of decision weight)
+
+**Cube's Ecosystem Positioning**:
+- **Primary**: Data warehouse (Snowflake/BigQuery/Redshift) + NetSuite ERP
+- **Secondary**: Spreadsheet-native (Excel/Google Sheets familiarity)
+- **Weakness**: SMB HRIS (Rippling/Gusto not native vs Runway)
+- **Ideal customer**: Mid-market (100-500 employees), NetSuite + Snowflake, Excel-heavy finance team
 
 ---
 
@@ -548,13 +584,14 @@ This document analyzes the integration ecosystem dynamics shaping FP&A platform 
 
 **Companies with data warehouse** (Snowflake, BigQuery):
 - **Vendor flexibility**: High (data-warehouse-native platforms query warehouse, low switching cost)
-- **Recommended platforms**: Causal, Runway (data-warehouse-native), Anaplan (CloudWorks)
+- **Recommended platforms**: Cube (spreadsheet-native + data warehouse), Causal (data warehouse + SQL), Runway (data warehouse + HRIS), Anaplan (CloudWorks)
+- **Cube advantage**: Only spreadsheet-native + data-warehouse-native platform (Excel UX + Snowflake backend)
 
 **Companies without data warehouse**:
 - **Vendor lock-in**: High (data stored in FP&A platform database, switching cost high)
-- **Recommended platforms**: Choose stable vendor (OneStream, Adaptive, Anaplan)
+- **Recommended platforms**: Choose stable vendor (OneStream, Adaptive, Anaplan) or Excel-native (Vena, Cube)
 
-**Insight**: Data warehouse = insurance policy against vendor lock-in
+**Insight**: Data warehouse = insurance policy against vendor lock-in. Cube uniquely bridges Excel familiarity + data warehouse flexibility.
 
 ---
 

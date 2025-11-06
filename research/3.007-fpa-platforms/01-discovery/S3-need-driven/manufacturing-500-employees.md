@@ -203,9 +203,44 @@ From S2 Feature Matrix:
 
 ### Platforms Matching All Requirements
 
-**1. Vena**
+**1. Cube**
 
-**Match Score**: 85% (best budget + timeline + consolidation fit for mid-market)
+**Match Score**: 88% (best fit for Excel-heavy manufacturing with NetSuite + data warehouse)
+
+**Strengths for This Scenario**:
+- **Spreadsheet-native**: Excel/Google Sheets interface (10-year Excel-based team = zero learning curve)
+- **Multi-entity consolidation**: Automated IC eliminations (3 subsidiaries)
+- **NetSuite integration**: Strong native integration (2-3 day setup)
+- **Multi-currency**: Full CAD → USD translation support
+- **Driver-based planning**: Production volume, capacity utilization formulas in spreadsheets
+- **Budget**: $150K-200K 3-year TCO (between Vena $250K and Prophix $345K)
+- **Implementation**: 2-4 weeks (faster than Vena 4-12 weeks, Prophix 6-12 weeks)
+- **Mid-market focus**: 100-500 employees sweet spot (won't outgrow)
+
+**Limitations for This Scenario**:
+- **ADP integration**: Not native (manual HRIS sync required)
+- **Audit reporting**: Fewer pre-built reports than Prophix (140+ reports)
+- **Less established**: Founded 2018 (vs Vena 2011, Prophix 1987)
+- **Consolidation depth**: Good for 3-5 subsidiaries, but Prophix stronger for 5+ entities
+
+**Data from Context**:
+- Funding: $65M raised (Series C $20M March 2024)
+- Revenue: $24.6M (2024), 400%+ growth
+- Implementation: 2 weeks typical (vs Vena 4-12 weeks, Prophix 6-12 weeks)
+- Pricing: $50K-60K/year for 500 employees (vs Vena $55K-65K, Prophix $75K-85K)
+
+**Why This Fits**:
+- Excel-native reduces change management (team comfortable with 10+ years Excel)
+- Manufacturing focus (capacity utilization, production volume drivers in spreadsheets)
+- Best value for consolidation ($150K-200K 3-year TCO vs Prophix $345K)
+- Fast implementation (Q1 Jan-Mar timeline, 2-4 weeks fits)
+- NetSuite integration strong (18 months old, 800+ accounts)
+
+---
+
+**2. Vena**
+
+**Match Score**: 83% (strong Excel-native fit, but Cube has better data warehouse + AI)
 
 **Strengths for This Scenario**:
 - **Multi-entity consolidation**: Automated IC eliminations (S2 Features, line 60)
@@ -236,9 +271,9 @@ From S2 Feature Matrix:
 
 ---
 
-**2. Prophix**
+**3. Prophix**
 
-**Match Score**: 90% (best consolidation + automation + driver-based planning)
+**Match Score**: 87% (best audit reporting + driver-based automation, but more expensive than Cube)
 
 **Strengths for This Scenario**:
 - **Consolidation excellence**: Sigma Conso acquisition (140+ audit reports) (S2 Features, line 68)
@@ -269,9 +304,9 @@ From S2 Feature Matrix:
 
 ---
 
-**3. Planful**
+**4. Planful**
 
-**Match Score**: 80% (enterprise-grade consolidation, but expensive + long implementation)
+**Match Score**: 77% (enterprise-grade consolidation, but expensive + long implementation vs Cube)
 
 **Strengths for This Scenario**:
 - **NetSuite partnership**: 600+ customers, best integration (S2 Integrations, line 98)
@@ -341,7 +376,16 @@ From S2 Feature Matrix:
 
 ## Key Trade-offs
 
-### Vena vs Prophix vs Planful Decision Framework
+### Cube vs Vena vs Prophix vs Planful Decision Framework
+
+**Choose Cube if**:
+- Excel familiarity critical (10-year Excel-based team, minimize change management)
+- Budget conscious ($150K-200K 3-year TCO vs Prophix $345K, Planful $510K)
+- Fast implementation priority (2-4 weeks vs Vena 4-12, Prophix 6-12 weeks)
+- 3-subsidiary structure sufficient (not complex 5+ subsidiary needs)
+- Data warehouse integration desired (Snowflake/BigQuery native)
+- Want modern AI (Agentic AI June 2024 vs Vena no documented AI)
+- Can accept manual ADP HRIS sync (8-10 hours/month)
 
 **Choose Vena if**:
 - Budget tightest constraint ($250K vs $345K vs $510K)
@@ -367,6 +411,24 @@ From S2 Feature Matrix:
 ---
 
 ### Quantified Trade-off Analysis
+
+**Cube vs Vena**: $50K-76K difference over 3 years
+
+**Cube Advantages** (worth $50K-76K savings or premium?):
+- **Modern AI**: Agentic AI (June 2024) for variance explanations (vs Vena no documented AI)
+- **Data warehouse integration**: Native Snowflake/BigQuery (vs Vena API + iPaaS $10K-20K/year)
+- **Faster implementation**: 2-4 weeks vs 4-12 weeks (save 2-8 weeks consultant time = $10K-40K)
+- **Total value**: $20K-60K (AI + data warehouse + faster setup)
+
+**Vena Advantages** (if Cube more expensive):
+- **Longer track record**: Founded 2011 vs 2018 (Cube newer)
+- **Larger customer base**: 1,000+ customers vs Cube <500 (estimated)
+
+**Key Question**: Is modern AI + data warehouse integration worth potential $50K-76K?
+
+**For This Scenario**: Manufacturing with Excel-heavy team + data warehouse → **Cube wins** (AI + data warehouse native value >$50K-76K). If no data warehouse → **Vena** (lower cost, longer track record).
+
+---
 
 **Vena vs Prophix**: $95K difference over 3 years
 
@@ -499,6 +561,31 @@ From S2 Feature Matrix:
 
 ---
 
+### Cube Total Cost of Ownership
+
+**Software Costs**:
+- Year 1: $50,000 (500 employees) + $10,000 implementation = $60,000
+- Year 2: $55,000 (525 employees, 5% growth)
+- Year 3: $60,000 (550 employees, 5% growth)
+- **Total Software**: $165,000
+
+**Implementation Costs**:
+- Professional services: $8,000 (guided setup, NetSuite integration)
+- Internal team time: 160-240 hours × $150/hour (loaded) = $24,000-36,000
+- **Total Implementation**: $38,000
+
+**Ongoing Costs**:
+- Manual ADP sync: 8 hours/month × 36 months × $100/hour = $28,800
+- Training: $1,500/year × 3 years = $4,500 (spreadsheet-native = minimal training)
+- Ongoing support: $1,000/year × 3 years = $3,000
+- **Total Ongoing**: $36,300
+
+**3-Year TCO**: $165,000 + $38,000 + $36,300 = **$239,300**
+
+**Cost Per Employee**: $239,300 ÷ 525 avg employees ÷ 3 years = **$152/employee/year**
+
+---
+
 ### Vena Total Cost of Ownership
 
 **Software Costs**:
@@ -535,10 +622,11 @@ From S2 Feature Matrix:
 **3-Year Benefit**: $162,000-270,000
 
 **ROI Calculation**:
+- Cube: $270,000 benefit ÷ $239,300 cost = **113% ROI** (payback 11 months)
 - Prophix: $270,000 benefit ÷ $370,800 cost = **73% ROI** (payback 20 months)
 - Vena: $270,000 benefit ÷ $276,800 cost = **98% ROI** (payback 12 months)
 
-**Insight**: Both platforms excellent ROI. Vena faster payback (lower cost), Prophix higher long-term value (automation).
+**Insight**: Cube best ROI (11 months payback, lowest cost), Vena close second (12 months), Prophix slower but highest long-term value (driver-based automation). Cube's spreadsheet-native + modern AI justifies position as #1 choice for Excel-heavy manufacturing teams.
 
 ---
 

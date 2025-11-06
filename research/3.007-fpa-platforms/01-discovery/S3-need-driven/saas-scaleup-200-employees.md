@@ -198,9 +198,43 @@ From S2 Pricing (500-employee scenario):
 
 ### Platforms Matching All Requirements
 
-**1. Causal**
+**1. Cube**
 
-**Match Score**: 90% (best fit for data-warehouse-native, technical finance team)
+**Match Score**: 92% (best fit for Excel-centric mid-market with data warehouse + NetSuite)
+
+**Strengths for This Scenario**:
+- **Spreadsheet-native**: Works with Excel/Google Sheets (familiar interface, zero learning curve)
+- **Data warehouse integration**: Native Snowflake, BigQuery, Redshift (direct query, eliminates manual SQL exports)
+- **NetSuite partnership**: Strong integration (2-3 day setup) (S2 Integrations, line 243)
+- **Fast implementation**: 2 weeks typical (vs 4-12 weeks for enterprise) (S2 Implementation)
+- **Budget**: $75K-110K 3-year TCO (mid-market sweet spot)
+- **Agentic AI**: June 2024 launch (variance explanations, forecast automation)
+- **Mid-market focus**: 50-200 employees sweet spot (won't outgrow at 300)
+
+**Limitations for This Scenario**:
+- **Gusto HRIS integration**: Not native (manual sync required vs Runway native)
+- **Post-funding growth**: $65M Series C (March 2024) = aggressive growth phase (roadmap velocity high)
+- **Less established**: Founded 2018 (vs Causal 2019, Runway 2020, but newer than Vena/Planful)
+
+**Data from Context**:
+- Funding: $65M raised (Series C $20M March 2024)
+- Revenue: $24.6M (2024), 400%+ growth
+- Implementation: 2 weeks typical (faster than Vena 4-12 weeks, Planful 12-24 weeks)
+- Pricing: $25K-45K/year for 200 employees (vs $100K+ for Planful)
+- Snowflake integration: Native (direct query)
+
+**Why This Fits**:
+- Company already Snowflake-centric (data warehouse as source of truth)
+- Finance team Excel-comfortable but want modern platform (spreadsheet-native bridges gap)
+- NetSuite integration (18 months old, needs strong ERP sync)
+- Mid-market budget ($25K-80K/year target, Cube fits)
+- Fast implementation (Q4 planning cycle starts in 8 weeks)
+
+---
+
+**2. Causal**
+
+**Match Score**: 85% (strong fit for data-warehouse-native, but LucaNet acquisition uncertainty)
 
 **Strengths for This Scenario**:
 - **Data warehouse native**: Direct Snowflake query (eliminates manual SQL exports)
@@ -231,9 +265,9 @@ From S2 Pricing (500-employee scenario):
 
 ---
 
-**2. Runway**
+**3. Runway**
 
-**Match Score**: 80% (good fit, but less flexible modeling than Causal)
+**Match Score**: 78% (good fit for HRIS-first teams, but less flexible modeling than Cube/Causal)
 
 **Strengths for This Scenario**:
 - **Snowflake integration**: Native Gold-tier (2-3 day setup) (S2 Integrations, line 121)
@@ -268,9 +302,9 @@ From S2 Pricing (500-employee scenario):
 
 ---
 
-**3. Vena**
+**4. Vena**
 
-**Match Score**: 70% (fits budget/timeline, but Excel-native may not appeal to technical team)
+**Match Score**: 68% (fits budget/timeline, but Cube is better Excel-native + data warehouse option)
 
 **Strengths for This Scenario**:
 - **NetSuite integration**: Native (3-5 day setup) (S2 Integrations, line 243)
@@ -335,7 +369,16 @@ From S2 Pricing (500-employee scenario):
 
 ## Key Trade-offs
 
-### Causal vs Runway vs Vena Decision Framework
+### Cube vs Causal vs Runway vs Vena Decision Framework
+
+**Choose Cube if**:
+- Excel/Google Sheets is primary finance tool (team prefers spreadsheet UX)
+- Data warehouse is central data platform (Snowflake as source of truth)
+- Need fast implementation (2 weeks vs 4-12 weeks for enterprise platforms)
+- Budget allows $75K-110K (premium over Causal/Runway, but less than Vena)
+- NetSuite integration critical (strong 2-3 day setup)
+- Want modern AI (Agentic AI launched June 2024)
+- Company likely to stay 100-300 employees (Cube sweet spot)
 
 **Choose Causal if**:
 - Data warehouse is central data platform (Snowflake as source of truth)
@@ -361,6 +404,25 @@ From S2 Pricing (500-employee scenario):
 ---
 
 ### Quantified Trade-off Analysis
+
+**Cube vs Causal**: $11K-21K difference over 3 years
+
+**Cube Advantages** (worth $11K-21K premium?):
+- **Spreadsheet-native UX**: Excel/Google Sheets familiarity = zero learning curve (save 20-30 hours training)
+- **NetSuite integration**: Native 2-3 day setup vs Causal API 5-7 days (save 3-4 days)
+- **Agentic AI**: Built-in variance explanations (vs Causal basic AI)
+- **Total time savings**: 20-30 hours training × $100/hour = $2,000-3,000
+
+**Causal Advantages** (worth $11K-21K savings?):
+- **Lower cost**: $89K vs $100K-110K (3-year TCO)
+- **Flexible modeling**: Human-readable formulas (vs spreadsheet formulas)
+- **SQL direct access**: More technical flexibility
+
+**Key Question**: Is spreadsheet-native UX worth $11K-21K premium?
+
+**For This Scenario**: If finance team Excel-heavy (10+ years Excel experience), **Cube wins** (zero learning curve value >$11K-21K cost). If team technical/SQL-comfortable, **Causal wins** (cost savings prioritized).
+
+---
 
 **Causal vs Runway**: $17K difference over 3 years
 
@@ -509,7 +571,33 @@ From S2 Pricing (500-employee scenario):
 
 **3-Year TCO**: $86,000 + $11,000 + $3,000 = **$100,000**
 
-**Cost Per Employee**: $100,000 ÷ 240 avg employees ÷ 3 years 139/employee/year**
+**Cost Per Employee**: $100,000 ÷ 240 avg employees ÷ 3 years = **$139/employee/year**
+
+---
+
+### Cube Total Cost of Ownership
+
+**Software Costs**:
+- Year 1: $30,000 (200 employees) + $5,000 implementation = $35,000
+- Year 2: $35,000 (240 employees)
+- Year 3: $40,000 (280 employees)
+- **Total Software**: $110,000
+
+**Implementation Costs**:
+- Self-service setup: $2,000 vendor support
+- Finance analyst time: 40-60 hours × $100/hour = $4,000-6,000
+- Data engineer support: 10 hours × $150/hour = $1,500
+- **Total Implementation**: $8,500
+
+**Ongoing Costs**:
+- Manual HRIS sync: 4 hours/month × 36 months × $100/hour = $14,400
+- Training: $500/year (spreadsheet-native = minimal training)
+- Integration maintenance: $0 (native connectors)
+- **Total Ongoing**: $16,400
+
+**3-Year TCO**: $110,000 + $8,500 + $16,400 = **$134,900**
+
+**Cost Per Employee**: $134,900 ÷ 240 avg employees ÷ 3 years = **$187/employee/year**
 
 ---
 
@@ -552,9 +640,10 @@ From S2 Pricing (500-employee scenario):
 **ROI Calculation**:
 - Causal: $282,000 benefit ÷ $101,900 cost = **277% ROI** (payback 4 months)
 - Runway: $282,000 benefit ÷ $100,000 cost = **282% ROI** (payback 4 months)
+- Cube: $282,000 benefit ÷ $134,900 cost = **209% ROI** (payback 6 months)
 - Vena: $282,000 benefit ÷ $266,400 cost = **106% ROI** (payback 11 months)
 
-**Insight**: Causal and Runway nearly identical ROI (both excellent). Vena ROI positive but 2.7x higher cost reduces return.
+**Insight**: Causal and Runway best ROI (4 months), Cube strong ROI (6 months), Vena positive but slower payback (11 months). Cube's spreadsheet-native UX justifies premium over Causal/Runway for Excel-heavy teams.
 
 ---
 

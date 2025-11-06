@@ -47,6 +47,10 @@ platforms:
       rationale: "Tier 1 alternative, data warehouse focus"
 
   tier_2_mid_market:
+    - name: "Cube"
+      research_depth: "full"
+      line_count: 990
+      rationale: "Spreadsheet-native mid-market platform (Excel/Sheets), Added Nov 5, 2025"
     - name: "Vena"
       research_depth: "reduced"
       line_count: 370
@@ -93,13 +97,15 @@ mpse_stages:
   s1_rapid:
     status: "completed"
     completed_date: "2025-11-01"
-    goal: "Platform overviews, 8 platforms"
-    platforms: 8
+    updated_date: "2025-11-05"
+    goal: "Platform overviews, 9 platforms (Cube added Nov 5)"
+    platforms: 9
     time_actual: "1 day"
     deliverables:
       - "approach.md"
       - "runway.md (563 lines, full depth)"
       - "planful.md (577 lines, full depth)"
+      - "cube.md (990 lines, full depth - ADDED Nov 5, 2025)"
       - "causal.md (315 lines, reduced)"
       - "vena.md (370 lines, reduced)"
       - "prophix.md (387 lines, reduced)"
@@ -107,7 +113,7 @@ mpse_stages:
       - "anaplan.md (410 lines, reduced)"
       - "onestream.md (462 lines, reduced)"
       - "recommendations.md (synthesis)"
-    total_lines: ~3500
+    total_lines: ~4500 (includes Cube 990 lines added Nov 5)
 
   s2_comprehensive:
     status: "completed"
@@ -116,7 +122,7 @@ mpse_stages:
     time_actual: "1 day"
     deliverables:
       - "approach.md"
-      - "feature-matrix.md (437 lines, 82 features across 8 platforms)"
+      - "feature-matrix.md (550+ lines, 82 features across 9 platforms - Cube added Nov 5)"
       - "integrations-deep-dive.md (544 lines, HRIS/ERP/data warehouse matrices)"
       - "pricing-tco.md (708 lines, 3-year/5-year TCO scenarios)"
       - "implementation-complexity.md (605 lines, timeline/training/risk analysis)"
@@ -297,8 +303,9 @@ notes:
   - "AI capabilities evaluated with skepticism: most features <1 year old, too new for ROI validation"
 
 created: "2025-11-01"
-updated: "2025-11-01"
-version: "1.0"
+updated: "2025-11-05"
+version: "1.1"
+update_notes: "Added Cube Software as 9th platform (990 lines S1, integrated into S2-S4)"
 
 completion_summary:
   total_documents: 30+
@@ -307,15 +314,15 @@ completion_summary:
 
   document_breakdown:
     service_explainer: "1 file (FP&A domain concepts)"
-    s1_rapid: "10 files (~3,500 lines)"
+    s1_rapid: "10 files (~4,500 lines - includes Cube 990 lines)"
     s2_comprehensive: "7 files (~3,400 lines)"
     s3_need_driven: "7 files (~3,600 lines)"
     s4_strategic: "6 files (~3,200 lines)"
     metadata: "1 file (comprehensive tracking)"
 
   key_deliverables:
-    platform_profiles: "8 (Runway, Planful full depth; Causal, Vena, Prophix, Adaptive, Anaplan, OneStream reduced)"
-    feature_comparisons: "82 features across 8 platforms"
+    platform_profiles: "9 (Runway, Planful, Cube full depth; Causal, Vena, Prophix, Adaptive, Anaplan, OneStream reduced)"
+    feature_comparisons: "82 features across 9 platforms"
     integration_matrices: "HRIS (8×10), ERP (8×8), data warehouse assessment"
     pricing_analysis: "3-year and 5-year TCO scenarios"
     scenarios: "5 generic business scenarios with platform matching"
