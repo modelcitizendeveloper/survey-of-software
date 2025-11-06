@@ -1,0 +1,9 @@
+---
+experiment_number: "2.051"
+experiment_sequence: 1
+experiment_date: "2025-10-16"
+experiment_status: complete
+discovery_method: detailed_toc
+migrated_from: null
+notes: "First Tier 2 storage standards experiment - S3 API as object storage portability standard. Amazon-originated de-facto standard (2006, API version 2006-03-01 unchanged 19 years) with 20+ compatible implementations (AWS S3, Cloudflare R2, Backblaze B2, Wasabi, DigitalOcean Spaces, MinIO self-hosted, Linode, Storj, Filebase, plus cloud providers: Azure Blob S3 compatibility, Google Cloud Storage). Key findings: (1) TRUE ZERO LOCK-IN - switch backends via endpoint URL + credentials change only (1-2 hours); (2) Core API (GetObject, PutObject, ListBuckets) 100% portable across all providers; (3) Proprietary extensions create mild lock-in (Glacier, Intelligent-Tiering AWS-specific, but avoidable); (4) Migration validation: Real-world companies migrated AWS S3 → Cloudflare R2 (10× cheaper egress) with zero code changes; (5) Strategic recommendation: ALWAYS use S3 API for object storage—highest portability standard in Tier 2 catalog. Completed with S1-S4 discovery (18 files, ~2,775 lines including migration testing, cost comparison, backend compatibility matrix) plus S3_API_EXPLAINER. Governance caveat: Amazon-owned (no standards body), but 19-year stability record + industry adoption = low risk. Highest confidence portability standard (9/10)."
+---

@@ -30,10 +30,13 @@ This document provides strategic frameworks for identifying when companies shoul
 - **Implementation**: 1-2 weeks
 
 ### Tier 2: Mid-Market Platforms (100-2,000 Employees)
-- **Platforms**: Vena, Prophix, Planful, Adaptive
+- **Platforms**: Cube, Vena, Prophix, Planful, Adaptive
 - **Annual Cost**: $25K-400K
 - **Use Cases**: Multi-entity consolidation, workforce planning, financial planning
-- **Implementation**: 4-16 weeks
+- **Implementation**: 2-16 weeks
+  - **Cube**: 2 weeks (spreadsheet-native, fast setup)
+  - **Vena**: 4-12 weeks (Excel-native, guided setup)
+  - **Prophix/Planful/Adaptive**: 6-16 weeks (enterprise features, professional services)
 
 ### Tier 3: Enterprise CPM (1,000-10,000+ Employees)
 - **Platforms**: OneStream, Anaplan
@@ -153,16 +156,21 @@ Do you have 50+ employees?
 - **ROI**: Save 15-20 hours/month on custom reporting
 
 #### Scenario C: Mid-Market (100-500 employees, NetSuite ERP)
-- **Recommended**: Vena or Planful
+- **Recommended**: Cube, Vena, or Planful
 - **Why**: Strong NetSuite integration, consolidation capabilities
-- **Cost**: $30K-150K/year
+  - **Cube**: Best for Excel-centric teams, data warehouse integration, 2-week implementation ($25K-60K/year)
+  - **Vena**: Excel-native, mid-market consolidation ($30K-80K/year)
+  - **Planful**: NetSuite partnership (600+ customers), enterprise-grade ($50K-150K/year)
+- **Cost**: $25K-150K/year
 - **ROI**: Save 20-40 hours/month on consolidation + budgeting
 
 #### Scenario D: Excel Power Users (CFO prefers Excel interface)
-- **Recommended**: Vena
-- **Why**: Excel-native (works inside Excel, minimal UI change)
+- **Recommended**: Cube or Vena
+- **Why**: Spreadsheet-native (works with Excel/Google Sheets, minimal UI change)
+  - **Cube**: Excel + Google Sheets native, data warehouse integration, Agentic AI ($25K-60K/year)
+  - **Vena**: Excel-native only, longer track record (founded 2011 vs 2018) ($25K-80K/year)
 - **Cost**: $25K-80K/year
-- **ROI**: Preserve Excel workflows while gaining database backend
+- **ROI**: Preserve Excel workflows while gaining database backend + modern AI
 
 ---
 
@@ -383,14 +391,14 @@ Do you have 30+ employees?
 Do you have 400+ employees?
 ├─ Yes → Do you have 5+ entities requiring consolidation?
 │   ├─ Yes → **GRADUATE NOW** (scale + consolidation)
-│   │   └─ Recommended: Adaptive (if Workday), Planful (if NetSuite), Vena (if budget-conscious)
+│   │   └─ Recommended: Adaptive (if Workday), Planful (if NetSuite), Cube (if Excel-heavy + budget-conscious)
 │   └─ No → Do you need SOX compliance (pre-IPO)?
 │       ├─ Yes → **GRADUATE NOW** (compliance critical)
 │       │   └─ Recommended: Planful, Adaptive, Prophix (SOX features)
 │       └─ No → **STAY ON TIER 1** (can wait 12 months)
 └─ No → Do you have 5+ entities requiring consolidation?
     ├─ Yes → **GRADUATE NOW** (consolidation complexity)
-    │   └─ Recommended: Vena (cost-effective), Planful (NetSuite partnership)
+    │   └─ Recommended: Cube (Excel-heavy, fast 2-week setup), Vena (Excel-native, longer track record), Planful (NetSuite partnership)
     └─ No → Are you preparing for SOX compliance?
         ├─ Yes → **GRADUATE IN 6-12 MONTHS** (plan ahead)
         └─ No → **STAY ON TIER 1** (no immediate triggers)

@@ -205,6 +205,47 @@ This document assesses long-term vendor viability and AI evolution trajectories 
 
 ### VC-Backed Startups (Higher Risk)
 
+#### Cube (Series C, $65M raised, last funding March 2024)
+
+**Financial Health**: Strong
+- **Funding**: $65M total raised (Series C $20M March 2024)
+- **Valuation**: $300M-400M (estimated, Series C 2024)
+- **Revenue**: $24.6M ARR (2024)
+- **Growth**: 400%+ YoY (rapid growth phase)
+- **Profitability**: Unprofitable (typical for growth-stage startup)
+- **Burn Rate**: $2M-3M/month (estimated)
+- **Runway**: 20-24 months (estimated, post-Series C)
+
+**Viability Score**: 65/100
+- **5-year survival**: 80% (Series C funded, strong growth, differentiated positioning)
+- **10-year survival**: 60% (mid-market crowded, acquisition likely)
+- **Acquisition risk**: Moderate-to-High (40-50% in 5 years, strategic acquirer interest)
+
+**Roadmap Stability**: Moderate (startup agility, post-Series C scaling phase)
+
+**Potential Scenarios (2027-2030)**:
+1. **Strategic acquisition** (50% probability): Microsoft, Oracle, Snowflake, or Workday acquires
+2. **Series D / IPO path** (30% probability): If ARR >$100M by 2027, Series D → IPO 2029-2030
+3. **Secondary PE sale** (20% probability): Vista Equity or Thoma Bravo buys for consolidation play
+
+**Potential Acquirers (Ranked by Likelihood)**:
+1. **Microsoft** (30% probability): Excel-native synergy (Cube works in Excel/Google Sheets), Power BI integration
+2. **Snowflake** (25% probability): Data warehouse native (Cube queries Snowflake directly), expand ecosystem
+3. **Oracle** (20% probability): NetSuite consolidation play (Cube strong NetSuite integration)
+4. **Workday** (15% probability): Mid-market FP&A gap (Adaptive = enterprise, Cube = mid-market)
+5. **PE firm** (10% probability): Vista Equity or Thoma Bravo consolidates CPM assets
+
+**Risk Factors**:
+- Venture-backed = pressure to grow 200-300%+ YoY (high burn rate)
+- Series D required in 18-24 months (if growth slows, down round risk)
+- Competitive pressure (Causal/LucaNet, Vena, Planful all targeting mid-market 100-300 employees)
+- Customer concentration risk: Unknown (not disclosed), but mid-market segment crowded
+- Spreadsheet-native positioning: Risk if market shifts fully to web-native (though Excel remains dominant)
+
+**Verdict**: Moderate-risk vendor (Series C funded, strong growth, but 5-year acquisition pressure via IPO or strategic sale)
+
+---
+
 #### Runway (Series C, $74M raised, last funding 2024)
 
 **Financial Health**: Moderate
@@ -316,7 +357,27 @@ This document assesses long-term vendor viability and AI evolution trajectories 
 
 ### Moderate Probability Acquisitions (40-50%)
 
-#### 3. Runway → Rippling (40% probability by 2028)
+#### 3. Cube → Microsoft or Snowflake (45% probability by 2029)
+
+**Rationale**:
+- **Microsoft scenario** (30% probability): Excel/Google Sheets native synergy, Power BI integration, Dynamics 365 bundle
+- **Snowflake scenario** (25% probability): Data warehouse native (Cube queries Snowflake directly), expand data cloud ecosystem
+- **Oracle scenario** (20% probability): NetSuite integration strength (Cube strong NetSuite connector)
+- **PE exit timing**: Series C March 2024, typical 3-5 year exit window = 2027-2029
+
+**Acquisition Timeline**: 2027-2029 (Series D or strategic acquisition)
+**Acquisition Price**: $400M-800M (15-20x ARR if $50M-60M ARR by 2027)
+
+**Impact on Customers**:
+- **Microsoft scenario**: Deeper Microsoft 365 integration (Excel Copilot for FP&A), Dynamics 365 bundle, non-Microsoft customers may be deprioritized
+- **Snowflake scenario**: Native Snowflake Data Cloud integration, expand to embedded FP&A in warehouse, non-Snowflake customers neutral
+- **Oracle scenario**: NetSuite customers benefit (bundle pricing), non-NetSuite customers deprioritized
+
+**Alternative Scenario**: Cube IPO (30% probability) if ARR >$100M by 2028, goes public 2029-2030
+
+---
+
+#### 4. Runway → Rippling (40% probability by 2028)
 
 **Rationale**:
 - **Rippling partnership**: Runway's #1 integration, 30-40% customers use Rippling
@@ -335,7 +396,7 @@ This document assesses long-term vendor viability and AI evolution trajectories 
 
 ---
 
-#### 4. Planful → Oracle or SAP (40% probability by 2030)
+#### 5. Planful → Oracle or SAP (40% probability by 2030)
 
 **Rationale**:
 - **NetSuite synergy**: Planful has 600+ NetSuite customers (Oracle acquisition)
@@ -355,7 +416,7 @@ This document assesses long-term vendor viability and AI evolution trajectories 
 
 ### Low Probability Acquisitions (10-20%)
 
-#### 5. Adaptive Insights (Workday) → Standalone IPO (10% probability by 2030)
+#### 6. Adaptive Insights (Workday) → Standalone IPO (10% probability by 2030)
 
 **Rationale**: Workday spins out Adaptive as standalone public company (rare)
 - **Precedent**: PayPal spun out of eBay (2015), VMware spun out of Dell (2021)
@@ -371,7 +432,7 @@ This document assesses long-term vendor viability and AI evolution trajectories 
 
 ---
 
-#### 6. Causal (LucaNet) → Resold or Sunset (20% probability by 2027)
+#### 7. Causal (LucaNet) → Resold or Sunset (20% probability by 2027)
 
 **Rationale**: LucaNet fails to integrate Causal successfully
 - **Scenario A**: LucaNet resells Causal to another buyer (Vista Equity, Thoma Bravo)
@@ -397,13 +458,14 @@ This document assesses long-term vendor viability and AI evolution trajectories 
 | **Planful** | 90% | 70% | PE-backed, likely IPO or strategic sale 2028-2032 |
 | **Vena** | 85% | 60% | PE-backed, likely Microsoft acquisition 2026-2028 |
 | **Prophix** | 85% | 55% | PE-backed, likely Sage acquisition 2025-2027 |
+| **Cube** | 80% | 60% | VC-backed Series C, strong growth, likely acquisition 2027-2030 |
 | **Runway** | 75% | 50% | VC-backed, Series D or acquisition 2027-2029 |
 | **Causal** | 70% | 50% | Acquired by LucaNet, integration risk |
 
 **Key Insights**:
 - **Highest viability**: OneStream, Adaptive (public companies)
 - **Moderate viability**: Anaplan, Planful (large PE-backed, exit in 5-7 years)
-- **Lower viability**: Vena, Prophix (PE exit imminent, acquisition likely)
+- **Lower viability**: Vena, Prophix (PE exit imminent, acquisition likely), Cube (VC-backed Series C, acquisition pressure 2027-2030)
 - **Highest risk**: Runway (VC-backed, exit pressure), Causal (post-acquisition uncertainty)
 
 ---

@@ -138,22 +138,31 @@ This document provides economic frameworks for the build vs buy decision in FP&A
 
 ### Scenario 2: Mid-Market (500-1,000 Employees)
 
-#### Option A: Buy Planful
+#### Option A: Buy Cube
+- **Year 1**: $50K subscription + $10K implementation = $60K
+- **Year 2**: $55K subscription = $55K
+- **Year 3**: $60K subscription = $60K
+- **3-Year Total**: **$175K**
+
+#### Option B: Buy Planful
 - **Year 1**: $150K subscription + $75K implementation = $225K
 - **Year 2**: $160K subscription = $160K
 - **Year 3**: $170K subscription = $170K
 - **3-Year Total**: **$555K**
 
-#### Option B: Build DIY (Full Stack)
+#### Option C: Build DIY (Full Stack)
 - **Software**: $72K-150K/year (Snowflake + Fivetran + dbt + Looker)
 - **Personnel**: $250K-400K/year (0.5 data engineer, 0.5 analytics engineer, 0.5 full-stack dev)
 - **Year 1**: ($110K software + $500K build) = $610K
 - **Years 2-3**: ($110K software + $325K maintain) × 2 = $870K
 - **3-Year Total**: **$1.48M**
 
-**Cost Comparison**: DIY costs 2.7x more than Planful ($1.48M vs $555K)
+**Cost Comparison**:
+- DIY costs 8.5x more than Cube ($1.48M vs $175K)
+- DIY costs 2.7x more than Planful ($1.48M vs $555K)
+- Cube costs 3.2x less than Planful ($175K vs $555K)
 
-**Verdict**: Buy Planful (DIY not cost-competitive)
+**Verdict**: Buy Cube for Excel-heavy mid-market teams (best value), Buy Planful for enterprise features (consolidation, SOX), Never DIY at mid-market scale
 
 ---
 
