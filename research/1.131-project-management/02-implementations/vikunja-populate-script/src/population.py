@@ -6,6 +6,7 @@ Creates projects, labels, and tasks in Vikunja from validated schema.
 """
 
 from typing import Dict, Any, List
+from datetime import datetime
 
 
 class PopulationError(Exception):
@@ -65,10 +66,13 @@ def populate_vikunja(client: Any, schema: Dict[str, Any], dry_run: bool = False)
         try:
             kwargs = {"title": label_data["title"]}
 
-            if "description" in label_data:
-                kwargs["description"] = label_data["description"]
-            if "color" in label_data:
-                kwargs["color"] = label_data["color"]
+            # hex_color is required by the API
+            if "hex_color" in label_data:
+                kwargs["hex_color"] = label_data["hex_color"]
+            elif "color" in label_data:
+                kwargs["hex_color"] = label_data["color"]
+            else:
+                raise PopulationError(f"Label '{label_data['title']}' missing required field 'hex_color'")
 
             label = client.labels.create(**kwargs)
             result["labels"].append(label)
@@ -86,9 +90,18 @@ def populate_vikunja(client: Any, schema: Dict[str, Any], dry_run: bool = False)
                 "title": task_data["title"]
             }
 
-            for field in ["description", "due_date", "priority", "done"]:
+            for field in ["description", "priority"]:
                 if field in task_data:
                     kwargs[field] = task_data[field]
+
+            # Convert YYYY-MM-DD to ISO datetime for API
+            if "due_date" in task_data:
+                date_str = task_data["due_date"]
+                # If it's just a date (YYYY-MM-DD), convert to ISO datetime
+                if len(date_str) == 10:
+                    kwargs["due_date"] = f"{date_str}T23:59:59Z"
+                else:
+                    kwargs["due_date"] = date_str
 
             task = client.tasks.create(**kwargs)
             result["tasks"].append(task)

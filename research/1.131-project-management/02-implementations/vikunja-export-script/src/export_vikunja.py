@@ -10,21 +10,17 @@ Usage:
     python export_vikunja.py --output portfolio.md     # Save to file
     python export_vikunja.py --spawn-analysis          # Format for spawn-analysis cards
 """
+from __future__ import annotations
 
 import argparse
 import json
 import os
 import sys
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 from pathlib import Path
 from typing import List, Dict, Any
 from collections import defaultdict
 from dotenv import load_dotenv
-
-# Add vikunja-api-wrapper to path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent / "vikunja-api-wrapper" / "src"))
-from vikunja_wrapper import VikunjaClient
-
 
 def calculate_velocity(tasks: List[Any], weeks: int = 4) -> Dict[str, Any]:
     """
@@ -37,7 +33,7 @@ def calculate_velocity(tasks: List[Any], weeks: int = 4) -> Dict[str, Any]:
     Returns:
         Velocity metrics dict
     """
-    cutoff_date = datetime.now() - timedelta(weeks=weeks)
+    cutoff_date = datetime.now(timezone.utc) - timedelta(weeks=weeks)
 
     completed_tasks = [
         t for t in tasks
@@ -72,7 +68,7 @@ def get_task_summary(tasks: List[Any]) -> Dict[str, Any]:
     Returns:
         Task summary dict
     """
-    now = datetime.now()
+    now = datetime.now(timezone.utc)
 
     # Count by status
     total = len(tasks)
@@ -166,7 +162,7 @@ def export_portfolio(client: VikunjaClient) -> Dict[str, Any]:
 
     # Get all tasks for each project
     portfolio_data = {
-        "exported_at": datetime.now().isoformat(),
+        "exported_at": datetime.now(timezone.utc).isoformat(),
         "projects": [],
         "summary": {
             "total_projects": len(projects),
@@ -322,6 +318,10 @@ def main():
 
     # Connect to Vikunja
     try:
+        # Import only when needed (avoid missing dependencies if not using API)
+        sys.path.insert(0, str(Path(__file__).parent.parent.parent / "vikunja-api-wrapper" / "src"))
+        from vikunja_wrapper import VikunjaClient
+
         client = VikunjaClient(base_url=base_url, token=api_token)
     except Exception as e:
         print(f"Error: Failed to connect to Vikunja API: {e}", file=sys.stderr)
