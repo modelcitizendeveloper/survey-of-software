@@ -15,12 +15,130 @@ from __future__ import annotations
 import argparse
 import json
 import os
+import re
 import sys
 from datetime import datetime, timedelta, timezone
 from pathlib import Path
-from typing import List, Dict, Any
+from typing import List, Dict, Any, Optional
 from collections import defaultdict
 from dotenv import load_dotenv
+
+
+def extract_source_documents(description: str) -> Optional[Dict[str, str]]:
+    """
+    Extract source document paths from task description HTML.
+
+    Args:
+        description: Task description (may contain HTML)
+
+    Returns:
+        Dict with source document paths, or None if not found
+    """
+    if not description:
+        return None
+
+    result = {}
+
+    # Extract project definition
+    match = re.search(r'Project definition: <code>(.*?)</code>', description)
+    if match:
+        result['project_definition'] = match.group(1)
+
+    # Extract project folder
+    match = re.search(r'Project folder: <code>(.*?)</code>', description)
+    if match:
+        result['project_folder'] = match.group(1)
+
+    # Extract codebase (optional)
+    match = re.search(r'Codebase: <code>(.*?)</code>', description)
+    if match:
+        result['codebase'] = match.group(1)
+
+    return result if result else None
+
+
+def get_project_hierarchy(client: Any, project: Any) -> List[str]:
+    """
+    Get full project hierarchy path.
+
+    Args:
+        client: VikunjaClient instance
+        project: Project object
+
+    Returns:
+        List of project titles from root to current project
+    """
+    hierarchy = []
+    current = project
+
+    # Walk up the tree
+    max_depth = 10  # Safety limit
+    depth = 0
+
+    while current and depth < max_depth:
+        hierarchy.insert(0, current.title)
+
+        parent_id = getattr(current, 'parent_project_id', None)
+        if not parent_id:
+            break
+
+        try:
+            current = client.projects.get(parent_id)
+            depth += 1
+        except Exception:
+            # Parent not found, stop here
+            break
+
+    return hierarchy
+
+
+def get_task_with_metadata(client: Any, task: Any) -> Dict[str, Any]:
+    """
+    Extract complete task metadata including labels, source docs, hierarchy.
+
+    Args:
+        client: VikunjaClient instance
+        task: Task object
+
+    Returns:
+        Dict with all task metadata
+    """
+    # Get project for hierarchy
+    try:
+        project = client.projects.get(task.project_id)
+        hierarchy = get_project_hierarchy(client, project)
+    except Exception:
+        hierarchy = []
+
+    # Extract source documents
+    source_docs = extract_source_documents(getattr(task, 'description', None))
+
+    # Extract labels with colors
+    labels = []
+    if hasattr(task, 'labels') and task.labels is not None:
+        for label in task.labels:
+            labels.append({
+                'id': getattr(label, 'id', None),
+                'title': getattr(label, 'title', ''),
+                'color': getattr(label, 'hex_color', None),
+                'description': getattr(label, 'description', None),
+            })
+
+    return {
+        'id': task.id,
+        'title': task.title,
+        'description': getattr(task, 'description', None),
+        'project_id': task.project_id,
+        'project_hierarchy': hierarchy,
+        'done': getattr(task, 'done', False),
+        'priority': getattr(task, 'priority', 0),
+        'due_date': str(task.due_date) if hasattr(task, 'due_date') and task.due_date else None,
+        'created': str(task.created) if hasattr(task, 'created') and task.created else None,
+        'bucket_id': getattr(task, 'bucket_id', None),
+        'labels': labels,
+        'source_documents': source_docs,
+    }
+
 
 def calculate_velocity(tasks: List[Any], weeks: int = 4) -> Dict[str, Any]:
     """
@@ -114,12 +232,13 @@ def get_task_summary(tasks: List[Any]) -> Dict[str, Any]:
     }
 
 
-def get_project_summary(project: Any, tasks: List[Any]) -> Dict[str, Any]:
+def get_project_summary(project: Any, client: Any, tasks: List[Any]) -> Dict[str, Any]:
     """
-    Summarize a single project
+    Summarize a single project with full metadata
 
     Args:
         project: Project object
+        client: VikunjaClient instance
         tasks: List of tasks for this project
 
     Returns:
@@ -128,10 +247,16 @@ def get_project_summary(project: Any, tasks: List[Any]) -> Dict[str, Any]:
     task_summary = get_task_summary(tasks)
     velocity = calculate_velocity(tasks, weeks=4)
 
+    # Get project hierarchy
+    hierarchy = get_project_hierarchy(client, project)
+
+    # Get full task metadata (with source docs, labels, etc.)
+    detailed_tasks = [get_task_with_metadata(client, task) for task in tasks]
+
     # Get label distribution
     label_counts = defaultdict(int)
     for task in tasks:
-        if hasattr(task, 'labels'):
+        if hasattr(task, 'labels') and task.labels is not None:
             for label in task.labels:
                 if hasattr(label, 'title'):
                     label_counts[label.title] += 1
@@ -141,24 +266,33 @@ def get_project_summary(project: Any, tasks: List[Any]) -> Dict[str, Any]:
         "title": project.title,
         "description": getattr(project, 'description', None),
         "created": getattr(project, 'created', None),
-        "tasks": task_summary,
+        "hierarchy": hierarchy,
+        "tasks": detailed_tasks,
+        "task_summary": task_summary,
         "velocity": velocity,
         "labels": dict(label_counts),
     }
 
 
-def export_portfolio(client: VikunjaClient) -> Dict[str, Any]:
+def export_portfolio(client: VikunjaClient, project_ids: List[int] = None) -> Dict[str, Any]:
     """
     Export complete portfolio state
 
     Args:
         client: VikunjaClient instance
+        project_ids: Optional list of project IDs to export (default: all)
 
     Returns:
         Portfolio data dict
     """
     # Get all projects
-    projects = client.projects.list()
+    all_projects = client.projects.list()
+
+    # Filter if project_ids specified
+    if project_ids:
+        projects = [p for p in all_projects if p.id in project_ids]
+    else:
+        projects = all_projects
 
     # Get all tasks for each project
     portfolio_data = {
@@ -176,16 +310,21 @@ def export_portfolio(client: VikunjaClient) -> Dict[str, Any]:
     for project in projects:
         try:
             tasks = client.tasks.list(project_id=project.id)
-            project_summary = get_project_summary(project, tasks)
+
+            # Handle None returns from API
+            if tasks is None:
+                tasks = []
+
+            project_summary = get_project_summary(project, client, tasks)
             portfolio_data["projects"].append(project_summary)
 
             # Update summary
-            portfolio_data["summary"]["total_tasks"] += project_summary["tasks"]["total"]
-            portfolio_data["summary"]["total_done"] += project_summary["tasks"]["done"]
-            portfolio_data["summary"]["total_pending"] += project_summary["tasks"]["pending"]
-            portfolio_data["summary"]["total_overdue"] += project_summary["tasks"]["overdue"]
+            portfolio_data["summary"]["total_tasks"] += project_summary["task_summary"]["total"]
+            portfolio_data["summary"]["total_done"] += project_summary["task_summary"]["done"]
+            portfolio_data["summary"]["total_pending"] += project_summary["task_summary"]["pending"]
+            portfolio_data["summary"]["total_overdue"] += project_summary["task_summary"]["overdue"]
         except Exception as e:
-            print(f"Warning: Could not fetch tasks for project {project.title}: {e}", file=sys.stderr)
+            print(f"Warning: Could not process project {project.title}: {e}", file=sys.stderr)
             continue
 
     return portfolio_data
@@ -219,33 +358,79 @@ def format_spawn_analysis(portfolio: Dict[str, Any]) -> str:
     output.append("## Active Projects\n")
 
     for project in portfolio['projects']:
-        output.append(f"### {project['title']}\n")
+        # Project title with hierarchy
+        hierarchy = project.get('hierarchy', [])
+        if len(hierarchy) > 1:
+            hierarchy_path = " → ".join(hierarchy)
+            output.append(f"### {project['title']}")
+            output.append(f"*Path*: {hierarchy_path}\n")
+        else:
+            output.append(f"### {project['title']}\n")
 
-        if project['description']:
+        # Description
+        if project.get('description'):
             output.append(f"*{project['description']}*\n")
 
-        # Task status
-        tasks = project['tasks']
-        output.append(f"**Tasks**: {tasks['total']} total, {tasks['done']} done, {tasks['pending']} pending")
+        # Task summary stats
+        task_summary = project.get('task_summary', {})
+        if task_summary:
+            output.append(f"**Tasks**: {task_summary.get('total', 0)} total, {task_summary.get('done', 0)} done, {task_summary.get('pending', 0)} pending")
 
-        if tasks['overdue'] > 0:
-            output.append(f"⚠️  **{tasks['overdue']} overdue**")
-        if tasks['due_this_week'] > 0:
-            output.append(f"📅 {tasks['due_this_week']} due this week")
-        if tasks['due_next_week'] > 0:
-            output.append(f"📅 {tasks['due_next_week']} due next week")
+            if task_summary.get('overdue', 0) > 0:
+                output.append(f"⚠️  **{task_summary['overdue']} overdue**")
+            if task_summary.get('due_this_week', 0) > 0:
+                output.append(f"📅 {task_summary['due_this_week']} due this week")
+            if task_summary.get('due_next_week', 0) > 0:
+                output.append(f"📅 {task_summary['due_next_week']} due next week")
 
-        output.append("")
+            output.append("")
 
         # Velocity
-        velocity = project['velocity']
-        output.append(f"**Velocity**: {velocity['tasks_per_week']} tasks/week (last 4 weeks)")
-        output.append(f"**Completion Rate**: {velocity['completion_rate']}%\n")
+        velocity = project.get('velocity', {})
+        if velocity:
+            output.append(f"**Velocity**: {velocity.get('tasks_per_week', 0)} tasks/week (last 4 weeks)")
+            output.append(f"**Completion Rate**: {velocity.get('completion_rate', 0)}%\n")
 
         # Labels
-        if project['labels']:
+        if project.get('labels'):
             top_labels = sorted(project['labels'].items(), key=lambda x: x[1], reverse=True)[:5]
             output.append("**Top Labels**: " + ", ".join([f"{label} ({count})" for label, count in top_labels]))
+            output.append("")
+
+        # Tasks with source documents
+        tasks = project.get('tasks', [])
+        tasks_with_sources = [t for t in tasks if t.get('source_documents')]
+
+        if tasks_with_sources:
+            output.append("**Source Documents Available**:")
+            for task in tasks_with_sources[:5]:  # Show first 5
+                src = task['source_documents']
+                output.append(f"- **{task['title']}**:")
+                if src.get('project_definition'):
+                    output.append(f"  - Definition: `{src['project_definition']}`")
+                if src.get('project_folder'):
+                    output.append(f"  - Folder: `{src['project_folder']}`")
+                if src.get('codebase'):
+                    output.append(f"  - Codebase: `{src['codebase']}`")
+
+            if len(tasks_with_sources) > 5:
+                output.append(f"  - *(+{len(tasks_with_sources) - 5} more tasks with source docs)*")
+            output.append("")
+
+        # Task labels with colors
+        all_labels = {}
+        for task in tasks:
+            for label in task.get('labels', []):
+                title = label.get('title')
+                color = label.get('color')
+                if title:
+                    all_labels[title] = color
+
+        if all_labels:
+            output.append("**Labels**: " + ", ".join([
+                f"{title} ({color})" if color else title
+                for title, color in list(all_labels.items())[:10]
+            ]))
             output.append("")
 
     # Decision context
@@ -254,21 +439,29 @@ def format_spawn_analysis(portfolio: Dict[str, Any]) -> str:
     output.append("**Considerations**:")
 
     # Highlight attention areas
-    overdue_projects = [p for p in portfolio['projects'] if p['tasks']['overdue'] > 0]
+    overdue_projects = [p for p in portfolio['projects'] if p.get('task_summary', {}).get('overdue', 0) > 0]
     if overdue_projects:
         output.append(f"- **{len(overdue_projects)} projects have overdue tasks**")
 
-    stalled_projects = [p for p in portfolio['projects'] if p['velocity']['tasks_per_week'] == 0]
+    stalled_projects = [p for p in portfolio['projects'] if p.get('velocity', {}).get('tasks_per_week', 0) == 0]
     if stalled_projects:
         output.append(f"- **{len(stalled_projects)} projects have 0 velocity** (no recent completions)")
 
-    active_projects = [p for p in portfolio['projects'] if p['velocity']['tasks_per_week'] > 0]
+    active_projects = [p for p in portfolio['projects'] if p.get('velocity', {}).get('tasks_per_week', 0) > 0]
     if active_projects:
         output.append(f"- **{len(active_projects)} projects are actively progressing**")
 
-    high_workload = [p for p in portfolio['projects'] if p['tasks']['pending'] > 10]
+    high_workload = [p for p in portfolio['projects'] if p.get('task_summary', {}).get('pending', 0) > 10]
     if high_workload:
         output.append(f"- **{len(high_workload)} projects have >10 pending tasks**")
+
+    # Count tasks with source documents
+    total_with_sources = sum(
+        len([t for t in p.get('tasks', []) if t.get('source_documents')])
+        for p in portfolio['projects']
+    )
+    if total_with_sources > 0:
+        output.append(f"- **{total_with_sources} tasks have source document references**")
 
     return "\n".join(output)
 
@@ -297,6 +490,13 @@ def main():
         "--spawn-analysis",
         action="store_true",
         help="Format for spawn-analysis decision cards (same as --format spawn-analysis)"
+    )
+
+    parser.add_argument(
+        "--project-id",
+        type=int,
+        action="append",
+        help="Export only specific project ID (can be used multiple times)"
     )
 
     args = parser.parse_args()
@@ -329,7 +529,7 @@ def main():
 
     # Export portfolio
     try:
-        portfolio = export_portfolio(client)
+        portfolio = export_portfolio(client, project_ids=args.project_id)
     except Exception as e:
         print(f"Error: Failed to export portfolio: {e}", file=sys.stderr)
         sys.exit(1)
