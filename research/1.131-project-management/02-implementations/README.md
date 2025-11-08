@@ -13,30 +13,29 @@ This suite integrates Vikunja project management with the spawn ecosystem to ena
 │                         OODA LOOP CLOSED                        │
 ├─────────────────────────────────────────────────────────────────┤
 │                                                                 │
-│  OBSERVE         spawn-plans Tactical Detailer                 │
-│  (Plan)          └─→ vikunja-tasks.yaml                        │
-│                                                                 │
-│  ↓                                                              │
-│                                                                 │
-│  DECIDE          vikunja-populate-script                        │
-│  (Create)        └─→ Vikunja API (tasks created)               │
-│                                                                 │
-│  ↓                                                              │
-│                                                                 │
-│  ACT             Work in Vikunja                                │
-│  (Execute)       └─→ Mark tasks done, track progress           │
-│                                                                 │
-│  ↓                                                              │
-│                                                                 │
-│  ORIENT          vikunja-export-script                          │
+│  OBSERVE         vikunja-export-script                          │
 │  (Measure)       └─→ portfolio-state.md                        │
+│                  Current reality: velocity, overdue, completion │
 │                                                                 │
 │  ↓                                                              │
 │                                                                 │
-│  DECIDE          spawn-analysis decision cards                  │
-│  (Prioritize)    └─→ "What should I prioritize this week?"     │
+│  ORIENT          spawn-analysis decision cards                  │
+│  (Analysis)      └─→ "Should I prioritize this project?"       │
+│                  Strategist, Optimizer, Economizer analysis     │
 │                                                                 │
-│  ↓ (loop back to OBSERVE for next planning round)              │
+│  ↓                                                              │
+│                                                                 │
+│  DECIDE          spawn-solutions                                │
+│  (Solution)      └─→ Which tools/services/libraries to use     │
+│                  S1-S4 discovery: platform selection            │
+│                                                                 │
+│  ↓                                                              │
+│                                                                 │
+│  ACT             spawn-plans + vikunja-populate + execution     │
+│  (Plan)          └─→ Tactical Detailer → YAML → Vikunja        │
+│                  Create plan, populate tasks, execute & track   │
+│                                                                 │
+│  ↓ (loop back to OBSERVE to measure execution results)         │
 │                                                                 │
 └─────────────────────────────────────────────────────────────────┘
 ```
