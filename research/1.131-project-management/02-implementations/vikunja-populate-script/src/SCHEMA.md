@@ -12,6 +12,15 @@ project:
   title: "Project Name"                    # Required: string
   description: "Project description"       # Optional: string
   color: "FF0000"                          # Optional: hex color (no #)
+  buckets:                                 # Optional: Kanban board buckets
+    - name: "Backlog"                      # Required: bucket name
+      position: 0                          # Required: sort order
+      limit: 0                             # Optional: WIP limit (0 = no limit)
+    - name: "In Progress"
+      position: 1
+      limit: 3                             # WIP limit: max 3 tasks
+    - name: "Done"
+      position: 2
 
 # Labels to create/use
 labels:
@@ -27,9 +36,16 @@ tasks:
     description: "Task description"        # Optional: string (HTML formatting supported)
     due_date: "2025-11-15"                 # Optional: YYYY-MM-DD format
     priority: 0                            # Optional: 0-5 (0=unset, 5=DO NOW)
+    bucket: "Backlog"                      # Optional: bucket name (Kanban column)
     labels:                                # Optional: list of label titles
       - "Bug"
       - "Feature"
+    blocked_by:                            # Optional: list of blocking task titles
+      - "Other Task Name"
+    subtask_of: "Parent Task Name"         # Optional: parent task title
+    assignees:                             # Optional: list of user emails/usernames
+      - "user@example.com"
+      - "username"
     done: false                            # Optional: boolean (default: false)
 ```
 
@@ -69,6 +85,126 @@ tasks:
 
 ---
 
+## Example: Sprint with Dependencies and Kanban
+
+```yaml
+project:
+  title: "Sprint 1: User Authentication"
+  description: "Implement user authentication with dependencies and workflow"
+  color: "4287f5"
+  buckets:
+    - name: "Backlog"
+      position: 0
+    - name: "In Progress"
+      position: 1
+      limit: 3  # WIP limit
+    - name: "Code Review"
+      position: 2
+      limit: 2
+    - name: "Done"
+      position: 3
+
+labels:
+  - title: "Backend"
+    color: "ff6b6b"
+  - title: "Frontend"
+    color: "4ecdc4"
+  - title: "DevOps"
+    color: "95e1d3"
+
+tasks:
+  # Foundation tasks
+  - title: "Design Database Schema"
+    description: "Create user tables and authentication schema"
+    bucket: "In Progress"
+    priority: 5
+    labels:
+      - "Backend"
+    assignees:
+      - "architect@team.com"
+
+  # Backend tasks (blocked by schema)
+  - title: "Implement Login Endpoint"
+    description: "POST /api/auth/login with JWT"
+    bucket: "Backlog"
+    priority: 4
+    blocked_by:
+      - "Design Database Schema"
+    subtask_of: "Backend API Implementation"
+    labels:
+      - "Backend"
+    assignees:
+      - "backend-dev@team.com"
+
+  - title: "Implement Registration Endpoint"
+    description: "POST /api/auth/register with validation"
+    bucket: "Backlog"
+    priority: 4
+    blocked_by:
+      - "Design Database Schema"
+    subtask_of: "Backend API Implementation"
+    labels:
+      - "Backend"
+    assignees:
+      - "backend-dev@team.com"
+
+  # Parent task for backend
+  - title: "Backend API Implementation"
+    description: "Complete all authentication endpoints"
+    bucket: "In Progress"
+    priority: 5
+    labels:
+      - "Backend"
+
+  # Frontend tasks (blocked by backend)
+  - title: "Build Login Form Component"
+    description: "React component with form validation"
+    bucket: "Backlog"
+    priority: 3
+    blocked_by:
+      - "Implement Login Endpoint"
+    labels:
+      - "Frontend"
+    assignees:
+      - "frontend-dev@team.com"
+
+  - title: "Build Registration Form"
+    description: "React component with email validation"
+    bucket: "Backlog"
+    priority: 3
+    blocked_by:
+      - "Implement Registration Endpoint"
+    labels:
+      - "Frontend"
+    assignees:
+      - "frontend-dev@team.com"
+
+  # Deployment (blocked by everything)
+  - title: "Deploy to Staging"
+    description: "Deploy authentication system to staging environment"
+    bucket: "Backlog"
+    priority: 2
+    blocked_by:
+      - "Build Login Form Component"
+      - "Build Registration Form"
+      - "Backend API Implementation"
+    labels:
+      - "DevOps"
+    assignees:
+      - "devops@team.com"
+```
+
+**This example demonstrates**:
+- Kanban board with 4 buckets (Backlog → In Progress → Code Review → Done)
+- WIP limits on "In Progress" and "Code Review"
+- Task dependencies (`blocked_by`)
+- Parent-child relationships (`subtask_of`)
+- Task assignments to team members
+- Multiple labels per task
+- Priority-based ordering
+
+---
+
 ## JSON Example
 
 ```json
@@ -98,6 +234,10 @@ tasks:
 - `title` (required): Non-empty string, max 250 chars
 - `description` (optional): String, max 5000 chars
 - `color` (optional): 6-char hex color without `#`
+- `buckets` (optional): List of bucket definitions
+  - `name` (required): Non-empty string
+  - `position` (required): Integer (sort order)
+  - `limit` (optional): Integer (0 = no limit)
 
 ### Labels
 - `title` (required): Non-empty string, max 100 chars
@@ -109,7 +249,11 @@ tasks:
 - `description` (optional): String (HTML allowed), max 50000 chars
 - `due_date` (optional): ISO date `YYYY-MM-DD` format
 - `priority` (optional): Integer 0-5
+- `bucket` (optional): String (must match a defined bucket name)
 - `labels` (optional): List of strings matching label titles
+- `blocked_by` (optional): List of strings (task titles that block this task)
+- `subtask_of` (optional): String (parent task title)
+- `assignees` (optional): List of strings (user emails or usernames)
 - `done` (optional): Boolean
 
 ---

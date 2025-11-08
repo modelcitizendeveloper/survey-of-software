@@ -70,6 +70,8 @@ class Project:
     id: int
     title: str
     description: Optional[str] = None
+    hex_color: Optional[str] = None
+    parent_project_id: int = 0  # 0 = top-level (no parent)
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
 
@@ -88,7 +90,9 @@ class Task:
     done: bool = False
     due_date: Optional[datetime] = None
     priority: int = 0
+    bucket_id: int = 0
     labels: Optional[List[str]] = None
+    assignees: Optional[List[Dict[str, Any]]] = None
     created_at: Optional[datetime] = None
     updated_at: Optional[datetime] = None
 
@@ -110,6 +114,35 @@ class Label:
         return {k: v for k, v in asdict(self).items() if v is not None}
 
 
+@dataclass
+class TaskRelation:
+    """Represents a task relation."""
+    task_id: int
+    other_task_id: int
+    relation_kind: str  # 'subtask', 'parenttask', 'related', 'blocking', 'blocked', etc.
+    created_at: Optional[datetime] = None
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert TaskRelation to dictionary."""
+        return {k: v for k, v in asdict(self).items() if v is not None}
+
+
+@dataclass
+class Bucket:
+    """Represents a kanban bucket."""
+    id: int
+    title: str
+    project_id: int
+    position: int = 0
+    limit: int = 0  # 0 = no limit
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert Bucket to dictionary."""
+        return {k: v for k, v in asdict(self).items() if v is not None}
+
+
 # Manager Classes
 class ProjectsManager:
     """Manages project operations."""
@@ -117,13 +150,15 @@ class ProjectsManager:
     def __init__(self, client: 'VikunjaClient'):
         self.client = client
 
-    def create(self, title: str, description: str = None) -> Project:
+    def create(self, title: str, description: str = None, hex_color: str = None, parent_project_id: int = None) -> Project:
         """
         Create a new project.
 
         Args:
             title: Project title (required)
             description: Project description (optional)
+            hex_color: Project color in hex format (e.g., "#3498db" or "3498db") (optional)
+            parent_project_id: ID of parent project for hierarchy (optional, 0 = top-level)
 
         Returns:
             Project: Created project object
@@ -131,17 +166,23 @@ class ProjectsManager:
         Raises:
             AuthenticationError: If token is invalid
             ValidationError: If title is empty or invalid
+            NotFoundError: If parent_project_id doesn't exist
             VikunjaError: For other API errors
 
         Example:
             >>> client = VikunjaClient(...)
-            >>> project = client.projects.create(title="My Project")
+            >>> project = client.projects.create(title="My Project", hex_color="#3498db")
             >>> print(project.id)
             123
+            >>> child = client.projects.create(title="Child Project", parent_project_id=123)
         """
         data = {"title": title}
         if description:
             data["description"] = description
+        if hex_color:
+            data["hex_color"] = hex_color
+        if parent_project_id is not None:
+            data["parent_project_id"] = parent_project_id
 
         response = self.client._request("PUT", "/api/v1/projects", json=data)
         return self._parse_project(response)
@@ -178,7 +219,7 @@ class ProjectsManager:
         response = self.client._request("GET", f"/api/v1/projects/{project_id}")
         return self._parse_project(response)
 
-    def update(self, project_id: int, title: str = None, description: str = None) -> Project:
+    def update(self, project_id: int, title: str = None, description: str = None, hex_color: str = None, parent_project_id: int = None) -> Project:
         """
         Update a project.
 
@@ -186,6 +227,8 @@ class ProjectsManager:
             project_id: ID of the project
             title: New title (optional)
             description: New description (optional)
+            hex_color: New color in hex format (optional)
+            parent_project_id: New parent project ID (optional, 0 = move to top-level)
 
         Returns:
             Project: Updated project object
@@ -200,9 +243,81 @@ class ProjectsManager:
             data["title"] = title
         if description is not None:
             data["description"] = description
+        if hex_color is not None:
+            data["hex_color"] = hex_color
+        if parent_project_id is not None:
+            data["parent_project_id"] = parent_project_id
 
         response = self.client._request("POST", f"/api/v1/projects/{project_id}", json=data)
         return self._parse_project(response)
+
+    def get_children(self, parent_id: int) -> List[Project]:
+        """
+        Get all child projects of a parent project.
+
+        Args:
+            parent_id: ID of the parent project
+
+        Returns:
+            List[Project]: List of child projects
+
+        Example:
+            >>> parent = client.projects.create(title="Foundations")
+            >>> children = client.projects.get_children(parent.id)
+        """
+        all_projects = self.list()
+        return [p for p in all_projects if p.parent_project_id == parent_id]
+
+    def get_parent(self, project: Project) -> Optional[Project]:
+        """
+        Get the parent project of a given project.
+
+        Args:
+            project: Project object or project with parent_project_id
+
+        Returns:
+            Optional[Project]: Parent project, or None if top-level
+
+        Example:
+            >>> child = client.projects.get(123)
+            >>> parent = client.projects.get_parent(child)
+        """
+        if project.parent_project_id == 0:
+            return None
+        return self.get(project.parent_project_id)
+
+    def move_project(self, project_id: int, new_parent_id: int) -> Project:
+        """
+        Move a project to a different parent (or to top-level).
+
+        This is a convenience method that fetches the project and updates it
+        with the new parent_project_id while preserving all other fields.
+        Use this to migrate existing projects into a hierarchy.
+
+        Args:
+            project_id: ID of the project to move
+            new_parent_id: ID of the new parent project (0 = top-level)
+
+        Returns:
+            Project: Updated project object with new parent
+
+        Raises:
+            NotFoundError: If project or new parent doesn't exist
+            AuthenticationError: If token is invalid
+            VikunjaError: For other API errors
+
+        Example:
+            >>> # Move project 5 under Applications (ID: 13448)
+            >>> project = client.projects.move_project(5, 13448)
+            >>> print(project.parent_project_id)
+            13448
+            >>>
+            >>> # Move project to top-level
+            >>> project = client.projects.move_project(5, 0)
+        """
+        # Fetch current project to preserve its title (required by Vikunja API)
+        current = self.get(project_id)
+        return self.update(project_id, title=current.title, parent_project_id=new_parent_id)
 
     def delete(self, project_id: int) -> None:
         """
@@ -224,6 +339,8 @@ class ProjectsManager:
             id=data["id"],
             title=data["title"],
             description=data.get("description"),
+            hex_color=data.get("hex_color"),
+            parent_project_id=data.get("parent_project_id", 0),
             created_at=parser.parse(data["created"]) if "created" in data else None,
             updated_at=parser.parse(data["updated"]) if "updated" in data else None
         )
@@ -305,7 +422,7 @@ class TasksManager:
         return self._parse_task(response)
 
     def update(self, task_id: int, title: str = None, description: str = None,
-               done: bool = None, priority: int = None) -> Task:
+               done: bool = None, priority: int = None, bucket_id: int = None) -> Task:
         """
         Update a task.
 
@@ -315,6 +432,7 @@ class TasksManager:
             description: New description (optional)
             done: Mark as done/undone (optional)
             priority: New priority (optional)
+            bucket_id: Move task to bucket (optional)
 
         Returns:
             Task: Updated task object
@@ -333,6 +451,8 @@ class TasksManager:
             data["done"] = done
         if priority is not None:
             data["priority"] = priority
+        if bucket_id is not None:
+            data["bucket_id"] = bucket_id
 
         response = self.client._request("POST", f"/api/v1/tasks/{task_id}", json=data)
         return self._parse_task(response)
@@ -366,17 +486,76 @@ class TasksManager:
         """
         self.client._request("PUT", f"/api/v1/tasks/{task_id}/labels", json={"label_id": label_id})
 
+    def assign_user(self, task_id: int, user_id: int) -> Task:
+        """
+        Assign a user to a task.
+
+        Args:
+            task_id: ID of the task
+            user_id: ID of the user to assign
+
+        Returns:
+            Task: Updated task object with assignee
+
+        Raises:
+            NotFoundError: If task or user doesn't exist
+            AuthenticationError: If token is invalid
+            VikunjaError: For other API errors
+        """
+        data = {"user_id": user_id}
+        response = self.client._request("PUT", f"/api/v1/tasks/{task_id}/assignees", json=data)
+        return self._parse_task(response)
+
+    def unassign_user(self, task_id: int, user_id: int) -> Task:
+        """
+        Remove user assignment from a task.
+
+        Args:
+            task_id: ID of the task
+            user_id: ID of the user to unassign
+
+        Returns:
+            Task: Updated task object
+
+        Raises:
+            NotFoundError: If task or user doesn't exist
+            AuthenticationError: If token is invalid
+            VikunjaError: For other API errors
+        """
+        response = self.client._request("DELETE", f"/api/v1/tasks/{task_id}/assignees/{user_id}")
+        return self._parse_task(response)
+
+    def list_assignees(self, task_id: int) -> List[Dict[str, Any]]:
+        """
+        List all users assigned to a task.
+
+        Args:
+            task_id: ID of the task
+
+        Returns:
+            List[Dict]: List of user dictionaries with 'id', 'username', 'name', etc.
+
+        Raises:
+            NotFoundError: If task doesn't exist
+            AuthenticationError: If token is invalid
+            VikunjaError: For other API errors
+        """
+        task = self.get(task_id)
+        return task.assignees if task.assignees else []
+
     def _parse_task(self, data: Dict[str, Any]) -> Task:
         """Parse task data from API response."""
         return Task(
             id=data["id"],
             title=data["title"],
-            project_id=data.get("list_id", 0),
+            project_id=data.get("list_id", 0) or data.get("project_id", 0),
             description=data.get("description"),
             done=data.get("done", False),
             due_date=parser.parse(data["due_date"]) if data.get("due_date") else None,
             priority=data.get("priority", 0),
+            bucket_id=data.get("bucket_id", 0),
             labels=data.get("labels"),
+            assignees=data.get("assignees"),
             created_at=parser.parse(data["created"]) if "created" in data else None,
             updated_at=parser.parse(data["updated"]) if "updated" in data else None
         )
@@ -472,6 +651,216 @@ class LabelsManager:
         )
 
 
+class TaskRelationsManager:
+    """Manages task relation operations."""
+
+    def __init__(self, client: 'VikunjaClient'):
+        self.client = client
+
+    def create(self, task_id: int, relation_kind: str, other_task_id: int) -> TaskRelation:
+        """
+        Create a task relation.
+
+        Args:
+            task_id: ID of the source task
+            relation_kind: Type of relation ('subtask', 'blocking', 'related', etc.)
+            other_task_id: ID of the target task
+
+        Returns:
+            TaskRelation: Created relation object
+
+        Raises:
+            AuthenticationError: If token is invalid
+            NotFoundError: If task doesn't exist
+            ValidationError: If relation_kind is invalid
+            VikunjaError: For other API errors
+
+        Example:
+            >>> # Create blocking relation: task_a blocks task_b
+            >>> relation = client.task_relations.create(
+            ...     task_id=task_a.id,
+            ...     relation_kind="blocking",
+            ...     other_task_id=task_b.id
+            ... )
+        """
+        endpoint = f"/api/v1/tasks/{task_id}/relations/{relation_kind}/{other_task_id}"
+        response = self.client._request("PUT", endpoint)
+        return self._parse_relation(response)
+
+    def delete(self, task_id: int, relation_kind: str, other_task_id: int) -> None:
+        """
+        Delete a task relation.
+
+        Args:
+            task_id: ID of the source task
+            relation_kind: Type of relation to delete
+            other_task_id: ID of the target task
+
+        Raises:
+            AuthenticationError: If token is invalid
+            NotFoundError: If task or relation doesn't exist
+            VikunjaError: For other API errors
+        """
+        endpoint = f"/api/v1/tasks/{task_id}/relations/{relation_kind}/{other_task_id}"
+        self.client._request("DELETE", endpoint)
+
+    def list(self, task_id: int) -> List[TaskRelation]:
+        """
+        List all relations for a task.
+
+        Args:
+            task_id: ID of the task
+
+        Returns:
+            List[TaskRelation]: List of relation objects
+
+        Raises:
+            AuthenticationError: If token is invalid
+            NotFoundError: If task doesn't exist
+            VikunjaError: For other API errors
+
+        Note:
+            This returns relations from the task details endpoint,
+            which includes both outgoing and incoming relations.
+        """
+        # Get task details which includes relations
+        response = self.client._request("GET", f"/api/v1/tasks/{task_id}")
+
+        relations = []
+
+        # Parse related_tasks field which contains all relations
+        if "related_tasks" in response and response["related_tasks"]:
+            for relation_kind, tasks in response["related_tasks"].items():
+                if tasks:
+                    for task in tasks:
+                        relations.append(TaskRelation(
+                            task_id=task_id,
+                            other_task_id=task["id"],
+                            relation_kind=relation_kind,
+                            created_at=parser.parse(task.get("created", "")) if task.get("created") else None
+                        ))
+
+        return relations
+
+    def _parse_relation(self, data: Dict[str, Any]) -> TaskRelation:
+        """Parse relation data from API response."""
+        return TaskRelation(
+            task_id=data.get("task_id", 0),
+            other_task_id=data.get("other_task_id", 0) or data.get("id", 0),
+            relation_kind=data.get("relation_kind", ""),
+            created_at=parser.parse(data["created"]) if "created" in data else None
+        )
+
+
+class BucketsManager:
+    """Manages bucket (kanban column) operations."""
+
+    def __init__(self, client: 'VikunjaClient'):
+        self.client = client
+
+    def create(self, project_id: int, title: str, position: int = 0, limit: int = 0) -> Bucket:
+        """
+        Create a new bucket in a project.
+
+        Args:
+            project_id: ID of the project
+            title: Bucket title
+            position: Sort position (default 0)
+            limit: WIP limit, 0 = no limit (default 0)
+
+        Returns:
+            Bucket: Created bucket object
+
+        Raises:
+            AuthenticationError: If token is invalid
+            NotFoundError: If project doesn't exist
+            ValidationError: If parameters are invalid
+            VikunjaError: For other API errors
+        """
+        data = {
+            "title": title,
+            "position": position,
+            "limit": limit
+        }
+        response = self.client._request("PUT", f"/api/v1/projects/{project_id}/buckets", json=data)
+        return self._parse_bucket(response)
+
+    def list(self, project_id: int) -> List[Bucket]:
+        """
+        List all buckets in a project.
+
+        Args:
+            project_id: ID of the project
+
+        Returns:
+            List[Bucket]: List of bucket objects
+
+        Raises:
+            AuthenticationError: If token is invalid
+            NotFoundError: If project doesn't exist
+            VikunjaError: For other API errors
+        """
+        response = self.client._request("GET", f"/api/v1/projects/{project_id}/buckets")
+        return [self._parse_bucket(b) for b in response]
+
+    def update(self, project_id: int, bucket_id: int, title: str = None, position: int = None, limit: int = None) -> Bucket:
+        """
+        Update a bucket.
+
+        Args:
+            project_id: ID of the project
+            bucket_id: ID of the bucket
+            title: New title (optional)
+            position: New position (optional)
+            limit: New WIP limit (optional)
+
+        Returns:
+            Bucket: Updated bucket object
+
+        Raises:
+            NotFoundError: If bucket doesn't exist
+            AuthenticationError: If token is invalid
+            VikunjaError: For other API errors
+        """
+        data = {}
+        if title is not None:
+            data["title"] = title
+        if position is not None:
+            data["position"] = position
+        if limit is not None:
+            data["limit"] = limit
+
+        response = self.client._request("POST", f"/api/v1/projects/{project_id}/buckets/{bucket_id}", json=data)
+        return self._parse_bucket(response)
+
+    def delete(self, project_id: int, bucket_id: int) -> None:
+        """
+        Delete a bucket.
+
+        Args:
+            project_id: ID of the project
+            bucket_id: ID of the bucket
+
+        Raises:
+            NotFoundError: If bucket doesn't exist
+            AuthenticationError: If token is invalid
+            VikunjaError: For other API errors
+        """
+        self.client._request("DELETE", f"/api/v1/projects/{project_id}/buckets/{bucket_id}")
+
+    def _parse_bucket(self, data: Dict[str, Any]) -> Bucket:
+        """Parse bucket data from API response."""
+        return Bucket(
+            id=data["id"],
+            title=data["title"],
+            project_id=data.get("project_id", 0) or data.get("list_id", 0),
+            position=data.get("position", 0),
+            limit=data.get("limit", 0),
+            created_at=parser.parse(data["created"]) if "created" in data else None,
+            updated_at=parser.parse(data["updated"]) if "updated" in data else None
+        )
+
+
 # Main Client
 class VikunjaClient:
     """
@@ -506,6 +895,8 @@ class VikunjaClient:
         self.projects = ProjectsManager(self)
         self.tasks = TasksManager(self)
         self.labels = LabelsManager(self)
+        self.task_relations = TaskRelationsManager(self)
+        self.buckets = BucketsManager(self)
 
     def _request(self, method: str, endpoint: str, **kwargs) -> Any:
         """
@@ -564,6 +955,8 @@ __all__ = [
     'Project',
     'Task',
     'Label',
+    'TaskRelation',
+    'Bucket',
     'VikunjaError',
     'AuthenticationError',
     'NotFoundError',
