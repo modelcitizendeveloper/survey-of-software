@@ -1,0 +1,37 @@
+# Simple Example - Getting Started
+# Minimal example to demonstrate the format
+
+project:
+  title: "My First Project"
+  description: "A simple test project"
+
+labels:
+  - title: "Bug"
+    color: "FF0000"
+  - title: "Feature"
+    color: "00FF00"
+
+tasks:
+  - title: "Set up development environment"
+    description: "Install dependencies and configure workspace"
+    due_date: "2025-11-10"
+    priority: 0
+    labels:
+      - "Feature"
+
+  - title: "Fix login bug"
+    description: |
+      <strong>Issue:</strong> Users cannot log in with special characters in password<br><br>
+      <strong>Steps to reproduce:</strong><br>
+      1. Try logging in with password containing @#$<br>
+      2. Login fails<br><br>
+      <strong>Expected:</strong> Login should succeed
+    due_date: "2025-11-12"
+    priority: 5
+    labels:
+      - "Bug"
+
+  - title: "Write documentation"
+    due_date: "2025-11-15"
+    labels:
+      - "Feature"
