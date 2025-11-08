@@ -73,6 +73,53 @@ def validate_date_format(date_str: str) -> bool:
     return True
 
 
+def validate_bucket(bucket: Dict[str, Any]) -> bool:
+    """
+    Validate bucket schema
+
+    Args:
+        bucket: Bucket dictionary
+
+    Returns:
+        True if valid
+
+    Raises:
+        ValidationError: If bucket schema is invalid
+    """
+    if not isinstance(bucket, dict):
+        raise ValidationError("Bucket must be a dictionary")
+
+    # Required: name
+    if "name" not in bucket:
+        raise ValidationError("Bucket missing required field: name")
+
+    name = bucket["name"]
+    if not isinstance(name, str):
+        raise ValidationError("Bucket name must be a string")
+
+    if not name.strip():
+        raise ValidationError("Bucket name cannot be empty")
+
+    # Required: position
+    if "position" not in bucket:
+        raise ValidationError("Bucket missing required field: position")
+
+    position = bucket["position"]
+    if not isinstance(position, int):
+        raise ValidationError("Bucket position must be an integer")
+
+    # Optional: limit
+    if "limit" in bucket:
+        limit = bucket["limit"]
+        if not isinstance(limit, int):
+            raise ValidationError("Bucket limit must be an integer")
+
+        if limit < 0:
+            raise ValidationError("Bucket limit cannot be negative")
+
+    return True
+
+
 def validate_project(project: Dict[str, Any]) -> bool:
     """
     Validate project schema
@@ -115,6 +162,18 @@ def validate_project(project: Dict[str, Any]) -> bool:
     # Optional: color
     if "color" in project:
         validate_hex_color(project["color"])
+
+    # Optional: buckets
+    if "buckets" in project:
+        buckets = project["buckets"]
+        if not isinstance(buckets, list):
+            raise ValidationError("Project buckets must be a list")
+
+        for i, bucket in enumerate(buckets):
+            try:
+                validate_bucket(bucket)
+            except ValidationError as e:
+                raise ValidationError(f"Bucket {i}: {e}")
 
     return True
 
@@ -230,9 +289,57 @@ def validate_task(task: Dict[str, Any], available_labels: List[str]) -> bool:
         if not isinstance(labels, list):
             raise ValidationError("Task labels must be a list")
 
+        # Note: We don't validate label existence here because:
+        # 1. Labels are global in Vikunja (shared across projects)
+        # 2. Tasks can reference bootstrap/global labels not defined in this YAML
+        # 3. The populate script will check label existence at runtime
         for label_title in labels:
-            if label_title not in available_labels:
-                raise ValidationError(f"Label '{label_title}' not found in available labels")
+            if not isinstance(label_title, str):
+                raise ValidationError(f"Label title must be a string, got {type(label_title)}")
+
+    # Optional: bucket
+    if "bucket" in task:
+        bucket = task["bucket"]
+        if not isinstance(bucket, str):
+            raise ValidationError("Task bucket must be a string")
+
+        if not bucket.strip():
+            raise ValidationError("Task bucket name cannot be empty")
+
+    # Optional: blocked_by
+    if "blocked_by" in task:
+        blocked_by = task["blocked_by"]
+        if not isinstance(blocked_by, list):
+            raise ValidationError("Task blocked_by must be a list")
+
+        for i, blocker in enumerate(blocked_by):
+            if not isinstance(blocker, str):
+                raise ValidationError(f"blocked_by[{i}] must be a string (task title)")
+
+            if not blocker.strip():
+                raise ValidationError(f"blocked_by[{i}] cannot be empty")
+
+    # Optional: subtask_of
+    if "subtask_of" in task:
+        subtask_of = task["subtask_of"]
+        if not isinstance(subtask_of, str):
+            raise ValidationError("Task subtask_of must be a string (parent task title)")
+
+        if not subtask_of.strip():
+            raise ValidationError("Task subtask_of cannot be empty")
+
+    # Optional: assignees
+    if "assignees" in task:
+        assignees = task["assignees"]
+        if not isinstance(assignees, list):
+            raise ValidationError("Task assignees must be a list")
+
+        for i, assignee in enumerate(assignees):
+            if not isinstance(assignee, str):
+                raise ValidationError(f"assignees[{i}] must be a string (email or username)")
+
+            if not assignee.strip():
+                raise ValidationError(f"assignees[{i}] cannot be empty")
 
     return True
 

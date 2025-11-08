@@ -1,0 +1,197 @@
+# Example: Sprint Planning with Dependencies and Kanban Workflow
+#
+# Demonstrates:
+# - Kanban buckets (Backlog → In Progress → Review → Done)
+# - Task dependencies (blocked_by)
+# - WIP limits
+# - Priority-based planning
+# - Multi-phase workflow
+
+project:
+  title: "Sprint 1: Authentication System"
+  description: "Implement user authentication with JWT tokens and password reset"
+  color: "3498db"
+  buckets:
+    - name: "Backlog"
+      position: 0
+    - name: "In Progress"
+      position: 1
+      limit: 3  # WIP limit: max 3 tasks
+    - name: "Code Review"
+      position: 2
+      limit: 2  # WIP limit: max 2 tasks
+    - name: "Done"
+      position: 3
+
+labels:
+  - title: "Backend"
+    color: "e74c3c"
+  - title: "Frontend"
+    color: "3498db"
+  - title: "Database"
+    color: "9b59b6"
+  - title: "Security"
+    color: "e67e22"
+  - title: "DevOps"
+    color: "1abc9c"
+
+tasks:
+  # Phase 1: Database Schema
+  - title: "Design User Database Schema"
+    description: |
+      Create database schema for user authentication:
+      - users table (id, email, password_hash, created_at, updated_at)
+      - sessions table (id, user_id, token, expires_at)
+      - password_resets table (id, user_id, token, expires_at)
+    bucket: "In Progress"
+    priority: 5
+    labels:
+      - "Database"
+      - "Backend"
+    assignees:
+      - "architect@team.com"
+
+  # Phase 2: Backend API (blocked by schema)
+  - title: "Implement User Registration Endpoint"
+    description: |
+      POST /api/auth/register
+      - Validate email format
+      - Hash password with bcrypt
+      - Create user record
+      - Return JWT token
+    bucket: "Backlog"
+    priority: 4
+    blocked_by:
+      - "Design User Database Schema"
+    labels:
+      - "Backend"
+      - "Security"
+    assignees:
+      - "backend-dev@team.com"
+
+  - title: "Implement Login Endpoint"
+    description: |
+      POST /api/auth/login
+      - Validate credentials
+      - Create session
+      - Return JWT token
+    bucket: "Backlog"
+    priority: 4
+    blocked_by:
+      - "Design User Database Schema"
+    labels:
+      - "Backend"
+      - "Security"
+    assignees:
+      - "backend-dev@team.com"
+
+  - title: "Implement Password Reset Endpoint"
+    description: |
+      POST /api/auth/reset-password
+      - Generate secure token
+      - Send reset email
+      - Validate token on reset
+    bucket: "Backlog"
+    priority: 3
+    blocked_by:
+      - "Design User Database Schema"
+    labels:
+      - "Backend"
+      - "Security"
+    assignees:
+      - "backend-dev@team.com"
+
+  # Phase 3: Frontend (blocked by backend)
+  - title: "Build Registration Form Component"
+    description: |
+      React component with:
+      - Email validation
+      - Password strength meter
+      - Confirmation password check
+      - Error handling
+    bucket: "Backlog"
+    priority: 3
+    blocked_by:
+      - "Implement User Registration Endpoint"
+    labels:
+      - "Frontend"
+    assignees:
+      - "frontend-dev@team.com"
+
+  - title: "Build Login Form Component"
+    description: |
+      React component with:
+      - Email/password inputs
+      - Remember me checkbox
+      - Forgot password link
+      - Error handling
+    bucket: "Backlog"
+    priority: 3
+    blocked_by:
+      - "Implement Login Endpoint"
+    labels:
+      - "Frontend"
+    assignees:
+      - "frontend-dev@team.com"
+
+  - title: "Build Password Reset Flow"
+    description: |
+      Two-step flow:
+      1. Request reset (email input)
+      2. Reset password (token + new password)
+    bucket: "Backlog"
+    priority: 2
+    blocked_by:
+      - "Implement Password Reset Endpoint"
+    labels:
+      - "Frontend"
+    assignees:
+      - "frontend-dev@team.com"
+
+  # Phase 4: Testing & Deployment
+  - title: "Write Integration Tests"
+    description: |
+      Test all authentication endpoints:
+      - Registration flow
+      - Login/logout flow
+      - Password reset flow
+      - Token validation
+    bucket: "Backlog"
+    priority: 2
+    blocked_by:
+      - "Implement User Registration Endpoint"
+      - "Implement Login Endpoint"
+      - "Implement Password Reset Endpoint"
+    labels:
+      - "Backend"
+    assignees:
+      - "qa@team.com"
+
+  - title: "Deploy to Staging"
+    description: |
+      Deploy authentication system to staging:
+      - Database migrations
+      - Environment variables
+      - SMTP configuration
+      - SSL certificates
+    bucket: "Backlog"
+    priority: 1
+    blocked_by:
+      - "Write Integration Tests"
+      - "Build Registration Form Component"
+      - "Build Login Form Component"
+      - "Build Password Reset Flow"
+    labels:
+      - "DevOps"
+    assignees:
+      - "devops@team.com"
+
+# Usage:
+# python populate_vikunja.py examples/sprint-with-dependencies.yaml
+#
+# This creates a fully-structured sprint with:
+# - 4 Kanban columns
+# - 9 tasks with clear dependencies
+# - WIP limits on In Progress (3) and Code Review (2)
+# - Priority-based ordering
+# - Team member assignments
