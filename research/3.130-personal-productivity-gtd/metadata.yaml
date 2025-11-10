@@ -1,0 +1,23 @@
+code: '3.130'
+title: Personal Productivity Tools (GTD)
+tier: 3
+category: Managed Services - Convenience
+status: in_progress
+estimated_hours: 8-10
+started_date: 2025-11-09
+scope: Individual task management and GTD methodology tools
+targets:
+  - Todoist
+  - Things 3
+  - OmniFocus
+  - Notion (personal use)
+  - Obsidian
+  - Bear
+research_focus:
+  - GTD methodology support
+  - Capture and organize features
+  - Individual productivity workflows
+  - Pricing models
+  - Mobile app capabilities
+rationale: Direct competitors for individual tier of LLM-GTD product
+value: Core competitive analysis for personal productivity space
