@@ -120,12 +120,13 @@ def validate_bucket(bucket: Dict[str, Any]) -> bool:
     return True
 
 
-def validate_project(project: Dict[str, Any]) -> bool:
+def validate_project(project: Dict[str, Any], allow_root_project: bool = False) -> bool:
     """
     Validate project schema
 
     Args:
         project: Project dictionary
+        allow_root_project: If True, allow projects without parent (for automation/testing)
 
     Returns:
         True if valid
@@ -149,6 +150,16 @@ def validate_project(project: Dict[str, Any]) -> bool:
 
     if len(title) > 250:
         raise ValidationError(f"Project title cannot exceed 250 characters, got {len(title)}")
+
+    # Required: parent_project or parent_project_id (no root-level projects allowed by default)
+    has_parent = "parent_project" in project or "parent_project_id" in project
+    if not has_parent and not allow_root_project:
+        raise ValidationError(
+            f"Project '{title}' must have a parent_project or parent_project_id field. "
+            "Root-level projects are not allowed. "
+            "Specify the parent project hierarchy (e.g., 'Applications/Products') or parent_project_id. "
+            "Use --allow-root-project flag to override this check."
+        )
 
     # Optional: description
     if "description" in project:
@@ -344,12 +355,13 @@ def validate_task(task: Dict[str, Any], available_labels: List[str]) -> bool:
     return True
 
 
-def validate_schema(schema: Dict[str, Any]) -> bool:
+def validate_schema(schema: Dict[str, Any], allow_root_project: bool = False) -> bool:
     """
     Validate full schema (project, labels, tasks)
 
     Args:
         schema: Full schema dictionary
+        allow_root_project: If True, allow projects without parent (for automation/testing)
 
     Returns:
         True if valid
@@ -364,7 +376,7 @@ def validate_schema(schema: Dict[str, Any]) -> bool:
     if "project" not in schema:
         raise ValidationError("Schema missing required field: project")
 
-    validate_project(schema["project"])
+    validate_project(schema["project"], allow_root_project=allow_root_project)
 
     # Optional: labels (default to empty list)
     labels = schema.get("labels", [])
