@@ -1,0 +1,187 @@
+---
+experiment_number: "3.133"
+experiment_sequence: 21
+experiment_date: "2025-11-09"
+experiment_status: in_progress
+discovery_method: mpse_v3
+migrated_from: null
+mpse_version: "3.0"
+
+# Execution Statistics (S1 Only - S2-S4 Pending)
+execution_stats:
+  methodology: sequential
+  total_wall_time: "180 minutes"
+
+  S1_rapid:
+    status: complete
+    tokens: 10000
+    duration: "180m"
+    files_created: 4
+    providers_analyzed: 7
+
+  S2_comprehensive:
+    status: pending
+    estimated_hours: 3-4
+
+  S3_need_driven:
+    status: pending
+    estimated_hours: 2-3
+
+  S4_strategic:
+    status: pending
+    estimated_hours: 2-3
+
+  totals:
+    completed_phases: 1
+    pending_phases: 3
+    tokens: 10000
+    duration: "180m"
+    remaining_estimated: "7-10 hours"
+
+# Discovery Output (S1 Only)
+deliverables:
+  - DOMAIN_EXPLAINER.md
+  - SECTION_0_STANDARDS.md
+  - README.md
+  - metadata.yaml
+  - 01-discovery/S1-rapid/approach.md
+  - 01-discovery/S1-rapid/provider-motion.md
+  - 01-discovery/S1-rapid/provider-reclaim.md
+  - 01-discovery/S1-rapid/recommendation.md
+
+total_files: 8
+providers_analyzed: 7
+s1_confidence: "7/10 (Moderate-High)"
+
+# Key Findings (S1)
+key_insights:
+  - "No open AI productivity standard - moderate lock-in (2-8h migration)"
+  - "Cost varies 7× ($0 Reclaim free to $34 Motion)"
+  - "Reclaim.ai best for most people (free tier, calendar-first, $8-12/month)"
+  - "Motion best for advanced users (most powerful AI, $34/month)"
+  - "ROI exceptional: 5-10h/month saved = $250-500 value, 10-60× ROI"
+
+category: "3.133"
+title: "AI-Powered Productivity & Task Management"
+domain: "Productivity & Personal Efficiency"
+
+scope:
+  what_it_is: "Comprehensive analysis of AI-powered productivity tools that auto-schedule tasks, prioritize work, and optimize personal calendars"
+  what_it_covers:
+    - AI auto-scheduling and calendar optimization
+    - Smart task prioritization algorithms
+    - Natural language task creation
+    - Calendar + task list integration
+    - Habit and pattern learning
+    - Time blocking and focus time protection
+    - Meeting cost analysis and optimization
+    - Team scheduling coordination
+    - Multi-calendar management
+    - Task duration estimation and learning
+  what_it_excludes:
+    - Simple to-do lists without AI (Todoist, Things, Apple Reminders)
+    - Project management platforms (Asana, Linear, Jira - see separate category)
+    - Team collaboration tools (Slack, Teams - see 3.XXX)
+    - Habit tracking apps (Habitica, Streaks - separate category)
+    - Focus/Pomodoro apps (Forest, Focus@Will - separate category)
+    - Time tracking tools (Toggl, Harvest - separate category)
+
+relationship_to_other_categories:
+  "3.501_crm":
+    relationship: "integration"
+    description: "CRM follow-up tasks can be scheduled by AI productivity tools"
+    documented_in: "S3 use case analysis"
+  "3.062_web_analytics":
+    relationship: "complementary"
+    description: "Track productivity metrics and time allocation patterns"
+    documented_in: "S2 analytics features"
+  "1.033_nlp":
+    relationship: "underlying_technology"
+    description: "NLP powers natural language task creation and parsing"
+    documented_in: "S2 AI capabilities"
+
+use_cases:
+  - Knowledge workers managing 20-50 tasks across projects
+  - Managers balancing meetings and deep work
+  - Executives optimizing limited time for strategic work
+  - Remote workers needing structure and accountability
+  - ADHD/neurodivergent individuals needing external structure
+  - Consultants juggling multiple clients and deadlines
+  - Founders context-switching between product, sales, ops
+  - Students balancing coursework, projects, and extracurriculars
+
+target_personas:
+  - Individual contributors (ICs) with complex workloads
+  - Engineering managers with maker+manager schedules
+  - Product managers coordinating cross-functional work
+  - Consultants and fractional executives
+  - Solo founders and solopreneurs
+  - Knowledge workers with ADHD
+  - Remote/distributed workers
+
+key_decision_factors:
+  - AI sophistication (auto-scheduling vs manual)
+  - Calendar integration quality (Google, Outlook, Apple)
+  - Task source integrations (Todoist, Asana, Linear, email)
+  - Pricing ($8-34/month range)
+  - Learning curve (setup time, AI calibration period)
+  - Mobile app quality (iOS/Android)
+  - Team features (shared scheduling, delegation)
+  - Privacy and data security (AI training on your data?)
+
+market_overview:
+  market_leaders:
+    ai_first:
+      - Motion - Most advanced AI, $34/month, auto-schedules everything
+      - Reclaim.ai - Calendar-focused, $8-12/month, habit scheduling
+      - Trevor AI - Visual time blocking, $9.99/month, AI suggestions
+      - Akiflow - Task aggregator, $19-34/month, AI scheduling
+    guided_planning:
+      - Sunsama - Daily planning ritual, $20/month, light AI
+      - Structured - Minimalist planning, $14/month, basic scheduling
+    traditional_comparison:
+      - Todoist - Smart to-do list, $5/month, no AI scheduling
+      - Things - Apple ecosystem, $50 one-time, no AI
+  market_size: "~$500M-1B (productivity tools), AI segment emerging"
+  growth_rate: "~50-100% YoY (AI productivity tools specifically)"
+  typical_pricing: "$8-15/month (basic) to $20-40/month (premium)"
+
+research_questions:
+  - Which AI productivity tool has the most advanced scheduling algorithm?
+  - How does AI auto-scheduling compare to manual time blocking (time saved)?
+  - What's the learning period for AI to understand your patterns (weeks/months)?
+  - When should you build custom productivity AI vs use Motion/Reclaim?
+  - How do these tools handle team coordination vs individual work?
+  - What's the privacy/security model (is your data used for AI training)?
+  - How accurate are AI time estimates after calibration?
+  - What integrations are must-haves (calendar, task list, email)?
+
+mpse_methodologies_applied:
+  S1_rapid:
+    focus: "Popular AI productivity tools and quick comparison"
+    outcome: "Market leaders identified, key differentiators"
+  S2_comprehensive:
+    focus: "Deep dive on AI algorithms, features, pricing, integrations"
+    outcome: "Detailed technical analysis, feature matrix, AI capabilities breakdown"
+  S3_need_driven:
+    focus: "Use case matching (ADHD, manager schedule, founder, remote worker)"
+    outcome: "Recommendations by persona, workload, and AI maturity needs"
+  S4_strategic:
+    focus: "Build vs buy decision, vendor viability, lock-in, future of AI productivity"
+    outcome: "Strategic framework for when to build custom vs use off-the-shelf"
+
+research_sources:
+  - Provider websites and pricing documentation
+  - Product Hunt reviews and discussions
+  - Reddit communities (r/productivity, r/ADHD, r/getdisciplined)
+  - YouTube reviews and demos
+  - Direct product trials (free trials, testing AI quality)
+  - User testimonials and case studies
+  - Competitor comparisons and feature matrices
+
+notes:
+  - Generic reference material for anyone evaluating AI productivity tools
+  - Pricing current as of November 2025
+  - Focus on individual productivity (not team project management)
+  - AI productivity is rapidly evolving (GPT-4+ integration emerging)
+  - Privacy considerations important (AI training on personal task data?)
