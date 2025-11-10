@@ -1,4 +1,25 @@
 queue:
+- code: '3.133'
+  title: AI-Powered Productivity
+  tier: 3
+  status: not_started
+  estimated_hours: 8-10
+  rationale: CRITICAL - Direct competitors for LLM-GTD product opportunity (Motion, Reclaim.ai, Trevor AI)
+  value: AI features, LLM integration, pricing models - must research before building
+- code: '3.130'
+  title: Personal Productivity Tools (GTD)
+  tier: 3
+  status: not_started
+  estimated_hours: 8-10
+  rationale: HIGH - Individual tier competitive analysis (Todoist, Things, OmniFocus)
+  value: GTD methodology support, capture/organize features, pricing
+- code: '3.131'
+  title: Team Task Management
+  tier: 3
+  status: not_started
+  estimated_hours: 10-12
+  rationale: HIGH - Team tier competitive analysis (Asana, ClickUp, Linear)
+  value: Collaboration features, permission models, per-seat pricing
 - code: '3.030'
   title: CDN Services
   tier: 3
