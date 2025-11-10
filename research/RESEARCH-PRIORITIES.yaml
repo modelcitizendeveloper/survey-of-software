@@ -1,102 +1,50 @@
-# Research Priorities Queue
-#
-# Purpose: Maintain ordered list of next experiments to research
-# Usage: Agents check this file first for "what to research next"
-# Management: Add new items to bottom, reorder as priorities shift
-# Cadence: ~1 experiment per day = 7 items = 1 week's work
-
 queue:
-  # Week 1: Complete in-progress + high-value next items
-
-  - code: '3.031'
-    title: Object Storage
-    tier: 3
-    status: in_progress
-    estimated_hours: 6-8
-    rationale: "Substantial work done, connects Three Paths (1.XXX DIY → 2.051 S3 API → 3.031 Services)"
-    value: "Universal need (images, files, backups, media)"
-
-  - code: '3.030'
-    title: CDN Services
-    tier: 3
-    status: not_started
-    estimated_hours: 6-8
-    rationale: "High-value managed service, common in all web apps"
-    value: "Cloudflare, Fastly, BunnyCDN comparison"
-
-  - code: '3.032'
-    title: Image & Media Processing
-    tier: 3
-    status: not_started
-    estimated_hours: 4-6
-    rationale: "Complements 3.030 CDN and 1.080 Image Processing"
-    value: "Cloudinary, ImageKit, Imgix - transformation services"
-
-  - code: '3.043'
-    title: Search Services
-    tier: 3
-    status: not_started
-    estimated_hours: 6-8
-    rationale: "Common application feature, Tier 3 managed option"
-    value: "Algolia, Meilisearch, Typesense comparison"
-
-  - code: '2.080'
-    title: OCI/Docker Container Format
-    tier: 2
-    status: not_started
-    estimated_hours: 4-6
-    rationale: "Foundation standard for 2.081 Kubernetes, completes container portability story"
-    value: "Docker → Podman → containerd portability"
-
-  - code: '1.055'
-    title: Binary Serialization Libraries
-    tier: 1
-    status: not_started
-    estimated_hours: 2-4
-    rationale: "Quick Tier 1 research, foundational for data exchange"
-    value: "MessagePack, Protocol Buffers, Avro comparison"
-
-  - code: '1.001'
-    title: Advanced Sorting Libraries
-    tier: 1
-    status: not_started
-    estimated_hours: 3-5
-    rationale: "First item in Tier 1 roadmap, algorithmic fundamentals"
-    value: "Timsort variants, parallel sorts, radix sorts"
-
-  - code: '3.041'
-    title: NoSQL Databases
-    tier: 3
-    status: not_started
-    estimated_hours: 8-10
-    rationale: "Major category, complements 3.040 Relational Databases"
-    value: "MongoDB, DynamoDB, Cassandra, Redis as database"
-
-  - code: '2.072'
-    title: GraphQL
-    tier: 2
-    status: not_started
-    estimated_hours: 5-7
-    rationale: "API standard, complements 2.070 OpenAPI and 2.071 gRPC"
-    value: "GraphQL Federation, Apollo, Hasura backends"
-
-  - code: '1.003'
-    title: Full-text Search Libraries
-    tier: 1
-    status: not_started
-    estimated_hours: 4-6
-    rationale: "Foundational capability, DIY option for 3.043 Search Services"
-    value: "Whoosh, Tantivy, MeiliSearch clients"
-
-# Instructions for agents:
-# 1. Read this file to get next research item
-# 2. Take first item in queue
-# 3. If item has dependencies, check they're completed first
-# 4. After completing research, remove from this queue
-# 5. Regenerate COMPLETED-RESEARCH.yaml and PLANNED-RESEARCH.yaml
-
-# Instructions for humans:
-# - Add new items to bottom of queue (or insert at priority position)
-# - Reorder queue as client needs emerge
-# - Mark status: not_started | in_progress | blocked
-# - Update estimated_hours based on actual completion times
+- code: '3.030'
+  title: CDN Services
+  tier: 3
+  status: not_started
+  estimated_hours: 6-8
+  rationale: High-value managed service, common in all web apps
+  value: Cloudflare, Fastly, BunnyCDN comparison
+- code: '3.032'
+  title: Image & Media Processing
+  tier: 3
+  status: not_started
+  estimated_hours: 4-6
+  rationale: Complements 3.030 CDN and 1.080 Image Processing
+  value: Cloudinary, ImageKit, Imgix - transformation services
+- code: '3.043'
+  title: Search Services
+  tier: 3
+  status: not_started
+  estimated_hours: 6-8
+  rationale: Common application feature, Tier 3 managed option
+  value: Algolia, Meilisearch, Typesense comparison
+- code: '1.001'
+  title: Advanced Sorting Libraries
+  tier: 1
+  status: not_started
+  estimated_hours: 3-5
+  rationale: First item in Tier 1 roadmap, algorithmic fundamentals
+  value: Timsort variants, parallel sorts, radix sorts
+- code: '3.041'
+  title: NoSQL Databases
+  tier: 3
+  status: not_started
+  estimated_hours: 8-10
+  rationale: Major category, complements 3.040 Relational Databases
+  value: MongoDB, DynamoDB, Cassandra, Redis as database
+- code: '2.072'
+  title: GraphQL
+  tier: 2
+  status: not_started
+  estimated_hours: 5-7
+  rationale: API standard, complements 2.070 OpenAPI and 2.071 gRPC
+  value: GraphQL Federation, Apollo, Hasura backends
+- code: '1.003'
+  title: Full-text Search Libraries
+  tier: 1
+  status: not_started
+  estimated_hours: 4-6
+  rationale: Foundational capability, DIY option for 3.043 Search Services
+  value: Whoosh, Tantivy, MeiliSearch clients
