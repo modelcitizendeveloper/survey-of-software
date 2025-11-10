@@ -89,8 +89,11 @@ class Task:
     description: Optional[str] = None
     done: bool = False
     due_date: Optional[datetime] = None
+    start_date: Optional[datetime] = None
     priority: int = 0
     bucket_id: int = 0
+    repeat_after: Optional[int] = None  # Recurrence interval in seconds (86400 = daily)
+    repeat_mode: int = 0  # 0 = repeat from due date, 1 = repeat from completion
     labels: Optional[List[str]] = None
     assignees: Optional[List[Dict[str, Any]]] = None
     created_at: Optional[datetime] = None
@@ -552,8 +555,11 @@ class TasksManager:
             description=data.get("description"),
             done=data.get("done", False),
             due_date=parser.parse(data["due_date"]) if data.get("due_date") else None,
+            start_date=parser.parse(data["start_date"]) if data.get("start_date") else None,
             priority=data.get("priority", 0),
             bucket_id=data.get("bucket_id", 0),
+            repeat_after=data.get("repeat_after"),
+            repeat_mode=data.get("repeat_mode", 0),
             labels=data.get("labels"),
             assignees=data.get("assignees"),
             created_at=parser.parse(data["created"]) if "created" in data else None,
