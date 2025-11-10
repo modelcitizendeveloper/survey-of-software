@@ -14,7 +14,48 @@ class PopulationError(Exception):
     pass
 
 
-def populate_vikunja(client: Any, schema: Dict[str, Any], dry_run: bool = False) -> Dict[str, Any]:
+def _resolve_parent_project(parent_path: str, all_projects: List[Any]) -> int:
+    """
+    Resolve parent project path to project ID
+
+    Args:
+        parent_path: Slash-separated path like "Applications/Products"
+        all_projects: List of all projects from Vikunja
+
+    Returns:
+        Parent project ID, or None if not found
+
+    Example:
+        "Applications/Products" -> find Applications (root), then Products (child of Applications)
+    """
+    if not parent_path:
+        return None
+
+    # Split path into parts
+    parts = [p.strip() for p in parent_path.split("/")]
+    if not parts:
+        return None
+
+    # Build project hierarchy map: {(title, parent_id): project}
+    project_map = {}
+    for project in all_projects:
+        key = (project.title, project.parent_project_id)
+        project_map[key] = project
+
+    # Walk the path from root to target
+    current_parent_id = 0  # Root level
+    for part in parts:
+        key = (part, current_parent_id)
+        if key not in project_map:
+            # Project not found at this level
+            return None
+        project = project_map[key]
+        current_parent_id = project.id
+
+    return current_parent_id
+
+
+def populate_vikunja(client: Any, schema: Dict[str, Any], dry_run: bool = False, preserve_api_order: bool = False) -> Dict[str, Any]:
     """
     Populate Vikunja with projects, labels, and tasks from schema
 
@@ -22,6 +63,8 @@ def populate_vikunja(client: Any, schema: Dict[str, Any], dry_run: bool = False)
         client: VikunjaClient instance
         schema: Validated schema dictionary
         dry_run: If True, validate without creating (no API calls)
+        preserve_api_order: If True, preserve Vikunja API order (tasks added to top).
+                           If False (default), reverse tasks to match YAML order.
 
     Returns:
         Dictionary with created resources:
@@ -49,10 +92,24 @@ def populate_vikunja(client: Any, schema: Dict[str, Any], dry_run: bool = False)
     try:
         project_data = schema["project"]
         title = project_data["title"]
-        parent_id = project_data.get("parent_project_id", 0)
+
+        # Get all projects for parent resolution
+        all_projects = client.projects.list()
+
+        # Resolve parent_project (string path) to parent_project_id (integer)
+        parent_id = 0
+        if "parent_project_id" in project_data:
+            parent_id = project_data["parent_project_id"]
+        elif "parent_project" in project_data:
+            parent_path = project_data["parent_project"]
+            parent_id = _resolve_parent_project(parent_path, all_projects)
+            if parent_id is None:
+                raise PopulationError(
+                    f"Parent project not found: '{parent_path}'. "
+                    f"Please create the parent project hierarchy first."
+                )
 
         # Check if project already exists
-        all_projects = client.projects.list()
         existing_project = None
         for p in all_projects:
             if p.title == title and p.parent_project_id == parent_id:
@@ -65,8 +122,8 @@ def populate_vikunja(client: Any, schema: Dict[str, Any], dry_run: bool = False)
             kwargs["description"] = project_data["description"]
         if "color" in project_data:
             kwargs["color"] = project_data["color"]
-        if "parent_project_id" in project_data:
-            kwargs["parent_project_id"] = project_data["parent_project_id"]
+        if parent_id > 0:
+            kwargs["parent_project_id"] = parent_id
 
         if existing_project:
             # Update existing project
@@ -175,7 +232,13 @@ def populate_vikunja(client: Any, schema: Dict[str, Any], dry_run: bool = False)
     existing_tasks_map = {task.title: task for task in existing_tasks}
     task_map = {}  # Map task title -> task object (for relations)
 
-    for task_data in schema.get("tasks", []):
+    # Reverse task order to match YAML order in display (unless preserve_api_order is True)
+    # Vikunja API adds new tasks to the top, so we reverse to maintain YAML order
+    tasks_to_create = schema.get("tasks", [])
+    if not preserve_api_order:
+        tasks_to_create = list(reversed(tasks_to_create))
+
+    for task_data in tasks_to_create:
         try:
             task_title = task_data["title"]
             existing_task = existing_tasks_map.get(task_title)

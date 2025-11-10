@@ -61,6 +61,18 @@ Input file format:
         help="Verbose output (show all API calls)"
     )
 
+    parser.add_argument(
+        "--preserve-api-order",
+        action="store_true",
+        help="Preserve Vikunja API order (tasks added to top). By default, tasks are reversed to match YAML order."
+    )
+
+    parser.add_argument(
+        "--allow-root-project",
+        action="store_true",
+        help="Allow creating root-level projects (bypasses parent project requirement). Use for automation/testing only."
+    )
+
     args = parser.parse_args()
 
     # Load environment variables
@@ -101,7 +113,7 @@ Input file format:
         print(f"\n🔍 Validating schema...")
 
     try:
-        validate_schema(schema)
+        validate_schema(schema, allow_root_project=args.allow_root_project)
     except ValidationError as e:
         print(f"❌ Validation Error: {e}")
         sys.exit(1)
@@ -150,7 +162,7 @@ Input file format:
         print(f"\n🚀 Creating resources in Vikunja...")
 
     try:
-        result = populate_vikunja(client, schema, dry_run=False)
+        result = populate_vikunja(client, schema, dry_run=False, preserve_api_order=args.preserve_api_order)
     except PopulationError as e:
         print(f"❌ Population Error: {e}")
         sys.exit(1)

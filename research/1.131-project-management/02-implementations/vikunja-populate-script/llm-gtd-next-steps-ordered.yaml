@@ -1,0 +1,155 @@
+project:
+  title: "LLM-GTD"
+  description: "Strategic options for public release of LLM-GTD integration"
+  parent_project: "Applications/Products"
+
+tasks:
+  - title: "Q1 2026 Decision Review: LLM-GTD path forward"
+    description: |
+      <p>Review advent GTD drop engagement (Task Capture Widget, Portfolio Dashboard).</p>
+
+      <h3>Decision Paths:</h3>
+      <ul>
+      <li><strong>Path A:</strong> Open Standard + Consulting (high engagement, 30-45 hrs)</li>
+      <li><strong>Path B:</strong> Enterprise Consulting Only (medium engagement, 5-10 hrs)</li>
+      <li><strong>Path C:</strong> Keep Private (low engagement, 0 hrs)</li>
+      </ul>
+
+      <p><strong>Metrics:</strong> visits, engagement, inquiries, GitHub interest</p>
+      <p><strong>Decision criteria:</strong> engagement, pipeline, capacity, strategic fit</p>
+    labels:
+      - Research
+      - Planning
+    priority: 3
+    start_date: "2026-01-08"
+    due_date: "2026-01-15"
+
+  - title: "Package LLM-GTD research as enterprise consulting offer"
+    description: |
+      <p>Transform research into consulting service (no product commitment).</p>
+
+      <h3>Deliverables:</h3>
+      <ol>
+      <li>Service description (problem/solution/target)</li>
+      <li>Consulting packages (assessment $5K, implementation $10-30K, training $2-5K)</li>
+      <li>Case study template (methodology, results)</li>
+      <li>Technical assets (architecture, integration options)</li>
+      <li>Add to inversefractional.com</li>
+      </ol>
+
+      <p><strong>Target:</strong> Consulting firms, professional services, knowledge work teams</p>
+    labels:
+      - Planning
+      - Writing
+    priority: 2
+    start_date: "2026-01-16"
+    due_date: "2026-01-31"
+
+  - title: "Implement backend abstraction layer (if pursuing standard)"
+    description: |
+      <p>Create backend-agnostic interface for LLM-GTD.</p>
+
+      <p><strong>Only if Task 1 → Path A</strong></p>
+
+      <h3>Components:</h3>
+      <ol>
+      <li>GTDBackend abstract class (2-3 hrs)</li>
+      <li>Three backends: Vikunja, Local Files, GitHub Issues (5-8 hrs)</li>
+      <li>Testing suite (2-3 hrs)</li>
+      <li>Documentation (2-3 hrs)</li>
+      </ol>
+
+      <p><strong>Strategic value:</strong> No lock-in, free options, community extensibility, consulting opportunity</p>
+    labels:
+      - Code
+      - Planning
+    priority: 3
+    start_date: "2026-02-01"
+    due_date: "2026-02-28"
+
+  - title: "Write 2.130 LLM-GTD Interface Protocol standard"
+    description: |
+      <p>Document open standard specification.</p>
+
+      <p><strong>Only if Task 1 → Path A</strong></p>
+
+      <h3>Parts:</h3>
+      <ol>
+      <li>Data schema (YAML/JSON) (3-4 hrs)</li>
+      <li>LLM prompt patterns (capture, clarify, organize, analyze) (4-6 hrs)</li>
+      <li>Backend integration API (2-3 hrs)</li>
+      <li>Usage examples (2-3 hrs)</li>
+      </ol>
+
+      <p><strong>Launch:</strong> GitHub, blog, HN, r/gtd</p>
+      <p><strong>Success:</strong> 500+ stars, 10+ inquiries, 2-3 community backends</p>
+    labels:
+      - Writing
+      - Research
+    priority: 3
+    start_date: "2026-03-01"
+    due_date: "2026-03-15"
+
+  - title: "Launch reference implementation (clean Vikunja integration)"
+    description: |
+      <p>Polish scripts for public release.</p>
+
+      <p><strong>Only if Task 1 → Path A</strong></p>
+
+      <h3>Tasks:</h3>
+      <ol>
+      <li>Code quality (refactor, types, docs) (3-4 hrs)</li>
+      <li>Testing (unit, integration, CI/CD) (2-3 hrs)</li>
+      <li>Documentation (README, guides) (3-4 hrs)</li>
+      <li>Examples (YAML, use cases, video) (2-3 hrs)</li>
+      <li>Docker Compose (one-command setup) (2-3 hrs)</li>
+      </ol>
+    labels:
+      - Code
+      - Writing
+    priority: 3
+    start_date: "2026-03-16"
+    due_date: "2026-03-31"
+
+  - title: "Measure personal productivity impact for case study"
+    description: |
+      <p>Quantify GTD overhead reduction for consulting/standard launch.</p>
+
+      <p><strong>Metrics:</strong> capture time, tasks/week, review time, overdue reduction, decision quality</p>
+
+      <h3>Use Cases:</h3>
+      <ul>
+      <li><strong>Path B:</strong> Consulting case study</li>
+      <li><strong>Path A:</strong> Standard launch evidence</li>
+      <li><strong>Path C:</strong> Personal learning</li>
+      </ul>
+
+      <p>Document in Jan-Feb 2026 (after 2-3 months usage)</p>
+    labels:
+      - Research
+      - Writing
+    priority: 1
+    start_date: "2026-02-01"
+    due_date: "2026-02-15"
+
+  - title: "Create LLM-GTD consulting proposal template"
+    description: |
+      <p>Reusable proposal for enterprise engagements.</p>
+
+      <p><strong>Only if Task 1 → Path B</strong></p>
+
+      <h3>Phases:</h3>
+      <ol>
+      <li>Assessment: $5K, 2-3 weeks</li>
+      <li>Implementation: $10-30K, 4-8 weeks</li>
+      <li>Support: $500-2K/month (optional)</li>
+      </ol>
+
+      <p><strong>Components:</strong> executive summary, methodology, timeline, pricing, success metrics, case study</p>
+      <p><strong>Target:</strong> Consulting firms, professional services, CTOs/COOs</p>
+    labels:
+      - Writing
+      - Planning
+    priority: 2
+    start_date: "2026-02-01"
+    due_date: "2026-02-28"
