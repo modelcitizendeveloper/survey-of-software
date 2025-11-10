@@ -633,35 +633,3 @@ planned_research:
   title: Integration Platforms (iPaaS)
   tier: 'Tier 3: Managed Services'
   roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
-- code: '1.130'
-  title: Task management libraries
-  tier: 'Tier 1: Algorithms & Libraries'
-  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
-- code: '3.130'
-  title: Personal Productivity Tools (GTD)
-  tier: 'Tier 3: Managed Services'
-  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
-- code: '3.131'
-  title: Team Task Management
-  tier: 'Tier 3: Managed Services'
-  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
-- code: '3.132'
-  title: Enterprise Project Management
-  tier: 'Tier 3: Managed Services'
-  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
-- code: '3.133'
-  title: AI-Powered Productivity
-  tier: 'Tier 3: Managed Services'
-  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
-- code: '3.134'
-  title: Collaboration & Workspace Platforms
-  tier: 'Tier 3: Managed Services'
-  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
-- code: '3.135'
-  title: Knowledge Management & Note-Taking
-  tier: 'Tier 3: Managed Services'
-  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
-- code: '3.136'
-  title: Time Tracking & Productivity Analytics
-  tier: 'Tier 3: Managed Services'
-  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
