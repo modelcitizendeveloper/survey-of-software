@@ -1,11 +1,4 @@
 queue:
-- code: '3.130'
-  title: Personal Productivity Tools (GTD)
-  tier: 3
-  status: not_started
-  estimated_hours: 8-10
-  rationale: HIGH - Individual tier competitive analysis (Todoist, Things, OmniFocus)
-  value: GTD methodology support, capture/organize features, pricing
 - code: '3.131'
   title: Team Task Management
   tier: 3
