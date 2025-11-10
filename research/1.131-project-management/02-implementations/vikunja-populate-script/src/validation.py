@@ -152,8 +152,11 @@ def validate_project(project: Dict[str, Any], allow_root_project: bool = False) 
         raise ValidationError(f"Project title cannot exceed 250 characters, got {len(title)}")
 
     # Required: parent_project or parent_project_id (no root-level projects allowed by default)
+    # UNLESS: project_id is specified (adding tasks to existing project, not creating new)
     has_parent = "parent_project" in project or "parent_project_id" in project
-    if not has_parent and not allow_root_project:
+    is_adding_to_existing = "project_id" in project
+
+    if not has_parent and not allow_root_project and not is_adding_to_existing:
         raise ValidationError(
             f"Project '{title}' must have a parent_project or parent_project_id field. "
             "Root-level projects are not allowed. "

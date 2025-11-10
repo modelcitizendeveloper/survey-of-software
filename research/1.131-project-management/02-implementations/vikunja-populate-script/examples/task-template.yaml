@@ -1,0 +1,43 @@
+# Vikunja Task Template
+# Copy this template when creating new task files
+
+project:
+  project_id: XXXXX  # Required: Existing project ID (e.g., 13764)
+  title: "Project Name"  # Required: For validation, should match existing project
+
+tasks:
+  - title: "Task title here"
+    description: |
+      <p>Task description in HTML format</p>
+
+      <h3>Section:</h3>
+      <ul>
+      <li>List item 1</li>
+      <li>List item 2</li>
+      </ul>
+
+      <p><strong>Important:</strong> Additional context</p>
+
+    # LABELS: Use ONLY existing global labels (validation will fail otherwise)
+    # Available labels:
+    #   - Security, Next Action, Waiting For, Blocked, Someday/Maybe
+    #   - @Computer, @Quick, @DeepWork, @Errands, @People
+    #   - High Energy, Low Energy
+    #   - Code, Writing, Bug, Research, Planning
+    labels:
+      - Next Action  # Action-oriented label
+      - Code         # Type of work
+
+    priority: 5  # 1-5 (5 = highest)
+
+    # Dates (optional, format: YYYY-MM-DD)
+    start_date: "2025-11-12"
+    due_date: "2025-11-15"
+
+  - title: "Second task"
+    description: |
+      <p>Another task</p>
+    labels:
+      - Research
+      - Planning
+    priority: 3
