@@ -1,11 +1,4 @@
 queue:
-- code: '3.133'
-  title: AI-Powered Productivity
-  tier: 3
-  status: not_started
-  estimated_hours: 8-10
-  rationale: CRITICAL - Direct competitors for LLM-GTD product opportunity (Motion, Reclaim.ai, Trevor AI)
-  value: AI features, LLM integration, pricing models - must research before building
 - code: '3.130'
   title: Personal Productivity Tools (GTD)
   tier: 3
