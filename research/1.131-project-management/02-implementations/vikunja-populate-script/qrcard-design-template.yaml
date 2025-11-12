@@ -1,0 +1,192 @@
+# QRCard Design Template
+# Use this template to create task sets for new QRCard designs
+# Copy this file and customize for each new card (e.g., TRS-001, APA-001, etc.)
+
+project:
+  project_id: 13764  # inversefractional.com - CFO Positioning
+  title: "inversefractional.com - CFO Positioning"
+
+tasks:
+  - title: "Design [CARD-ID] QRCard (front + back)"
+    description: |
+      <p>Design postcard-sized decision tree card for [TOPIC]</p>
+
+      <h3>Front:</h3>
+      <ul>
+      <li>Title: [CARD TITLE]</li>
+      <li>Decision tree: [DECISION VARIABLE] → [RECOMMENDATION]</li>
+      <li>[THRESHOLD 1] → [SOLUTION 1]</li>
+      <li>[THRESHOLD 2] → [SOLUTION 2]</li>
+      <li>[THRESHOLD 3] → [SOLUTION 3]</li>
+      <li>Brand: inversefractional.com</li>
+      </ul>
+
+      <h3>Back:</h3>
+      <ul>
+      <li>QR code (2"×2", centered)</li>
+      <li>CTA: "Scan for complete [TOPIC] analysis"</li>
+      <li>URL: inversefractional.com</li>
+      <li>Card ID: [CARD-ID]</li>
+      </ul>
+
+      <p><strong>Specs:</strong> 4"×6" postcard, 16pt cardstock, matte front/UV gloss back</p>
+
+      <p><strong>Reference:</strong> ~/spawn-solutions/calendar/decision-trees/[filename].yaml</p>
+    labels:
+      - Design
+      - Code
+    priority: 5
+    # due_date: "YYYY-MM-DD"
+
+  - title: "Generate QR code for [CARD-ID]"
+    description: |
+      <p>Generate QR code that points to [CARD-ID] landing page</p>
+
+      <p><strong>URL:</strong> https://inversefractional.com/decision-trees/[path]?source=[CARD-ID]&utm_source=card-[card-id]&utm_medium=postcard&utm_campaign=[campaign-name]</p>
+
+      <p><strong>Specs:</strong></p>
+      <ul>
+      <li>Size: 500×500px minimum (for 2"×2" print at 300 DPI)</li>
+      <li>Error correction: High (30% damage tolerance)</li>
+      <li>Format: PNG or SVG</li>
+      <li>Color: Black on white (high contrast)</li>
+      </ul>
+
+      <p><strong>Tool:</strong> qr-code-generator.com or Python qrcode library</p>
+    labels:
+      - Code
+    priority: 5
+    # due_date: "YYYY-MM-DD"
+
+  - title: "Print [QUANTITY] [CARD-ID] cards"
+    description: |
+      <p>Print [CARD-ID] QRCards for [EVENT NAME] ([EVENT DATE])</p>
+
+      <p><strong>Options:</strong></p>
+      <ul>
+      <li>Vistaprint: 24-48 hour expedited</li>
+      <li>FedEx Office: 2-hour rush printing</li>
+      <li>Local print shop: Same day turnaround</li>
+      </ul>
+
+      <p><strong>Specs:</strong></p>
+      <ul>
+      <li>Size: 4"×6" postcard</li>
+      <li>Material: 16pt cardstock</li>
+      <li>Finish: Matte front / UV gloss back</li>
+      <li>Quantity: [QUANTITY] cards</li>
+      </ul>
+
+      <p><strong>Files needed:</strong> Front PDF + Back PDF (300 DPI, CMYK, with bleed)</p>
+    labels:
+      - Next Action
+    priority: 5
+    # due_date: "YYYY-MM-DD"
+
+  - title: "Create [CARD-ID] landing page"
+    description: |
+      <p>Build landing page for [TOPIC] decision tree</p>
+
+      <p><strong>URL:</strong> /decision-trees/[path]</p>
+
+      <p><strong>Content sections:</strong></p>
+      <ul>
+      <li>Hero: Interactive decision tree (expand on YAML branches)</li>
+      <li>Comparison table: [SOLUTIONS TO COMPARE]</li>
+      <li>When custom makes sense (3-5 scenarios)</li>
+      <li>Guide excerpt (500-1000 words teaser)</li>
+      </ul>
+
+      <p><strong>CTAs:</strong></p>
+      <ul>
+      <li>Primary: "Book Free 30-Min [TOPIC] Analysis"</li>
+      <li>Secondary: "Download Complete Guide ($99)"</li>
+      <li>Tertiary: "Get Custom [SOLUTION] Quote ($[PRICE RANGE])"</li>
+      </ul>
+
+      <p><strong>Analytics:</strong> Track source=[CARD-ID] parameter for card scans</p>
+
+      <p><strong>Reference:</strong> ~/spawn-solutions/calendar/decision-trees/[filename].yaml</p>
+    labels:
+      - Code
+      - Writing
+    priority: 4
+    # due_date: "YYYY-MM-DD"
+
+  - title: "Prepare [EVENT NAME] strategy + talking points"
+    description: |
+      <p>Prepare for [EVENT NAME]</p>
+
+      <h3>Event Details:</h3>
+      <ul>
+      <li>Date: [DAY, DATE, TIME]</li>
+      <li>Location: [VENUE]</li>
+      <li>Attendees: [NUMBER] [AUDIENCE TYPE]</li>
+      <li>Topic: [EVENT TOPIC]</li>
+      </ul>
+
+      <h3>What to Bring:</h3>
+      <ul>
+      <li>[QUANTITY] [CARD-ID] QRCards</li>
+      <li>Business cards (inversefractional.com)</li>
+      <li>Phone/tablet (note-taking for validation tracking)</li>
+      </ul>
+
+      <h3>Opening Line:</h3>
+      <p>"I do Decision Analysis for CFOs - I created a framework for [TOPIC]. Here's the postcard version."</p>
+
+      <h3>Validation Tracker:</h3>
+      <ul>
+      <li>How many cards distributed?</li>
+      <li>Which pain points came up? ([PAIN POINT 1], [PAIN POINT 2], [PAIN POINT 3])</li>
+      <li>Any scans? (check analytics next day)</li>
+      <li>New solution hypotheses?</li>
+      </ul>
+
+      <h3>Follow-up:</h3>
+      <ul>
+      <li>Email everyone who took a card</li>
+      <li>Update CFO-SOLUTIONS.md with validation data</li>
+      <li>Track conversions (card → scan → booking)</li>
+      </ul>
+    labels:
+      - Planning
+    priority: 5
+    # start_date: "YYYY-MM-DD"
+    # due_date: "YYYY-MM-DD"
+
+  - title: "Post-event: Update CFO-SOLUTIONS.md with validation data"
+    description: |
+      <p>After [EVENT NAME], update CFO solution hypotheses with validation data</p>
+
+      <p><strong>File:</strong> ~/spawn-solutions/calendar/ideas/CFO-SOLUTIONS.md</p>
+
+      <h3>Capture:</h3>
+      <ul>
+      <li>[CARD-ID] cards distributed: [number]</li>
+      <li>QR scans: [check analytics]</li>
+      <li>Pain points mentioned:
+        <ul>
+        <li>[SOLUTION 1]: [tally] mentions → ✅✅✅ or ⚠️ or ❌</li>
+        <li>[SOLUTION 2]: [tally] mentions</li>
+        <li>[SOLUTION 3]: [tally] mentions</li>
+        </ul>
+      </li>
+      <li>New patterns discovered: [add to hypotheses]</li>
+      </ul>
+
+      <h3>Update YAML:</h3>
+      <p>If 3+ validations → Promote to PLANNED-SOLUTIONS.yaml with priority</p>
+
+      <h3>Follow-up Tasks:</h3>
+      <ul>
+      <li>Email CFOs who took cards</li>
+      <li>Schedule any booked free sessions</li>
+      <li>Update tracking spreadsheet (cards → scans → bookings)</li>
+      </ul>
+    labels:
+      - Research
+      - Writing
+    priority: 4
+    # start_date: "YYYY-MM-DD"
+    # due_date: "YYYY-MM-DD"

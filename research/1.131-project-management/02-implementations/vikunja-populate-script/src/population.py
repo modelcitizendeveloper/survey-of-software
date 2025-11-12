@@ -93,48 +93,63 @@ def populate_vikunja(client: Any, schema: Dict[str, Any], dry_run: bool = False,
         project_data = schema["project"]
         title = project_data["title"]
 
-        # Get all projects for parent resolution
-        all_projects = client.projects.list()
-
-        # Resolve parent_project (string path) to parent_project_id (integer)
-        parent_id = 0
-        if "parent_project_id" in project_data:
-            parent_id = project_data["parent_project_id"]
-        elif "parent_project" in project_data:
-            parent_path = project_data["parent_project"]
-            parent_id = _resolve_parent_project(parent_path, all_projects)
-            if parent_id is None:
+        # If project_id is specified, use that project directly (adding tasks to existing)
+        if "project_id" in project_data:
+            target_project_id = project_data["project_id"]
+            try:
+                project = client.projects.get(target_project_id)
+                result["project"] = project
+                result["project_updated"] = False
+                # Skip project creation/update - just use the existing project
+            except Exception as e:
                 raise PopulationError(
-                    f"Parent project not found: '{parent_path}'. "
-                    f"Please create the parent project hierarchy first."
+                    f"Project ID {target_project_id} not found. "
+                    f"Please verify the project exists at the specified ID."
                 )
-
-        # Check if project already exists
-        existing_project = None
-        for p in all_projects:
-            if p.title == title and p.parent_project_id == parent_id:
-                existing_project = p
-                break
-
-        # Prepare kwargs
-        kwargs = {"title": title}
-        if "description" in project_data:
-            kwargs["description"] = project_data["description"]
-        if "color" in project_data:
-            kwargs["color"] = project_data["color"]
-        if parent_id > 0:
-            kwargs["parent_project_id"] = parent_id
-
-        if existing_project:
-            # Update existing project
-            project = client.projects.update(existing_project.id, **kwargs)
-            result["project"] = project
-            result["project_updated"] = True
         else:
-            # Create new project
-            project = client.projects.create(**kwargs)
-            result["project"] = project
-            result["project_updated"] = False
+            # Normal flow: create new project or find existing by title+parent
+            # Get all projects for parent resolution
+            all_projects = client.projects.list()
+
+            # Resolve parent_project (string path) to parent_project_id (integer)
+            parent_id = 0
+            if "parent_project_id" in project_data:
+                parent_id = project_data["parent_project_id"]
+            elif "parent_project" in project_data:
+                parent_path = project_data["parent_project"]
+                parent_id = _resolve_parent_project(parent_path, all_projects)
+                if parent_id is None:
+                    raise PopulationError(
+                        f"Parent project not found: '{parent_path}'. "
+                        f"Please create the parent project hierarchy first."
+                    )
+
+            # Check if project already exists
+            existing_project = None
+            for p in all_projects:
+                if p.title == title and p.parent_project_id == parent_id:
+                    existing_project = p
+                    break
+
+            # Prepare kwargs
+            kwargs = {"title": title}
+            if "description" in project_data:
+                kwargs["description"] = project_data["description"]
+            if "color" in project_data:
+                kwargs["hex_color"] = project_data["color"]
+            if parent_id > 0:
+                kwargs["parent_project_id"] = parent_id
+
+            if existing_project:
+                # Update existing project
+                project = client.projects.update(existing_project.id, **kwargs)
+                result["project"] = project
+                result["project_updated"] = True
+            else:
+                # Create new project
+                project = client.projects.create(**kwargs)
+                result["project"] = project
+                result["project_updated"] = False
 
     except Exception as e:
         raise PopulationError(f"Failed to create/update project: {e}")
@@ -143,12 +158,17 @@ def populate_vikunja(client: Any, schema: Dict[str, Any], dry_run: bool = False,
     bucket_map = {}  # Map bucket name -> bucket object
 
     if "buckets" in schema.get("project", {}):
-        # Get existing buckets
+        # Get existing buckets (if project already existed)
         try:
             existing_buckets = client.buckets.list(project_id=project.id)
             existing_bucket_map = {b.title: b for b in existing_buckets}
         except Exception as e:
-            raise PopulationError(f"Failed to list existing buckets: {e}")
+            # If project is new or has no buckets yet, start with empty map
+            error_msg = str(e)
+            if "Not Found" in error_msg or "404" in error_msg:
+                existing_bucket_map = {}
+            else:
+                raise PopulationError(f"Failed to list existing buckets: {e}")
 
         for bucket_data in schema["project"]["buckets"]:
             try:
