@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_completed: 70
+total_completed: 71
 research:
 - code: '1.002'
   title: fuzzy search
@@ -257,6 +257,10 @@ research:
   title: personal productivity gtd
   description: Individual task management and GTD methodology tools
   path: research/3.130-personal-productivity-gtd
+- code: '3.131'
+  title: team task management
+  description: Team task management platforms (3-20 people) - Asana, ClickUp, Linear, Monday.com, Airtable, Trello
+  path: research/3.131-team-task-management
 - code: '3.133'
   title: ai productivity
   description: '- **Tier**: 3 (Managed Services - Convenience)'
