@@ -146,6 +146,21 @@ class Bucket:
         return {k: v for k, v in asdict(self).items() if v is not None}
 
 
+@dataclass
+class View:
+    """Represents a project view (List, Gantt, Table, Kanban)."""
+    id: int
+    title: str
+    project_id: int
+    view_kind: str  # 'list', 'gantt', 'table', 'kanban'
+    created_at: Optional[datetime] = None
+    updated_at: Optional[datetime] = None
+
+    def to_dict(self) -> Dict[str, Any]:
+        """Convert View to dictionary."""
+        return {k: v for k, v in asdict(self).items() if v is not None}
+
+
 # Manager Classes
 class ProjectsManager:
     """Manages project operations."""
@@ -356,7 +371,8 @@ class TasksManager:
         self.client = client
 
     def create(self, project_id: int, title: str, description: str = None,
-               due_date: str = None, priority: int = 0, labels: List[str] = None) -> Task:
+               due_date: str = None, priority: int = 0, labels: List[str] = None,
+               bucket_id: int = None) -> Task:
         """
         Create a new task.
 
@@ -367,6 +383,7 @@ class TasksManager:
             due_date: Due date (ISO format string or datetime)
             priority: Task priority (0-5, default 0)
             labels: List of label names (optional)
+            bucket_id: Bucket ID to assign task to (optional)
 
         Returns:
             Task: Created task object
@@ -385,6 +402,8 @@ class TasksManager:
             data["priority"] = priority
         if labels:
             data["labels"] = labels
+        if bucket_id is not None:
+            data["bucket_id"] = bucket_id
 
         response = self.client._request("PUT", f"/api/v1/projects/{project_id}/tasks", json=data)
         return self._parse_task(response)
@@ -473,6 +492,79 @@ class TasksManager:
             VikunjaError: For other API errors
         """
         self.client._request("DELETE", f"/api/v1/tasks/{task_id}")
+
+    def set_position(self, task_id: int, project_view_id: int, bucket_id: int = None, position: int = None, project_id: int = None) -> Dict[str, Any]:
+        """
+        Set a task's position in a project view (e.g., assign to Kanban bucket).
+
+        Note: In Vikunja 0.24+, bucket assignment is now view-based. When assigning
+        a task to a bucket, this method makes TWO API calls (like the UI does):
+        1. Add task to bucket: POST /projects/{pid}/views/{vid}/buckets/{bid}/tasks
+        2. Set position: POST /tasks/{tid}/position
+
+        Args:
+            task_id: ID of the task
+            project_view_id: ID of the project view (from ViewsManager.get_kanban_view())
+            bucket_id: Bucket ID to assign task to (optional, for Kanban views)
+            position: Position within the bucket/view (optional, None = append to end)
+            project_id: Project ID (required if bucket_id is provided)
+
+        Returns:
+            Dict: Position information from the final API call
+
+        Raises:
+            NotFoundError: If task or view doesn't exist
+            AuthenticationError: If token is invalid
+            ValueError: If bucket_id provided without project_id
+            VikunjaError: For other API errors
+
+        Example:
+            >>> # Assign task to "In Progress" bucket in Kanban view
+            >>> kanban_view = client.views.get_kanban_view(project_id=13481)
+            >>> buckets = client.buckets.list(project_id=13481, view_id=kanban_view.id)
+            >>> bucket = [b for b in buckets if b.title == "In Progress"][0]
+            >>> client.tasks.set_position(
+            ...     task_id=task.id,
+            ...     project_view_id=kanban_view.id,
+            ...     bucket_id=bucket.id,
+            ...     project_id=13481
+            ... )
+        """
+        # If bucket_id is provided, first add task to bucket (Call 1)
+        # This is the CORRECT endpoint discovered from UI network capture
+        if bucket_id is not None:
+            if project_id is None:
+                raise ValueError("project_id is required when bucket_id is provided")
+
+            bucket_data = {
+                "max_permission": None,
+                "task_id": task_id,
+                "bucket_id": bucket_id,
+                "project_view_id": project_view_id,
+                "project_id": project_id
+            }
+            # CRITICAL: Use the buckets/tasks endpoint, NOT the position endpoint
+            self.client._request(
+                "POST",
+                f"/api/v1/projects/{project_id}/views/{project_view_id}/buckets/{bucket_id}/tasks",
+                json=bucket_data
+            )
+
+        # Then set the position (Call 2) - only if position is explicitly provided
+        if position is not None or bucket_id is None:
+            position_data = {
+                "max_permission": None,
+                "project_view_id": project_view_id,
+                "task_id": task_id
+            }
+            if position is not None:
+                position_data["position"] = position
+
+            response = self.client._request("POST", f"/api/v1/tasks/{task_id}/position", json=position_data)
+            return response
+
+        # If only bucket was set, return a success indicator
+        return {"task_id": task_id, "project_view_id": project_view_id, "bucket_id": bucket_id}
 
     def add_label(self, task_id: int, label_id: int) -> None:
         """
@@ -764,12 +856,13 @@ class BucketsManager:
     def __init__(self, client: 'VikunjaClient'):
         self.client = client
 
-    def create(self, project_id: int, title: str, position: int = 0, limit: int = 0) -> Bucket:
+    def create(self, project_id: int, view_id: int, title: str, position: int = 0, limit: int = 0) -> Bucket:
         """
-        Create a new bucket in a project.
+        Create a new bucket in a view (typically Kanban view).
 
         Args:
             project_id: ID of the project
+            view_id: ID of the view (get from ViewsManager.get_kanban_view())
             title: Bucket title
             position: Sort position (default 0)
             limit: WIP limit, 0 = no limit (default 0)
@@ -779,7 +872,7 @@ class BucketsManager:
 
         Raises:
             AuthenticationError: If token is invalid
-            NotFoundError: If project doesn't exist
+            NotFoundError: If project or view doesn't exist
             ValidationError: If parameters are invalid
             VikunjaError: For other API errors
         """
@@ -788,33 +881,35 @@ class BucketsManager:
             "position": position,
             "limit": limit
         }
-        response = self.client._request("PUT", f"/api/v1/projects/{project_id}/buckets", json=data)
+        response = self.client._request("PUT", f"/api/v1/projects/{project_id}/views/{view_id}/buckets", json=data)
         return self._parse_bucket(response)
 
-    def list(self, project_id: int) -> List[Bucket]:
+    def list(self, project_id: int, view_id: int) -> List[Bucket]:
         """
-        List all buckets in a project.
+        List all buckets in a view.
 
         Args:
             project_id: ID of the project
+            view_id: ID of the view (get from ViewsManager.get_kanban_view())
 
         Returns:
             List[Bucket]: List of bucket objects
 
         Raises:
             AuthenticationError: If token is invalid
-            NotFoundError: If project doesn't exist
+            NotFoundError: If project or view doesn't exist
             VikunjaError: For other API errors
         """
-        response = self.client._request("GET", f"/api/v1/projects/{project_id}/buckets")
+        response = self.client._request("GET", f"/api/v1/projects/{project_id}/views/{view_id}/buckets")
         return [self._parse_bucket(b) for b in response]
 
-    def update(self, project_id: int, bucket_id: int, title: str = None, position: int = None, limit: int = None) -> Bucket:
+    def update(self, project_id: int, view_id: int, bucket_id: int, title: str = None, position: int = None, limit: int = None) -> Bucket:
         """
         Update a bucket.
 
         Args:
             project_id: ID of the project
+            view_id: ID of the view
             bucket_id: ID of the bucket
             title: New title (optional)
             position: New position (optional)
@@ -836,15 +931,16 @@ class BucketsManager:
         if limit is not None:
             data["limit"] = limit
 
-        response = self.client._request("POST", f"/api/v1/projects/{project_id}/buckets/{bucket_id}", json=data)
+        response = self.client._request("POST", f"/api/v1/projects/{project_id}/views/{view_id}/buckets/{bucket_id}", json=data)
         return self._parse_bucket(response)
 
-    def delete(self, project_id: int, bucket_id: int) -> None:
+    def delete(self, project_id: int, view_id: int, bucket_id: int) -> None:
         """
         Delete a bucket.
 
         Args:
             project_id: ID of the project
+            view_id: ID of the view
             bucket_id: ID of the bucket
 
         Raises:
@@ -852,7 +948,7 @@ class BucketsManager:
             AuthenticationError: If token is invalid
             VikunjaError: For other API errors
         """
-        self.client._request("DELETE", f"/api/v1/projects/{project_id}/buckets/{bucket_id}")
+        self.client._request("DELETE", f"/api/v1/projects/{project_id}/views/{view_id}/buckets/{bucket_id}")
 
     def _parse_bucket(self, data: Dict[str, Any]) -> Bucket:
         """Parse bucket data from API response."""
@@ -862,6 +958,86 @@ class BucketsManager:
             project_id=data.get("project_id", 0) or data.get("list_id", 0),
             position=data.get("position", 0),
             limit=data.get("limit", 0),
+            created_at=parser.parse(data["created"]) if "created" in data else None,
+            updated_at=parser.parse(data["updated"]) if "updated" in data else None
+        )
+
+
+class ViewsManager:
+    """Manages view operations."""
+
+    def __init__(self, client: 'VikunjaClient'):
+        self.client = client
+
+    def list(self, project_id: int) -> List[View]:
+        """
+        List all views for a project.
+
+        Vikunja auto-creates 4 default views when a project is created:
+        - List view
+        - Gantt view
+        - Table view
+        - Kanban view
+
+        Args:
+            project_id: ID of the project
+
+        Returns:
+            List[View]: List of view objects
+
+        Raises:
+            NotFoundError: If project doesn't exist
+            AuthenticationError: If token is invalid
+            VikunjaError: For other API errors
+        """
+        response = self.client._request("GET", f"/api/v1/projects/{project_id}/views")
+        return [self._parse_view(view) for view in response]
+
+    def get(self, project_id: int, view_id: int) -> View:
+        """
+        Get a specific view.
+
+        Args:
+            project_id: ID of the project
+            view_id: ID of the view
+
+        Returns:
+            View: View object
+
+        Raises:
+            NotFoundError: If view doesn't exist
+            AuthenticationError: If token is invalid
+            VikunjaError: For other API errors
+        """
+        response = self.client._request("GET", f"/api/v1/projects/{project_id}/views/{view_id}")
+        return self._parse_view(response)
+
+    def get_kanban_view(self, project_id: int) -> View:
+        """
+        Convenience method to get the Kanban view for a project.
+
+        Args:
+            project_id: ID of the project
+
+        Returns:
+            View: Kanban view object
+
+        Raises:
+            NotFoundError: If no Kanban view exists
+        """
+        views = self.list(project_id)
+        kanban_views = [v for v in views if v.view_kind == 'kanban']
+        if not kanban_views:
+            raise NotFoundError(f"No Kanban view found for project {project_id}")
+        return kanban_views[0]
+
+    def _parse_view(self, data: Dict[str, Any]) -> View:
+        """Parse view data from API response."""
+        return View(
+            id=data["id"],
+            title=data["title"],
+            project_id=data.get("project_id", 0),
+            view_kind=data.get("view_kind", "unknown"),
             created_at=parser.parse(data["created"]) if "created" in data else None,
             updated_at=parser.parse(data["updated"]) if "updated" in data else None
         )
@@ -903,6 +1079,7 @@ class VikunjaClient:
         self.labels = LabelsManager(self)
         self.task_relations = TaskRelationsManager(self)
         self.buckets = BucketsManager(self)
+        self.views = ViewsManager(self)
 
     def _request(self, method: str, endpoint: str, **kwargs) -> Any:
         """
