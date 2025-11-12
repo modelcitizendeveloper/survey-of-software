@@ -119,6 +119,14 @@ Examples:
   python3 create_task.py --project-id 13426 --title "FIFA prep" \\
     --description-file prep.html --priority 3
 
+  # Task with bucket assignment (by name)
+  python3 create_task.py --project-id 13481 --title "PyCon talk" \\
+    --bucket "Ideas" --due-date 2026-03-01
+
+  # Task with bucket assignment (by index)
+  python3 create_task.py --project-id 13481 --title "Event opportunity" \\
+    --bucket 1 --due-date "next month"
+
 Priority Levels:
   0 = Unset (default)
   1 = Low
@@ -165,6 +173,10 @@ Repeat Mode:
                         help='Shortcut for --repeat-after 604800')
     parser.add_argument('--repeat-from-completion', action='store_true',
                         help='Repeat from completion instead of due date')
+
+    # Bucket assignment
+    parser.add_argument('--bucket', type=str,
+                        help='Assign to bucket: bucket name (e.g., "💡 Ideas") or index (1=first, 2=second, etc.)')
 
     # Options
     parser.add_argument('--dry-run', '-d', action='store_true',
@@ -250,6 +262,8 @@ Repeat Mode:
 
     if args.dry_run:
         print("🔍 DRY RUN - Task not created")
+        if args.bucket:
+            print(f"Would assign to bucket: {args.bucket}")
     else:
         print("Creating task...")
         try:
@@ -257,11 +271,57 @@ Repeat Mode:
             response = client._request("PUT", f"/api/v1/projects/{args.project_id}/tasks", json=task_data)
 
             if response:
+                task_id = response['id']
                 print()
                 print("✅ Task created successfully")
                 print()
-                print(f"Task ID: {response['id']}")
-                print(f"URL: https://app.vikunja.cloud/tasks/{response['id']}")
+                print(f"Task ID: {task_id}")
+                print(f"URL: https://app.vikunja.cloud/tasks/{task_id}")
+
+                # Assign to bucket if requested
+                if args.bucket:
+                    print()
+                    print(f"Assigning to bucket: {args.bucket}")
+                    try:
+                        # Get Kanban view
+                        kanban_view = client.views.get_kanban_view(args.project_id)
+
+                        # Get all buckets
+                        buckets = client.buckets.list(args.project_id, kanban_view.id)
+
+                        # Find target bucket (by name or index)
+                        target_bucket = None
+
+                        # Try as index first (1-based)
+                        if args.bucket.isdigit():
+                            index = int(args.bucket) - 1
+                            if 0 <= index < len(buckets):
+                                target_bucket = buckets[index]
+                            else:
+                                print(f"⚠️  Bucket index {args.bucket} out of range (1-{len(buckets)})")
+                        else:
+                            # Try as name (partial match)
+                            for b in buckets:
+                                if args.bucket.lower() in b.title.lower():
+                                    target_bucket = b
+                                    break
+
+                        if target_bucket:
+                            client.tasks.set_position(
+                                task_id=task_id,
+                                project_view_id=kanban_view.id,
+                                bucket_id=target_bucket.id,
+                                project_id=args.project_id
+                            )
+                            print(f"✅ Assigned to bucket: {target_bucket.title}")
+                        else:
+                            print(f"⚠️  Bucket not found: {args.bucket}")
+                            print(f"Available buckets: {[b.title for b in buckets]}")
+
+                    except Exception as e:
+                        print(f"⚠️  Failed to assign bucket: {e}")
+                        print("Task created but not assigned to bucket")
+
         except Exception as e:
             print()
             print(f"❌ Failed to create task: {e}")
