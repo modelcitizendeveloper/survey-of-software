@@ -1,18 +1,4 @@
 queue:
-- code: '3.030'
-  title: CDN Services
-  tier: 3
-  status: not_started
-  estimated_hours: 6-8
-  rationale: High-value managed service, common in all web apps
-  value: Cloudflare, Fastly, BunnyCDN comparison
-- code: '3.032'
-  title: Image & Media Processing
-  tier: 3
-  status: not_started
-  estimated_hours: 4-6
-  rationale: Complements 3.030 CDN and 1.080 Image Processing
-  value: Cloudinary, ImageKit, Imgix - transformation services
 - code: '3.043'
   title: Search Services
   tier: 3

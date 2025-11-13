@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_completed: 71
+total_completed: 73
 research:
 - code: '1.002'
   title: fuzzy search
@@ -205,10 +205,18 @@ research:
   title: email communication
   description: Research on email communication
   path: research/3.020-email-communication
+- code: '3.030'
+  title: cdn services
+  description: Research on CDN services (content delivery networks) - completed Nov 12, 2025 (S1-S4 MPSE methodology)
+  path: research/3.030-cdn
 - code: '3.031'
   title: object storage
   description: '- **Tier**: 3 (Managed Services - Convenience)'
   path: research/3.031-object-storage
+- code: '3.032'
+  title: image media processing
+  description: Image & media processing services - Cloudinary, ImageKit, Imgix, Cloudflare Images. Completed Nov 13, 2025 (S1-S4 MPSE, 28 docs, 14,189 lines)
+  path: research/3.032-image-media-processing
 - code: '3.040'
   title: database services
   description: Research on database services
