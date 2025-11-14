@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_completed: 73
+total_completed: 74
 research:
 - code: '1.002'
   title: fuzzy search
@@ -221,6 +221,10 @@ research:
   title: database services
   description: Research on database services
   path: research/3.040-database-services
+- code: '3.043'
+  title: search services
+  description: Search-as-a-Service platforms - Algolia, Meilisearch, Typesense, Elasticsearch, OpenSearch. Completed Nov 14, 2025 (S1-S4 MPSE, 28 docs, 16,268 lines)
+  path: research/3.043-search-services
 - code: '3.042'
   title: redis hosting
   description: Research on redis hosting

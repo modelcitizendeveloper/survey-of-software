@@ -1,11 +1,4 @@
 queue:
-- code: '3.043'
-  title: Search Services
-  tier: 3
-  status: not_started
-  estimated_hours: 6-8
-  rationale: Common application feature, Tier 3 managed option
-  value: Algolia, Meilisearch, Typesense comparison
 - code: '1.001'
   title: Advanced Sorting Libraries
   tier: 1
