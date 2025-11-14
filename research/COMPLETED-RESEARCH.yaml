@@ -1,6 +1,10 @@
 repository: spawn-solutions
-total_completed: 74
+total_completed: 75
 research:
+- code: '1.001'
+  title: advanced sorting libraries
+  description: Advanced sorting algorithms and libraries - Timsort, NumPy radix, parallel, external sorting. Completed Nov 14, 2025 (S1-S4, 29 docs, 19,686 lines)
+  path: research/1.001-sorting-libraries
 - code: '1.002'
   title: fuzzy search
   description: Research on fuzzy search
