@@ -1,11 +1,4 @@
 queue:
-- code: '1.001'
-  title: Advanced Sorting Libraries
-  tier: 1
-  status: not_started
-  estimated_hours: 3-5
-  rationale: First item in Tier 1 roadmap, algorithmic fundamentals
-  value: Timsort variants, parallel sorts, radix sorts
 - code: '3.041'
   title: NoSQL Databases
   tier: 3
