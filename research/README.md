@@ -219,6 +219,7 @@ planned_research:
 **Planned**: 157 total research items across all tiers
 
 **In Progress**:
+- 3.030 CDN Services (S1 complete Nov 9, S2-S4 pending)
 - 3.502 ERP Platforms
 - 3.503 HRIS/HCM
 - 3.031 Object Storage (substantial progress)
@@ -241,6 +242,9 @@ planned_research:
 - Updated by: Product/research lead (as priorities shift)
 - Frequency: Weekly or when triggers emerge
 - Validation: Top item should always be "what's next"
+- **IMPORTANT**: Check `status` and `path` fields before starting research:
+  - `status: in_progress` → Continue existing research in `path`
+  - `status: not_started` → Create new research directory
 
 **PLANNED-RESEARCH.yaml**:
 - Updated by: Roadmap maintainer (when roadmaps change)
