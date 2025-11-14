@@ -8,7 +8,9 @@ experiment:
   status: "complete"
   started: "2025-11-01"
   completed: "2025-11-01"
+  updated: "2025-11-13"
   discovery_method: "detailed_toc"
+  update_notes: "Nov 13, 2025: Added Una, Pigment, Datarails (full depth). Expanded from 9 to 12 platforms. Client request for decision analysis."
 
 trigger:
   source: "CFO Forum Post Analysis"
@@ -45,6 +47,11 @@ platforms:
       research_depth: "reduced"
       line_count: 315
       rationale: "Tier 1 alternative, data warehouse focus"
+    - name: "Una"
+      research_depth: "full"
+      line_count: 865
+      rationale: "Revenue-centered FP&A, early-stage (founded 2023), ADDED Nov 13, 2025"
+      added: "2025-11-13"
 
   tier_2_mid_market:
     - name: "Cube"
@@ -63,6 +70,11 @@ platforms:
       research_depth: "reduced"
       line_count: 419
       rationale: "Workday ecosystem platform"
+    - name: "Datarails"
+      research_depth: "full"
+      line_count: 976
+      rationale: "Excel-native, 200+ integrations, FP&A Genius AI, ADDED Nov 13, 2025"
+      added: "2025-11-13"
 
   tier_3_enterprise:
     - name: "Planful"
@@ -77,6 +89,11 @@ platforms:
       research_depth: "reduced"
       line_count: 462
       rationale: "Unified CPM, recent IPO"
+    - name: "Pigment"
+      research_depth: "full"
+      line_count: 835
+      rationale: "AI-powered enterprise FP&A, unicorn $1B valuation, ADDED Nov 13, 2025"
+      added: "2025-11-13"
 
 research_questions:
   primary:
@@ -97,23 +114,26 @@ mpse_stages:
   s1_rapid:
     status: "completed"
     completed_date: "2025-11-01"
-    updated_date: "2025-11-05"
-    goal: "Platform overviews, 9 platforms (Cube added Nov 5)"
-    platforms: 9
-    time_actual: "1 day"
+    updated_date: "2025-11-13"
+    goal: "Platform overviews, 12 platforms (Cube Nov 5, Una/Pigment/Datarails Nov 13)"
+    platforms: 12
+    time_actual: "1 day (initial), +4 hours (Nov 13 update)"
     deliverables:
       - "approach.md"
       - "runway.md (563 lines, full depth)"
       - "planful.md (577 lines, full depth)"
       - "cube.md (990 lines, full depth - ADDED Nov 5, 2025)"
+      - "una.md (865 lines, full depth - ADDED Nov 13, 2025)"
+      - "datarails.md (976 lines, full depth - ADDED Nov 13, 2025)"
+      - "pigment.md (835 lines, full depth - ADDED Nov 13, 2025)"
       - "causal.md (315 lines, reduced)"
       - "vena.md (370 lines, reduced)"
       - "prophix.md (387 lines, reduced)"
       - "adaptive-insights.md (419 lines, reduced)"
       - "anaplan.md (410 lines, reduced)"
       - "onestream.md (462 lines, reduced)"
-      - "recommendations.md (synthesis)"
-    total_lines: ~4500 (includes Cube 990 lines added Nov 5)
+      - "recommendations.md (synthesis - needs update for 3 new platforms)"
+    total_lines: ~7176 (original 4500 + 2676 new lines Nov 13)
 
   s2_comprehensive:
     status: "completed"
