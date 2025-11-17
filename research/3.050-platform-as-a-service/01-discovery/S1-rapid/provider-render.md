@@ -5,25 +5,33 @@ Render is a modern cloud platform that has emerged as the leading Heroku alterna
 
 ## Pricing
 
-### Free Tier
+**Account Tiers:**
+- **Hobby (Free):** Individual developers, no team features
+- **Professional:** $19/user/month - team collaboration, autoscaling, preview environments, 500GB bandwidth
+
+**Compute Pricing (applies to both Hobby and Professional):**
+
+### Free Tier (Hobby only)
 - 750 hours per month of free instance credit (enough for one instance running 24/7)
 - 0.1 CPU, public-facing servers
 - Custom domains and fully-managed TLS certificates
 - Pull Request Previews, Log Streams, rollbacks
 - Free PostgreSQL database for 90 days (1GB disk, 256MB RAM, 0.1 CPU)
 - No credit card required
-- **Limitations:** Services spin down after 15 minutes of inactivity, no persistent disk, no SMTP email
+- **Limitations:** Services spin down after 15 minutes of inactivity, no SMTP email
 
-### Starter Tier
+### Starter Tier (Hobby or Professional)
 - Pay-as-you-go starting at $7/month for basic web service
 - Shared CPU instances with guaranteed resources
 - Multiple container sizes available
+- **Persistent disks available:** $0.25/GB/month (NEW: Available on Hobby tier!)
 
-### Production Tier
+### Production Tier (Hobby or Professional)
 - Dedicated instances starting at $25/month
 - Full CPU cores, more RAM options
-- Persistent disks available
 - Production PostgreSQL from $7/month
+
+**Key Update (Nov 2025):** Persistent disks now available on ALL tiers including free Hobby accounts at $0.25/GB/month. Professional tier ($19/user/month) only needed for team features, autoscaling, and enhanced bandwidth (500GB vs 100GB).
 
 ## Key Strengths
 - Maintains a free tier when competitors eliminated theirs (major competitive advantage)
