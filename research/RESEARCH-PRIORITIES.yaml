@@ -1,11 +1,21 @@
 queue:
-- code: '3.041'
-  title: NoSQL Databases
+- code: '3.045'
+  title: Graph Databases
   tier: 3
   status: not_started
   estimated_hours: 8-10
-  rationale: Major category, complements 3.040 Relational Databases
-  value: MongoDB, DynamoDB, Cassandra, Redis as database
+  rationale: |
+    Specialized coverage of graph databases (deeper than 3.041 NoSQL Neo4j coverage).
+    Triggered by use case: representing research project as graph (research items, relationships, dependencies).
+    Goal: Evaluate graph DB options avoiding Neo4j lock-in.
+  value: |
+    - openCypher portability (Neo4j, Neptune, ArangoDB)
+    - Gremlin vs Cypher comparison
+    - Graph algorithms (PageRank, centrality, community detection)
+    - Self-hosting (Neo4j Community, JanusGraph, Memgraph)
+    - Cost analysis (managed vs self-hosted)
+  providers: Neo4j Aura, Amazon Neptune, ArangoDB, TigerGraph, Memgraph, JanusGraph, Dgraph
+  use_case: Knowledge graph for research project relationships
 - code: '2.072'
   title: GraphQL
   tier: 2
