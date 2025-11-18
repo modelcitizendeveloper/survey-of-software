@@ -237,7 +237,9 @@ class FinancialTrainer:
         elif key.is_sequence:
             pass  # Ignore other special keys
         else:
-            self.observation_buffer += str(key)
+            # Limit observation length to 250 characters
+            if len(self.observation_buffer) < 250:
+                self.observation_buffer += str(key)
 
         return True
 
@@ -297,9 +299,17 @@ class FinancialTrainer:
                 commands[1] += "  [l] LLM"
             commands[1] += "  [f] Finish  [q] Quit"
         else:  # observe mode
+            # Truncate observation display if too long for screen
+            max_display_len = self.term.width - 25  # Leave room for label and cursor
+            buffer_display = self.observation_buffer
+            if len(buffer_display) > max_display_len:
+                # Show end of observation (most recent typing)
+                buffer_display = "..." + buffer_display[-(max_display_len-3):]
+
+            char_count = f"({len(self.observation_buffer)}/250)"
             commands = [
-                f"Observation: {self.observation_buffer}_",
-                "[Enter] Submit  [q] Cancel"
+                f"Observation: {buffer_display}_",
+                f"[Enter] Submit  [q] Cancel  {char_count}"
             ]
 
         for i, cmd in enumerate(commands):
