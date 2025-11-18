@@ -1,0 +1,385 @@
+#!/usr/bin/env python3
+"""Financial Analysis Fluency Trainer - Interactive CLI."""
+
+import sys
+import argparse
+from pathlib import Path
+from datetime import datetime
+from blessed import Terminal
+
+from scenario_loader import ScenarioLoader
+from view_engine import ViewEngine
+from scorer import ObservationScorer
+
+
+class FinancialTrainer:
+    """Interactive financial analysis training session."""
+
+    def __init__(self, scenario, term, use_llm=False):
+        self.scenario = scenario
+        self.term = term
+        self.use_llm = use_llm
+
+        self.view_engine = ViewEngine(scenario)
+        self.scorer = ObservationScorer(scenario['key_insights'])
+
+        self.current_view = 'default'
+        self.start_time = datetime.now()
+        self.observation_buffer = ""
+        self.mode = 'view'  # 'view' or 'observe'
+        self.message = ""
+
+    def run(self):
+        """Run interactive training session."""
+        with self.term.fullscreen(), self.term.cbreak(), self.term.hidden_cursor():
+            self._display()
+
+            while True:
+                key = self.term.inkey(timeout=0.1)
+
+                if not key:
+                    continue
+
+                # Handle quit
+                if key.lower() == 'q':
+                    if self.mode == 'observe':
+                        # Cancel observation mode
+                        self.mode = 'view'
+                        self.observation_buffer = ""
+                        self.message = "Observation cancelled"
+                        self._display()
+                        continue
+                    else:
+                        # Confirm quit
+                        if self._confirm_quit():
+                            break
+                        self._display()
+                        continue
+
+                # Handle different modes
+                if self.mode == 'view':
+                    if not self._handle_view_mode(key):
+                        break
+                elif self.mode == 'observe':
+                    if not self._handle_observe_mode(key):
+                        break
+
+                self._display()
+
+        # Show final results
+        self._show_final_results()
+
+    def _handle_view_mode(self, key):
+        """Handle input in view mode.
+
+        Returns:
+            True to continue, False to quit
+        """
+        key_str = str(key)
+
+        # View switching
+        if key == 'd' or key == '1':
+            self.current_view = 'default'
+            self.message = "Showing: Default (absolute values)"
+
+        elif key == '%' or key == '2':
+            self.current_view = '%'
+            self.message = "Showing: Percentage of Revenue"
+
+        elif key == 'm' or key == '3':
+            self.current_view = 'mom'
+            self.message = "Showing: Month-over-Month Growth"
+
+        elif key == 'g' or key == '4':
+            self.current_view = 'margin'
+            self.message = "Showing: Margin Analysis"
+
+        elif key == 'e' or key == '5':
+            self.current_view = 'detail'
+            self.message = "Showing: Detailed Breakdown"
+
+        elif key == 'c' or key == '6':
+            self.current_view = 'cash'
+            self.message = "Showing: Cash Flow"
+
+        # Enter observation mode
+        elif key == 'o' or key == '\n':
+            self.mode = 'observe'
+            self.observation_buffer = ""
+            self.message = "Enter observation (Enter to submit, q to cancel):"
+
+        # Show hint
+        elif key == '?':
+            self._show_hint()
+
+        # Finish session
+        elif key.name == 'KEY_ESCAPE' or key == 'f':
+            return False
+
+        return True
+
+    def _handle_observe_mode(self, key):
+        """Handle input in observation entry mode.
+
+        Returns:
+            True to continue, False to quit
+        """
+        # Submit observation
+        if key.name == 'KEY_ENTER':
+            if self.observation_buffer.strip():
+                result = self.scorer.score_observation(
+                    self.observation_buffer,
+                    use_llm=self.use_llm
+                )
+
+                if result['matches']:
+                    points = result['points']
+                    count = len(result['matches'])
+                    self.message = f"✓ Nice! +{points} points ({count} insight(s) matched)"
+                else:
+                    self.message = "Observation noted, but no new insights matched. Try exploring different views!"
+
+                self.observation_buffer = ""
+                self.mode = 'view'
+            else:
+                self.message = "Observation was empty"
+                self.mode = 'view'
+
+        # Backspace
+        elif key.name == 'KEY_BACKSPACE' or key.name == 'KEY_DELETE' or key == '\x7f':
+            if self.observation_buffer:
+                self.observation_buffer = self.observation_buffer[:-1]
+
+        # Regular character input
+        elif key.is_sequence:
+            pass  # Ignore other special keys
+        else:
+            self.observation_buffer += str(key)
+
+        return True
+
+    def _display(self):
+        """Display current UI state."""
+        print(self.term.home + self.term.clear)
+
+        # Title
+        print(self.term.move_y(1) + self.term.center(
+            self.term.bold("EXERCITATIO PECUNIAE")
+        ))
+        print(self.term.move_y(2) + self.term.center(
+            self.term.dim("Financial Analysis Fluency Trainer")
+        ))
+
+        # Scenario info
+        scenario_info = (f"{self.scenario['name']} | "
+                        f"{self.scenario['industry']} | "
+                        f"Level: {self.scenario['difficulty'].upper()}")
+        print(self.term.move_y(3) + self.term.center(scenario_info))
+
+        # Current score
+        user_score, max_score = self.scorer.get_total_score()
+        score_text = f"Score: {user_score}/{max_score}"
+        print(self.term.move_y(4) + self.term.center(
+            self.term.green(score_text) if user_score > 0 else score_text
+        ))
+
+        # View area
+        print(self.term.move_y(6))
+        view_text = self.view_engine.format_view(self.current_view)
+        for line in view_text.split('\n'):
+            print(self.term.center(line))
+
+        # Command area
+        cmd_y = self.term.height - 8
+
+        print(self.term.move_y(cmd_y))
+        print(self.term.center(self.term.reverse("─" * 60)))
+
+        # Mode-specific commands
+        if self.mode == 'view':
+            commands = [
+                "[d/1] Default  [%/2] Percent  [m/3] MoM  [g/4] Margin  [e/5] Detail  [c/6] Cash",
+                "[o/Enter] Add Observation  [?] Hint  [f/Esc] Finish Session  [q] Quit"
+            ]
+        else:  # observe mode
+            commands = [
+                f"Observation: {self.observation_buffer}_",
+                "[Enter] Submit  [q] Cancel"
+            ]
+
+        for i, cmd in enumerate(commands):
+            print(self.term.move_y(cmd_y + 1 + i) + self.term.center(cmd))
+
+        # Message area
+        if self.message:
+            print(self.term.move_y(cmd_y + 4) + self.term.center(
+                self.term.yellow(self.message)
+            ))
+
+    def _show_hint(self):
+        """Show a hint based on difficulty level."""
+        prompts = self.scenario.get('prompts', {})
+        difficulty = self.scenario.get('difficulty', 'beginner')
+
+        hints = prompts.get(difficulty, prompts.get('beginner', []))
+
+        if hints:
+            # Find a hint for an uncaught insight
+            missed = self.scorer.get_missed_insights()
+
+            if missed and hints:
+                # Match hint to missed insight category
+                hint = hints[len(self.scorer.matched_insights) % len(hints)]
+                self.message = f"💡 Hint: {hint}"
+            else:
+                self.message = "You've explored thoroughly! Try finishing the session."
+        else:
+            self.message = "No hints available for this level"
+
+    def _confirm_quit(self):
+        """Confirm quit action."""
+        print(self.term.move_y(self.term.height - 2) + self.term.center(
+            self.term.red("Really quit without finishing? [y/N] ")
+        ))
+
+        key = self.term.inkey()
+        return key.lower() == 'y'
+
+    def _show_final_results(self):
+        """Display final scoring results."""
+        print(self.term.clear)
+        print(self.term.move_y(2) + self.term.center(
+            self.term.bold("═" * 50)
+        ))
+        print(self.term.move_y(3) + self.term.center(
+            self.term.bold("SESSION COMPLETE")
+        ))
+        print(self.term.move_y(4) + self.term.center(
+            self.term.bold("═" * 50)
+        ))
+
+        summary = self.scorer.get_summary()
+
+        # Overall score
+        print(self.term.move_y(6) + self.term.center(
+            f"Score: {summary['user_score']}/{summary['max_score']} "
+            f"({summary['percentage']:.0f}%)"
+        ))
+        print(self.term.move_y(7) + self.term.center(
+            f"Depth Level: {self.term.bold(summary['depth_level'])}"
+        ))
+
+        # Time spent
+        duration = datetime.now() - self.start_time
+        minutes = int(duration.total_seconds() / 60)
+        seconds = int(duration.total_seconds() % 60)
+        print(self.term.move_y(8) + self.term.center(
+            f"Time: {minutes}m {seconds}s"
+        ))
+
+        # What you caught
+        print(self.term.move_y(10) + self.term.center(
+            self.term.green("✓ INSIGHTS CAUGHT:")
+        ))
+        y = 11
+        for insight in summary['caught']:
+            line = f"  • {insight['description']} (+{insight['points']} pts)"
+            print(self.term.move_y(y) + self.term.center(line))
+            y += 1
+
+        # What you missed
+        if summary['missed']:
+            y += 1
+            print(self.term.move_y(y) + self.term.center(
+                self.term.yellow("⚠ INSIGHTS MISSED:")
+            ))
+            y += 1
+            for insight in summary['missed']:
+                importance = insight.get('importance', 'medium')
+                emoji = "🔥" if importance == 'high' else "💡"
+                line = f"  {emoji} {insight['description']} ({insight['points']} pts)"
+                print(self.term.move_y(y) + self.term.center(line))
+                y += 1
+
+        # Next steps
+        y += 2
+        if summary['percentage'] < 60:
+            next_step = "Try reviewing the financial statement again with different views!"
+        elif summary['percentage'] < 80:
+            next_step = "Great work! Try connecting insights across multiple metrics."
+        else:
+            next_step = "Excellent analysis! Ready for the next scenario."
+
+        print(self.term.move_y(y) + self.term.center(next_step))
+
+        # Wait for keypress
+        print(self.term.move_y(self.term.height - 2) + self.term.center(
+            self.term.dim("Press any key to exit...")
+        ))
+        self.term.inkey()
+
+
+def main():
+    """Main entry point."""
+    parser = argparse.ArgumentParser(
+        description='Financial Analysis Fluency Trainer'
+    )
+    parser.add_argument(
+        'scenario',
+        nargs='?',
+        default='001_simple_growth.yaml',
+        help='Scenario file to load (default: 001_simple_growth.yaml)'
+    )
+    parser.add_argument(
+        '--llm',
+        action='store_true',
+        help='Use LLM for observation scoring (requires Ollama)'
+    )
+    parser.add_argument(
+        '--list',
+        action='store_true',
+        help='List available scenarios'
+    )
+    parser.add_argument(
+        '--scenarios-dir',
+        default='scenarios',
+        help='Directory containing scenario files'
+    )
+
+    args = parser.parse_args()
+
+    # Initialize
+    loader = ScenarioLoader(args.scenarios_dir)
+
+    # List scenarios
+    if args.list:
+        scenarios = loader.list_scenarios()
+        print("\nAvailable Scenarios:")
+        print("=" * 60)
+        for s in scenarios:
+            print(f"{s['file']:30} | {s['difficulty']:12} | {s['name']}")
+        print()
+        return 0
+
+    # Load scenario
+    try:
+        scenario = loader.load_scenario(args.scenario)
+    except Exception as e:
+        print(f"Error loading scenario: {e}", file=sys.stderr)
+        return 1
+
+    # Run training session
+    term = Terminal()
+    trainer = FinancialTrainer(scenario, term, use_llm=args.llm)
+
+    try:
+        trainer.run()
+    except KeyboardInterrupt:
+        print("\n\nSession interrupted.")
+        return 1
+
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())
