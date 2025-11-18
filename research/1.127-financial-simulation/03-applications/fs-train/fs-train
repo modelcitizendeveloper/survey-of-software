@@ -158,16 +158,29 @@ class FinancialTrainer:
 
                 if result['matches']:
                     points = result['points']
-                    count = len(result['matches'])
-                    # Show which keywords matched for learning
+                    # Show keywords matched + LLM feedback if available
                     first_match = result['matches'][0]
                     keywords = ', '.join(first_match.get('keywords_matched', [])[:3])
-                    self.message = f"✓ Nice! +{points} points - matched: {keywords}"
+                    msg = f"✓ Nice! +{points} points - matched: {keywords}"
+
+                    # Add LLM feedback if present
+                    if result.get('llm_feedback'):
+                        msg = f"✓ +{points} pts! {result['llm_feedback'][:60]}"
+
+                    self.message = msg
+
+                elif result.get('llm_bonus', 0) >= 3:
+                    # LLM recognized it even without keyword match
+                    points = result['llm_bonus']
+                    feedback = result.get('llm_feedback', 'Valid insight!')
+                    self.message = f"✓ +{points} pts (LLM)! {feedback[:60]}"
+
                 elif result.get('near_misses'):
                     # Near miss - guide toward correct jargon
                     near_miss = result['near_misses'][0]
                     suggested = ', '.join(near_miss['keywords'][:2])
                     self.message = f"⚡ Close! Try using: {suggested}"
+
                 else:
                     self.message = "Observation noted, but no new insights matched. Try exploring different views!"
 
