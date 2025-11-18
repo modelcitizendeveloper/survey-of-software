@@ -521,24 +521,39 @@ class ViewEngine:
             end_key = f'{month}_end'
             ending_cash[month] = cash_flow.get(end_key, 0)
 
-        # Calculate DSO (Days Sales Outstanding) if we have revenue
+        # Get net income for each month
         default = self.views.get('default', self._calculate_default())
+        net_income = default.get('net_income', {})
         revenue = default.get('revenue', {})
 
+        # Calculate cumulative net income (retained earnings change)
+        cumulative_income = {}
+        total = 0
+        for month in self.months:
+            total += net_income.get(month, 0)
+            cumulative_income[month] = total
+
+        # Calculate DSO (Days Sales Outstanding) if we have AR
         dso = {}
+        ar_ratio = {}
         for month in self.months:
             if month in ar and month in revenue:
                 monthly_revenue = revenue[month]
                 if monthly_revenue > 0:
                     dso[month] = (ar[month] / monthly_revenue) * 30  # Days in month
+                    ar_ratio[month] = (ar[month] / monthly_revenue) * 100  # Percentage
                 else:
                     dso[month] = 0
+                    ar_ratio[month] = 0
 
         return {
             'cash': ending_cash,
             'accounts_receivable': ar,
             'accounts_payable': ap,
-            'dso': dso
+            'net_income': net_income,
+            'cumulative_income': cumulative_income,
+            'dso': dso,
+            'ar_ratio': ar_ratio
         }
 
     def _format_balance_sheet(self, view: Dict[str, Any]) -> str:
@@ -576,6 +591,28 @@ class ViewEngine:
             line = f"{'Accounts Payable':25}"
             for month in self.months:
                 value = ap.get(month, 0)
+                line += f" ${value:>9,.0f}"
+            lines.append(line)
+
+        # Show P&L items for context
+        lines.append("")
+        lines.append("Period Performance:")
+
+        # Net Income
+        net_income = view.get('net_income', {})
+        if net_income:
+            line = f"{'  Net Income':25}"
+            for month in self.months:
+                value = net_income.get(month, 0)
+                line += f" ${value:>9,.0f}"
+            lines.append(line)
+
+        # Cumulative Income (Retained Earnings change)
+        cumulative = view.get('cumulative_income', {})
+        if cumulative:
+            line = f"{'  Cumulative Income':25}"
+            for month in self.months:
+                value = cumulative.get(month, 0)
                 line += f" ${value:>9,.0f}"
             lines.append(line)
 
