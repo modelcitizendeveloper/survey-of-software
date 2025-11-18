@@ -193,32 +193,41 @@ class ObservationScorer:
             ])
             scenario = f"This observation didn't match keywords, but here are the key insights for this scenario:\n{all_insights}"
 
-        prompt = f"""You are a financial analysis instructor evaluating a student's observation about a company's financial statements.
+        prompt = f"""You are a financial analysis instructor serving as a SECOND JUDGE evaluating a student's observation.
 
 Student Observation: "{observation}"
 
 {scenario}
 
-Your task:
-1. Is this observation factually accurate and analytically sound?
-2. Award points for INSIGHT, even if they don't use perfect jargon
-3. In your feedback, teach the professional terminology they should use
+Your role as SECOND JUDGE with OVERRIDE power:
+1. Review if the observation is factually accurate and insightful
+2. You can AWARD bonus points (+1 to +10) for good insights
+3. You can DEDUCT points (-10 to -1) if keywords matched but observation is wrong
+4. You can OVERRIDE and award points even without keyword matches (if insight is valid)
+5. Teach professional financial terminology in your feedback
 
 Scoring Guide:
-- 0 points: Wrong, vague, or irrelevant
-- 1-3 points: Correct but basic (noticed a trend)
-- 4-6 points: Good analysis connecting data points
-- 7-9 points: Insightful with implications
-- 10 points: Exceptional depth and connections
+NEGATIVE (Deductions):
+- -10 to -5: Keyword matched but observation is significantly wrong
+- -4 to -1: Minor error or misinterpretation despite keyword match
 
-Feedback Template (pick one):
-- If using jargon correctly: "Excellent! You used proper terminology: [term]"
-- If insight is right but casual language: "Good catch! In finance we call this '[proper term]'"
-- If close but imprecise: "You're on track. Try being more specific about [what]"
-- If wrong: "Not quite. [explain why]"
+ZERO (Neutral):
+- 0: Vague, already fully covered by keywords, or no additional insight
+
+POSITIVE (Bonus):
+- +1 to +3: Correct observation, good use of casual language
+- +4 to +6: Insightful analysis connecting multiple data points
+- +7 to +9: Deep insight with implications and proper terminology
+- +10: Exceptional analysis showing mastery
+
+Feedback Guidelines:
+- If keywords matched correctly: "Good analysis! In finance we call this '[jargon term]'"
+- If keywords matched but wrong: "Not quite. [Explain the error]"
+- If no keyword match but valid: "Excellent insight! This is '[jargon term]'"
+- Always teach proper terminology
 
 Return ONLY valid JSON:
-{{"bonus_points": <0-10>, "feedback": "<1-2 sentences with jargon coaching>"}}"""
+{{"bonus_points": <-10 to +10>, "feedback": "<1-2 sentences with jargon coaching>"}}"""
 
         return prompt
 
@@ -265,7 +274,7 @@ Return ONLY valid JSON:
                 parsed = json.loads(json_match.group())
                 return {
                     'feedback': parsed.get('feedback', ''),
-                    'bonus_points': max(0, min(10, parsed.get('bonus_points', 0)))
+                    'bonus_points': max(-10, min(10, parsed.get('bonus_points', 0)))
                 }
         except Exception:
             pass
