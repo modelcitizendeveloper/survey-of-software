@@ -1,0 +1,134 @@
+#!/home/ivanadamin/spawn-solutions/research/1.140-classical-language-libraries/02-implementations/.venv/bin/python
+"""
+latin-parse - Parse Latin text and output JSONL
+
+Usage:
+    latin-parse input.txt > parsed.jsonl
+    cat input.txt | latin-parse > parsed.jsonl
+
+Output format: One JSON object per line (JSONL)
+"""
+
+import sys
+import json
+import re
+
+from cltk import NLP
+
+def decode_noun_xpos(xpos):
+    """Extract declension and case from XPOS code"""
+    if not xpos or xpos == '-':
+        return None, None
+
+    # Declension mapping (first character)
+    decl_map = {
+        'A': '1st',
+        'B': '2nd',
+        'C': '2nd/3rd',  # Ambiguous, needs disambiguation
+        'D': '4th',
+        'E': '5th',
+    }
+
+    # Case mapping - parse from pipe-delimited fields
+    case_map = {
+        'A': 'nominative',  # casA
+        'B': 'genitive',     # casB
+        'C': 'dative',       # casC
+        'D': 'accusative',   # casD
+        'E': 'vocative',     # casE
+        'F': 'ablative',     # casF
+        'M': 'accusative',   # casM (neuter nom/acc - treat as accusative)
+    }
+
+    declension = decl_map.get(xpos[0], None)
+
+    # Parse case from cas field
+    case = None
+    if '|' in xpos:
+        fields = xpos.split('|')
+        for field in fields:
+            if field.startswith('cas') and len(field) > 3:
+                case_code = field[3]  # Get character after 'cas'
+                case = case_map.get(case_code)
+                break
+
+    return declension, case
+
+def decode_verb_xpos(xpos):
+    """Extract tense from XPOS code"""
+    if not xpos or xpos == '-':
+        return None
+
+    tense_match = re.search(r'tem(\d)', xpos)
+    if tense_match:
+        tense_map = {
+            '1': 'present',
+            '2': 'imperfect',
+            '3': 'future',
+            '4': 'perfect',
+        }
+        return tense_map.get(tense_match.group(1))
+    return None
+
+def parse_text(text):
+    """Parse Latin text and return structured data"""
+    nlp = NLP(language="lat", suppress_banner=True)
+
+    # Split into sentences (simple split on . ! ?)
+    sentences = re.split(r'[.!?]+', text.strip())
+    sentences = [s.strip() for s in sentences if s.strip()]
+
+    results = []
+
+    for sentence in sentences:
+        doc = nlp.analyze(text=sentence)
+
+        words_data = []
+        for word in doc.words:
+            word_info = {
+                'text': word.string,
+                'lemma': word.lemma if word.lemma else word.string.lower(),
+                'pos': word.upos if word.upos else 'UNKNOWN',
+                'xpos': word.xpos if word.xpos else '-',
+            }
+
+            # Add declension/case for nouns
+            if word.upos in ('NOUN', 'PROPN'):
+                declension, case = decode_noun_xpos(word.xpos)
+                if declension:
+                    word_info['declension'] = declension
+                if case:
+                    word_info['case'] = case
+
+            # Add tense for verbs
+            if word.upos == 'VERB':
+                tense = decode_verb_xpos(word.xpos)
+                if tense:
+                    word_info['tense'] = tense
+
+            words_data.append(word_info)
+
+        results.append({
+            'sentence': sentence,
+            'words': words_data
+        })
+
+    return results
+
+def main():
+    # Read from file or stdin
+    if len(sys.argv) > 1:
+        input_file = sys.argv[1]
+        with open(input_file, 'r', encoding='utf-8') as f:
+            text = f.read()
+    else:
+        text = sys.stdin.read()
+
+    # Parse and output JSONL
+    results = parse_text(text)
+
+    for result in results:
+        print(json.dumps(result, ensure_ascii=False))
+
+if __name__ == '__main__':
+    main()

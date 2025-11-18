@@ -1,0 +1,166 @@
+CLTK S2 COMPREHENSIVE TESTING
+======================================================================
+
+======================================================================
+TEST 1: API PARAMETERS
+======================================================================
+
+--- Testing flatten parameter ---
+flatten=False (default):
+  Type: <class 'list'>
+  Length: 12
+  First 2: [('puella', '--s----n-'), ('puella', '--s----v-')]
+
+flatten=True:
+  Type: <class 'list'>
+  Length: 12
+  First 2: ['puella', 'puella']
+
+--- Testing collatinus_dict parameter ---
+collatinus_dict=False:
+  First 2: [('puella', '--s----n-'), ('puella', '--s----v-')]
+collatinus_dict=True:
+  Type: dict
+  Keys: [1, 2, 3, 4, 5]
+  Sample: [(1, ['puella']), (2, ['puella'])]
+
+--- Testing lemmas attribute ---
+decliner.lemmas type: <class 'dict'>
+Number of lemmas: 81906
+Lemmas attributes: ['clear', 'copy', 'fromkeys', 'get', 'items', 'keys', 'pop', 'popitem', 'setdefault', 'update']
+
+======================================================================
+TEST 2: GRAMMATICAL CODE ANALYSIS
+======================================================================
+
+Comparing codes across genders:
+
+Masculine (dominus) codes:
+  dominus      --s----n-
+  domine       --s----v-
+  dominum      --s----a-
+  domini       --s----g-
+  domino       --s----d-
+  domino       --s----b-
+
+Feminine (puella) codes:
+  puella       --s----n-
+  puella       --s----v-
+  puellam      --s----a-
+  puellae      --s----g-
+  puellae      --s----d-
+  puella       --s----b-
+
+Neuter (templum) codes:
+  templum      --s----n-
+  templum      --s----v-
+  templum      --s----a-
+  templi       --s----g-
+  templo       --s----d-
+  templo       --s----b-
+
+--- Code Pattern Analysis ---
+Total unique codes: 12
+Sample codes: ['--s----g-', '--s----b-', '--p----b-', '--p----v-', '--s----d-']
+
+======================================================================
+TEST 3: PERFORMANCE BENCHMARKING
+======================================================================
+
+--- Single Declension ---
+Time: 0.01 ms
+Forms: 12
+
+--- Batch Declension (12 words) ---
+Total: 0.12 ms
+Average: 0.01 ms/word
+
+--- Batch Declension (100 words) ---
+Total: 0.79 ms
+Average: 0.01 ms/word
+Throughput: 129864 words/second
+
+--- Initialization Time ---
+Time: 139.94 ms
+
+--- Lemmatization (80 words) ---
+Total: 0.39 ms
+Average: 0.00 ms/word
+
+======================================================================
+TEST 4: EDGE CASES & ERROR HANDLING
+======================================================================
+
+--- Unknown Words ---
+foobar          → ERROR: CLTKException
+computer        → ERROR: CLTKException
+pizza           → ERROR: CLTKException
+
+--- Case Sensitivity ---
+'puella    ' → 12 forms
+'Puella    ' → ERROR: CLTKException
+'PUELLA    ' → ERROR: CLTKException
+'puella    ' → ERROR: CLTKException
+' puella   ' → ERROR: CLTKException
+
+--- Invalid Input ---
+'            ' → ERROR: CLTKException
+'            ' → ERROR: CLTKException
+'123         ' → ERROR: CLTKException
+'puella123   ' → ERROR: CLTKException
+'puel-la     ' → ERROR: CLTKException
+
+--- Lemmatization Edge Cases ---
+'foobar    ' → foobar
+'sum       ' → sum
+'est       ' → sum
+'AMAT      ' → AMAT
+'          ' → NO RESULT
+
+======================================================================
+TEST 5: COVERAGE TESTING
+======================================================================
+
+--- Irregular/Special Nouns ---
+
+vis: 12 forms
+  --s----n- vis
+  --s----v- vis
+  --s----a- vim
+  --s----d- vi
+
+bos: 12 forms
+  --s----n- bos
+  --s----v- bos
+  --s----a- bovem
+  --s----g- bovis
+
+domus: 14 forms
+  --s----n- domus
+  --s----v- domus
+  --s----a- domum
+  --s----g- domus
+
+os: 12 forms
+  --s----n- os
+  --s----v- os
+  --s----a- os
+  --s----g- ossis
+
+corpus: 12 forms
+  --s----n- corpus
+  --s----v- corpus
+  --s----a- corpus
+  --s----g- corporis
+
+--- Greek Loanwords ---
+basis        → 13 forms
+  Sample: ('basis', '--s----n-')
+crisis       → 13 forms
+  Sample: ('crisis', '--s----n-')
+poesis       → 16 forms
+  Sample: ('poesis', '--s----n-')
+
+======================================================================
+ALL TESTS COMPLETE
+======================================================================
