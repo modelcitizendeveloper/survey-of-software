@@ -163,6 +163,11 @@ class FinancialTrainer:
                     first_match = result['matches'][0]
                     keywords = ', '.join(first_match.get('keywords_matched', [])[:3])
                     self.message = f"✓ Nice! +{points} points - matched: {keywords}"
+                elif result.get('near_misses'):
+                    # Near miss - guide toward correct jargon
+                    near_miss = result['near_misses'][0]
+                    suggested = ', '.join(near_miss['keywords'][:2])
+                    self.message = f"⚡ Close! Try using: {suggested}"
                 else:
                     self.message = "Observation noted, but no new insights matched. Try exploring different views!"
 
@@ -346,8 +351,22 @@ class FinancialTrainer:
                 print(self.term.move_y(y) + self.term.center(line))
                 y += 1
 
+        # Explain non-matches
+        non_matches = [obs for obs in self.scorer.observation_log
+                      if not obs['matches'] and not obs.get('near_misses')]
+        if non_matches and len(non_matches) <= 3:
+            y += 1
+            print(self.term.move_y(y) + self.term.center(
+                self._fmt("📝 OBSERVATIONS THAT DIDN'T MATCH:", 'dim')
+            ))
+            y += 1
+            for obs in non_matches[:3]:
+                line = f'  "{obs["observation"][:50]}" - Keep exploring or try different phrasing'
+                print(self.term.move_y(y) + self.term.center(line))
+                y += 1
+
         # Next steps
-        y += 2
+        y += 1
         if summary['percentage'] < 60:
             next_step = "Try reviewing the financial statement again with different views!"
         elif summary['percentage'] < 80:
