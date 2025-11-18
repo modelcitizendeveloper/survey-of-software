@@ -372,7 +372,7 @@ class ViewEngine:
         # Header
         header = f"{'':25}"
         for month in self.months:
-            header += f"{month.capitalize():>10}"
+            header += f"{month.capitalize():>11}"
         lines.append(header)
         lines.append("")
 
@@ -382,7 +382,7 @@ class ViewEngine:
         line = f"  {'Total':23}"
         for month in self.months:
             value = revenue.get(month, 0)
-            line += f"${value:>9,.0f}"
+            line += f" ${value:>9,.0f}"
         lines.append(line)
         lines.append("")
 
@@ -392,7 +392,7 @@ class ViewEngine:
         line = f"  {'Total':23}"
         for month in self.months:
             value = cogs.get(month, 0)
-            line += f"${value:>9,.0f}"
+            line += f" ${value:>9,.0f}"
         lines.append(line)
         lines.append("")
 
@@ -405,7 +405,7 @@ class ViewEngine:
             line = f"  {category.capitalize():23}"
             for month in self.months:
                 value = values.get(month, 0)
-                line += f"${value:>9,.0f}"
+                line += f" ${value:>9,.0f}"
             lines.append(line)
 
         # Show total
@@ -414,7 +414,7 @@ class ViewEngine:
             total = 0
             for category, values in opex.items():
                 total += values.get(month, 0)
-            total_line += f"${total:>9,.0f}"
+            total_line += f" ${total:>9,.0f}"
         lines.append(total_line)
 
         return "\n".join(lines)
@@ -426,7 +426,7 @@ class ViewEngine:
         # Header
         header = f"{'':25}"
         for month in self.months:
-            header += f"{month.capitalize():>10}"
+            header += f"{month.capitalize():>11}"
         lines.append(header)
         lines.append("")
 
@@ -435,7 +435,7 @@ class ViewEngine:
         for month in self.months:
             start_key = f'{month}_start'
             value = view.get(start_key, 0)
-            line += f"${value:>9,.0f}"
+            line += f" ${value:>9,.0f}"
         lines.append(line)
 
         # Cash from operations row
@@ -443,8 +443,10 @@ class ViewEngine:
         for month in self.months:
             change_key = f'{month}_change'
             change = view.get(change_key, 0)
-            sign = "+" if change >= 0 else ""
-            line += f"{sign}${change:>8,.0f}"
+            if change >= 0:
+                line += f" +${change:>8,.0f}"
+            else:
+                line += f" ${change:>9,.0f}"
         lines.append(line)
 
         # Ending cash row
@@ -452,7 +454,7 @@ class ViewEngine:
         for month in self.months:
             end_key = f'{month}_end'
             value = view.get(end_key, 0)
-            line += f"${value:>9,.0f}"
+            line += f" ${value:>9,.0f}"
         lines.append(line)
 
         return "\n".join(lines)
