@@ -6,6 +6,8 @@ import argparse
 from pathlib import Path
 from datetime import datetime
 from blessed import Terminal
+import threading
+from queue import Queue
 
 from scenario_loader import ScenarioLoader
 from view_engine import ViewEngine
@@ -34,6 +36,11 @@ class FinancialTrainer:
         self.message = ""
         self.llm_error = None  # Track LLM errors
         self.finished = False  # Track if user pressed 'f' to finish
+        self.processing = False  # Track if we're processing an observation
+
+        # Async LLM evaluation
+        self.result_queue = Queue()  # Results from background threads
+        self.pending_observations = []  # Track observations being evaluated
 
     def _fmt(self, text, *attrs):
         """Safely apply terminal formatting, falling back to plain text.
@@ -63,6 +70,9 @@ class FinancialTrainer:
 
             while True:
                 key = self.term.inkey(timeout=0.1)
+
+                # Check for async LLM results
+                self._check_llm_results()
 
                 if not key:
                     continue
@@ -159,48 +169,53 @@ class FinancialTrainer:
         """
         # Submit observation
         if key.name == 'KEY_ENTER':
+            # Prevent double-submission
+            if self.processing:
+                return True
+
             if self.observation_buffer.strip():
-                result = self.scorer.score_observation(
-                    self.observation_buffer,
-                    use_llm=self.use_llm
-                )
-
-                if result['matches']:
-                    points = result['points']
-                    # Show keywords matched + LLM feedback if available
-                    first_match = result['matches'][0]
-                    keywords = ', '.join(first_match.get('keywords_matched', [])[:3])
-                    msg = f"✓ Nice! +{points} points - matched: {keywords}"
-
-                    # Add LLM feedback if present
-                    if result.get('llm_feedback'):
-                        msg = f"✓ +{points} pts! {result['llm_feedback'][:60]}"
-
-                    self.message = msg
-
-                elif result.get('llm_bonus', 0) >= 3:
-                    # LLM recognized it even without keyword match
-                    points = result['llm_bonus']
-                    feedback = result.get('llm_feedback', 'Valid insight!')
-                    self.message = f"✓ +{points} pts (LLM)! {feedback[:60]}"
-
-                elif result.get('error') and self.use_llm:
-                    # LLM error - show once
-                    if not self.llm_error:
-                        self.llm_error = result['error']
-                        self.message = f"⚠️ LLM: {result['error']}"
-
-                elif result.get('near_misses'):
-                    # Near miss - guide toward correct jargon
-                    near_miss = result['near_misses'][0]
-                    suggested = ', '.join(near_miss['keywords'][:2])
-                    self.message = f"⚡ Close! Try using: {suggested}"
-
-                else:
-                    self.message = "Observation noted, but no new insights matched. Try exploring different views!"
-
+                observation_text = self.observation_buffer
                 self.observation_buffer = ""
                 self.mode = 'view'
+
+                # Do keyword matching immediately (fast!)
+                result = self.scorer.score_observation(
+                    observation_text,
+                    use_llm=False  # No LLM yet - that's async
+                )
+
+                # Show immediate feedback from keywords
+                if result['matches']:
+                    points = result['points']
+                    first_match = result['matches'][0]
+                    keywords = ', '.join(first_match.get('keywords_matched', [])[:3])
+                    self.message = f"✓ +{points} pts! Matched: {keywords}"
+                    if self.use_llm:
+                        self.message += " (🤖 LLM evaluating...)"
+
+                elif result.get('near_misses'):
+                    near_miss = result['near_misses'][0]
+                    suggested = ', '.join(near_miss['keywords'][:2])
+                    self.message = f"⚡ Close! Try: {suggested}"
+                    if self.use_llm:
+                        self.message += " (🤖 LLM evaluating...)"
+
+                else:
+                    if self.use_llm:
+                        self.message = "🤖 LLM evaluating..."
+                    else:
+                        self.message = "No keyword matches. Try exploring different views!"
+
+                # Launch async LLM evaluation if enabled
+                if self.use_llm:
+                    self.pending_observations.append(observation_text)
+                    thread = threading.Thread(
+                        target=self._evaluate_with_llm_async,
+                        args=(observation_text,),
+                        daemon=True
+                    )
+                    thread.start()
+
             else:
                 self.message = "Observation was empty"
                 self.mode = 'view'
@@ -428,6 +443,69 @@ class FinancialTrainer:
 
         key = self.term.inkey()
         return 'back' if key.lower() == 'b' else 'exit'
+
+    def _evaluate_with_llm_async(self, observation: str):
+        """Evaluate observation with LLM in background thread.
+
+        Args:
+            observation: User's observation text
+        """
+        try:
+            # Call LLM evaluation
+            result = self.scorer.score_observation(
+                observation,
+                use_llm=True
+            )
+
+            # Put result in queue for main thread to process
+            self.result_queue.put({
+                'observation': observation,
+                'result': result
+            })
+
+        except Exception as e:
+            # Put error in queue
+            self.result_queue.put({
+                'observation': observation,
+                'error': str(e)
+            })
+
+    def _check_llm_results(self):
+        """Check for completed LLM evaluations and display results."""
+        while not self.result_queue.empty():
+            item = self.result_queue.get()
+            observation = item['observation']
+
+            # Remove from pending
+            if observation in self.pending_observations:
+                self.pending_observations.remove(observation)
+
+            if 'error' in item:
+                # LLM error
+                if not self.llm_error:
+                    self.llm_error = item['error']
+                    self.message = f"⚠️ LLM: {item['error']}"
+                    self._display()
+                continue
+
+            result = item['result']
+
+            # LLM can award bonus points, deduct points, or override
+            if result.get('llm_feedback'):
+                llm_bonus = result.get('llm_bonus', 0)
+                feedback = result['llm_feedback'][:200]
+
+                if llm_bonus > 0:
+                    # LLM agrees or found additional insight
+                    self.message = f"🤖 +{llm_bonus} bonus! {feedback}"
+                elif llm_bonus < 0:
+                    # LLM deducts points (keyword matched but wrong)
+                    self.message = f"🤖 {llm_bonus} pts: {feedback}"
+                else:
+                    # LLM just provides commentary
+                    self.message = f"🤖 {feedback}"
+
+                self._display()
 
 
 def main():
