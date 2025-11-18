@@ -41,6 +41,7 @@ class FinancialTrainer:
         # Async LLM evaluation
         self.result_queue = Queue()  # Results from background threads
         self.pending_observations = []  # Track observations being evaluated
+        self.last_llm_feedback = None  # Store full LLM feedback for modal viewing
 
     def _fmt(self, text, *attrs):
         """Safely apply terminal formatting, falling back to plain text.
@@ -153,6 +154,13 @@ class FinancialTrainer:
         # Show hint
         elif key == '?':
             self._show_hint()
+
+        # Show full LLM feedback
+        elif key == 'l':
+            if self.last_llm_feedback:
+                self._show_llm_modal()
+            else:
+                self.message = "No LLM feedback available yet"
 
         # Finish session
         elif key.name == 'KEY_ESCAPE' or key == 'f':
@@ -282,8 +290,12 @@ class FinancialTrainer:
         if self.mode == 'view':
             commands = [
                 "[d/1] Default  [%/2] Percent  [m/3] MoM  [g/4] Margin  [e/5] Detail",
-                "[c/6] Cash  [b/7] Balance Sheet  [o/Enter] Observe  [?] Hint  [f] Finish  [q] Quit"
+                "[c/6] Cash  [b/7] Balance  [o/Enter] Observe  [?] Hint"
             ]
+            # Add LLM detail option if feedback available
+            if self.use_llm and self.last_llm_feedback:
+                commands[1] += "  [l] LLM"
+            commands[1] += "  [f] Finish  [q] Quit"
         else:  # observe mode
             commands = [
                 f"Observation: {self.observation_buffer}_",
@@ -493,19 +505,133 @@ class FinancialTrainer:
             # LLM can award bonus points, deduct points, or override
             if result.get('llm_feedback'):
                 llm_bonus = result.get('llm_bonus', 0)
-                feedback = result['llm_feedback'][:200]
+                full_feedback = result['llm_feedback']
+
+                # Store full feedback for modal viewing
+                self.last_llm_feedback = {
+                    'observation': observation,
+                    'bonus': llm_bonus,
+                    'feedback': full_feedback
+                }
+
+                # Show truncated feedback (max ~80 chars on screen)
+                feedback_short = full_feedback[:80]
+                needs_more = len(full_feedback) > 80
 
                 if llm_bonus > 0:
-                    # LLM agrees or found additional insight
-                    self.message = f"🤖 +{llm_bonus} bonus! {feedback}"
+                    self.message = f"🤖 +{llm_bonus}! {feedback_short}"
                 elif llm_bonus < 0:
-                    # LLM deducts points (keyword matched but wrong)
-                    self.message = f"🤖 {llm_bonus} pts: {feedback}"
+                    self.message = f"🤖 {llm_bonus}pts: {feedback_short}"
                 else:
-                    # LLM just provides commentary
-                    self.message = f"🤖 {feedback}"
+                    self.message = f"🤖 {feedback_short}"
+
+                if needs_more:
+                    self.message += "... [l]"
 
                 self._display()
+
+    def _show_llm_modal(self):
+        """Show full LLM feedback in a modal overlay."""
+        if not self.last_llm_feedback:
+            return
+
+        feedback_data = self.last_llm_feedback
+        observation = feedback_data['observation']
+        bonus = feedback_data['bonus']
+        full_feedback = feedback_data['feedback']
+
+        # Calculate modal dimensions
+        modal_width = min(self.term.width - 10, 100)
+        modal_height = 20
+        start_x = (self.term.width - modal_width) // 2
+        start_y = (self.term.height - modal_height) // 2
+
+        # Word wrap the feedback
+        import textwrap
+        wrapped_lines = textwrap.wrap(full_feedback, width=modal_width - 4)
+
+        # Draw modal
+        print(self.term.home + self.term.clear)
+
+        # Border
+        print(self.term.move_y(start_y) + self.term.move_x(start_x) +
+              self._fmt("╔" + "═" * (modal_width - 2) + "╗", 'bold'))
+
+        # Title
+        title = "🤖 LLM FEEDBACK"
+        title_x = start_x + (modal_width - len(title)) // 2
+        print(self.term.move_y(start_y + 1) + self.term.move_x(start_x) +
+              self._fmt("║", 'bold') +
+              " " * (modal_width - 2) +
+              self._fmt("║", 'bold'))
+        print(self.term.move_y(start_y + 1) + self.term.move_x(title_x) +
+              self._fmt(title, 'bold', 'green'))
+
+        # Observation
+        print(self.term.move_y(start_y + 2) + self.term.move_x(start_x) +
+              self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+
+        obs_label = "Your observation:"
+        print(self.term.move_y(start_y + 3) + self.term.move_x(start_x + 2) +
+              self._fmt("║", 'bold'))
+        print(self.term.move_y(start_y + 3) + self.term.move_x(start_x + 3) +
+              self._fmt(obs_label, 'dim'))
+
+        # Wrap observation
+        obs_wrapped = textwrap.wrap(f'"{observation}"', width=modal_width - 6)
+        y = start_y + 4
+        for line in obs_wrapped[:2]:  # Max 2 lines for observation
+            print(self.term.move_y(y) + self.term.move_x(start_x) +
+                  self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+            print(self.term.move_y(y) + self.term.move_x(start_x + 3) + line)
+            y += 1
+
+        # Score
+        print(self.term.move_y(y) + self.term.move_x(start_x) +
+              self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+        y += 1
+
+        score_text = f"LLM Score: {bonus:+d} points"
+        score_color = 'green' if bonus > 0 else 'red' if bonus < 0 else 'yellow'
+        print(self.term.move_y(y) + self.term.move_x(start_x) +
+              self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+        print(self.term.move_y(y) + self.term.move_x(start_x + 3) +
+              self._fmt(score_text, score_color, 'bold'))
+        y += 1
+
+        # Feedback
+        print(self.term.move_y(y) + self.term.move_x(start_x) +
+              self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+        y += 1
+
+        for line in wrapped_lines[:8]:  # Max 8 lines for feedback
+            print(self.term.move_y(y) + self.term.move_x(start_x) +
+                  self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+            print(self.term.move_y(y) + self.term.move_x(start_x + 3) + line)
+            y += 1
+
+        # Fill remaining space
+        while y < start_y + modal_height - 1:
+            print(self.term.move_y(y) + self.term.move_x(start_x) +
+                  self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+            y += 1
+
+        # Bottom border
+        print(self.term.move_y(start_y + modal_height - 1) + self.term.move_x(start_x) +
+              self._fmt("╚" + "═" * (modal_width - 2) + "╝", 'bold'))
+
+        # Instructions
+        instructions = "Press any key to close"
+        instr_x = start_x + (modal_width - len(instructions)) // 2
+        print(self.term.move_y(start_y + modal_height) + self.term.move_x(instr_x) +
+              self._fmt(instructions, 'dim'))
+
+        # Wait for keypress
+        with self.term.cbreak():
+            self.term.inkey()
+
+        # Redraw main screen
+        self._display()
 
 
 def main():
