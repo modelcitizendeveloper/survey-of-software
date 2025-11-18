@@ -87,12 +87,18 @@ class ObservationScorer:
             'method': 'keyword'
         }
 
-        # LLM evaluation (Phase 2 feature)
-        if use_llm and matches:
+        # LLM evaluation - validates ALL observations (matched or not)
+        if use_llm:
             llm_result = self._evaluate_with_llm(observation, matches)
             result['llm_feedback'] = llm_result.get('feedback', '')
             result['llm_bonus'] = llm_result.get('bonus_points', 0)
-            result['points'] += result['llm_bonus']
+
+            # If no keyword match but LLM gives points, count it
+            if not matches and result['llm_bonus'] >= 3:
+                result['points'] = result['llm_bonus']
+                result['method'] = 'llm'
+            else:
+                result['points'] += result['llm_bonus']
 
         self.observation_log.append(result)
         return result
@@ -170,29 +176,46 @@ class ObservationScorer:
 
     def _build_evaluation_prompt(self, observation: str, matches: List[Dict]) -> str:
         """Build evaluation prompt for LLM."""
-        matched_insights = "\n".join([
-            f"- {m['description']} ({m['points']} points)"
-            for m in matches
-        ])
+        if matches:
+            matched_insights = "\n".join([
+                f"- {m['description']} ({m['points']} points)"
+                for m in matches
+            ])
+            scenario = f"This observation matched these key insights:\n{matched_insights}"
+        else:
+            # No keyword matches - ask LLM if observation is still valid
+            all_insights = "\n".join([
+                f"- {insight['description']}"
+                for insight in self.key_insights
+            ])
+            scenario = f"This observation didn't match keywords, but here are the key insights for this scenario:\n{all_insights}"
 
-        prompt = f"""You are a financial analysis instructor evaluating a student's observation.
+        prompt = f"""You are a financial analysis instructor evaluating a student's observation about a company's financial statements.
 
 Student Observation: "{observation}"
 
-This observation matched these key insights:
-{matched_insights}
+{scenario}
 
-Evaluate the observation:
-1. Does it show deeper understanding beyond the matched insights?
-2. Does it make connections between multiple metrics?
-3. Is the analysis precise and accurate?
+Your task:
+1. Is this observation factually accurate and analytically sound?
+2. Award points for INSIGHT, even if they don't use perfect jargon
+3. In your feedback, teach the professional terminology they should use
 
-Provide:
-- bonus_points: 0-10 (0 = basic match, 10 = exceptional insight)
-- feedback: 1-2 sentences explaining the quality
+Scoring Guide:
+- 0 points: Wrong, vague, or irrelevant
+- 1-3 points: Correct but basic (noticed a trend)
+- 4-6 points: Good analysis connecting data points
+- 7-9 points: Insightful with implications
+- 10 points: Exceptional depth and connections
+
+Feedback Template (pick one):
+- If using jargon correctly: "Excellent! You used proper terminology: [term]"
+- If insight is right but casual language: "Good catch! In finance we call this '[proper term]'"
+- If close but imprecise: "You're on track. Try being more specific about [what]"
+- If wrong: "Not quite. [explain why]"
 
 Return ONLY valid JSON:
-{{"bonus_points": <number>, "feedback": "<text>"}}"""
+{{"bonus_points": <0-10>, "feedback": "<1-2 sentences with jargon coaching>"}}"""
 
         return prompt
 
