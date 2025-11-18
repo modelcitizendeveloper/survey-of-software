@@ -221,13 +221,14 @@ POSITIVE (Bonus):
 - +10: Exceptional analysis showing mastery
 
 Feedback Guidelines:
-- If keywords matched correctly: "Good analysis! In finance we call this '[jargon term]'"
-- If keywords matched but wrong: "Not quite. [Explain the error]"
-- If no keyword match but valid: "Excellent insight! This is '[jargon term]'"
-- Always teach proper terminology
+- Keep feedback CONCISE: 50-100 characters maximum (screen space is limited!)
+- If keywords matched correctly: "Good! In finance: '[jargon term]'"
+- If keywords matched but wrong: "Not quite. [Brief correction]"
+- If no keyword match but valid: "Excellent! This is '[jargon term]'"
+- Focus on teaching ONE key term per feedback
 
 Return ONLY valid JSON:
-{{"bonus_points": <-10 to +10>, "feedback": "<1-2 sentences with jargon coaching>"}}"""
+{{"bonus_points": <-10 to +10>, "feedback": "<50-100 chars max, teach jargon>"}}"""
 
         return prompt
 
