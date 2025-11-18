@@ -21,7 +21,10 @@ class FinancialTrainer:
         self.use_llm = use_llm
 
         self.view_engine = ViewEngine(scenario)
-        self.scorer = ObservationScorer(scenario['key_insights'])
+        self.scorer = ObservationScorer(
+            scenario['key_insights'],
+            scenario_id=scenario.get('scenario_id', 'unknown')
+        )
 
         self.current_view = 'default'
         self.start_time = datetime.now()
@@ -156,7 +159,10 @@ class FinancialTrainer:
                 if result['matches']:
                     points = result['points']
                     count = len(result['matches'])
-                    self.message = f"✓ Nice! +{points} points ({count} insight(s) matched)"
+                    # Show which keywords matched for learning
+                    first_match = result['matches'][0]
+                    keywords = ', '.join(first_match.get('keywords_matched', [])[:3])
+                    self.message = f"✓ Nice! +{points} points - matched: {keywords}"
                 else:
                     self.message = "Observation noted, but no new insights matched. Try exploring different views!"
 
@@ -268,6 +274,13 @@ class FinancialTrainer:
 
     def _show_final_results(self):
         """Display final scoring results."""
+        # Save session log for analysis
+        try:
+            log_path = self.scorer.save_session_log()
+        except Exception as e:
+            # Don't fail if logging fails
+            pass
+
         with self.term.cbreak():
             self._render_final_results()
 
@@ -309,7 +322,10 @@ class FinancialTrainer:
         ))
         y = 11
         for insight in summary['caught']:
-            line = f"  • {insight['description']} (+{insight['points']} pts)"
+            # Show keywords that would have matched
+            keywords = insight.get('keywords', [])
+            kw_hint = f" (keywords: {', '.join(keywords[:3])})" if keywords else ""
+            line = f"  • {insight['description']} (+{insight['points']} pts){kw_hint}"
             print(self.term.move_y(y) + self.term.center(line))
             y += 1
 
@@ -323,7 +339,10 @@ class FinancialTrainer:
             for insight in summary['missed']:
                 importance = insight.get('importance', 'medium')
                 emoji = "🔥" if importance == 'high' else "💡"
-                line = f"  {emoji} {insight['description']} ({insight['points']} pts)"
+                # Show keywords that would match
+                keywords = insight.get('keywords', [])
+                kw_hint = f" → Try: {', '.join(keywords[:3])}" if keywords else ""
+                line = f"  {emoji} {insight['description']} ({insight['points']} pts){kw_hint}"
                 print(self.term.move_y(y) + self.term.center(line))
                 y += 1
 
