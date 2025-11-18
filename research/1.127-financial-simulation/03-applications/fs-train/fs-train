@@ -29,8 +29,9 @@ class FinancialTrainer:
         self.current_view = 'default'
         self.start_time = datetime.now()
         self.observation_buffer = ""
-        self.mode = 'view'  # 'view' or 'observe'
+        self.mode = 'view'  # 'view' or 'observe' or 'results'
         self.message = ""
+        self.llm_error = None  # Track LLM errors
 
     def _fmt(self, text, *attrs):
         """Safely apply terminal formatting, falling back to plain text.
@@ -175,6 +176,12 @@ class FinancialTrainer:
                     feedback = result.get('llm_feedback', 'Valid insight!')
                     self.message = f"✓ +{points} pts (LLM)! {feedback[:60]}"
 
+                elif result.get('error') and self.use_llm:
+                    # LLM error - show once
+                    if not self.llm_error:
+                        self.llm_error = result['error']
+                        self.message = f"⚠️ LLM: {result['error']}"
+
                 elif result.get('near_misses'):
                     # Near miss - guide toward correct jargon
                     near_miss = result['near_misses'][0]
@@ -221,11 +228,19 @@ class FinancialTrainer:
                         f"Level: {self.scenario['difficulty'].upper()}")
         print(self.term.move_y(3) + self.term.center(scenario_info))
 
-        # Current score
+        # Current score + LLM status
         user_score, max_score = self.scorer.get_total_score()
         score_text = f"Score: {user_score}/{max_score}"
         if user_score > 0:
             score_text = self._fmt(score_text, 'green')
+
+        # Add LLM indicator
+        if self.use_llm:
+            if self.llm_error:
+                score_text += "  🤖 LLM: " + self._fmt("Error", 'red')
+            else:
+                score_text += "  🤖 LLM: " + self._fmt("Active", 'green')
+
         print(self.term.move_y(4) + self.term.center(score_text))
 
         # View area
@@ -291,7 +306,7 @@ class FinancialTrainer:
         return key.lower() == 'y'
 
     def _show_final_results(self):
-        """Display final scoring results."""
+        """Display final scoring results with option to return."""
         # Save session log for analysis
         try:
             log_path = self.scorer.save_session_log()
@@ -299,8 +314,17 @@ class FinancialTrainer:
             # Don't fail if logging fails
             pass
 
-        with self.term.cbreak():
-            self._render_final_results()
+        while True:
+            with self.term.cbreak():
+                action = self._render_final_results()
+
+            if action == 'back':
+                # Return to session
+                self.mode = 'view'
+                return
+            else:
+                # Exit
+                break
 
     def _render_final_results(self):
         """Render the final results screen."""
@@ -389,11 +413,13 @@ class FinancialTrainer:
 
         print(self.term.move_y(y) + self.term.center(next_step))
 
-        # Wait for keypress
-        print(self.term.move_y(self.term.height - 2) + self.term.center(
-            self._fmt("Press any key to exit...", 'dim')
+        # Wait for keypress with options
+        print(self.term.move_y(self.term.height - 3) + self.term.center(
+            "[b] Back to session  |  [Any other key] Exit"
         ))
-        self.term.inkey()
+
+        key = self.term.inkey()
+        return 'back' if key.lower() == 'b' else 'exit'
 
 
 def main():
