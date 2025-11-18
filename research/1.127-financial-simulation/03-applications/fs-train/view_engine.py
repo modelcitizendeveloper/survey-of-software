@@ -521,9 +521,9 @@ class ViewEngine:
             end_key = f'{month}_end'
             ending_cash[month] = cash_flow.get(end_key, 0)
 
-        # Get net income for each month
+        # Get operating income (which equals net income for these simple scenarios)
         default = self.views.get('default', self._calculate_default())
-        net_income = default.get('net_income', {})
+        net_income = default.get('operating_income', {})  # No interest/taxes in scenarios
         revenue = default.get('revenue', {})
 
         # Calculate cumulative net income (retained earnings change)
