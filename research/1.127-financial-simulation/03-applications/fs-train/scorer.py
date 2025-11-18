@@ -11,7 +11,8 @@ class ObservationScorer:
     """Score user observations against ground truth insights."""
 
     def __init__(self, key_insights: List[Dict[str, Any]], llm_provider: str = "ollama",
-                 llm_model: str = "llama3", llm_base_url: str = "http://localhost:11434"):
+                 llm_model: str = "llama3", llm_base_url: str = "http://localhost:11434",
+                 scenario_id: str = "unknown"):
         """Initialize scorer.
 
         Args:
@@ -19,11 +20,13 @@ class ObservationScorer:
             llm_provider: LLM provider ('ollama', 'openai', 'claude')
             llm_model: Model name (e.g., 'llama3', 'gpt-4', 'claude-3-sonnet')
             llm_base_url: Base URL for LLM API (Ollama default)
+            scenario_id: Scenario identifier for logging
         """
         self.key_insights = key_insights
         self.llm_provider = llm_provider
         self.llm_model = llm_model
         self.llm_base_url = llm_base_url
+        self.scenario_id = scenario_id
 
         self.matched_insights = set()
         self.observation_log = []
@@ -244,3 +247,27 @@ Return ONLY valid JSON:
             'missed': missed,
             'observation_count': len(self.observation_log)
         }
+
+    def save_session_log(self, output_file: str = "training_sessions.jsonl"):
+        """Save session observations to JSONL for analysis.
+
+        Args:
+            output_file: Path to JSONL log file
+        """
+        import json
+        from datetime import datetime
+        from pathlib import Path
+
+        log_entry = {
+            'timestamp': datetime.now().isoformat(),
+            'scenario_id': self.scenario_id,
+            'observations': self.observation_log,
+            'summary': self.get_summary()
+        }
+
+        # Append to JSONL file
+        log_path = Path(output_file)
+        with open(log_path, 'a') as f:
+            f.write(json.dumps(log_entry) + '\n')
+
+        return log_path
