@@ -45,6 +45,7 @@ class ObservationScorer:
 
         # Keyword matching
         matches = []
+        near_misses = []
         points = 0
 
         for insight in self.key_insights:
@@ -67,10 +68,21 @@ class ObservationScorer:
                 })
                 points += insight['points']
                 self.matched_insights.add(insight_id)
+            else:
+                # Check for near misses (related words but not exact keywords)
+                near_miss_score = self._check_near_miss(observation_lower, insight)
+                if near_miss_score > 0:
+                    near_misses.append({
+                        'insight_id': insight_id,
+                        'description': insight['description'],
+                        'keywords': keywords[:3],  # Show first 3 keywords
+                        'score': near_miss_score
+                    })
 
         result = {
             'observation': observation,
             'matches': matches,
+            'near_misses': near_misses,
             'points': points,
             'method': 'keyword'
         }
@@ -84,6 +96,50 @@ class ObservationScorer:
 
         self.observation_log.append(result)
         return result
+
+    def _check_near_miss(self, observation: str, insight: Dict[str, Any]) -> float:
+        """Check if observation is close to matching an insight.
+
+        Args:
+            observation: User's observation (lowercased)
+            insight: Insight to check against
+
+        Returns:
+            Score 0-1 indicating how close (0 = not close, 1 = very close)
+        """
+        # Define synonym groups for common financial terms
+        synonyms = {
+            'opex': ['operating expense', 'operating cost', 'overhead'],
+            'cogs': ['cost of goods', 'cost of sales', 'product cost'],
+            'revenue': ['sales', 'income', 'top line'],
+            'profit': ['earnings', 'bottom line', 'net income'],
+            'margin': ['profitability', 'markup'],
+            'grow': ['increase', 'rise', 'expand', 'rising', 'growing'],
+            'decline': ['decrease', 'fall', 'drop', 'falling', 'declining'],
+            'hire': ['employee', 'headcount', 'staff', 'hiring'],
+            'unit economics': ['roi', 'return on investment', 'payback', 'efficiency'],
+        }
+
+        # Check if observation contains synonyms of insight keywords
+        keywords = insight.get('keywords', [])
+        synonym_matches = 0
+
+        for keyword in keywords:
+            keyword_lower = keyword.lower()
+            # Check if keyword has synonyms
+            for canonical, syns in synonyms.items():
+                if canonical in keyword_lower or keyword_lower in canonical:
+                    # Check if observation contains any synonym
+                    for syn in syns:
+                        if syn in observation:
+                            synonym_matches += 1
+                            break
+
+        # If found related terms, return score
+        if synonym_matches > 0:
+            return min(synonym_matches / len(keywords), 1.0)
+
+        return 0.0
 
     def _evaluate_with_llm(self, observation: str, matches: List[Dict]) -> Dict[str, Any]:
         """Use LLM to evaluate observation quality and nuance.
