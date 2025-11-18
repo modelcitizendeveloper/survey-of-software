@@ -5,17 +5,21 @@ Interactive CLI tool for learning financial statement analysis through hands-on 
 ## Quick Start
 
 ```bash
-# Install dependencies
-pip install -r requirements.txt
+# One-time setup
+uv venv
+uv pip install blessed PyYAML requests
 
-# List available scenarios
-./fs-train --list
+# Option 1: Use wrapper script (recommended)
+./run-fs-train --list
+./run-fs-train 001_simple_growth.yaml
 
-# Run beginner scenario
-./fs-train 001_simple_growth.yaml
+# Option 2: Activate venv first
+source .venv/bin/activate
+python3 fs-train --list
+python3 fs-train 001_simple_growth.yaml
 
 # Run with LLM scoring (requires Ollama)
-./fs-train 001_simple_growth.yaml --llm
+./run-fs-train 001_simple_growth.yaml --llm
 ```
 
 ## Features
