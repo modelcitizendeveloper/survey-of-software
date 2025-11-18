@@ -38,6 +38,7 @@ class ViewEngine:
         self.views['margin'] = self._calculate_margins()
         self.views['detail'] = self._calculate_detail()
         self.views['cash'] = self._calculate_cash_flow()
+        self.views['balance'] = self._calculate_balance_sheet()
 
     def _calculate_default(self) -> Dict[str, Any]:
         """Calculate default view - absolute values."""
@@ -252,6 +253,8 @@ class ViewEngine:
             return self._format_detail_view(view)
         elif view_name == 'cash':
             return self._format_cash_view(view)
+        elif view_name == 'balance':
+            return self._format_balance_sheet(view)
         else:
             return str(view)
 
@@ -502,5 +505,103 @@ class ViewEngine:
             value = view.get(end_key, 0)
             line += f" ${value:>9,.0f}"
         lines.append(line)
+
+        return "\n".join(lines)
+
+    def _calculate_balance_sheet(self) -> Dict[str, Any]:
+        """Calculate balance sheet view with working capital metrics."""
+        # Get balance sheet items
+        cash_flow = self.views.get('cash', self._calculate_cash_flow())
+        ar = self.data.get('accounts_receivable', {})
+        ap = self.data.get('accounts_payable', {})
+
+        # Calculate ending cash for each month
+        ending_cash = {}
+        for month in self.months:
+            end_key = f'{month}_end'
+            ending_cash[month] = cash_flow.get(end_key, 0)
+
+        # Calculate DSO (Days Sales Outstanding) if we have revenue
+        default = self.views.get('default', self._calculate_default())
+        revenue = default.get('revenue', {})
+
+        dso = {}
+        for month in self.months:
+            if month in ar and month in revenue:
+                monthly_revenue = revenue[month]
+                if monthly_revenue > 0:
+                    dso[month] = (ar[month] / monthly_revenue) * 30  # Days in month
+                else:
+                    dso[month] = 0
+
+        return {
+            'cash': ending_cash,
+            'accounts_receivable': ar,
+            'accounts_payable': ap,
+            'dso': dso
+        }
+
+    def _format_balance_sheet(self, view: Dict[str, Any]) -> str:
+        """Format balance sheet view."""
+        lines = ["── Balance Sheet & Working Capital ─────────"]
+
+        # Header
+        header = f"{'':25}"
+        for month in self.months:
+            header += f"{month.capitalize():>11}"
+        lines.append(header)
+        lines.append("")
+
+        # Cash
+        cash = view.get('cash', {})
+        if cash:
+            line = f"{'Cash':25}"
+            for month in self.months:
+                value = cash.get(month, 0)
+                line += f" ${value:>9,.0f}"
+            lines.append(line)
+
+        # Accounts Receivable
+        ar = view.get('accounts_receivable', {})
+        if ar:
+            line = f"{'Accounts Receivable':25}"
+            for month in self.months:
+                value = ar.get(month, 0)
+                line += f" ${value:>9,.0f}"
+            lines.append(line)
+
+        # Accounts Payable
+        ap = view.get('accounts_payable', {})
+        if ap:
+            line = f"{'Accounts Payable':25}"
+            for month in self.months:
+                value = ap.get(month, 0)
+                line += f" ${value:>9,.0f}"
+            lines.append(line)
+
+        # DSO (Days Sales Outstanding)
+        dso = view.get('dso', {})
+        if dso:
+            lines.append("")
+            lines.append("Working Capital Metrics:")
+            line = f"{'  DSO (days)':25}"
+            for month in self.months:
+                value = dso.get(month, 0)
+                line += f" {value:>10.0f}"
+            lines.append(line)
+
+        # AR/Revenue ratio
+        ar_ratio = {}
+        revenue = self.views.get('default', {}).get('revenue', {})
+        for month in self.months:
+            if month in ar and month in revenue and revenue[month] > 0:
+                ar_ratio[month] = (ar[month] / revenue[month]) * 100
+
+        if ar_ratio:
+            line = f"{'  AR/Revenue':25}"
+            for month in self.months:
+                value = ar_ratio.get(month, 0)
+                line += f" {value:>9.0f}%"
+            lines.append(line)
 
         return "\n".join(lines)

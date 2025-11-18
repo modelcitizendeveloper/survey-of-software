@@ -127,6 +127,10 @@ class FinancialTrainer:
             self.current_view = 'cash'
             self.message = "Showing: Cash Flow"
 
+        elif key == 'b' or key == '7':
+            self.current_view = 'balance'
+            self.message = "Showing: Balance Sheet"
+
         # Enter observation mode
         elif key == 'o' or key == '\n':
             self.mode = 'observe'
@@ -258,8 +262,8 @@ class FinancialTrainer:
         # Mode-specific commands
         if self.mode == 'view':
             commands = [
-                "[d/1] Default  [%/2] Percent  [m/3] MoM  [g/4] Margin  [e/5] Detail  [c/6] Cash",
-                "[o/Enter] Add Observation  [?] Hint  [f/Esc] Finish Session  [q] Quit"
+                "[d/1] Default  [%/2] Percent  [m/3] MoM  [g/4] Margin  [e/5] Detail",
+                "[c/6] Cash  [b/7] Balance Sheet  [o/Enter] Observe  [?] Hint  [f] Finish  [q] Quit"
             ]
         else:  # observe mode
             commands = [
