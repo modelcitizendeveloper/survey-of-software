@@ -15,7 +15,7 @@ from scorer import ObservationScorer
 class FinancialTrainer:
     """Interactive financial analysis training session."""
 
-    def __init__(self, scenario, term, use_llm=False):
+    def __init__(self, scenario, term, use_llm=False, llm_model="llama3.2:latest"):
         self.scenario = scenario
         self.term = term
         self.use_llm = use_llm
@@ -23,6 +23,7 @@ class FinancialTrainer:
         self.view_engine = ViewEngine(scenario)
         self.scorer = ObservationScorer(
             scenario['key_insights'],
+            llm_model=llm_model,
             scenario_id=scenario.get('scenario_id', 'unknown')
         )
 
@@ -32,6 +33,7 @@ class FinancialTrainer:
         self.mode = 'view'  # 'view' or 'observe' or 'results'
         self.message = ""
         self.llm_error = None  # Track LLM errors
+        self.finished = False  # Track if user pressed 'f' to finish
 
     def _fmt(self, text, *attrs):
         """Safely apply terminal formatting, falling back to plain text.
@@ -91,8 +93,9 @@ class FinancialTrainer:
 
                 self._display()
 
-        # Show final results
-        self._show_final_results()
+        # Show final results only if user pressed 'f' to finish
+        if self.finished:
+            self._show_final_results()
 
     def _handle_view_mode(self, key):
         """Handle input in view mode.
@@ -143,6 +146,7 @@ class FinancialTrainer:
 
         # Finish session
         elif key.name == 'KEY_ESCAPE' or key == 'f':
+            self.finished = True
             return False
 
         return True
@@ -443,6 +447,11 @@ def main():
         help='Use LLM for observation scoring (requires Ollama)'
     )
     parser.add_argument(
+        '--model',
+        default='llama3.2:latest',
+        help='LLM model to use (default: llama3.2:latest)'
+    )
+    parser.add_argument(
         '--list',
         action='store_true',
         help='List available scenarios'
@@ -485,7 +494,7 @@ def main():
 
     # Run training session
     term = Terminal()
-    trainer = FinancialTrainer(scenario, term, use_llm=args.llm)
+    trainer = FinancialTrainer(scenario, term, use_llm=args.llm, llm_model=args.model)
 
     try:
         trainer.run()
