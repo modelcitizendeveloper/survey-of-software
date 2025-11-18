@@ -316,9 +316,17 @@ class ViewEngine:
         """Format month-over-month growth view."""
         lines = ["── Month-over-Month Growth (%) ─────────────"]
 
-        # Get growth keys (e.g., "jan→feb")
+        # Get growth keys (e.g., "jan→feb") in chronological order
         sample = view.get('revenue', {})
-        growth_keys = sorted(sample.keys())
+        month_order = ['jan', 'feb', 'mar', 'apr', 'may', 'jun',
+                      'jul', 'aug', 'sep', 'oct', 'nov', 'dec']
+
+        # Sort growth keys by the first month in the pair
+        def growth_key_order(key):
+            first_month = key.split('→')[0]
+            return month_order.index(first_month) if first_month in month_order else 999
+
+        growth_keys = sorted(sample.keys(), key=growth_key_order)
 
         # Header
         header = f"{'':25}"
