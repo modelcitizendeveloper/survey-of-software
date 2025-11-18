@@ -1,0 +1,160 @@
+# Scenario 009: Subscription Churn Problem
+# Difficulty: Advanced
+# Concept: Recognize revenue quality issues hidden by growth
+
+scenario_id: 009_subscription_churn
+name: "VideoSaaS - Hidden Churn"
+industry: Video Platform SaaS
+stage: Growth
+difficulty: advanced
+duration_months: 3
+
+company_context:
+  description: "Video hosting platform with churn problem"
+  employees: 18
+  founded: "2.5 years ago"
+  funding: "Series A, $3M"
+
+financial_data:
+  revenue:
+    jan: 180000
+    feb: 185000
+    mar: 188000
+
+  cogs:
+    bandwidth:
+      jan: 54000
+      feb: 55500
+      mar: 56400
+
+  opex:
+    salaries:
+      jan: 70000
+      feb: 70000
+      mar: 70000
+    marketing:
+      jan: 55000
+      feb: 60000
+      mar: 65000
+    rent:
+      jan: 8000
+      feb: 8000
+      mar: 8000
+    software:
+      jan: 7000
+      feb: 7000
+      mar: 7000
+
+  cash:
+    starting: 520000
+
+  # Revenue composition showing the problem
+  revenue_detail:
+    new_mrr:  # New customer revenue
+      jan: 75000
+      feb: 80000
+      mar: 85000
+    expansion_mrr:  # Existing customer upgrades
+      jan: 15000
+      feb: 12000
+      mar: 10000
+    churned_mrr:  # Lost revenue
+      jan: -60000
+      feb: -62000
+      mar: -67000
+
+key_insights:
+  - id: slow_revenue_growth
+    description: "Revenue growing very slowly (2.8% → 1.6% MoM)"
+    importance: high
+    points: 20
+    category: growth
+    keywords: ["revenue", "slow", "slowing", "decelerat"]
+
+  - id: high_churn
+    description: "Churn rate is dangerously high (~35% monthly)"
+    importance: high
+    points: 30
+    category: sustainability
+    keywords: ["churn", "losing customers", "attrition", "retention"]
+
+  - id: acquisition_masking
+    description: "New customer acquisition masking underlying churn problem"
+    importance: high
+    points: 25
+    category: analysis
+    keywords: ["mask", "hiding", "new customer", "acquisition"]
+
+  - id: marketing_inefficient
+    description: "Marketing spend increasing but net growth minimal"
+    importance: high
+    points: 25
+    category: efficiency
+    keywords: ["marketing", "inefficient", "spending", "not working"]
+
+  - id: expansion_declining
+    description: "Expansion revenue declining (customers not upgrading)"
+    importance: medium
+    points: 20
+    category: sustainability
+    keywords: ["expansion", "upgrade", "declining", "not growing"]
+
+  - id: product_problem
+    description: "Likely product/satisfaction issue causing churn"
+    importance: high
+    points: 25
+    bonus: true
+    category: strategy
+    keywords: ["product", "satisfaction", "quality", "fit"]
+
+  - id: cac_payback_risk
+    description: "High CAC with high churn = never recover acquisition cost"
+    importance: high
+    points: 20
+    bonus: true
+    category: unit economics
+    keywords: ["CAC", "payback", "LTV", "unit economics", "recover"]
+
+  - id: leaky_bucket
+    description: "Classic 'leaky bucket' problem - can't fill faster than it drains"
+    importance: medium
+    points: 15
+    bonus: true
+    category: metaphor
+    keywords: ["leaky bucket", "bucket", "leak", "drain"]
+
+prompts:
+  beginner:
+    - "Is revenue growing?"
+
+  intermediate:
+    - "Why is growth so slow with this much marketing spend?"
+    - "What's the efficiency of their spending?"
+
+  advanced:
+    - "What's the underlying health of this business?"
+    - "Should they increase or decrease marketing?"
+
+suggested_views:
+  beginner:
+    - "show mom"
+    - "show percent"
+
+  intermediate:
+    - "show detail"
+    - "show margin"
+
+story:
+  setup: "VideoSaaS is spending heavily on marketing to grow."
+  challenge: "Growth is much slower than expected given the spending."
+  question: "Why isn't marketing working?"
+
+expected_score_ranges:
+  beginner: "20-40 points (notice slow growth)"
+  intermediate: "40-75 points (identify marketing inefficiency)"
+  advanced: "75-180 points (diagnose churn problem, understand unit economics failure)"
+
+notes:
+  - "This scenario teaches looking beneath revenue growth"
+  - "Marketing efficiency isn't the problem - retention is"
+  - "Classic mistake: trying to solve retention with acquisition"
