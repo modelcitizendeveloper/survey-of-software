@@ -159,7 +159,7 @@ class ObservationScorer:
         """
         if self.llm_provider != "ollama":
             # Phase 2: Add OpenAI/Claude support
-            return {'feedback': '', 'bonus_points': 0}
+            return {'feedback': '', 'bonus_points': 0, 'error': 'Only Ollama supported'}
 
         # Ollama evaluation
         try:
@@ -170,9 +170,12 @@ class ObservationScorer:
             parsed = self._parse_llm_response(response)
             return parsed
 
+        except requests.exceptions.ConnectionError as e:
+            return {'feedback': '', 'bonus_points': 0,
+                   'error': 'Ollama not running. Start with: ollama serve'}
         except Exception as e:
-            print(f"LLM evaluation failed: {e}")
-            return {'feedback': '', 'bonus_points': 0}
+            return {'feedback': '', 'bonus_points': 0,
+                   'error': f'LLM error: {str(e)[:50]}'}
 
     def _build_evaluation_prompt(self, observation: str, matches: List[Dict]) -> str:
         """Build evaluation prompt for LLM."""
