@@ -29,6 +29,27 @@ class FinancialTrainer:
         self.mode = 'view'  # 'view' or 'observe'
         self.message = ""
 
+    def _fmt(self, text, *attrs):
+        """Safely apply terminal formatting, falling back to plain text.
+
+        Args:
+            text: Text to format
+            *attrs: Attribute names like 'bold', 'dim', 'green', etc.
+
+        Returns:
+            Formatted text or plain text if capabilities not supported
+        """
+        result = text
+        for attr in attrs:
+            formatter = getattr(self.term, attr, None)
+            if formatter and callable(formatter):
+                try:
+                    result = formatter(result)
+                except (TypeError, AttributeError):
+                    # Terminal doesn't support this capability
+                    pass
+        return result
+
     def run(self):
         """Run interactive training session."""
         with self.term.fullscreen(), self.term.cbreak(), self.term.hidden_cursor():
@@ -164,10 +185,10 @@ class FinancialTrainer:
 
         # Title
         print(self.term.move_y(1) + self.term.center(
-            self.term.bold("EXERCITATIO PECUNIAE")
+            self._fmt("EXERCITATIO PECUNIAE", 'bold')
         ))
         print(self.term.move_y(2) + self.term.center(
-            self.term.dim("Financial Analysis Fluency Trainer")
+            self._fmt("Financial Analysis Fluency Trainer", 'dim')
         ))
 
         # Scenario info
@@ -179,9 +200,9 @@ class FinancialTrainer:
         # Current score
         user_score, max_score = self.scorer.get_total_score()
         score_text = f"Score: {user_score}/{max_score}"
-        print(self.term.move_y(4) + self.term.center(
-            self.term.green(score_text) if user_score > 0 else score_text
-        ))
+        if user_score > 0:
+            score_text = self._fmt(score_text, 'green')
+        print(self.term.move_y(4) + self.term.center(score_text))
 
         # View area
         print(self.term.move_y(6))
@@ -193,7 +214,7 @@ class FinancialTrainer:
         cmd_y = self.term.height - 8
 
         print(self.term.move_y(cmd_y))
-        print(self.term.center(self.term.reverse("─" * 60)))
+        print(self.term.center(self._fmt("─" * 60, 'reverse')))
 
         # Mode-specific commands
         if self.mode == 'view':
@@ -213,7 +234,7 @@ class FinancialTrainer:
         # Message area
         if self.message:
             print(self.term.move_y(cmd_y + 4) + self.term.center(
-                self.term.yellow(self.message)
+                self._fmt(self.message, 'yellow')
             ))
 
     def _show_hint(self):
@@ -239,7 +260,7 @@ class FinancialTrainer:
     def _confirm_quit(self):
         """Confirm quit action."""
         print(self.term.move_y(self.term.height - 2) + self.term.center(
-            self.term.red("Really quit without finishing? [y/N] ")
+            self._fmt("Really quit without finishing? [y/N] ", 'red')
         ))
 
         key = self.term.inkey()
@@ -249,13 +270,13 @@ class FinancialTrainer:
         """Display final scoring results."""
         print(self.term.clear)
         print(self.term.move_y(2) + self.term.center(
-            self.term.bold("═" * 50)
+            self._fmt("═" * 50, 'bold')
         ))
         print(self.term.move_y(3) + self.term.center(
-            self.term.bold("SESSION COMPLETE")
+            self._fmt("SESSION COMPLETE", 'bold')
         ))
         print(self.term.move_y(4) + self.term.center(
-            self.term.bold("═" * 50)
+            self._fmt("═" * 50, 'bold')
         ))
 
         summary = self.scorer.get_summary()
@@ -266,7 +287,7 @@ class FinancialTrainer:
             f"({summary['percentage']:.0f}%)"
         ))
         print(self.term.move_y(7) + self.term.center(
-            f"Depth Level: {self.term.bold(summary['depth_level'])}"
+            f"Depth Level: {self._fmt(summary['depth_level'], 'bold')}"
         ))
 
         # Time spent
@@ -279,7 +300,7 @@ class FinancialTrainer:
 
         # What you caught
         print(self.term.move_y(10) + self.term.center(
-            self.term.green("✓ INSIGHTS CAUGHT:")
+            self._fmt("✓ INSIGHTS CAUGHT:", 'green')
         ))
         y = 11
         for insight in summary['caught']:
@@ -291,7 +312,7 @@ class FinancialTrainer:
         if summary['missed']:
             y += 1
             print(self.term.move_y(y) + self.term.center(
-                self.term.yellow("⚠ INSIGHTS MISSED:")
+                self._fmt("⚠ INSIGHTS MISSED:", 'yellow')
             ))
             y += 1
             for insight in summary['missed']:
@@ -314,7 +335,7 @@ class FinancialTrainer:
 
         # Wait for keypress
         print(self.term.move_y(self.term.height - 2) + self.term.center(
-            self.term.dim("Press any key to exit...")
+            self._fmt("Press any key to exit...", 'dim')
         ))
         self.term.inkey()
 
