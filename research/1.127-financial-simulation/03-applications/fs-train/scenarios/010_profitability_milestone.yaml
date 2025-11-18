@@ -1,0 +1,152 @@
+# Scenario 010: Profitability Milestone
+# Difficulty: Intermediate
+# Concept: Recognize successful scaling and sustainable business
+
+scenario_id: 010_profitability_milestone
+name: "FormBuilder - Breaking Even"
+industry: No-Code SaaS
+stage: Growth
+difficulty: intermediate
+duration_months: 3
+
+company_context:
+  description: "Form building tool reaching profitability"
+  employees: 12
+  founded: "2 years ago"
+  funding: "Seed, $800K"
+
+financial_data:
+  revenue:
+    sep: 85000
+    oct: 92000
+    nov: 98000
+
+  cogs:
+    sep: 17000
+    oct: 18400
+    nov: 19600
+
+  opex:
+    salaries:
+      sep: 55000
+      oct: 55000
+      nov: 55000
+    marketing:
+      sep: 18000
+      oct: 19000
+      nov: 20000
+    rent:
+      sep: 4000
+      oct: 4000
+      nov: 4000
+    software:
+      sep: 3000
+      oct: 3000
+      nov: 3000
+
+  cash:
+    starting: 180000
+
+key_insights:
+  - id: consistent_growth
+    description: "Revenue growing consistently at 7-8% MoM"
+    importance: high
+    points: 20
+    category: growth
+    keywords: ["revenue", "grow", "consistent", "steady"]
+
+  - id: break_even
+    description: "Company breaks even in October, profitable in November"
+    importance: high
+    points: 30
+    category: sustainability
+    keywords: ["break even", "profitable", "profitability", "positive"]
+
+  - id: gross_margin_healthy
+    description: "Gross margin at 80% (excellent for SaaS)"
+    importance: medium
+    points: 15
+    category: efficiency
+    keywords: ["gross margin", "80%", "healthy", "strong"]
+
+  - id: controlled_spending
+    description: "OpEx well-controlled (growing slower than revenue)"
+    importance: high
+    points: 20
+    category: efficiency
+    keywords: ["OpEx", "controlled", "disciplined", "efficient"]
+
+  - id: marketing_scales
+    description: "Marketing growing proportionally with revenue (good discipline)"
+    importance: medium
+    points: 15
+    category: efficiency
+    keywords: ["marketing", "scale", "proportion", "disciplined"]
+
+  - id: cash_inflection
+    description: "Cash stops declining in October (inflection point)"
+    importance: high
+    points: 25
+    category: sustainability
+    keywords: ["cash", "inflection", "stop", "turning around"]
+
+  - id: rule_of_40
+    description: "Approaching Rule of 40 (growth + margin ~40%)"
+    importance: medium
+    points: 20
+    bonus: true
+    category: metrics
+    keywords: ["Rule of 40", "efficient growth", "balanced"]
+
+  - id: path_sustainable
+    description: "Business now self-sustaining (doesn't need funding)"
+    importance: high
+    points: 25
+    bonus: true
+    category: sustainability
+    keywords: ["self-sustaining", "sustainable", "independent", "no funding"]
+
+  - id: cogs_linear
+    description: "COGS scaling linearly with revenue (20% ratio)"
+    importance: low
+    points: 10
+    bonus: true
+    category: efficiency
+    keywords: ["COGS", "linear", "scale", "proportion"]
+
+prompts:
+  beginner:
+    - "Is the company making money?"
+    - "What's happening with cash?"
+
+  intermediate:
+    - "When did they reach profitability?"
+    - "Is the business sustainable?"
+
+  advanced:
+    - "Evaluate the business health"
+    - "What enabled profitability?"
+
+suggested_views:
+  beginner:
+    - "show default"
+    - "show cash"
+
+  intermediate:
+    - "show margin"
+    - "show balance"
+
+story:
+  setup: "FormBuilder has been burning through their seed funding for 18 months."
+  challenge: "They're approaching the end of their runway."
+  question: "Can they reach profitability before running out of money?"
+
+expected_score_ranges:
+  beginner: "35-55 points (notice profitability and cash improvement)"
+  intermediate: "55-90 points (understand milestone significance)"
+  advanced: "90-180 points (analyze path to sustainability, calculate metrics)"
+
+notes:
+  - "Positive story showing successful execution"
+  - "Teaches recognition of key milestones"
+  - "Demonstrates importance of gross margin and OpEx discipline"
