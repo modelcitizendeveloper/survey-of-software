@@ -11,14 +11,14 @@ class ObservationScorer:
     """Score user observations against ground truth insights."""
 
     def __init__(self, key_insights: List[Dict[str, Any]], llm_provider: str = "ollama",
-                 llm_model: str = "llama3", llm_base_url: str = "http://localhost:11434",
+                 llm_model: str = "llama3.2:latest", llm_base_url: str = "http://localhost:11434",
                  scenario_id: str = "unknown"):
         """Initialize scorer.
 
         Args:
             key_insights: Ground truth insights from scenario
             llm_provider: LLM provider ('ollama', 'openai', 'claude')
-            llm_model: Model name (e.g., 'llama3', 'gpt-4', 'claude-3-sonnet')
+            llm_model: Model name (e.g., 'llama3.2:latest', 'gpt-4', 'claude-3-sonnet')
             llm_base_url: Base URL for LLM API (Ollama default)
             scenario_id: Scenario identifier for logging
         """
