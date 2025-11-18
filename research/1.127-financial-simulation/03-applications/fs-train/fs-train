@@ -387,9 +387,17 @@ def main():
         print()
         return 0
 
-    # Load scenario
+    # Find and load scenario
     try:
-        scenario = loader.load_scenario(args.scenario)
+        # Smart scenario finding - accepts numbers, partial names, full filenames
+        scenario_file = loader.find_scenario(args.scenario)
+        scenario = loader.load_scenario(scenario_file)
+    except ValueError as e:
+        print(f"Error: {e}", file=sys.stderr)
+        print("\nAvailable scenarios:", file=sys.stderr)
+        for s in loader.list_scenarios():
+            print(f"  {s['file']}", file=sys.stderr)
+        return 1
     except Exception as e:
         print(f"Error loading scenario: {e}", file=sys.stderr)
         return 1

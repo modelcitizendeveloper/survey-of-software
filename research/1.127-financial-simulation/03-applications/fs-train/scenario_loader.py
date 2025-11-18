@@ -82,3 +82,49 @@ class ScenarioLoader:
                 continue
 
         raise ValueError(f"Scenario not found: {scenario_id}")
+
+    def find_scenario(self, search: str) -> str:
+        """Find scenario file by number, name, or partial match.
+
+        Args:
+            search: Can be:
+                - Full filename: "001_simple_growth.yaml"
+                - Just number: "001" or "002"
+                - Partial name: "margin", "growth", "cash"
+                - With prefix: "scenarios/001_simple_growth.yaml"
+
+        Returns:
+            Scenario filename (without scenarios/ prefix)
+
+        Raises:
+            ValueError: If no match or multiple matches found
+        """
+        # Strip scenarios/ prefix if present
+        if search.startswith('scenarios/'):
+            search = search[10:]
+
+        # If it's a full filename that exists, use it
+        if search.endswith('.yaml') and (self.scenarios_dir / search).exists():
+            return search
+
+        # Get all scenario files
+        all_scenarios = list(self.scenarios_dir.glob("*.yaml"))
+
+        # Try exact number match (e.g., "002" -> "002_*.yaml")
+        if search.isdigit():
+            matches = [f for f in all_scenarios if f.name.startswith(f"{search}_")]
+            if len(matches) == 1:
+                return matches[0].name
+            elif len(matches) > 1:
+                raise ValueError(f"Multiple scenarios match '{search}': {[m.name for m in matches]}")
+
+        # Try partial name match (case-insensitive)
+        search_lower = search.lower()
+        matches = [f for f in all_scenarios if search_lower in f.name.lower()]
+
+        if len(matches) == 1:
+            return matches[0].name
+        elif len(matches) > 1:
+            raise ValueError(f"Multiple scenarios match '{search}': {[m.name for m in matches]}")
+
+        raise ValueError(f"No scenario found matching: {search}")

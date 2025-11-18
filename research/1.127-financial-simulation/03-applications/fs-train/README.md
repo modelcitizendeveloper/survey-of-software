@@ -9,17 +9,26 @@ Interactive CLI tool for learning financial statement analysis through hands-on 
 uv venv
 uv pip install blessed PyYAML requests
 
-# Option 1: Use wrapper script (recommended)
+# List scenarios
 ./run-fs-train --list
+
+# Run by number (easiest!)
+./run-fs-train 001
+./run-fs-train 002
+
+# Or by partial name
+./run-fs-train margin
+./run-fs-train cash
+
+# Or full filename
 ./run-fs-train 001_simple_growth.yaml
 
-# Option 2: Activate venv first
-source .venv/bin/activate
-python3 fs-train --list
-python3 fs-train 001_simple_growth.yaml
+# With LLM scoring (requires Ollama)
+./run-fs-train 002 --llm
 
-# Run with LLM scoring (requires Ollama)
-./run-fs-train 001_simple_growth.yaml --llm
+# Optional: Enable bash tab completion
+source fs-train-completion.bash
+./run-fs-train <TAB>  # Shows all scenarios
 ```
 
 ## Features
