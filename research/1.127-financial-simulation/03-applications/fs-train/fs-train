@@ -66,47 +66,61 @@ class FinancialTrainer:
 
     def run(self):
         """Run interactive training session."""
-        with self.term.fullscreen(), self.term.cbreak(), self.term.hidden_cursor():
-            self._display()
+        session_active = True
 
-            while True:
-                key = self.term.inkey(timeout=0.1)
-
-                # Check for async LLM results
-                self._check_llm_results()
-
-                if not key:
-                    continue
-
-                # Handle quit
-                if key.lower() == 'q':
-                    if self.mode == 'observe':
-                        # Cancel observation mode
-                        self.mode = 'view'
-                        self.observation_buffer = ""
-                        self.message = "Observation cancelled"
-                        self._display()
-                        continue
-                    else:
-                        # Confirm quit
-                        if self._confirm_quit():
-                            break
-                        self._display()
-                        continue
-
-                # Handle different modes
-                if self.mode == 'view':
-                    if not self._handle_view_mode(key):
-                        break
-                elif self.mode == 'observe':
-                    if not self._handle_observe_mode(key):
-                        break
-
+        while session_active:
+            with self.term.fullscreen(), self.term.cbreak(), self.term.hidden_cursor():
                 self._display()
 
-        # Show final results only if user pressed 'f' to finish
-        if self.finished:
-            self._show_final_results()
+                while True:
+                    key = self.term.inkey(timeout=0.1)
+
+                    # Check for async LLM results
+                    self._check_llm_results()
+
+                    if not key:
+                        continue
+
+                    # Handle quit
+                    if key.lower() == 'q':
+                        if self.mode == 'observe':
+                            # Cancel observation mode
+                            self.mode = 'view'
+                            self.observation_buffer = ""
+                            self.message = "Observation cancelled"
+                            self._display()
+                            continue
+                        else:
+                            # Confirm quit
+                            if self._confirm_quit():
+                                session_active = False
+                                break
+                            self._display()
+                            continue
+
+                    # Handle different modes
+                    if self.mode == 'view':
+                        if not self._handle_view_mode(key):
+                            break
+                    elif self.mode == 'observe':
+                        if not self._handle_observe_mode(key):
+                            break
+
+                    self._display()
+
+            # Show final results only if user pressed 'f' to finish
+            if self.finished:
+                action = self._show_final_results()
+                if action == 'back':
+                    # User wants to continue - reset finished flag and restart loop
+                    self.finished = False
+                    continue
+                else:
+                    # User wants to exit
+                    break
+            else:
+                # User quit without finishing
+                break
 
     def _handle_view_mode(self, key):
         """Handle input in view mode.
@@ -351,7 +365,11 @@ class FinancialTrainer:
         return key.lower() == 'y'
 
     def _show_final_results(self):
-        """Display final scoring results with option to return."""
+        """Display final scoring results with option to return.
+
+        Returns:
+            'back' to return to session, 'exit' to quit
+        """
         # Save session log for analysis
         try:
             log_path = self.scorer.save_session_log()
@@ -359,17 +377,15 @@ class FinancialTrainer:
             # Don't fail if logging fails
             pass
 
-        while True:
-            with self.term.cbreak():
-                action = self._render_final_results()
+        with self.term.cbreak():
+            action = self._render_final_results()
 
-            if action == 'back':
-                # Return to session
-                self.mode = 'view'
-                return
-            else:
-                # Exit
-                break
+        if action == 'back':
+            # Reset mode for returning to session
+            self.mode = 'view'
+            self.message = "Resumed session - continue exploring!"
+
+        return action
 
     def _render_final_results(self):
         """Render the final results screen."""
