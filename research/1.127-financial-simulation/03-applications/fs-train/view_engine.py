@@ -42,7 +42,7 @@ class ViewEngine:
     def _calculate_default(self) -> Dict[str, Any]:
         """Calculate default view - absolute values."""
         revenue = self._get_line_item('revenue')
-        cogs = self._get_line_item('cogs')
+        cogs = self._sum_cogs()  # Handle nested COGS like OpEx
         opex_total = self._sum_opex()
 
         gross_profit = self._subtract(revenue, cogs)
@@ -144,6 +144,23 @@ class ViewEngine:
                 totals[month] += amount
 
         return dict(totals)
+
+    def _sum_cogs(self) -> Dict[str, float]:
+        """Sum all COGS categories (handles nested or flat structure)."""
+        cogs_data = self.data.get('cogs', {})
+
+        # Check if COGS is nested (has categories) or flat (direct month values)
+        if cogs_data and isinstance(list(cogs_data.values())[0], dict):
+            # Nested structure: cogs.server_costs.jan, cogs.support.jan, etc.
+            totals = defaultdict(float)
+            for category, values in cogs_data.items():
+                if isinstance(values, dict):
+                    for month, amount in values.items():
+                        totals[month] += amount
+            return dict(totals)
+        else:
+            # Flat structure: cogs.jan, cogs.feb, etc.
+            return cogs_data
 
     def _subtract(self, a: Dict[str, float], b: Dict[str, float]) -> Dict[str, float]:
         """Subtract two line items."""
@@ -388,12 +405,33 @@ class ViewEngine:
 
         # COGS
         lines.append("Cost of Goods Sold")
-        cogs = view['cogs']
-        line = f"  {'Total':23}"
-        for month in self.months:
-            value = cogs.get(month, 0)
-            line += f" ${value:>9,.0f}"
-        lines.append(line)
+        cogs_data = self.data.get('cogs', {})
+
+        # Check if COGS is nested (show breakdown) or flat (show total only)
+        if cogs_data and isinstance(list(cogs_data.values())[0], dict):
+            # Show COGS categories
+            for category, values in sorted(cogs_data.items()):
+                line = f"  {category.replace('_', ' ').title():23}"
+                for month in self.months:
+                    value = values.get(month, 0)
+                    line += f" ${value:>9,.0f}"
+                lines.append(line)
+
+            # Show COGS total
+            total_line = f"  {'Total COGS':23}"
+            for month in self.months:
+                total = sum(cat.get(month, 0) for cat in cogs_data.values())
+                total_line += f" ${total:>9,.0f}"
+            lines.append(total_line)
+        else:
+            # Flat COGS - just show total
+            cogs = view['cogs']
+            line = f"  {'Total':23}"
+            for month in self.months:
+                value = cogs.get(month, 0)
+                line += f" ${value:>9,.0f}"
+            lines.append(line)
+
         lines.append("")
 
         # OpEx detail
