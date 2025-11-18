@@ -268,6 +268,11 @@ class FinancialTrainer:
 
     def _show_final_results(self):
         """Display final scoring results."""
+        with self.term.cbreak():
+            self._render_final_results()
+
+    def _render_final_results(self):
+        """Render the final results screen."""
         print(self.term.clear)
         print(self.term.move_y(2) + self.term.center(
             self._fmt("═" * 50, 'bold')
