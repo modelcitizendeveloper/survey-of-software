@@ -379,38 +379,43 @@ class ViewEngine:
         # Revenue
         lines.append("Revenue")
         revenue = view['revenue']
+        line = f"  {'Total':23}"
         for month in self.months:
             value = revenue.get(month, 0)
-            lines.append(f"  Total{'':<18}${value:>9,.0f}")
-            break  # Just show total for now
+            line += f"${value:>9,.0f}"
+        lines.append(line)
         lines.append("")
 
         # COGS
         lines.append("Cost of Goods Sold")
         cogs = view['cogs']
+        line = f"  {'Total':23}"
         for month in self.months:
             value = cogs.get(month, 0)
-            lines.append(f"  Total{'':<18}${value:>9,.0f}")
-            break
+            line += f"${value:>9,.0f}"
+        lines.append(line)
         lines.append("")
 
         # OpEx detail
         lines.append("Operating Expenses")
         opex = view.get('opex', {})
-        total_line = f"{'':25}"
-        for month in self.months:
-            total = 0
-            for category, values in opex.items():
-                total += values.get(month, 0)
-            total_line += f"${total:>9,.0f}"
 
+        # Show individual categories
         for category, values in sorted(opex.items()):
             line = f"  {category.capitalize():23}"
             for month in self.months:
                 value = values.get(month, 0)
                 line += f"${value:>9,.0f}"
             lines.append(line)
-        lines.append(total_line.replace("", "Total OpEx"))
+
+        # Show total
+        total_line = f"  {'Total OpEx':23}"
+        for month in self.months:
+            total = 0
+            for category, values in opex.items():
+                total += values.get(month, 0)
+            total_line += f"${total:>9,.0f}"
+        lines.append(total_line)
 
         return "\n".join(lines)
 
@@ -425,19 +430,29 @@ class ViewEngine:
         lines.append(header)
         lines.append("")
 
-        # Starting, change, ending cash
+        # Starting cash row
+        line = f"{'Starting Cash':25}"
         for month in self.months:
             start_key = f'{month}_start'
+            value = view.get(start_key, 0)
+            line += f"${value:>9,.0f}"
+        lines.append(line)
+
+        # Cash from operations row
+        line = f"{'Cash from Ops':25}"
+        for month in self.months:
             change_key = f'{month}_change'
-            end_key = f'{month}_end'
-
-            lines.append(f"Starting Cash{'':<12}${view.get(start_key, 0):>9,.0f}")
-
             change = view.get(change_key, 0)
             sign = "+" if change >= 0 else ""
-            lines.append(f"Cash from Ops{'':<12}{sign}${change:>8,.0f}")
+            line += f"{sign}${change:>8,.0f}"
+        lines.append(line)
 
-            lines.append(f"Ending Cash{'':<14}${view.get(end_key, 0):>9,.0f}")
-            lines.append("")
+        # Ending cash row
+        line = f"{'Ending Cash':25}"
+        for month in self.months:
+            end_key = f'{month}_end'
+            value = view.get(end_key, 0)
+            line += f"${value:>9,.0f}"
+        lines.append(line)
 
         return "\n".join(lines)
