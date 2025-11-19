@@ -12,7 +12,7 @@
 |----------|-----------|----------------|---------------|-------|
 | **PythonAnywhere** | $0 (limited, no custom domain) | $5/month | $5 (MySQL included) | Cheapest paid option |
 | **Heroku** | NONE | $5/month (Eco) | $10/month (+$5 DB) | Eco dynos sleep |
-| **Render** | $0 (sleeps, DB 90-day limit) | $7/month | $14/month (+$7 DB) | Free tier usable for demos |
+| **Render** | $0 (sleeps, DB 30-day limit) | $9/month | $15/month (+$6 DB) | Free tier limited (30-day DB!) |
 | **Railway** | $5 trial (one-time) | $5/month + usage | ~$15-20/month | Usage-based, unpredictable |
 | **Fly.io** | NONE | ~$5-6/month | ~$15/month (DIY DB) | Requires Docker |
 | **DigitalOcean** | $0 (static only) | $5/month | $12/month (+$7 DB) | Solid middle ground |
@@ -93,36 +93,57 @@
 
 ### 3. Render
 
-#### Free Tier
+#### Free Tier (Hobby)
 - **Cost:** $0/month (no credit card)
+- **Workspace:** 100 GB bandwidth/month, 500 build minutes/month, 1 project, email support
 - **Web Service:** 512 MB RAM, shared CPU (0.1 CPU)
 - **Sleep:** YES (after 15 min inactivity)
-- **Bandwidth:** Limited
-- **Build Minutes:** Limited monthly
 - **Custom Domain:** YES (with free SSL)
-- **Database:** Free Postgres (DELETED after 90 days!)
-- **Limitations:** Cold starts 30-60 sec, database not persistent
+- **Database:** Free Postgres (DELETED after 30 days!)
+- **Redis:** Free 25 MB (for testing only)
+- **Limitations:** Cold starts 30-60 sec, database deleted after 30 days
 
 #### Starter (Entry Paid Web Service)
-- **Cost:** $7/month
+- **Cost:** $9/month
 - **Specs:** 512 MB RAM, 0.5 shared CPU
 - **Sleep:** NO (always on)
-- **Bandwidth:** 100 GB/month included
-- **Build Minutes:** 500/month
+- **Billing:** Prorated by the second
 - **Database:** NOT included
 
 #### Standard
 - **Cost:** $25/month
 - **Specs:** 1 vCPU, 2 GB RAM
-- **Bandwidth:** 400 GB/month
 - **Auto-Scaling:** YES
 
-#### Database (Postgres)
-- **Starter:** $7/month (1 GB, 256 MB RAM)
-- **Standard:** $20/month (10 GB, 1 GB RAM)
-- **Pro:** $90/month (50 GB, 4 GB RAM, HA)
+#### Higher Tiers
+- **Pro:** $85/month (2 vCPU, 4 GB RAM)
+- **Pro Plus:** $175/month (4 vCPU, 8 GB RAM)
+- **Pro Max:** $225/month (4 vCPU, 16 GB RAM)
+- **Pro Ultra:** $450/month (8 vCPU, 32 GB RAM)
 
-**Small Flask App Total:** $14/month (Starter $7 + DB $7)
+#### Database (PostgreSQL)
+- **Free:** $0/month (30-day limit)
+- **Basic-256mb:** $6/month
+- **Basic-1gb:** $19/month
+- **Basic-4gb:** $75/month
+- **Pro:** $55-$3,000/month (4-256 GB RAM, HA, backups)
+- **Accelerated:** $160-$11,000/month (enterprise)
+
+#### Redis (Render Key Value)
+- **Free:** $0/month (25 MB)
+- **Starter:** $10/month (256 MB)
+- **Standard:** $32/month (1 GB)
+- **Pro:** $135/month (5 GB)
+- **Pro Plus:** $250/month (10 GB)
+- **Pro Max:** $550/month (20 GB)
+- **Pro Ultra:** $1,100/month (40 GB)
+
+#### Add-Ons
+- **Persistent Disks:** $0.25/GB/month (available on all tiers)
+- **Cron Jobs:** From $1/month ($0.00016-$0.00405/minute)
+- **Static Sites:** $0/month (free)
+
+**Small Flask App Total:** $15/month (Starter $9 + Basic-256mb DB $6)
 
 **Pricing Model:** Fixed tiers + bandwidth/build minute overages
 
@@ -289,7 +310,7 @@
 |----------|-------------|------------|----------------|-------------------|
 | **PythonAnywhere** | $0 (very limited) | $5 | $5 (MySQL incl.) | Not available |
 | **Heroku** | NONE | $5 (sleeps) | $10 ($5+$5) | $75+ (Perf+DB) |
-| **Render** | $0 (sleeps, 90-day DB) | $7 (no sleep) | $14 ($7+$7) | $45 ($25+$20) |
+| **Render** | $0 (sleeps, 30-day DB) | $9 (no sleep) | $15 ($9+$6) | $80 ($25+$55) |
 | **Railway** | $5 trial (once) | $5 + usage | ~$15-20 | N/A (manual) |
 | **Fly.io** | NONE | ~$6 | ~$15 (DIY DB) | N/A (manual) |
 | **DigitalOcean** | NONE (static only) | $5 | $12 ($5+$7) | $27 ($12+$15) |
@@ -304,7 +325,7 @@
 1. **PythonAnywhere $5/month** - Fixed, predictable, MySQL included
 2. **Heroku $10/month** - But Eco sleeps (frustrating)
 3. **DigitalOcean $12/month** - Solid middle ground
-4. **Render $14/month** - Modern, no sleep
+4. **Render $15/month** - Modern, no sleep (up from $14)
 
 ### Best Value for Low Traffic
 - **Google Cloud Run:** $0-1/month (but cold starts)
@@ -319,7 +340,7 @@
 - **Railway:** ~$15-20/month (usage-based)
 
 ### Free Tier Winners
-1. **Render:** Free tier with custom domains (but sleeps + 90-day DB)
+1. **Render:** Free tier with custom domains (but sleeps + 30-day DB - significantly limited!)
 2. **Google Cloud Run:** 2M requests/month (but cold starts)
 3. **Vercel:** 100 GB bandwidth (but not for Flask)
 
@@ -343,7 +364,7 @@
 ## Recommendation by Budget
 
 ### $0/month (Free Only)
-- **Render Free Tier** (accept 15-min sleep, 90-day DB limit)
+- **Render Free Tier** (accept 15-min sleep, 30-day DB limit - very limited!)
 - **Google Cloud Run** (if very low traffic, accept cold starts)
 
 ### $5-10/month
@@ -353,12 +374,14 @@
 
 ### $10-15/month
 - **DigitalOcean $12** (solid, predictable)
-- **Render $14** (modern, no sleep)
+- **Render $15** (modern, no sleep - up from $14)
 - **Railway ~$15** (usage-based, great DX)
 
 ### $20-30/month
-- **Render Standard $45** (auto-scaling)
 - **DigitalOcean Professional $27** (scaling)
+
+### $50-100/month
+- **Render Standard $80** (auto-scaling, up from $45)
 
 ### Variable Traffic (Pay-Per-Use)
 - **Google Cloud Run** (best for spiky traffic)
@@ -369,8 +392,10 @@
 ## For QRCards Current Stage
 
 **Budget-Conscious:** PythonAnywhere $5 (current choice, good fit)
-**Modernize:** Render $14 (git auto-deploy, no sleep)
+**Modernize:** Render $15 (git auto-deploy, no sleep - pricing increased)
 **Flexibility:** Railway ~$15-20 (beautiful UI, usage-based)
-**Free Demo:** Render free tier (accept sleep, 90-day DB)
+**Free Demo:** Render free tier (accept sleep, 30-day DB - very limited now!)
 
 **NOT Recommended:** Heroku (too expensive), Fly.io (too complex), Vercel (incompatible), Cloud Run (overkill)
+
+**Pricing Update Note (Nov 2025):** Render increased Starter tier from $7 to $9/month (+29%) and reduced free database lifespan from 90 days to 30 days (-67%). This makes the free tier significantly less useful for development and increases the entry cost for production apps.

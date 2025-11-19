@@ -47,7 +47,8 @@
 - Franchises & multi-entity groups
 
 **Use Cases**:
-- Accounting firms serving multiple clients
+- **Accounting firms serving multiple clients** (Business Advisors plan)
+- **Fractional CFOs/controllers managing 5-10+ client companies** (per-company pricing)
 - SMBs needing reporting + cash flow
 - Franchise groups requiring consolidation
 
@@ -55,8 +56,19 @@
 
 ## 4. Pricing
 
-**Pricing**: Not disclosed publicly (demo required)
-**Estimated**: $100-150/month range
+**Published Pricing** (Nov 18, 2025 - Business Advisors Plan):
+- **1 company**: $53/month
+- **4 companies**: $212/month ($53/company)
+- **5 companies**: $265/month ($53/company)
+- **10 companies**: $280/month ($28/company - bulk discount kicks in)
+- **Additional companies**: $53/company (1-9), $28/company (10+)
+- **Free Trial**: 14-day trial available
+
+**Billing**: Monthly subscription
+
+**Multi-Client Pricing Model**: Per-company pricing designed for accounting firms and fractional CFOs managing multiple client businesses
+
+**Source**: https://www.fathomhq.com/business-advisors (Nov 18, 2025)
 
 ---
 
@@ -103,14 +115,19 @@
 
 ## Summary
 
-**Positioning**: SMB financial platform combining reporting + cash flow
+**Positioning**: SMB financial platform combining reporting + cash flow, designed for business advisors
 
-**Pricing**: $100-150/month (estimated)
+**Pricing**: $53/company/month (bulk discount to $28/company at 10+ companies)
 
-**Target**: SMBs and accountants (5-50 employees)
+**Target**: Accounting firms, fractional CFOs, business advisors, SMBs (5-50 employees)
 
-**Strengths**: Broad accounting integrations, accountant channel, multi-entity support
+**Strengths**: Multi-client portfolio management, broad accounting integrations, professional report generation, accountant channel, multi-entity support
 
-**Best For**: Accounting firms managing multiple clients, SMBs needing reporting + cash flow
+**Best For**:
+- **Fractional CFOs/controllers managing 5-10+ client companies** ($265-280/mo for 5-10 clients)
+- Accounting firms providing advisory services to multiple clients
+- SMBs needing comprehensive reporting + cash flow forecasting
 
-**Cash Flow Focus**: ⭐⭐⭐ (Cash flow is one component of broader financial management)
+**Cash Flow Focus**: ⭐⭐⭐ (Cash flow is one component of broader financial management platform)
+
+**Key Value-Add (Nov 18, 2025)**: Professional report generation - significant differentiator for client-facing advisors and fractional controllers

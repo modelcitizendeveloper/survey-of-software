@@ -26,114 +26,139 @@ Render is a **modern cloud platform** built to replace Heroku after its free tie
 
 ## 1. Pricing Structure
 
-### Free Tier (Starter)
+### Free Tier (Hobby)
 
 **Monthly Cost:** $0 (no credit card required)
+
+**Workspace Limits:**
+- **Bandwidth:** 100 GB/month
+- **Build Minutes:** 500/month
+- **Projects:** Up to 1 project
+- **Support:** Email support
 
 **Free Web Service:**
 - **CPU:** Shared CPU (0.1 CPU allocation)
 - **Memory:** 512 MB RAM
-- **Bandwidth:** Limited (not published exactly, but generous)
-- **Build Minutes:** Limited monthly quota
 - **Sleep Behavior:** Spins down after **15 minutes of inactivity**
 - **Cold Start:** Slow (30-60 seconds to wake up)
 - **Custom Domains:** YES (with free SSL)
 - **Automatic Deploys:** YES (on git push)
 
 **Free Postgres Database:**
-- **Storage:** Limited (typically 1 GB)
-- **Lifespan:** **Database deleted after 90 days** (major limitation!)
+- **Lifespan:** **Database deleted after 30 days** (major limitation!)
+- **Storage:** Limited
 - **Connections:** Limited
 - **NO persistence guarantees** - not for production
+
+**Free Redis:**
+- **Memory:** 25 MB
+- **Best for:** Development/testing only
 
 **Free Static Sites:**
 - Unlimited static sites
 - Free SSL
 - Global CDN
 
-**Best For:** Personal projects, portfolios, learning, demos
+**Best For:** Personal projects, portfolios, learning, demos (30-day limit for databases!)
 
 ---
 
 ### Starter Plan (Paid Web Services)
 
-**Monthly Cost:** $7/month per service
+**Monthly Cost:** $9/month per service
 
 **Specifications:**
 - **CPU:** Shared CPU (0.5 CPU)
 - **Memory:** 512 MB RAM
 - **Sleep:** **NEVER sleeps** (always on)
-- **Bandwidth:** 100 GB/month included
-- **Build Minutes:** 500/month included
-- **Disk:** None (ephemeral - use external storage)
+- **Bandwidth:** Included in workspace plan
+- **Build Minutes:** Included in workspace plan
+- **Disk:** Ephemeral (use persistent disks add-on at $0.25/GB)
 
 **vs. Heroku Eco:**
-- Same price as Heroku Basic ($7)
+- Slightly more expensive ($9 vs $5 Eco)
 - **No sleep** (vs. Heroku Eco 30-min sleep)
 - More transparent billing
+- Prorated by the second
 
 ---
 
 ### Standard and Higher Plans
 
-**Standard:** $25/month per service
-- **CPU:** 1 vCPU
-- **Memory:** 2 GB RAM
-- **Bandwidth:** 400 GB/month
-- **Build Minutes:** 500/month per team member
+**Compute Tiers (Web Services, Private Services, Background Workers):**
 
-**Pro:** $85/month per service
-- **CPU:** 2 vCPU
-- **Memory:** 4 GB RAM
-- **Bandwidth:** 1000 GB/month
+| Tier | Price/month | CPU | RAM |
+|------|-------------|-----|-----|
+| Standard | $25 | 1 vCPU | 2 GB |
+| Pro | $85 | 2 vCPU | 4 GB |
+| Pro Plus | $175 | 4 vCPU | 8 GB |
+| Pro Max | $225 | 4 vCPU | 16 GB |
+| Pro Ultra | $450 | 8 vCPU | 32 GB |
 
-**Pro Plus:** $200/month per service
-- **CPU:** 4 vCPU
-- **Memory:** 8 GB RAM
-
-**Pro Max:** $500/month per service
-- **CPU:** 8 vCPU
-- **Memory:** 16 GB RAM
+**Notes:**
+- All compute resources are prorated by the second
+- Bandwidth included in workspace plan (100 GB free, 500 GB professional, 1 TB organization)
+- Build minutes included in workspace plan
+- Auto-scaling available on Standard tier and above
 
 ---
 
-### Database Pricing (Postgres)
+### Database Pricing (PostgreSQL)
 
-**Starter:** $7/month
-- **Storage:** 1 GB SSD
-- **RAM:** 256 MB
-- **Connections:** 25
-- **Automated backups:** NO
-- **Good for:** Development/staging
+**Free Tier:**
+- **Cost:** $0/month
+- **Lifespan:** 30 days (then deleted)
+- **Not for production use**
 
-**Standard:** $20/month
-- **Storage:** 10 GB SSD
-- **RAM:** 1 GB
-- **Connections:** 100
-- **Automated backups:** YES
+**Basic Tier:**
+- **Basic-256mb:** $6/month
+- **Basic-1gb:** $19/month
+- **Basic-4gb:** $75/month
 
-**Pro:** $90/month
-- **Storage:** 50 GB SSD
-- **RAM:** 4 GB
-- **High availability:** YES
+**Pro Tier:** $55-$3,000/month
+- **Range:** 4 GB to 256 GB RAM
+- **Features:** High availability, automated backups, point-in-time recovery (7-day window)
+
+**Accelerated Tier:** $160-$11,000/month
+- **Higher performance options**
+- **Enterprise-grade features**
+
+### Redis Pricing (Render Key Value)
+
+| Tier | Price/month | RAM |
+|------|-------------|-----|
+| Free | $0 | 25 MB |
+| Starter | $10 | 256 MB |
+| Standard | $32 | 1 GB |
+| Pro | $135 | 5 GB |
+| Pro Plus | $250 | 10 GB |
+| Pro Max | $550 | 20 GB |
+| Pro Ultra | $1,100 | 40 GB |
 
 ---
 
 ### Additional Costs
 
-**Bandwidth Overages:**
-- Included: Varies by plan (100 GB to 1 TB/month)
-- Overage: Billed in $10 increments for additional bandwidth
-- Free services suspended if no payment method on file
+**Bandwidth:**
+- **Hobby:** 100 GB/month included
+- **Professional:** 500 GB/month included
+- **Organization:** 1 TB/month included
+- **Overages:** Additional charges apply
 
 **Build Minutes:**
-- Hobby plan: 500 minutes/month
-- Professional: 500 per team member
-- Overage: Varies (charges apply)
+- **Hobby:** 500 minutes/month
+- **Professional:** 500 per team member/month
+- **Overages:** Charges apply if exceeded
 
 **Persistent Disks:**
-- Paid add-on for storage beyond ephemeral file system
-- Pricing varies by size
+- **Cost:** $0.25/GB/month
+- Available on all tiers including free Hobby
+- SSD-backed storage that persists across deployments
+
+**Cron Jobs:**
+- **Pricing:** From $1/month
+- **Rate:** $0.00016/minute (Starter) to $0.00405/minute (Pro Plus)
+- Billed based on execution time
 
 ---
 
@@ -150,18 +175,23 @@ Render uses **hybrid pricing:**
 
 **Free Tier (Hobby):**
 - Free web service (with sleep)
-- Free Postgres (deleted after 90 days!)
-- **Total: $0/month** (not suitable for production)
+- Free Postgres (deleted after 30 days!)
+- **Total: $0/month** (not suitable for production - 30 day database limit!)
 
-**Always-On Small App:**
-- Starter web service: $7/month
-- Starter Postgres: $7/month
-- **Total: $14/month**
+**Always-On Small App (Development):**
+- Starter web service: $9/month
+- Basic-256mb Postgres: $6/month
+- **Total: $15/month**
 
-**Production App:**
+**Always-On Small App (Production):**
+- Starter web service: $9/month
+- Basic-1gb Postgres: $19/month
+- **Total: $28/month**
+
+**Production App (Standard):**
 - Standard web service: $25/month
-- Standard Postgres: $20/month
-- **Total: $45/month**
+- Pro Postgres (entry): ~$55/month
+- **Total: $80/month**
 
 ---
 
@@ -493,14 +523,14 @@ Auto-detects based on files present.
    - Clear overage pricing
 
 7. **Better Free Database than Competitors**
-   - Free Postgres (though 90-day limit)
-   - Better than Railway (no free DB)
+   - Free Postgres (though 30-day limit)
+   - Better than Railway (no free DB), but very limited
 
 ### Disadvantages
 
 1. **Free Tier Limitations**
    - **15-minute sleep** (slow cold starts)
-   - **90-day database deletion** (unusable for real apps)
+   - **30-day database deletion** (unusable for real apps - down from 90 days!)
    - Shared CPU (slow performance)
 
 2. **Smaller Ecosystem than Heroku**
@@ -514,7 +544,7 @@ Auto-detects based on files present.
 
 4. **No Auto-Scaling on Starter**
    - Must upgrade to Standard ($25) for autoscaling
-   - Starter requires manual scaling
+   - Starter ($9) requires manual scaling
 
 5. **Build Minute Limits**
    - 500 minutes/month on Hobby
@@ -543,7 +573,7 @@ Auto-detects based on files present.
 
 ### NOT Ideal For:
 - **Always-on free apps** (15-min sleep is annoying)
-- **Production apps needing free database** (90-day deletion!)
+- **Production apps needing free database** (30-day deletion!)
 - **High-traffic apps** (expensive to scale vs. usage-based platforms)
 - **Global edge applications** (limited regions)
 - **Beginners unfamiliar with Docker** (though buildpack auto-detection helps)
@@ -560,21 +590,21 @@ Auto-detects based on files present.
 
 ### vs. Heroku
 - **Free Tier:** Render has one, Heroku doesn't
-- **Cheaper Paid:** $7 Starter (no sleep) vs. $7 Basic or $5 Eco (with sleep)
+- **Paid Pricing:** $9 Starter (no sleep) vs. $7 Basic or $5 Eco (with sleep)
 - **Less Mature:** Fewer add-ons, smaller ecosystem
 - **Docker-First:** Easier Docker workflow than Heroku
 
 ### vs. Railway
-- **Fixed Pricing:** Render's $7/month vs. Railway usage-based
+- **Fixed Pricing:** Render's $9/month vs. Railway usage-based
 - **Predictable Costs:** No surprise bills on Render
 - **Railway More Flexible:** Pay only for actual usage
-- **Render Better Free Tier:** 90-day DB vs. Railway no free DB
+- **Render Better Free Tier:** 30-day DB vs. Railway no free DB (but limited!)
 
 ### vs. Fly.io
 - **Simpler:** Buildpack auto-detection vs. Dockerfile required
 - **Free Tier:** Render has one (with sleep), Fly.io none
 - **Less Global:** 4 regions vs. 30+ on Fly.io
-- **Cheaper Entry:** $7/month vs. Fly.io usage-based (can be higher)
+- **Entry Pricing:** $9/month vs. Fly.io usage-based (~$5-6/month)
 
 ---
 
@@ -685,14 +715,15 @@ Migrations run automatically before each deploy.
 **Render is the best "Heroku replacement" for developers seeking free hosting and modern Docker workflows.**
 
 **Best For:** Hobby projects, small production apps, Docker-based teams, infrastructure-as-code enthusiasts
-**Avoid For:** Always-on free apps (sleep), production apps needing free persistent DB (90-day limit)
+**Avoid For:** Always-on free apps (sleep), production apps needing free persistent DB (30-day limit)
 
 **For QRCards:**
 - **Current Stage:** Excellent choice
-  - Free tier for testing (accept 15-min sleep)
-  - $14/month for always-on (Starter web + Starter DB)
+  - Free tier for testing (accept 15-min sleep + 30-day DB limit)
+  - $15/month for always-on development (Starter web $9 + Basic-256mb DB $6)
+  - $28/month for production (Starter web $9 + Basic-1gb DB $19)
   - Better than PythonAnywhere for git-based workflow
-- **Future Stage:** Scales well to Standard ($45/month) with autoscaling
+- **Future Stage:** Scales well to Standard ($80/month) with autoscaling
 - **Recommendation:** **Strong candidate** - modern, affordable, Docker-native
 
 **Render's 2025 Position:** Leading Heroku alternative with growing adoption, excellent for solo devs and small teams.

@@ -1,4 +1,90 @@
 queue:
+- code: '1.140'
+  title: Classical Language Libraries
+  tier: 1
+  status: not_started
+  estimated_hours: 6-8
+  rationale: |
+    Foundation for language-learning application (~/spawn-solutions/applications/language-learning).
+    Need to evaluate CLTK vs alternatives for Latin declension/conjugation generation.
+    Personal use case: building Latin noun/verb quiz tool with spaced repetition.
+  value: |
+    - CLTK (Classical Language Toolkit) for Latin/Greek morphology
+    - pyLatinam for automated declension generation
+    - PyWORDS (Python implementation of Whitaker's WORDS)
+    - Compare quality, coverage, API usability
+    - Integration patterns for quiz generation
+  libraries: CLTK, pyLatinam, PyWORDS, LatMor
+  use_case: Latin declension/conjugation quiz generation for language learning app
+- code: '1.141'
+  title: Spaced Repetition Algorithms
+  tier: 1
+  status: not_started
+  estimated_hours: 5-7
+  rationale: |
+    Core algorithm for effective language learning retention.
+    Building personal language quiz tool requiring optimal review scheduling.
+    Need to choose between classic (SM-2) vs modern (FSRS) algorithms.
+  value: |
+    - SM-2 (SuperMemo-2, 1987) - simple, proven, widely used
+    - SM-18 (SuperMemo-18, 2019) - complex, highest theoretical performance
+    - FSRS (Free Spaced Repetition Scheduler, 2022) - modern, open-source, good balance
+    - Implementation complexity vs effectiveness trade-offs
+    - Integration with quiz systems
+  algorithms: SM-2, SM-18, FSRS, Leitner System
+  use_case: Optimal review scheduling for language vocabulary retention
+- code: '1.142'
+  title: Flashcard Systems & Integrations
+  tier: 1
+  status: not_started
+  estimated_hours: 4-6
+  rationale: |
+    Evaluate Anki integration vs building custom flashcard system.
+    Language learning app needs: deck generation, cross-platform sync, data portability.
+    Decision point: extend Anki vs build standalone with Anki export capability.
+  value: |
+    - genanki for programmatic Anki deck generation
+    - ankipandas for analyzing Anki databases with pandas
+    - AnkiConnect for live integration with Anki desktop
+    - Anki pylib for direct database access
+    - Custom flashcard system architecture patterns
+  libraries: genanki, ankipandas, AnkiConnect, Anki pylib
+  use_case: Generate Anki decks from linguistic data or build custom quiz system
+- code: '1.148'
+  title: Morphological Analysis Libraries
+  tier: 1
+  status: not_started
+  estimated_hours: 8-12
+  rationale: |
+    Multi-language morphological analysis for language learning app.
+    Need to handle VERY different language structures:
+    - Japanese: agglutinative, particles, 3 scripts (hiragana/katakana/kanji)
+    - Russian: fusional, 6 cases, perfective/imperfective aspect
+    - Czech: 7 cases, complex declension patterns
+    - Latin: already covered in 1.140 (CLTK)
+    Critical for generating inflected forms and parsing user input.
+  value: |
+    Japanese libraries:
+    - MeCab (classic, widely used, requires binary installation)
+    - fugashi (Python wrapper for MeCab with better API)
+    - SudachiPy (modern, pure Python, better for new words)
+    - jamdict (JMdict dictionary, kanji lookup by reading/meaning)
+    - jaconv (kana/romaji conversion)
+
+    Slavic libraries:
+    - pymorphy2 (Russian morphology, excellent coverage)
+    - UDPipe (Czech, Universal Dependencies models)
+    - spaCy models (hr_core_news, sr_core_news for Croatian/Serbian)
+    - transliterate (Cyrillic ↔ Latin for B/S/C variants)
+
+    Evaluation criteria:
+    - Accuracy of inflection generation
+    - Parsing quality (analyze inflected forms)
+    - Installation complexity (binary deps vs pure Python)
+    - Dictionary coverage (especially for Japanese kanji)
+    - API usability for quiz generation
+  libraries: MeCab, fugashi, SudachiPy, jamdict, pymorphy2, UDPipe, spaCy
+  use_case: Generate and validate inflected forms across Japanese, Slavic, and Romance languages
 - code: '3.045'
   title: Graph Databases
   tier: 3

@@ -75,13 +75,21 @@
 ## 4. Pricing
 
 **Published Pricing** (transparent):
-- **Basics**: $29/month
-- **Premium**: Higher tier available (pricing not specified)
+- **Basics**: $29/month (1 company, 1 bank account)
+- **Small Business**: $59/month (1 company, multiple bank accounts)
+- **Premium**: $89/month (unlimited companies, unlimited accounts)
 - **Free Trial**: 30-day trial available
 
 **Billing**: Monthly subscription
 
 **Value Proposition**: Affordable entry point for small businesses
+
+**IMPORTANT CLARIFICATION (Nov 18, 2025)**:
+- Premium's "unlimited companies" = Add multiple QuickBooks connections for a SINGLE business owner managing multiple entities they OWN
+- Pulse's "companies" feature (found in Pulse help) = Tracks YOUR customers (people who pay YOU), NOT separate client businesses you manage as fractional controller
+- **CONFIRMED by Pulse Support:** "You can only connect one QuickBooks account to your Pulse account, you would need a separate Pulse account for another QuickBooks account." (Seth, Pulse Support, Nov 18, 2025)
+- **For fractional controllers serving 5+ clients**: Would need 5 separate subscriptions (5 × $29-59 = $145-295/mo) - NOT designed for this use case
+- **Use Fathom or Jirav instead** for multi-client fractional CFO/controller practices
 
 ---
 
@@ -154,6 +162,7 @@
 - Companies needing full FP&A (budgeting, forecasting, headcount)
 - Mid-market or enterprise organizations
 - Businesses requiring multi-entity consolidation
+- **Fractional controllers/CFOs managing multiple client companies** (CRITICAL: Pulse's "companies" feature tracks YOUR customers/revenue sources, NOT separate businesses you manage. Premium's "unlimited accounts" = bank accounts within ONE company, not multiple companies. Source: Pulse help docs, Nov 18, 2025)
 
 ---
 
