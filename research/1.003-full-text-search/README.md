@@ -200,10 +200,14 @@ Following MPSE Tier 1 framework:
 
 ## Research Log
 
-- **2025-11-19**: Project initialized, directory structure created
-- Next: S1 Rapid Discovery - Install and benchmark Whoosh, Tantivy-py
+- **2025-11-19 09:00**: Project initialized, directory structure created
+- **2025-11-19 10:00**: S1 Rapid Discovery complete - Whoosh vs Tantivy benchmarked
+  - Tantivy clear winner: 240× faster queries (0.27ms vs 64ms)
+  - Pre-built wheels eliminate Rust compilation barrier
+  - Recommendation: Proceed with Tantivy deep-dive in S2
+- Next: S2 Comprehensive Discovery - Tantivy at scale (100K-1M docs)
 
 ---
 
-**Status**: ⬜ S1 Pending | ⬜ S2 Pending | ⬜ S3 Pending | ⬜ S4 Pending
-**Next Action**: S1 - Install libraries, run benchmarks, test integration
+**Status**: ✅ S1 Complete (Nov 19) | ⬜ S2 Pending | ⬜ S3 Pending | ⬜ S4 Pending
+**Next Action**: S2 - Tantivy deep-dive (scale testing, features, memory profiling)
