@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_completed: 75
+total_completed: 77
 research:
 - code: '1.001'
   title: advanced sorting libraries
@@ -145,6 +145,10 @@ research:
   title: project management
   description: Research on project management
   path: research/1.131-project-management
+- code: '1.140'
+  title: classical language libraries
+  description: Classical Latin morphology libraries - CLTK, Stanza PROIEL package. Completed Nov 19, 2025 (S1-S4 MPSE, synthesis, 45%→75-80% accuracy in 26h implementation, clear path to 97-98%)
+  path: research/1.140-classical-language-libraries
 - code: '2.040'
   title: opentelemetry
   description: Research on opentelemetry
@@ -237,6 +241,10 @@ research:
   title: data warehouse
   description: Research on data warehouse
   path: research/3.044-data-warehouse
+- code: '3.045'
+  title: graph databases
+  description: Graph database platforms - Neo4j, Memgraph, Neptune, ArangoDB, Dgraph, TigerGraph, JanusGraph. Completed Nov 16, 2025 (S1-S4 MPSE, 22 docs, 7,000 lines, openCypher portability focus)
+  path: research/3.045-graph-databases
 - code: '3.050'
   title: platform as a service
   description: Research on platform as a service
