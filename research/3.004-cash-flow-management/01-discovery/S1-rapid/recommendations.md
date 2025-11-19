@@ -236,11 +236,11 @@ Platform success correlates with integration breadth:
 - SaaS metrics built-in
 - Integrations for startup stack (Stripe, Gusto)
 
-### "I'm an accountant serving multiple clients"
-→ **Jirav** or **Fathom**
-- Multi-client portfolio views
-- Accounting platform breadth
-- Advisor pricing models
+### "I'm an accountant/fractional CFO serving multiple clients"
+→ **Fathom** ($265/mo for 5 clients, $280/mo for 10 clients) or **Jirav** ($150-300/mo)
+- **Fathom**: $53/company/month (1-9 companies), $28/company/month (10+), professional report generation, Business Advisors plan
+- **Jirav**: Multi-client portfolio views, white-label capabilities
+- ❌ **NOT Pulse**: Pulse's "companies" = YOUR customers (revenue tracking), NOT separate client businesses (discovered Nov 18, 2025)
 
 ### "We have a finance team (3-10 people), Excel-dependent"
 → **Datarails** (NEW)
@@ -444,17 +444,20 @@ PlanGuru                    Causal                  Mosaic
 ### Small Business (1-20 employees)
 **Need**: Simple cash flow visibility
 **Recommended**: Pulse ($29-89/mo)
-**Alternative**: Fathom (if need reporting + cash flow)
+**Alternative**: Fathom ($53/mo for 1 company - if need reporting + cash flow)
+**Important**: Pulse works for SINGLE business owners only - not for fractional controllers managing multiple clients
 
 ### Startup Pre-Revenue
 **Need**: Scenario modeling, runway tracking
 **Recommended**: Finmark ($100-200/mo)
 **Alternative**: Causal (if technical finance team, data warehouse)
 
-### Accounting Firm (20+ clients)
-**Need**: Multi-client portfolio management
-**Recommended**: Jirav ($150-300/mo)
-**Alternative**: Fathom (international clients, MYOB/Sage)
+### Accounting Firm / Fractional CFO (5-20+ clients)
+**Need**: Multi-client portfolio management, professional reporting
+**Recommended**: Fathom ($265/mo for 5 clients, $280/mo for 10 clients)
+**Alternative**: Jirav ($150-300/mo for white-label, if need full FP&A)
+**Why Fathom**: Per-company pricing ($53/company), professional report generation, 14-day free trial, designed for business advisors
+**NOT Recommended**: Pulse (doesn't support multi-client fractional controller use case - discovered Nov 18, 2025)
 
 ### SaaS Startup Series A+ (30-200 employees)
 **Need**: SaaS metrics, hiring plans, data warehouse integration

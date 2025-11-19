@@ -1,10 +1,6 @@
 repository: spawn-solutions
-total_planned: 157
+total_planned: 171
 planned_research:
-- code: '1.001'
-  title: Advanced sorting libraries (timsort variants, parallel sorts, radix sorts)
-  tier: 'Tier 1: Algorithms & Libraries'
-  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
 - code: '1.003'
   title: Full-text search libraries (Whoosh, Tantivy bindings, MeiliSearch clients)
   tier: 'Tier 1: Algorithms & Libraries'
@@ -481,6 +477,88 @@ planned_research:
   title: Self-hosted accounting/ERP (Odoo, ERPNext, Dolibarr)
   tier: 'Tier 1: Algorithms & Libraries'
   roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.141'
+  title: Spaced repetition algorithms (SM-2, SM-18, FSRS)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.142'
+  title: Flashcard systems & integrations (Anki, genanki, ankipandas, AnkiConnect)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.143'
+  title: Language detection & identification (langdetect, polyglot, fastText language
+    ID)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.144'
+  title: Phonetic & pronunciation libraries (IPA transcription, forvo API, eSpeak)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.145'
+  title: Grammar checking & correction (LanguageTool, GrammarBot, Ginger)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.146'
+  title: Vocabulary databases & dictionaries (WordNet, ConceptNet, Wiktionary parsers)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.147'
+  title: Language corpus libraries (Brown Corpus, Universal Dependencies, Leipzig)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.148'
+  title: 'Morphological analysis libraries (Japanese: MeCab/fugashi/SudachiPy, Russian:
+    pymorphy2, Czech: UDPipe, multi-script inflection generation)'
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.149'
+  title: Second language acquisition tools (CEFR level assessment, readability scores)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.150'
+  title: Latin text corpora (Perseus Digital Library, PHI5/PHI7, Latin Library, Open
+    Greek and Latin)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.151'
+  title: Latin vocabulary frequency lists (DCC Core Vocabulary, Dickinson College,
+    LASLA frequency data)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.152'
+  title: Reading difficulty assessment algorithms (lexical coverage, readability metrics,
+    i+1 detection)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.153'
+  title: Sentence parsing & dependency analysis (Universal Dependencies, Stanza, syntax
+    trees)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.154'
+  title: Graded reader generation (automatic text leveling, vocabulary substitution)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.155'
+  title: Parallel text alignment (Latin-English corpora, sentence alignment tools)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.156'
+  title: Text annotation tools (morphological tagging, glossing, interlinear display)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.157'
+  title: Reading comprehension assessment (question generation, answer validation)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.158'
+  title: Vocabulary acquisition tracking (learning curves, retention modeling)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.159'
+  title: Adaptive text recommendation (personalized difficulty, interest-based selection)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
 - code: '2.042'
   title: Grafana/Loki
   tier: 'Tier 2: Open Standards'
@@ -531,22 +609,6 @@ planned_research:
   roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
 - code: '3.022'
   title: Push Notifications
-  tier: 'Tier 3: Managed Services'
-  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
-- code: '3.030'
-  title: Content Delivery Network
-  tier: 'Tier 3: Managed Services'
-  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
-- code: '3.032'
-  title: Image & Media Processing
-  tier: 'Tier 3: Managed Services'
-  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
-- code: '3.041'
-  title: NoSQL Databases
-  tier: 'Tier 3: Managed Services'
-  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
-- code: '3.043'
-  title: Search Services
   tier: 'Tier 3: Managed Services'
   roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
 - code: '3.051'

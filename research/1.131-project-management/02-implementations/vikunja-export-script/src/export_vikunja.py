@@ -203,7 +203,12 @@ def get_task_summary(tasks: List[Any]) -> Dict[str, Any]:
             continue
 
         try:
-            due = datetime.fromisoformat(str(task.due_date).replace('Z', '+00:00'))
+            due_str = str(task.due_date)
+            # Skip Vikunja's default "undated" date
+            if due_str.startswith('0001-01-01'):
+                continue
+
+            due = datetime.fromisoformat(due_str.replace('Z', '+00:00'))
             days_until_due = (due - now).days
 
             if days_until_due < 0:

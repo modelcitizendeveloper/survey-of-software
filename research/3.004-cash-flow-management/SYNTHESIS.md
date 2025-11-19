@@ -262,8 +262,9 @@ Do you use enterprise ERP/CRM/data warehouse?
 **Segment C: Mid-Market (100-500 employees, $20M-100M revenue)**
 → Causal ($500-1,200/mo), Dryrun ($500-1,000/mo), or Mosaic ($1,500-2,000/mo)
 
-**Segment D: Accounting Firm (serving multiple clients)**
-→ Jirav ($50-750/mo) or Fathom ($200-400/mo)
+**Segment D: Accounting Firm / Fractional CFO (serving multiple clients)**
+→ Fathom ($265/mo for 5 clients, $280/mo for 10 clients) or Jirav ($150-300/mo)
+**IMPORTANT**: Pulse does NOT support multi-client fractional controllers - "companies" feature = revenue tracking, not client management (Nov 18, 2025)
 
 **Segment E: Enterprise (500+ employees, $100M+ revenue)**
 → Don't use these platforms (use Anaplan, Workday Adaptive, SAP, Oracle EPM)
@@ -286,8 +287,9 @@ Do you use enterprise ERP/CRM/data warehouse?
 → Mosaic (25+ integrations, AI insights, real-time)
 
 **Priority: Accountant Channel (Multi-Client)**
+→ Fathom ($265/mo for 5 clients, professional report generation, business advisors plan)
 → Jirav (white-label, portfolio management, 4,000+ firms)
-→ Fathom (group benchmarking, multi-entity)
+**NOT Pulse**: Doesn't support fractional controllers managing multiple client companies (discovered Nov 18, 2025)
 
 **Priority: Scenario Modeling Depth**
 → Dryrun (scenario modeling is core product, CFO-grade)
@@ -304,8 +306,9 @@ Do you use enterprise ERP/CRM/data warehouse?
 | Your Profile | Primary Rec | Rationale | Runner-Up |
 |--------------|-------------|-----------|-----------|
 | **Solo founder, raising capital** | Finmark ($100/mo) | Scenario modeling, modern UX, affordable | Jirav Controller ($50/mo) |
-| **Small business, QB, need cash visibility** | Pulse ($59/mo) | Simplest, QB sync, affordable, stable | Fathom ($100/mo) if need reporting |
-| **Accounting firm, 20 clients** | Jirav ($150-300/mo) | White-label, multi-client, accountant channel | Fathom ($200-400/mo) |
+| **Small business, QB, need cash visibility** | Pulse ($59/mo) | Simplest, QB sync, affordable, stable (SINGLE business only) | Fathom ($53/mo) if need reporting |
+| **Fractional CFO/controller, 5-10 clients** | Fathom ($265-280/mo) | Multi-client portfolio, professional reports, $53/company, business advisors plan | Jirav ($150-300/mo) if need full FP&A |
+| **Accounting firm, 20 clients** | Jirav ($150-300/mo) or Fathom | White-label, multi-client, accountant channel | Fathom scales to $28/company at 10+ |
 | **SaaS startup, Series A, 30 employees** | Causal ($500-800/mo) | SaaS metrics, hiring plans, modern | Finmark ($200-300/mo) if budget-constrained |
 | **Restaurant, 3 locations** | Pulse ($89/mo) | Daily granularity, multi-location, simple | Fathom ($100-150/mo) |
 | **Manufacturing, Sage Intacct** | Dryrun ($800/mo) | Sage Intacct integration, scenario modeling | Mosaic ($1,500/mo) if need AI |

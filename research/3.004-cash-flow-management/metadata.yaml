@@ -16,7 +16,9 @@ summary: |
 
 key_findings:
   market_structure:
-    tier_1_small_business: "Pulse ($29-89/mo), Fathom ($100-150/mo) - 1-20 employees, cash flow focus, QuickBooks integration"
+    tier_1_small_business: "Pulse ($29-89/mo), Fathom ($53-265/mo) - 1-20 employees, cash flow focus, QuickBooks integration"
+    pulse_multi_client_limitation: "CRITICAL DISCOVERY (Nov 18, 2025): Pulse does NOT support fractional controllers managing multiple client companies. Pulse's 'companies' feature tracks YOUR customers (revenue sources), NOT separate businesses you manage. Premium's 'unlimited accounts' = bank accounts within ONE company, not multiple companies. Source: Pulse help docs."
+    fathom_multi_client_pricing: "CONFIRMED (Nov 18, 2025): Fathom Business Advisors plan - $53/company/month (1-9 companies), $28/company/month (10+ bulk discount). 5 clients = $265/mo, 10 clients = $280/mo. Professional report generation key value-add for fractional CFOs."
     tier_2_startup_smb: "Finmark ($100-300/mo), Jirav ($50-750/mo), Causal ($500-800/mo) - 20-100 employees, full FP&A, modern integrations"
     tier_3_mid_market: "Mosaic ($1,500-2,000/mo), Dryrun ($500-1,000/mo), PlanGuru ($300-500/yr), Datarails ($2,000-5,000/mo) - 50-500 employees, strategic finance, enterprise ERP, Excel-native"
     tier_4_enterprise: "Pigment ($6,000-20,000/mo) - 100-10,000+ employees, AI-powered planning, complex consolidation, competes with Anaplan/Planful (ADDED Nov 13, 2025)"
@@ -84,8 +86,9 @@ key_findings:
 
   scenario_based_recommendations:
     solo_founder_pre_revenue: "Finmark ($100/mo) - scenario modeling, modern UX, affordable"
-    small_business_qb_cash_visibility: "Pulse ($59/mo) - simplest, QB sync, stable"
-    accounting_firm_20_clients: "Jirav ($150-300/mo) - white-label, multi-client, accountant channel"
+    small_business_qb_cash_visibility: "Pulse ($59/mo) - simplest, QB sync, stable (SINGLE business only, NOT for fractional controllers)"
+    fractional_cfo_5_clients: "Fathom ($265/mo) - multi-client portfolio, professional reports, $53/company. NOT Pulse (doesn't support multi-client use case - Nov 18, 2025)"
+    accounting_firm_20_clients: "Jirav ($150-300/mo) or Fathom ($280/mo for 10+ clients) - white-label, multi-client, accountant channel"
     saas_startup_series_a_30_employees: "Causal ($500-800/mo) - SaaS metrics, hiring plans, modern"
     restaurant_3_locations: "Pulse ($89/mo) - daily granularity, multi-location"
     manufacturing_sage_intacct: "Dryrun ($800/mo) - Sage Intacct integration, scenario modeling"
@@ -135,13 +138,19 @@ platforms_analyzed:
       integrations: "1 (QuickBooks)"
       lock_in: "$750-1,500 escape cost"
       stability: "95%+ 5-year confidence"
+      multi_client_support: "NO - Pulse's 'companies' = revenue tracking, not multi-client management (discovered Nov 18, 2025)"
+      limitation: "NOT for fractional controllers managing multiple client companies"
+      updated: "2025-11-18"
 
     - name: "Fathom"
-      pricing: "$100-150/mo (estimated)"
-      target: "SMB + accountants"
+      pricing: "$53-265/mo (Business Advisors: $53/company, bulk discount $28/company at 10+)"
+      target: "SMB + accountants + fractional CFOs"
       integrations: "6+ (QB, Xero, MYOB, Sage, Excel, Sheets)"
       lock_in: "$1,500-3K escape cost"
       stability: "95%+ 5-year confidence"
+      multi_client_support: "YES - per-company pricing model ($265/mo for 5 clients, $280/mo for 10 clients)"
+      key_value_add: "Professional report generation for client-facing advisors"
+      updated: "2025-11-18"
 
   tier_2:
     - name: "Finmark"
