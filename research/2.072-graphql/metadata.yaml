@@ -1,0 +1,84 @@
+code: "2.072"
+title: GraphQL
+tier: 2
+status: in_progress
+date_started: 2025-11-19
+date_completed: null
+estimated_hours: 7-9
+actual_hours: 0
+
+description: |
+  Research on GraphQL as an open API design standard. Focus on portability
+  across implementations, migration costs, and lock-in assessment.
+
+  GraphQL Foundation (Linux Foundation) specification enables schema-first,
+  client-driven API design with built-in introspection.
+
+use_case: |
+  Primary: API design portability across server implementations
+  - Schema-first contract-driven development
+  - Switch between Node.js, Postgres-native, Python, Go implementations
+  - Federation patterns without vendor lock-in
+  - Minimize proprietary extensions (Apollo Federation concerns)
+
+key_questions:
+  - How portable are GraphQL schemas across implementations?
+  - What is the migration cost between implementations?
+  - Which features are standard vs proprietary?
+  - How does Apollo Federation create lock-in?
+  - GraphQL vs REST/gRPC for portability?
+
+implementations_to_analyze: 7
+implementations:
+  - Apollo Server (Node.js, most popular)
+  - Hasura (Haskell, auto-generates from Postgres)
+  - Postgraphic (Postgres-native)
+  - GraphQL Yoga (Node.js, lightweight)
+  - Hot Chocolate (.NET)
+  - Strawberry (Python)
+  - gqlgen (Go)
+  - Juniper (Rust)
+
+deliverables:
+  s1_documents: 0
+  s2_documents: 0
+  s3_scenarios: 0
+  s4_strategic: 0
+  total_docs: 0
+
+integration_relationships:
+  complements:
+    - code: "2.070"
+      title: OpenAPI/REST
+      reason: GraphQL is alternative/complement to REST for API design
+    - code: "2.071"
+      title: gRPC
+      reason: Both are alternatives to REST, different strengths
+  references: []
+  enables: []
+
+research_priorities:
+  - Schema portability across implementations
+  - Migration cost analysis (switching servers)
+  - Federation patterns (Apollo vs open standards)
+  - Lock-in assessment (proprietary extensions)
+  - GraphQL vs REST/gRPC comparison
+
+standards_body: GraphQL Foundation (Linux Foundation)
+specification_url: https://spec.graphql.org/
+maturity: production
+specification_version: October 2021 (living standard)
+
+notes: |
+  This is a Tier 2 (Open Standards) experiment, so focus is on STANDARD
+  portability, not specific implementation selection. Server implementations
+  are Tier 1 concerns.
+
+  GraphQL differs from OpenAPI/REST and gRPC by providing:
+  - Client-driven queries (no over/under-fetching)
+  - Built-in introspection (schema discovery)
+  - Strong typing (schema-first)
+  - Single endpoint (vs resource-based REST)
+
+  Key concern: Apollo Federation proprietary extensions may create lock-in
+  despite GraphQL spec being open. Need to evaluate open federation alternatives.
