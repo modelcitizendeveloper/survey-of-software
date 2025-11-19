@@ -1,21 +1,4 @@
 queue:
-- code: '1.140'
-  title: Classical Language Libraries
-  tier: 1
-  status: not_started
-  estimated_hours: 6-8
-  rationale: |
-    Foundation for language-learning application (~/spawn-solutions/applications/language-learning).
-    Need to evaluate CLTK vs alternatives for Latin declension/conjugation generation.
-    Personal use case: building Latin noun/verb quiz tool with spaced repetition.
-  value: |
-    - CLTK (Classical Language Toolkit) for Latin/Greek morphology
-    - pyLatinam for automated declension generation
-    - PyWORDS (Python implementation of Whitaker's WORDS)
-    - Compare quality, coverage, API usability
-    - Integration patterns for quiz generation
-  libraries: CLTK, pyLatinam, PyWORDS, LatMor
-  use_case: Latin declension/conjugation quiz generation for language learning app
 - code: '1.141'
   title: Spaced Repetition Algorithms
   tier: 1
@@ -85,30 +68,6 @@ queue:
     - API usability for quiz generation
   libraries: MeCab, fugashi, SudachiPy, jamdict, pymorphy2, UDPipe, spaCy
   use_case: Generate and validate inflected forms across Japanese, Slavic, and Romance languages
-- code: '3.045'
-  title: Graph Databases
-  tier: 3
-  status: not_started
-  estimated_hours: 8-10
-  rationale: |
-    Specialized coverage of graph databases (deeper than 3.041 NoSQL Neo4j coverage).
-    Triggered by use case: representing research project as graph (research items, relationships, dependencies).
-    Goal: Evaluate graph DB options avoiding Neo4j lock-in.
-  value: |
-    - openCypher portability (Neo4j, Neptune, ArangoDB)
-    - Gremlin vs Cypher comparison
-    - Graph algorithms (PageRank, centrality, community detection)
-    - Self-hosting (Neo4j Community, JanusGraph, Memgraph)
-    - Cost analysis (managed vs self-hosted)
-  providers: Neo4j Aura, Amazon Neptune, ArangoDB, TigerGraph, Memgraph, JanusGraph, Dgraph
-  use_case: Knowledge graph for research project relationships
-- code: '2.072'
-  title: GraphQL
-  tier: 2
-  status: not_started
-  estimated_hours: 5-7
-  rationale: API standard, complements 2.070 OpenAPI and 2.071 gRPC
-  value: GraphQL Federation, Apollo, Hasura backends
 - code: '1.003'
   title: Full-text Search Libraries
   tier: 1
