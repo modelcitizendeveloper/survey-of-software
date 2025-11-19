@@ -68,6 +68,65 @@ queue:
     - API usability for quiz generation
   libraries: MeCab, fugashi, SudachiPy, jamdict, pymorphy2, UDPipe, spaCy
   use_case: Generate and validate inflected forms across Japanese, Slavic, and Romance languages
+- code: '3.134'
+  title: AI Content Generation & Copywriting
+  tier: 3
+  status: not_started
+  estimated_hours: 6-8
+  rationale: |
+    HIGH PRIORITY - Niki client engagement (decision analysis consultant).
+    Social media posts, blog content, marketing copy automation.
+    Immediate client deliverable for content generation pipeline.
+  value: |
+    Platform comparison:
+    - SaaS: Copy.ai ($49/mo), Jasper ($49/mo), Writesonic
+    - API-based: Claude/GPT-4 ($0.02-0.10 per piece)
+    - Content repurposing workflows (long-form → 10-15 social posts)
+    - Brand voice tuning and prompt engineering frameworks
+    - Quality control and human-in-loop workflows
+    Integration with 3.135 (social scheduling) and 3.100 (CMS)
+  platforms: Copy.ai, Jasper, Claude API, GPT-4 API, Writesonic, ContentBot
+  use_case: Automate social media content, blog drafting, marketing copy for consultants
+  trigger: Niki client (Nov 19, 2025) - needs social media automation
+- code: '3.202'
+  title: Speech & Audio AI
+  tier: 3
+  status: not_started
+  estimated_hours: 8-10
+  rationale: |
+    HIGH PRIORITY - Niki client engagement (meeting notes automation).
+    Speech-to-text, meeting transcription, AI summarization.
+    Evaluate Fireflies.ai/Otter.ai vs Whisper API custom pipeline.
+  value: |
+    Platform comparison:
+    - SaaS: Fireflies.ai ($10/mo), Otter.ai ($17/mo), Grain ($15/mo)
+    - API-based: Whisper ($0.006/min) + Claude/GPT-4 summarization
+    - Real-time vs post-call processing workflows
+    - Privacy/consent considerations for client calls
+    - Meeting summary quality and action item extraction
+    ROI: 2-4 hours/week saved for 5+ meetings/week
+  platforms: Whisper API, Fireflies.ai, Otter.ai, Grain
+  use_case: Automate meeting transcription and summarization for consultants
+  trigger: Niki client (Nov 19, 2025) - highest ROI use case for time savings
+- code: '3.135'
+  title: Social Media Management
+  tier: 3
+  status: not_started
+  estimated_hours: 6-8
+  rationale: |
+    MEDIUM PRIORITY - Niki client engagement (social media scheduling).
+    Downstream from 3.134 (AI generates, this schedules/publishes).
+    Multi-platform posting, content calendars, analytics.
+  value: |
+    Platform comparison:
+    - Free tiers: Buffer (3 profiles, 10 posts), Later (basic)
+    - Paid: Buffer Pro ($15/mo), Hootsuite ($99/mo), Sprout Social ($249/mo)
+    - Multi-platform: LinkedIn, Twitter, Instagram, Facebook support
+    - Analytics: Engagement tracking, best time to post
+    - Integration with 3.134 (content generation pipeline)
+  platforms: Buffer, Hootsuite, Later, Sprout Social, SocialPilot
+  use_case: Schedule and analyze social media posts across platforms
+  trigger: Niki client (Nov 19, 2025) - content distribution automation
 - code: '1.003'
   title: Full-text Search Libraries
   tier: 1
