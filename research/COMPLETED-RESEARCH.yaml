@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_completed: 77
+total_completed: 79
 research:
 - code: '1.001'
   title: advanced sorting libraries
@@ -149,6 +149,10 @@ research:
   title: classical language libraries
   description: Classical Latin morphology libraries - CLTK, Stanza PROIEL package. Completed Nov 19, 2025 (S1-S4 MPSE, synthesis, 45%→75-80% accuracy in 26h implementation, clear path to 97-98%)
   path: research/1.140-classical-language-libraries
+- code: '1.200'
+  title: llm orchestration frameworks
+  description: LLM Orchestration Frameworks - Completed Nov 19, 2025 (S1 Rapid Discovery, 10 docs, LangChain/LlamaIndex/Haystack/Semantic Kernel/DSPy)
+  path: research/1.200-llm-orchestration
 - code: '2.040'
   title: opentelemetry
   description: Research on opentelemetry
@@ -289,6 +293,10 @@ research:
   title: ai productivity
   description: '- **Tier**: 3 (Managed Services - Convenience)'
   path: research/3.133-ai-productivity
+- code: '3.134'
+  title: ai content generation & copywriting
+  description: AI Content Generation & Copywriting - Completed Nov 19, 2025 (S1-S4 MPSE, 10 docs, triggered by Niki client engagement)
+  path: research/3.134-ai-content-generation
 - code: '3.200'
   title: llm apis
   description: '- **Tier**: 3 (Managed Services - Convenience)'

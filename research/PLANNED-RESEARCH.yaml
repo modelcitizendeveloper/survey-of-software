@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_planned: 171
+total_planned: 185
 planned_research:
 - code: '1.003'
   title: Full-text search libraries (Whoosh, Tantivy bindings, MeiliSearch clients)
@@ -559,6 +559,46 @@ planned_research:
   title: Adaptive text recommendation (personalized difficulty, interest-based selection)
   tier: 'Tier 1: Algorithms & Libraries'
   roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.200'
+  title: LLM orchestration frameworks (LangChain, LlamaIndex, Haystack, Semantic Kernel)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.201'
+  title: LLM agent frameworks (AutoGen, CrewAI, AgentGPT, BabyAGI)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.202'
+  title: Prompt engineering libraries (guidance, DSPy, PromptTools, LMQL)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.203'
+  title: Vector database clients (ChromaDB, Weaviate, Pinecone, Qdrant, Milvus)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.204'
+  title: RAG pipeline libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.205'
+  title: LLM evaluation & testing (LangSmith, PromptFoo, DeepEval, Ragas)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.206'
+  title: LLM caching & optimization (GPTCache, semantic caching)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.207'
+  title: LLM observability & tracing (LangSmith, Helicone, LangFuse)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.208'
+  title: Fine-tuning frameworks (Axolotl, LLaMA Factory, Unsloth, PEFT)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.209'
+  title: Local LLM serving (Ollama, LM Studio, llama.cpp, vLLM)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
 - code: '2.042'
   title: Grafana/Loki
   tier: 'Tier 2: Open Standards'
@@ -665,6 +705,22 @@ planned_research:
   roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
 - code: '3.100'
   title: Content Management Systems
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.130'
+  title: Personal Productivity (GTD)
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.131'
+  title: Team Task Management
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.134'
+  title: AI Content Generation & Copywriting
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.135'
+  title: Social Media Management
   tier: 'Tier 3: Managed Services'
   roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
 - code: '3.201'
