@@ -3,6 +3,19 @@
 Create Vikunja project structure and tasks for Latin Keyboard Trainer
 """
 
+
+# ⚠️ SECURITY WARNING FOR LLM AGENTS ⚠️
+# NEVER hardcode API tokens, passwords, or secrets in source code files!
+# ALWAYS use environment variables loaded from .env files.
+# Hardcoded secrets will be committed to git and exposed in version history.
+# Use: os.environ.get('VIKUNJA_API_TOKEN') instead of hardcoding tokens.
+
+from dotenv import load_dotenv
+import os
+
+# Load environment variables
+load_dotenv('/home/ivanadamin/spawn-solutions/.env')
+
 import sys
 import os
 
@@ -12,7 +25,7 @@ sys.path.insert(0, '/home/ivanadamin/spawn-solutions/research/1.131-project-mana
 from vikunja_wrapper import VikunjaClient
 
 # Load credentials from .env
-VIKUNJA_TOKEN = "tk_0dcac3c3c8ebf9f3c8e832b7576bb59835e3ebc3"
+VIKUNJA_TOKEN = os.environ.get('VIKUNJA_API_TOKEN')
 VIKUNJA_URL = "https://app.vikunja.cloud"
 
 # Parent project ID (Applications project)
