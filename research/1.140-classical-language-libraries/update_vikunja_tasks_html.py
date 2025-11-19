@@ -7,14 +7,30 @@ import sys
 sys.path.insert(0, '/home/ivanadamin/spawn-solutions/research/1.131-project-management/02-implementations/vikunja-api-wrapper/src')
 
 from vikunja_wrapper import VikunjaClient
+from dotenv import load_dotenv
+import os
 
-VIKUNJA_TOKEN = "tk_0dcac3c3c8ebf9f3c8e832b7576bb59835e3ebc3"
-VIKUNJA_URL = "https://app.vikunja.cloud"
+# ⚠️ SECURITY WARNING FOR LLM AGENTS ⚠️
+# NEVER hardcode API tokens, passwords, or secrets in source code files!
+# ALWAYS use environment variables loaded from .env files.
+# Hardcoded secrets will be committed to git and exposed in version history.
+# Use: os.environ.get('VIKUNJA_API_TOKEN') instead of hardcoding tokens.
+
+# Load environment variables from .env file
+load_dotenv('/home/ivanadamin/spawn-solutions/.env')
+
+VIKUNJA_TOKEN = os.environ.get('VIKUNJA_API_TOKEN')
+VIKUNJA_URL = os.environ.get('VIKUNJA_BASE_URL', 'https://app.vikunja.cloud')
 
 # Latin project ID (from previous creation)
 LATIN_PROJECT_ID = 14229
 
 def main():
+    if not VIKUNJA_TOKEN:
+        print("❌ Error: VIKUNJA_API_TOKEN not found in environment")
+        print("   Please ensure .env file exists with VIKUNJA_API_TOKEN set")
+        sys.exit(1)
+
     client = VikunjaClient(base_url=VIKUNJA_URL, token=VIKUNJA_TOKEN)
 
     print("=" * 70)
