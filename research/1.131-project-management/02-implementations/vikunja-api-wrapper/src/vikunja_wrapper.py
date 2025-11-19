@@ -444,7 +444,8 @@ class TasksManager:
         return self._parse_task(response)
 
     def update(self, task_id: int, title: str = None, description: str = None,
-               done: bool = None, priority: int = None, bucket_id: int = None) -> Task:
+               done: bool = None, priority: int = None, bucket_id: int = None,
+               due_date: str = None, start_date: str = None) -> Task:
         """
         Update a task.
 
@@ -455,6 +456,8 @@ class TasksManager:
             done: Mark as done/undone (optional)
             priority: New priority (optional)
             bucket_id: Move task to bucket (optional)
+            due_date: New due date in ISO format (YYYY-MM-DDTHH:MM:SSZ) (optional)
+            start_date: New start date in ISO format (optional)
 
         Returns:
             Task: Updated task object
@@ -475,6 +478,10 @@ class TasksManager:
             data["priority"] = priority
         if bucket_id is not None:
             data["bucket_id"] = bucket_id
+        if due_date is not None:
+            data["due_date"] = due_date
+        if start_date is not None:
+            data["start_date"] = start_date
 
         response = self.client._request("POST", f"/api/v1/tasks/{task_id}", json=data)
         return self._parse_task(response)
