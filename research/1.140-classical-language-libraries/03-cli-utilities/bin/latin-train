@@ -157,7 +157,11 @@ class LatinTrainer:
         # Input buffer
         print(self.term.move_y(start_y + len(words) + 2))
         if not self.checked:
-            print(self.term.center(f"Input: {self.term.bold(self.input_buffer)}_"))
+            if self.current_word == len(words) - 1:
+                # On last word - show check prompt
+                print(self.term.center(f"Input: {self.term.bold(self.input_buffer)}_ {self.term.dim('(Enter to check answers)')}"))
+            else:
+                print(self.term.center(f"Input: {self.term.bold(self.input_buffer)}_"))
         else:
             print(self.term.center(self.term.green("Press any key for next sentence...")))
 
