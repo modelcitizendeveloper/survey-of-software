@@ -151,7 +151,7 @@ research:
   path: research/1.140-classical-language-libraries
 - code: '1.200'
   title: llm orchestration frameworks
-  description: LLM Orchestration Frameworks - Completed Nov 19, 2025 (S1 Rapid Discovery, 10 docs, LangChain/LlamaIndex/Haystack/Semantic Kernel/DSPy)
+  description: LLM Orchestration Frameworks - Completed Nov 19, 2025 (S1-S4 MPSE, 38 docs, LangChain/LlamaIndex/Haystack/Semantic Kernel/DSPy)
   path: research/1.200-llm-orchestration
 - code: '2.040'
   title: opentelemetry
