@@ -161,7 +161,12 @@ class LatinTrainer:
         if not self.checked:
             if self.current_word == len(words) - 1:
                 # On last word - show check prompt
-                print(self.term.center(f"Input: {self.term.bold(self.input_buffer)}_ {self.term.dim('(Enter to check answers)')}"))
+                # Use dim if available, otherwise just show in normal text
+                try:
+                    hint = self.term.dim('(Enter to check answers)')
+                except (TypeError, AttributeError):
+                    hint = '(Enter to check answers)'
+                print(self.term.center(f"Input: {self.term.bold(self.input_buffer)}_ {hint}"))
             else:
                 print(self.term.center(f"Input: {self.term.bold(self.input_buffer)}_"))
         else:
