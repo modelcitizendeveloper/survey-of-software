@@ -123,25 +123,31 @@ class LatinTrainer:
 
                 # Check if correct (handle multiple valid answers)
                 pos_correct = user_ans.get('pos') == expected_pos
-                decl_correct = user_ans.get('declension') == word.get('declension')
+                decl_correct = (user_ans.get('declension') == word.get('declension')) if word.get('declension') else True
 
-                # Number can be single value or list
+                # Number can be single value or list (or None if not required)
                 number_val = word.get('number')
-                if isinstance(number_val, list):
+                if number_val is None:
+                    number_correct = True  # No number required
+                elif isinstance(number_val, list):
                     number_correct = user_ans.get('number') in number_val
                 else:
                     number_correct = user_ans.get('number') == number_val
 
-                # Case can be single value or list
+                # Case can be single value or list (or None if not required)
                 case_val = word.get('case')
-                if isinstance(case_val, list):
+                if case_val is None:
+                    case_correct = True  # No case required
+                elif isinstance(case_val, list):
                     case_correct = user_ans.get('case') in case_val
                 else:
                     case_correct = user_ans.get('case') == case_val
 
-                # Tense can be single value or list
+                # Tense can be single value or list (or None if not required)
                 tense_val = word.get('tense')
-                if isinstance(tense_val, list):
+                if tense_val is None:
+                    tense_correct = True  # No tense required
+                elif isinstance(tense_val, list):
                     tense_correct = user_ans.get('tense') in tense_val
                 else:
                     tense_correct = user_ans.get('tense') == tense_val
@@ -350,25 +356,31 @@ class LatinTrainer:
 
             # Check correctness (handle multiple valid answers)
             pos_match = user_ans.get('pos') == expected['pos']
-            decl_match = user_ans.get('declension') == expected.get('declension')
+            decl_match = (user_ans.get('declension') == expected.get('declension')) if expected.get('declension') else True
 
-            # Number can be single value or list
+            # Number can be single value or list (or None if not required)
             number_val = expected.get('number')
-            if isinstance(number_val, list):
+            if number_val is None:
+                number_match = True  # No number required
+            elif isinstance(number_val, list):
                 number_match = user_ans.get('number') in number_val
             else:
                 number_match = user_ans.get('number') == number_val
 
-            # Case can be single value or list
+            # Case can be single value or list (or None if not required)
             case_val = expected.get('case')
-            if isinstance(case_val, list):
+            if case_val is None:
+                case_match = True  # No case required
+            elif isinstance(case_val, list):
                 case_match = user_ans.get('case') in case_val
             else:
                 case_match = user_ans.get('case') == case_val
 
-            # Tense can be single value or list
+            # Tense can be single value or list (or None if not required)
             tense_val = expected.get('tense')
-            if isinstance(tense_val, list):
+            if tense_val is None:
+                tense_match = True  # No tense required
+            elif isinstance(tense_val, list):
                 tense_match = user_ans.get('tense') in tense_val
             else:
                 tense_match = user_ans.get('tense') == tense_val
