@@ -51,7 +51,7 @@ class LatinTrainer:
         print(self.term.move_y(2) + self.term.center(inst))
 
         # Grammar options
-        grammar_help = "NOUN/ADJ: 1-5 decl, then n/g/d/a/b/v case | VERB: [p]resent [i]mperfect [f]uture pe[r]fect"
+        grammar_help = "NOUN/ADJ: 1-5 decl, then n/g/d/a/b/v case (lowercase=sing, UPPER=plural) | VERB: [p]resent [i]mperfect [f]uture pe[r]fect"
         print(self.term.move_y(3) + self.term.center(grammar_help))
 
         # Sentence (italic)
@@ -89,6 +89,8 @@ class LatinTrainer:
                 ans_str = user_ans['pos']
                 if user_ans.get('declension'):
                     ans_str += f" {user_ans['declension']}"
+                if user_ans.get('number'):
+                    ans_str += f" {user_ans['number']}"
                 if user_ans.get('case'):
                     ans_str += f" {user_ans['case']}"
                 if user_ans.get('tense'):
@@ -100,18 +102,49 @@ class LatinTrainer:
                 correct_str = expected_pos
                 if word.get('declension'):
                     correct_str += f" {word['declension']}"
+                if word.get('number'):
+                    # Handle multiple valid numbers
+                    number_val = word.get('number')
+                    if isinstance(number_val, list):
+                        correct_str += f" {'/'.join(number_val)}"
+                    elif number_val:
+                        correct_str += f" {number_val}"
                 if word.get('case'):
-                    correct_str += f" {word['case']}"
+                    # Handle multiple valid cases
+                    case_val = word.get('case')
+                    if isinstance(case_val, list):
+                        correct_str += f" {'/'.join(case_val)}"
+                    elif case_val:
+                        correct_str += f" {case_val}"
                 if word.get('tense'):
                     correct_str += f" {word['tense']}"
 
-                # Check if correct
-                is_correct = (
-                    user_ans.get('pos') == expected_pos and
-                    user_ans.get('declension') == word.get('declension') and
-                    user_ans.get('case') == word.get('case') and
-                    user_ans.get('tense') == word.get('tense')
-                )
+                # Check if correct (handle multiple valid answers)
+                pos_correct = user_ans.get('pos') == expected_pos
+                decl_correct = user_ans.get('declension') == word.get('declension')
+
+                # Number can be single value or list
+                number_val = word.get('number')
+                if isinstance(number_val, list):
+                    number_correct = user_ans.get('number') in number_val
+                else:
+                    number_correct = user_ans.get('number') == number_val
+
+                # Case can be single value or list
+                case_val = word.get('case')
+                if isinstance(case_val, list):
+                    case_correct = user_ans.get('case') in case_val
+                else:
+                    case_correct = user_ans.get('case') == case_val
+
+                # Tense can be single value or list
+                tense_val = word.get('tense')
+                if isinstance(tense_val, list):
+                    tense_correct = user_ans.get('tense') in tense_val
+                else:
+                    tense_correct = user_ans.get('tense') == tense_val
+
+                is_correct = pos_correct and decl_correct and number_correct and case_correct and tense_correct
 
                 if is_correct:
                     ans_str = self.term.green("✓ " + ans_str)
@@ -200,13 +233,17 @@ class LatinTrainer:
                 self.input_buffer += decl_map[key] + " "
                 return True
 
-            # Case input
+            # Case input (lowercase = singular, uppercase = plural)
             case_map = {
                 'n': 'nominative', 'g': 'genitive', 'd': 'dative',
-                'a': 'accusative', 'b': 'ablative', 'v': 'vocative'
+                'a': 'accusative', 'b': 'ablative', 'v': 'vocative',
+                'N': 'nominative', 'G': 'genitive', 'D': 'dative',
+                'A': 'accusative', 'B': 'ablative', 'V': 'vocative'
             }
             if key in case_map and ans.get('declension'):
                 ans['case'] = case_map[key]
+                # Set number based on case
+                ans['number'] = 'plural' if key.isupper() else 'singular'
                 self.input_buffer = ""
                 # Auto-advance
                 self.current_word = min(self.current_word + 1, len(words) - 1)
@@ -287,18 +324,39 @@ class LatinTrainer:
             expected = {'pos': expected_pos}
             if word.get('declension'):
                 expected['declension'] = word['declension']
+            if word.get('number'):
+                expected['number'] = word['number']
             if word.get('case'):
                 expected['case'] = word['case']
             if word.get('tense'):
                 expected['tense'] = word['tense']
 
-            # Check correctness
-            is_correct = (
-                user_ans.get('pos') == expected['pos'] and
-                user_ans.get('declension') == expected.get('declension') and
-                user_ans.get('case') == expected.get('case') and
-                user_ans.get('tense') == expected.get('tense')
-            )
+            # Check correctness (handle multiple valid answers)
+            pos_match = user_ans.get('pos') == expected['pos']
+            decl_match = user_ans.get('declension') == expected.get('declension')
+
+            # Number can be single value or list
+            number_val = expected.get('number')
+            if isinstance(number_val, list):
+                number_match = user_ans.get('number') in number_val
+            else:
+                number_match = user_ans.get('number') == number_val
+
+            # Case can be single value or list
+            case_val = expected.get('case')
+            if isinstance(case_val, list):
+                case_match = user_ans.get('case') in case_val
+            else:
+                case_match = user_ans.get('case') == case_val
+
+            # Tense can be single value or list
+            tense_val = expected.get('tense')
+            if isinstance(tense_val, list):
+                tense_match = user_ans.get('tense') in tense_val
+            else:
+                tense_match = user_ans.get('tense') == tense_val
+
+            is_correct = pos_match and decl_match and number_match and case_match and tense_match
 
             if user_ans:  # Only count if user attempted
                 total_count += 1
