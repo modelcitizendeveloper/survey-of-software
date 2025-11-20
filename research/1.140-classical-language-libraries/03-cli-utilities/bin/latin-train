@@ -13,6 +13,7 @@ and appends results to attempts file.
 import sys
 import json
 import argparse
+import random
 from datetime import datetime
 from blessed import Terminal
 
@@ -26,10 +27,11 @@ POS_DISPLAY = {
 }
 
 class LatinTrainer:
-    def __init__(self, output_file, user='default'):
+    def __init__(self, output_file, user='default', randomize=False):
         self.term = Terminal()
         self.output_file = output_file
         self.user = user
+        self.randomize = randomize
         self.current_word = 0
         self.user_answers = {}
         self.input_buffer = ""
@@ -283,7 +285,13 @@ class LatinTrainer:
     def train_sentence(self, sentence_data, sentence_idx):
         """Train on a single sentence"""
         sentence = sentence_data['sentence']
-        words = sentence_data['words']
+        words = sentence_data['words'].copy()  # Make a copy to avoid modifying original
+
+        # Randomize word order if flag is set
+        if self.randomize:
+            random.shuffle(words)
+            # Rebuild sentence text from shuffled words
+            sentence = ' '.join(word['text'] for word in words)
 
         # Reset state
         self.current_word = 0
@@ -419,6 +427,7 @@ def main():
     parser.add_argument('--output', '-o', required=True, help='Output file for attempts')
     parser.add_argument('--resume', '-r', action='store_true', help='Resume from last position')
     parser.add_argument('--user', '-u', default='default', help='User name')
+    parser.add_argument('--randomize', '-x', action='store_true', help='Randomize word order within each sentence')
 
     args = parser.parse_args()
 
@@ -431,7 +440,7 @@ def main():
                 last = json.loads(lines[-1])
                 resume_from = last['sentence_id'] + 1
 
-    trainer = LatinTrainer(args.output, args.user)
+    trainer = LatinTrainer(args.output, args.user, args.randomize)
     trainer.run(args.parsed_file, resume_from)
 
 if __name__ == '__main__':
