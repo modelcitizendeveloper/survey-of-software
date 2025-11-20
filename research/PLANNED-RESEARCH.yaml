@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_planned: 185
+total_planned: 186
 planned_research:
 - code: '1.003'
   title: Full-text search libraries (Whoosh, Tantivy bindings, MeiliSearch clients)
@@ -720,7 +720,11 @@ planned_research:
   tier: 'Tier 3: Managed Services'
   roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
 - code: '3.135'
-  title: Social Media Management
+  title: Social Media Scheduling & Automation
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.136'
+  title: AI Meeting Transcription & Note-Taking
   tier: 'Tier 3: Managed Services'
   roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
 - code: '3.201'
