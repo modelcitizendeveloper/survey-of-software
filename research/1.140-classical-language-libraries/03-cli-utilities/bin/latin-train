@@ -195,7 +195,7 @@ class LatinTrainer:
 
             # Declension input (for nouns/adjectives)
             if key in '12345' and ans.get('pos') in ('NOUN', 'ADJ'):
-                decl_map = {'1': '1st', '2': '2nd', '3': '2nd/3rd', '4': '4th', '5': '5th'}
+                decl_map = {'1': '1st', '2': '2nd', '3': '3rd', '4': '4th', '5': '5th'}
                 ans['declension'] = decl_map[key]
                 self.input_buffer += decl_map[key] + " "
                 return True
