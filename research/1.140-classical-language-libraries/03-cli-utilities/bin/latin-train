@@ -40,6 +40,38 @@ class LatinTrainer:
         self.word_times = {}
         self.total_correct = 0
         self.total_words = 0
+        self.show_vocabulary = True  # Default to showing vocabulary
+        self.vocabulary = {}  # Will be populated from sentences
+
+    def extract_vocabulary(self, sentences):
+        """Extract vocabulary from all sentences for reference display.
+
+        Returns dict: {lemma: {'genitive': str, 'gender': str}}
+        """
+        vocab = {}
+        for sentence_data in sentences:
+            for word in sentence_data['words']:
+                lemma = word.get('lemma')
+                if not lemma or lemma in vocab:
+                    continue
+
+                # Find genitive singular form for this lemma
+                genitive = None
+                for w in sentence_data['words']:
+                    if (w.get('lemma') == lemma and
+                        w.get('number') == 'singular' and
+                        (w.get('case') == 'genitive' or
+                         (isinstance(w.get('case'), list) and 'genitive' in w['case']))):
+                        genitive = w['text']
+                        break
+
+                if genitive:
+                    vocab[lemma] = {
+                        'genitive': genitive,
+                        'gender': word.get('gender', '?')
+                    }
+
+        return vocab
 
     def check_interpretation(self, user_ans, interpretation, word_pos=None):
         """Check if user answer matches a single interpretation
@@ -102,23 +134,43 @@ class LatinTrainer:
         """Display current training state"""
         print(self.term.home + self.term.clear)
 
+        current_line = 1
+
         # Title
-        print(self.term.move_y(1) + self.term.center(
+        print(self.term.move_y(current_line) + self.term.center(
             self.term.bold("EXERCITATIO LATINA")
         ))
+        current_line += 1
+
+        # Vocabulary section (if enabled)
+        if self.show_vocabulary and self.vocabulary:
+            # Build vocabulary display in dictionary format: "puella, puellae (f.)"
+            vocab_items = []
+            for lemma in sorted(self.vocabulary.keys()):
+                v = self.vocabulary[lemma]
+                vocab_items.append(f"{lemma}, {v['genitive']} ({v['gender']})")
+
+            vocab_display = "  •  ".join(vocab_items)
+            print(self.term.move_y(current_line) + self.term.center(
+                self.term.dim(vocab_display)
+            ))
+            current_line += 1
 
         # Instructions
-        inst = "j/k: next/prev | Ctrl-1..9: jump | Backspace: clear | n/v/a/p: POS | Enter: check | q: quit"
-        print(self.term.move_y(2) + self.term.center(inst))
+        inst = "j/k: next/prev | Ctrl-1..9: jump | Backspace: clear | n/v/a/p: POS | V: vocab | Enter: check | q: quit"
+        print(self.term.move_y(current_line) + self.term.center(inst))
+        current_line += 1
 
         # Grammar options
         grammar_help = "NOUN/ADJ: 1-5 decl, then n/g/d/a/b/v case (lowercase=sing, UPPER=plural) | VERB: [p]resent [i]mperfect [f]uture pe[r]fect"
-        print(self.term.move_y(3) + self.term.center(grammar_help))
+        print(self.term.move_y(current_line) + self.term.center(grammar_help))
+        current_line += 2  # Extra space before sentence
 
         # Sentence (italic)
-        print(self.term.move_y(5) + self.term.center(
+        print(self.term.move_y(current_line) + self.term.center(
             self.term.italic(sentence)
         ))
+        current_line += 2  # Space after sentence
 
         # Words with indices (like [1] [2] [3])
         word_line = ""
@@ -128,18 +180,18 @@ class LatinTrainer:
             else:
                 word_line += f"[{i+1}]{word['text']} "
 
-        print(self.term.move_y(7) + self.term.center(word_line))
+        print(self.term.move_y(current_line) + self.term.center(word_line))
+        current_line += 2  # Space after word line
 
         # Current word focus
         current = words[self.current_word]
-        print(self.term.move_y(9) + self.term.center(
+        print(self.term.move_y(current_line) + self.term.center(
             self.term.underline(f"Word {self.current_word + 1}: {current['text']}")
         ))
-
-        print()
+        current_line += 2  # Space after focus
 
         # Answers section
-        start_y = 11
+        start_y = current_line
         for i, word in enumerate(words):
             marker = "→" if i == self.current_word else " "
 
@@ -253,6 +305,11 @@ class LatinTrainer:
         # Quit
         if key == 'q':
             return False
+
+        # Toggle vocabulary display
+        if key == 'V':
+            self.show_vocabulary = not self.show_vocabulary
+            return True
 
         # Backspace - clear current word's input
         if key.name == 'KEY_BACKSPACE' or key.name == 'KEY_DELETE' or key == '\x7f':
@@ -458,6 +515,11 @@ class LatinTrainer:
 
         print(self.term.clear)
         print(f"Loaded {len(sentences)} sentences")
+
+        # Extract vocabulary for reference (before randomization)
+        self.vocabulary = self.extract_vocabulary(sentences)
+        if self.vocabulary:
+            print(f"Vocabulary: {', '.join(sorted(self.vocabulary.keys()))}")
 
         # Document-level randomization for drills
         if self.randomize:
