@@ -263,7 +263,45 @@ class LatinTrainer:
                 if is_correct:
                     ans_str = self.term.green("✓ " + ans_str)
                 else:
-                    ans_str = self.term.red("✗ " + ans_str + f" → {correct_str}")
+                    # Build minimal correction - only show what's wrong
+                    correction_parts = []
+
+                    # Check each component to see if it's wrong
+                    if 'valid_interpretations' in word:
+                        # For multi-interpretation, just show the full correct answer
+                        correction_parts.append(correct_str)
+                    else:
+                        # Check what's wrong
+                        expected_pos = POS_DISPLAY.get(word['pos'], word['pos'])
+                        if user_ans.get('pos') != expected_pos:
+                            correction_parts.append(expected_pos)
+
+                        if word.get('declension'):
+                            if user_ans.get('declension') != word['declension']:
+                                correction_parts.append(word['declension'])
+
+                        if word.get('number'):
+                            number_val = word.get('number')
+                            if isinstance(number_val, list):
+                                if user_ans.get('number') not in number_val:
+                                    correction_parts.append('/'.join(number_val))
+                            elif user_ans.get('number') != number_val:
+                                correction_parts.append(number_val)
+
+                        if word.get('case'):
+                            case_val = word.get('case')
+                            if isinstance(case_val, list):
+                                if user_ans.get('case') not in case_val:
+                                    correction_parts.append('/'.join(case_val))
+                            elif user_ans.get('case') != case_val:
+                                correction_parts.append(case_val)
+
+                        if word.get('tense'):
+                            if user_ans.get('tense') != word['tense']:
+                                correction_parts.append(word['tense'])
+
+                    minimal_correction = ' '.join(correction_parts)
+                    ans_str = self.term.red("✗ " + ans_str + f" → {minimal_correction}")
 
             word_display = f"{marker} [{i+1}] {word['text']:12s}  {ans_str}"
             print(self.term.move_y(start_y + i) + "    " + word_display)
