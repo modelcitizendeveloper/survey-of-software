@@ -16,10 +16,13 @@ Adapt the Latin grammar training toolkit to **Bosnian/Croatian/Serbian (B/C/S)**
 - Same pedagogical challenge: recognizing inflected forms in context
 
 ### 2. Superior NLP Infrastructure
-**Parser**: Stanza already supports Croatian (`hr`) and Serbian (`sr`)
-- Trained on billions of tokens
+**Parser**: CLASSLA-Stanza (South Slavic specialist) supports Croatian (`hr`) and Serbian (`sr`)
+- **Note**: No dedicated Bosnian model, but Croatian model works excellently for Bosnian text (languages are mutually intelligible with identical grammar)
+- Specialized for South Slavic languages (better than standard Stanza)
+- Trained on billions of tokens from regional corpora
 - Extracts full morphological features (case, gender, number, animacy, definiteness)
-- Likely MORE accurate than Latin parsers due to modern training data
+- Handles standard and non-standard (web) text variants
+- Likely MORE accurate than Latin parsers due to modern training data and specialized models
 
 **Corpus availability**: Orders of magnitude larger than Latin
 - hrWaC: 1.2 billion tokens
