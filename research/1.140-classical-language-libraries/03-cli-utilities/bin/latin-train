@@ -160,7 +160,7 @@ class LatinTrainer:
             current_line += 1
 
         # Instructions
-        inst = "j/k: next/prev | Ctrl-1..9: jump | Backspace: clear | n/v/a/p: POS | V: vocab | Enter: check | q: quit"
+        inst = "j/k: next/prev | Ctrl-1..9: jump | Backspace: clear | n/v/a/p: POS | ?: vocab | Enter: check | q: quit"
         print(self.term.move_y(current_line) + self.term.center(inst))
         current_line += 1
 
@@ -310,7 +310,7 @@ class LatinTrainer:
             return False
 
         # Toggle vocabulary display
-        if key == 'V':
+        if key == '?':
             self.show_vocabulary = not self.show_vocabulary
             return True
 
