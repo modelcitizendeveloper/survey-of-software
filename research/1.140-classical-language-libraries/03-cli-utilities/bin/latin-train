@@ -39,9 +39,21 @@ class LatinTrainer:
         self.start_time = None
         self.word_times = {}
 
-    def check_interpretation(self, user_ans, interpretation):
-        """Check if user answer matches a single interpretation"""
-        expected_pos = POS_DISPLAY.get(interpretation['pos'], interpretation['pos'])
+    def check_interpretation(self, user_ans, interpretation, word_pos=None):
+        """Check if user answer matches a single interpretation
+
+        Args:
+            user_ans: User's answer dict
+            interpretation: Expected interpretation dict
+            word_pos: POS from word level (for multi-interpretation format)
+        """
+        # Get expected POS (either from interpretation or word level)
+        if 'pos' in interpretation:
+            expected_pos = POS_DISPLAY.get(interpretation['pos'], interpretation['pos'])
+        elif word_pos:
+            expected_pos = POS_DISPLAY.get(word_pos, word_pos)
+        else:
+            return False  # No POS to check against
 
         # Check POS
         if user_ans.get('pos') != expected_pos:
@@ -148,13 +160,15 @@ class LatinTrainer:
                 # Check if word uses multi-interpretation format
                 if 'valid_interpretations' in word:
                     # Multi-interpretation format: check against any valid interpretation
-                    is_correct = any(self.check_interpretation(user_ans, interp)
+                    word_pos = word.get('pos')
+                    is_correct = any(self.check_interpretation(user_ans, interp, word_pos)
                                    for interp in word['valid_interpretations'])
 
                     # Build display string showing all valid interpretations
                     interp_strs = []
+                    pos_display = POS_DISPLAY.get(word_pos, word_pos) if word_pos else 'UNKNOWN'
                     for interp in word['valid_interpretations']:
-                        s = POS_DISPLAY.get(interp['pos'], interp['pos'])
+                        s = pos_display
                         if interp.get('declension'): s += f" {interp['declension']}"
                         if interp.get('number'):
                             nv = interp['number']
@@ -380,7 +394,8 @@ class LatinTrainer:
             # Check if word uses multi-interpretation format
             if 'valid_interpretations' in word:
                 # Multi-interpretation: check against any valid interpretation
-                is_correct = any(self.check_interpretation(user_ans, interp)
+                word_pos = word.get('pos')
+                is_correct = any(self.check_interpretation(user_ans, interp, word_pos)
                                for interp in word['valid_interpretations'])
                 # Store all interpretations in expected
                 expected = {'valid_interpretations': word['valid_interpretations']}
