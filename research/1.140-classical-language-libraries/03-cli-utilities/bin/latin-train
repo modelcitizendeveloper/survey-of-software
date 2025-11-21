@@ -39,6 +39,51 @@ class LatinTrainer:
         self.start_time = None
         self.word_times = {}
 
+    def check_interpretation(self, user_ans, interpretation):
+        """Check if user answer matches a single interpretation"""
+        expected_pos = POS_DISPLAY.get(interpretation['pos'], interpretation['pos'])
+
+        # Check POS
+        if user_ans.get('pos') != expected_pos:
+            return False
+
+        # Check declension
+        if interpretation.get('declension'):
+            if user_ans.get('declension') != interpretation['declension']:
+                return False
+
+        # Check number (can be single value or list)
+        number_val = interpretation.get('number')
+        if number_val is not None:
+            if isinstance(number_val, list):
+                if user_ans.get('number') not in number_val:
+                    return False
+            else:
+                if user_ans.get('number') != number_val:
+                    return False
+
+        # Check case (can be single value or list)
+        case_val = interpretation.get('case')
+        if case_val is not None:
+            if isinstance(case_val, list):
+                if user_ans.get('case') not in case_val:
+                    return False
+            else:
+                if user_ans.get('case') != case_val:
+                    return False
+
+        # Check tense (can be single value or list)
+        tense_val = interpretation.get('tense')
+        if tense_val is not None:
+            if isinstance(tense_val, list):
+                if user_ans.get('tense') not in tense_val:
+                    return False
+            else:
+                if user_ans.get('tense') != tense_val:
+                    return False
+
+        return True
+
     def display(self, words, sentence):
         """Display current training state"""
         print(self.term.home + self.term.clear)
@@ -100,59 +145,49 @@ class LatinTrainer:
 
             # Correct answer (if checked)
             if self.checked:
-                expected_pos = POS_DISPLAY.get(word['pos'], word['pos'])
-                correct_str = expected_pos
-                if word.get('declension'):
-                    correct_str += f" {word['declension']}"
-                if word.get('number'):
-                    # Handle multiple valid numbers
-                    number_val = word.get('number')
-                    if isinstance(number_val, list):
-                        correct_str += f" {'/'.join(number_val)}"
-                    elif number_val:
-                        correct_str += f" {number_val}"
-                if word.get('case'):
-                    # Handle multiple valid cases
-                    case_val = word.get('case')
-                    if isinstance(case_val, list):
-                        correct_str += f" {'/'.join(case_val)}"
-                    elif case_val:
-                        correct_str += f" {case_val}"
-                if word.get('tense'):
-                    correct_str += f" {word['tense']}"
+                # Check if word uses multi-interpretation format
+                if 'valid_interpretations' in word:
+                    # Multi-interpretation format: check against any valid interpretation
+                    is_correct = any(self.check_interpretation(user_ans, interp)
+                                   for interp in word['valid_interpretations'])
 
-                # Check if correct (handle multiple valid answers)
-                pos_correct = user_ans.get('pos') == expected_pos
-                decl_correct = (user_ans.get('declension') == word.get('declension')) if word.get('declension') else True
-
-                # Number can be single value or list (or None if not required)
-                number_val = word.get('number')
-                if number_val is None:
-                    number_correct = True  # No number required
-                elif isinstance(number_val, list):
-                    number_correct = user_ans.get('number') in number_val
+                    # Build display string showing all valid interpretations
+                    interp_strs = []
+                    for interp in word['valid_interpretations']:
+                        s = POS_DISPLAY.get(interp['pos'], interp['pos'])
+                        if interp.get('declension'): s += f" {interp['declension']}"
+                        if interp.get('number'):
+                            nv = interp['number']
+                            s += f" {'/'.join(nv) if isinstance(nv, list) else nv}"
+                        if interp.get('case'):
+                            cv = interp['case']
+                            s += f" {'/'.join(cv) if isinstance(cv, list) else cv}"
+                        if interp.get('tense'): s += f" {interp['tense']}"
+                        interp_strs.append(s)
+                    correct_str = ' OR '.join(interp_strs)
                 else:
-                    number_correct = user_ans.get('number') == number_val
+                    # Original format: single interpretation with optional lists
+                    expected_pos = POS_DISPLAY.get(word['pos'], word['pos'])
+                    correct_str = expected_pos
+                    if word.get('declension'):
+                        correct_str += f" {word['declension']}"
+                    if word.get('number'):
+                        number_val = word.get('number')
+                        if isinstance(number_val, list):
+                            correct_str += f" {'/'.join(number_val)}"
+                        elif number_val:
+                            correct_str += f" {number_val}"
+                    if word.get('case'):
+                        case_val = word.get('case')
+                        if isinstance(case_val, list):
+                            correct_str += f" {'/'.join(case_val)}"
+                        elif case_val:
+                            correct_str += f" {case_val}"
+                    if word.get('tense'):
+                        correct_str += f" {word['tense']}"
 
-                # Case can be single value or list (or None if not required)
-                case_val = word.get('case')
-                if case_val is None:
-                    case_correct = True  # No case required
-                elif isinstance(case_val, list):
-                    case_correct = user_ans.get('case') in case_val
-                else:
-                    case_correct = user_ans.get('case') == case_val
-
-                # Tense can be single value or list (or None if not required)
-                tense_val = word.get('tense')
-                if tense_val is None:
-                    tense_correct = True  # No tense required
-                elif isinstance(tense_val, list):
-                    tense_correct = user_ans.get('tense') in tense_val
-                else:
-                    tense_correct = user_ans.get('tense') == tense_val
-
-                is_correct = pos_correct and decl_correct and number_correct and case_correct and tense_correct
+                    # Validate using helper
+                    is_correct = self.check_interpretation(user_ans, word)
 
                 if is_correct:
                     ans_str = self.term.green("✓ " + ans_str)
@@ -341,51 +376,29 @@ class LatinTrainer:
 
         for i, word in enumerate(words):
             user_ans = self.user_answers.get(i, {})
-            expected_pos = POS_DISPLAY.get(word['pos'], word['pos'])
 
-            # Build expected answer
-            expected = {'pos': expected_pos}
-            if word.get('declension'):
-                expected['declension'] = word['declension']
-            if word.get('number'):
-                expected['number'] = word['number']
-            if word.get('case'):
-                expected['case'] = word['case']
-            if word.get('tense'):
-                expected['tense'] = word['tense']
-
-            # Check correctness (handle multiple valid answers)
-            pos_match = user_ans.get('pos') == expected['pos']
-            decl_match = (user_ans.get('declension') == expected.get('declension')) if expected.get('declension') else True
-
-            # Number can be single value or list (or None if not required)
-            number_val = expected.get('number')
-            if number_val is None:
-                number_match = True  # No number required
-            elif isinstance(number_val, list):
-                number_match = user_ans.get('number') in number_val
+            # Check if word uses multi-interpretation format
+            if 'valid_interpretations' in word:
+                # Multi-interpretation: check against any valid interpretation
+                is_correct = any(self.check_interpretation(user_ans, interp)
+                               for interp in word['valid_interpretations'])
+                # Store all interpretations in expected
+                expected = {'valid_interpretations': word['valid_interpretations']}
             else:
-                number_match = user_ans.get('number') == number_val
+                # Original format: single interpretation
+                expected_pos = POS_DISPLAY.get(word['pos'], word['pos'])
+                expected = {'pos': expected_pos}
+                if word.get('declension'):
+                    expected['declension'] = word['declension']
+                if word.get('number'):
+                    expected['number'] = word['number']
+                if word.get('case'):
+                    expected['case'] = word['case']
+                if word.get('tense'):
+                    expected['tense'] = word['tense']
 
-            # Case can be single value or list (or None if not required)
-            case_val = expected.get('case')
-            if case_val is None:
-                case_match = True  # No case required
-            elif isinstance(case_val, list):
-                case_match = user_ans.get('case') in case_val
-            else:
-                case_match = user_ans.get('case') == case_val
-
-            # Tense can be single value or list (or None if not required)
-            tense_val = expected.get('tense')
-            if tense_val is None:
-                tense_match = True  # No tense required
-            elif isinstance(tense_val, list):
-                tense_match = user_ans.get('tense') in tense_val
-            else:
-                tense_match = user_ans.get('tense') == tense_val
-
-            is_correct = pos_match and decl_match and number_match and case_match and tense_match
+                # Validate using helper
+                is_correct = self.check_interpretation(user_ans, word)
 
             if user_ans:  # Only count if user attempted
                 total_count += 1
