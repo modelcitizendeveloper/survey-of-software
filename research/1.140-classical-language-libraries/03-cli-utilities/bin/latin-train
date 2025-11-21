@@ -345,12 +345,6 @@ class LatinTrainer:
         sentence = sentence_data['sentence']
         words = sentence_data['words'].copy()  # Make a copy to avoid modifying original
 
-        # Randomize word order if flag is set
-        if self.randomize:
-            random.shuffle(words)
-            # Rebuild sentence text from shuffled words
-            sentence = ' '.join(word['text'] for word in words)
-
         # Reset state
         self.current_word = 0
         self.user_answers = {}
@@ -450,6 +444,29 @@ class LatinTrainer:
 
         print(self.term.clear)
         print(f"Loaded {len(sentences)} sentences")
+
+        # Document-level randomization for drills
+        if self.randomize:
+            # Collect all words from all sentences
+            all_words = []
+            for sentence_data in sentences:
+                all_words.extend(sentence_data['words'])
+
+            # Shuffle all words
+            random.shuffle(all_words)
+
+            # Regroup into pages of 5 words
+            page_size = 5
+            sentences = []
+            for i in range(0, len(all_words), page_size):
+                page_words = all_words[i:i+page_size]
+                sentence_text = ' '.join(word['text'] for word in page_words)
+                sentences.append({
+                    'sentence': sentence_text,
+                    'words': page_words
+                })
+
+            print(f"Randomized into {len(sentences)} pages of ~{page_size} words each")
 
         if resume_from > 0:
             print(f"Resuming from sentence {resume_from + 1}")
