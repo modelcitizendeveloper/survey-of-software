@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_completed: 79
+total_completed: 80
 research:
 - code: '1.001'
   title: advanced sorting libraries
@@ -105,6 +105,10 @@ research:
   title: qr code generation
   description: Research on qr code generation
   path: research/1.080.1-qr-code-generation
+- code: 1.091.2
+  title: face detection & recognition libraries
+  description: Face detection and recognition libraries - MediaPipe, Dlib, InsightFace, MTCNN, RetinaFace, OpenCV, commercial APIs. Completed Nov 21, 2025 (S1, 9 docs, 4,522 lines)
+  path: research/1.091.2-face-detection
 - code: '1.094'
   title: constraint solving libraries
   description: Research on constraint solving libraries
