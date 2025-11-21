@@ -151,9 +151,12 @@ class LatinTrainer:
                 vocab_items.append(f"{lemma}, {v['genitive']} ({v['gender']})")
 
             vocab_display = "  •  ".join(vocab_items)
-            print(self.term.move_y(current_line) + self.term.center(
-                self.term.dim(vocab_display)
-            ))
+            # Use dim formatting if available, otherwise just display normally
+            try:
+                formatted = self.term.dim + vocab_display + self.term.normal
+            except (TypeError, AttributeError):
+                formatted = vocab_display
+            print(self.term.move_y(current_line) + self.term.center(formatted))
             current_line += 1
 
         # Instructions
