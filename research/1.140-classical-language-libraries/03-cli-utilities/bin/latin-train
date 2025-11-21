@@ -38,6 +38,8 @@ class LatinTrainer:
         self.checked = False
         self.start_time = None
         self.word_times = {}
+        self.total_correct = 0
+        self.total_words = 0
 
     def check_interpretation(self, user_ans, interpretation, word_pos=None):
         """Check if user answer matches a single interpretation
@@ -425,6 +427,10 @@ class LatinTrainer:
 
         accuracy = correct_count / total_count if total_count > 0 else 0.0
 
+        # Update running totals
+        self.total_correct += correct_count
+        self.total_words += total_count
+
         result = {
             'sentence_id': sentence_idx,
             'sentence': sentence,
@@ -493,6 +499,15 @@ class LatinTrainer:
             for idx, sentence_data in enumerate(sentences, start=resume_from):
                 if not self.train_sentence(sentence_data, idx):
                     break
+
+        # Display final score
+        print(self.term.clear)
+        if self.total_words > 0:
+            percentage = (self.total_correct / self.total_words) * 100
+            print(self.term.bold_green(f"\nFinal Score: {self.total_correct}/{self.total_words}"))
+            print(self.term.green(f"Accuracy: {percentage:.1f}%\n"))
+        else:
+            print("\nNo words attempted.\n")
 
 def main():
     parser = argparse.ArgumentParser(description='Interactive Latin grammar trainer')
