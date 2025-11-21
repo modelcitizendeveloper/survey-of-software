@@ -18,8 +18,8 @@
     },
     "stem_rule": "remove_a",
     "ambiguous": {
-      "singular": ["genitive|dative"],
-      "plural": ["dative|ablative"]
+      "singular": ["genitive|dative", "nominative|vocative"],
+      "plural": ["dative|ablative", "nominative|vocative"]
     }
   },
   "2nd": {
@@ -42,7 +42,7 @@
     "stem_rule": "remove_us",
     "ambiguous": {
       "singular": ["dative|ablative"],
-      "plural": ["dative|ablative"]
+      "plural": ["dative|ablative", "nominative|vocative"]
     }
   },
   "3rd": {
@@ -64,7 +64,7 @@
     },
     "stem_rule": "from_genitive",
     "ambiguous": {
-      "singular": [],
+      "singular": ["nominative|vocative"],
       "plural": ["nominative|accusative|vocative", "dative|ablative"]
     }
   },
@@ -87,7 +87,7 @@
     },
     "stem_rule": "remove_us",
     "ambiguous": {
-      "singular": [],
+      "singular": ["nominative|vocative"],
       "plural": ["nominative|accusative|vocative", "dative|ablative"]
     }
   },
@@ -110,7 +110,7 @@
     },
     "stem_rule": "remove_es",
     "ambiguous": {
-      "singular": ["genitive|dative"],
+      "singular": ["genitive|dative", "nominative|vocative"],
       "plural": ["nominative|accusative|vocative", "dative|ablative"]
     }
   }
