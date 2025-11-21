@@ -277,6 +277,10 @@ class LatinTrainer:
                 # Move to next sentence
                 return None  # Signal to advance
 
+        # After checking answers, any key advances to next sentence
+        if self.checked:
+            return None  # Signal to advance
+
         # Grammar input (follow-up to POS)
         if not self.checked:
             ans = self.user_answers.get(self.current_word, {})
@@ -452,21 +456,30 @@ class LatinTrainer:
             for sentence_data in sentences:
                 all_words.extend(sentence_data['words'])
 
-            # Shuffle all words
-            random.shuffle(all_words)
+            # Remove duplicates based on text to avoid showing same word twice on a page
+            seen = {}
+            unique_words = []
+            for word in all_words:
+                word_text = word['text']
+                if word_text not in seen:
+                    seen[word_text] = True
+                    unique_words.append(word)
+
+            # Shuffle unique words
+            random.shuffle(unique_words)
 
             # Regroup into pages of 5 words
             page_size = 5
             sentences = []
-            for i in range(0, len(all_words), page_size):
-                page_words = all_words[i:i+page_size]
+            for i in range(0, len(unique_words), page_size):
+                page_words = unique_words[i:i+page_size]
                 sentence_text = ' '.join(word['text'] for word in page_words)
                 sentences.append({
                     'sentence': sentence_text,
                     'words': page_words
                 })
 
-            print(f"Randomized into {len(sentences)} pages of ~{page_size} words each")
+            print(f"Randomized {len(unique_words)} unique words into {len(sentences)} pages of ~{page_size} words each")
 
         if resume_from > 0:
             print(f"Resuming from sentence {resume_from + 1}")
