@@ -7,30 +7,42 @@ Verify that Stanza's Croatian/Serbian models produce sufficient morphological fe
 
 ### Tasks
 
-**1.1 Install Stanza B/C/S models**
+**1.1 Install CLASSLA-Stanza B/C/S models**
 ```bash
 cd research/1.140-classical-language-libraries/04-bcs-adaptation
 uv venv
-uv pip install stanza
-python -c "import stanza; stanza.download('hr'); stanza.download('sr')"
+uv pip install classla
+
+# Download Croatian and Serbian models
+# Note: No dedicated Bosnian model exists, but Croatian model works excellently
+# for Bosnian text (languages are mutually intelligible with identical grammar)
+python -c "import classla; classla.download('hr'); classla.download('sr')"
 ```
 
 **1.2 Test parser on sample sentences**
 Create `test-parser.py`:
 ```python
-import stanza
+import classla
 import json
 
 # Sample sentences covering different cases
+# Note: Testing Croatian model with Bosnian, Croatian, and Serbian text
 test_sentences = {
-    'hr': [
+    'hr': [  # Croatian
         "Kuća je velika.",              # Nominative
         "Vidim kuću.",                  # Accusative
         "Dam djetetu knjigu.",          # Dative
         "Pričam o kući.",               # Locative
         "Idem s prijateljem.",          # Instrumental
     ],
-    'sr': [
+    'bs': [  # Bosnian (will use 'hr' model)
+        "Kuća je velika.",
+        "Vidim kuću.",
+        "Dajem djetetu knjigu.",
+        "Pričam o kući.",
+        "Idem s prijateljem.",
+    ],
+    'sr': [  # Serbian (Cyrillic)
         "Град је велик.",
         "Видим град.",
         "Дајем детету књигу.",
@@ -39,11 +51,26 @@ test_sentences = {
     ]
 }
 
-for lang in ['hr', 'sr']:
-    nlp = stanza.Pipeline(lang, processors='tokenize,pos,lemma')
+# Test Croatian model on Croatian text
+print("=== Croatian model on Croatian text ===")
+nlp_hr = classla.Pipeline('hr', type='standard')
+for sentence in test_sentences['hr']:
+    doc = nlp_hr(sentence)
 
-    for sentence in test_sentences[lang]:
-        doc = nlp(sentence)
+    for sent in doc.sentences:
+        for word in sent.words:
+            print(json.dumps({
+                'text': word.text,
+                'lemma': word.lemma,
+                'upos': word.upos,
+                'xpos': word.xpos,
+                'feats': word.feats if word.feats else None
+            }, ensure_ascii=False, indent=2))
+
+# Test Croatian model on Bosnian text (should work identically)
+print("\n=== Croatian model on Bosnian text ===")
+for sentence in test_sentences['bs']:
+    doc = nlp_hr(sentence)  # Using Croatian model for Bosnian
 
         for sent in doc.sentences:
             for word in sent.words:
