@@ -41,8 +41,49 @@ class LatinTrainer:
         self.word_times = {}
         self.total_correct = 0
         self.total_words = 0
-        self.show_vocabulary = True  # Default to showing vocabulary
-        self.vocabulary = {}  # Will be populated from sentences
+        self.vocabulary = {}  # Will be populated from sentences, accessed via '?' key
+
+    def show_vocabulary_modal(self):
+        """Display vocabulary in a modal overlay with proper formatting."""
+        if not self.vocabulary:
+            return
+
+        print(self.term.clear)
+
+        # Title
+        print(self.term.move_y(2) + self.term.center(self.term.bold("VOCABULARY REFERENCE")))
+        print(self.term.move_y(3) + self.term.center("=" * 60))
+        print()
+
+        # Build vocabulary list
+        vocab_lines = []
+        for lemma in sorted(self.vocabulary.keys()):
+            v = self.vocabulary[lemma]
+            vocab_lines.append(f"  {lemma}, {v['genitive']} ({v['gender']})")
+
+        # Display vocabulary in columns if it fits, otherwise list format
+        term_width = self.term.width
+        start_line = 5
+
+        if term_width >= 80:
+            # Two-column layout for wider terminals
+            mid = (len(vocab_lines) + 1) // 2
+            for i in range(mid):
+                left = vocab_lines[i].ljust(38) if i < len(vocab_lines) else ""
+                right = vocab_lines[i + mid] if i + mid < len(vocab_lines) else ""
+                print(self.term.move_y(start_line + i) + self.term.center(left + "  " + right))
+        else:
+            # Single column for narrow terminals
+            for i, line in enumerate(vocab_lines):
+                print(self.term.move_y(start_line + i) + self.term.center(line))
+
+        # Instructions
+        print()
+        print(self.term.center(self.term.dim("Press any key to return to exercise...")))
+
+        # Wait for keypress
+        with self.term.cbreak():
+            self.term.inkey()
 
     def extract_vocabulary(self, sentences):
         """Extract vocabulary from all sentences for reference display.
@@ -144,23 +185,7 @@ class LatinTrainer:
         current_line += 1
 
         # Vocabulary section (if enabled)
-        if self.show_vocabulary and self.vocabulary:
-            # Build vocabulary display in dictionary format: "puella, puellae (f.)"
-            vocab_items = []
-            for lemma in sorted(self.vocabulary.keys()):
-                v = self.vocabulary[lemma]
-                vocab_items.append(f"{lemma}, {v['genitive']} ({v['gender']})")
-
-            vocab_display = "  •  ".join(vocab_items)
-            # Use dim formatting if available, otherwise just display normally
-            try:
-                formatted = self.term.dim + vocab_display + self.term.normal
-            except (TypeError, AttributeError):
-                formatted = vocab_display
-            print(self.term.move_y(current_line) + self.term.center(formatted))
-            current_line += 1
-
-        # Instructions
+        # Instructions (vocabulary now in modal, press '?')
         inst = "j/k: next/prev | Ctrl-1..9: jump | Backspace: clear | n/v/a/p: POS | ?: vocab | Enter: check | q: quit"
         print(self.term.move_y(current_line) + self.term.center(inst))
         current_line += 1
@@ -348,9 +373,9 @@ class LatinTrainer:
         if key == 'q':
             return False
 
-        # Toggle vocabulary display
+        # Show vocabulary modal
         if key == '?':
-            self.show_vocabulary = not self.show_vocabulary
+            self.show_vocabulary_modal()
             return True
 
         # Backspace - clear current word's input
