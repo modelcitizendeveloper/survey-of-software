@@ -446,11 +446,15 @@ class LatinTrainer:
 
     def run(self, parsed_file, resume_from=0):
         """Run trainer on parsed file"""
-        # Load parsed sentences
+        # Load parsed sentences (skip metadata lines)
         sentences = []
         with open(parsed_file, 'r', encoding='utf-8') as f:
             for line in f:
-                sentences.append(json.loads(line))
+                data = json.loads(line)
+                # Skip metadata lines
+                if data.get('_metadata'):
+                    continue
+                sentences.append(data)
 
         print(self.term.clear)
         print(f"Loaded {len(sentences)} sentences")
