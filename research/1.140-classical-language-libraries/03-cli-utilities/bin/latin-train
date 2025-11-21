@@ -27,11 +27,12 @@ POS_DISPLAY = {
 }
 
 class LatinTrainer:
-    def __init__(self, output_file, user='default', randomize=False):
+    def __init__(self, output_file, user='default', randomize=False, exercise_file=None):
         self.term = Terminal()
         self.output_file = output_file
         self.user = user
         self.randomize = randomize
+        self.exercise_file = exercise_file  # Track which exercise file is being used
         self.current_word = 0
         self.user_answers = {}
         self.input_buffer = ""
@@ -534,6 +535,7 @@ class LatinTrainer:
             'sentence': sentence,
             'timestamp': datetime.now().isoformat(),
             'user': self.user,
+            'exercise': self.exercise_file,  # Track which exercise this came from
             'attempts': attempts,
             'accuracy': accuracy,
         }
@@ -635,7 +637,7 @@ def main():
                 last = json.loads(lines[-1])
                 resume_from = last['sentence_id'] + 1
 
-    trainer = LatinTrainer(args.output, args.user, args.randomize)
+    trainer = LatinTrainer(args.output, args.user, args.randomize, args.parsed_file)
     trainer.run(args.parsed_file, resume_from)
 
 if __name__ == '__main__':
