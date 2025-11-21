@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_completed: 80
+total_completed: 79
 research:
 - code: '1.001'
   title: advanced sorting libraries
@@ -81,10 +81,6 @@ research:
   title: jwt libraries
   description: Research on jwt libraries
   path: research/1.063-jwt-libraries
-- code: '1.070'
-  title: machine learning
-  description: Research on machine learning
-  path: research/1.070-machine-learning
 - code: '1.071'
   title: dimensionality reduction
   description: Research on dimensionality reduction
