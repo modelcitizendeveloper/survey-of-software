@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_completed: 79
+total_completed: 80
 research:
 - code: '1.001'
   title: advanced sorting libraries
@@ -317,3 +317,7 @@ research:
   title: hris hcm
   description: Research on hris hcm
   path: research/3.503-hris-hcm
+- code: '1.141'
+  title: spaced repetition algorithms
+  description: Spaced repetition algorithms for language learning. FSRS clear winner - 20-47× more popular (7,324 downloads/month), adopted by Anki v23.10+, active maintenance. Completed Nov 23, 2025 (S1-only, 1.2 hours, 6 files)
+  path: research/1.141-spaced-repetition
