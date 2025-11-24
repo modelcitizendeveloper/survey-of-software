@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_completed: 80
+total_completed: 81
 research:
 - code: '1.001'
   title: advanced sorting libraries
@@ -321,3 +321,7 @@ research:
   title: spaced repetition algorithms
   description: Spaced repetition algorithms for language learning. FSRS clear winner - 20-47× more popular (7,324 downloads/month), adopted by Anki v23.10+, active maintenance. Completed Nov 23, 2025 (S1-only, 1.2 hours, 6 files)
   path: research/1.141-spaced-repetition
+- code: '1.142'
+  title: flashcard systems & integrations
+  description: Flashcard system integration for language learning. genanki clear winner - 22× more popular (33,970 downloads/month), programmatic .apkg generation, MIT license. Completed Nov 23, 2025 (S1-only, 1.3 hours, 5 files)
+  path: research/1.142-flashcard-systems
