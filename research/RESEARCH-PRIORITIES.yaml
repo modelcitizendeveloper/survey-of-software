@@ -1,39 +1,4 @@
 queue:
-- code: '1.148'
-  title: Morphological Analysis Libraries
-  tier: 1
-  status: not_started
-  estimated_hours: 8-12
-  rationale: |
-    Multi-language morphological analysis for language learning app.
-    Need to handle VERY different language structures:
-    - Japanese: agglutinative, particles, 3 scripts (hiragana/katakana/kanji)
-    - Russian: fusional, 6 cases, perfective/imperfective aspect
-    - Czech: 7 cases, complex declension patterns
-    - Latin: already covered in 1.140 (CLTK)
-    Critical for generating inflected forms and parsing user input.
-  value: |
-    Japanese libraries:
-    - MeCab (classic, widely used, requires binary installation)
-    - fugashi (Python wrapper for MeCab with better API)
-    - SudachiPy (modern, pure Python, better for new words)
-    - jamdict (JMdict dictionary, kanji lookup by reading/meaning)
-    - jaconv (kana/romaji conversion)
-
-    Slavic libraries:
-    - pymorphy2 (Russian morphology, excellent coverage)
-    - UDPipe (Czech, Universal Dependencies models)
-    - spaCy models (hr_core_news, sr_core_news for Croatian/Serbian)
-    - transliterate (Cyrillic ↔ Latin for B/S/C variants)
-
-    Evaluation criteria:
-    - Accuracy of inflection generation
-    - Parsing quality (analyze inflected forms)
-    - Installation complexity (binary deps vs pure Python)
-    - Dictionary coverage (especially for Japanese kanji)
-    - API usability for quiz generation
-  libraries: MeCab, fugashi, SudachiPy, jamdict, pymorphy2, UDPipe, spaCy
-  use_case: Generate and validate inflected forms across Japanese, Slavic, and Romance languages
 - code: '3.134'
   title: AI Content Generation & Copywriting
   tier: 3

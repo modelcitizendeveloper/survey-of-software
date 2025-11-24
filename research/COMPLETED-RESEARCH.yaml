@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_completed: 81
+total_completed: 82
 research:
 - code: '1.001'
   title: advanced sorting libraries
@@ -325,3 +325,7 @@ research:
   title: flashcard systems & integrations
   description: Flashcard system integration for language learning. genanki clear winner - 22× more popular (33,970 downloads/month), programmatic .apkg generation, MIT license. Completed Nov 23, 2025 (S1-only, 1.3 hours, 5 files)
   path: research/1.142-flashcard-systems
+- code: '1.148'
+  title: morphological analysis libraries
+  description: Multi-language morphology (Japanese, Russian, Czech). Per-language specialists win - SudachiPy (1.9M/mo), pymorphy3 (585K/mo), UDPipe (52K/mo). Created LANGUAGE_FAMILIES_ROADMAP (11 families cataloged). Completed Nov 23, 2025 (S1-only, 1.7 hours, 8 files)
+  path: research/1.148-morphological-analysis
