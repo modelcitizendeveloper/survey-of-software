@@ -1,21 +1,4 @@
 queue:
-- code: '1.141'
-  title: Spaced Repetition Algorithms
-  tier: 1
-  status: not_started
-  estimated_hours: 5-7
-  rationale: |
-    Core algorithm for effective language learning retention.
-    Building personal language quiz tool requiring optimal review scheduling.
-    Need to choose between classic (SM-2) vs modern (FSRS) algorithms.
-  value: |
-    - SM-2 (SuperMemo-2, 1987) - simple, proven, widely used
-    - SM-18 (SuperMemo-18, 2019) - complex, highest theoretical performance
-    - FSRS (Free Spaced Repetition Scheduler, 2022) - modern, open-source, good balance
-    - Implementation complexity vs effectiveness trade-offs
-    - Integration with quiz systems
-  algorithms: SM-2, SM-18, FSRS, Leitner System
-  use_case: Optimal review scheduling for language vocabulary retention
 - code: '1.142'
   title: Flashcard Systems & Integrations
   tier: 1
