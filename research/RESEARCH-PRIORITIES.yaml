@@ -1,24 +1,4 @@
 queue:
-- code: '3.134'
-  title: AI Content Generation & Copywriting
-  tier: 3
-  status: not_started
-  estimated_hours: 6-8
-  rationale: |
-    HIGH PRIORITY - Niki client engagement (decision analysis consultant).
-    Social media posts, blog content, marketing copy automation.
-    Immediate client deliverable for content generation pipeline.
-  value: |
-    Platform comparison:
-    - SaaS: Copy.ai ($49/mo), Jasper ($49/mo), Writesonic
-    - API-based: Claude/GPT-4 ($0.02-0.10 per piece)
-    - Content repurposing workflows (long-form → 10-15 social posts)
-    - Brand voice tuning and prompt engineering frameworks
-    - Quality control and human-in-loop workflows
-    Integration with 3.135 (social scheduling) and 3.100 (CMS)
-  platforms: Copy.ai, Jasper, Claude API, GPT-4 API, Writesonic, ContentBot
-  use_case: Automate social media content, blog drafting, marketing copy for consultants
-  trigger: Niki client (Nov 19, 2025) - needs social media automation
 - code: '3.202'
   title: Speech & Audio AI
   tier: 3
@@ -39,29 +19,75 @@ queue:
   platforms: Whisper API, Fireflies.ai, Otter.ai, Grain
   use_case: Automate meeting transcription and summarization for consultants
   trigger: Niki client (Nov 19, 2025) - highest ROI use case for time savings
-- code: '3.135'
-  title: Social Media Management
+- code: '1.003'
+  title: Full-text Search Libraries
+  tier: 1
+  status: in_progress
+  s1_complete: 2025-11-19
+  estimated_hours: 4-6
+  rationale: Foundational capability, DIY option for 3.043 Search Services. S1 complete (Tantivy 240× faster than Whoosh). Next: S2 scale testing.
+  value: Whoosh, Tantivy, MeiliSearch clients
+- code: '3.070'
+  title: Food Service Inventory Management
+  tier: 3
+  status: not_started
+  estimated_hours: 8-12
+  rationale: |
+    HIGH PRIORITY - Seattle restaurant cost reduction opportunity.
+    Food waste = 4-10% of food costs = $20K-100K/year for medium restaurant.
+    Biggest operational gap in existing research.
+  value: |
+    Platform comparison:
+    - SaaS: MarketMan ($200-400/mo), xtraCHEF by Toast ($200/mo), BlueCart, Craftable
+    - Open source: Odoo inventory + recipe modules, ERPNext
+    - Perishable inventory tracking, recipe explosion (15+ ingredients per menu item)
+    - Waste management workflows (spoilage vs over-portioning vs theft)
+    - Variance analysis (theoretical vs actual usage)
+    - Invoice digitization and auto-cost updates
+    Integration with 3.005 POS, 3.072 suppliers, 3.006 accounting
+  platforms: MarketMan, xtraCHEF, BlueCart, Craftable, Toast Inventory, Odoo, ERPNext
+  use_case: Reduce food waste and track ingredient costs for commercial kitchens
+  trigger: Seattle restaurant industry cost pressure analysis (Nov 24, 2025)
+- code: '3.075'
+  title: Labor Scheduling (Restaurant-Specific)
   tier: 3
   status: not_started
   estimated_hours: 6-8
   rationale: |
-    MEDIUM PRIORITY - Niki client engagement (social media scheduling).
-    Downstream from 3.134 (AI generates, this schedules/publishes).
-    Multi-platform posting, content calendars, analytics.
+    HIGH PRIORITY - Seattle restaurant cost reduction opportunity.
+    Labor = 30-35% of revenue (largest controllable cost).
+    Seattle minimum wage $20.76/hr (highest in US) makes optimization critical.
+    5-10% labor reduction = $22K-52K/year for $1.5M revenue restaurant.
   value: |
     Platform comparison:
-    - Free tiers: Buffer (3 profiles, 10 posts), Later (basic)
-    - Paid: Buffer Pro ($15/mo), Hootsuite ($99/mo), Sprout Social ($249/mo)
-    - Multi-platform: LinkedIn, Twitter, Instagram, Facebook support
-    - Analytics: Engagement tracking, best time to post
-    - Integration with 3.134 (content generation pipeline)
-  platforms: Buffer, Hootsuite, Later, Sprout Social, SocialPilot
-  use_case: Schedule and analyze social media posts across platforms
-  trigger: Niki client (Nov 19, 2025) - content distribution automation
-- code: '1.003'
-  title: Full-text Search Libraries
-  tier: 1
+    - SaaS: 7shifts ($40-100/mo), HotSchedules (enterprise), When I Work, Deputy
+    - POS-integrated: Toast Scheduling, TouchBistro (basic features)
+    - Open source: Custom OR-Tools constraint solvers, Staffjoy (defunct but code available)
+    - Forecast-driven scheduling (sales projections → labor needs)
+    - Seattle Secure Scheduling Ordinance compliance (14-day advance notice)
+    - Break requirements, overtime rules for WA state
+    Integration with 3.005 POS (sales forecasting), 3.503 HRIS (payroll), 1.096 scheduling libraries
+  platforms: 7shifts, HotSchedules, When I Work, Deputy, OR-Tools custom
+  use_case: Optimize restaurant labor costs while maintaining service quality
+  trigger: Seattle restaurant industry cost pressure analysis (Nov 24, 2025)
+- code: '3.074'
+  title: Production Scheduling (Commercial Kitchen)
+  tier: 3
   status: not_started
   estimated_hours: 4-6
-  rationale: Foundational capability, DIY option for 3.043 Search Services
-  value: Whoosh, Tantivy, MeiliSearch clients
+  rationale: |
+    PERSONAL INTEREST - Thanksgiving baking schedule (multi-product, capacity-constrained).
+    Equipment capacity constraints (ovens, mixers), prep sequencing, multi-day planning.
+    Applies to bakeries, catering, meal prep services, commissary kitchens.
+  value: |
+    Platform comparison:
+    - SaaS: Katana MRP ($99-299/mo), ERP manufacturing modules (Odoo, ERPNext)
+    - Custom: OR-Tools constraint solvers, SimPy discrete event simulation
+    - Equipment capacity planning (2 ovens, 4 burners, 1 mixer)
+    - Prep sequencing (what can be done in advance vs timed exactly)
+    - Multi-day production (Monday prep, Tuesday bake, Wednesday finish)
+    - Recipe scaling and ingredient availability
+    Integration with 3.071 recipes, 3.070 inventory, 1.096 scheduling libraries, 1.120 simulation
+  platforms: Katana MRP, Odoo Manufacturing, ERPNext, OR-Tools, SimPy
+  use_case: Schedule batch cooking and production in capacity-constrained commercial kitchens
+  trigger: Personal Thanksgiving baking schedule + bakery/catering operations (Nov 24, 2025)
