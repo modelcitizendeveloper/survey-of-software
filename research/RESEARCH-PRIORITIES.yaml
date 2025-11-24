@@ -1,21 +1,4 @@
 queue:
-- code: '1.142'
-  title: Flashcard Systems & Integrations
-  tier: 1
-  status: not_started
-  estimated_hours: 4-6
-  rationale: |
-    Evaluate Anki integration vs building custom flashcard system.
-    Language learning app needs: deck generation, cross-platform sync, data portability.
-    Decision point: extend Anki vs build standalone with Anki export capability.
-  value: |
-    - genanki for programmatic Anki deck generation
-    - ankipandas for analyzing Anki databases with pandas
-    - AnkiConnect for live integration with Anki desktop
-    - Anki pylib for direct database access
-    - Custom flashcard system architecture patterns
-  libraries: genanki, ankipandas, AnkiConnect, Anki pylib
-  use_case: Generate Anki decks from linguistic data or build custom quiz system
 - code: '1.148'
   title: Morphological Analysis Libraries
   tier: 1

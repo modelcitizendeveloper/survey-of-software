@@ -1,0 +1,108 @@
+code: "1.142"
+title: Flashcard Systems & Integrations
+tier: 1
+status: complete
+date_started: 2025-11-23
+date_completed: 2025-11-23
+estimated_hours: 4-6
+actual_hours: 1.3
+
+description: |
+  Research on flashcard system integration patterns for language learning.
+  Two distinct paths: generate Anki decks for existing users vs build custom
+  flashcard interface with full control.
+
+use_case: |
+  Primary: Deliver spaced repetition flashcards for language learning
+  - Path A: Generate Anki decks (leverage 50M+ user ecosystem)
+  - Path B: Build custom flashcard interface (full UX control)
+
+  Critical decision: Anki export vs standalone system vs hybrid approach.
+
+libraries_to_evaluate:
+  anki_integration:
+    - genanki: Programmatic Anki deck generation (no Anki installation required)
+    - ankipandas: Analyze Anki databases with pandas
+    - AnkiConnect: Live integration with Anki desktop (requires Anki running)
+    - Anki pylib: Direct database access (low-level)
+  custom_systems:
+    - Build from scratch with FSRS (1.141)
+    - Web-based flashcard frameworks
+    - Mobile-first patterns
+
+evaluation_criteria:
+  - Installation complexity (user friction)
+  - Data portability (vendor lock-in)
+  - UX control (custom interface vs Anki UI)
+  - Cross-platform (web, mobile, desktop)
+  - Maintenance burden (library stability)
+  - Migration path (Anki → custom or vice versa)
+
+key_questions:
+  - Anki export: Good enough for 90% of language learners?
+  - Custom UI: Worth the engineering investment?
+  - Hybrid approach: Best of both worlds or complexity nightmare?
+  - Data format: Anki .apkg vs SQLite vs JSON?
+
+integration_relationships:
+  enabled_by:
+    - code: "1.141"
+      title: Spaced Repetition Algorithms
+      reason: FSRS provides scheduling algorithm
+    - code: "1.140"
+      title: Classical Language Libraries
+      reason: Provides content (Latin declensions, conjugations)
+  enables:
+    - code: "1.148"
+      title: Morphological Analysis Libraries
+      reason: Flashcard system delivers multi-language content
+
+strategic_value:
+  - Foundation for language learning application
+  - Critical UX decision (Anki ecosystem vs custom)
+  - Validates Path 1 (self-operated) delivery mechanism
+  - Determines development scope (integration vs full build)
+
+s3_focus: |
+  CRITICAL: S3 must evaluate TWO distinct scenarios:
+
+  Scenario 1: "Create flashcards for existing Anki users"
+  - User already has Anki installed
+  - Wants to import Latin/Japanese/Russian decks
+  - Expects Anki's UI, mobile sync, ecosystem
+  - Success = clean .apkg export, minimal friction
+
+  Scenario 2: "Build software with custom interface"
+  - User wants dedicated language learning app
+  - Custom UX optimized for morphology learning
+  - No Anki dependency, runs in browser/mobile
+  - Success = full control, integrated experience
+
+  Key trade-off: Anki's 50M user ecosystem vs custom UX control.
+
+key_findings:
+  - genanki is clear winner: 22× more popular than alternatives (33,970 vs 1,548 downloads/month)
+  - Simple API for programmatic .apkg generation (no Anki installation needed)
+  - MIT license, stable (v0.13.1), 1,492 GitHub stars
+  - Media support (audio, images), GUID management for updates
+  - AnkiConnect too complex (requires Anki running), ankipandas read-only
+
+recommendation: Use genanki package (pip install genanki)
+
+discovery_method: S1-only
+completion_notes: |
+  S1 rapid discovery sufficient - popularity signal decisive (22× leader).
+  genanki only viable library for creating Anki decks programmatically.
+
+  Alternatives:
+  - AnkiConnect: Complex (requires Anki running + add-on install)
+  - ankipandas: Wrong tool (read-only analysis, cannot create decks)
+
+  Custom flashcard system comparison (Anki export vs build-your-own) belongs
+  in applications/ level analysis, not library research.
+
+notes: |
+  Second consecutive research where S1 alone sufficient due to clear popularity winner.
+
+  Pattern: When ecosystem converges on solution (genanki 22×, FSRS 20-47×),
+  S2-S4 add limited value. Library landscape is mature and stable.
