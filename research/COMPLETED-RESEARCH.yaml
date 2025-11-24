@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_completed: 82
+total_completed: 84
 research:
 - code: '1.001'
   title: advanced sorting libraries
@@ -297,6 +297,14 @@ research:
   title: ai content generation & copywriting
   description: AI Content Generation & Copywriting - Completed Nov 19, 2025 (S1-S4 MPSE, 10 docs, triggered by Niki client engagement)
   path: research/3.134-ai-content-generation
+- code: '3.135'
+  title: social media scheduling & automation
+  description: Social Media Scheduling platforms - Buffer, Hootsuite, Later, SocialBee, Publer. Completed Nov 20, 2025 (S1, 1,977 lines, AI features focus)
+  path: research/3.135-social-media-scheduling
+- code: '3.136'
+  title: ai meeting transcription & note-taking
+  description: Meeting transcription platforms - Fireflies, Otter, Grain, Fathom. Completed Nov 20, 2025 (S1, privacy & data policy analysis)
+  path: research/3.136-meeting-transcription
 - code: '3.200'
   title: llm apis
   description: '- **Tier**: 3 (Managed Services - Convenience)'
