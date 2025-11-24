@@ -1,4 +1,3 @@
-
 # S1 Rapid Discovery - Recommendation
 
 **Time Spent**: ~100 minutes
