@@ -2,23 +2,90 @@ queue:
 - code: '3.202'
   title: Speech & Audio AI
   tier: 3
+  status: complete
+  completed: 2025-11-24
+  estimated_hours: 8-10
+  actual_hours: 22
+  rationale: |
+    ✅ COMPLETE - Meeting transcription, speech-to-text platforms.
+    Evaluated Fireflies.ai, Otter.ai, Grain, Fathom, Whisper API, AssemblyAI, Deepgram, Rev AI.
+    Full MPSE S1-S4 complete (35 documents, 500 KB research).
+  value: |
+    Platform comparison complete:
+    - Best free: Fathom (unlimited storage, HIPAA BAA)
+    - Best paid: Otter Pro ($100/user/year)
+    - Best accuracy: Rev AI (96%+ WER)
+    - Best multilingual: Whisper API (99 languages, $0.36/hour)
+    ROI: 262x to ∞ across 6 use case scenarios
+  platforms: Whisper API, Fireflies.ai, Otter.ai, Grain, Fathom, AssemblyAI, Deepgram, Rev AI
+  use_case: Meeting transcription, sales call analysis, content transcription, multilingual teams
+  trigger: Niki client (Nov 19, 2025) + language-learning app integration (Nov 24, 2025)
+  related_tier1: "1.106.1 Speech Recognition Libraries (Whisper self-hosted, WhisperX, Faster-Whisper, Vosk)"
+
+- code: '3.204'
+  title: Text-to-Speech / Speech Synthesis
+  tier: 3
   status: not_started
   estimated_hours: 8-10
   rationale: |
-    HIGH PRIORITY - Niki client engagement (meeting notes automation).
-    Speech-to-text, meeting transcription, AI summarization.
-    Evaluate Fireflies.ai/Otter.ai vs Whisper API custom pipeline.
+    HIGH PRIORITY - Language-learning app integration (listening comprehension drills).
+    Generate native pronunciation audio for vocabulary practice.
+    Discovered from 3.202 research + language-learning app ROADMAP (line 267: "Audio pronunciation (forvo API?)").
   value: |
     Platform comparison:
-    - SaaS: Fireflies.ai ($10/mo), Otter.ai ($17/mo), Grain ($15/mo)
-    - API-based: Whisper ($0.006/min) + Claude/GPT-4 summarization
-    - Real-time vs post-call processing workflows
-    - Privacy/consent considerations for client calls
-    - Meeting summary quality and action item extraction
-    ROI: 2-4 hours/week saved for 5+ meetings/week
-  platforms: Whisper API, Fireflies.ai, Otter.ai, Grain
-  use_case: Automate meeting transcription and summarization for consultants
-  trigger: Niki client (Nov 19, 2025) - highest ROI use case for time savings
+    - Google Cloud TTS: 220+ voices, 40+ languages, $4/M chars
+    - Amazon Polly: 60+ voices, 30+ languages, $4-16/M chars
+    - Azure TTS: 400+ voices, 140+ languages, $4-16/M chars
+    - ElevenLabs: Ultra-realistic, 11 languages, $5-22/M chars
+    - Coqui TTS: Open-source, free self-hosted
+    Cost: $4 for 100 hours of student practice (extremely cheap)
+    ROI: Unlocks listening comprehension drills (80% of language apps use TTS)
+  platforms: Google Cloud TTS, Amazon Polly, Azure TTS, ElevenLabs, Play.ht, Coqui TTS, Piper TTS
+  use_case: Language learning (listening drills), accessibility (screen readers), content creation (audiobooks)
+  trigger: Language-learning app audio integration (Nov 24, 2025)
+  related_tier1: "1.106.2 TTS Libraries (Coqui TTS, Piper TTS, gTTS, pyttsx3, eSpeak)"
+
+- code: '3.205'
+  title: Pronunciation Assessment & Accent Analysis
+  tier: 3
+  status: not_started
+  estimated_hours: 6-8
+  rationale: |
+    MEDIUM PRIORITY - Language-learning app speaking practice ("How's my accent?").
+    AI scores pronunciation accuracy, provides phoneme-level feedback.
+    Unique value-add (most language apps lack good pronunciation feedback).
+  value: |
+    Platform comparison:
+    - Speechace API: 15+ languages, $0.01-0.03/assessment
+    - Azure Pronunciation Assessment: Built into Speech-to-Text, $1/hour
+    - ELSA Speak API: English only, $0.02-0.05/assessment
+    - Custom Whisper + phonetic analysis: Free (DIY)
+    Cost: $40 for 100 hours of practice (2,000 assessments)
+    ROI: Pronunciation coaching (human tutoring = $30-50/hour, AI = $0.40/hour)
+  platforms: Speechace, Azure Pronunciation Assessment, ELSA Speak, Custom Whisper
+  use_case: Language learning (speaking practice), accent reduction coaching, fluency measurement
+  trigger: Language-learning app speaking practice integration (Nov 24, 2025)
+
+- code: '3.203'
+  title: Translation & Localization Services
+  tier: 3
+  status: not_started
+  estimated_hours: 6-8
+  rationale: |
+    MEDIUM PRIORITY - Split from 3.202 multilingual scenario.
+    Translation (text → text) is separate from transcription (audio → text).
+    Language-learning app needs bidirectional translation (Latin ↔ English, Japanese ↔ English).
+  value: |
+    Platform comparison:
+    - Google Translate: 100+ languages, $20/M chars
+    - DeepL: 30+ languages (European focus), $25/M chars (higher quality)
+    - LLM-based (Claude, GPT-4): All major languages, $3-30/M tokens, best for context-aware
+    Cost: $15-25/M characters (cheaper than human translation $0.10-0.30/word)
+    ROI: Translation drills, flashcard auto-generation, semantic validation
+  platforms: Google Translate, DeepL, LLM-based (Claude, GPT-4), Amazon Translate
+  use_case: Translation drills, multilingual content localization, semantic equivalence validation
+  trigger: 3.202 multilingual scenario (Nov 24, 2025) + language-learning app (Nov 24, 2025)
+  related_tier1: "1.105 Translation & i18n Libraries (googletrans, deep-translator, argostranslate, gettext, Babel)"
 - code: '1.003'
   title: Full-text Search Libraries
   tier: 1
