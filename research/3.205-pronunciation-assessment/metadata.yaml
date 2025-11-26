@@ -1,0 +1,85 @@
+code: '3.205'
+title: Pronunciation Assessment & Accent Analysis
+tier: 3
+category: Speech & Audio AI
+status: s1_complete
+started: 2025-11-25
+s1_completed: 2025-11-25
+estimated_hours: 6-8
+actual_hours_s1: 2.5
+s2_s3_s4_status: planned_not_started
+
+rationale: |
+  MEDIUM PRIORITY - Language-learning app speaking practice ("How's my accent?").
+  AI scores pronunciation accuracy, provides phoneme-level feedback.
+  Unique value-add (most language apps lack good pronunciation feedback).
+
+platforms_evaluated:
+  commercial:
+    - Speechace API (15+ languages, $0.01-0.03/assessment, IELTS/PTE/TOEFL alignment)
+    - Azure Pronunciation Assessment (32+ languages, $1/hour, grammar + vocabulary)
+    - ELSA Speak API (English-only, $0.02-0.05/assessment, L1-aware feedback)
+  open_source:
+    - Custom Whisper + phonetic analysis (99 languages, $0/assessment, DIY)
+
+key_findings:
+  - No universal winner (depends on languages, volume, budget)
+  - ELSA unique for English (L1-aware feedback, largest non-native dataset)
+  - Azure best multi-language (32+ languages, grammar + vocabulary)
+  - Speechace best value ($0.01-0.03/assessment, 15+ languages, test prep)
+  - Custom Whisper only cost-effective at >50K assessments/month
+  - Break-even Custom Whisper: >50K/month ($2K/month vs $600-1,500 commercial)
+  - Pronunciation assessment costs <5% of revenue (negligible at any scale)
+
+recommended_platforms:
+  english_only_premium: "ELSA (L1-aware feedback, best English accuracy)"
+  multi_language: "Azure (32+ languages, grammar + vocabulary, $1/hour)"
+  best_value: "Speechace ($0.01-0.03/assessment, 15+ languages)"
+  test_prep: "Speechace (IELTS/PTE/TOEFL) or ELSA (IELTS/CEFR)"
+  massive_scale: "Custom Whisper (>50K assessments/month, $0/assessment)"
+  azure_ecosystem: "Azure (built into Speech-to-Text, no additional cost)"
+
+s1_documents:
+  - 00-SYNTHESIS.md (comprehensive comparison + recommendations)
+  - 01-speechace-api.md
+  - 02-azure-pronunciation-assessment.md
+  - 03-elsa-speak-api.md
+  - 04-custom-whisper-phonetic.md
+
+s1_stats:
+  documents: 5
+  platforms: 4
+  lines: 1647
+  size_kb: 88
+
+domain_explainer:
+  created: 2025-11-25
+  purpose: Business-facing technical glossary (phonemes, IPA, GOP/PER, L1-aware feedback, test alignment)
+  audience: Non-technical decision-makers, product managers, founders
+
+next_steps:
+  s2_comprehensive:
+    - Feature matrix (50+ features × 4 providers)
+    - Pricing TCO (6 volume scenarios: 1K to 1M assessments/month)
+    - Accuracy benchmarks (Phoneme Error Rate, GOP scores)
+    - Integration complexity (time-to-first-assessment, code examples)
+  s3_need_driven:
+    - 6 use case scenarios (English-only, multi-language, test prep, corporate, K-12, massive scale)
+    - Architecture patterns (API integration, webhook processing)
+    - Implementation guides (code examples, best practices)
+  s4_strategic:
+    - Vendor viability (10-year survival probability)
+    - Lock-in mitigation strategies
+    - Technology evolution (2025-2030)
+    - Build vs buy decision framework
+
+trigger: Language-learning app speaking practice integration (Nov 24, 2025)
+related_research:
+  - 3.202 Speech & Audio AI (completed Nov 24, 2025)
+  - 3.204 Text-to-Speech (completed S1+S2 Nov 25, 2025)
+  - 1.106.3 Phonetic Analysis Libraries (Tier 1 self-hosted alternatives)
+
+integration_relationships:
+  upstream: "3.202 Speech-to-Text (transcription input for pronunciation assessment)"
+  downstream: "Language-learning app (speaking practice feature)"
+  adjacent: "3.204 TTS (model audio generation for comparison)"
