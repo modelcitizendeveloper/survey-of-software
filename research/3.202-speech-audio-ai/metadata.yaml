@@ -1,0 +1,245 @@
+# 3.202: Speech & Audio AI - Experiment Metadata
+
+experiment:
+  id: "3.202"
+  title: "Speech & Audio AI"
+  category: "AI & Advanced Capabilities"
+  tier: 3
+  status: "complete"
+  started: "2025-11-24"
+  completed: "2025-11-24"
+  discovery_method: "mpse_v3"
+
+trigger:
+  source: "Client engagement pattern + productivity tools gap"
+  date: "2025-11-24"
+  description: "Meeting transcription and summarization is common need for consultants, remote workers, sales teams"
+  validation: "Recurring need across multiple client types - warrants generic platform research"
+  related_research:
+    - "3.200: LLM APIs (summarization backend)"
+    - "3.136: Meeting Transcription platforms (overlapping category)"
+
+scope:
+  domain: "Speech & Audio AI Services"
+  definition: "Platforms and APIs for speech-to-text transcription, speaker diarization, meeting summarization, and audio intelligence"
+  includes:
+    - "Meeting transcription platforms (Fireflies.ai, Otter.ai, Grain, Fathom)"
+    - "Speech-to-text APIs (OpenAI Whisper API, AssemblyAI, Deepgram, Rev AI)"
+    - "Real-time transcription services"
+    - "Meeting summarization and action item extraction"
+    - "Speaker diarization (who said what)"
+    - "Audio intelligence (sentiment, keywords, topics)"
+    - "Integration with meeting platforms (Zoom, Google Meet, Teams)"
+  excludes:
+    - "Text-to-speech / voice synthesis (separate category)"
+    - "Voice assistants / conversational AI (separate category)"
+    - "Self-hosted speech models without API service"
+    - "Call center analytics (specialized vertical)"
+
+providers:
+  tier_1_meeting_platforms:
+    - name: "Fireflies.ai"
+      research_depth: "planned"
+      rationale: "Market leader for meeting bots, $10/mo, Zoom/Meet/Teams integration"
+    - name: "Otter.ai"
+      research_depth: "planned"
+      rationale: "Consumer favorite, $17/mo, real-time collaboration features"
+    - name: "Grain"
+      research_depth: "planned"
+      rationale: "Sales/coaching focus, $15/mo, video clip creation"
+    - name: "Fathom"
+      research_depth: "planned"
+      rationale: "Free tier, privacy-focused, CRM integrations"
+
+  tier_2_speech_apis:
+    - name: "OpenAI Whisper API"
+      research_depth: "planned"
+      rationale: "State-of-the-art accuracy, $0.006/min ($0.36/hour), build custom pipeline"
+    - name: "AssemblyAI"
+      research_depth: "planned"
+      rationale: "Developer-friendly API, $0.00025/sec ($0.90/hour), real-time support"
+    - name: "Deepgram"
+      research_depth: "planned"
+      rationale: "Fast + accurate, $0.0125/min ($0.75/hour), real-time streaming"
+    - name: "Rev AI"
+      research_depth: "planned"
+      rationale: "Human transcription option, $0.02/min ($1.20/hour), 99% accuracy with human"
+
+research_questions:
+  primary:
+    - "SaaS meeting platform vs custom API pipeline - which for which use case?"
+    - "What is cost range? (per meeting hour, per month subscription)"
+    - "Accuracy comparison - which provider for which audio quality/accent?"
+    - "Privacy considerations - where is data stored, GDPR compliance?"
+    - "Integration complexity - calendar auto-join vs manual upload?"
+
+  secondary:
+    - "Real-time transcription vs post-call processing - latency and cost trade-offs?"
+    - "Speaker diarization accuracy - how well do platforms identify speakers?"
+    - "Meeting summary quality - which LLM backend do platforms use?"
+    - "Lock-in risk - can you export transcripts, switch platforms easily?"
+    - "Custom workflows - can you build Whisper API + Claude pipeline cheaper?"
+
+mpse_stages:
+  s1_rapid:
+    status: "completed"
+    completed_date: "2025-11-24"
+    goal: "Platform overviews - 8 providers (4 SaaS + 4 APIs)"
+    providers: 8
+    time_actual: "3 hours"
+    deliverables:
+      - "approach.md"
+      - "platform-fireflies.md"
+      - "platform-otter.md"
+      - "platform-grain.md"
+      - "platform-fathom.md"
+      - "api-whisper.md"
+      - "api-assemblyai.md"
+      - "api-deepgram.md"
+      - "api-revai.md"
+      - "recommendations.md"
+
+  s2_comprehensive:
+    status: "completed"
+    completed_date: "2025-11-24"
+    goal: "Feature matrix, pricing TCO, accuracy benchmarks, integration complexity, privacy analysis"
+    time_actual: "6 hours"
+    deliverables:
+      - "approach.md"
+      - "feature-matrix.md"
+      - "pricing-tco.md"
+      - "accuracy-benchmarks.md"
+      - "integration-complexity.md"
+      - "privacy-compliance.md"
+      - "synthesis.md"
+
+  s3_need_driven:
+    status: "completed"
+    completed_date: "2025-11-24"
+    goal: "6 use case scenarios - consultant, remote worker, sales team, researcher, content creator, multilingual"
+    scenarios: 6
+    time_actual: "8 hours"
+    deliverables:
+      - "approach.md"
+      - "consultant-meetings.md"
+      - "remote-worker-notes.md"
+      - "sales-call-analysis.md"
+      - "research-interviews.md"
+      - "content-podcast-transcription.md"
+      - "multilingual-international-teams.md"
+      - "synthesis.md"
+
+  s4_strategic:
+    status: "completed"
+    completed_date: "2025-11-24"
+    goal: "Vendor viability, lock-in mitigation, API standardization, 5-year AI trajectory"
+    time_actual: "5 hours"
+    deliverables:
+      - "approach.md"
+      - "vendor-viability.md"
+      - "lock-in-mitigation.md"
+      - "whisper-commoditization.md"
+      - "ai-trajectory.md"
+      - "synthesis.md"
+
+integration_relationships:
+  upstream:
+    - experiment: "3.200"
+      title: "LLM APIs"
+      relationship: "Meeting summaries generated by LLM APIs (Claude, GPT-4) after Whisper transcription"
+
+  downstream:
+    - experiment: "3.130"
+      title: "Personal Productivity / GTD"
+      relationship: "Meeting transcripts feed into task management systems (action items)"
+
+  parallel:
+    - experiment: "3.136"
+      title: "Meeting Transcription (productivity category)"
+      relationship: "Overlapping scope - may merge or cross-reference"
+
+key_findings:
+  # To be populated during S1-S4 research
+  expected_findings:
+    - "Whisper API custom pipeline likely 60-80% cheaper than SaaS for high volume"
+    - "SaaS platforms win on convenience (calendar integration, auto-join bots)"
+    - "Privacy concerns vary - some platforms store indefinitely, others allow self-hosting"
+    - "Meeting summary quality depends on LLM backend (platforms using GPT-4 vs 3.5)"
+    - "No open standard for meeting transcription format - lock-in risk moderate"
+
+success_criteria:
+  s1_complete: "8 provider profiles exist, recommendations synthesis complete"
+  s2_complete: "Feature matrix (30+ features), pricing TCO (5 scenarios), accuracy benchmarks, privacy analysis complete"
+  s3_complete: "5 use case scenarios with platform matching, decision trees documented"
+  s4_complete: "Vendor viability, lock-in mitigation, Whisper commoditization analysis, 5-year outlook complete"
+  full_complete: "Decision-maker can match use case + volume + privacy needs to platform shortlist"
+
+business_value:
+  market_size: "Meeting transcription is universal need for remote-first teams, consultants, sales organizations"
+  decision_frequency: "Initial selection (year 0), re-evaluate yearly as accuracy improves, pricing drops"
+  annual_spend: "$120-$2,000/user/year (SaaS subscriptions) OR $50-$500/year (custom API pipeline)"
+  time_savings: "2-4 hours/week saved per user with 5+ meetings/week (ROI: meeting notes automation)"
+
+  hardware_store_application:
+    catalog: "8 provider profiles + feature matrix + use case mapping = generic hardware store catalog (this research)"
+    application: "Client context (meeting volume, privacy requirements, budget) → platform shortlist (separate client folder)"
+    value: "Catalog is timeless; application is context-specific and lives in business/client-engagements/"
+
+timeline:
+  s1_rapid: "Nov 24, 2025 (target: 3-4 hours)"
+  s2_comprehensive: "Nov 24-25, 2025 (target: 6-8 hours)"
+  s3_need_driven: "Nov 25, 2025 (target: 6-8 hours)"
+  s4_strategic: "Nov 25, 2025 (target: 4-6 hours)"
+  total_time_estimate: "2-3 days (19-26 hours total)"
+
+notes:
+  - "Maintain separation: Generic research in research/3.202/, client-specific recommendations in business/client-engagements/"
+  - "Whisper API accuracy is state-of-the-art (2024) - likely to remain competitive for 2-3 years"
+  - "SaaS platforms differentiate on UX (calendar integration, collaboration) not core transcription accuracy"
+  - "Privacy-sensitive industries (healthcare, legal) may require self-hosted Whisper + local LLM"
+  - "Meeting summary quality varies widely - test with real meeting recordings before committing"
+  - "Multilingual capability major differentiator: Whisper 99 languages vs most SaaS English-only or 3-5 languages"
+  - "Translation vs transcription: Separate capabilities (3.202 = transcribe in native language; 3.20X = translate to target language)"
+
+created: "2025-11-24"
+updated: "2025-11-24"
+version: "1.0"
+
+completion_summary:
+  overall_status: "COMPLETE"
+  completion_date: "2025-11-24"
+  total_documents: 35
+  total_research_hours: 22
+  research_output: "~500 KB strategic intelligence"
+
+  document_breakdown:
+    metadata: "1 file (experiment tracking)"
+    readme: "1 file (navigation guide)"
+    domain_explainer: "1 file (15-20 min business-friendly technical concepts)"
+    terms_tracking: "1 file (140+ terms documented)"
+    s1_rapid: "10 files (8 provider profiles + approach + recommendations)"
+    s2_comprehensive: "7 files (feature matrix, pricing TCO, accuracy, integration, privacy, synthesis)"
+    s3_need_driven: "8 files (6 use case scenarios + approach + synthesis + multilingual notes)"
+    s4_strategic: "6 files (vendor viability, lock-in, commoditization, trajectory, synthesis)"
+
+  key_deliverables:
+    provider_profiles: "8 (Fireflies, Otter, Grain, Fathom, Whisper API, AssemblyAI, Deepgram, Rev AI)"
+    feature_comparison: "30+ features across 8 providers"
+    pricing_analysis: "5 scenarios with 3-year TCO ($0 to $68,400)"
+    use_case_scenarios: "6 scenarios with ROI calculations (262x to ∞ return)"
+    strategic_frameworks: "Vendor viability (5/10-year), lock-in mitigation (1-5 scale), AI trajectory (2025-2030)"
+    technical_explainer: "140+ technical terms defined in business-friendly language"
+
+  critical_findings:
+    best_free: "Fathom (unlimited storage, HIPAA BAA at no cost)"
+    best_paid_value: "Otter Pro ($100/user/year)"
+    best_accuracy: "Rev AI (96%+ WER)"
+    best_speed: "Deepgram (5 seconds for 14-min audio)"
+    best_compliance: "AssemblyAI (only PII redaction)"
+    best_multilingual: "Whisper API (99 languages, $0.36/hour)"
+    whisper_dominance: "60-80% of SaaS platforms likely use Whisper backend"
+    lock_in_range: "APIs 1.1-1.4/5 (minimal) vs SaaS 2.1-3.4/5 (moderate to high)"
+    vendor_consolidation: "8 providers (2024) → 3-4 players (2030), 60-80% acquisition risk for startups"
+    pricing_deflation: "30-50% expected by 2030 (Whisper commoditization)"
+
+  research_status: "COMPLETE - Ready for client application (billable consulting when engaged)"

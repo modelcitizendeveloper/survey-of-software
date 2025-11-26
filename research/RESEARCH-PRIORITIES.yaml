@@ -25,46 +25,58 @@ queue:
 - code: '3.204'
   title: Text-to-Speech / Speech Synthesis
   tier: 3
-  status: not_started
+  status: s1_s2_complete
+  completed_phases: S1+S2
+  s1_s2_completed: 2025-11-25
+  s3_s4_status: planned_not_started
   estimated_hours: 8-10
+  actual_hours: 6
   rationale: |
-    HIGH PRIORITY - Language-learning app integration (listening comprehension drills).
-    Generate native pronunciation audio for vocabulary practice.
-    Discovered from 3.202 research + language-learning app ROADMAP (line 267: "Audio pronunciation (forvo API?)").
+    ✅ S1+S2 COMPLETE (Nov 25, 2025) - TTS platform comparison (13 documents, 3,725 lines).
+    Evaluated 7 platforms: Google Cloud TTS, Amazon Polly, Azure TTS, ElevenLabs, Play.ht, Coqui TTS, Piper TTS.
+    S1: Platform profiles + quick recommendations
+    S2: Feature matrix (60+ features), TCO (6 scenarios), quality benchmarks (MOS scores), integration complexity
+    S3/S4: Planned but not started (use case scenarios, strategic analysis)
   value: |
-    Platform comparison:
-    - Google Cloud TTS: 220+ voices, 40+ languages, $4/M chars
-    - Amazon Polly: 60+ voices, 30+ languages, $4-16/M chars
-    - Azure TTS: 400+ voices, 140+ languages, $4-16/M chars
-    - ElevenLabs: Ultra-realistic, 11 languages, $5-22/M chars
-    - Coqui TTS: Open-source, free self-hosted
-    Cost: $4 for 100 hours of student practice (extremely cheap)
-    ROI: Unlocks listening comprehension drills (80% of language apps use TTS)
+    Platform comparison complete:
+    - Best free tier: Google Cloud TTS (4M chars/month ongoing, $0)
+    - Best high volume: Play.ht Unlimited ($99/month flat, break-even at 6M chars/month)
+    - Best quality: ElevenLabs (4.14 MOS, but 4-16× more expensive)
+    - Best for language learning: Azure TTS (pronunciation assessment built-in)
+    - Fastest latency: Piper TTS (<50ms CPU), Azure (~100ms cloud)
+    - Best voice cloning: ElevenLabs (paid) or Coqui (free, 6-second samples)
   platforms: Google Cloud TTS, Amazon Polly, Azure TTS, ElevenLabs, Play.ht, Coqui TTS, Piper TTS
   use_case: Language learning (listening drills), accessibility (screen readers), content creation (audiobooks)
   trigger: Language-learning app audio integration (Nov 24, 2025)
   related_tier1: "1.106.2 TTS Libraries (Coqui TTS, Piper TTS, gTTS, pyttsx3, eSpeak)"
+  note: "Removed from active priority queue - S1+S2 provide 80% decision-making value"
 
 - code: '3.205'
   title: Pronunciation Assessment & Accent Analysis
   tier: 3
-  status: not_started
+  status: s1_complete
+  completed_phases: S1
+  s1_completed: 2025-11-25
+  s2_s3_s4_status: planned_not_started
   estimated_hours: 6-8
+  actual_hours: 2.5
   rationale: |
-    MEDIUM PRIORITY - Language-learning app speaking practice ("How's my accent?").
-    AI scores pronunciation accuracy, provides phoneme-level feedback.
-    Unique value-add (most language apps lack good pronunciation feedback).
+    ✅ S1 COMPLETE (Nov 25, 2025) - Pronunciation assessment comparison (5 documents, 1,647 lines).
+    Evaluated 4 platforms: Speechace, Azure, ELSA Speak, Custom Whisper + phonetic analysis.
+    S1: Platform profiles + quick recommendations
+    S2-S4: Planned but not started (feature matrix, TCO, use cases, strategic analysis)
   value: |
-    Platform comparison:
-    - Speechace API: 15+ languages, $0.01-0.03/assessment
-    - Azure Pronunciation Assessment: Built into Speech-to-Text, $1/hour
-    - ELSA Speak API: English only, $0.02-0.05/assessment
-    - Custom Whisper + phonetic analysis: Free (DIY)
-    Cost: $40 for 100 hours of practice (2,000 assessments)
-    ROI: Pronunciation coaching (human tutoring = $30-50/hour, AI = $0.40/hour)
+    Platform comparison complete:
+    - Best English: ELSA (L1-aware feedback, largest non-native dataset)
+    - Best multi-language: Azure (32+ languages, grammar + vocabulary)
+    - Best value: Speechace ($0.01-0.03/assessment, 15+ languages, IELTS/PTE/TOEFL)
+    - Best at scale: Custom Whisper (>50K assessments/month, $0/assessment)
+    Cost: $0.01-0.05/assessment (commercial), $0 + dev costs (DIY)
+    ROI: AI pronunciation coaching ($0.40/hour) vs human tutoring ($30-50/hour) = 75-125× cheaper
   platforms: Speechace, Azure Pronunciation Assessment, ELSA Speak, Custom Whisper
   use_case: Language learning (speaking practice), accent reduction coaching, fluency measurement
   trigger: Language-learning app speaking practice integration (Nov 24, 2025)
+  note: "Removed from active priority queue - S1 provides 70% decision-making value"
 
 - code: '3.203'
   title: Translation & Localization Services
