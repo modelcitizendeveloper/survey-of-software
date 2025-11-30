@@ -110,72 +110,105 @@ queue:
 - code: '1.003'
   title: Full-text Search Libraries
   tier: 1
-  status: in_progress
-  s1_complete: 2025-11-19
+  status: s1_complete
+  completed_phases: S1
+  s1_completed: 2025-11-19
+  s2_s3_s4_status: planned_not_started
   estimated_hours: 4-6
-  rationale: Foundational capability, DIY option for 3.043 Search Services. S1 complete (Tantivy 240× faster than Whoosh). Next: S2 scale testing.
-  value: Whoosh, Tantivy, MeiliSearch clients
+  actual_hours: 3
+  rationale: |
+    ✅ S1 COMPLETE (Nov 19, 2025) - Full-text search library comparison.
+    Evaluated Whoosh, Tantivy (via tantivy-py), MeiliSearch Python client.
+    S1: Key finding - Tantivy 240× faster than Whoosh for indexing
+    S2-S4: Planned but not started (scale testing, integration patterns, strategic analysis)
+  value: |
+    Library comparison complete:
+    - Fastest: Tantivy (Rust-based, 240× faster indexing than Whoosh)
+    - Pure Python: Whoosh (simpler deployment, slower performance)
+    - Client library: MeiliSearch Python (requires external server)
+    DIY baseline for 3.043 Search Services comparison
+  libraries: Whoosh, Tantivy (tantivy-py), MeiliSearch Python client
+  use_case: Embedded search for applications, DIY search vs managed services
+  trigger: Foundational capability research (Nov 19, 2025)
+  note: "Removed from active priority queue - S1 provides 70% decision-making value, S2+ deferred"
 - code: '3.070'
   title: Food Service Inventory Management
   tier: 3
-  status: not_started
+  status: s1_complete
+  completed_phases: S1
+  s1_completed: 2025-11-30
+  s2_s3_s4_status: planned_not_started
   estimated_hours: 8-12
+  actual_hours: 5.5
   rationale: |
-    HIGH PRIORITY - Seattle restaurant cost reduction opportunity.
-    Food waste = 4-10% of food costs = $20K-100K/year for medium restaurant.
-    Biggest operational gap in existing research.
+    ✅ S1 COMPLETE (Nov 30, 2025) - Food service inventory management comparison (15 documents, 9,347 lines).
+    Evaluated 7 solutions: MarketMan, xtraCHEF (Toast), BlueCart, Craftable, WISK, Odoo, ERPNext+URY.
+    S1: Platform profiles + comprehensive synthesis with decision tree
+    S2-S4: Planned but not started (feature matrix, TCO, use cases, strategic analysis)
   value: |
-    Platform comparison:
-    - SaaS: MarketMan ($200-400/mo), xtraCHEF by Toast ($200/mo), BlueCart, Craftable
-    - Open source: Odoo inventory + recipe modules, ERPNext
-    - Perishable inventory tracking, recipe explosion (15+ ingredients per menu item)
-    - Waste management workflows (spoilage vs over-portioning vs theft)
-    - Variance analysis (theoretical vs actual usage)
-    - Invoice digitization and auto-cost updates
-    Integration with 3.005 POS, 3.072 suppliers, 3.006 accounting
-  platforms: MarketMan, xtraCHEF, BlueCart, Craftable, Toast Inventory, Odoo, ERPNext
-  use_case: Reduce food waste and track ingredient costs for commercial kitchens
+    Platform comparison complete:
+    - Best multi-location: ERPNext+URY (free, proven 10+ outlets) or MarketMan ($200-400/mo, AI forecasting)
+    - Best Toast integration: xtraCHEF ($149/mo, seamless POS sync)
+    - Best bar inventory: WISK ($249/mo, 99.7% accuracy, hardware scales)
+    - Best budget: BlueCart ($0.01-150/mo, supplier marketplace) or Odoo Community (free + $50/mo hosting)
+    - ROI: 400-1150% for food waste reduction (2-6% savings on food costs)
+    - Bar shrink reduction: 151-421% ROI for high-shrink bars (5-15% typical loss)
+  platforms: MarketMan, xtraCHEF, BlueCart, Craftable, WISK, Odoo, ERPNext+URY
+  use_case: Reduce food waste (4-10% typical) and track ingredient costs for restaurants, bars, hotels
   trigger: Seattle restaurant industry cost pressure analysis (Nov 24, 2025)
+  related_tier1: "1.096 Scheduling Libraries (automated reordering), 1.120 Simulation Libraries (inventory optimization)"
+  note: "Removed from active priority queue - S1 provides 70-80% decision-making value, S2-S4 deferred"
 - code: '3.075'
   title: Labor Scheduling (Restaurant-Specific)
   tier: 3
-  status: not_started
+  status: s1_complete
+  completed_phases: S1
+  s1_completed: 2025-11-30
+  s2_s3_s4_status: planned_not_started
   estimated_hours: 6-8
+  actual_hours: 4
   rationale: |
-    HIGH PRIORITY - Seattle restaurant cost reduction opportunity.
-    Labor = 30-35% of revenue (largest controllable cost).
-    Seattle minimum wage $20.76/hr (highest in US) makes optimization critical.
-    5-10% labor reduction = $22K-52K/year for $1.5M revenue restaurant.
+    ✅ S1 COMPLETE (Nov 30, 2025) - Restaurant labor scheduling comparison (10 documents, 6,423 lines).
+    Evaluated 6 platforms: 7shifts, HotSchedules, When I Work, Deputy, Sling (Toast), OR-Tools (DIY).
+    S1: Platform profiles + comprehensive synthesis + domain explainer (Fair Workweek laws, AI forecasting, constraint programming)
+    S2-S4: Planned but not started (feature matrix, TCO, use cases, strategic analysis)
   value: |
-    Platform comparison:
-    - SaaS: 7shifts ($40-100/mo), HotSchedules (enterprise), When I Work, Deputy
-    - POS-integrated: Toast Scheduling, TouchBistro (basic features)
-    - Open source: Custom OR-Tools constraint solvers, Staffjoy (defunct but code available)
-    - Forecast-driven scheduling (sales projections → labor needs)
-    - Seattle Secure Scheduling Ordinance compliance (14-day advance notice)
-    - Break requirements, overtime rules for WA state
-    Integration with 3.005 POS (sales forecasting), 3.503 HRIS (payroll), 1.096 scheduling libraries
-  platforms: 7shifts, HotSchedules, When I Work, Deputy, OR-Tools custom
-  use_case: Optimize restaurant labor costs while maintaining service quality
-  trigger: Seattle restaurant industry cost pressure analysis (Nov 24, 2025)
+    Platform comparison complete:
+    - Best free tier: 7shifts Comp (20 employees free, 5-star mobile app)
+    - Best value: Sling by Toast ($1.70/user/mo, best Toast integration, 2,510% ROI for Toast users)
+    - Best compliance: HotSchedules ($200-300/mo/location, Seattle ordinance automation) or Deputy ($4.50/user, free tier)
+    - Best DIY: OR-Tools (free + dev cost, unlimited constraints, 18-month break-even vs Deputy)
+    - ROI: 1,300-2,000% for 2-5% labor cost reduction ($1.5M revenue restaurant)
+    - Seattle compliance automation prevents $3K-12K/year in violation fines
+  platforms: 7shifts, HotSchedules, When I Work, Deputy, Sling by Toast, Google OR-Tools
+  use_case: Optimize restaurant labor costs, Seattle Secure Scheduling Ordinance compliance, AI demand forecasting
+  trigger: Seattle restaurant industry cost pressure analysis (Nov 24, 2025) + 3.070 inventory research (Nov 30, 2025)
+  related_tier1: "1.096 Scheduling Libraries (OR-Tools constraint programming for custom scheduling)"
+  note: "Removed from active priority queue - S1 provides 70-80% decision-making value, S2-S4 deferred"
 - code: '3.074'
   title: Production Scheduling (Commercial Kitchen)
   tier: 3
-  status: not_started
+  status: complete
+  completed: 2025-11-24
   estimated_hours: 4-6
+  actual_hours: 18
   rationale: |
-    PERSONAL INTEREST - Thanksgiving baking schedule (multi-product, capacity-constrained).
-    Equipment capacity constraints (ovens, mixers), prep sequencing, multi-day planning.
-    Applies to bakeries, catering, meal prep services, commissary kitchens.
+    ✅ COMPLETE - Full S1-S4 research (Nov 24, 2025).
+    Commercial kitchen production scheduling: batch cooking, equipment constraints, multi-day workflows.
+    Evaluated 14 platforms (CakeBoss $20/year → BatchMaster $50K+/year).
+    Covers bakeries, catering, meal prep, commissary kitchens, ghost kitchens.
   value: |
-    Platform comparison:
-    - SaaS: Katana MRP ($99-299/mo), ERP manufacturing modules (Odoo, ERPNext)
-    - Custom: OR-Tools constraint solvers, SimPy discrete event simulation
-    - Equipment capacity planning (2 ovens, 4 burners, 1 mixer)
-    - Prep sequencing (what can be done in advance vs timed exactly)
-    - Multi-day production (Monday prep, Tuesday bake, Wednesday finish)
-    - Recipe scaling and ingredient availability
-    Integration with 3.071 recipes, 3.070 inventory, 1.096 scheduling libraries, 1.120 simulation
-  platforms: Katana MRP, Odoo Manufacturing, ERPNext, OR-Tools, SimPy
-  use_case: Schedule batch cooking and production in capacity-constrained commercial kitchens
-  trigger: Personal Thanksgiving baking schedule + bakery/catering operations (Nov 24, 2025)
+    Platform comparison complete:
+    - Wholesale bakery: FlexiBake ($12,420/year) - bakery-specific, ROI 3,333-4,508%
+    - Catering company: CaterZen ($1,188-3,588/year) - event-driven, ROI 658-2,569%
+    - Meal prep: Katana MRP ($9,588/year) or MRPeasy ($1,788/year)
+    - CPG food brand: Katana or BatchMaster ($60K+ enterprise)
+    - Break-even: <$2M SaaS wins, $2M-10M Odoo if have tech, $10M+ custom
+    - Equipment optimization ROI: $650K opportunity (primary value driver)
+    - Key finding: Production model determines platform (make-to-stock → MRP, make-to-order → project mgmt)
+    Full MPSE S1-S4 complete (platform landscape, feature matrix, use cases, vendor viability, build-vs-buy)
+  platforms: FlexiBake, Katana MRP, CaterZen, BatchMaster, Odoo, ERPNext, MRPeasy, BakeSmart, Craftybase, CakeBoss
+  use_case: Batch production planning, equipment capacity optimization, multi-day prep workflows
+  trigger: Operations research overlap + Thanksgiving baking (Nov 24, 2025)
+  related_tier1: "1.096 Scheduling Libraries (constraint solvers), 1.120 Discrete Event Simulation (kitchen workflow modeling)"
+  note: "Full S1-S4 research complete - comprehensive platform analysis across all market segments"
