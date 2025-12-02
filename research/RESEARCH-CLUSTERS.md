@@ -1,7 +1,8 @@
 # Research Cluster Analysis
 
-**Total Planned Research**: 195 items (86 completed, 109 remaining)
+**Total Planned Research**: 196 items (86 completed, 110 remaining)
 **Generated**: 2025-12-01
+**Updated**: 2025-12-01 (added 1.110.4 Browser Python execution)
 
 This document identifies thematic clusters of planned research that could be explored together for maximum efficiency and coherence.
 
@@ -56,15 +57,16 @@ This document identifies thematic clusters of planned research that could be exp
 
 ---
 
-### Cluster 3: Frontend Development Stack (13 items)
+### Cluster 3: Frontend Development Stack (14 items)
 **Application**: All web applications (qrcards, project management, etc.)
 **Business Value**: Foundation for all UI work
-**Completion Status**: 1/13 complete (8%)
+**Completion Status**: 1/14 complete (7%)
 
 **Completed**:
 - ✅ 1.110: Frontend frameworks (React, Vue, Svelte)
 
-**Remaining (12 items)**:
+**Remaining (13 items)**:
+- 1.110.4: Browser Python execution (Pyodide, JupyterLite, PyScript) 🔴 CRITICAL
 - 1.110.1: React meta-frameworks (Next.js, Remix)
 - 1.110.2: Vue meta-frameworks (Nuxt)
 - 1.110.3: Svelte meta-frameworks (SvelteKit)
@@ -78,7 +80,7 @@ This document identifies thematic clusters of planned research that could be exp
 - 1.118: Testing libraries (Vitest, Playwright)
 - 1.119: Mobile frameworks (React Native, Expo)
 
-**Next Action**: 1.114 (build tools) → 1.112 (CSS) → 1.113 (components)
+**Next Action**: 1.114 (build tools) → 1.112 (CSS) → 1.110.4 (browser Python) → 1.113 (components)
 
 ---
 
@@ -339,8 +341,8 @@ This document identifies thematic clusters of planned research that could be exp
 **Timeline**: 4-6 weeks
 1. Complete Cluster 1 (Language Learning): 9 items
 2. Complete Cluster 4 (LLM Stack): 7 items
-3. Complete Cluster 3 (Frontend): 12 items
-**Result**: QR Cards ready for advanced features + LLM integration
+3. Complete Cluster 3 (Frontend): 13 items (including browser Python)
+**Result**: QR Cards ready for advanced features + LLM integration + Jupyter notebooks
 
 ### Strategy B: "Consulting Package" (Restaurant Operations)
 **Timeline**: 2-3 weeks
@@ -350,11 +352,11 @@ This document identifies thematic clusters of planned research that could be exp
 
 ### Strategy C: "Full Stack Foundation" (Balanced)
 **Timeline**: 6-8 weeks
-1. Frontend Stack (Cluster 3): 12 items
+1. Frontend Stack (Cluster 3): 13 items (including browser Python)
 2. LLM Stack (Cluster 4): 7 items
 3. Security (Cluster 8): 6 items
 4. Document Processing (Cluster 10): 5 items
-**Result**: Complete modern web application stack
+**Result**: Complete modern web application stack + browser Python execution
 
 ### Strategy D: "Research Depth" (Academic)
 **Timeline**: 8-10 weeks
@@ -378,9 +380,9 @@ This document identifies thematic clusters of planned research that could be exp
 **Value**: Consulting package opportunity
 
 ### Option 3: **Build Frontend Foundation** (Cluster 3)
-**Next 3 items**: 1.114 (build tools) → 1.112 (CSS) → 1.113 (UI components)
-**Time**: 12-15 hours total
-**Value**: Accelerate all future UI development
+**Next 4 items**: 1.114 (build tools) → 1.112 (CSS) → 1.110.4 (browser Python) → 1.113 (UI components)
+**Time**: 18-23 hours total
+**Value**: Accelerate all future UI development + enable Jupyter iframe pattern
 
 ---
 
