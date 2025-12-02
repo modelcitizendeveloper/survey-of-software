@@ -5,9 +5,9 @@ experiment:
   title: "HRIS/HCM Platforms"
   category: "Business Platforms"
   tier: 3
-  status: "in_progress"
+  status: "complete"
   started: "2025-10-31"
-  completed: null
+  completed: "2025-10-31"
 
 trigger:
   source: "CFO LinkedIn Community Forum Post"
