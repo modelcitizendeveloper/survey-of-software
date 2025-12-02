@@ -91,6 +91,15 @@ Examples:
   # Update start date
   python3 update_task.py --task-id 123 --start-date 2025-11-11
 
+  # Mark task as done
+  python3 update_task.py --task-id 123 --done
+
+  # Mark task as done with completion details
+  python3 update_task.py --task-id 123 --done --description-file completion.html
+
+  # Mark task as not done
+  python3 update_task.py --task-id 123 --not-done
+
   # Update multiple fields at once
   python3 update_task.py --task-id 123 \\
     --title "Updated title" \\
@@ -136,6 +145,10 @@ Priority Levels:
                         help='Due date (YYYY-MM-DD or ISO format)')
     parser.add_argument('--start-date', type=str,
                         help='Start date (YYYY-MM-DD or ISO format)')
+    parser.add_argument('--done', action='store_true',
+                        help='Mark task as done')
+    parser.add_argument('--not-done', action='store_true',
+                        help='Mark task as not done')
 
     # Options
     parser.add_argument('--dry-run', '-d', action='store_true',
@@ -147,9 +160,15 @@ Priority Levels:
 
     # Validate that at least one field is being updated
     if not any([args.title, args.description, args.description_file,
-                args.priority is not None, args.due_date, args.start_date]):
+                args.priority is not None, args.due_date, args.start_date,
+                args.done, args.not_done]):
         print("❌ Error: Must specify at least one field to update")
-        print("   Use --title, --description, --priority, --due-date, or --start-date")
+        print("   Use --title, --description, --priority, --due-date, --start-date, --done, or --not-done")
+        sys.exit(1)
+
+    # Validate done/not-done conflict
+    if args.done and args.not_done:
+        print("❌ Error: Cannot specify both --done and --not-done")
         sys.exit(1)
 
     # Handle description from file
@@ -227,6 +246,14 @@ Priority Levels:
         desc_preview = args.description[:100] + "..." if len(args.description) > 100 else args.description
         print(f"📝 Description: Updating ({len(args.description)} chars)")
         print(f"   Preview: {desc_preview}")
+
+    if args.done:
+        updates['done'] = True
+        print(f"✅ Status: {'Done' if task.done else 'Not done'} → Done")
+
+    if args.not_done:
+        updates['done'] = False
+        print(f"⏳ Status: {'Done' if task.done else 'Not done'} → Not done")
 
     print()
 
