@@ -1,5 +1,5 @@
 repository: spawn-solutions
-total_completed: 84
+total_completed: 86
 research:
 - code: '1.001'
   title: advanced sorting libraries
@@ -337,3 +337,11 @@ research:
   title: morphological analysis libraries
   description: Multi-language morphology (Japanese, Russian, Czech). Per-language specialists win - SudachiPy (1.9M/mo), pymorphy3 (585K/mo), UDPipe (52K/mo). Created LANGUAGE_FAMILIES_ROADMAP (11 families cataloged). Completed Nov 23, 2025 (S1-only, 1.7 hours, 8 files)
   path: research/1.148-morphological-analysis
+- code: '3.502'
+  title: erp platforms
+  description: Enterprise Resource Planning platforms - NetSuite, Dynamics 365, SAP, Odoo, Oracle, Acumatica. Completed Nov 2, 2025 (S1-S4 MPSE, 21 docs)
+  path: research/3.502-erp-platforms
+- code: '3.503'
+  title: hris hcm platforms
+  description: HRIS/HCM platforms - Rippling, Gusto, Paycom, Workday, Oracle, ADP, BambooHR, Paylocity. Completed Oct 31, 2025 (S1-S4 MPSE, 19 docs). Triggered by CFO forum Oracle HCM migration question.
+  path: research/3.503-hris-hcm
