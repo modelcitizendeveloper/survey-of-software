@@ -1,4 +1,86 @@
 queue:
+- code: '1.114'
+  title: Build Tools & Bundlers (Vite, Webpack, Turbopack, esbuild, Rollup)
+  tier: 1
+  status: not_started
+  estimated_hours: 4-6
+  rationale: |
+    🔴 CRITICAL - Blocks QRCards Python API widget bundling.
+    Cannot bundle JavaScript for calculator widgets, language learning tools, or recipe scalers.
+    Flask templates need modern build tooling for component-based development.
+  value: |
+    Decision: Vite vs Webpack vs esbuild for Flask template bundling
+    Integration: How to integrate with Flask static assets
+    Dev experience: Hot reload, TypeScript support, CSS processing
+    Production: Bundle optimization, code splitting, tree shaking
+  platforms: Vite, Webpack 5, Turbopack, esbuild, Rollup, Parcel
+  use_case: Bundle JavaScript/CSS for QRCards calculator widgets, Flask template assets
+  trigger: QRCards Python API embedding architecture (qrcards/project/python-api/)
+  related_tier1: "1.112 CSS Frameworks, 1.113 UI Components, 1.110 Frontend Frameworks"
+  blocking: All QRCards widget development, frontend stack implementation
+
+- code: '1.112'
+  title: CSS Frameworks & Styling (Tailwind, Bootstrap, Material UI, Styled Components)
+  tier: 1
+  status: not_started
+  estimated_hours: 4-6
+  rationale: |
+    🔴 CRITICAL - Blocks QRCards calculator widget styling.
+    Cannot style forms, buttons, layouts for Python API widgets.
+    Need consistent design system across multidomain infrastructure.
+  value: |
+    Decision: Tailwind vs Bootstrap vs CSS-in-JS for Flask templates
+    Integration: How to use with Jinja2 templates, Flask static assets
+    Components: Form styling, calculator layouts, responsive design
+    Design system: Color schemes, spacing, typography across domains
+  platforms: Tailwind CSS, Bootstrap 5, Material UI, Styled Components, CSS Modules, Emotion
+  use_case: Style calculator widgets, language quiz forms, recipe scaler UI
+  trigger: QRCards Python API embedding architecture
+  related_tier1: "1.114 Build Tools, 1.113 UI Components"
+  blocking: All QRCards UI development, widget styling
+
+- code: '1.110.4'
+  title: Browser Python Execution (Pyodide, JupyterLite, PyScript, Brython)
+  tier: 1
+  status: not_started
+  estimated_hours: 6-8
+  rationale: |
+    🔴 CRITICAL - Blocks QRCards Jupyter iframe pattern.
+    Documented architecture requires browser-based Python execution.
+    Hybrid pattern: simple users get forms (Flask API), power users get code editor (Jupyter).
+  value: |
+    Decision: JupyterLite (full Jupyter) vs Pyodide REPL (lightweight) vs PyScript (HTML-first)
+    Security: User code execution, package restrictions, resource limits, iframe isolation
+    Performance: WASM overhead, package loading, memory constraints
+    Integration: Parent-child communication, state sharing with Flask backend
+    Patterns: Interactive notebooks, Python REPL widgets, computational notebooks
+  platforms: Pyodide, JupyterLite, PyScript, Brython, Skulpt
+  use_case: Embed Jupyter notebooks in QRCards, interactive Python learning environment
+  trigger: QRCards Python API embedding (JUPYTER-INTEGRATION.md, JUPYTER-SECURITY.md)
+  related_tier3: "3.202 Speech & Audio AI (for language learning integration)"
+  blocking: Jupyter iframe pattern, advanced Python features in QRCards
+
+- code: '1.118'
+  title: Testing Libraries (Jest, Vitest, Testing Library, Playwright, Cypress)
+  tier: 1
+  status: not_started
+  estimated_hours: 4-6
+  rationale: |
+    🔴 CRITICAL - Blocks Flask API testing and frontend quality assurance.
+    Cannot test Python API endpoints, calculator widgets, or user interactions.
+    Need testing strategy for Flask + JavaScript hybrid architecture.
+  value: |
+    Decision: Pytest (Flask) + Playwright (E2E) vs Pytest + Cypress
+    Coverage: API endpoint testing, widget interaction testing, integration testing
+    Patterns: Test Flask blueprints, mock API responses, test Jupyter iframe
+    CI/CD: Automated testing pipeline for QRCards deployments
+  platforms: Pytest, Vitest, Jest, Playwright, Cypress, Testing Library
+  use_case: Test Flask API endpoints, calculator widgets, language quiz interactions
+  trigger: QRCards Python API quality assurance (TESTING.md in python-api/)
+  related_tier3: "3.052 CI/CD Services (for test automation)"
+  blocking: Production deployment confidence, API reliability
+
+
 - code: '3.202'
   title: Speech & Audio AI
   tier: 3
