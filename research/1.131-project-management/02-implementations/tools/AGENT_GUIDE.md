@@ -315,6 +315,82 @@ VIKUNJA_API_TOKEN=v1.YOUR_TOKEN_HERE
 | `create_task.py` | Create new tasks | `./create_task.py` |
 | `update_task.py` | Update existing tasks | `./update_task.py` |
 | `add_talk.py` | Create speaking tasks | `./add_talk.py` |
+| `upcoming_digest.py` | Show tasks due soon | `../vikunja-export-script/src/upcoming_digest.py` |
+| `export_vikunja.py` | Export full portfolio | `../vikunja-export-script/src/export_vikunja.py` |
+
+---
+
+## Task Discovery: Finding What's Due
+
+### upcoming_digest.py - Show tasks starting or due soon
+
+**Location**: `../vikunja-export-script/src/upcoming_digest.py`
+
+This script addresses a Vikunja UI limitation: the UI only filters by `due_date`, but this script filters by both `start_date` AND `due_date`.
+
+**Common Use Cases:**
+
+```bash
+# Show what's overdue or due today
+python3 ../vikunja-export-script/src/upcoming_digest.py --days 0
+
+# Show next 7 days (typical weekly planning)
+python3 ../vikunja-export-script/src/upcoming_digest.py --days 7
+
+# Show next 14 days with full descriptions
+python3 ../vikunja-export-script/src/upcoming_digest.py --days 14 --show-description
+
+# Show next 7 days + all high priority tasks
+python3 ../vikunja-export-script/src/upcoming_digest.py --days 7 --include-priority
+```
+
+**Available Options:**
+- `--days N` - Days ahead to look (default: 7, use 0 for overdue/today)
+- `--show-description` - Include full task descriptions
+- `--include-priority` - Include high priority (4-5) tasks regardless of dates
+- `--include-done` - Include completed tasks (default: exclude)
+
+**Output Format:**
+```
+================================================================================
+UPCOMING TASKS (Next 7 days)
+================================================================================
+
+📅 DUE: Dec 2, 2025 (Today)
+───────────────────────────────────────────────────────────────────────────────
+  [ID: 219666] Patents for QR Cards
+  Project: Applications > QRCards > Business Development
+  Priority: High (3)
+  https://app.vikunja.cloud/tasks/219666
+
+🏁 STARTING: Dec 3, 2025 (Tomorrow)
+───────────────────────────────────────────────────────────────────────────────
+  [ID: 220123] Research competitor pricing
+  Project: Business > Market Analysis
+  Priority: Medium (2)
+  https://app.vikunja.cloud/tasks/220123
+```
+
+### export_vikunja.py - Full portfolio export
+
+**Location**: `../vikunja-export-script/src/export_vikunja.py`
+
+Export entire Vikunja portfolio for analysis or backup.
+
+**Usage:**
+```bash
+# Export for spawn-analysis decision cards
+python3 ../vikunja-export-script/src/export_vikunja.py --format spawn-analysis
+
+# Export to markdown file
+python3 ../vikunja-export-script/src/export_vikunja.py --format markdown --output /tmp/tasks.md
+
+# Export as JSON
+python3 ../vikunja-export-script/src/export_vikunja.py --format json --output /tmp/tasks.json
+
+# Export specific project only
+python3 ../vikunja-export-script/src/export_vikunja.py --project-id 13792
+```
 
 ---
 
