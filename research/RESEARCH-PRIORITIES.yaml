@@ -2,37 +2,37 @@ queue:
 - code: '1.114'
   title: Build Tools & Bundlers (Vite, Webpack, Turbopack, esbuild, Rollup)
   tier: 1
-  status: not_started
+  status: complete
+  completed: 2025-12-02
   estimated_hours: 4-6
   rationale: |
-    🔴 CRITICAL - Blocks QRCards Python API widget bundling.
-    Cannot bundle JavaScript for calculator widgets, language learning tools, or recipe scalers.
-    Flask templates need modern build tooling for component-based development.
+    ✅ COMPLETE - Build Tools research finished (S1-S4).
+    Generic research: Vite (strategic winner 85% confidence), Turbopack (Next.js only), Webpack (legacy).
+    39 documents, full MPSE methodology.
   value: |
-    Decision: Vite vs Webpack vs esbuild for Flask template bundling
-    Integration: How to integrate with Flask static assets
-    Dev experience: Hot reload, TypeScript support, CSS processing
-    Production: Bundle optimization, code splitting, tree shaking
+    Research complete: Vite 45/50 strategic score, Turbopack 36/50, Webpack 24/50.
+    Strategic: Vite is bundler of 2020s-2030s (60-70% market share by 2030).
+    Key: Rolldown migration (2025-2026) will match Turbopack performance.
+    QRCards: Vite recommended for Flask + JavaScript hybrid architecture.
   platforms: Vite, Webpack 5, Turbopack, esbuild, Rollup, Parcel
   use_case: Bundle JavaScript/CSS for QRCards calculator widgets, Flask template assets
   trigger: QRCards Python API embedding architecture (qrcards/project/python-api/)
   related_tier1: "1.112 CSS Frameworks, 1.113 UI Components, 1.110 Frontend Frameworks"
-  blocking: All QRCards widget development, frontend stack implementation
+  blocking: N/A (research complete)
 
 - code: '1.112'
   title: CSS Frameworks & Styling (Tailwind, Bootstrap, Material UI, Styled Components)
   tier: 1
-  status: not_started
+  status: complete
+  completed: 2025-12-02
   estimated_hours: 4-6
   rationale: |
-    🔴 CRITICAL - Blocks QRCards calculator widget styling.
-    Cannot style forms, buttons, layouts for Python API widgets.
-    Need consistent design system across multidomain infrastructure.
+    ✅ COMPLETE - CSS Frameworks research finished (S1-S4).
+    Generic research: Tailwind (popularity), Bootstrap (viability), context-dependent recommendations.
+    QRCards decision: Keep Bootstrap via CDN (already deployed, zero friction).
   value: |
-    Decision: Tailwind vs Bootstrap vs CSS-in-JS for Flask templates
-    Integration: How to use with Jinja2 templates, Flask static assets
-    Components: Form styling, calculator layouts, responsive design
-    Design system: Color schemes, spacing, typography across domains
+    Research complete: Tailwind 89.5/100 (S2), Bootstrap 9/10 viability (S4).
+    QRCards: Bootstrap perfect for form-heavy calculators, skip CSS build tools.
   platforms: Tailwind CSS, Bootstrap 5, Material UI, Styled Components, CSS Modules, Emotion
   use_case: Style calculator widgets, language quiz forms, recipe scaler UI
   trigger: QRCards Python API embedding architecture
@@ -42,18 +42,16 @@ queue:
 - code: '1.110.4'
   title: Browser Python Execution (Pyodide, JupyterLite, PyScript, Brython)
   tier: 1
-  status: not_started
+  status: complete
+  completed: 2025-12-02
   estimated_hours: 6-8
   rationale: |
-    🔴 CRITICAL - Blocks QRCards Jupyter iframe pattern.
-    Documented architecture requires browser-based Python execution.
-    Hybrid pattern: simple users get forms (Flask API), power users get code editor (Jupyter).
+    ✅ COMPLETE - Browser Python research finished (S1-S4).
+    Generic research: Pyodide foundation layer, JupyterLite highest viability (9.5/10), context-dependent.
+    Key finding: JavaScript-first principle (90% of widgets don't need Python).
   value: |
-    Decision: JupyterLite (full Jupyter) vs Pyodide REPL (lightweight) vs PyScript (HTML-first)
-    Security: User code execution, package restrictions, resource limits, iframe isolation
-    Performance: WASM overhead, package loading, memory constraints
-    Integration: Parent-child communication, state sharing with Flask backend
-    Patterns: Interactive notebooks, Python REPL widgets, computational notebooks
+    Research complete: JupyterLite 9.5/10 viability (Linux Foundation), Pyodide 9.0/10, Skulpt obsolete (2/10).
+    Strategic: WebAssembly solutions won, CSS-in-JS paradigm declining.
   platforms: Pyodide, JupyterLite, PyScript, Brython, Skulpt
   use_case: Embed Jupyter notebooks in QRCards, interactive Python learning environment
   trigger: QRCards Python API embedding (JUPYTER-INTEGRATION.md, JUPYTER-SECURITY.md)
@@ -63,23 +61,92 @@ queue:
 - code: '1.118'
   title: Testing Libraries (Jest, Vitest, Testing Library, Playwright, Cypress)
   tier: 1
-  status: not_started
+  status: complete
+  completed: 2025-12-03
   estimated_hours: 4-6
   rationale: |
-    🔴 CRITICAL - Blocks Flask API testing and frontend quality assurance.
-    Cannot test Python API endpoints, calculator widgets, or user interactions.
-    Need testing strategy for Flask + JavaScript hybrid architecture.
+    ✅ COMPLETE - Testing Libraries research finished (S1-S4).
+    Generic research: Vitest (95% viability), Playwright (98% viability), pytest (90% viability).
+    33 documents, ~8,920 lines, full MPSE methodology.
   value: |
-    Decision: Pytest (Flask) + Playwright (E2E) vs Pytest + Cypress
-    Coverage: API endpoint testing, widget interaction testing, integration testing
-    Patterns: Test Flask blueprints, mock API responses, test Jupyter iframe
-    CI/CD: Automated testing pipeline for QRCards deployments
-  platforms: Pytest, Vitest, Jest, Playwright, Cypress, Testing Library
-  use_case: Test Flask API endpoints, calculator widgets, language quiz interactions
-  trigger: QRCards Python API quality assurance (TESTING.md in python-api/)
+    Research complete: Modern testing stack identified.
+    - Unit: Vitest 10-20x faster than Jest, TypeScript-native
+    - E2E: Playwright overtook Cypress (cross-browser, free parallelization)
+    - Python: pytest 52%+ adoption, undisputed leader
+    - Strategic: Cypress declining (60% viability), Jest stable but declining
+  platforms: Vitest, Jest, Playwright, Cypress, Testing Library, pytest
+  use_case: Unit, integration, component, and E2E testing for web applications
+  trigger: QRCards Python API quality assurance
   related_tier3: "3.052 CI/CD Services (for test automation)"
-  blocking: Production deployment confidence, API reliability
+  blocking: N/A (research complete)
 
+- code: '2.073'
+  title: WebSocket Protocol (Standard & Managed Services)
+  tier: 2
+  status: complete
+  completed: 2025-12-03
+  estimated_hours: 2-3
+  rationale: |
+    ✅ COMPLETE - WebSocket research finished (S1-S4).
+    Standards validation: PASS (RFC 6455, 14 years mature, 20+ implementations).
+    Critical finding: <50ms to ALL devices NOT achievable; <100ms achievable.
+    33 documents, ~16,600 lines, full MPSE methodology.
+  value: |
+    Research complete:
+    - Latency: Centrifugo 3-8ms, Socket.io 10-25ms, Ably 30-50ms
+    - Cost at 10K: Centrifugo $2,300, Ably $3-5K, Pusher $1.5-3K
+    - Strategic: Socket.io 9/10 viability, Ably 8.5/10, Pusher 7.5/10
+    - Physics: <50ms to ALL 1K+ devices = impossible (77-135ms minimum)
+  platforms: Pusher, Ably, Socket.io, Supabase Realtime, Centrifugo, AWS IoT Core
+  use_case: Real-time bidirectional communication for audience synchronization
+  trigger: Audience Orchestration patent filing decision
+  related_tier3: "3.028 Device Synchronization, 3.042 Redis Pub/Sub, 3.080.9 Audience Orchestration"
+  blocking: N/A (research complete)
+
+- code: '3.028'
+  title: Device Synchronization & Real-time Coordination Services
+  tier: 3
+  status: complete
+  completed: 2025-12-02
+  estimated_hours: 2-3
+  rationale: |
+    ✅ COMPLETE - Prior art assessment done for Audience Orchestration patent.
+    Analyzed concert/stadium apps, broadcast second-screen, gaming crowd control.
+    12 patents analyzed, zero blocking patents found.
+  value: |
+    Research complete (applications/qrcards/patent-research/prior-art/):
+    - concert-stadium-sync.md: Coldplay, PixMob, Xylobands analysis
+    - broadcast-second-screen.md: HbbTV, second-screen patents
+    - gaming-crowd-control.md: Twitch, gaming crowd tech
+    - patent-search.md: 12 patents analyzed
+    - risk-assessment.md: Freedom to operate confirmed
+  platforms: Concert apps, stadium tech, broadcast sync, gaming crowd control
+  use_case: Prior art for Audience Orchestration patent
+  trigger: Audience Orchestration patent filing (GREEN-LIT Dec 2, 2025)
+  related: "2.073 WebSocket, 3.080.9 Audience Orchestration"
+  blocking: N/A (research complete, patent filing approved)
+
+- code: '3.080.9'
+  title: Live Event Audience Orchestration Platforms
+  tier: 3
+  status: complete
+  completed: 2025-12-02
+  estimated_hours: 2-3
+  rationale: |
+    ✅ COMPLETE - Competitive analysis done for Audience Orchestration patent.
+    7 platforms analyzed: Slido, Mentimeter, Poll Everywhere, Kahoot!, Crowdpurr, Pigeonhole Live, Glisser.
+    Strong differentiation confirmed.
+  value: |
+    Research complete (applications/qrcards/patent-research/competitive-analysis/):
+    - 7 platform profiles (slido.md, mentimeter.md, etc.)
+    - gap-analysis.md: Pre-loaded, time-code, <50ms, offline = ZERO competitors
+    - patent-implications.md: Claims differentiation validated
+    Key finding: Glisser closest (200-1000ms latency, no pre-load, no offline)
+  platforms: Slido, Mentimeter, Poll Everywhere, Kahoot!, Crowdpurr, Pigeonhole Live, Glisser
+  use_case: Competitive analysis for Audience Orchestration patent
+  trigger: Audience Orchestration patent filing (GREEN-LIT Dec 2, 2025)
+  related: "2.073 WebSocket, 3.028 Device Sync"
+  blocking: N/A (research complete, patent filing approved)
 
 - code: '3.202'
   title: Speech & Audio AI
@@ -294,3 +361,359 @@ queue:
   trigger: Operations research overlap + Thanksgiving baking (Nov 24, 2025)
   related_tier1: "1.096 Scheduling Libraries (constraint solvers), 1.120 Discrete Event Simulation (kitchen workflow modeling)"
   note: "Full S1-S4 research complete - comprehensive platform analysis across all market segments"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GROUP 1: CODE GENERATION STACK (Critical - Blocking)
+# Dependencies for code generation tools and schema evolution
+# ═══════════════════════════════════════════════════════════════════════════════
+
+- code: '1.104.1'
+  title: Code Parsing & AST Libraries (libcst, ast, redbaron, rope, parso)
+  tier: 1
+  status: complete
+  completed: 2025-11-07
+  group: code-generation-stack
+  estimated_hours: 4-6
+  rationale: |
+    ✅ COMPLETE - Full S1-S4 research (Nov 7, 2025).
+    Python AST/CST parsing and transformation libraries.
+    libcst recommended for safe code transformation with CST preservation.
+  value: |
+    Research complete:
+    - Winner: libcst (CST preservation, safe transforms, Meta-backed)
+    - ast: Read-only analysis, built-in, fastest
+    - redbaron: Legacy, use libcst instead
+    - rope: Refactoring-specific, IDE integration
+  libraries: libcst, ast, redbaron, rope, parso, bowler
+  use_case: Code generation, automated refactoring, schema evolution framework
+  trigger: Schema evolution framework dependencies
+  related: "1.104.2 Code Formatting, 1.049.1 Schema Inspection"
+  blocking: N/A (research complete)
+
+- code: '1.104.2'
+  title: Code Formatting Libraries (Black, autopep8, ruff, isort)
+  tier: 1
+  status: complete
+  completed: 2025-12-04
+  group: code-generation-stack
+  estimated_hours: 3-4
+  rationale: |
+    ✅ COMPLETE - Full S1-S4 research (Dec 4, 2025).
+    ruff is replacing Black (30-100x faster, >99.9% compatible).
+    Biome challenging Prettier in JS/TS (25x faster).
+    37 files, ~7,050 lines, full MPSE methodology.
+  value: |
+    Research complete:
+    - Python: ruff (92% viability, unified format+lint+imports)
+    - JS/TS performance: Biome (88% viability, 25x faster)
+    - JS/TS stability: Prettier (85% viability, best coverage)
+    - Black: Survives but declining (75% viability)
+  libraries: ruff, Black, Prettier, Biome, ESLint, autopep8, isort
+  use_case: Format generated code, enforce style consistency
+  trigger: Code generation stack completion
+  related: "1.104.1 Code Parsing"
+
+- code: '1.049.1'
+  title: Database Schema Inspection (SQLAlchemy Inspector, Alembic, sqlalchemy-diff)
+  tier: 1
+  status: not_started
+  group: code-generation-stack
+  estimated_hours: 4-6
+  rationale: |
+    🟡 HIGH - Critical for migration validation.
+    Inspect database schemas, compare versions, generate migrations.
+    Alembic autogenerate depends on accurate schema inspection.
+  value: |
+    Decision: SQLAlchemy Inspector capabilities vs third-party tools
+    Patterns: Schema diffing, migration generation, validation
+    Integration: Alembic autogenerate workflow
+  libraries: SQLAlchemy Inspector, Alembic, sqlalchemy-diff, sqlacodegen
+  use_case: Database migration validation, schema evolution tracking
+  trigger: Schema evolution framework dependencies
+  related: "1.104.1 Code Parsing"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GROUP 2: UI COMPONENT STACK (Frontend Development)
+# Next layer after Build Tools (1.114) and CSS Frameworks (1.112)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+- code: '1.113'
+  title: UI Component Libraries (shadcn/ui, Radix, Headless UI, Ant Design)
+  tier: 1
+  status: not_started
+  group: ui-component-stack
+  estimated_hours: 4-6
+  rationale: |
+    🟡 HIGH - Speeds up widget development.
+    Pre-built accessible components vs building from scratch.
+    shadcn/ui (copy-paste) vs Radix (primitives) vs Ant Design (full system).
+  value: |
+    Decision: Headless (Radix, Headless UI) vs styled (Ant, Chakra) vs copy-paste (shadcn)
+    Accessibility: ARIA compliance out of the box
+    Customization: How easy to theme and modify
+  libraries: shadcn/ui, Radix UI, Headless UI, Ant Design, Chakra UI, Material UI
+  use_case: Build accessible UI components for web applications
+  trigger: Frontend stack completion (1.114, 1.112 done)
+  related: "1.114 Build Tools, 1.112 CSS Frameworks, 1.115 Form Validation"
+
+- code: '1.115'
+  title: Form & Validation Libraries (React Hook Form, Formik, Zod, Yup)
+  tier: 1
+  status: not_started
+  group: ui-component-stack
+  estimated_hours: 3-4
+  rationale: |
+    🟡 HIGH - Better form UX for calculators and data entry.
+    React Hook Form (performance) vs Formik (features) vs native.
+    Zod (TypeScript-first) vs Yup (Yup schema) for validation.
+  value: |
+    Decision: React Hook Form + Zod (modern) vs Formik + Yup (established)
+    Performance: Re-render optimization, uncontrolled vs controlled
+    TypeScript: Type inference from schema
+  libraries: React Hook Form, Formik, Zod, Yup, Valibot, AJV
+  use_case: Form handling and validation for web applications
+  trigger: UI component stack
+  related: "1.113 UI Components"
+
+- code: '1.116'
+  title: Data Visualization Libraries (D3.js, Chart.js, Plotly, Recharts)
+  tier: 1
+  status: not_started
+  group: ui-component-stack
+  estimated_hours: 4-6
+  rationale: |
+    🟡 MEDIUM - Visualize calculator results, dashboards.
+    D3 (low-level power) vs Chart.js (simple) vs Plotly (interactive).
+    React wrappers: Recharts, Victory, Nivo.
+  value: |
+    Decision: Chart.js (simple) vs Plotly (interactive) vs D3 (custom)
+    React integration: Recharts vs Victory vs react-chartjs-2
+    Performance: Large datasets, real-time updates
+  libraries: D3.js, Chart.js, Plotly, Recharts, Victory, Nivo, Apache ECharts
+  use_case: Charts, graphs, dashboards for data visualization
+  trigger: UI component stack
+  related: "1.113 UI Components"
+
+- code: '1.111'
+  title: State Management Libraries (Redux, Zustand, Jotai, Pinia)
+  tier: 1
+  status: not_started
+  group: ui-component-stack
+  estimated_hours: 3-4
+  rationale: |
+    🟡 MEDIUM - Complex state for multi-step calculators.
+    Zustand (simple) vs Redux Toolkit (ecosystem) vs Jotai (atomic).
+    Vue: Pinia is the standard.
+  value: |
+    Decision: Zustand (minimal) vs Redux Toolkit (full-featured) vs Jotai (atomic)
+    DevTools: Time-travel debugging, state inspection
+    Persistence: localStorage, sessionStorage integration
+  libraries: Redux Toolkit, Zustand, Jotai, Recoil, MobX, Pinia, Valtio
+  use_case: State management for complex React/Vue applications
+  trigger: UI component stack
+  related: "1.113 UI Components"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GROUP 3: LLM APPLICATION STACK (AI Orchestration)
+# Frameworks for building LLM-powered applications
+# ═══════════════════════════════════════════════════════════════════════════════
+
+- code: '1.200'
+  title: LLM Orchestration Frameworks (LangChain, LlamaIndex, Haystack)
+  tier: 1
+  status: not_started
+  group: llm-application-stack
+  estimated_hours: 6-8
+  rationale: |
+    🟡 HIGH - Foundation for LLM application development.
+    LangChain (flexible) vs LlamaIndex (RAG-focused) vs Haystack (production).
+    Rapidly evolving space - need current state assessment.
+  value: |
+    Decision: LangChain vs LlamaIndex vs Haystack vs direct API calls
+    Patterns: RAG, agents, chains, memory
+    Trade-offs: Abstraction overhead vs flexibility
+  libraries: LangChain, LlamaIndex, Haystack, Semantic Kernel, DSPy
+  use_case: Build LLM-powered applications, RAG pipelines, agents
+  trigger: AI application development needs
+  related: "1.203 Vector DBs, 1.205 LLM Evaluation, 3.200 LLM APIs"
+
+- code: '1.203'
+  title: Vector Database Clients (ChromaDB, Pinecone, Qdrant, Weaviate)
+  tier: 1
+  status: not_started
+  group: llm-application-stack
+  estimated_hours: 4-6
+  rationale: |
+    🟡 HIGH - Essential for RAG and semantic search.
+    ChromaDB (local) vs Pinecone (managed) vs Qdrant (self-hosted).
+    Embedding storage and similarity search.
+  value: |
+    Decision: ChromaDB (dev) vs Qdrant (self-hosted prod) vs Pinecone (managed)
+    Performance: Query latency, index size, filtering
+    Cost: Self-hosted vs managed at scale
+  libraries: ChromaDB, Pinecone, Qdrant, Weaviate, Milvus, pgvector
+  use_case: Store and query embeddings for RAG, semantic search
+  trigger: LLM application stack
+  related: "1.200 LLM Orchestration"
+
+- code: '1.205'
+  title: LLM Evaluation & Testing (LangSmith, PromptFoo, DeepEval, Ragas)
+  tier: 1
+  status: not_started
+  group: llm-application-stack
+  estimated_hours: 4-6
+  rationale: |
+    🟡 MEDIUM - Validate LLM application quality.
+    Prompt testing, RAG evaluation, regression detection.
+    Critical for production LLM applications.
+  value: |
+    Decision: PromptFoo (open source) vs LangSmith (LangChain) vs DeepEval
+    Metrics: Faithfulness, relevance, hallucination detection
+    CI/CD: Automated prompt testing in pipelines
+  libraries: PromptFoo, LangSmith, DeepEval, Ragas, TruLens, Prompttools
+  use_case: Test and evaluate LLM applications, detect regressions
+  trigger: LLM application stack
+  related: "1.200 LLM Orchestration"
+
+- code: '1.209'
+  title: Local LLM Serving (Ollama, vLLM, llama.cpp, LM Studio)
+  tier: 1
+  status: not_started
+  group: llm-application-stack
+  estimated_hours: 4-6
+  rationale: |
+    🟡 MEDIUM - Run LLMs locally for dev, privacy, cost.
+    Ollama (easy) vs vLLM (production) vs llama.cpp (efficient).
+    Growing importance as open models improve.
+  value: |
+    Decision: Ollama (dev) vs vLLM (production) vs llama.cpp (edge)
+    Performance: Tokens/sec, memory usage, batching
+    Models: Llama 3, Mistral, Phi, Qwen support
+  libraries: Ollama, vLLM, llama.cpp, LM Studio, text-generation-webui, LocalAI
+  use_case: Run LLMs locally for development, privacy, cost savings
+  trigger: LLM application stack
+  related: "1.200 LLM Orchestration, 3.200 LLM APIs"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GROUP 4: DOCUMENT PROCESSING STACK (Text & PDF)
+# Document generation and manipulation
+# ═══════════════════════════════════════════════════════════════════════════════
+
+- code: '1.101'
+  title: PDF Generation & Processing (ReportLab, WeasyPrint, pdfkit, PyPDF2)
+  tier: 1
+  status: not_started
+  group: document-processing-stack
+  estimated_hours: 4-6
+  rationale: |
+    🟡 MEDIUM - Generate reports, invoices, exports.
+    ReportLab (programmatic) vs WeasyPrint (HTML→PDF) vs pdfkit (wkhtmltopdf).
+    PyPDF2/pypdf for manipulation.
+  value: |
+    Decision: WeasyPrint (HTML templates) vs ReportLab (precise control)
+    Features: Tables, images, fonts, page layout
+    Performance: Large document generation speed
+  libraries: ReportLab, WeasyPrint, pdfkit, PyPDF2, pypdf, fpdf2, borb
+  use_case: Generate PDF reports, invoices, documentation
+  trigger: Document processing needs
+  related: "1.102 Document Parsing, 1.103 Markdown"
+
+- code: '1.102'
+  title: Document Parsing (python-docx, openpyxl, pandas Excel)
+  tier: 1
+  status: not_started
+  group: document-processing-stack
+  estimated_hours: 3-4
+  rationale: |
+    🟡 MEDIUM - Read/write Office documents.
+    python-docx (Word), openpyxl (Excel), python-pptx (PowerPoint).
+    pandas for Excel data processing.
+  value: |
+    Decision: openpyxl vs xlsxwriter for Excel generation
+    Features: Styles, charts, formulas, templates
+    Performance: Large file handling
+  libraries: python-docx, openpyxl, xlsxwriter, python-pptx, pandas
+  use_case: Read/write Word, Excel, PowerPoint documents
+  trigger: Document processing stack
+  related: "1.101 PDF Generation"
+
+- code: '1.103'
+  title: Markdown & Markup Processing (markdown-it, mistune, commonmark)
+  tier: 1
+  status: not_started
+  group: document-processing-stack
+  estimated_hours: 3-4
+  rationale: |
+    🟡 MEDIUM - Parse and render Markdown content.
+    Python: mistune, markdown, commonmark.
+    JS: markdown-it, marked, remark.
+  value: |
+    Decision: mistune (fast) vs markdown (standard) vs commonmark (spec-compliant)
+    Extensions: Tables, code highlighting, math (KaTeX)
+    Security: XSS prevention in rendered HTML
+  libraries: mistune, markdown, commonmark, markdown-it, marked, remark
+  use_case: Parse and render Markdown for documentation, blogs, wikis
+  trigger: Document processing stack
+  related: "1.101 PDF Generation"
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# GROUP 5: SECURITY & AUTH STACK (Cryptography)
+# Security-critical libraries
+# ═══════════════════════════════════════════════════════════════════════════════
+
+- code: '1.060'
+  title: Cryptographic Libraries (cryptography, PyNaCl, pycryptodome)
+  tier: 1
+  status: not_started
+  group: security-auth-stack
+  estimated_hours: 4-6
+  rationale: |
+    🟡 HIGH - Security-critical cryptographic operations.
+    cryptography (recommended) vs PyNaCl (libsodium) vs pycryptodome.
+    Foundation for secure applications.
+  value: |
+    Decision: cryptography (standard) vs PyNaCl (modern) vs pycryptodome (legacy)
+    Features: Symmetric, asymmetric, hashing, key derivation
+    Best practices: Secure defaults, avoiding pitfalls
+  libraries: cryptography, PyNaCl, pycryptodome, pyOpenSSL
+  use_case: Encryption, decryption, digital signatures, secure communications
+  trigger: Security requirements
+  related: "1.062 Password Hashing, 1.063 JWT, 1.064 Encryption"
+
+- code: '1.062'
+  title: Password Hashing Libraries (bcrypt, argon2, scrypt)
+  tier: 1
+  status: not_started
+  group: security-auth-stack
+  estimated_hours: 2-3
+  rationale: |
+    🟡 HIGH - Secure password storage.
+    argon2 (recommended) vs bcrypt (established) vs scrypt.
+    Critical for user authentication systems.
+  value: |
+    Decision: argon2id (modern, recommended) vs bcrypt (battle-tested)
+    Parameters: Memory, time, parallelism tuning
+    Migration: Upgrading from older hashing schemes
+  libraries: argon2-cffi, bcrypt, passlib, hashlib (scrypt)
+  use_case: Hash and verify passwords securely
+  trigger: Security stack
+  related: "1.060 Cryptographic Libraries"
+
+- code: '1.064'
+  title: Encryption Libraries (AES, ChaCha20, RSA implementations)
+  tier: 1
+  status: not_started
+  group: security-auth-stack
+  estimated_hours: 3-4
+  rationale: |
+    🟡 MEDIUM - Data encryption at rest and in transit.
+    AES-GCM (standard) vs ChaCha20-Poly1305 (modern).
+    Key management patterns.
+  value: |
+    Decision: AES-GCM vs ChaCha20-Poly1305 for symmetric encryption
+    Patterns: Key derivation, IV handling, authenticated encryption
+    Integration: File encryption, database field encryption
+  libraries: cryptography (Fernet, AES), PyNaCl (SecretBox), pycryptodome
+  use_case: Encrypt sensitive data at rest and in transit
+  trigger: Security stack
+  related: "1.060 Cryptographic Libraries"
