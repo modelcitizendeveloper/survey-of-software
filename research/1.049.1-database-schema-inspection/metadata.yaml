@@ -1,115 +1,51 @@
-experiment_id: 1.049.1
-category: database-schema-inspection
-title: "Database Schema Inspection Libraries"
-tier: 1 (Self-Operated)
-status: in_progress
-priority: CRITICAL
+---
+experiment_number: "1.049.1"
+experiment_sequence: 29
+experiment_date: "2025-12-04"
+experiment_status: in_progress
+discovery_method: detailed_toc
+migrated_from: null
+notes: "Database schema inspection, diffing, and migration generation tools. SQLAlchemy Inspector, Alembic, sqlalchemy-diff, sqlacodegen."
 
-timeline:
-  start_date: 2025-11-07
-  estimated_duration: 2-3 days
-  phases:
-    - S1_rapid: Day 1
-    - S2_comprehensive: Day 1-2
-    - S3_need_driven: Day 2
-    - S4_strategic: Day 2-3
+data_sources:
+  performance_benchmarks:
+    - source: "official_documentation"
+      notes: "No custom benchmarks - focus on capabilities"
+  pricing_data:
+    source: "N/A"
+    accessed: "2025-12-04"
+    notes: "All tools are open source"
+  feature_comparisons:
+    source: "official_documentation"
+    accessed: "2025-12-04"
+  market_data:
+    github_stars: "github_api"
+    downloads: "pypistats.org"
 
-parent_category: 1.049 (Meta-data structure libraries)
-subcategory: Database schema inspection, introspection, type reflection
+legal_review:
+  tos_compliance: "verified"
+  tos_issues: []
+  prohibited_sources: []
+  copyright_cleared: true
 
-research_questions:
-  primary: "Which database schema inspection library best balances accuracy, database coverage, and ease of use?"
-  secondary:
-    - "How to validate database state before/after migrations?"
-    - "How to detect schema drift between code and database?"
-    - "How to introspect tables, columns, indexes, constraints?"
-    - "How to handle multiple database backends (PostgreSQL, MySQL, SQLite)?"
-    - "Performance requirements (<100ms for typical introspection)?"
+publication_clearance:
+  can_publish_publicly: true
+  reasons: []
+  safe_for_subscribers: true
+  requires_disclaimer: false
 
-candidate_libraries:
-  - name: sqlalchemy.inspect
-    category: "SQLAlchemy Inspector"
-    description: "Built-in SQLAlchemy reflection/introspection API"
+benchmark_methodology:
+  captured: false
+  environment: ""
+  reproducible: false
+  code_available: ""
 
-  - name: alembic.autogenerate
-    category: "Migration Autogeneration"
-    description: "Alembic's schema comparison and diff generation"
-
-  - name: sqlalchemy-diff
-    category: "Schema Comparison"
-    description: "Third-party schema diff tool"
-
-  - name: migra
-    category: "PostgreSQL Schema Diff"
-    description: "PostgreSQL-specific schema comparison"
-
-  - name: sqlacodegen
-    category: "Code Generation from Schema"
-    description: "Reverse engineer SQLAlchemy models from database"
-
-evaluation_criteria:
-  - criterion: "Database Coverage"
-    weight: 30%
-    description: "PostgreSQL, MySQL, SQLite support"
-
-  - criterion: "Introspection Capabilities"
-    weight: 25%
-    description: "Tables, columns, indexes, constraints, types"
-
-  - criterion: "Ease of Use"
-    weight: 20%
-    description: "API simplicity, documentation quality"
-
-  - criterion: "Integration"
-    weight: 15%
-    description: "SQLAlchemy integration, ORM compatibility"
-
-  - criterion: "Performance"
-    weight: 10%
-    description: "Introspection speed for typical databases"
-
-predicted_winner: "SQLAlchemy Inspector + Alembic autogenerate"
-predicted_winner_rationale: "SQLAlchemy Inspector for introspection, Alembic for schema comparison - both are industry standard, well-integrated"
-
-success_criteria:
-  - "Can introspect tables and columns from live database"
-  - "Can detect schema differences between database and models"
-  - "Can validate migration safety (no data loss)"
-  - "Supports PostgreSQL, MySQL, SQLite"
-  - "Performance acceptable (<1s for typical database)"
-
-use_cases:
-  - name: "Pre-migration validation"
-    description: "Check database state before applying migration"
-
-  - name: "Post-migration verification"
-    description: "Verify migration applied correctly"
-
-  - name: "Schema drift detection"
-    description: "Detect differences between ORM models and database"
-
-  - name: "Reverse engineering"
-    description: "Generate models from existing database"
-
-  - name: "Migration safety checks"
-    description: "Ensure migration won't lose data"
-
-integration_with:
-  - "1.104.1 (Code parsing & AST - for model comparison)"
-  - "1.039 (Template engines - for migration generation)"
-  - "2.050 (PostgreSQL - primary database)"
-  - "2.051 (S3 API - for backup before migrations)"
-
-related_experiments:
-  - 1.049: "Meta-data structure libraries (parent)"
-  - 1.104.1: "Code parsing & AST"
-  - 2.050: "PostgreSQL/SQL databases"
-
-tags:
-  - database
-  - schema
-  - introspection
-  - sqlalchemy
-  - migrations
-  - validation
-  - critical-research
+token_usage:
+  total_tokens: 0
+  input_tokens: 0
+  output_tokens: 0
+  model: "claude-opus-4-5"
+  session_count: 1
+  cost_estimate: "$0.00"
+  notes: "To be updated on completion"
+---
