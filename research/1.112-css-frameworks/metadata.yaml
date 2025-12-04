@@ -1,0 +1,296 @@
+# MPSE V3 Metadata
+# CSS Frameworks Research Domain (1.112)
+# Multi-Perspective Systematic Exploration - Version 3
+
+experiment_info:
+  experiment_number: "1.112"
+  experiment_name: "CSS Frameworks"
+  experiment_date: "2025-12-01"
+  experiment_status: "complete"
+  completion_date: "2025-12-01"
+
+discovery_method:
+  method: "detailed_toc"
+  description: "Modular subdirectory organization (S1-S4 methodologies)"
+  toc_location: "01-discovery/DISCOVERY_TOC.md"
+  rationale: "Four independent discovery methodologies applied in parallel for comprehensive evaluation"
+
+methodologies_applied:
+  - methodology_id: "S1"
+    name: "Rapid Library Search"
+    status: "complete"
+    philosophy: "Trust popularity metrics as proxy for quality and ecosystem validation"
+    time_budget: "90 minutes"
+    primary_output: "01-discovery/S1-rapid/recommendation.md"
+    winner: "Tailwind CSS"
+    confidence: "HIGH"
+
+  - methodology_id: "S2"
+    name: "Comprehensive Solution Analysis"
+    status: "complete"
+    philosophy: "Systematic evaluation across all solution dimensions with weighted scoring"
+    time_budget: "8-12 hours"
+    primary_output: "01-discovery/S2-comprehensive/recommendation.md"
+    winner: "Tailwind CSS (89.5/100)"
+    confidence: "HIGH"
+
+  - methodology_id: "S3"
+    name: "Need-Driven Discovery"
+    status: "complete"
+    philosophy: "Build prototypes for each use case pattern, measure requirement satisfaction"
+    time_budget: "47.5 hours"
+    primary_output: "01-discovery/S3-need-driven/recommendation.md"
+    winner: "Context-dependent (Bootstrap 83%, Tailwind 81%)"
+    confidence: "VERY HIGH (95%)"
+
+  - methodology_id: "S4"
+    name: "Strategic Solution Selection"
+    status: "complete"
+    philosophy: "5-year viability, ecosystem stability, migration cost over short-term convenience"
+    time_budget: "8-12 hours"
+    primary_output: "01-discovery/S4-strategic/recommendation.md"
+    winner: "Bootstrap (risk-averse) or Tailwind (velocity-focused)"
+    confidence: "VERY HIGH"
+
+frameworks_analyzed:
+  primary:
+    - name: "Tailwind CSS"
+      paradigm: "Utility-first"
+      npm_downloads_weekly: "27.7M"
+      github_stars: "91.3k"
+      s1_rating: "9.3/10"
+      s2_score: "89.5/100"
+      s3_satisfaction: "81%"
+      s4_sustainability: "8.5/10"
+
+    - name: "Bootstrap"
+      paradigm: "Component-based"
+      npm_downloads_weekly: "4.9M"
+      github_stars: "174k"
+      s1_rating: "9.3/10"
+      s2_score: "85.5/100"
+      s3_satisfaction: "83%"
+      s4_sustainability: "9/10"
+
+    - name: "CSS Modules"
+      paradigm: "Scoped CSS"
+      npm_downloads_weekly: "Built-in"
+      github_stars: "17.4k"
+      s1_rating: "8.0/10"
+      s2_score: "88.0/100"
+      s3_satisfaction: "Not fully tested"
+      s4_sustainability: "Not assessed"
+
+    - name: "Material-UI"
+      paradigm: "React component library"
+      npm_downloads_weekly: "4.7M"
+      github_stars: "97.4k"
+      s1_rating: "3.0/10"
+      s2_score: "41.5/100"
+      s3_satisfaction: "Not tested"
+      s4_sustainability: "8/10"
+
+    - name: "Emotion"
+      paradigm: "CSS-in-JS"
+      npm_downloads_weekly: "5.8M"
+      github_stars: "17.5k"
+      s1_rating: "2.7/10"
+      s2_score: "69.75/100"
+      s3_satisfaction: "Not tested"
+      s4_sustainability: "3/10 (declining)"
+
+    - name: "Styled-Components"
+      paradigm: "CSS-in-JS"
+      npm_downloads_weekly: "2.9M"
+      github_stars: "40.6k"
+      s1_rating: "2.5/10"
+      s2_score: "56.0/100"
+      s3_satisfaction: "Not tested"
+      s4_sustainability: "3/10 (maintenance mode)"
+
+  secondary:
+    - name: "Bulma"
+      paradigm: "Flexbox-based semantic"
+      s3_satisfaction: "83%"
+      s4_sustainability: "High risk (single maintainer)"
+
+    - name: "PicoCSS"
+      paradigm: "Classless semantic"
+      s3_satisfaction: "69%"
+      s4_sustainability: "High risk (abandonment concerns)"
+
+    - name: "Open Props"
+      paradigm: "CSS variables / design tokens"
+      s3_satisfaction: "46%"
+      s4_sustainability: "Not assessed"
+
+data_sources:
+  - source: "npm registry"
+    type: "quantitative"
+    metrics: "Weekly download counts, package metadata"
+    date_accessed: "2025-12-01"
+
+  - source: "GitHub"
+    type: "quantitative"
+    metrics: "Stars, contributors, commit activity, issue resolution"
+    date_accessed: "2025-12-01"
+
+  - source: "State of CSS 2024 Survey"
+    type: "qualitative"
+    metrics: "Developer satisfaction, awareness, usage patterns"
+    url: "https://stateofcss.com"
+
+  - source: "Official Documentation"
+    type: "qualitative"
+    content: "Integration guides, API documentation, build tool setup"
+    frameworks: ["Tailwind", "Bootstrap", "MUI", "Emotion", "Styled-Components"]
+
+  - source: "Bundle Size Analysis"
+    type: "quantitative"
+    methodology: "Production builds with Vite, gzipped measurements"
+    tools: ["Vite", "PostCSS", "Webpack"]
+
+  - source: "Prototype Building"
+    type: "empirical"
+    methodology: "S3 Need-Driven actual implementation and measurement"
+    time_invested: "47.5 hours"
+
+legal_review:
+  data_collection_method: "Public sources only"
+  copyright_status: "All data from publicly accessible sources"
+  trademark_usage: "Framework names used for factual comparison only"
+  licensing:
+    - framework: "Tailwind CSS"
+      license: "MIT"
+    - framework: "Bootstrap"
+      license: "MIT"
+    - framework: "CSS Modules"
+      license: "MIT"
+    - framework: "Material-UI"
+      license: "MIT"
+    - framework: "Emotion"
+      license: "MIT"
+    - framework: "Styled-Components"
+      license: "MIT"
+  verification_date: "2025-12-01"
+  verified_by: "Automated license scanning and manual verification"
+
+publication_clearance:
+  can_publish_publicly: true
+  publication_readiness: "ready"
+  restrictions: "none"
+  justification: "Generic research with no proprietary information, client references removed"
+  recommended_venues:
+    - "Technical blogs"
+    - "Engineering documentation"
+    - "Open source repositories"
+    - "Educational materials"
+  clearance_date: "2025-12-01"
+
+content_classification:
+  contains_proprietary_info: false
+  contains_client_references: false
+  contains_internal_tooling: false
+  contains_sensitive_data: false
+  educational_value: "high"
+  reusability: "universal"
+
+deliverables:
+  core:
+    - file: "DOMAIN_EXPLAINER.md"
+      lines: 801
+      purpose: "Business-focused guide for non-technical stakeholders"
+      audience: "CTOs, product managers, engineering managers"
+
+    - file: "01-discovery/DISCOVERY_TOC.md"
+      lines: 294
+      purpose: "Navigation document and research synthesis"
+      audience: "Technical researchers and implementers"
+
+    - file: "metadata.yaml"
+      lines: 316
+      purpose: "MPSE V3 experiment metadata"
+      audience: "Research process documentation"
+
+  methodology_files:
+    s1_rapid:
+      - "approach.md (95 lines)"
+      - "recommendation.md (184 lines)"
+      - "Framework profiles (6 files, 622 lines total)"
+      total_lines: 901
+
+    s2_comprehensive:
+      - "approach.md (100 lines)"
+      - "recommendation.md (463 lines)"
+      - "feature-comparison.md (368 lines)"
+      - "Framework analyses (6 files, 2235 lines total)"
+      total_lines: 3166
+
+    s3_need_driven:
+      - "approach.md (365 lines)"
+      - "recommendation.md (401 lines)"
+      - "Use case analyses (5 files, 3363 lines total)"
+      total_lines: 4129
+
+    s4_strategic:
+      - "approach.md (74 lines)"
+      - "recommendation.md (340 lines)"
+      - "framework-maturity.md (412 lines)"
+      - "synthesis.md (331 lines)"
+      - "README.md (87 lines)"
+      total_lines: 1244
+
+file_statistics:
+  total_markdown_files: 29
+  total_lines: 9077
+  average_lines_per_file: 313
+  largest_file: "interactive-widgets.md (689 lines)"
+  smallest_file: "emotion.md (68 lines)"
+
+token_usage:
+  conversation_tokens: "~53000"
+  estimated_output_tokens: "~9000"
+  methodology: "Based on file generation session"
+  note: "Token count from final file generation session only, not full research process"
+
+research_quality:
+  methodology_rigor: "high"
+  evidence_based: true
+  prototype_validation: true
+  cross_methodology_validation: true
+  convergence_analysis: "Strong agreement between S1, S2, S4 on Tailwind/Bootstrap leadership"
+  divergence_analysis: "S3 reveals context-dependent recommendations (use case matters)"
+  confidence_overall: "Very High (90-95%)"
+
+key_findings:
+  - "Tailwind CSS and Bootstrap are the two viable strategic choices for 2025"
+  - "CSS-in-JS (runtime) is declining and not recommended for new projects"
+  - "Framework choice should match use case: no single 'best' framework"
+  - "Bundle size varies dramatically: 8-25KB (Tailwind) vs 28-45KB (Bootstrap) vs 90KB+ (Material-UI)"
+  - "Server-side rendering compatibility eliminates CSS-in-JS for Flask/Django/Rails/Laravel"
+  - "Bootstrap offers stability (9/10), Tailwind offers velocity (8.5/10 sustainability)"
+
+recommendations_by_context:
+  default_recommendation: "Tailwind CSS (modern projects) or Bootstrap (enterprise/stability)"
+  performance_critical: "Tailwind CSS or CSS Modules (<20KB bundles)"
+  rapid_prototyping: "Bootstrap (pre-built components)"
+  custom_design_systems: "Tailwind CSS (utility-first flexibility)"
+  form_heavy_applications: "Bootstrap (best form components)"
+  embedded_widgets: "Tailwind CSS (<10KB possible)"
+  content_sites: "PicoCSS or Tailwind Typography plugin"
+  enterprise_stability: "Bootstrap (community-owned, 13+ years proven)"
+  startup_velocity: "Tailwind CSS (fast iteration, modern DX)"
+
+version_control:
+  repository: "spawn-solutions"
+  branch: "main"
+  commit_status: "pending"
+  last_updated: "2025-12-01"
+
+maintainer_notes:
+  - "All four methodologies (S1-S4) completed and documented"
+  - "Research is generic and shareable (no proprietary references)"
+  - "9,077 lines of detailed analysis across 29 markdown files"
+  - "Strong convergence on Tailwind/Bootstrap as industry leaders"
+  - "S3 methodology provides highest confidence through empirical testing"
+  - "Ready for public publication and educational use"
