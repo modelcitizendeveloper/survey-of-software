@@ -1,375 +1,548 @@
-# S3 Need-Driven Discovery: Overall Recommendation
+# S3 Need-Driven Recommendations: Database Schema Inspection
 
 ## Executive Summary
 
-**Best Library Overall**: **SQLAlchemy Inspector**
+This document provides specific tool recommendations matched to workflow requirements. Choose your use case below to find the optimal toolchain for your needs.
 
-**Confidence**: High (85%)
+## Decision Matrix
 
-**Rationale**: SQLAlchemy Inspector is the best-fit library for database schema inspection because it provides comprehensive coverage across all major use cases while maintaining multi-database compatibility and production-ready stability.
+| Use Case | Primary Tool | Supporting Tools | Complexity | Setup Time |
+|----------|-------------|------------------|------------|------------|
+| Legacy Reverse Engineering | sqlacodegen | SQLAlchemy | Low | 15 mins |
+| CI/CD Migration Validation | Alembic + pytest | migra | Medium | 2 hours |
+| Multi-Environment Sync | migra | Alembic, SQLAlchemy | Medium | 3 hours |
+| Greenfield Project | Alembic | SQLAlchemy | Low | 30 mins |
+| Database-First Development | sqlacodegen | Alembic, CI/CD | High | 4 hours |
 
-## Use Case Matrix
+## Use Case Recommendations
 
-| Use Case | Primary Library | Confidence | Alternative |
-|----------|----------------|------------|-------------|
-| **Introspect Schema** | SQLAlchemy Inspector | 90% | Direct SQL (large DBs) |
-| **Detect Differences** | Alembic Autogenerate | 80% | Manual Inspector |
-| **Validate Safety** | Manual Validator Library | 75% | Atlas (non-Python) |
-| **Reverse Engineer** | sqlacodegen | 90% | Django inspectdb |
-| **Multi-Database** | SQLAlchemy Inspector | 95% | N/A (clear winner) |
-| **Performance** | Hybrid (Direct SQL + Inspector) | 70% | Caching layer |
+### 1. Legacy Database Reverse Engineering
 
-## Best-Fit Analysis by Use Case
+**Recommended: sqlacodegen**
 
-### 1. Introspect Database Schema
-**Winner**: SQLAlchemy Inspector
+**Best fit when:**
+- Inheriting existing database without models
+- One-time model generation needed
+- Database has good foreign key relationships
+- Need SQLAlchemy declarative models
 
-**Why**:
-- Complete metadata coverage (tables, columns, constraints, indexes)
-- Multi-database support (PostgreSQL, MySQL, SQLite, Oracle, MSSQL)
-- Built-in caching for repeated queries
-- Production-tested, widely adopted
-- Low learning curve
-
-**When to Use Alternative**:
-- Database has 1,000+ tables → Use direct SQL to information_schema (15-100x faster)
-
-### 2. Detect Schema Differences
-**Winner**: Alembic Autogenerate (code-to-database)
-
-**Why**:
-- Designed specifically for schema comparison
-- Detects tables, columns, constraints, indexes, nullable changes
-- Generates actionable migration scripts
-- Integrates with migration workflow
-- Handles type comparison with configurable flags
-
-**Gap**: Database-to-database comparison lacks ideal Python solution after migra deprecation.
-
-**Workaround**: Reflect database1 into MetaData, compare database2 against it using Alembic.
-
-### 3. Validate Migration Safety
-**Winner**: Manual Validator Library (build your own)
-
-**Why**:
-- No comprehensive Python library exists for migration safety
-- Custom validation logic needed for specific scenarios
-- Integrate with any migration framework
-- Python-native solution
-
-**Alternative**: Atlas (Go-based tool with pre-built safety checks)
-
-**Gap Identified**: Python ecosystem needs a production-ready migration safety validation library.
-
-### 4. Reverse Engineer Models
-**Winner**: sqlacodegen (SQLAlchemy) OR Django inspectdb (Django)
-
-**Why sqlacodegen**:
-- Multiple output formats (declarative, dataclasses, SQLModel)
-- Relationship detection from foreign keys
-- Active maintenance, modern Python support
-- Works with FastAPI, Flask, standalone
-
-**Why Django inspectdb**:
-- Built into Django (no installation)
-- Follows Django conventions
-- Good for Django-only projects
-
-### 5. Multi-Database Support
-**Winner**: SQLAlchemy Inspector (clear winner)
-
-**Why**:
-- Explicit design goal: database abstraction
-- Supports 8+ major databases with single API
-- Dialect system for extensibility
-- Type abstraction handles platform differences
-- Industry standard for multi-database Python
-
-**No Close Second**: All alternatives are either database-specific or built on SQLAlchemy.
-
-### 6. Performance at Scale
-**Winner**: Hybrid approach (Direct SQL + Inspector)
-
-**Why**:
-- SQLAlchemy Inspector has N+1 query problem (slow for 500+ tables)
-- Direct SQL to information_schema is 15-100x faster
-- Hybrid maintains multi-database support with performance escape hatch
-
-**Strategy**:
-```python
-if table_count > 500 and dialect in ('postgresql', 'mysql'):
-    use_direct_sql()
-else:
-    use_inspector()
+**Installation:**
+```bash
+uv pip install sqlacodegen
 ```
 
-## Hybrid Architecture Recommendation
+**Quick Start:**
+```bash
+# Generate models with relationships
+sqlacodegen postgresql://localhost/legacy_db > models.py
 
-### Production-Ready Solution
-
-```python
-from sqlalchemy import create_engine, inspect, text
-from typing import Dict, List, Optional
-
-class SchemaIntrospection:
-    """Production-ready schema introspection with optimizations"""
-
-    def __init__(self, database_uri: str):
-        self.engine = create_engine(database_uri)
-        self.inspector = inspect(self.engine)
-        self.dialect = self.engine.dialect.name
-
-    # Use Case 1: Introspect Schema
-    def get_table_structure(self, table_name: str) -> Dict:
-        """Get complete table structure"""
-        return {
-            'columns': self.inspector.get_columns(table_name),
-            'primary_key': self.inspector.get_pk_constraint(table_name),
-            'foreign_keys': self.inspector.get_foreign_keys(table_name),
-            'indexes': self.inspector.get_indexes(table_name)
-        }
-
-    # Use Case 2: Detect Differences (requires Alembic)
-    def compare_to_metadata(self, metadata):
-        """Compare database to SQLAlchemy metadata"""
-        from alembic.migration import MigrationContext
-        from alembic.autogenerate import compare_metadata
-
-        context = MigrationContext.configure(self.engine.connect())
-        diff = compare_metadata(context, metadata)
-        return diff
-
-    # Use Case 3: Validate Safety
-    def validate_safe_to_drop_table(self, table_name: str):
-        """Check table is empty before dropping"""
-        result = self.engine.execute(
-            text(f"SELECT COUNT(*) FROM {table_name}")
-        )
-        count = result.scalar()
-        if count > 0:
-            raise ValueError(
-                f"Cannot drop {table_name}: contains {count} rows"
-            )
-
-    # Use Case 4: Reverse Engineer (requires sqlacodegen)
-    @staticmethod
-    def generate_models(database_uri: str, output_file: str):
-        """Generate SQLAlchemy models from database"""
-        import subprocess
-        subprocess.run([
-            'sqlacodegen',
-            '--generator', 'dataclasses',
-            '--outfile', output_file,
-            database_uri
-        ])
-
-    # Use Case 5: Multi-Database (built-in)
-    def get_all_tables(self, schema: Optional[str] = None) -> List[str]:
-        """Get tables - works across all databases"""
-        if self.dialect == 'sqlite' and schema:
-            return self.inspector.get_table_names()
-        return self.inspector.get_table_names(schema=schema)
-
-    # Use Case 6: Performance optimization
-    def fast_introspect_all(self) -> Dict:
-        """Optimized full introspection"""
-        table_count = len(self.inspector.get_table_names())
-
-        # Performance threshold: use direct SQL for large databases
-        if table_count > 500 and self.dialect in ('postgresql', 'mysql'):
-            return self._fast_introspect_sql()
-        else:
-            return self._introspect_inspector()
-
-    def _fast_introspect_sql(self) -> Dict:
-        """Direct SQL for performance"""
-        if self.dialect == 'postgresql':
-            query = text("""
-                SELECT
-                    table_name,
-                    column_name,
-                    data_type,
-                    is_nullable,
-                    column_default
-                FROM information_schema.columns
-                WHERE table_schema = 'public'
-                ORDER BY table_name, ordinal_position
-            """)
-            # Parse and return...
-        # Similar for MySQL...
-
-    def _introspect_inspector(self) -> Dict:
-        """Standard Inspector approach"""
-        results = {}
-        for table in self.inspector.get_table_names():
-            results[table] = self.get_table_structure(table)
-        return results
+# For advanced features
+sqlacodegen \
+  --generator declarative \
+  --outfile models.py \
+  postgresql://localhost/legacy_db
 ```
 
-### Usage Examples
+**Pros:**
+- Excellent relationship inference
+- Handles complex schemas well
+- Supports advanced SQLAlchemy features
+- One command generates complete models
 
-```python
-# Basic introspection
-schema = SchemaIntrospection('postgresql://localhost/mydb')
-structure = schema.get_table_structure('users')
+**Cons:**
+- Generated code needs manual cleanup
+- Naming conventions may not match project standards
+- Large schemas produce very long files
+- Relationships may need manual correction
 
-# Works with any database
-schema_pg = SchemaIntrospection('postgresql://localhost/db')
-schema_mysql = SchemaIntrospection('mysql://localhost/db')
-schema_sqlite = SchemaIntrospection('sqlite:///db.sqlite')
-
-# Schema comparison
-from sqlalchemy import MetaData
-metadata = MetaData()  # Define expected schema
-diff = schema.compare_to_metadata(metadata)
-
-# Safety validation
-schema.validate_safe_to_drop_table('legacy_users')
-
-# Reverse engineering
-SchemaIntrospection.generate_models(
-    'postgresql://localhost/db',
-    'models.py'
-)
-
-# Performance-optimized
-all_schema = schema.fast_introspect_all()  # Uses optimal method
+**Alternative for Django:**
+```bash
+python manage.py inspectdb > models.py
 ```
 
-## Gaps Identified
+**Success Criteria:**
+- All tables mapped to models: 100%
+- Relationships correctly inferred: >90%
+- Type mappings accurate: 100%
+- Manual cleanup required: <20% of code
 
-### Gap 1: Migration Safety Validation Library
-**Problem**: No comprehensive Python library for validating migration safety (data loss prevention, constraint validation).
+---
 
-**Current State**: Teams build custom validation logic.
+### 2. CI/CD Migration Validation
 
-**Needed**: Production-ready library with:
-- Pre-built validators for common scenarios
-- Data-aware checks (not just schema)
-- Multi-database support
-- Integration hooks for Alembic, Django, Flask-Migrate
+**Recommended: Alembic + pytest + migra**
 
-**Workaround**: Build custom validator class (see use-case-validate-safety.md).
+**Best fit when:**
+- Automated deployment pipeline exists
+- Multiple environments (dev/staging/prod)
+- Need to catch migration errors before production
+- Team follows test-driven development
 
-### Gap 2: Database-to-Database Comparison
-**Problem**: migra (best tool for DB-to-DB comparison) is deprecated.
+**Installation:**
+```bash
+uv pip install alembic pytest pytest-postgresql migra
+```
 
-**Current State**: No ideal Python solution for comparing two live databases without code models.
+**Quick Start:**
+```python
+# tests/test_migrations.py
+def test_migrations_apply_cleanly(alembic_config):
+    command.upgrade(alembic_config, "head")
+    assert True
 
-**Needed**: Maintained Python library for database-to-database schema comparison.
+def test_schema_matches_models(db_engine, app_models):
+    migration = Migration(db_engine, app_models)
+    migration.add_all_changes()
+    assert not migration.statements
+```
 
-**Workaround**: Reflect database1 into MetaData, compare using Alembic autogenerate.
+**Pros:**
+- Catches migration issues before production
+- Automated in CI/CD pipeline
+- Validates both upgrade and downgrade paths
+- Clear pass/fail criteria
 
-### Gap 3: Performance for Very Large Databases
-**Problem**: SQLAlchemy Inspector has N+1 query problem, slow for 1,000+ tables.
+**Cons:**
+- Initial setup complexity
+- Requires test database infrastructure
+- May slow down CI/CD pipeline
+- Needs maintenance as tests evolve
 
-**Current State**: Must write database-specific SQL for performance.
+**Key Components:**
 
-**Needed**: Bulk introspection API in SQLAlchemy that issues efficient queries.
+1. **Migration Tests:** Verify migrations apply successfully
+2. **Schema Comparison:** Ensure migrations produce expected schema
+3. **Rollback Tests:** Validate downgrade paths work
+4. **Performance Tests:** Check migration speed
 
-**Workaround**: Direct SQL to information_schema (see use-case-performance.md).
+**Success Criteria:**
+- 100% migration test coverage
+- Zero production migration failures
+- CI/CD pipeline time increase: <5 minutes
+- Clear error reporting on failures
 
-## Confidence Assessment
+---
 
-### High Confidence (85-95%)
-- **SQLAlchemy Inspector** for multi-database introspection
-- **sqlacodegen** for reverse engineering to SQLAlchemy models
-- **Django inspectdb** for Django-specific reverse engineering
-- **Alembic autogenerate** for code-to-database comparison
+### 3. Multi-Environment Schema Synchronization
 
-### Medium Confidence (70-80%)
-- **Manual validator library** for migration safety (no standard exists)
-- **Hybrid performance approach** (database-specific, needs testing)
-- **Database-to-database comparison** (workaround, not ideal)
+**Recommended: migra + Alembic**
 
-### Lower Confidence (60-70%)
-- Performance optimization strategies (scenario-dependent)
-- Caching approaches (invalidation complexity)
+**Best fit when:**
+- Managing dev/staging/production environments
+- Schema drift is a recurring problem
+- Need automated drift detection
+- Compliance requires audit trail
 
-## Evidence Quality
+**Installation:**
+```bash
+uv pip install migra alembic sqlalchemy
+```
 
-**Excellent Evidence**:
-- SQLAlchemy Inspector: Official docs, GitHub, production usage
-- Alembic: Comprehensive documentation, battle-tested
-- sqlacodegen: Active maintenance, clear documentation
+**Quick Start:**
+```bash
+# Compare two databases
+migra \
+  postgresql://localhost/staging \
+  postgresql://localhost/production
 
-**Good Evidence**:
-- Performance issues: Real GitHub issues with measurements
-- migra deprecation: Confirmed via repository status
-- Django inspectdb: Official Django documentation
+# Generate SQL to sync
+migra \
+  --unsafe \
+  postgresql://localhost/staging \
+  postgresql://localhost/production > sync.sql
+```
 
-**Limited Evidence**:
-- Migration safety: No standard library to evaluate
-- Performance benchmarks: Limited comprehensive testing
-- Database-specific optimizations: Case-by-case analysis needed
+**Pros:**
+- Fast, accurate schema comparison
+- PostgreSQL-specific optimizations
+- Generates SQL to fix drift
+- Minimal dependencies
 
-## Implementation Roadmap
+**Cons:**
+- PostgreSQL-only (no MySQL/SQLite)
+- Requires direct database access
+- No built-in automation (need scripting)
+- Doesn't handle data migrations
 
-### Phase 1: Foundation (SQLAlchemy Inspector)
-1. Install SQLAlchemy with appropriate database drivers
-2. Implement basic introspection with Inspector
-3. Add multi-database support with dialect detection
-4. Test across PostgreSQL, MySQL, SQLite
+**Architecture:**
 
-### Phase 2: Schema Comparison (Alembic)
-1. Add Alembic dependency
-2. Implement compare_metadata for code-to-database
-3. Build database-to-database comparison using reflection
-4. Create diff reporting utilities
+```
+[Dev DB] --migra--> [Staging DB] --migra--> [Prod DB]
+    |                    |                     |
+    +-- Alembic --------+--------Alembic -----+
+```
 
-### Phase 3: Safety Validation (Custom Library)
-1. Build reusable validator class
-2. Implement common safety checks (drop, NOT NULL, FK, unique)
-3. Integrate with migration workflow
-4. Add data-aware validation queries
+**Daily Workflow:**
+```bash
+# Morning: Check for drift
+python scripts/check_drift.py
 
-### Phase 4: Code Generation (sqlacodegen)
-1. Add sqlacodegen to toolchain
-2. Create wrapper functions for common generation tasks
-3. Document reverse engineering workflow
-4. Add post-generation cleanup scripts
+# Before deployment: Validate
+migra staging_db prod_db
 
-### Phase 5: Performance Optimization
-1. Measure introspection performance on target databases
-2. Implement direct SQL optimizations for large databases
-3. Add caching layer for repeated introspection
-4. Create performance testing suite
+# After deployment: Verify
+python scripts/verify_sync.py
+```
 
-## Final Recommendation
+**Alternative for MySQL:**
+```bash
+# Use mysqldump + diff approach
+mysqldump --no-data staging_db > staging_schema.sql
+mysqldump --no-data prod_db > prod_schema.sql
+diff -u staging_schema.sql prod_schema.sql
+```
 
-**For Most Projects**: Start with SQLAlchemy Inspector + Alembic Autogenerate.
+**Success Criteria:**
+- Drift detected within: 24 hours
+- False positive rate: <5%
+- Time to identify drift: <5 minutes
+- Automated drift alerts: Yes
 
-This combination provides:
-- ✓ Schema introspection (Inspector)
-- ✓ Schema comparison (Alembic)
-- ✓ Multi-database support (both)
-- ✓ Production-ready (both)
-- ✓ Active maintenance (both)
-- ✓ Large ecosystems (both)
+---
 
-**Add as Needed**:
-- sqlacodegen for reverse engineering
-- Custom validator library for migration safety
-- Direct SQL optimizations for large databases (1,000+ tables)
-- Caching layer for repeated introspection (CI/CD)
+### 4. Greenfield SQLAlchemy Project
 
-**Avoid**:
-- Database-specific tools (migra, mysql-diff) unless PostgreSQL-only forever
-- Building introspection from scratch (SQLAlchemy already solves this)
-- Over-optimizing performance before measuring (Inspector sufficient for most cases)
+**Recommended: Alembic (with SQLAlchemy)**
 
-## Success Metrics
+**Best fit when:**
+- Starting new Python project
+- Using SQLAlchemy ORM
+- Want version-controlled schema changes
+- Team collaboration on schema
 
-**Implementation Success**:
-- Can introspect any supported database with single API
-- Schema comparison detects all structural changes
-- Migration safety prevents data loss
-- Reverse engineering produces valid code
-- Performance meets targets for database size
+**Installation:**
+```bash
+uv pip install alembic sqlalchemy psycopg2-binary
+```
 
-**Adoption Indicators**:
-- SQLAlchemy Inspector: ~50M downloads/month on PyPI
-- Alembic: ~25M downloads/month on PyPI
-- sqlacodegen: ~500K downloads/month on PyPI
+**Quick Start:**
+```bash
+# Initialize Alembic
+alembic init alembic
 
-These numbers indicate production-ready, widely-adopted solutions.
+# Edit alembic/env.py to import your models
+# Then generate first migration
+alembic revision --autogenerate -m "Initial schema"
+
+# Apply migration
+alembic upgrade head
+```
+
+**Pros:**
+- Industry standard for SQLAlchemy
+- Auto-generates migrations from model changes
+- Excellent documentation
+- Production-proven
+
+**Cons:**
+- Learning curve for team
+- Auto-generation needs review
+- Complex migrations require manual coding
+- Migration conflicts need resolution
+
+**Project Structure:**
+```
+myproject/
+  models/
+    __init__.py
+    user.py
+    product.py
+  alembic/
+    env.py
+    versions/
+      001_initial_schema.py
+      002_add_indexes.py
+  alembic.ini
+```
+
+**Development Workflow:**
+
+1. **Update Models:** Change SQLAlchemy model definitions
+2. **Generate Migration:** `alembic revision --autogenerate`
+3. **Review Migration:** Manually check generated code
+4. **Test Migration:** Apply to dev database
+5. **Commit:** Version control migration script
+6. **Deploy:** Apply in staging, then production
+
+**Best Practices:**
+- Always review auto-generated migrations
+- Test migrations in fresh database
+- Use descriptive migration messages
+- Never skip migration files in version control
+
+**Success Criteria:**
+- All schema changes via migrations: 100%
+- Manual SQL in production: 0%
+- New developer setup time: <10 minutes
+- Migration conflicts: <1 per month
+
+---
+
+### 5. Database-First Development
+
+**Recommended: sqlacodegen + Alembic + CI/CD automation**
+
+**Best fit when:**
+- Database team controls schema
+- DBAs use SQL for schema changes
+- Multiple applications share database
+- Need automatic model synchronization
+
+**Installation:**
+```bash
+uv pip install sqlacodegen alembic sqlalchemy
+```
+
+**Architecture:**
+
+```
+[DBA Team]
+    |
+    v
+[SQL Migrations] --> [Database]
+                        |
+                        v
+                   [sqlacodegen] --> [Generated Models]
+                        |
+                        v
+                   [Custom Extensions] --> [Application]
+```
+
+**Quick Start:**
+
+1. **Generate Models:**
+```bash
+sqlacodegen postgresql://localhost/mydb > models/generated/schema.py
+```
+
+2. **Separate Custom Code:**
+```python
+# models/custom/user_extensions.py
+from models.generated.schema import User as GeneratedUser
+
+class User(GeneratedUser):
+    def custom_method(self):
+        pass
+```
+
+3. **Automate Sync:**
+```yaml
+# .github/workflows/model-sync.yml
+on:
+  schedule:
+    - cron: '0 0 * * *'
+jobs:
+  sync-models:
+    steps:
+      - run: python scripts/sync_models.py
+      - uses: peter-evans/create-pull-request@v5
+```
+
+**Pros:**
+- Respects database-first workflow
+- DBAs maintain independence
+- Automatic model updates
+- Clear separation of concerns
+
+**Cons:**
+- High initial setup complexity
+- Requires CI/CD infrastructure
+- Risk of custom code loss
+- Coordination between teams needed
+
+**Critical Success Factors:**
+
+1. **Separation of Generated/Custom Code:** Never mix
+2. **Automated Sync Checks:** Daily or more frequent
+3. **Clear Communication:** DB team alerts app team
+4. **Version Control:** Track generated models
+
+**Success Criteria:**
+- Model sync lag: <24 hours
+- Custom code preserved: 100%
+- Manual model updates: 0%
+- Schema-related bugs: <1 per quarter
+
+---
+
+## Cross-Cutting Tool Evaluations
+
+### sqlacodegen
+
+**Use for:**
+- Generating models from existing databases
+- One-time reverse engineering
+- Periodic model regeneration
+
+**Avoid for:**
+- Ongoing schema management
+- Complex custom model logic
+- Real-time schema tracking
+
+**Version:** Latest stable (3.0.0+)
+
+---
+
+### Alembic
+
+**Use for:**
+- Version-controlled migrations
+- SQLAlchemy-based projects
+- Team collaboration on schema
+- Production deployments
+
+**Avoid for:**
+- Non-SQLAlchemy ORMs
+- Simple prototypes
+- Read-only database access
+
+**Version:** Latest stable (1.13.0+)
+
+---
+
+### migra
+
+**Use for:**
+- PostgreSQL schema comparison
+- Drift detection
+- Environment synchronization
+- Generating sync SQL
+
+**Avoid for:**
+- MySQL/SQLite (not supported)
+- Data migration
+- Complex transformation logic
+
+**Version:** Latest stable (3.0.0+)
+**Platform:** PostgreSQL only
+
+---
+
+### pytest + pytest-postgresql
+
+**Use for:**
+- Automated migration testing
+- CI/CD validation
+- Schema consistency checks
+
+**Avoid for:**
+- Simple manual testing
+- Non-Python projects
+
+**Version:** pytest 7.0+, pytest-postgresql 5.0+
+
+---
+
+## Decision Flowchart
+
+```
+Start: What is your primary need?
+
+├─ Generate models from existing DB?
+│  └─> Use sqlacodegen
+│
+├─ Validate migrations in CI/CD?
+│  └─> Use Alembic + pytest + migra
+│
+├─ Detect schema drift across environments?
+│  └─> Use migra + Alembic
+│
+├─ Start new project with migrations?
+│  └─> Use Alembic
+│
+└─ Database-first with DBA team?
+   └─> Use sqlacodegen + Alembic + automation
+```
+
+---
+
+## Combination Strategies
+
+### Strategy 1: Full-Stack Schema Management
+**Tools:** Alembic + migra + pytest
+**Use case:** Mature project with multiple environments
+
+### Strategy 2: Hybrid Database-First
+**Tools:** sqlacodegen + Alembic
+**Use case:** DBA-managed schema with application migrations
+
+### Strategy 3: Simple Greenfield
+**Tools:** Alembic only
+**Use case:** New project, application controls schema
+
+### Strategy 4: Legacy Migration
+**Tools:** sqlacodegen + manual cleanup
+**Use case:** One-time reverse engineering
+
+---
+
+## Common Anti-Patterns
+
+### Anti-Pattern 1: Manual SQL in Production
+**Problem:** Bypassing migration tools
+**Solution:** All changes through Alembic migrations
+
+### Anti-Pattern 2: Ignoring Migration Tests
+**Problem:** Migrations fail in production
+**Solution:** Implement CI/CD validation with pytest
+
+### Anti-Pattern 3: Mixing Generated and Custom Code
+**Problem:** Regeneration overwrites custom logic
+**Solution:** Strict separation of generated/custom files
+
+### Anti-Pattern 4: No Schema Version Control
+**Problem:** Unknown database state in environments
+**Solution:** Track all migrations in version control
+
+---
+
+## Quick Reference Commands
+
+```bash
+# Generate models from database
+sqlacodegen postgresql://localhost/mydb > models.py
+
+# Initialize Alembic
+alembic init alembic
+
+# Create migration
+alembic revision --autogenerate -m "Description"
+
+# Apply migrations
+alembic upgrade head
+
+# Compare schemas (PostgreSQL)
+migra postgresql://localhost/db1 postgresql://localhost/db2
+
+# Run migration tests
+pytest tests/migrations/ -v
+```
+
+---
+
+## When to Seek Custom Solutions
+
+Consider building custom tooling when:
+- Using non-standard database (e.g., ClickHouse, TimescaleDB)
+- Complex domain-specific requirements
+- Existing tools don't support your workflow
+- High-volume schema automation needed
+
+---
+
+## Further Resources
+
+### Documentation
+- Alembic: https://alembic.sqlalchemy.org/
+- SQLAlchemy: https://www.sqlalchemy.org/
+- migra: https://github.com/djrobstep/migra
+- sqlacodegen: https://github.com/agronholm/sqlacodegen
+
+### Community
+- SQLAlchemy Google Group
+- Alembic GitHub Discussions
+- Stack Overflow: [sqlalchemy], [alembic], [database-migration]
+
+---
+
+Date compiled: December 4, 2025

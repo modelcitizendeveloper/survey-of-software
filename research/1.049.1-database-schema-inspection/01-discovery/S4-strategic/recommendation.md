@@ -1,12 +1,14 @@
 # S4 Strategic Recommendation: Database Schema Inspection Libraries
 
+Date compiled: December 4, 2025
+
 ## Executive Summary
 
 **STRATEGIC WINNER**: **SQLAlchemy Inspector**
 
-**5-Year Confidence**: 95%
-**10-Year Confidence**: 85%
-**Strategic Risk**: Very Low (10% over 10 years)
+**3-Year Confidence**: 95%
+**5-Year Confidence**: 90%
+**Strategic Risk**: Very Low (10% over 5 years)
 
 For database schema inspection in Python, SQLAlchemy Inspector is the only choice with
 acceptable long-term strategic risk. All alternatives carry materially higher risk
@@ -240,11 +242,11 @@ strategic advantage in cloud-native world.
 
 **Verdict**: About as certain as we can be in technology over 5-year horizon.
 
-### 10-Year Confidence: 85%
+### Post-2030 Outlook: Moderate Uncertainty (70%)
 
 **Increased uncertainty factors**:
 - **Technology paradigm shifts**: NewSQL, AI-powered tools, cloud-native patterns
-- **Maintainer succession**: Mike Bayer may exit in 10 years (though community could continue)
+- **Maintainer succession**: Mike Bayer may exit (though community could continue)
 - **Competitive dynamics**: Atlas or similar platform could gain significant market share
 
 **Mitigating factors**:
@@ -252,7 +254,7 @@ strategic advantage in cloud-native world.
 - Open-source code is forkable (community could maintain)
 - Architectural flexibility allows adaptation to new paradigms
 
-**Verdict**: Still very high confidence, but 10-year horizon introduces meaningful uncertainty.
+**Verdict**: Still high confidence through 2030, but beyond requires continuous monitoring.
 
 ---
 
@@ -348,6 +350,20 @@ clear strategic choice**:
 
 **Bottom line**: For Python applications with relational databases, SQLAlchemy Inspector
 represents the **lowest-risk, highest-certainty choice** for schema inspection. This is
-as close to a "safe bet" as exists in technology for 5-10 year commitments.
+as close to a "safe bet" as exists in technology for 3-5 year strategic commitments.
 
 **Build on SQLAlchemy. Avoid third-party dependencies. Design for the long term.**
+
+---
+
+## Sources
+
+Research compiled from:
+- [SQLAlchemy 2.0 Documentation](https://docs.sqlalchemy.org/en/20/)
+- [SQLAlchemy 2.0.42 Released](https://www.sqlalchemy.org/blog/2025/07/29/sqlalchemy-2.0.42-released/)
+- [Alembic 1.17.2 Documentation](https://alembic.sqlalchemy.org/)
+- [GitHub - sqlalchemy/alembic](https://github.com/sqlalchemy/alembic)
+- [sqlacodegen GitHub Releases](https://github.com/agronholm/sqlacodegen/releases)
+- [SQLModel vs Prisma vs Django ORM Comparison](https://www.cotocus.com/blog/top-10-object-relational-mapping-orm-tools-in-2025-features-pros-cons-comparison/)
+- [Database Schema Management Tools 2025](https://www.bytebase.com/blog/top-database-schema-change-tool-evolution/)
+- [Async SQLAlchemy Documentation](https://docs.sqlalchemy.org/en/20/orm/extensions/asyncio.html)

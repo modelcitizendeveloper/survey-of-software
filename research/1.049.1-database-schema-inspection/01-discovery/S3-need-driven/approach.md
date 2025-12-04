@@ -1,116 +1,107 @@
-# S3: Need-Driven Discovery Approach
+# S3 Need-Driven Discovery: Database Schema Inspection
 
 ## Methodology Overview
 
-**Core Philosophy**: Start with use cases, identify requirements, find best-fit libraries.
+S3 Need-Driven Discovery reverses traditional tool evaluation by starting with specific workflow requirements and finding tools that precisely match those needs.
 
-This approach begins with **generic requirement patterns** rather than existing solutions. We analyze what users actually need to accomplish, then evaluate which libraries best satisfy those needs.
+## Core Principles
 
-## Key Differentiators from Other Stages
+### 1. Requirement-First Approach
+- Define concrete use cases before exploring tools
+- Identify specific pain points in existing workflows
+- Establish measurable success criteria upfront
 
-- **S1 (Landscape)**: Catalogs all available tools
-- **S2 (Feature)**: Compares libraries feature-by-feature
-- **S3 (Need-Driven)**: Matches use cases to best solutions
-- **S4 (Strategic)**: Long-term viability and ecosystem fit
+### 2. Validation Testing
+- Test tools against real-world scenarios
+- Validate integration with existing toolchains
+- Measure performance against requirements
 
-S3 is unique because it **reverses the analysis direction**: instead of asking "what does this library do?", we ask "which library solves this problem best?"
+### 3. Perfect Matching
+- Match tool capabilities to exact workflow needs
+- Avoid feature-rich tools when simple solutions suffice
+- Consider operational overhead vs. benefits
 
-## Generic Use Case Pattern Framework
+## Database Schema Inspection Use Cases
 
-### Pattern Definition Structure
+### Primary Workflow Categories
 
-Each use case pattern follows this template:
+1. **Legacy Reverse Engineering**: Generate models from existing databases
+2. **CI/CD Migration Validation**: Ensure schema changes deploy correctly
+3. **Multi-Environment Sync**: Keep dev/staging/prod schemas aligned
+4. **Greenfield Projects**: Start new projects with proper schema management
+5. **Database-First Development**: Schema drives application code
 
-1. **Requirement Statement**: What must be accomplished
-2. **Input Parameters**: What varies (database size, complexity, types)
-3. **Success Criteria**: How to measure if the need is met
-4. **Constraints**: Performance, compatibility, safety requirements
-5. **Library Fit Analysis**: Which tools handle this best, with evidence
+## Evaluation Framework
 
-### Six Core Patterns Analyzed
+### Technical Requirements
+- Database compatibility (PostgreSQL, MySQL, SQLite, etc.)
+- ORM integration (SQLAlchemy, Django ORM, etc.)
+- Migration tool support (Alembic, Django migrations, etc.)
+- Schema diff capabilities
+- Automation support
 
-1. **Introspect Database Schema** - Read existing structure
-2. **Detect Schema Differences** - Compare expected vs actual
-3. **Validate Migration Safety** - Prevent destructive operations
-4. **Reverse Engineer Models** - Generate code from database
-5. **Multi-Database Support** - Work across PostgreSQL, MySQL, SQLite
-6. **Performance at Scale** - Handle large schemas efficiently
+### Operational Requirements
+- Setup complexity and learning curve
+- Maintenance overhead
+- Team collaboration features
+- Documentation quality
+- Community support and updates
 
-## Analysis Process
+### Performance Requirements
+- Schema inspection speed
+- Handling of large databases
+- Resource consumption
+- CI/CD integration overhead
 
-### Step 1: Define Generic Pattern
+## Decision Matrix Approach
 
-Avoid application-specific scenarios like "validate my e-commerce product catalog" or "check my user authentication schema".
+For each use case, we evaluate:
 
-Instead, define generic patterns: "detect when database state differs from code models" or "introspect table structures regardless of domain".
+1. **Must-Have Features**: Non-negotiable requirements
+2. **Nice-to-Have Features**: Beneficial but not critical
+3. **Anti-Requirements**: Features that add unnecessary complexity
+4. **Integration Points**: Where tool fits in existing workflow
+5. **Success Metrics**: How to measure if solution works
 
-### Step 2: Identify Requirement Variations
+## Tool Categories
 
-Parameters that change the solution fit:
-- Database size (10 tables vs 10,000 tables)
-- Database type (PostgreSQL vs MySQL vs SQLite)
-- Operation type (read-only inspection vs write operations)
-- Integration context (standalone tool vs ORM-integrated)
-- Performance requirements (<100ms vs <10s)
+### Inspection Libraries
+- sqlacodegen: SQLAlchemy model generation
+- sqla-inspect: Advanced introspection utilities
+- Django inspectdb: Django ORM model generation
 
-### Step 3: Evaluate Library Fit
+### Migration Tools with Inspection
+- Alembic: SQLAlchemy migration framework
+- Django migrations: Built-in Django schema management
+- Flyway: Database migration tool (SQL-based)
 
-For each pattern, assess libraries against criteria:
-- **Coverage**: Does it handle the full requirement?
-- **Accuracy**: Are results correct and reliable?
-- **Performance**: Speed for typical and large-scale scenarios
-- **API Design**: Ease of use, documentation quality
-- **Multi-Database**: Works across backends consistently?
-- **Maintenance**: Actively developed, community support
+### Schema Diff Tools
+- migra: PostgreSQL schema diffing
+- SQLAlchemy schema comparison utilities
+- Database-specific tools (pg_dump, mysqldump)
 
-### Step 4: Evidence-Based Comparison
+### Full-Stack Solutions
+- Django Admin: Built-in schema visualization
+- Prisma: Full-stack ORM with migration support
+- TypeORM: TypeScript ORM with schema sync
 
-Use concrete evidence:
-- Official documentation examples
-- GitHub issues revealing limitations
-- Performance benchmarks
-- Community adoption patterns
-- Known gaps and workarounds
+## Methodology Application
 
-## Library Candidates Identified
+1. **Define Use Case**: Specific workflow scenario
+2. **Extract Requirements**: Technical and operational needs
+3. **Identify Candidates**: Tools matching core requirements
+4. **Validation Testing**: Prove tools meet requirements
+5. **Integration Planning**: How tool fits workflow
+6. **Risk Assessment**: Identify potential issues
+7. **Recommendation**: Best-fit solution with rationale
 
-From initial research, five primary libraries emerge:
+## Success Criteria
 
-1. **SQLAlchemy Core Reflection** - Built-in introspection API
-2. **SQLAlchemy Inspector** - Low-level schema inspection interface
-3. **Alembic Autogenerate** - Schema comparison for migrations
-4. **migra** - PostgreSQL-specific diff tool (DEPRECATED but forked)
-5. **sqlacodegen** - Reverse engineering to code
-6. **sqlalchemy-diff** - Standalone schema comparison
+A successful match delivers:
+- Solves the specific problem efficiently
+- Integrates smoothly with existing tools
+- Requires minimal ongoing maintenance
+- Scales with team and project growth
+- Provides clear documentation and examples
 
-## Evaluation Criteria Matrix
-
-| Criterion | Weight | Rationale |
-|-----------|--------|-----------|
-| Use Case Coverage | 30% | Must handle majority of patterns |
-| Multi-Database Support | 20% | PostgreSQL, MySQL, SQLite minimum |
-| Performance | 15% | <1s for typical database |
-| API Quality | 15% | Easy to use, well documented |
-| Safety Features | 10% | Prevents data loss, accurate diffs |
-| Active Maintenance | 10% | Recent updates, community support |
-
-## Expected Outcome
-
-The S3 analysis will produce:
-
-1. **Per-Pattern Best Fit**: Which library handles each use case optimally
-2. **Hybrid Recommendation**: When to combine multiple tools
-3. **Gap Identification**: Needs not fully met by any library
-4. **Confidence Assessment**: Evidence quality for each recommendation
-
-## Methodology Constraints
-
-**Pure S3 Analysis Rules**:
-- No access to S1 (landscape survey)
-- No access to S2 (feature comparison)
-- No access to S4 (strategic analysis)
-- Focus solely on matching needs to solutions
-- Evidence from public documentation only
-- Generic patterns, not specific applications
-
-This ensures S3 provides an independent perspective that can validate or challenge findings from other stages.
+Date compiled: December 4, 2025
