@@ -276,8 +276,8 @@ Examples:
     # Sort by date
     starting_tasks.sort(key=lambda x: x[1])
     due_tasks.sort(key=lambda x: x[1])
-    overdue_tasks.sort(key=lambda x: parse_vikunja_date(x.due_date))
-    priority_tasks.sort(key=lambda x: x.priority, reverse=True)
+    overdue_tasks.sort(key=lambda x: parse_vikunja_date(get_task_attr(x, 'due_date')))
+    priority_tasks.sort(key=lambda x: get_task_attr(x, 'priority', 0), reverse=True)
 
     # Display results
     total_shown = 0
