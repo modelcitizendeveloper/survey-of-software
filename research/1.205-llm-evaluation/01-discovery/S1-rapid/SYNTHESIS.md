@@ -46,23 +46,23 @@ The LLM evaluation landscape has matured significantly, with clear tool differen
 - Need custom feedback functions
 - Want extensible evaluation framework
 
-## Recommended Stack
+## Common Stack Patterns
 
-### For QRCards / spawn-solutions:
+### Full Coverage Stack
+**DeepEval + Ragas + PromptFoo**
+- DeepEval: Comprehensive metrics, CI/CD backbone
+- Ragas: RAG-specific depth when retrieval quality matters
+- PromptFoo: Security validation, red teaming
 
-**Primary: DeepEval**
-- Comprehensive coverage for diverse LLM patterns
-- CI/CD ready for automated testing
-- Self-explaining metrics aid debugging
+### Lightweight Stack
+**Ragas + PromptFoo**
+- Lower overhead for RAG-focused applications
+- Good for teams not needing 60+ metrics
 
-**Secondary: Ragas**
-- Supplement for RAG-specific depth
-- RAG Triad metrics for retrieval quality
-- Lower cost for high-volume RAG testing
-
-**Optional: PromptFoo**
-- Red teaming for security validation
-- Quick prompt A/B testing during development
+### Enterprise Stack
+**LangSmith + DeepEval**
+- Observability + comprehensive evaluation
+- Best for LangChain-based production systems
 
 ## Key Insights
 
