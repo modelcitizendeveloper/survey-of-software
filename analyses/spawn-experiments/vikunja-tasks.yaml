@@ -1,0 +1,70 @@
+# spawn-experiments Database System
+#
+# Database-driven tracking for methodology research (Method 1-4 competitions)
+# Tracks roadmap, experiment index, methodology results, findings, patterns
+#
+# Documentation:
+# - README.md - Database overview and quick start
+# - DATABASE_STRATEGY.md - Strategic architecture
+# - QUICKSTART.md - Step-by-step guide
+# - ADVANCED_APPROACHES.md - Advanced patterns
+# - schema.sql - Database schema (11 tables, 6 views)
+#
+# Experiment data: ~/spawn-experiments/ (43+ completed experiments)
+
+project:
+  title: "spawn-experiments Database"
+  description: "Methodology tracking database - experiment lifecycle, validation, pattern recognition"
+  parent_project_id: 13447  # Foundations - capability development
+
+tasks:
+  - title: "GTD Capture: Review database system and create implementation tasks"
+    description: |
+      <strong>Goal:</strong> Capture work for spawn-experiments database implementation<br><br>
+      <strong>Steps:</strong><br>
+      - Review README.md (database overview)<br>
+      - Review DATABASE_STRATEGY.md<br>
+      - Review schema.sql (11 tables, 6 views)<br>
+      - Check ~/spawn-experiments/ for data import needs<br>
+      - Review migration scripts<br><br>
+      <strong>System components:</strong><br>
+      - Database schema (roadmap, experiments, methodology_results, findings, patterns)<br>
+      - Data import (43+ completed experiments from markdown)<br>
+      - Query interface (experiment lookup, winner analysis, validation tracking)<br>
+      - Dual-mode operation (markdown + database auto-sync)<br><br>
+      <strong>Current status:</strong><br>
+      - Schema: ✅ Ready (11 tables, 6 views)<br>
+      - Migration scripts: ⏸️ Check migration/ folder<br>
+      - Data import: ⏸️ Not started (43 experiments)<br><br>
+      <strong>Deliverables:</strong><br>
+      - Implementation tasks in Vikunja<br>
+      - Data import plan
+    due_date: "2025-11-09"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+
+  - title: "Database: Create spawn_experiments.db and verify schema"
+    description: |
+      <strong>Goal:</strong> Initialize SQLite database with complete schema<br><br>
+      <strong>Steps:</strong><br>
+      - cd /home/ivanadamin/spawn-solutions/applications/spawn-experiments<br>
+      - sqlite3 spawn_experiments.db < schema.sql<br>
+      - Verify schema version table<br>
+      - Verify all 11 tables created<br>
+      - Verify all 6 views created<br><br>
+      <strong>Success criteria:</strong><br>
+      - Database file created<br>
+      - All tables present<br>
+      - Schema version 1.0.0 recorded<br><br>
+      <strong>Next step:</strong><br>
+      - Run migration script (43 experiments)
+    due_date: "2025-11-15"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "Code"
+      - "Research"

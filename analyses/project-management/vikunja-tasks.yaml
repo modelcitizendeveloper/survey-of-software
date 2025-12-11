@@ -1,0 +1,236 @@
+# Project Management - Vikunja Integration
+#
+# Three-part integration suite for Vikunja + spawn ecosystem:
+# 1. vikunja-api-wrapper - Python client (Method 4, 100/100 score)
+# 2. vikunja-populate-script - YAML/JSON → Vikunja tasks (Method 4, 75/75 tests)
+# 3. vikunja-export-script - Portfolio state extraction (Method 1)
+#
+# Real implementation: ~/spawn-solutions/research/1.131-project-management/
+#
+# Documentation:
+# - GTD_WITH_VIKUNJA.md - Complete GTD methodology integration
+# - VIKUNJA_GTD_CAPTURE.md - Portfolio capture workflow
+# - TASK_GRANULARITY.md - Sprint-level task sizing guide
+
+project:
+  title: "Project Management - Vikunja"
+  description: "Vikunja integration suite - API wrapper, populate script, export script, GTD workflow"
+  parent_project_id: 13448  # Applications - capability application
+
+tasks:
+  - title: "GTD Capture: Review Vikunja integration and document next steps"
+    description: |
+      <strong>Goal:</strong> Capture ongoing work for Vikunja integration<br><br>
+      <strong>Steps:</strong><br>
+      - Review ~/spawn-solutions/research/1.131-project-management/<br>
+      - Check 02-implementations/ (wrapper, populate, export)<br>
+      - Review GTD_WITH_VIKUNJA.md<br>
+      - Review VIKUNJA_GTD_CAPTURE.md<br>
+      - Document any remaining integration work<br><br>
+      <strong>Recent completion (Nov 7-8, 2025):</strong><br>
+      - ✅ vikunja-api-wrapper (100/100 score, Method 4)<br>
+      - ✅ vikunja-populate-script (75/75 tests, YAML support)<br>
+      - ✅ vikunja-export-script (portfolio extraction)<br>
+      - ✅ GTD labels system (16 labels)<br>
+      - ✅ OODA loop integration (OBSERVE → ORIENT → DECIDE → ACT)<br>
+      - ✅ Bootstrap labels + 5 QRCards sites + decision-analysis<br><br>
+      <strong>Current status:</strong><br>
+      - Core integration complete<br>
+      - GTD capture in progress (applications/ folder)<br>
+      - Future enhancements identified (see tasks below)<br><br>
+      <strong>Deliverables:</strong><br>
+      - Any remaining integration tasks
+    due_date: "2025-11-09"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+
+  - title: "Feature: Create vikunja-admin script for project management operations"
+    description: |
+      <strong>Goal:</strong> Build administrative utility for common project operations<br><br>
+      <strong>Context:</strong><br>
+      - Need ability to rename/move projects with existing tasks<br>
+      - Common operations that don't fit in populate script workflow<br>
+      - Administrative tasks for managing existing Vikunja instance<br><br>
+      <strong>Operations to support:</strong><br>
+      - Rename project (update title, keep tasks)<br>
+      - Move project to different parent (change hierarchy)<br>
+      - Delete project and all tasks<br>
+      - List all projects in hierarchy (tree view)<br>
+      - Bulk operations (rename multiple, move multiple)<br><br>
+      <strong>Implementation approach:</strong><br>
+      - Create vikunja-admin.py script using existing wrapper<br>
+      - Command-line interface with subcommands (rename, move, delete, list)<br>
+      - TDD tests for each operation<br>
+      - Safe operations with confirmation prompts<br><br>
+      <strong>Example usage:</strong><br>
+      <code>
+      # Rename project<br>
+      python vikunja-admin.py rename --from "Inverse Fractional" --to "IF Learning Lab"<br><br>
+      # Move project to different parent<br>
+      python vikunja-admin.py move --project "IF Learning Lab" --parent "Applications"<br><br>
+      # Rename AND move in one operation<br>
+      python vikunja-admin.py update --project "Inverse Fractional" --title "IF Learning Lab" --parent 13448<br><br>
+      # List all projects in hierarchy<br>
+      python vikunja-admin.py list --tree<br>
+      </code><br><br>
+      <strong>Success criteria:</strong><br>
+      - Can rename projects safely<br>
+      - Can move projects between parents<br>
+      - All tasks move with project<br>
+      - TDD tests for all operations<br>
+      - Confirmation prompts for destructive operations
+    due_date: "2025-11-12"
+    priority: 5
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "Code"
+      - "High Energy"
+
+  - title: "Feature: Implement task relations in Vikunja wrapper and populate script"
+    description: |
+      <strong>Goal:</strong> Add support for task relationships (blocked_by, subtasks, dependencies)<br><br>
+      <strong>Context:</strong><br>
+      - Task relations are critical for complex project management<br>
+      - Vikunja supports: blocked_by, subtasks, parent tasks, related tasks<br>
+      - Need both API wrapper support AND populate script YAML syntax<br><br>
+      <strong>Implementation scope:</strong><br>
+      - Research Vikunja task relations API endpoints<br>
+      - Design wrapper API for creating/updating task relations<br>
+      - Add TDD tests for relation operations<br>
+      - Design YAML schema for expressing relations in populate script<br>
+      - Update validation.py to support relations syntax<br>
+      - Update population.py to create relations<br>
+      - Add tests for relation population<br><br>
+      <strong>YAML syntax options to evaluate:</strong><br>
+      <code>
+      tasks:<br>
+        - title: "Task A"<br>
+          id: task-a  # Optional local reference<br>
+        - title: "Task B"<br>
+          blocked_by: ["Task A"]  # Block by title<br>
+        - title: "Task C"<br>
+          subtasks:<br>
+            - "Subtask 1"<br>
+            - "Subtask 2"<br>
+      </code><br><br>
+      <strong>Use cases:</strong><br>
+      - Sequential tasks (B depends on A completing)<br>
+      - Hierarchical tasks (parent with multiple subtasks)<br>
+      - Blocker tracking (can't start until X is done)<br><br>
+      <strong>Success criteria:</strong><br>
+      - Wrapper supports all task relation types<br>
+      - YAML can express relations declaratively<br>
+      - Populate script creates relations correctly<br>
+      - All relation operations have TDD tests<br>
+      - Documentation updated with relation examples
+    due_date: "2025-11-22"
+    priority: 5
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "Code"
+      - "High Energy"
+
+  - title: "Feature: Add kanban buckets and task assignments to populate script"
+    description: |
+      <strong>Goal:</strong> Support kanban workflow with buckets and task assignments<br><br>
+      <strong>Context:</strong><br>
+      - Vikunja supports kanban view with buckets (columns)<br>
+      - Tasks can be assigned to users<br>
+      - Need YAML syntax to express buckets and assignments<br><br>
+      <strong>Implementation scope:</strong><br>
+      - Research Vikunja kanban bucket API<br>
+      - Design wrapper API for creating/managing buckets<br>
+      - Design YAML schema for bucket definitions<br>
+      - Design YAML schema for task assignments<br>
+      - Update validation.py to support buckets and assignments<br>
+      - Update population.py to create buckets and assign tasks<br>
+      - Add TDD tests for bucket and assignment operations<br><br>
+      <strong>YAML syntax options to evaluate:</strong><br>
+      <code>
+      project:<br>
+        title: "My Project"<br>
+        buckets:<br>
+          - name: "Backlog"<br>
+            position: 0<br>
+          - name: "In Progress"<br>
+            position: 1<br>
+          - name: "Done"<br>
+            position: 2<br><br>
+      tasks:<br>
+        - title: "Task A"<br>
+          bucket: "Backlog"  # Assign to bucket by name<br>
+          assignees: ["user@example.com"]  # Assign to users<br>
+      </code><br><br>
+      <strong>Use cases:</strong><br>
+      - Sprint planning with kanban board<br>
+      - Team task assignment and tracking<br>
+      - Status visualization (backlog → doing → done)<br><br>
+      <strong>Success criteria:</strong><br>
+      - Wrapper supports bucket CRUD operations<br>
+      - Wrapper supports task assignment operations<br>
+      - YAML can define buckets declaratively<br>
+      - YAML can assign tasks to buckets and users<br>
+      - Populate script creates/updates buckets<br>
+      - All operations have TDD tests<br>
+      - Documentation updated with kanban examples
+    due_date: "2025-11-25"
+    priority: 5
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "Code"
+
+  - title: "Enhancement: Implement hierarchical project structures in wrapper API"
+    description: |
+      <strong>Goal:</strong> Add support for Vikunja's project hierarchy feature<br><br>
+      <strong>Scope:</strong><br>
+      - Research Vikunja API hierarchy endpoints<br>
+      - Design wrapper API for parent/child projects<br>
+      - Implement HierarchyManager (or extend ProjectsManager)<br>
+      - Add TDD tests for hierarchy operations<br>
+      - Update populate script to support parent_project_id<br><br>
+      <strong>Use case:</strong><br>
+      - applications/ folder structure could map to Vikunja hierarchy<br>
+      - Example: spawn-* projects under "Spawn Platform" parent<br>
+      - QRCards sites under "QRCards Sites" parent<br><br>
+      <strong>Success criteria:</strong><br>
+      - Can create nested project structures via API<br>
+      - YAML files support parent_project_id field<br>
+      - All hierarchy operations have validated TDD tests<br><br>
+      <strong>Priority:</strong> Medium (not top priority but on the list)
+    due_date: "2025-12-01"
+    priority: 0
+
+  - title: "Enhancement: Expand wrapper API to cover all Vikunja API features"
+    description: |
+      <strong>Goal:</strong> Achieve 100% coverage of Vikunja Cloud API<br><br>
+      <strong>Current coverage:</strong><br>
+      - ✅ Projects (CRUD)<br>
+      - ✅ Tasks (create, update, list)<br>
+      - ✅ Labels (CRUD)<br>
+      - ⏸️ Task relationships (blocked_by, subtasks)<br>
+      - ⏸️ Task attachments<br>
+      - ⏸️ Task comments<br>
+      - ⏸️ Task assignees<br>
+      - ⏸️ Task reminders<br>
+      - ⏸️ Filters and saved views<br>
+      - ⏸️ Teams and sharing<br>
+      - ⏸️ Webhooks<br><br>
+      <strong>Approach:</strong><br>
+      - Review Vikunja API documentation for all endpoints<br>
+      - Prioritize features by usage (relationships → attachments → comments)<br>
+      - Implement with Method 4 TDD (validated tests for each feature)<br>
+      - Maintain 100/100 quality score<br><br>
+      <strong>Success criteria:</strong><br>
+      - All documented Vikunja API endpoints accessible via wrapper<br>
+      - TDD tests for all new features<br>
+      - No breaking changes to existing API<br><br>
+      <strong>Priority:</strong> Medium (incremental improvements over time)
+    due_date: "2025-12-15"
+    priority: 0

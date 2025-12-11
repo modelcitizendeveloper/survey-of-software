@@ -1,0 +1,70 @@
+# Bootstrap: Create GTD Labels System
+#
+# Run this ONCE to create all GTD labels in Vikunja
+# Labels are global - available to all projects
+#
+# Usage:
+#   cd ~/spawn-solutions/research/1.131-project-management/02-implementations/vikunja-populate-script/src
+#   python populate_vikunja.py ~/spawn-solutions/applications/00-bootstrap-labels.yaml
+#
+# After this, labels will be available for all future projects
+
+project:
+  title: "GTD Labels System"
+  description: "Bootstrap project to create all GTD labels (delete this project after labels are created)"
+
+labels:
+  # GTD: Status (Where is this in the workflow?)
+  - title: "Next Action"
+    hex_color: "2ecc71"  # Green - Can start immediately
+  - title: "Waiting For"
+    hex_color: "f39c12"  # Orange - Waiting on someone/something
+  - title: "Blocked"
+    hex_color: "e74c3c"  # Red - Cannot proceed
+  - title: "Someday/Maybe"
+    hex_color: "95a5a6"  # Gray - Not committed yet
+
+  # GTD: Context (When/where/how can I do this?)
+  - title: "@Computer"
+    hex_color: "3498db"  # Blue - Need computer/focused work
+  - title: "@Quick"
+    hex_color: "1abc9c"  # Teal - <30 min, can do anytime
+  - title: "@DeepWork"
+    hex_color: "34495e"  # Dark blue - Need 2+ hours uninterrupted
+  - title: "@Errands"
+    hex_color: "e67e22"  # Orange - Need to be out/online shopping
+  - title: "@People"
+    hex_color: "9b59b6"  # Purple - Need collaboration/meeting
+
+  # GTD: Energy (What energy level needed?)
+  - title: "High Energy"
+    hex_color: "c0392b"  # Dark red - Creative/complex work
+  - title: "Low Energy"
+    hex_color: "bdc3c7"  # Light gray - Admin/routine tasks
+
+  # Work Type (What kind of work is this?)
+  - title: "Code"
+    hex_color: "3498db"  # Blue
+  - title: "Writing"
+    hex_color: "1abc9c"  # Teal
+  - title: "Bug"
+    hex_color: "e74c3c"  # Red
+  - title: "Research"
+    hex_color: "9b59b6"  # Purple
+  - title: "Planning"
+    hex_color: "34495e"  # Dark blue-gray
+
+tasks:
+  - title: "Delete this bootstrap project after labels are created"
+    description: |
+      <strong>Goal:</strong> Clean up after label creation<br><br>
+      <strong>Steps:</strong><br>
+      - Verify all 16 labels exist in Vikunja<br>
+      - Go to Vikunja → Projects → GTD Labels System<br>
+      - Delete this project<br><br>
+      <strong>Note:</strong> Deleting project does NOT delete labels<br>
+      Labels are global and will remain available
+    labels:
+      - "Next Action"
+      - "@Quick"
+      - "Low Energy"

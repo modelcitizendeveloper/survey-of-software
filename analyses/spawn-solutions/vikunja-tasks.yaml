@@ -1,0 +1,189 @@
+# spawn-solutions: Technology Intelligence Database
+#
+# "Hardware store for software" - queryable knowledge base of 42+ technology discoveries
+# Tracks DIY tools, Open Standards, and Managed Services with survival analysis
+#
+# Documentation:
+# - README.md - Database overview and quick start
+# - TECHNOLOGY_INTELLIGENCE_SYSTEM.md - Strategic architecture
+# - schema.sql - Database schema (17 tables, 5 views)
+#
+# Research data: ~/spawn-solutions/research/ (42+ discoveries)
+
+project:
+  title: "spawn-solutions Database"
+  description: "Technology intelligence database - schema, data import, recommendation engine"
+  parent_project_id: 13447  # Foundations - capability development
+
+tasks:
+  - title: "GTD Capture: Review database system and create implementation tasks"
+    description: |
+      <strong>Goal:</strong> Capture work for spawn-solutions database implementation<br><br>
+      <strong>Steps:</strong><br>
+      - Review README.md (database overview)<br>
+      - Review TECHNOLOGY_INTELLIGENCE_SYSTEM.md<br>
+      - Review schema.sql (17 tables, 5 views)<br>
+      - Check ~/spawn-solutions/research/ for data import needs<br>
+      - Document implementation priorities<br><br>
+      <strong>System components:</strong><br>
+      - Database schema (discoveries, technologies, use cases, recommendations)<br>
+      - Data import (42+ discoveries from markdown → SQLite)<br>
+      - Query interface (smart recommendations based on requirements)<br>
+      - Survival tracking (10-year probability analysis)<br>
+      - spawn-experiments integration (empirical validation linkage)<br><br>
+      <strong>Current status:</strong><br>
+      - Schema: ✅ Ready (17 tables, 5 views)<br>
+      - Data import: ⏸️ Not started (migration script needed)<br>
+      - Query engine: ⏸️ Not started<br><br>
+      <strong>Deliverables:</strong><br>
+      - Implementation tasks in Vikunja<br>
+      - Data import plan (42+ discoveries)
+    due_date: "2025-11-09"
+    priority: 0
+
+  - title: "Database: Create spawn_solutions.db and verify schema"
+    description: |
+      <strong>Goal:</strong> Initialize SQLite database with complete schema<br><br>
+      <strong>Steps:</strong><br>
+      - cd /home/ivanadamin/spawn-solutions/applications/spawn-solutions<br>
+      - sqlite3 spawn_solutions.db < schema.sql<br>
+      - Verify schema version table<br>
+      - Verify all 17 tables created<br>
+      - Verify all 5 views created<br><br>
+      <strong>Success criteria:</strong><br>
+      - Database file created<br>
+      - All tables present<br>
+      - Schema version 1.0 recorded<br><br>
+      <strong>Next step:</strong><br>
+      - Create data import script
+    due_date: "2025-11-15"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "Code"
+      - "Research"
+
+  - title: "Strategic Planning: Review CERTIFICATION_SYSTEM.md (super ambitious)"
+    description: |
+      <strong>Goal:</strong> Evaluate certification system vision and determine viability<br><br>
+      <strong>Location:</strong> /home/ivanadamin/spawn-solutions/plan/CERTIFICATION_SYSTEM.md<br><br>
+      <strong>Context:</strong><br>
+      - Super ambitious long-term vision<br>
+      - Certification program for spawn-solutions technologies<br>
+      - Potential revenue stream and community building<br><br>
+      <strong>Steps:</strong><br>
+      - Read complete CERTIFICATION_SYSTEM.md<br>
+      - Assess viability (time, cost, market demand)<br>
+      - Identify dependencies (curriculum, platform, partners)<br>
+      - Determine: go/no-go/defer decision<br>
+      - If go: break into implementation phases<br><br>
+      <strong>Key questions:</strong><br>
+      - What's the market for technology certification?<br>
+      - How does this integrate with educational curriculum?<br>
+      - What's the revenue model?<br>
+      - What's the time to first certification issued?<br><br>
+      <strong>Deliverables:</strong><br>
+      - Viability assessment<br>
+      - Go/no-go/defer decision<br>
+      - If go: implementation roadmap
+    due_date: "2025-12-01"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+
+  - title: "Strategic Planning: Review CURRICULUM_VISION.md and EDUCATIONAL_CURRICULUM_VISION.md"
+    description: |
+      <strong>Goal:</strong> Evaluate educational curriculum vision and integration strategy<br><br>
+      <strong>Locations:</strong><br>
+      - /home/ivanadamin/spawn-solutions/plan/CURRICULUM_VISION.md<br>
+      - /home/ivanadamin/spawn-solutions/plan/EDUCATIONAL_CURRICULUM_VISION.md<br><br>
+      <strong>Context:</strong><br>
+      - Ambitious vision for teaching spawn-solutions methodology<br>
+      - Links to certification system<br>
+      - Potential Model Citizen Developer content<br><br>
+      <strong>Steps:</strong><br>
+      - Read both curriculum documents<br>
+      - Identify overlap vs unique content<br>
+      - Assess relationship to certification system<br>
+      - Determine: standalone content vs certification prerequisite<br>
+      - Evaluate delivery channels (blog, course, workshop, conference talks)<br><br>
+      <strong>Integration points:</strong><br>
+      - Model Citizen Developer site (Clients)<br>
+      - Technical talks (Talks)<br>
+      - Certification program (if viable)<br><br>
+      <strong>Deliverables:</strong><br>
+      - Curriculum viability assessment<br>
+      - Integration strategy with other initiatives<br>
+      - Content delivery plan
+    due_date: "2025-12-01"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+
+  - title: "Strategic Planning: Review PROJECT_MARKETPLACE.md"
+    description: |
+      <strong>Goal:</strong> Evaluate project marketplace vision and business model<br><br>
+      <strong>Location:</strong> /home/ivanadamin/spawn-solutions/plan/PROJECT_MARKETPLACE.md<br><br>
+      <strong>Context:</strong><br>
+      - Ambitious vision for marketplace connecting developers with projects<br>
+      - Potential revenue model<br>
+      - Community building opportunity<br><br>
+      <strong>Steps:</strong><br>
+      - Read complete PROJECT_MARKETPLACE.md<br>
+      - Assess market opportunity (who needs this?)<br>
+      - Evaluate business model (fees, revenue share, subscription)<br>
+      - Identify technical requirements (platform, payments, matching)<br>
+      - Determine: build, partner, or defer<br><br>
+      <strong>Key questions:</strong><br>
+      - How is this different from Upwork, Toptal, etc?<br>
+      - What's the unique value proposition?<br>
+      - What's the MVP scope?<br>
+      - What's time/cost to launch?<br><br>
+      <strong>Deliverables:</strong><br>
+      - Market opportunity assessment<br>
+      - Go/no-go/defer decision<br>
+      - If go: MVP scope and launch plan
+    due_date: "2025-12-01"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+
+  - title: "Strategic Planning: Review all remaining plan/ documents"
+    description: |
+      <strong>Goal:</strong> Survey all other planning documents and extract action items<br><br>
+      <strong>Documents to review:</strong><br>
+      - CRM_RESEARCH_POSITIONING_PLAN.md<br>
+      - EXPERIMENT_VALIDATION_CHECKLIST.md<br>
+      - NEXT_STEPS_2025-10-07.md<br>
+      - NEXT_STEPS_2025-10-08.md<br>
+      - NEXT_STEPS_2025-10-17.md<br>
+      - PLATFORM_INTEGRATION_EXPLORATION.md<br>
+      - QRCARDS_FRAMEWORK_WALKTHROUGH.md<br>
+      - QRCARDS_FRAMEWORK_WALKTHROUGH_V2.md<br>
+      - 1.001-099-ALGORITHM_ROADMAP.md (already tracked)<br>
+      - 2.001-099-OPEN_STANDARDS_ROADMAP.md<br>
+      - 3.001-099-MANAGED_SERVICES_ROADMAP.md<br>
+      - 4.001-099-SYSTEM_ARCHITECTURE_ROADMAP.md<br>
+      - 5.001-099-PLATFORM_INTEGRATION_ROADMAP.md<br><br>
+      <strong>For each document:</strong><br>
+      - Read and summarize intent<br>
+      - Identify status (active, deferred, superseded)<br>
+      - Extract action items or decisions needed<br>
+      - Create specific tasks if needed<br>
+      - Archive or consolidate if appropriate<br><br>
+      <strong>Deliverables:</strong><br>
+      - Summary of all plan/ documents<br>
+      - Action items extracted<br>
+      - Cleanup recommendations (archive, consolidate, prioritize)
+    due_date: "2025-12-15"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"

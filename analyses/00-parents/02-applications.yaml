@@ -1,0 +1,36 @@
+# Applications - Parent project for capability application
+#
+# This is a parent project that organizes all application development work:
+# - Large platforms (qrcards, inverse-fractional/learning-lab, SEA)
+# - Tools (project-management, cookbooks, elevator-project)
+# - Backlog projects (boutique-hotel-recs, business-database, etc.)
+#
+# Children will reference this project via parent_project_id after creation
+
+project:
+  title: "Applications"
+  description: "Capability application - tools, platforms, and products built on foundations"
+  hex_color: "#2ecc71"  # Green - growth/application
+
+tasks:
+  - title: "GTD Capture: Review Applications hierarchy"
+    description: |
+      <strong>Goal:</strong> Verify all application projects are properly nested<br><br>
+      <strong>Expected children (12):</strong><br>
+      - qrcards (multi-database creator platform)<br>
+      - schema-evolution-automation (SEA CLI tool)<br>
+      - inverse-fractional (CFO consulting + Learning Lab)<br>
+      - project-management (Vikunja integration suite)<br>
+      - cookbooks (research-to-content conversion)<br>
+      - elevator-project (scheduling simulation)<br>
+      - boutique-hotel-recs (investigation needed)<br>
+      - business-database (investigation needed)<br>
+      - intelligence-portal (investigation needed)<br>
+      - org-chart (investigation needed)<br>
+      - research-lineage-system (investigation needed)<br>
+      - werise (investigation needed)<br><br>
+      <strong>Deliverables:</strong><br>
+      - All 12 children properly linked<br>
+      - Hierarchy visible in Vikunja UI
+    due_date: "2025-11-10"
+    priority: 0

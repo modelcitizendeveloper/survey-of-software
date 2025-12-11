@@ -1,0 +1,29 @@
+# Clients - Parent project for customer-facing work
+#
+# This is a parent project that organizes all client-facing work:
+# - Consulting services (decision-analysis)
+# - QRCards sites (5 sites: ivantohelpyou, model-citizen-developer, etc.)
+#
+# Children will reference this project via parent_project_id after creation
+
+project:
+  title: "Clients"
+  description: "Customer-facing work - consulting services and custom implementations"
+  hex_color: "#e74c3c"  # Red - client/revenue focus
+
+tasks:
+  - title: "GTD Capture: Review Clients hierarchy"
+    description: |
+      <strong>Goal:</strong> Verify all client-facing projects are properly nested<br><br>
+      <strong>Expected children (6):</strong><br>
+      - decision-analysis (live consulting service)<br>
+      - ivantohelpyou (QRCards site)<br>
+      - model-citizen-developer (QRCards site)<br>
+      - convention-city-seattle (QRCards site)<br>
+      - inverse-fractional site (QRCards site)<br>
+      - taelyen (QRCards site)<br><br>
+      <strong>Deliverables:</strong><br>
+      - All 6 children properly linked<br>
+      - Hierarchy visible in Vikunja UI
+    due_date: "2025-11-10"
+    priority: 0

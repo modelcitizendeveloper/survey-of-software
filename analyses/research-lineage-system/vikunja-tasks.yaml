@@ -1,0 +1,45 @@
+# Research Lineage System
+#
+# Status: Evaluate current state
+# Context: Started with basic metadata, need to assess where we are
+
+project:
+  title: "Research Lineage System"
+  description: "Research lineage and metadata tracking system"
+  parent_project_id: 13448  # Applications - capability application
+
+tasks:
+  - title: "Evaluation: Assess current state of research-lineage-system"
+    description: |
+      <strong>Goal:</strong> Understand where we are with this project and how much has been built<br><br>
+      <strong>Context:</strong><br>
+      - Started with basic metadata tracking<br>
+      - Need to evaluate: where are we with this? how much is done?<br><br>
+      <strong>Folder location:</strong> ~/spawn-solutions/applications/research-lineage-system/<br><br>
+      <strong>Assessment questions:</strong><br>
+      - What metadata is currently being tracked?<br>
+      - What systems or code exist?<br>
+      - Is there a database or data model?<br>
+      - What was the original intent/vision?<br>
+      - What remains to be built?<br>
+      - Is this still valuable or should it be archived?<br><br>
+      <strong>Steps:</strong><br>
+      - Review folder contents thoroughly<br>
+      - Check for any code, schemas, or data files<br>
+      - Look for README or design documents<br>
+      - Evaluate completeness (10%? 50%? 90%?)<br>
+      - Determine if it's serving its purpose<br>
+      - Identify gaps or missing components<br><br>
+      <strong>Deliverables:</strong><br>
+      - Current state assessment document<br>
+      - Decision: continue, pause, or archive?<br>
+      - If continuing: Complete task list for remaining work<br>
+      - If pausing: Document reasons and restart conditions<br>
+      - If archiving: Document what was learned
+    due_date: "2025-11-15"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "@DeepWork"
+      - "Research"
