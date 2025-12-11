@@ -1,0 +1,278 @@
+# Inverse Fractional - CFO Decision Analysis & Learning Laboratory
+#
+# Business: CFO Decision Analysis sessions ($200/50-min) + Premium frameworks
+# Learning Lab: Use business as real-world training ground for CFO skills
+# Philosophy: "Hardware Store for Software" - test spawn-solutions research
+#
+# Documentation:
+# - README.md - Business model and learning lab concept
+# - 05-learning-lab/README.md - Complete learning lab framework
+# - 01-operations-requirements/ - Operational stack decisions
+# - 06-portfolio-showcase/ - Public stack documentation
+
+project:
+  title: "IF Learning Lab"
+  description: "CFO consulting + Learning Laboratory - test research, build portfolio, create content"
+  parent_project_id: 13448  # Applications - capability application
+
+tasks:
+  - title: "GTD Capture: Review inverse-fractional folders and create complete task list"
+    description: |
+      <strong>Goal:</strong> Complete GTD capture for Inverse Fractional business + learning lab<br><br>
+      <strong>Folders to review:</strong><br>
+      - 00-business-model/ (financials, unit economics)<br>
+      - 01-operations-requirements/ (stack decisions)<br>
+      - 02-financial-operations/ (CFO operations)<br>
+      - 03-content-creation/ (blog, events like FATE)<br>
+      - 04-delivery-execution/ (Decision Analysis workflow)<br>
+      - 05-learning-lab/ (CFO training experiments)<br>
+      - 06-portfolio-showcase/ (public stack documentation)<br><br>
+      <strong>Key priorities from learning lab:</strong><br>
+      - Month 2-3: Odoo Community implementation<br>
+      - Month 3-4: Cash flow forecasting tool (Python)<br>
+      - Month 4-5: Metabase dashboards<br>
+      - Month 5-6: Portfolio documentation<br><br>
+      <strong>Deliverables:</strong><br>
+      - Complete task list in Vikunja<br>
+      - Learning lab experiments prioritized<br>
+      - Content creation pipeline documented
+    due_date: "2025-11-09"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+
+  - title: "Learning Lab Experiment 1.1: Implement Odoo Community accounting system"
+    description: |
+      <strong>Goal:</strong> Set up full ERP/accounting system for Inverse Fractional<br><br>
+      <strong>Research basis:</strong> 3.006 Accounting Software, 3.502 ERP Platforms<br>
+      <strong>Time investment:</strong> 20-40 hours<br>
+      <strong>ROI:</strong> $5,000/year savings vs QuickBooks + full ERP capabilities<br><br>
+      <strong>Implementation steps:</strong><br>
+      - Research Odoo hosting (Odoo.sh $20/mo vs DigitalOcean $10/mo)<br>
+      - Set up Odoo Community (self-hosted or managed)<br>
+      - Configure chart of accounts<br>
+      - Set up invoicing templates<br>
+      - Configure bank reconciliation<br>
+      - Migrate from Wave (or run parallel)<br><br>
+      <strong>Content deliverables:</strong><br>
+      - Blog: "Odoo vs QuickBooks: CFO's Build vs Buy Analysis"<br>
+      - Blog: "How to Set Up Odoo Community in 1 Weekend"<br>
+      - Documentation: 05-learning-lab/odoo-implementation.md<br>
+      - Portfolio: Full Odoo setup documented in 06-portfolio-showcase/<br><br>
+      <strong>Success criteria:</strong><br>
+      - Odoo running with full accounting<br>
+      - First invoice generated<br>
+      - Bank reconciliation working<br>
+      - Documentation complete<br><br>
+      <strong>Status:</strong> Planned (Year 1, Month 2-3)
+    due_date: "2025-12-15"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "Code"
+      - "Research"
+
+  - title: "Learning Lab Experiment 1.2: Build unit economics simulator (Python + Monte Carlo)"
+    description: |
+      <strong>Goal:</strong> Build interactive unit economics model with scenario analysis<br><br>
+      <strong>Research basis:</strong> 1.120 Discrete Event Sim, 1.122 Monte Carlo, 3.007 FP&A<br>
+      <strong>Time investment:</strong> 30-40 hours<br>
+      <strong>ROI:</strong> $1,200/year savings (vs Causal) + portfolio evidence<br><br>
+      <strong>Key innovation:</strong> Distinguish economic profit (labor as cost) vs cash profit (solo operator)<br><br>
+      <strong>Features to build:</strong><br>
+      - Unit economics calculator (sessions → revenue → costs → profit)<br>
+      - Scenario analysis (best/base/worst case)<br>
+      - Sensitivity analysis (which drivers matter most)<br>
+      - Monte Carlo simulation (probability distributions)<br>
+      - Interactive Jupyter notebook or Streamlit app<br><br>
+      <strong>Content deliverables:</strong><br>
+      - Blog: "I Built My Own FP&A Tool Instead of Paying $1,200/year"<br>
+      - Blog: "Unit Economics Modeling in Python: CFO's Guide"<br>
+      - Blog: "Why Economic Profit ≠ Cash Profit"<br>
+      - GitHub: Open source Python tool<br>
+      - Documentation: 05-learning-lab/unit-economics-simulator.md<br><br>
+      <strong>Status:</strong> Planned (Year 1, Month 3-4)
+    due_date: "2025-12-31"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "Code"
+      - "Research"
+
+  - title: "Learning Lab Experiment 1.3: Build cash flow forecasting tool (Python + 1.127)"
+    description: |
+      <strong>Goal:</strong> Build 13-week cash flow forecast using Python + Monte Carlo<br><br>
+      <strong>Research basis:</strong> 3.004 Cash Flow Management, 1.127 Financial Simulation<br>
+      <strong>Time investment:</strong> 10-20 hours<br>
+      <strong>ROI:</strong> $720/year savings (vs Causal $60/mo)<br><br>
+      <strong>Implementation:</strong><br>
+      - Python script for 13-week rolling forecast<br>
+      - Input: Expected sessions, costs, timing<br>
+      - Output: Weekly cash position + runway<br>
+      - Monte Carlo: Probability of cash out scenarios<br>
+      - Integrate with Odoo data (if possible)<br><br>
+      <strong>Content deliverables:</strong><br>
+      - Blog: "Build vs Buy: Custom Cash Flow Forecasting vs Causal"<br>
+      - Blog: "13-Week Cash Flow Forecast in Python (Tutorial)"<br>
+      - GitHub: Open source tool<br>
+      - Documentation: 05-learning-lab/cash-flow-forecasting.md<br><br>
+      <strong>Status:</strong> Planned (Year 1, Month 4-5)
+    due_date: "2026-01-15"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "Code"
+      - "Research"
+
+  - title: "Learning Lab Experiment 1.4: Build CFO dashboard with Metabase"
+    description: |
+      <strong>Goal:</strong> Build financial dashboard for MRR, burn rate, runway, unit economics<br><br>
+      <strong>Research basis:</strong> 3.044 Data Warehouse, 3.062 Analytics<br>
+      <strong>Time investment:</strong> 8-15 hours<br>
+      <strong>ROI:</strong> $840/year savings (vs Tableau $70/mo)<br><br>
+      <strong>Dashboards to create:</strong><br>
+      - Revenue dashboard (MRR, sessions/month, average session value)<br>
+      - Pipeline dashboard (leads, conversions, funnel)<br>
+      - Financial dashboard (burn rate, runway, cash position)<br>
+      - Unit economics dashboard (CAC, LTV, contribution margin)<br><br>
+      <strong>Content deliverables:</strong><br>
+      - Blog: "CFO Dashboard with Metabase: Free Alternative to Tableau"<br>
+      - Screenshots + SQL queries in portfolio<br>
+      - Documentation: 05-learning-lab/financial-dashboards.md<br><br>
+      <strong>Status:</strong> Planned (Year 1, Month 5-6)
+    due_date: "2026-01-31"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "Code"
+      - "Research"
+
+  - title: "Content: FATE event preparation (November 2025)"
+    description: |
+      <strong>Goal:</strong> Prepare content/presentation for FATE event<br><br>
+      <strong>Event folder:</strong> 03-content-creation/events/2025-11-FATE/<br><br>
+      <strong>Steps:</strong><br>
+      - Review FATE event folder<br>
+      - Check for presentation materials<br>
+      - Identify preparation tasks<br>
+      - Create timeline for delivery<br><br>
+      <strong>Deliverables:</strong><br>
+      - Event preparation complete
+    due_date: "2025-11-20"
+    priority: 5
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "Writing"
+      - "High Energy"
+
+  - title: "Portfolio: Document operational stack in 06-portfolio-showcase/"
+    description: |
+      <strong>Goal:</strong> Create public documentation of Inverse Fractional tech stack<br><br>
+      <strong>Content to create:</strong><br>
+      - my-stack.md (complete technology stack)<br>
+      - build-vs-buy-decisions.md (document each decision)<br>
+      - cost-breakdown.md (transparent costs: $50/month total)<br>
+      - roi-analysis.md (savings vs SaaS alternatives)<br><br>
+      <strong>Stack to document:</strong><br>
+      - Odoo Community (accounting/ERP)<br>
+      - Custom cash flow tool (Python)<br>
+      - Metabase (dashboards)<br>
+      - Hugo (website/blog)<br>
+      - Calendly (scheduling)<br>
+      - Stripe (payments)<br><br>
+      <strong>Success criteria:</strong><br>
+      - Full stack transparency<br>
+      - Build vs buy rationale for each component<br>
+      - Cost comparison with SaaS alternatives<br>
+      - Screenshots and documentation<br><br>
+      <strong>Status:</strong> Planned (Year 1, Month 5-6)
+    due_date: "2026-02-15"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "Writing"
+
+  - title: "CXO Offering: Integrate project management tool into service"
+    description: |
+      <strong>Goal:</strong> Add Vikunja project management as part of CXO effectiveness offering<br><br>
+      <strong>Context:</strong><br>
+      - Resource for CXOs (CFO, CTO, etc.)<br>
+      - Pitch: Working with them to enhance their effectiveness<br>
+      - Project management tool (Vikunja) could be part of that offering<br><br>
+      <strong>Value proposition:</strong><br>
+      - Help CXOs organize their work using GTD methodology<br>
+      - Demonstrate open-source PM tool vs expensive SaaS alternatives<br>
+      - Package with decision analysis and CFO consulting services<br><br>
+      <strong>Implementation ideas:</strong><br>
+      - Create "CXO Effectiveness Package" including PM setup<br>
+      - Offer Vikunja setup and GTD training as add-on service<br>
+      - Document PM methodology as part of learning lab<br>
+      - Use as case study for build vs buy decisions<br><br>
+      <strong>Success criteria:</strong><br>
+      - PM offering defined and priced<br>
+      - Integrated into inverse-fractional service menu<br>
+      - At least one client using PM service
+    due_date: "2025-12-15"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "Planning"
+      - "Writing"
+
+  - title: "CXO Offering: Develop effectiveness assessment framework"
+    description: |
+      <strong>Goal:</strong> Create structured approach to assess and enhance CXO effectiveness<br><br>
+      <strong>Framework components:</strong><br>
+      - Time management assessment<br>
+      - Decision-making processes<br>
+      - Tool stack audit (what are they using? what's the cost?)<br>
+      - Build vs buy analysis for their context<br>
+      - Productivity optimization recommendations<br><br>
+      <strong>Deliverables:</strong><br>
+      - Assessment questionnaire or interview script<br>
+      - Scoring/evaluation rubric<br>
+      - Recommendations template<br>
+      - Pricing for assessment service<br><br>
+      <strong>Use case:</strong><br>
+      - Entry point for CXO consulting relationships<br>
+      - Demonstrates value before larger engagement<br>
+      - Leads to ongoing advisory or implementation work<br><br>
+      <strong>Success criteria:</strong><br>
+      - Framework documented<br>
+      - Pilot assessment completed with 1-2 CXOs<br>
+      - Refinements made based on pilot feedback
+    due_date: "2025-12-31"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+      - "Writing"
+
+  - title: "CXO Offering: Create case study template for portfolio building"
+    description: |
+      <strong>Goal:</strong> Develop case study format to showcase CXO engagements<br><br>
+      <strong>Case study structure:</strong><br>
+      - Client context (industry, role, challenges) - anonymized<br>
+      - Assessment findings (what we discovered)<br>
+      - Recommendations made<br>
+      - Implementation (what we built/changed)<br>
+      - Results and ROI (time saved, cost saved, effectiveness gained)<br><br>
+      <strong>Use cases for case studies:</strong><br>
+      - Marketing material for future CXO clients<br>
+      - Blog content for inverse-fractional site<br>
+      - Portfolio demonstration of methodology<br>
+      - Learning lab documentation<br><br>
+      <strong>Success criteria:</strong><br>
+      - Template created<br>
+      - At least one case study completed (can be hypothetical or real)<br>
+      - Published on inverse-fractional site or portfolio
+    due_date: "2026-01-15"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "Writing"

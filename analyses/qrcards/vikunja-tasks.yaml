@@ -1,0 +1,130 @@
+# QRCards - Production Platform
+#
+# Real codebase location: ~/qrcards
+# This tracks implementation work, not strategic analysis
+#
+# Strategic assessments live in this directory (applications/qrcards/*.md)
+# but the actual implementation work happens in ~/qrcards
+
+project:
+  title: "QRCards"
+  description: "Multi-database creator platform - implementation and infrastructure work"
+  parent_project_id: 13448  # Applications - capability application
+
+tasks:
+  - title: "GTD Capture: Review ~/qrcards for open items"
+    description: |
+      <strong>Goal:</strong> Capture all open work in ~/qrcards codebase<br><br>
+      <strong>Steps:</strong><br>
+      - Search for TODO/FIXME comments in ~/qrcards<br>
+      - Check ~/qrcards README, ROADMAP, STATUS files<br>
+      - Review any open branches<br>
+      - List infrastructure tasks (Render migration, etc.)<br>
+      - Document current priorities<br><br>
+      <strong>Key known items:</strong><br>
+      - Render migration (2.050_PAAS_STRATEGIC_ASSESSMENT.md)<br>
+      - Other implementation work (TBD after review)<br><br>
+      <strong>Deliverables:</strong><br>
+      - Complete task list in Vikunja<br>
+      - Priorities identified
+    due_date: "2025-11-09"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+
+  - title: "Infrastructure: Execute Render migration from PythonAnywhere"
+    description: |
+      <strong>Goal:</strong> Migrate QRCards to Render hosting<br><br>
+      <strong>Based on:</strong> 2.050_PAAS_STRATEGIC_ASSESSMENT.md<br>
+      <strong>Cost savings:</strong> $147/year<br><br>
+      <strong>Scope:</strong><br>
+      - Main app deployment<br>
+      - 7 customer subdomains<br>
+      - 101 SQLite databases<br>
+      - DNS migration<br>
+      - SSL certificates<br><br>
+      <strong>Success criteria:</strong><br>
+      - Zero downtime cutover<br>
+      - All customer sites working<br>
+      - Performance maintained or improved<br><br>
+      <strong>Note:</strong> Break into sprints after reviewing migration complexity
+    due_date: "2025-11-30"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "Code"
+      - "High Energy"
+
+  - title: "Strategic Assessments: Review and action X.XXX- reports"
+    description: |
+      <strong>Goal:</strong> Review all strategic assessment reports and create action items<br><br>
+      <strong>Reports to review:</strong> (in ~/spawn-solutions/applications/qrcards/)<br>
+      - 1.047_CACHING_DYNAMIC_PATHS_STRATEGY.md<br>
+      - 1.050-COMPRESSION_STRATEGIC_ANALYSIS.md<br>
+      - 1.071-DIMENSIONALITY_REDUCTION_STRATEGIC_ANALYSIS.md<br>
+      - 1.074-GRADIENT_BOOSTING_STRATEGIC_ANALYSIS.md<br>
+      - 1.080-IMAGE_PROCESSING_STRATEGIC_ANALYSIS.md<br>
+      - 1.082-TASK_QUEUE_STRATEGIC_ANALYSIS.md<br>
+      - 1.110-QRCARDS_FRONTEND_MODERNIZATION_ANALYSIS.md<br>
+      - 2.001-PAYMENT_PROCESSING_STRATEGIC_ANALYSIS.md<br>
+      - 2.001+2.020_SERVICE_SUBTRACTION_STRATEGY.md<br>
+      - 2.010_WAF_WEBHOOK_SECURITY_IMPLEMENTATION.md<br>
+      - 2.050_PAAS_STRATEGIC_ASSESSMENT.md (already have task for this)<br>
+      - 2.060_APPLICATION_MONITORING_STRATEGIC_ASSESSMENT.md<br>
+      - 2.060_APPLICATION_MONITORING_ADDENDUM.md<br>
+      - 2.061_UPTIME_MONITORING_STRATEGIC_ASSESSMENT.md<br>
+      - 2.062+2.063_ANALYTICS_STRATEGIC_ASSESSMENT.md<br>
+      - 3.012_AUTHENTICATION_STRATEGIC_ASSESSMENT.md<br>
+      - 3.040_DATABASE_STRATEGIC_ASSESSMENT.md<br><br>
+      <strong>For each report:</strong><br>
+      - Read recommendations section<br>
+      - Identify actionable items<br>
+      - Assess priority (critical, important, nice-to-have)<br>
+      - Create specific implementation tasks in Vikunja<br>
+      - Note dependencies or blockers<br><br>
+      <strong>Success criteria:</strong><br>
+      - All 17 reports reviewed<br>
+      - Action items extracted and prioritized<br>
+      - Implementation tasks created for high-priority items
+    due_date: "2025-11-20"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+
+  - title: "Trail Creation: Implement Phase 0 manual process"
+    description: |
+      <strong>Goal:</strong> Implement minimum viable trail creation process<br><br>
+      <strong>Based on:</strong> TRAIL_CREATION_IMPLEMENTATION_ROADMAP.md<br>
+      <strong>Location:</strong> ~/spawn-solutions/applications/qrcards/TRAIL_CREATION_IMPLEMENTATION_ROADMAP.md<br><br>
+      <strong>Phase 0 deliverables:</strong> (from roadmap Section 2)<br>
+      - trail-intake-form.md template<br>
+      - trail-creation-checklist.md template<br>
+      - QR code generation script<br>
+      - Customer onboarding email templates<br>
+      - Pricing tiers defined<br>
+      - Timeline established (2-3 weeks per trail)<br><br>
+      <strong>Time investment:</strong> 12-17 hours<br>
+      <strong>Output:</strong> Ready to onboard first paying customer<br><br>
+      <strong>Why this matters:</strong><br>
+      - Validates market demand before building automation<br>
+      - Generates revenue immediately<br>
+      - Identifies automation opportunities through real-world usage<br><br>
+      <strong>Next steps:</strong><br>
+      - Review full roadmap (sections 2-10)<br>
+      - Create sub-tasks for each Phase 0 deliverable<br>
+      - Complete documentation and tooling<br>
+      - Identify first customer prospect
+    due_date: "2025-12-01"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "Planning"
+      - "Writing"

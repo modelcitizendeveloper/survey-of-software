@@ -1,0 +1,39 @@
+# Spawn Intelligence Platform
+#
+# Umbrella for spawn-experiments, spawn-solutions, and spawn-analysis
+# "The Hardware Store for Software" - systematic intelligence for build-vs-buy decisions
+#
+# Documentation:
+# - README.md - Platform overview and ecosystem guide
+# - STRATEGIC_VISION.md - Full strategic context and business case
+
+project:
+  title: "Spawn Intelligence Platform"
+  description: "Platform coordination - strategic vision, documentation, and cross-project integration"
+  parent_project_id: 13447  # Foundations - capability development
+
+tasks:
+  - title: "GTD Capture: Review Spawn platform documentation and identify open items"
+    description: |
+      <strong>Goal:</strong> Capture platform-level work (not individual spawn-* projects)<br><br>
+      <strong>Steps:</strong><br>
+      - Review README.md (platform overview)<br>
+      - Review STRATEGIC_VISION.md<br>
+      - Check for cross-project integration work<br>
+      - Document any platform-level decisions needed<br><br>
+      <strong>Note:</strong><br>
+      Individual spawn-* projects have their own tasks:<br>
+      - spawn-experiments (separate project)<br>
+      - spawn-solutions (separate project)<br>
+      - spawn-analysis (separate project)<br><br>
+      This project is for platform-wide coordination only.<br><br>
+      <strong>Deliverables:</strong><br>
+      - Platform-level tasks in Vikunja<br>
+      - Cross-project integration tasks identified
+    due_date: "2025-11-09"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"

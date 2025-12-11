@@ -1,0 +1,16 @@
+# Org Chart
+#
+# Status: Needs investigation
+
+project:
+  title: "Org Chart"
+  description: "Organization chart tool - needs investigation"
+  parent_project_id: 13448  # Applications - capability application
+
+tasks:
+  - title: "GTD Capture: Investigate org-chart"
+    description: |
+      <strong>Goal:</strong> Understand project scope and capture open items<br><br>
+      <strong>Deliverables:</strong> Task list if work is needed
+    due_date: "2025-11-10"
+    priority: 0

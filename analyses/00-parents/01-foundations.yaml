@@ -1,0 +1,28 @@
+# Foundations - Parent project for capability development
+#
+# This is a parent project that organizes all capability development work:
+# - spawn-* ecosystem (spawn, spawn-experiments, spawn-solutions, spawn-analysis)
+# - spawn-patents (IP strategy for QRCards)
+#
+# Children will reference this project via parent_project_id after creation
+
+project:
+  title: "Foundations"
+  description: "Capability development - spawn-* ecosystem and research infrastructure"
+  hex_color: "#3498db"  # Blue - foundational/infrastructure
+
+tasks:
+  - title: "GTD Capture: Review Foundations hierarchy"
+    description: |
+      <strong>Goal:</strong> Verify all capability development projects are properly nested<br><br>
+      <strong>Expected children:</strong><br>
+      - spawn (platform coordination)<br>
+      - spawn-experiments (methodology tracking)<br>
+      - spawn-solutions (technology intelligence)<br>
+      - spawn-analysis (decision analysis content)<br>
+      - spawn-patents (IP strategy)<br><br>
+      <strong>Deliverables:</strong><br>
+      - All 5 children properly linked<br>
+      - Hierarchy visible in Vikunja UI
+    due_date: "2025-11-10"
+    priority: 0

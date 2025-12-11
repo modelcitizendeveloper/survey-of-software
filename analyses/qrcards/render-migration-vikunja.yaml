@@ -1,0 +1,274 @@
+# Render Migration - Infrastructure Subproject
+#
+# Purpose: Migrate QRCards platform from PythonAnywhere to Render.com
+# Cost Savings: $147/year
+# Parent: Infrastructure (14214) under Applications (13448)
+
+project:
+  project_id: 14242  # Add tasks to existing Render Migration subproject
+  title: "Render Migration"
+  description: "Migrate QRCards hosting from PythonAnywhere to Render.com - 7 customer subdomains, 101 SQLite databases"
+
+tasks:
+  # PLANNING PHASE - COMPLETE
+  - title: "✅ Planning: Complete comprehensive migration documentation"
+    description: |
+      <strong>Status:</strong> COMPLETED (Nov 19, 2025)<br><br>
+      <strong>Deliverables:</strong><br>
+      <strong>Migration Planning (19 documents):</strong><br>
+      - Migration strategy and plans (V2 with git subtree approach)<br>
+      - Monorepo deployment strategy<br>
+      - Infrastructure inventory (7 sites, 101 databases)<br>
+      - Git subtree deep dive and quick reference<br>
+      - Migration priority and architecture clarifications<br>
+      - Render architecture evolution<br>
+      - TDD DevOps guide<br>
+      - WSGI/Gunicorn migration guide<br>
+      - Environment variable investigation<br>
+      - Docker architecture compatibility<br>
+      - Multi-package deployment strategy<br>
+      - Private repo security setup<br><br>
+      <strong>Site Migration (12 documents):</strong><br>
+      - Deployment strategy and process planning<br>
+      - Deployment procedures and cookbooks<br>
+      - Runtime database persistence<br>
+      - Backup endpoint implementation<br>
+      - Local backup scripts<br>
+      - Pricing analysis<br>
+      - Model Citizen deployment log<br>
+      - Cookbooks deployment plan<br>
+      - Immediate next steps<br>
+      - Quick reference guide<br><br>
+      <strong>Output:</strong> 31 files, 12,704 lines of documentation<br>
+      <strong>Location:</strong> ~/qrcards/project/render-migration/<br><br>
+      <strong>Commit:</strong> b6eead02 (docs: Add comprehensive Render migration planning)
+    done: true
+    labels:
+      - "Writing"
+      - "@Computer"
+      - "Planning"
+
+  - title: "✅ Quick Proof: Deploy newsletter.modelcitizendeveloper.com to Render"
+    description: |
+      <strong>Status:</strong> COMPLETED (Nov 2025)<br><br>
+      <strong>Goal:</strong> Validate Render deployment process with low-risk site<br><br>
+      <strong>Site:</strong> newsletter.modelcitizendeveloper.com<br>
+      <strong>Approach:</strong> Simple newsletter site, minimal database complexity<br><br>
+      <strong>Success Criteria:</strong><br>
+      - Site deployed and accessible<br>
+      - SSL certificate working<br>
+      - Performance acceptable<br>
+      - Deployment process documented<br><br>
+      <strong>Note:</strong> This was the proof-of-concept migration
+    done: true
+    labels:
+      - "@Computer"
+      - "Code"
+
+  - title: "✅ Quick Proof: Deploy cookbooks.modelcitizendeveloper.com to Render"
+    description: |
+      <strong>Status:</strong> COMPLETED (Nov 2025)<br><br>
+      <strong>Goal:</strong> Second validation of Render deployment process<br><br>
+      <strong>Site:</strong> cookbooks.modelcitizendeveloper.com<br>
+      <strong>Approach:</strong> Content-focused site, testing static asset delivery<br><br>
+      <strong>Success Criteria:</strong><br>
+      - Site deployed and accessible<br>
+      - SSL certificate working<br>
+      - Static assets loading correctly<br>
+      - Performance acceptable<br><br>
+      <strong>Note:</strong> Second successful Render deployment
+    done: true
+    labels:
+      - "@Computer"
+      - "Code"
+
+  # PYTHONANYWHERE SUBDOMAIN MIGRATION - PENDING
+  - title: "Investigation: Subdomain architecture for PythonAnywhere sites"
+    description: |
+      <strong>Goal:</strong> Understand how to migrate PythonAnywhere subdomains to Render<br><br>
+      <strong>Context:</strong><br>
+      - newsletter.modelcitizendeveloper.com ✅ (migrated)<br>
+      - cookbooks.modelcitizendeveloper.com ✅ (migrated)<br>
+      - BUT: Customer subdomains on PythonAnywhere NOT yet migrated<br><br>
+      <strong>Sites on PythonAnywhere to Migrate:</strong><br>
+      - [List customer subdomains from infrastructure inventory]<br>
+      - Estimated: 7 customer sites<br>
+      - Associated: 101 SQLite databases<br><br>
+      <strong>Investigation Tasks:</strong><br>
+      - Review PythonAnywhere subdomain configuration<br>
+      - Understand database dependencies per subdomain<br>
+      - Identify any subdomain-specific customizations<br>
+      - Map DNS requirements for subdomain migration<br>
+      - Determine batch vs sequential migration strategy<br>
+      - Estimate downtime per subdomain<br><br>
+      <strong>Success Criteria:</strong><br>
+      - Complete list of PythonAnywhere subdomains<br>
+      - Migration approach documented<br>
+      - Risk assessment complete<br>
+      - Go/no-go decision criteria defined
+    priority: 3
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+
+  - title: "Planning: Create subdomain migration runbook"
+    description: |
+      <strong>Goal:</strong> Detailed step-by-step migration procedure for each subdomain<br><br>
+      <strong>Runbook Contents:</strong><br>
+      - Pre-migration checklist (backups, testing, customer notification)<br>
+      - Migration steps (database export, code deployment, DNS cutover)<br>
+      - Post-migration validation (smoke tests, monitoring)<br>
+      - Rollback procedures (if migration fails)<br>
+      - Customer communication templates<br><br>
+      <strong>Per-Subdomain Tasks:</strong><br>
+      - Backup SQLite databases<br>
+      - Export environment variables<br>
+      - Deploy code to Render<br>
+      - Configure DNS<br>
+      - Test thoroughly<br>
+      - Monitor for 24 hours<br><br>
+      <strong>Success Criteria:</strong><br>
+      - Runbook can be followed without referring to other docs<br>
+      - All edge cases documented<br>
+      - Rollback procedures tested
+    priority: 2
+    blocked_by:
+      - "Investigation: Subdomain architecture for PythonAnywhere sites"
+    labels:
+      - "@Computer"
+      - "Planning"
+      - "Writing"
+
+  - title: "Test Migration: Migrate lowest-risk subdomain to Render"
+    description: |
+      <strong>Goal:</strong> Execute first PythonAnywhere subdomain migration as test<br><br>
+      <strong>Selection Criteria for Test Subdomain:</strong><br>
+      - Lowest traffic<br>
+      - Fewest databases<br>
+      - Minimal customization<br>
+      - Internal/personal site (not paying customer)<br><br>
+      <strong>Migration Steps:</strong><br>
+      - Follow runbook exactly<br>
+      - Document any deviations or issues<br>
+      - Measure actual downtime<br>
+      - Validate all functionality<br>
+      - Monitor for 48 hours<br><br>
+      <strong>Success Criteria:</strong><br>
+      - Zero data loss<br>
+      - All functionality working<br>
+      - Performance equal or better<br>
+      - Runbook validated/updated<br>
+      - Ready to migrate customer sites
+    priority: 2
+    blocked_by:
+      - "Planning: Create subdomain migration runbook"
+    labels:
+      - "@Computer"
+      - "Code"
+      - "High Energy"
+
+  - title: "Customer Migration: Migrate remaining PythonAnywhere subdomains"
+    description: |
+      <strong>Goal:</strong> Migrate all customer sites from PythonAnywhere to Render<br><br>
+      <strong>Scope:</strong><br>
+      - ~7 customer subdomains<br>
+      - ~101 SQLite databases<br>
+      - All associated static assets<br>
+      - DNS cutover per subdomain<br><br>
+      <strong>Migration Strategy:</strong><br>
+      - Sequential (one at a time) or batch approach<br>
+      - Customer notification 48 hours in advance<br>
+      - Maintenance window scheduling<br>
+      - 24-hour monitoring per migration<br><br>
+      <strong>Success Criteria:</strong><br>
+      - All customer sites migrated<br>
+      - Zero data loss<br>
+      - Zero customer complaints<br>
+      - PythonAnywhere account ready to close<br>
+      - $147/year cost savings achieved
+    priority: 1
+    blocked_by:
+      - "Test Migration: Migrate lowest-risk subdomain to Render"
+    labels:
+      - "@Computer"
+      - "Code"
+      - "High Energy"
+
+  # FIFA DEMO - SEPARATE TRACK
+  - title: "FIFA Demo: Deploy Mexico Demo Trail on Render"
+    description: |
+      <strong>Goal:</strong> Deploy FIFA Mexico demo trail as standalone Render deployment<br><br>
+      <strong>Context:</strong><br>
+      - FIFA demo is separate from main QRCards platform<br>
+      - Opportunity to test Render deployment with real demo<br>
+      - Can proceed in parallel with subdomain migration<br><br>
+      <strong>Tasks:</strong><br>
+      - Review FIFA demo requirements<br>
+      - Configure Render deployment<br>
+      - Set up demo database<br>
+      - Deploy and test<br>
+      - Share demo URL<br><br>
+      <strong>Success Criteria:</strong><br>
+      - Demo accessible via public URL<br>
+      - All FIFA demo functionality working<br>
+      - Performance acceptable for demo purposes
+    priority: 2
+    labels:
+      - "@Computer"
+      - "Code"
+
+  # POST-MIGRATION
+  - title: "Documentation: Document Render Migration Results"
+    description: |
+      <strong>Goal:</strong> Capture lessons learned and final results<br><br>
+      <strong>Documentation Topics:</strong><br>
+      - Total migration timeline<br>
+      - Issues encountered and resolutions<br>
+      - Performance comparison (PythonAnywhere vs Render)<br>
+      - Cost analysis (actual vs projected)<br>
+      - Lessons learned<br>
+      - Recommendations for future migrations<br><br>
+      <strong>Metrics to Document:</strong><br>
+      - Total sites migrated: 9 (2 Model Citizen + 7 customer)<br>
+      - Total databases migrated: 101<br>
+      - Total downtime per site<br>
+      - Cost savings: $147/year<br>
+      - Performance improvement: X%<br><br>
+      <strong>Success Criteria:</strong><br>
+      - Complete post-mortem document<br>
+      - Lessons learned captured<br>
+      - Future migrations can reference this
+    priority: 1
+    blocked_by:
+      - "Customer Migration: Migrate remaining PythonAnywhere subdomains"
+    labels:
+      - "@Computer"
+      - "Writing"
+
+  - title: "Cleanup: Close PythonAnywhere account"
+    description: |
+      <strong>Goal:</strong> Decommission PythonAnywhere after successful migration<br><br>
+      <strong>Pre-Closure Checklist:</strong><br>
+      - [ ] All sites migrated and validated<br>
+      - [ ] All databases backed up locally<br>
+      - [ ] All environment variables documented<br>
+      - [ ] No active customer traffic to PythonAnywhere<br>
+      - [ ] 30-day monitoring period complete<br>
+      - [ ] Final backups created<br><br>
+      <strong>Closure Steps:</strong><br>
+      - Download final backup of all data<br>
+      - Cancel PythonAnywhere subscription<br>
+      - Update documentation to remove PA references<br>
+      - Archive PA credentials securely<br><br>
+      <strong>Success Criteria:</strong><br>
+      - PythonAnywhere account closed<br>
+      - $147/year savings realized<br>
+      - All data safely archived
+    priority: 1
+    blocked_by:
+      - "Documentation: Document Render Migration Results"
+    labels:
+      - "@Computer"
+      - "Code"

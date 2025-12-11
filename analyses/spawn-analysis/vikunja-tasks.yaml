@@ -1,0 +1,43 @@
+# spawn-analysis Content Delivery System
+#
+# Database-driven progressive content delivery for decision reports
+# Problem: 13,000+ line reports are overwhelming
+# Solution: SQLite + chunking + staged delivery + feedback tracking
+#
+# Real tool location: ~/spawn-analysis
+# This folder: Content delivery system planning
+
+project:
+  title: "spawn-analysis Content Delivery"
+  description: "Progressive content delivery system - database schema, staging, multi-format export"
+  parent_project_id: 13447  # Foundations - capability development
+
+tasks:
+  - title: "GTD Capture: Review content delivery system and create implementation tasks"
+    description: |
+      <strong>Goal:</strong> Capture work for spawn-analysis content delivery system<br><br>
+      <strong>Steps:</strong><br>
+      - Review README.md (progressive delivery architecture)<br>
+      - Review CONTENT_DELIVERY_STRATEGY.md<br>
+      - Review schema.sql (10 tables, 4 views)<br>
+      - Check ~/spawn-analysis for actual tool status<br>
+      - Document integration needs<br><br>
+      <strong>System components:</strong><br>
+      - Content chunking (executive summary, methodologies, appendices)<br>
+      - Progressive disclosure (Stage 1 → 2 → 3)<br>
+      - Multi-format export (email, PDF, web, Notion)<br>
+      - Feedback loops (tracking + LLM parsing)<br>
+      - Analytics (engagement, requests, drop-off)<br><br>
+      <strong>Current status:</strong><br>
+      - Schema designed (10 tables, 4 views)<br>
+      - Implementation status: TBD (check ~/spawn-analysis)<br><br>
+      <strong>Deliverables:</strong><br>
+      - Implementation tasks in Vikunja<br>
+      - Integration plan with ~/spawn-analysis tool
+    due_date: "2025-11-09"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"

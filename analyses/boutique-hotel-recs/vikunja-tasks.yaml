@@ -1,0 +1,35 @@
+# Boutique Hotel Recommendations
+#
+# Status: ON HOLD
+# Context: QRCards-related series of sprints to make platform viable for deployment at small hotels
+
+project:
+  title: "Boutique Hotel Recommendations"
+  description: "QRCards hotel deployment initiative - ON HOLD pending QRCards readiness"
+  parent_project_id: 13448  # Applications - capability application
+
+tasks:
+  - title: "ON HOLD: Review boutique-hotel-recs scope and restart path"
+    description: |
+      <strong>Status:</strong> ON HOLD - not currently active<br><br>
+      <strong>Context:</strong> This is a QRCards-related series of sprints to make the platform viable for deployment at small boutique hotels.<br><br>
+      <strong>Folder location:</strong> ~/spawn-solutions/applications/boutique-hotel-recs/<br><br>
+      <strong>What this is:</strong><br>
+      - Initiative to adapt QRCards for hotel recommendation use case<br>
+      - Series of feature sprints for hotel-specific functionality<br>
+      - Deployment strategy for small hotel market<br><br>
+      <strong>Where to start when resuming:</strong><br>
+      - Review folder contents in ~/spawn-solutions/applications/boutique-hotel-recs/<br>
+      - Check for existing sprint plans or requirements documents<br>
+      - Review QRCards platform readiness (see qrcards project)<br>
+      - Identify what hotel-specific features are needed<br>
+      - Define MVP for first hotel deployment<br><br>
+      <strong>Dependencies:</strong><br>
+      - QRCards platform must be production-ready<br>
+      - May depend on specific QRCards features (content types, templates, etc.)<br><br>
+      <strong>Next action:</strong> When ready to resume, start by reviewing folder contents and defining current state
+    priority: 0
+    labels:
+      - "Someday/Maybe"
+      - "@Computer"
+      - "Planning"

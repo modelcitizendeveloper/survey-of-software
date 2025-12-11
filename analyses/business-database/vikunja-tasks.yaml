@@ -1,0 +1,37 @@
+# Business Database
+#
+# Status: ON HOLD
+# Context: "Tent card" concept where businesses can refer one another via QRCards
+
+project:
+  title: "Business Database"
+  description: "Tent card referral network - ON HOLD pending QRCards readiness"
+  parent_project_id: 13448  # Applications - capability application
+
+tasks:
+  - title: "ON HOLD: Review business-database tent card concept"
+    description: |
+      <strong>Status:</strong> ON HOLD - not currently active<br><br>
+      <strong>Context:</strong> This supports the "tent card" concept where businesses can refer one another using QRCards platform.<br><br>
+      <strong>Folder location:</strong> ~/spawn-solutions/applications/business-database/<br><br>
+      <strong>What this is:</strong><br>
+      - Business referral network built on QRCards<br>
+      - Tent cards (table-top displays) with QR codes<br>
+      - Businesses promote each other's services<br>
+      - Database of participating businesses and relationships<br><br>
+      <strong>Where to start when resuming:</strong><br>
+      - Review folder contents in ~/spawn-solutions/applications/business-database/<br>
+      - Check for business model or network design documents<br>
+      - Review QRCards platform capabilities for multi-business scenarios<br>
+      - Define referral mechanics (how do businesses benefit from referring?)<br>
+      - Identify pilot businesses or market segment<br><br>
+      <strong>Dependencies:</strong><br>
+      - QRCards platform must be production-ready<br>
+      - May need specific QRCards features (multi-business support, analytics sharing)<br>
+      - Business model must be defined (revenue sharing, membership fees, etc.)<br><br>
+      <strong>Next action:</strong> When ready to resume, start by reviewing folder contents and defining tent card use case
+    priority: 0
+    labels:
+      - "Someday/Maybe"
+      - "@Computer"
+      - "Planning"
