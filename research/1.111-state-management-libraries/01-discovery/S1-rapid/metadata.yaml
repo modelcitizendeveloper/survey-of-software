@@ -1,0 +1,94 @@
+id: "1.111"
+title: "State Management Libraries"
+category: "Frontend"
+status: "S1-complete"
+started: "2025-12-12"
+completed: "2025-12-12"
+methodology: "MPSE"
+
+research_question: |
+  What are the leading state management libraries for React and Vue in 2025?
+  How do they compare in terms of API complexity, bundle size, performance, and ecosystem?
+
+libraries_profiled:
+  react:
+    - name: "Redux Toolkit"
+      github_stars: 11086
+      npm_weekly_downloads: 6523888
+      bundle_size: "~33KB"
+      paradigm: "flux/reducer"
+      status: "mature"
+
+    - name: "Zustand"
+      github_stars: 56076
+      npm_weekly_downloads: 15428170
+      bundle_size: "~3KB"
+      paradigm: "flux-inspired"
+      status: "mature"
+
+    - name: "Jotai"
+      github_stars: 20800
+      npm_weekly_downloads: 9300000
+      bundle_size: "~2KB"
+      paradigm: "atomic"
+      status: "mature"
+
+    - name: "MobX"
+      github_stars: 28103
+      npm_weekly_downloads: 2318232
+      bundle_size: "~16KB"
+      paradigm: "reactive/observable"
+      status: "mature"
+
+    - name: "Recoil"
+      github_stars: 19500
+      npm_weekly_downloads: 500000
+      bundle_size: "~22KB"
+      paradigm: "atomic"
+      status: "archived"  # Jan 1, 2025
+
+    - name: "TanStack Store"
+      github_stars: 800
+      npm_weekly_downloads: 50000
+      bundle_size: "~2KB"
+      paradigm: "signal-based"
+      status: "emerging"
+
+  vue:
+    - name: "Pinia"
+      github_stars: 13500
+      npm_weekly_downloads: 3200000
+      bundle_size: "~1KB"
+      paradigm: "store-based"
+      status: "official"
+
+key_findings:
+  - finding: "Zustand dominates React state management with 56K stars and 15M weekly downloads"
+    implication: "Default choice for most React projects in 2025"
+
+  - finding: "Recoil archived by Facebook on Jan 1, 2025"
+    implication: "Migrate away from Recoil to Jotai or Zustand"
+
+  - finding: "Redux Toolkit still leads enterprise adoption despite lower downloads than Zustand"
+    implication: "Established teams stay with Redux; new projects often choose Zustand"
+
+  - finding: "Pinia is official Vue state management, replacing Vuex"
+    implication: "No competition in Vue ecosystem - use Pinia"
+
+  - finding: "TanStack Store emerging as signal-based alternative"
+    implication: "Watch for adoption growth, especially in TanStack ecosystem"
+
+recommendations:
+  default: "Zustand"
+  enterprise_react: "Redux Toolkit"
+  fine_grained_react: "Jotai"
+  vue: "Pinia"
+  reactive_programming: "MobX"
+  tanstack_ecosystem: "TanStack Store"
+
+sources:
+  - "https://dev.to/hijazi313/state-management-in-2025-when-to-use-context-redux-zustand-or-jotai-2d2k"
+  - "https://betterstack.com/community/guides/scaling-nodejs/zustand-vs-redux-toolkit-vs-jotai/"
+  - "https://pinia.vuejs.org/"
+  - "https://github.com/facebookexperimental/Recoil"
+  - "https://tanstack.com/store/latest/docs/overview"
