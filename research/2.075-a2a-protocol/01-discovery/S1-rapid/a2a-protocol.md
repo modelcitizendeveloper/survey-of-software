@@ -11,8 +11,6 @@
 
 A2A is an open protocol for **agent-to-agent communication**, enabling AI agents from different vendors to discover each other, negotiate interactions, and collaborate on tasks. It complements MCP (which handles agent↔tool integration) by providing **horizontal integration** between autonomous agents.
 
-**Key insight for SMCP**: A2A is designed for agent-level communication (higher abstraction), while SMCP's Roshumba/Naomi are MCP-server-level (lower abstraction). A2A could potentially serve as SMCP's inter-server protocol, but may be overkill for tightly-coupled local MCP orchestration.
-
 ---
 
 ## Protocol Overview
@@ -218,53 +216,22 @@ async def call_agent():
 ┌─────────────────────────────────────────────────────────────┐
 │                     Agent Application                        │
 │                                                              │
-│   ┌─────────────┐         A2A          ┌─────────────┐     │
-│   │   Agent A   │◄────────────────────►│   Agent B   │     │
-│   └──────┬──────┘                      └──────┬──────┘     │
-│          │ MCP                                │ MCP        │
-│          ▼                                    ▼            │
-│   ┌─────────────┐                      ┌─────────────┐     │
-│   │   Tools     │                      │   Tools     │     │
-│   │ (Database,  │                      │ (APIs,      │     │
-│   │  APIs, etc) │                      │  Services)  │     │
-│   └─────────────┘                      └─────────────┘     │
+│   ┌─────────────┐         A2A          ┌─────────────┐      │
+│   │   Agent A   │◄────────────────────►│   Agent B   │      │
+│   └──────┬──────┘                      └──────┬──────┘      │
+│          │ MCP                                │ MCP         │
+│          ▼                                    ▼             │
+│   ┌─────────────┐                      ┌─────────────┐      │
+│   │   Tools     │                      │   Tools     │      │
+│   │ (Database,  │                      │ (APIs,      │      │
+│   │  APIs, etc) │                      │  Services)  │      │
+│   └─────────────┘                      └─────────────┘      │
 └─────────────────────────────────────────────────────────────┘
 ```
 
 **Official guidance**: "Use MCP for tools and A2A for agents"
 - Tools = primitives with structured I/O and well-known behavior
 - Agents = autonomous applications that reason and interact
-
----
-
-## Relevance to SMCP
-
-### SMCP Components vs A2A
-
-| SMCP Component | A2A Equivalent | Assessment |
-|----------------|----------------|------------|
-| **Paulina** (Registry) | Agent Cards | Similar capability discovery. A2A uses HTTP well-known URLs; SMCP uses local YAML. |
-| **Roshumba** (Router) | A2A Client | A2A could replace Roshumba for inter-MCP calls. |
-| **Naomi** (Event Bus) | Push Notifications | A2A has webhooks but not full pub/sub. SMCP's Naomi is richer. |
-| **Kathy** (Config) | — | No A2A equivalent. SMCP value-add. |
-| **Gail** (Logger) | — | No A2A equivalent. SMCP value-add. |
-| **Judith** (Workflows) | — | No A2A equivalent. SMCP value-add. |
-| **Stacey** (Orchestrator) | — | No A2A equivalent. SMCP value-add. |
-
-### Recommendation for SMCP
-
-**Option 1: Use A2A for Roshumba**
-- Pros: Standards-compliant, future-proof, interoperable with external agents
-- Cons: Heavier weight for local MCP-to-MCP calls, requires HTTP server per MCP
-
-**Option 2: Keep custom protocol, expose A2A gateway**
-- Pros: Optimized for local IPC (Unix sockets), simpler for tightly-coupled MCPs
-- Cons: Two protocols to maintain
-
-**Option 3: Hybrid approach** (Recommended)
-- Internal SMCP communication: Unix sockets (fast, local)
-- External agent communication: A2A gateway via Roshumba
-- Best of both: Speed for local, interoperability for external
 
 ---
 
@@ -286,13 +253,44 @@ async def call_agent():
 
 ---
 
-## Implementation Checklist for SMCP Integration
+## Use Cases
 
-- [ ] Evaluate: Can each MCP server expose an Agent Card?
-- [ ] Prototype: A2A client in Roshumba calling external A2A agents
-- [ ] Decide: Internal protocol (Unix sockets vs A2A)
-- [ ] Build: A2A gateway for external agent interop
-- [ ] Test: Multi-agent scenarios (vikunja → external agent)
+### 1. Task Delegation
+
+A customer service agent delegates billing inquiries to a specialized billing agent.
+
+### 2. Multi-Agent Coordination
+
+A travel agent coordinates with flight, hotel, and activity agents to plan a trip.
+
+### 3. Enterprise Integration
+
+Different departments' AI agents collaborate across organizational boundaries.
+
+### 4. Tool + Agent Hybrid
+
+Agent uses MCP to access its tools (databases, APIs) and A2A to collaborate with other agents.
+
+---
+
+## Security Considerations
+
+- **TLS 1.3+** required for all communication
+- **Authentication schemes**: API Key, HTTP Auth, OAuth2, OIDC, mTLS
+- **Agent Cards** declare supported auth schemes
+- **Extended Agent Cards** available post-authentication with enhanced capabilities
+- Treat external agents as potentially untrusted entities
+
+---
+
+## Comparison with Other Protocols
+
+| Protocol | Focus | Governance | Maturity |
+|----------|-------|------------|----------|
+| **MCP** | Agent↔Tool | Linux Foundation (AAIF) | Production |
+| **A2A** | Agent↔Agent | Linux Foundation | Production (v0.3) |
+| **ACP** | Message infrastructure | Linux Foundation | Emerging |
+| **ANP** | Decentralized networks | Cisco | Early |
 
 ---
 
@@ -305,11 +303,3 @@ async def call_agent():
 - [A2A GitHub Repository](https://github.com/a2aproject/A2A)
 - [Google Developers Blog - A2A Announcement](https://developers.googleblog.com/en/a2a-a-new-era-of-agent-interoperability/)
 - [Linux Foundation A2A Launch](https://www.linuxfoundation.org/press/linux-foundation-launches-the-agent2agent-protocol-project-to-enable-secure-intelligent-communication-between-ai-agents)
-
----
-
-## Next Steps
-
-1. **S2 Research** (if needed): Deep dive into A2A security model, authentication patterns
-2. **Prototype**: Build minimal A2A server wrapper for an MCP server
-3. **SMCP Decision**: Finalize Roshumba architecture (A2A vs custom vs hybrid)
