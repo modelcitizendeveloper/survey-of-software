@@ -1,0 +1,63 @@
+id: "2.075"
+title: "A2A (Agent2Agent Protocol)"
+tier: 2
+category: "AI Agent Communication Standards"
+status: "s1-complete"
+governance: "Linux Foundation (A2A Project)"
+initiated_by: "Google"
+spec_version: "0.3"
+
+dates:
+  created: "2025-12-18"
+  s1_completed: "2025-12-18"
+
+summary: |
+  Open protocol for agent-to-agent communication, enabling AI agents from
+  different vendors to discover, negotiate, and collaborate. Complements MCP
+  (agent↔tool) with horizontal integration (agent↔agent).
+
+key_findings:
+  - "A2A = agent↔agent, MCP = agent↔tool (complementary, not competing)"
+  - "Task-based model with lifecycle (submitted→working→completed)"
+  - "Agent Cards for capability discovery (/.well-known/agent.json)"
+  - "JSON-RPC 2.0 over HTTP(S), with SSE streaming and webhook push"
+  - "150+ organizations adopted, Linux Foundation governance"
+  - "Python SDK: pip install a2a-sdk"
+
+smcp_relevance:
+  overlap:
+    - "Paulina (Registry) ↔ Agent Cards - similar discovery"
+    - "Roshumba (Router) ↔ A2A Client - could use A2A for inter-MCP"
+  no_overlap:
+    - "Kathy (Config) - no A2A equivalent"
+    - "Gail (Logger) - no A2A equivalent"
+    - "Naomi (Event Bus) - A2A webhooks weaker than full pub/sub"
+    - "Judith (Workflows) - no A2A equivalent"
+    - "Stacey (Orchestrator) - no A2A equivalent"
+  recommendation: |
+    Hybrid approach: Unix sockets for internal SMCP communication (fast),
+    A2A gateway for external agent interoperability.
+
+adoption:
+  github_stars: 21100
+  organizations: 150+
+  sdks: ["Python", "Go", "JavaScript", "Java", ".NET"]
+  major_adopters:
+    - "Google"
+    - "Atlassian"
+    - "Salesforce"
+    - "SAP"
+    - "LangChain"
+    - "ServiceNow"
+
+sources:
+  - "https://a2a-protocol.org/latest/specification/"
+  - "https://github.com/a2aproject/A2A"
+  - "https://github.com/a2aproject/a2a-python"
+
+tags:
+  - "agent-communication"
+  - "interoperability"
+  - "linux-foundation"
+  - "json-rpc"
+  - "smcp-relevant"
