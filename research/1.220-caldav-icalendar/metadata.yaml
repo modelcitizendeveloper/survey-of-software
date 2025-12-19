@@ -7,22 +7,32 @@ updated: 2025-12-19
 bead: solutions-abwd
 
 summary: |
-  Python libraries for calendar sync: icalendar (parsing, 4.7M/month),
-  caldav (CalDAV client, 107K/month). Recommendation: icalendar + caldav
-  for Vikunja integration. vobject is legacy.
+  Python libraries for calendar formats and protocols.
+  icalendar (4.7M/month) for RFC 5545 parsing.
+  caldav (107K/month) for CalDAV client.
+  vobject (783K/month) legacy, use only for vCard.
 
 key_findings:
-  - icalendar is de facto standard for RFC 5545 parsing (4.7M downloads/month)
-  - caldav v2.2 adds RFC 6764 auto-discovery (Nextcloud, etc)
+  - icalendar is de facto standard for RFC 5545 (4.7M downloads/month)
+  - caldav v2.2 (Dec 2025) adds RFC 6764 auto-discovery
   - vobject is legacy - prefer icalendar unless need vCard
-  - Google Calendar doesn't accept external CalDAV writes
-  - Proton Calendar has no CalDAV/API support
+  - caldav depends on icalendar internally
+  - Google Calendar: read-only CalDAV, no external writes
+  - Proton Calendar: no CalDAV/API support
 
-recommendation: |
-  Use icalendar + caldav for Vikunja calendar integration.
-  caldav handles CalDAV protocol, icalendar handles ICS format.
-
-next_steps:
-  - Test caldav with Vikunja CalDAV endpoint
-  - Benchmark icalendar parsing performance
-  - Test RRULE expansion for recurring events
+libraries:
+  icalendar:
+    downloads: 4.7M/month
+    version: 6.3.2
+    python: "3.8-3.13"
+    use_for: "Parse/generate ICS files"
+  caldav:
+    downloads: 107K/month
+    version: 2.2.3
+    python: "3.9+"
+    use_for: "CalDAV server communication"
+  vobject:
+    downloads: 783K/month
+    version: 1.x
+    python: "3.8+"
+    use_for: "Legacy, vCard support"
