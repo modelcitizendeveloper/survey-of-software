@@ -116,13 +116,43 @@ User: config add https://tasks.mycompany.com vkt_abc123
 
 Bot: ✓ Connected to tasks.mycompany.com
 
-     Detected permissions:
-     ✓ Read tasks
-     ✓ Write tasks
-     ✓ Read projects
-
      Found 3 projects, 27 tasks.
      Your data stays on your server.
+
+     To verify token permissions: config test
+```
+
+### Permission Testing (Explicit)
+
+```
+User: config test
+
+Bot: Testing permissions on tasks.mycompany.com...
+
+     Creating test task... ✓
+     Reading tasks... ✓
+     Updating task... ✓
+     Deleting test task... ✓
+
+     ✓ Full read/write access confirmed.
+```
+
+Read-only token:
+
+```
+User: config test
+
+Bot: Testing permissions on tasks.mycompany.com...
+
+     Reading tasks... ✓
+     Creating test task... ✗ (403 Forbidden)
+
+     This token is read-only. I can show your tasks
+     but can't add or modify them.
+
+     For full features, add these scopes to your token:
+     • tasks:write
+     • projects:write
 ```
 
 ---
@@ -160,6 +190,7 @@ Bot: ✓ Added "fix bug" to work
 ```
 config add [url] [token]           Add a vikunja
 config add [url] [token] --name X  Add with alias
+config test                        Test token permissions (explicit)
 config remove [name]               Remove vikunja
 config list                        Show all vikunjae
 config default [name]              Set default vikunja
