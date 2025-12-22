@@ -1,7 +1,8 @@
-# 19: Matrix Platform Recommendation for Factumerit
+# 21: Matrix Platform Recommendation for Factumerit
 
 **Date**: 2025-12-22
-**Status**: Recommendation
+**Status**: DECIDED
+**Decision**: Self-host Dendrite on existing Render ($0 additional)
 **Context**: Slack bot platform evaluation for Vikunja integration
 **Research**: 3.023 Team Chat, 1.230 Open Social Networks
 
@@ -71,31 +72,25 @@ This alignment means:
 | **Admin API** | Full access | Gated (Enterprise Grid) |
 | **Data Ownership** | Complete | Salesforce |
 
-### 3. Bridge Strategy
+### 3. Architecture (Simplified)
 
-Matrix bridges enable:
-- **Gradual migration**: Keep Slack users during transition
-- **Multi-platform reach**: Single bot serves Matrix + Slack + Discord
-- **No flag day**: Users migrate at their own pace
+Single-user deployment (no bridges needed):
 
 ```
 ┌─────────────────────────────────────────────────┐
 │              Factumerit Matrix Room             │
 │                                                 │
-│  Native Matrix users ←→ Bot ←→ Vikunja API     │
+│       User ←→ Matrix Bot ←→ Vikunja API        │
 │                                                 │
-└─────────────┬───────────────────┬───────────────┘
-              │                   │
-      ┌───────▼───────┐   ┌───────▼───────┐
-      │  Slack Bridge │   │ Discord Bridge│
-      │   (mautrix)   │   │   (mautrix)   │
-      └───────────────┘   └───────────────┘
-              │                   │
-      ┌───────▼───────┐   ┌───────▼───────┐
-      │  Slack Users  │   │ Discord Users │
-      │  (existing)   │   │   (future)    │
-      └───────────────┘   └───────────────┘
+└─────────────────────────────────────────────────┘
+                      │
+              ┌───────▼───────┐
+              │    Dendrite   │
+              │   (Render)    │
+              └───────────────┘
 ```
+
+Note: Bridges available later if multi-platform needed (mautrix-slack, mautrix-discord).
 
 ### 4. Government/Enterprise Precedent
 
@@ -175,47 +170,22 @@ await client.sync_forever()
 
 ## Hosting Decision
 
-### Option A: Element Cloud ($100/mo)
+**Decision**: Self-host Dendrite on existing Render
 
-**Pros**:
-- Zero ops
-- Managed backups
-- Support included
-- Professional reliability
-
-**Cons**:
-- Cost ($1,200/year)
-- Data on Element's servers
-
-**Recommendation**: Start here for speed
-
-### Option B: Self-host Dendrite on Render
-
-**Pros**:
-- $0 additional (use existing Render)
+**Why Dendrite**:
+- $0 additional cost (use existing Render allocation)
 - Full data control
-- Learn the platform
+- Lighter than Synapse (Go vs Python)
+- Good for single-user/small deployments
 
-**Cons**:
-- Ops burden
-- Dendrite less mature than Synapse
-- Backup responsibility
+**Render deployment**:
+- Add Dendrite as new service (~256MB RAM)
+- PostgreSQL: share existing or add free tier
+- Persistent disk for media (optional)
 
-**Recommendation**: Consider after MVP proven
-
-### Option C: matrix.org (Free)
-
-**Pros**:
-- $0
-- No setup
-
-**Cons**:
-- No custom domain
-- Slow during peak
-- No SLA
-- Limited admin control
-
-**Recommendation**: Testing only, not production
+**Not considered**:
+- Element Cloud ($100/mo) - over budget
+- matrix.org (free) - no custom domain, no SLA
 
 ---
 
@@ -231,46 +201,45 @@ await client.sync_forever()
 
 ---
 
-## Cost Comparison (100 users, 1 year)
+## Cost Comparison
 
-| Platform | Setup | Year 1 | Year 2+ |
-|----------|-------|--------|---------|
-| **Slack Pro** | $0 | $10,500 | $10,500 |
-| **Element Cloud** | $0 | $1,200 | $1,200 |
-| **Self-host Dendrite** | 4h | $0 | $0 |
-| **matrix.org** | $0 | $0 | $0 |
+| Platform | Monthly | Notes |
+|----------|---------|-------|
+| **Current Slack** | $0 | Free tier, limited |
+| **Dendrite (self-host)** | $0 | Existing Render allocation |
+| **Element Cloud** | $100 | Not considered |
 
-**Savings vs Slack**: $9,300/year (Element Cloud) or $10,500/year (self-host)
+**Result**: $0 additional cost for Matrix migration
 
 ---
 
 ## Decision
 
-**Recommended Path**:
+**Decided Path**:
 
-1. **Week 1**: Start with Element Cloud ($100/mo)
-   - Fast setup
-   - Prove bot works on Matrix
-   - No ops burden
+1. **Week 1**: Self-host Dendrite on existing Render
+   - $0 additional cost
+   - Full data control
+   - Deploy alongside existing Vikunja + bot services
 
-2. **Month 2-3**: Evaluate self-hosting
-   - If Element Cloud working well, stay
-   - If cost-sensitive, migrate to Dendrite
+2. **Week 2**: Port bot to matrix-nio
+   - Replace Slack SDK with matrix-nio
+   - Same Vikunja API integration
+   - Test E2EE verification flow
 
-3. **Month 3+**: Sunset Slack
-   - Bridge keeps compatibility during transition
-   - Full Matrix adoption
+3. **Week 3+**: Go live on Matrix
+   - No bridge needed (single Slack user migrates directly)
+   - Decommission Slack bot
 
 ---
 
 ## Next Steps
 
-1. [ ] Sign up for Element Cloud trial
-2. [ ] Create Factumerit space structure
+1. [ ] Deploy Dendrite on Render
+2. [ ] Create Factumerit space structure (#general, #tasks)
 3. [ ] Port Slack bot to matrix-nio
-4. [ ] Setup mautrix-slack bridge
-5. [ ] Invite first users
-6. [ ] Document onboarding flow
+4. [ ] Test E2EE device verification
+5. [ ] Go live, decommission Slack
 
 ---
 
