@@ -55,7 +55,7 @@
 | Codebase | vikunja-slack-bot | Reuse 58 MCP tools, multi-instance |
 | Matrix client | matrix-nio | Python, async, E2EE ready |
 | Matrix server | Dendrite (self-hosted) | Permanent identity `@bot:factumerit.app` |
-| Parser | Regex (MVP) | Simple, no LLM overhead |
+| Parser | RapidFuzz | Fuzzy matching, typo-tolerant (research: 1.002) |
 | Hosting | Existing + Dendrite | +$9/mo for Dendrite |
 
 **LLM Strategy (TBD - not MVP)**:
@@ -200,7 +200,7 @@ vikunja_mcp/
 ├── server.py              # Existing: MCP + Slack (58 tools)
 ├── matrix_client.py       # NEW: matrix-nio wrapper
 ├── matrix_handlers.py     # NEW: Message → tool routing
-└── matrix_parser.py       # NEW: Regex command parser
+└── matrix_parser.py       # NEW: RapidFuzz command matching
 
 # Reuse from existing:
 # - Multi-instance config (~/.vikunja-mcp/config.yaml)
@@ -213,7 +213,37 @@ vikunja_mcp/
 dependencies = [
     # ... existing ...
     "matrix-nio[e2e]>=0.21",
+    "rapidfuzz>=3.0",
 ]
+```
+
+**Parser implementation (from 1.002 research):**
+```python
+from rapidfuzz import process, fuzz
+
+COMMANDS = {
+    "list tasks": "list_tasks",
+    "show tasks": "list_tasks",
+    "what's due": "list_tasks",
+    "add task": "create_task",
+    "done": "complete_task",
+    "config add": "config_add",
+    "config test": "config_test",
+    "switch": "switch_instance",
+}
+
+def parse_command(user_input: str) -> tuple[str | None, str]:
+    """Returns (command, remaining_args) or (None, original) if no match."""
+    match, score, _ = process.extractOne(
+        user_input.lower(),
+        COMMANDS.keys(),
+        scorer=fuzz.WRatio
+    )
+    if score > 70:
+        # Extract args after matched command
+        args = user_input[len(match):].strip()
+        return COMMANDS[match], args
+    return None, user_input
 ```
 
 ---
@@ -227,21 +257,22 @@ dependencies = [
 4. **Test federation** - Verify matrix.org users can see the server
 
 ### Phase 2: Matrix Bot
-5. **Add matrix-nio** - `uv add matrix-nio[e2e]`
+5. **Add dependencies** - `uv add matrix-nio[e2e] rapidfuzz`
 6. **Matrix client wrapper** - Connect to Dendrite, receive DMs
-7. **Wire to existing tools** - Reuse vikunja-mcp 58 tools
-8. **Message handlers** - Route Matrix messages to tools
-9. **Test BYOV** - Connect your existing vikunjae
+7. **Fuzzy parser** - RapidFuzz command matching (typo-tolerant)
+8. **Wire to existing tools** - Reuse vikunja-mcp 58 tools
+9. **Message handlers** - Route Matrix messages to tools
+10. **Test BYOV** - Connect your existing vikunjae
 
 ### Phase 3: One-Click Provisioning
-10. **Provisioning endpoint** - Adapt existing OAuth callback for Matrix
-11. **Onboarding flow** - DM → link → hosted vikunja created
-12. **Test end-to-end** - New user gets working vikunja via Matrix
+11. **Provisioning endpoint** - Adapt existing OAuth callback for Matrix
+12. **Onboarding flow** - DM → link → hosted vikunja created
+13. **Test end-to-end** - New user gets working vikunja via Matrix
 
 ### Phase 4: Deploy & Announce
-13. **Deploy to Render** - Push bot update
-14. **Test from Element** - Full flow as external user
-15. **Announce in Vikunja Matrix room** - Distribution channel
+14. **Deploy to Render** - Push bot update
+15. **Test from Element** - Full flow as external user
+16. **Announce in Vikunja Matrix room** - Distribution channel
 
 ---
 
