@@ -7,37 +7,44 @@
 
 ## MVP Definition
 
-**Goal**: Bot responds to DMs, connects to user's Vikunja, does basic task CRUD.
+**Goal**: Feature parity with Slack bot on Matrix platform.
 
-**Not Goal**: One-click provisioning, LLM parsing, multi-vikunjae, cloud LLM.
+**MVP includes**:
+- One-click provisioning (hosted vikunja account)
+- BYOV (bring your own vikunja)
+- Full task CRUD via 58 MCP tools
+- Multi-vikunjae support
+- Permanent bot identity (`@bot:factumerit.app`)
+
+**Not MVP** (future):
+- Local LLM (Ollama)
+- Cloud LLM (BYOK)
+- Templates/Interview features
 
 ---
 
 ## MVP Features
 
-### In Scope
+### In Scope (Parity with Slack bot)
 
-| Feature | Commands | Priority |
-|---------|----------|----------|
-| **Connect vikunja** | `config add [url] [token]` | P0 |
-| **List tasks** | `what's due today`, `show tasks` | P0 |
-| **Add task** | `add [title]` | P0 |
-| **Complete task** | `done [id]` | P0 |
-| **Test permissions** | `config test` | P1 |
-| **Show config** | `config list` | P1 |
-| **Remove vikunja** | `config remove` | P1 |
-| **Help** | `help` | P1 |
+| Feature | Description | Priority |
+|---------|-------------|----------|
+| **Dendrite** | Self-hosted Matrix server | P0 |
+| **One-click provisioning** | New user → hosted vikunja in one click | P0 |
+| **BYOV** | Connect existing vikunja | P0 |
+| **58 MCP tools** | Full task/project/label CRUD | P0 |
+| **Multi-vikunjae** | Connect multiple instances | P0 |
+| **Permission testing** | `config test` | P0 |
+| **Instance switching** | `switch_instance`, `list_instances` | P0 |
 
-### Out of Scope (Later Phases)
+### Out of Scope (Future)
 
 | Feature | Phase |
 |---------|-------|
-| One-click provisioning | 2 |
-| Own Dendrite | 2 |
-| Local LLM (Ollama) | 3 |
-| Multi-vikunjae | 3 |
-| Cloud LLM (BYOK) | 3 |
-| Templates/Interview | 4 |
+| Local LLM (Ollama) | 2 |
+| Cloud LLM (BYOK) | 2 |
+| Templates | 3 |
+| Interview feature | 3 |
 
 ---
 
@@ -165,26 +172,21 @@ And confirms
 
 ## Acceptance Criteria
 
-### Must Have (MVP)
-- [ ] Bot responds to DMs on matrix.org
-- [ ] `config add` connects to Vikunja, stores encrypted token
-- [ ] `what's due today` lists tasks
-- [ ] `add [title]` creates task
-- [ ] `done [id]` completes task
-- [ ] Bot handles errors gracefully (invalid token, network issues)
+### Must Have (MVP = Slack parity)
+- [ ] Dendrite running at `matrix.factumerit.app`
+- [ ] Federation works (matrix.org users can DM bot)
+- [ ] Bot responds to DMs as `@bot:factumerit.app`
+- [ ] One-click provisioning creates hosted vikunja
+- [ ] BYOV connects to user's vikunja
+- [ ] All 58 MCP tools accessible via Matrix
+- [ ] Multi-vikunjae support (switch_instance, list_instances)
+- [ ] Permission testing (`config test`)
 
-### Should Have (MVP+)
-- [ ] `config test` probes permissions
-- [ ] `config list` shows connection
-- [ ] `config remove` deletes connection
-- [ ] `help` shows available commands
-
-### Won't Have (MVP)
-- Own Dendrite
-- Natural language parsing (LLM)
-- Multiple vikunjae per user
-- One-click provisioning
-- Cloud LLM analysis
+### Won't Have (Future)
+- Local LLM (Ollama)
+- Cloud LLM (BYOK)
+- Templates
+- Interview feature
 
 ---
 
@@ -218,17 +220,28 @@ dependencies = [
 
 ## Implementation Order
 
+### Phase 1: Dendrite
 1. **Deploy Dendrite** - New Render service, `matrix.factumerit.app`
 2. **Configure federation** - DNS, .well-known, TLS
 3. **Create bot account** - `@bot:factumerit.app`
-4. **Add matrix-nio** - `uv add matrix-nio[e2e]`
-5. **Matrix client wrapper** - Connect to Dendrite, receive DMs
-6. **Regex parser** - Simple command matching
-7. **Wire to existing tools** - Reuse vikunja-mcp tools
-8. **Config commands** - Reuse instance management
-9. **Test locally** - DM bot from Element
-10. **Deploy bot update** - Push to existing Render service
-11. **Test federation** - DM from matrix.org user
+4. **Test federation** - Verify matrix.org users can see the server
+
+### Phase 2: Matrix Bot
+5. **Add matrix-nio** - `uv add matrix-nio[e2e]`
+6. **Matrix client wrapper** - Connect to Dendrite, receive DMs
+7. **Wire to existing tools** - Reuse vikunja-mcp 58 tools
+8. **Message handlers** - Route Matrix messages to tools
+9. **Test BYOV** - Connect your existing vikunjae
+
+### Phase 3: One-Click Provisioning
+10. **Provisioning endpoint** - Adapt existing OAuth callback for Matrix
+11. **Onboarding flow** - DM → link → hosted vikunja created
+12. **Test end-to-end** - New user gets working vikunja via Matrix
+
+### Phase 4: Deploy & Announce
+13. **Deploy to Render** - Push bot update
+14. **Test from Element** - Full flow as external user
+15. **Announce in Vikunja Matrix room** - Distribution channel
 
 ---
 
