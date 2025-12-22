@@ -16,7 +16,6 @@ platforms_analyzed:
   - name: "Matrix"
     sdk: "matrix-nio"
     language: "Python"
-    recommendation: "primary"
   - name: "Discord"
     sdk: "discord.py"
     language: "Python"
@@ -31,13 +30,13 @@ platforms_analyzed:
     language: "Python"
 
 key_findings:
-  - "matrix-nio recommended for Factumerit (Python, E2EE, self-host)"
   - "Discord has best slash command UX but centralized"
   - "Telegram fastest MVP (2-4h) but centralized"
+  - "Matrix only option with E2EE + self-hosting"
   - "Matrix lacks native slash commands (use ! prefix)"
-  - "Nostr lacks interactive components"
+  - "Nostr lacks interactive components, has Lightning payments"
 
-trigger: "Factumerit platform decision - bot SDK evaluation"
+trigger: "Bot SDK comparison for chat platform integrations"
 
 tags:
   - "bot-sdk"
