@@ -22,12 +22,23 @@
 
 ## Target Architecture on Render
 
-**Option A: Add Matrix client to existing MCP server**
+**Production architecture** (permanent bot identity from day one):
 
 ```
 ┌──────────────────────────────────────────────────────────────────┐
 │                      RENDER DASHBOARD                             │
 │                                                                   │
+│  ┌──────────────────┐                                            │
+│  │ Dendrite         │  (NEW $9/mo)                               │
+│  │ matrix.factumerit│                                            │
+│  │ .app             │                                            │
+│  │                  │                                            │
+│  │ Bot account:     │                                            │
+│  │ @bot:factumerit  │                                            │
+│  │ .app             │                                            │
+│  └────────┬─────────┘                                            │
+│           │                                                       │
+│           ▼                                                       │
 │  ┌─────────────────────────────────────────────────────────────┐ │
 │  │ vikunja-mcp (existing $9/mo)                                │ │
 │  │                                                              │ │
@@ -52,31 +63,14 @@
 │                                                                   │
 └───────────────────────────────────────────────────────────────────┘
 
-Total: $18/mo (no change)
+Total: $27/mo (+$9 for Dendrite)
 ```
 
-**Option B: Separate Matrix service + own Dendrite**
-
-```
-┌──────────────────────────────────────────────────────────────────┐
-│                      RENDER DASHBOARD                             │
-│                                                                   │
-│  ┌──────────────────┐  ┌──────────────────┐                      │
-│  │ vikunja-mcp      │  │ factumerit-matrix│                      │
-│  │ (existing $9)    │  │ (NEW $9)         │                      │
-│  │ Slack + MCP      │  │ Dendrite + Bot   │                      │
-│  └──────────────────┘  └──────────────────┘                      │
-│                                                                   │
-│  ┌──────────────────┐                                            │
-│  │ vikunja          │  (existing $9)                             │
-│  └──────────────────┘                                            │
-│                                                                   │
-└───────────────────────────────────────────────────────────────────┘
-
-Total: $27/mo (+$9)
-```
-
-**Recommendation**: Start with Option A (add Matrix to existing service), move to Option B if needed.
+**Why Dendrite from day one**:
+- Permanent bot identity: `@bot:factumerit.app`
+- No migration later (users don't have to re-add bot)
+- Custom domain for branding
+- Built to last
 
 ---
 
@@ -238,33 +232,29 @@ def parse_message(text: str) -> dict | None:
 
 ## Deployment Steps
 
-### Phase 1: Bot Only (BYOV)
+### Phase 1: Dendrite + Bot
 
-1. **Create PostgreSQL** on Render (free tier)
-2. **Deploy factumerit-bot** as Background Worker
-   - Connect to PostgreSQL
-   - Connect to existing Dendrite/matrix.org (use matrix.org first)
+1. **Deploy Dendrite** as Web Service on Render
+   - Configure DNS for `matrix.factumerit.app`
+   - Set up federation (.well-known or SRV)
+   - Create bot account `@bot:factumerit.app`
+2. **Add matrix-nio** to vikunja-slack-bot
+   - Connect to Dendrite
+   - Implement message handlers
+   - Wire to existing vikunja-mcp tools
 3. **Test BYOV flow** with your vikunjae
-4. **Iterate on parser/responses**
+4. **Test federation** from Element (matrix.org users can DM bot)
 
-### Phase 2: Own Dendrite
-
-1. **Deploy factumerit-dendrite** as Web Service
-2. **Configure DNS** for `matrix.factumerit.app`
-3. **Create bot account** on new Dendrite
-4. **Update bot** to connect to own Dendrite
-5. **Test federation** with matrix.org users
-
-### Phase 3: Local LLM
+### Phase 2: Local LLM (Future)
 
 1. **Upgrade bot service** to handle Ollama memory
 2. **Add Ollama** to Dockerfile
 3. **Implement LLM routing**
 4. **Test natural language parsing**
 
-### Phase 4: One-Click Provisioning
+### Phase 3: One-Click Provisioning (Future)
 
-1. **Add provisioning endpoints** to bot (or separate service)
+1. **Add provisioning endpoints** to bot
 2. **Configure Vikunja admin API** access
 3. **Test one-click flow**
 4. **Announce in Vikunja Matrix room**
@@ -273,14 +263,18 @@ def parse_message(text: str) -> dict | None:
 
 ## Cost Projection
 
-| Phase | Change | Monthly Cost |
-|-------|--------|--------------|
+| Phase | Services | Monthly Cost |
+|-------|----------|--------------|
 | Current | Vikunja + Slack/MCP | **$18** |
-| + Matrix (Option A) | Add matrix-nio to existing | **$18** (no change) |
-| + Own Dendrite (Option B) | New service | **$27** (+$9) |
-| + Ollama upgrade | RAM for LLM | **$36+** (TBD) |
+| + Dendrite | Matrix homeserver | **$27** (+$9) |
+| + Ollama (future) | RAM upgrade for LLM | **$36+** (TBD) |
 
-**Key insight**: Shared codebase means Matrix is free if we add to existing service.
+**Breakdown**:
+- Vikunja: $9/mo (existing)
+- Slack/MCP + Matrix bot: $9/mo (existing, add matrix-nio)
+- Dendrite: $9/mo (new)
+
+**Total at launch**: $27/mo
 
 ---
 
