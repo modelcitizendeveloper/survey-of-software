@@ -28,17 +28,18 @@
 ┌──────────────────────────────────────────────────────────────────┐
 │                      RENDER DASHBOARD                             │
 │                                                                   │
-│  ┌──────────────────┐                                            │
-│  │ Dendrite         │  (NEW $9/mo)                               │
-│  │ matrix.factumerit│                                            │
-│  │ .app             │                                            │
-│  │                  │                                            │
-│  │ Bot account:     │                                            │
-│  │ @bot:factumerit  │                                            │
-│  │ .app             │                                            │
-│  └────────┬─────────┘                                            │
-│           │                                                       │
-│           ▼                                                       │
+│  ┌──────────────────┐  ┌──────────────────┐                     │
+│  │ Dendrite         │  │ MAS              │  (NEW $9-18/mo)     │
+│  │ matrix.factumerit│  │ (Matrix Auth     │                     │
+│  │ .app             │◄►│  Service)        │                     │
+│  │                  │  │                  │                     │
+│  │ Bot account:     │  │ OIDC provider    │                     │
+│  │ @bot:factumerit  │  │ for Vikunja      │                     │
+│  │ .app             │  │                  │                     │
+│  └────────┬─────────┘  └────────┬─────────┘                     │
+│           │                     │                                │
+│           │                     │ "Login with Matrix"            │
+│           ▼                     ▼                                │
 │  ┌─────────────────────────────────────────────────────────────┐ │
 │  │ vikunja-mcp (existing $9/mo)                                │ │
 │  │                                                              │ │
@@ -58,18 +59,19 @@
 │                                                                   │
 │  ┌─────────────────────┐                                         │
 │  │ vikunja.factumerit  │  (existing $9/mo)                       │
-│  │ .app                │                                         │
+│  │ .app                │◄── OIDC from MAS                        │
 │  └─────────────────────┘                                         │
 │                                                                   │
 └───────────────────────────────────────────────────────────────────┘
 
-Total: $27/mo (+$9 for Dendrite)
+Total: $27-36/mo (+$9-18 for Dendrite + MAS)
 ```
 
-**Why Dendrite from day one**:
+**Why Dendrite + MAS from day one**:
 - Permanent bot identity: `@bot:factumerit.app`
 - No migration later (users don't have to re-add bot)
 - Custom domain for branding
+- "Login with Matrix" for Vikunja (web access for provisioned users)
 - Built to last
 
 ---
@@ -119,7 +121,52 @@ client_api:
 
 **Health Check**: `GET /health`
 
-### 2. factumerit-bot
+### 2. factumerit-mas (Matrix Authentication Service)
+
+**Type**: Web Service
+**Runtime**: Docker
+**Cost**: $9/mo (Starter) or bundled with Dendrite
+
+**Purpose**: OIDC provider enabling "Login with Matrix" for Vikunja
+
+**Docker Image**: `ghcr.io/element-hq/matrix-authentication-service:latest`
+
+**Environment Variables**:
+```
+MAS_CONFIG=/config/config.yaml
+DATABASE_URL=<from Render PostgreSQL>
+```
+
+**Key Configuration** (config.yaml):
+```yaml
+http:
+  listeners:
+    - name: web
+      resources:
+        - name: human
+        - name: oauth
+        - name: compat
+
+upstream_oauth2:
+  providers: []
+
+matrix:
+  homeserver: matrix.factumerit.app
+  endpoint: https://matrix.factumerit.app
+
+clients:
+  - client_id: vikunja
+    client_auth_method: client_secret_post
+    client_secret: <secret>
+    redirect_uris:
+      - https://vikunja.factumerit.app/auth/openid/matrix/callback
+```
+
+**Custom Domain**: `auth.factumerit.app` (or same as Dendrite with path routing)
+
+**Health Check**: `GET /health`
+
+### 3. factumerit-bot
 
 **Type**: Background Worker (no public port)
 **Runtime**: Docker
@@ -232,32 +279,39 @@ def parse_message(text: str) -> dict | None:
 
 ## Deployment Steps
 
-### Phase 1: Dendrite + Bot
+### Phase 1: Dendrite + MAS
 
 1. **Deploy Dendrite** as Web Service on Render
    - Configure DNS for `matrix.factumerit.app`
    - Set up federation (.well-known or SRV)
    - Create bot account `@bot:factumerit.app`
-2. **Add matrix-nio** to vikunja-slack-bot
+2. **Deploy MAS** (Matrix Authentication Service)
+   - Configure as OIDC provider
+   - Set up client credentials for Vikunja
+3. **Configure Vikunja OIDC**
+   - Add MAS as OpenID provider
+   - Enable "Login with Matrix" button
+4. **Test federation** from Element (matrix.org users can DM bot)
+
+### Phase 2: Matrix Bot
+
+1. **Add matrix-nio** to vikunja-slack-bot
    - Connect to Dendrite
    - Implement message handlers
    - Wire to existing vikunja-mcp tools
-3. **Test BYOV flow** with your vikunjae
-4. **Test federation** from Element (matrix.org users can DM bot)
+2. **Test BYOV flow** with your vikunjae
 
-### Phase 2: Local LLM (Future)
+### Phase 3: One-Click Provisioning
+
+1. **Add provisioning endpoints** to bot
+2. **Test one-click flow** (Matrix login → Vikunja account)
+3. **Announce in Vikunja Matrix room**
+
+### Phase 4: Local LLM (Future)
 
 1. **Upgrade bot service** to handle Ollama memory
 2. **Add Ollama** to Dockerfile
 3. **Implement LLM routing**
-4. **Test natural language parsing**
-
-### Phase 3: One-Click Provisioning (Future)
-
-1. **Add provisioning endpoints** to bot
-2. **Configure Vikunja admin API** access
-3. **Test one-click flow**
-4. **Announce in Vikunja Matrix room**
 
 ---
 
@@ -266,15 +320,16 @@ def parse_message(text: str) -> dict | None:
 | Phase | Services | Monthly Cost |
 |-------|----------|--------------|
 | Current | Vikunja + Slack/MCP | **$18** |
-| + Dendrite | Matrix homeserver | **$27** (+$9) |
-| + Ollama (future) | RAM upgrade for LLM | **$36+** (TBD) |
+| + Dendrite + MAS | Matrix homeserver + OIDC | **$27-36** (+$9-18) |
+| + Ollama (future) | RAM upgrade for LLM | **$45+** (TBD) |
 
 **Breakdown**:
 - Vikunja: $9/mo (existing)
 - Slack/MCP + Matrix bot: $9/mo (existing, add matrix-nio)
 - Dendrite: $9/mo (new)
+- MAS: $0-9/mo (bundled with Dendrite or separate)
 
-**Total at launch**: $27/mo
+**Total at launch**: $27-36/mo
 
 ---
 

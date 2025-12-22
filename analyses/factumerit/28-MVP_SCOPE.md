@@ -30,7 +30,8 @@
 | Feature | Description | Priority |
 |---------|-------------|----------|
 | **Dendrite** | Self-hosted Matrix server | P0 |
-| **One-click provisioning** | New user → hosted vikunja in one click | P0 |
+| **MAS** | Matrix Authentication Service - OIDC provider | P0 |
+| **One-click provisioning** | New user → Matrix login → hosted vikunja | P0 |
 | **BYOV** | Connect existing vikunja | P0 |
 | **58 MCP tools** | Full task/project/label CRUD | P0 |
 | **Multi-vikunjae** | Connect multiple instances | P0 |
@@ -55,8 +56,9 @@
 | Codebase | vikunja-slack-bot | Reuse 58 MCP tools, multi-instance |
 | Matrix client | matrix-nio | Python, async, E2EE ready |
 | Matrix server | Dendrite (self-hosted) | Permanent identity `@bot:factumerit.app` |
+| OIDC provider | MAS (Matrix Auth Service) | "Login with Matrix" for Vikunja |
 | Parser | RapidFuzz | Fuzzy matching, typo-tolerant (research: 1.002) |
-| Hosting | Existing + Dendrite | +$9/mo for Dendrite |
+| Hosting | Existing + Dendrite + MAS | +$9-18/mo for Matrix stack |
 
 **LLM Strategy (TBD - not MVP)**:
 
@@ -262,11 +264,13 @@ def parse_command(user_input: str) -> tuple[str | None, str]:
 
 ## Implementation Order
 
-### Phase 1: Dendrite
+### Phase 1: Dendrite + MAS
 1. **Deploy Dendrite** - New Render service, `matrix.factumerit.app`
-2. **Configure federation** - DNS, .well-known, TLS
-3. **Create bot account** - `@bot:factumerit.app`
-4. **Test federation** - Verify matrix.org users can see the server
+2. **Deploy MAS** - Matrix Authentication Service for OIDC
+3. **Configure Vikunja OIDC** - Add MAS as "Login with Matrix" provider
+4. **Configure federation** - DNS, .well-known, TLS
+5. **Create bot account** - `@bot:factumerit.app`
+6. **Test federation** - Verify matrix.org users can see the server
 
 ### Phase 2: Matrix Bot
 5. **Add dependencies** - `uv add matrix-nio[e2e] rapidfuzz`
