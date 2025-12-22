@@ -67,7 +67,19 @@
 | Cloud LLM (BYOK) | Smart, user pays | Privacy, dependency |
 | Hybrid | Best of both | Complexity |
 
-Decision deferred. MVP uses regex parser. LLM can be added later.
+Decision deferred. MVP uses RapidFuzz parser. LLM can be added later.
+
+**Parser Evolution Path**:
+| Phase | Technology | Research | Capability |
+|-------|------------|----------|------------|
+| MVP | RapidFuzz | 1.002 | Typo-tolerant fuzzy matching (70+ score threshold) |
+| 2 | sentence-transformers | 1.033.1 | Semantic intent classification (<10ms, 22MB model) |
+| 3+ | Local LLM (Ollama) | TBD | Full natural language understanding |
+
+Phase 2 upgrade (sentence-transformers) offers semantic understanding without LLM cost:
+- `all-MiniLM-L6-v2`: 22MB model, <10ms inference
+- SetFit: 95%+ accuracy with 8-20 training examples per intent
+- Handles paraphrasing: "what's on my plate" → list_tasks
 
 ---
 
