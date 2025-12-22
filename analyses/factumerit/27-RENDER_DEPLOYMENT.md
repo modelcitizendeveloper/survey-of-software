@@ -86,7 +86,7 @@ Total: $27/mo (+$9)
 
 **Type**: Web Service
 **Runtime**: Docker
-**Cost**: $7/mo (Starter)
+**Cost**: $9/mo (Starter)
 
 **Dockerfile**:
 ```dockerfile
@@ -129,7 +129,7 @@ client_api:
 
 **Type**: Background Worker (no public port)
 **Runtime**: Docker
-**Cost**: $7/mo (Starter) - may need upgrade for Ollama
+**Cost**: $9/mo (Starter) - may need upgrade for Ollama
 
 **Dockerfile**:
 ```dockerfile
@@ -171,13 +171,13 @@ OLLAMA_HOST=http://localhost:11434
 
 **Resource Considerations**:
 - Mistral 7B needs ~4GB RAM
-- May need to upgrade from Starter ($7) to Standard ($25) or Pro ($85)
+- May need to upgrade from Starter ($9) to Standard ($25) or Pro ($85)
 - Alternative: Use smaller model (Phi-3 mini, ~2GB)
 
 ### 3. PostgreSQL
 
 **Type**: PostgreSQL
-**Plan**: Free (90-day) → Starter ($7/mo)
+**Plan**: Free (90-day) → Starter ($9/mo)
 
 **Connection**: Auto-injected as `DATABASE_URL`
 
@@ -192,7 +192,7 @@ For faster MVP, skip local LLM initially:
 ```
 ┌─────────────────────┐  ┌─────────────────────┐
 │ factumerit-dendrite │  │ factumerit-bot      │
-│ Web Service $7      │  │ Background Worker $7│
+│ Web Service $9      │  │ Background Worker $9│
 │                     │  │                     │
 │                     │  │ Simple regex parser │
 │                     │  │ (no LLM)            │
@@ -204,7 +204,7 @@ For faster MVP, skip local LLM initially:
           │ PostgreSQL (free)       │
           └─────────────────────────┘
 
-Total: $14/mo + existing Vikunja ($7) = $21/mo
+Total: $18/mo + existing Vikunja ($9) = $27/mo
 ```
 
 **MVP Parser** (no LLM):
