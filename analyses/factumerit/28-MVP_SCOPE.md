@@ -47,9 +47,9 @@
 |-----------|--------|--------|
 | Codebase | vikunja-slack-bot | Reuse 58 MCP tools, multi-instance |
 | Matrix client | matrix-nio | Python, async, E2EE ready |
-| Matrix server | matrix.org | Free, no deploy needed |
+| Matrix server | Dendrite (self-hosted) | Permanent identity `@bot:factumerit.app` |
 | Parser | Regex (MVP) | Simple, no LLM overhead |
-| Hosting | Existing Render service | $0 additional (shared with Slack/MCP) |
+| Hosting | Existing + Dendrite | +$9/mo for Dendrite |
 
 **LLM Strategy (TBD - not MVP)**:
 
@@ -68,11 +68,13 @@ Decision deferred. MVP uses regex parser. LLM can be added later.
 
 ```
 ┌──────────────────┐
-│   matrix.org     │  (use existing, no deploy)
+│   Dendrite       │  (NEW Render service $9/mo)
+│   matrix.        │
+│   factumerit.app │
 │                  │
 │  Bot account:    │
-│  @factumerit:    │
-│   matrix.org     │
+│  @bot:factumerit │
+│  .app            │
 └────────┬─────────┘
          │
          ▼
@@ -216,15 +218,17 @@ dependencies = [
 
 ## Implementation Order
 
-1. **Create matrix.org bot account** - @factumerit:matrix.org
-2. **Add matrix-nio** - `uv add matrix-nio[e2e]`
-3. **Matrix client wrapper** - Connect, receive DMs
-4. **Regex parser** - Simple command matching
-5. **Wire to existing tools** - Reuse vikunja-mcp tools
-6. **Config commands** - Reuse instance management
-7. **Test locally** - DM bot, list tasks
-8. **Deploy** - Push to existing Render service
-9. **Test federation** - DM from Element
+1. **Deploy Dendrite** - New Render service, `matrix.factumerit.app`
+2. **Configure federation** - DNS, .well-known, TLS
+3. **Create bot account** - `@bot:factumerit.app`
+4. **Add matrix-nio** - `uv add matrix-nio[e2e]`
+5. **Matrix client wrapper** - Connect to Dendrite, receive DMs
+6. **Regex parser** - Simple command matching
+7. **Wire to existing tools** - Reuse vikunja-mcp tools
+8. **Config commands** - Reuse instance management
+9. **Test locally** - DM bot from Element
+10. **Deploy bot update** - Push to existing Render service
+11. **Test federation** - DM from matrix.org user
 
 ---
 
