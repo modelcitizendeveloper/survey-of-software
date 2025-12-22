@@ -57,26 +57,20 @@
 
 ## Onboarding Flow
 
-### Step 1: First Contact - Choose Your Path
+### Step 1: First Contact
 
 ```
 User: hi
 
 Bot: Hi! I'm Factumerit, your task assistant.
 
-     How would you like to get started?
+     Get started in one click:
+     → factumerit.com/setup?mid=@user:matrix.org&nonce=abc123
 
-     1️⃣ **Quick Start** - Create a free account (one click)
-        → factumerit.com/setup?mid=@user:matrix.org&nonce=abc123
-
-     2️⃣ **Bring Your Own Vikunja** - Add existing vikunja
-        → config add [your-vikunja-url] [api-token]
-
-     3️⃣ **Learn More** - What is Vikunja?
-        → vikunja.io
+     (Already have Vikunja? Say "config add")
 ```
 
-### Path 1: One-Click Provisioning (New Users)
+### Easy Path: One-Click Provisioning
 
 ```
 User: [clicks link]
@@ -101,27 +95,34 @@ Bot: 📋 You're all set! No tasks yet.
      Try: "add buy groceries" or "add call mom tomorrow"
 ```
 
-### Path 2: Bring Your Own Token (Existing Vikunja Users)
+### Side Door: BYOV (Bring Your Own Vikunja)
 
 ```
-User: config connect https://tasks.mycompany.com vkt_abc123...
+User: config add
+
+Bot: To connect your Vikunja:
+
+     1. Create an API token at:
+        [your-vikunja]/user/settings/api-tokens
+
+     2. Recommended scopes:
+        ✓ tasks:read, tasks:write
+        ✓ projects:read
+        ✓ labels:read, labels:write
+
+     3. Then: config add [url] [token]
+
+User: config add https://tasks.mycompany.com vkt_abc123
 
 Bot: ✓ Connected to tasks.mycompany.com
 
+     Detected permissions:
+     ✓ Read tasks
+     ✓ Write tasks
+     ✓ Read projects
+
      Found 3 projects, 27 tasks.
-
-     Your data stays on your server. I just talk to it.
-```
-
-### Path 3: Existing User Wants Fresh Start
-
-```
-User: I have Vikunja but want a new account here
-
-Bot: No problem! Click to create a fresh Factumerit account:
-     → factumerit.com/setup?mid=@user:matrix.org&nonce=xyz789
-
-     Your existing Vikunja stays untouched.
+     Your data stays on your server.
 ```
 
 ---
