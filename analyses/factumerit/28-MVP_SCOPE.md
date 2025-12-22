@@ -45,11 +45,22 @@
 
 | Component | Choice | Reason |
 |-----------|--------|--------|
+| Codebase | vikunja-slack-bot | Reuse 58 MCP tools, multi-instance |
 | Matrix client | matrix-nio | Python, async, E2EE ready |
 | Matrix server | matrix.org | Free, no deploy needed |
-| Parser | Regex | Simple, no LLM overhead |
-| Database | PostgreSQL (Render free) | Familiar, cheap |
-| Hosting | Render Background Worker | $7/mo |
+| Parser | Regex (MVP) | Simple, no LLM overhead |
+| Hosting | Existing Render service | $0 additional (shared with Slack/MCP) |
+
+**LLM Strategy (TBD - not MVP)**:
+
+| Option | Pros | Cons |
+|--------|------|------|
+| No LLM (regex) | Simple, fast, $0 | Limited NLU |
+| Ollama on Render | Private, no API cost | RAM expensive ($25+/mo) |
+| Cloud LLM (BYOK) | Smart, user pays | Privacy, dependency |
+| Hybrid | Best of both | Complexity |
+
+Decision deferred. MVP uses regex parser. LLM can be added later.
 
 ---
 
@@ -65,14 +76,28 @@
 └────────┬─────────┘
          │
          ▼
-┌──────────────────┐     ┌──────────────────┐
-│ factumerit-bot   │────▶│ PostgreSQL       │
-│ (Render Worker)  │     │ (Render free)    │
-│                  │     │                  │
-│ - matrix-nio     │     │ - users          │
-│ - regex parser   │     │ - vikunjae       │
-│ - httpx          │     │                  │
-└────────┬─────────┘     └──────────────────┘
+┌───────────────────────────────────────────────────┐
+│ vikunja-slack-bot (existing Render service)       │
+│                                                    │
+│  ┌────────────┐  ┌────────────┐  ┌────────────┐  │
+│  │ Slack Bot  │  │ Matrix Bot │  │ MCP Server │  │
+│  │ (existing) │  │ (NEW)      │  │ (existing) │  │
+│  └─────┬──────┘  └─────┬──────┘  └─────┬──────┘  │
+│        │               │               │          │
+│        └───────────────┼───────────────┘          │
+│                        ▼                          │
+│              ┌─────────────────┐                  │
+│              │ vikunja-mcp     │                  │
+│              │ (58 tools)      │                  │
+│              │ multi-instance  │                  │
+│              └─────────────────┘                  │
+│                        │                          │
+│              ┌─────────▼─────────┐                │
+│              │ ~/.vikunja-mcp/   │                │
+│              │ config.yaml       │                │
+│              │ (instances)       │                │
+│              └───────────────────┘                │
+└───────────────────────────────────────────────────┘
          │
          ▼
 ┌──────────────────────────────────────────┐
@@ -163,40 +188,43 @@ And confirms
 
 ## File Structure
 
+**Add to existing `~/vikunja-slack-bot/src/vikunja_mcp/`:**
+
 ```
-factumerit/
-├── bot/
-│   ├── __init__.py
-│   ├── __main__.py          # Entry point
-│   ├── client.py             # Matrix client wrapper
-│   ├── handlers.py           # Message handlers
-│   └── parser.py             # Regex command parser
-├── vikunja/
-│   ├── __init__.py
-│   ├── client.py             # Vikunja API client
-│   └── models.py             # Task, Project models
-├── db/
-│   ├── __init__.py
-│   ├── connection.py         # asyncpg connection
-│   ├── users.py              # User CRUD
-│   └── vikunjae.py           # Vikunja connection CRUD
-├── config.py                 # Settings from env
-└── security.py               # Token encryption
+vikunja_mcp/
+├── __init__.py
+├── server.py              # Existing: MCP + Slack (58 tools)
+├── matrix_client.py       # NEW: matrix-nio wrapper
+├── matrix_handlers.py     # NEW: Message → tool routing
+└── matrix_parser.py       # NEW: Regex command parser
+
+# Reuse from existing:
+# - Multi-instance config (~/.vikunja-mcp/config.yaml)
+# - All 58 Vikunja tools
+# - OAuth callback for one-click
+```
+
+**Dependencies to add to pyproject.toml:**
+```toml
+dependencies = [
+    # ... existing ...
+    "matrix-nio[e2e]>=0.21",
+]
 ```
 
 ---
 
 ## Implementation Order
 
-1. **Project setup** - Poetry, structure, config
-2. **Database** - Schema, connection, basic CRUD
-3. **Vikunja client** - API wrapper, list/add/complete
-4. **Matrix client** - Connect, receive messages
-5. **Parser** - Regex command matching
-6. **Handlers** - Wire parser → vikunja actions
-7. **Config commands** - add, test, list, remove
-8. **Error handling** - Graceful failures
-9. **Deploy** - Render, test live
+1. **Create matrix.org bot account** - @factumerit:matrix.org
+2. **Add matrix-nio** - `uv add matrix-nio[e2e]`
+3. **Matrix client wrapper** - Connect, receive DMs
+4. **Regex parser** - Simple command matching
+5. **Wire to existing tools** - Reuse vikunja-mcp tools
+6. **Config commands** - Reuse instance management
+7. **Test locally** - DM bot, list tasks
+8. **Deploy** - Push to existing Render service
+9. **Test federation** - DM from Element
 
 ---
 

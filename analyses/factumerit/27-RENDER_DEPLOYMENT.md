@@ -9,46 +9,74 @@
 
 | Service | Type | Cost | Purpose |
 |---------|------|------|---------|
-| vikunja.factumerit.app | Web Service | $7/mo | Hosted Vikunja |
-| (existing bot?) | Web Service | $7/mo? | Slack bot (to be replaced) |
+| vikunja.factumerit.app | Web Service | $9/mo | Hosted Vikunja |
+| Slack bot + MCP | Web Service | $9/mo | vikunja-mcp (58 tools), Slack bot |
+
+**Total current**: $18/mo
+
+**Key assets**:
+- `~/vikunja-slack-bot/` - vikunja-mcp (58 tools), multi-instance, Slack bot
+- `~/vikunja-factumerit/` - Vikunja deployment with one-click connect page
 
 ---
 
 ## Target Architecture on Render
 
+**Option A: Add Matrix client to existing MCP server**
+
 ```
-┌─────────────────────────────────────────────────────────────────┐
-│                      RENDER DASHBOARD                            │
-│                                                                  │
-│  ┌─────────────────────┐  ┌─────────────────────┐              │
-│  │ factumerit-dendrite │  │ factumerit-bot      │              │
-│  │ Web Service         │  │ Background Worker   │              │
-│  │ $7/mo               │  │ $7/mo               │              │
-│  │                     │  │                     │              │
-│  │ matrix.factumerit   │  │ matrix-nio client   │              │
-│  │ .app                │  │ + Ollama            │              │
-│  │                     │  │                     │              │
-│  │ Ports: 8008, 8448   │  │ No public port      │              │
-│  └─────────┬───────────┘  └──────────┬──────────┘              │
-│            │                         │                          │
-│            │         ┌───────────────┘                          │
-│            │         │                                          │
-│            ▼         ▼                                          │
-│  ┌─────────────────────────────────────────────────────────┐   │
-│  │                    PostgreSQL                            │   │
-│  │                    Free tier (or $7/mo)                  │   │
-│  │                                                          │   │
-│  │  Tables: users, vikunjae, llm_keys, nonces              │   │
-│  └──────────────────────────────────────────────────────────┘   │
-│                                                                  │
-│  ┌─────────────────────┐                                        │
-│  │ vikunja.factumerit  │  (existing)                            │
-│  │ .app                │                                        │
-│  │ $7/mo               │                                        │
-│  └─────────────────────┘                                        │
-│                                                                  │
-└──────────────────────────────────────────────────────────────────┘
+┌──────────────────────────────────────────────────────────────────┐
+│                      RENDER DASHBOARD                             │
+│                                                                   │
+│  ┌─────────────────────────────────────────────────────────────┐ │
+│  │ vikunja-mcp (existing $9/mo)                                │ │
+│  │                                                              │ │
+│  │  ┌────────────┐  ┌────────────┐  ┌────────────┐            │ │
+│  │  │ Slack Bot  │  │ Matrix Bot │  │ MCP Server │            │ │
+│  │  │ (existing) │  │ (NEW)      │  │ (existing) │            │ │
+│  │  └─────┬──────┘  └─────┬──────┘  └─────┬──────┘            │ │
+│  │        │               │               │                    │ │
+│  │        └───────────────┼───────────────┘                    │ │
+│  │                        ▼                                    │ │
+│  │              ┌─────────────────┐                            │ │
+│  │              │ vikunja-mcp     │                            │ │
+│  │              │ (58 tools)      │                            │ │
+│  │              │ multi-instance  │                            │ │
+│  │              └─────────────────┘                            │ │
+│  └──────────────────────────────────────────────────────────────┘ │
+│                                                                   │
+│  ┌─────────────────────┐                                         │
+│  │ vikunja.factumerit  │  (existing $9/mo)                       │
+│  │ .app                │                                         │
+│  └─────────────────────┘                                         │
+│                                                                   │
+└───────────────────────────────────────────────────────────────────┘
+
+Total: $18/mo (no change)
 ```
+
+**Option B: Separate Matrix service + own Dendrite**
+
+```
+┌──────────────────────────────────────────────────────────────────┐
+│                      RENDER DASHBOARD                             │
+│                                                                   │
+│  ┌──────────────────┐  ┌──────────────────┐                      │
+│  │ vikunja-mcp      │  │ factumerit-matrix│                      │
+│  │ (existing $9)    │  │ (NEW $9)         │                      │
+│  │ Slack + MCP      │  │ Dendrite + Bot   │                      │
+│  └──────────────────┘  └──────────────────┘                      │
+│                                                                   │
+│  ┌──────────────────┐                                            │
+│  │ vikunja          │  (existing $9)                             │
+│  └──────────────────┘                                            │
+│                                                                   │
+└───────────────────────────────────────────────────────────────────┘
+
+Total: $27/mo (+$9)
+```
+
+**Recommendation**: Start with Option A (add Matrix to existing service), move to Option B if needed.
 
 ---
 
@@ -245,14 +273,14 @@ def parse_message(text: str) -> dict | None:
 
 ## Cost Projection
 
-| Phase | Services | Monthly Cost |
-|-------|----------|--------------|
-| MVP (BYOV only) | Bot + PostgreSQL | $7 + $0 = **$7** |
-| + Own Dendrite | + Dendrite | $7 + $7 = **$14** |
-| + Local LLM | Upgrade bot | $14 + $18 = **$32** |
-| + Provisioning | Same infra | **$32** |
+| Phase | Change | Monthly Cost |
+|-------|--------|--------------|
+| Current | Vikunja + Slack/MCP | **$18** |
+| + Matrix (Option A) | Add matrix-nio to existing | **$18** (no change) |
+| + Own Dendrite (Option B) | New service | **$27** (+$9) |
+| + Ollama upgrade | RAM for LLM | **$36+** (TBD) |
 
-Existing Vikunja ($7) adds to total.
+**Key insight**: Shared codebase means Matrix is free if we add to existing service.
 
 ---
 
