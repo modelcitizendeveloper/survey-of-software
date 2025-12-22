@@ -57,34 +57,221 @@
 
 ## Onboarding Flow
 
-### Step 1: First Contact
+### Step 1: First Contact - Choose Your Path
 
 ```
 User: hi
 
-Bot: Hi! I'm Factumerit, a task assistant for Vikunja.
+Bot: Hi! I'm Factumerit, your task assistant.
 
-     To get started, I need your Vikunja API token.
+     How would you like to get started?
 
-     Get it from: [your-vikunja-url]/user/settings/api-tokens
+     1️⃣ **Quick Start** - Create a free account (one click)
+        → factumerit.com/setup?mid=@user:matrix.org&nonce=abc123
 
-     Then send: config vikunja [token]
+     2️⃣ **Bring Your Own Vikunja** - Add existing vikunja
+        → config add [your-vikunja-url] [api-token]
+
+     3️⃣ **Learn More** - What is Vikunja?
+        → vikunja.io
 ```
 
-### Step 2: Vikunja Connected
+### Path 1: One-Click Provisioning (New Users)
 
 ```
-User: config vikunja vkt_abc123...
+User: [clicks link]
 
-Bot: ✓ Connected to Vikunja!
+Browser: factumerit.com/setup
+         ┌────────────────────────────────────┐
+         │  Welcome, @user:matrix.org!        │
+         │                                     │
+         │  Creating your Vikunja account...  │
+         │  ✓ Account created                 │
+         │  ✓ Default projects set up         │
+         │  ✓ Connected to bot                │
+         │                                     │
+         │  Go back to Matrix and try:        │
+         │  "add buy groceries"               │
+         └────────────────────────────────────┘
+
+User: [back in Matrix] what's due today
+
+Bot: 📋 You're all set! No tasks yet.
+
+     Try: "add buy groceries" or "add call mom tomorrow"
+```
+
+### Path 2: Bring Your Own Token (Existing Vikunja Users)
+
+```
+User: config connect https://tasks.mycompany.com vkt_abc123...
+
+Bot: ✓ Connected to tasks.mycompany.com
 
      Found 3 projects, 27 tasks.
 
-     Try: "what's due today" or "add buy groceries"
-
-     I'm using a local model for basic commands.
-     For smarter analysis, you can add a Claude API key later.
+     Your data stays on your server. I just talk to it.
 ```
+
+### Path 3: Existing User Wants Fresh Start
+
+```
+User: I have Vikunja but want a new account here
+
+Bot: No problem! Click to create a fresh Factumerit account:
+     → factumerit.com/setup?mid=@user:matrix.org&nonce=xyz789
+
+     Your existing Vikunja stays untouched.
+```
+
+---
+
+## Multiple Vikunjae
+
+The bot supports connecting to **multiple vikunjae** (Vikunja backends):
+
+```
+User: config add https://work.vikunja.io vkt_work123 --name work
+User: config add https://home.vikunja.io vkt_home456 --name home
+
+Bot: ✓ You have 2 vikunjae:
+     • work → work.vikunja.io (15 tasks)
+     • home → home.vikunja.io (8 tasks)
+
+User: what's due today
+
+Bot: 📋 Due Today:
+
+     **work** (2 tasks):
+     1. [ ] Review PR #42
+     2. [ ] Team standup
+
+     **home** (1 task):
+     1. [ ] Buy groceries
+
+User: add fix bug to work
+
+Bot: ✓ Added "fix bug" to work
+```
+
+### Vikunja Commands
+
+```
+config add [url] [token]           Add a vikunja
+config add [url] [token] --name X  Add with alias
+config remove [name]               Remove vikunja
+config list                        Show all vikunjae
+config default [name]              Set default vikunja
+```
+
+---
+
+## Provisioning Implementation
+
+### One-Click Flow
+
+```python
+# Bot generates unique provisioning link
+async def handle_new_user(room, event):
+    matrix_id = event.sender
+
+    # Check existing vikunjae
+    vikunjae = await db.get_vikunjae(matrix_id)
+    if vikunjae:
+        return await show_welcome_back(room, vikunjae)
+
+    # Generate one-time nonce
+    nonce = secrets.token_urlsafe(32)
+    await db.store_nonce(matrix_id, nonce, expires=timedelta(hours=1))
+
+    link = f"https://factumerit.com/setup?mid={quote(matrix_id)}&nonce={nonce}"
+
+    await self.send(room, ONBOARDING_MESSAGE.format(link=link))
+```
+
+### Provisioning Endpoint
+
+```python
+@app.get("/setup")
+async def setup(mid: str, nonce: str):
+    # Verify nonce
+    if not await db.verify_nonce(mid, nonce):
+        raise HTTPException(400, "Link expired or invalid")
+
+    # Create Vikunja user on hosted instance
+    username = sanitize_username(mid)  # @alice:matrix.org → alice_matrix_org
+
+    user = await vikunja_admin.create_user(
+        username=username,
+        email=f"{username}@users.factumerit.com"
+    )
+
+    # Create default projects
+    await vikunja_admin.create_project(user.id, "Inbox")
+    await vikunja_admin.create_project(user.id, "Personal")
+    await vikunja_admin.create_project(user.id, "Work")
+
+    # Generate API token
+    token = await vikunja_admin.create_token(user.id, name="Factumerit Bot")
+
+    # Store vikunja
+    await db.add_vikunja(
+        matrix_id=mid,
+        url="https://vikunja.factumerit.com",
+        token=token,
+        name="default",
+        is_hosted=True
+    )
+
+    # Invalidate nonce
+    await db.delete_nonce(mid, nonce)
+
+    return templates.TemplateResponse("success.html", {"matrix_id": mid})
+```
+
+### User Storage
+
+```json
+{
+  "matrix_id": "@alice:matrix.org",
+  "vikunjae": [
+    {
+      "name": "default",
+      "url": "https://vikunja.factumerit.com",
+      "token": "vkt_...",
+      "is_hosted": true,
+      "created": "2025-12-22"
+    },
+    {
+      "name": "work",
+      "url": "https://tasks.company.com",
+      "token": "vkt_...",
+      "is_hosted": false,
+      "created": "2025-12-22"
+    }
+  ],
+  "default_vikunja": "default",
+  "llm_provider": null,
+  "llm_key": null
+}
+```
+
+---
+
+## Hosted vs BYOT Comparison
+
+| Aspect | Hosted (Quick Start) | BYOT (Bring Your Own) |
+|--------|---------------------|----------------------|
+| Setup | One click | Manual token |
+| Data location | Factumerit servers | Your servers |
+| Backup | Factumerit manages | You manage |
+| Cost | Free tier / paid | Your Vikunja cost |
+| Privacy | Shared infra | Full control |
+| Features | All | All |
+
+---
+
+## Step 2: Basic Usage (After Connection)
 
 ### Step 3: Basic Usage (Local Model)
 
