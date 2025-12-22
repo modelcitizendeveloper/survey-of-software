@@ -1,18 +1,19 @@
-# 01: Dendrite as Multi-Project Platform
+# 01: Matrix as Multi-Project Platform
 
 **Date**: 2025-12-22
 **Status**: Exploration
+**Updated**: Pivoted from Dendrite to Synapse (ADR-021)
 
 ---
 
 ## Vision
 
-One self-hosted Dendrite instance (`matrix.factumerit.app`) becomes a unified conversational gateway to multiple projects and capabilities.
+One self-hosted Synapse instance (`matrix.factumerit.app`) becomes a unified conversational gateway to multiple projects and capabilities.
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
 │                    matrix.factumerit.app                             │
-│                    (self-hosted Dendrite)                            │
+│                    (self-hosted Synapse + MAS)                       │
 │                                                                      │
 │  ┌─────────────┐ ┌─────────────┐ ┌─────────────┐ ┌─────────────┐   │
 │  │ @tasks:     │ │ @research:  │ │ @qrcards:   │ │ @intel:     │   │
@@ -107,7 +108,7 @@ All bots share:
 
 | Component | Description |
 |-----------|-------------|
-| Dendrite | Single Matrix homeserver |
+| Synapse + MAS | Matrix homeserver + OIDC auth |
 | Authentication | Matrix identity = access control |
 | E2EE | End-to-end encryption for all DMs |
 | Federation | Reachable from any Matrix server |
@@ -120,20 +121,21 @@ All bots share:
 
 | Component | Cost | Supports |
 |-----------|------|----------|
-| Dendrite | $9/mo | Unlimited bots, users, rooms |
-| Bot services | $9/mo each | One service per bot (or combined) |
-| PostgreSQL | $9/mo | Shared database |
+| Synapse + MAS | $7-25/mo | Unlimited bots, users, rooms (RAM dependent) |
+| Bot services | $7/mo each | One service per bot (or combined) |
+| PostgreSQL | $7/mo | Shared database |
 
-**Minimum viable**: $27/mo (Dendrite + 1 combined bot service + PostgreSQL)
-**Full deployment**: $27 + $9 per additional isolated bot service
+**Minimum viable**: $21/mo (Synapse Starter + 1 combined bot service + PostgreSQL)
+**If RAM upgrade needed**: +$18/mo for Standard plan
 
 ---
 
 ## Implementation Strategy
 
 ### Phase 1: Foundation (current)
-- Deploy Dendrite
+- Deploy Synapse + MAS
 - Launch `@tasks:factumerit.app` (Vikunja MVP)
+- Enable "Login with Matrix" for Vikunja
 - Prove the model works
 
 ### Phase 2: Research Access
@@ -176,6 +178,8 @@ All bots share:
 
 ## Related
 
+- [02-SYNAPSE_CAPABILITIES.md](./02-SYNAPSE_CAPABILITIES.md) - Capabilities unlocked by Synapse
 - [analyses/factumerit/](../factumerit/) - Vikunja/task management analysis
 - ADR-019: Matrix Platform Pivot
-- `solutions-b847`: Deploy Dendrite on Render
+- ADR-021: Synapse over Dendrite
+- `solutions-b847`: Deploy Matrix on Render
