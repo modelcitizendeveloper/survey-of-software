@@ -1,6 +1,7 @@
-# Vikunja → MAS Login Lifecycle Documentation
+# Factumerit: Complete System Documentation
 
-**Architecture:** Vikunja → MAS → Synapse (Direct OIDC, bypassing Authentik)
+**Primary Architecture:** User → Matrix Bot → Vikunja API
+**Secondary Architecture:** User → Vikunja Web → MAS → Synapse (OAuth login)
 
 **Date:** 2025-12-23
 
@@ -8,38 +9,210 @@
 
 ## Overview
 
-This document describes the complete OAuth 2.0 / OpenID Connect login flow from Vikunja through Matrix Authentication Service (MAS) to Synapse, including all the moving parts and common failure points.
+Factumerit is a bot-first task management system where users interact with Vikunja through a Matrix chatbot. This document covers:
+
+1. **Primary Flow:** How users get onboarded via Matrix bot and manage tasks through chat
+2. **Secondary Flow:** How users optionally log into the Vikunja web interface via OAuth
+
+**Most users only use the bot.** The web interface is optional for when you want a visual dashboard.
 
 ---
 
-## Architecture Diagram
+## Complete System Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────────┐
-│                         User's Browser                          │
+│                    PRIMARY FLOW (Bot)                            │
 └─────────────────────────────────────────────────────────────────┘
-         │                    │                    │
-         │ (1) Click Login    │ (4) Authorize      │ (7) Callback
-         │                    │                    │
-         ▼                    ▼                    ▼
+
+User (Matrix Client)
+    │
+    │ DM: "what's due today"
+    ▼
 ┌──────────────┐      ┌──────────────┐      ┌──────────────┐
-│   Vikunja    │◄────►│     MAS      │◄────►│   Synapse    │
-│ (Task Mgmt)  │      │ (OIDC IdP)   │      │ (Matrix HS)  │
+│ Matrix Bot   │─────►│ Vikunja API  │      │  PostgreSQL  │
+│ @tasks:...   │◄─────│ (REST API)   │◄────►│  (Tasks DB)  │
 └──────────────┘      └──────────────┘      └──────────────┘
-  Port: 3456           Port: 8080           Port: 8008
-  
-  Config:              Config:              Config:
-  - authurl            - clients[]          - mas integration
-  - clientid           - policy             - userinfo patch
-  - clientsecret       - redirect_uris      
-  - scope              - admin_clients      
+    │                        ▲
+    │ Stores API token       │
+    ▼                        │
+┌──────────────┐             │
+│  Bot DB      │             │
+│ (User Config)│             │
+└──────────────┘             │
+                             │
+┌─────────────────────────────────────────────────────────────────┐
+│                  SECONDARY FLOW (Web UI)                         │
+└─────────────────────────────────────────────────────────────────┘
+                             │
+User's Browser               │
+    │                        │
+    │ (1) Click Login        │ (7) Callback
+    ▼                        ▼
+┌──────────────┐      ┌──────────────┐      ┌──────────────┐
+│ Vikunja Web  │◄────►│     MAS      │◄────►│   Synapse    │
+│ (Dashboard)  │      │ (OIDC IdP)   │      │ (Matrix HS)  │
+└──────────────┘      └──────────────┘      └──────────────┘
+    │                  Port: 8080           Port: 8008
+    │
+    │ Same tasks as bot
+    ▼
+┌──────────────┐
+│  PostgreSQL  │
+│  (Tasks DB)  │
+└──────────────┘
 ```
 
 ---
 
-## Step-by-Step Login Flow
+## Part 1: Primary Flow - Bot Onboarding & Usage
 
-### Step 1: User Clicks "Login with Factumerit"
+### Step 1: User Joins Matrix
+
+**What happens:**
+1. User creates Matrix account at https://matrix.factumerit.app
+2. Gets username like `@alice:factumerit.app`
+3. Verifies email (required)
+4. Logs into Matrix client (Element, FluffyChat, etc.)
+
+**No Vikunja account yet** - that comes next.
+
+---
+
+### Step 2: User DMs the Bot
+
+**What happens:**
+1. User opens Matrix client
+2. Starts DM with `@tasks:factumerit.app`
+3. Sends first message (e.g., "hello")
+
+**Bot response:**
+```
+👋 Hi! I'm Factumerit, your task assistant.
+
+Get started in one click:
+→ https://factumerit.app/setup?mid=@alice:factumerit.app&nonce=abc123xyz...
+
+(Already have Vikunja? Say "config add")
+```
+
+**What the bot did:**
+- Generated a cryptographically secure one-time nonce
+- Stored it in database with 1-hour expiry
+- Created unique provisioning link for this user
+
+---
+
+### Step 3: One-Click Provisioning
+
+**What happens when user clicks the link:**
+
+#### 3a. Link Validation
+```python
+# Backend validates the link
+if not await db.verify_nonce(matrix_id, nonce):
+    return "Link expired or invalid"
+```
+
+#### 3b. Vikunja Account Creation
+```python
+# Create user via Vikunja Admin API
+username = sanitize_username("@alice:factumerit.app")  # → alice_factumerit_app
+user = await vikunja_admin.create_user(
+    username=username,
+    email="alice@factumerit.app"  # From Matrix account
+)
+```
+
+#### 3c. Default Projects Setup
+```python
+# Create starter projects
+await vikunja_admin.create_project(user.id, "Inbox")
+await vikunja_admin.create_project(user.id, "Personal")
+await vikunja_admin.create_project(user.id, "Work")
+```
+
+#### 3d. API Token Generation
+```python
+# Generate token for bot to use
+token = await vikunja_admin.create_token(user.id, name="Factumerit Bot")
+
+# Store encrypted in bot database
+await db.add_vikunja(
+    matrix_id="@alice:factumerit.app",
+    url="https://vikunja.factumerit.app",
+    token=encrypt(token),  # Encrypted at rest
+    name="default",
+    is_hosted=True
+)
+```
+
+#### 3e. Success Page
+```
+✓ Account created
+✓ Default projects set up
+✓ Connected to bot
+
+Go back to Matrix and try:
+"add buy groceries"
+```
+
+**Security notes:**
+- Nonce is single-use and expires in 1 hour
+- API token is encrypted in database
+- Bot never sees user's Matrix password
+
+---
+
+### Step 4: User Chats with Bot
+
+**Example conversation:**
+
+```
+User: what's due today
+
+Bot: 📋 Due Today:
+     • Buy groceries (Personal)
+     • Finish report (Work)
+```
+
+```
+User: add call dentist tomorrow
+
+Bot: ✓ Created task: "Call dentist"
+     Due: Tomorrow
+     Project: Inbox
+```
+
+```
+User: I finished the report
+
+Bot: ✓ Marked as done: "Finish report"
+```
+
+**What's happening behind the scenes:**
+1. Bot receives Matrix message
+2. Bot parses intent using LLM (Ollama/Claude)
+3. Bot calls Vikunja API with stored token
+4. Bot formats response and sends to Matrix
+
+**No web interface needed!** Everything happens in chat.
+
+---
+
+## Part 2: Secondary Flow - Web UI Login (Optional)
+
+**Context:** This section describes what happens when a user wants to use the Vikunja web interface instead of (or in addition to) the bot.
+
+**Prerequisites:** User must have already been provisioned via bot (Part 1).
+
+---
+
+### Web Login Step-by-Step
+
+### Web Step 1: User Clicks "Login with Factumerit"
+
+**Context:** User already has a Vikunja account (created via bot provisioning). Now they want to access the web interface.
 
 **Location:** `https://vikunja.factumerit.app/login`
 
@@ -75,7 +248,7 @@ curl -s https://vikunja.factumerit.app/api/v1/info | jq '.auth.openid_connect.pr
 
 ---
 
-### Step 2: OIDC Discovery
+### Web Step 2: OIDC Discovery
 
 **What happens:**
 1. Vikunja appends `/.well-known/openid-configuration` to `authurl`
@@ -121,7 +294,7 @@ curl -s https://matrix.factumerit.app/.well-known/openid-configuration | jq -r '
 
 ---
 
-### Step 3: Authorization Request
+### Web Step 3: Authorization Request
 
 **What happens:**
 1. User clicks login button
@@ -134,7 +307,7 @@ https://matrix.factumerit.app/authorize?
   client_id=0000000000000000000V1KYNJA&
   redirect_uri=https://vikunja.factumerit.app/auth/openid/factumerit&
   response_type=code&
-  scope=openid%20email%20profile&
+  scope=openid%20email&
   state=<random_state>
 ```
 
@@ -142,13 +315,14 @@ https://matrix.factumerit.app/authorize?
 - `client_id`: Vikunja's client ID in MAS config
 - `redirect_uri`: Where MAS sends user after auth (must match MAS config exactly)
 - `response_type`: Always `code` for authorization code flow
-- `scope`: Requested claims (`openid email profile`)
+- `scope`: Requested claims (`openid email` - note: `profile` removed, MAS doesn't support it)
 - `state`: CSRF protection token
 
 **Common failures:**
 - ❌ **Invalid redirect_uri** → Mismatch between Vikunja and MAS config
 - ❌ **Unknown client** → Client ID not in MAS config
-- ❌ **Invalid scope** → Requested scope not allowed
+- ❌ **Invalid scope** → Requested scope not allowed (e.g., `profile`)
+- ❌ **Policy denied** → MAS policy rejected the authorization (check scope)
 
 **MAS config:**
 ```yaml
@@ -173,7 +347,7 @@ grep -A10 "0000000000000000000V1KYNJA" mas/mas.template.yaml
 
 ---
 
-### Step 4: User Authentication (Matrix Login)
+### Web Step 4: User Authentication (Matrix Login)
 
 **What happens:**
 1. MAS checks if user is already logged in
@@ -206,12 +380,14 @@ POST https://synapse.factumerit.app/_matrix/client/v3/login
 
 ---
 
-### Step 5: Policy Check & Consent
+### Web Step 5: Policy Check & Consent
 
 **What happens:**
-1. MAS checks policy to see if client is allowed
-2. If client is in `admin_clients`, shows consent screen
+1. MAS checks policy to see if authorization is allowed
+2. MAS shows consent screen (if not previously granted)
 3. User reviews requested scopes and grants/denies consent
+
+**Important:** The `admin_clients` list is ONLY for the `urn:mas:admin` scope. Regular OAuth scopes (`openid`, `email`) are allowed for all clients by default.
 
 **Policy check:**
 ```yaml
@@ -221,31 +397,36 @@ policy:
   data:
     admin_clients:
       - "000000000000000000ATHNTK00"  # Authentik
-      - "0000000000000000000V1KYNJA"  # Vikunja ← Must be here!
+      - "0000000000000000000V1KYNJA"  # Vikunja (only affects urn:mas:admin scope)
 ```
 
 **Consent screen shows:**
 - Client name: "Vikunja"
-- Requested scopes: openid, email, profile
-- User's email (from MAS userinfo patch)
+- Requested scopes: openid, email (NOT profile - MAS doesn't support it)
+- User's email and username (from MAS userinfo patch)
 
 **Common failures:**
-- ❌ **Authorization denied by policy** → Client not in `admin_clients` list
+- ❌ **Authorization denied by policy** → Requested unsupported scope (e.g., `profile`)
 - ❌ **Email not showing** → MAS userinfo patch not working
+- ❌ **Username is random tokens** → MAS not sending `preferred_username` claim
 - ❌ **User denies consent** → User clicks "Deny" instead of "Allow"
 
 **Debug:**
 ```bash
-# Check if Vikunja is in admin_clients
-cd ~/factumerit-matrix
-grep -A5 "admin_clients:" mas/mas.template.yaml
+# Check Vikunja scope configuration
+cd ~/vikunja-factumerit
+grep -A5 "scope:" config.yml
+# Should show: scope: openid email (NOT profile)
 
-# Should show both Authentik and Vikunja client IDs
+# Check MAS userinfo patch is applied
+cd ~/factumerit-matrix
+grep "preferred_username" Dockerfile
+# Should show the patch that adds preferred_username field
 ```
 
 ---
 
-### Step 6: Authorization Code Grant
+### Web Step 6: Authorization Code Grant
 
 **What happens:**
 1. User clicks "Allow" on consent screen
@@ -266,7 +447,7 @@ https://vikunja.factumerit.app/auth/openid/factumerit?
 
 ---
 
-### Step 7: Token Exchange
+### Web Step 7: Token Exchange
 
 **What happens:**
 1. Vikunja receives authorization code
@@ -314,7 +495,7 @@ grep -A5 "0000000000000000000V1KYNJA" mas/mas.template.yaml
 
 ---
 
-### Step 8: UserInfo Request
+### Web Step 8: UserInfo Request
 
 **What happens:**
 1. Vikunja uses access token to fetch user info
@@ -360,51 +541,65 @@ curl -H "Authorization: Bearer <token>" \
 
 ---
 
-### Step 9: User Account Creation in Vikunja
+### Web Step 9: User Account Lookup in Vikunja
 
 **What happens:**
 1. Vikunja receives user info from MAS
-2. Checks if user exists (by OIDC subject ID)
-3. If new user, creates account with email from userinfo
+2. Looks up user by email (user already exists from bot provisioning)
+3. Matches the existing account
 4. Logs user in and creates session
 
-**Vikunja user record:**
+**Important:** The user account was already created during bot provisioning (Part 1). This step just logs them into the web interface.
+
+**Vikunja user record (already exists):**
 ```
 id: <auto-increment>
-username: ivantohelpyou (from preferred_username)
-email: ivan@ivantohelpyou.com (from email claim)
-oidc_subject: 01JFQR8... (from sub claim)
+username: alice_factumerit_app (from bot provisioning)
+email: alice@factumerit.app (from Matrix account)
+oidc_subject: 01JFQR8... (set during first web login)
 ```
 
+**What gets updated:**
+- `oidc_subject` is set on first web login (links OIDC to existing account)
+- `username` may be updated to `preferred_username` from MAS (if different)
+
 **Common failures:**
-- ❌ **Email required but missing** → Vikunja requires email for account creation
-- ❌ **Duplicate email** → Email already exists (if using email matching)
-- ❌ **Username conflict** → Username already taken
+- ❌ **Email required but missing** → MAS userinfo patch not working
+- ❌ **Username is random tokens** → MAS not sending `preferred_username` claim
+- ❌ **Account not found** → User hasn't been provisioned via bot yet (rare)
 
 **Debug:**
 ```bash
-# Check Vikunja logs for user creation
-# Check Vikunja database for new user record
+# Check Vikunja logs for user lookup
+# Check Vikunja database for existing user record
 ```
 
 ---
 
-### Step 10: Session Creation & Redirect
+### Web Step 10: Session Creation & Redirect
 
 **What happens:**
 1. Vikunja creates JWT session token
 2. Sets session cookie in browser
 3. Redirects to Vikunja dashboard
 
-**Success!** User is now logged into Vikunja with:
-- ✅ Account created
+**Success!** User is now logged into Vikunja web interface with:
+- ✅ Account matched (from bot provisioning)
 - ✅ Email populated
+- ✅ Username set correctly (from `preferred_username`)
 - ✅ Session active
-- ✅ Can create tasks
+- ✅ Can see all tasks created via bot
+
+**User sees:**
+- All tasks they created via Matrix bot
+- All projects (Inbox, Personal, Work)
+- Same data, different interface
 
 ---
 
-## Configuration Checklist
+## Part 3: Configuration Reference
+
+### Configuration Checklist
 
 ### Vikunja Configuration
 
