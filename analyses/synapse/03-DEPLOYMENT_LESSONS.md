@@ -1,6 +1,8 @@
 # 03: Synapse + MAS Deployment Lessons
 
 **Date**: 2025-12-22
+**Status**: Deployed (verification pending)
+**Updated**: 2025-12-23 - MAS patched for email claims bug
 **Context**: Deploying Synapse + MAS on Render for Vikunja OIDC
 
 ---
@@ -8,6 +10,8 @@
 ## Summary
 
 Self-hosted Matrix homeserver with OIDC for "Login with Matrix" in external apps. Bundled Synapse + MAS + nginx in single container to save costs.
+
+**Update 2025-12-23**: Discovered and patched MAS email claims bug. See "MAS Email Claims Bug" section below.
 
 ---
 
@@ -196,6 +200,8 @@ Only these scopes are allowed by default:
 | Registration form missing | `password_registration_enabled: false` |
 | Consent page 404 | Missing `/consent` route to MAS |
 | "Authorization denied by policy" | Requested scope not allowed (e.g., `profile`) |
+| "No email address available" (client) | MAS userinfo not returning email (see MAS Email Claims Bug) |
+| GitGuardian warnings about .pem files | Committed test files from mas-patched/ directory |
 
 ---
 
