@@ -161,8 +161,19 @@ auth:
         authurl: https://matrix.factumerit.app/
         clientid: "$VIKUNJA_OIDC_CLIENT_ID"
         clientsecret: "$VIKUNJA_OIDC_CLIENT_SECRET"
-        scope: openid email profile
+        scope: openid email  # NOT 'profile' - MAS default policy denies it!
 ```
+
+### Allowed Scopes (MAS Default Policy)
+
+Only these scopes are allowed by default:
+- `openid` ✓
+- `email` ✓
+- `urn:mas:graphql:*` (GraphQL API)
+- `urn:matrix:org.matrix.msc2967.client:api:*` (Matrix Client API)
+
+**NOT allowed** (causes "authorization denied by policy"):
+- `profile` ✗ - common OIDC scope but blocked by MAS default
 
 ### Getting redirect_uri Right
 1. Check what URL the client actually sends (browser Network tab)
@@ -182,6 +193,7 @@ auth:
 | OIDC "invalid redirect_uri" | redirect_uri mismatch in MAS config |
 | Registration form missing | `password_registration_enabled: false` |
 | Consent page 404 | Missing `/consent` route to MAS |
+| "Authorization denied by policy" | Requested scope not allowed (e.g., `profile`) |
 
 ---
 
