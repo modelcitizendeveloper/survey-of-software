@@ -640,50 +640,113 @@ Complexity: Medium (2 auth layers)
 
 ## Appendix: Non-Technical Explanation
 
-This appendix explains the login system in simple terms for non-specialists.
+This appendix explains the Factumerit system in simple terms for non-specialists.
 
-### What Problem Are We Solving?
+### What is Factumerit?
 
-**The Goal:** Allow users to log into Vikunja (our task management app) using their Matrix account, without creating a separate password.
+**The Big Picture:** Factumerit is a task management assistant that lives in Matrix (a chat app). You talk to a bot in chat, and it manages your tasks for you.
+
+**The Magic:** The bot is connected to Vikunja (a task management web app), so you can:
+- Manage tasks by chatting with the bot in Matrix
+- OR use the Vikunja web interface when you want a visual dashboard
+- Your tasks sync between both - they're the same data
 
 **Why This Matters:**
-- Users only need to remember one password (their Matrix password)
-- When users log into Vikunja, their email is automatically filled in
-- Simpler for users, more secure (fewer passwords to manage)
+- Natural language: "remind me to buy groceries tomorrow" instead of clicking through forms
+- Always accessible: Matrix works on phone, desktop, web
+- One account: Your Matrix account works for both chat and web interface
 
 ---
 
-### The Players
+### The Complete User Journey
 
-Think of this like a conversation between three services:
+#### Step 1: You Join Matrix
+- You create a Matrix account at https://matrix.factumerit.app
+- This is like creating a Slack or Discord account
+- You get a username like `@yourname:factumerit.app`
+- You can use any Matrix client (Element, FluffyChat, etc.)
 
-#### 1. **Vikunja** (The App You Want to Use)
+#### Step 2: You DM the Bot
+- You send a direct message to `@tasks:factumerit.app`
+- The bot says: "Hi! Click this link to get started"
+- The link is unique to you and expires in 1 hour
+
+#### Step 3: One-Click Provisioning
+- You click the link
+- Behind the scenes, the system:
+  - Creates a Vikunja account for you (using your Matrix email)
+  - Sets up default projects (Inbox, Personal, Work)
+  - Generates an API token so the bot can access your tasks
+  - Stores the connection between your Matrix ID and Vikunja account
+- You see: "✓ All set! Go back to Matrix and try: 'add buy groceries'"
+
+#### Step 4: You Chat with the Bot
+- You return to Matrix and chat with the bot
+- "what's due today" → Bot shows your tasks
+- "add buy groceries tomorrow" → Bot creates the task
+- "I finished task 42" → Bot marks it done
+- The bot is talking to Vikunja's API on your behalf
+
+#### Step 5: (Optional) You Use the Web Interface
+- Sometimes you want to see all your tasks visually
+- You go to https://vikunja.factumerit.app
+- You click "Login with Factumerit"
+- **This is where the OAuth flow in this document happens**
+- You log in with your Matrix credentials
+- You see the same tasks you've been managing via chat
+
+---
+
+### The Players (In Context)
+
+#### 1. **Matrix** (The Chat Platform)
+- **What it is:** An open-source chat platform (like Slack or Discord)
+- **Your account:** `@yourname:factumerit.app`
+- **What you do here:** Chat with the task bot, get instant responses
+- **Clients:** Element (web/mobile), FluffyChat, Nheko, etc.
+
+#### 2. **The Bot** (`@tasks:factumerit.app`)
+- **What it is:** An AI assistant that understands natural language
+- **What it does:**
+  - Parses your messages ("buy groceries tomorrow" → create task with due date)
+  - Calls Vikunja API to create/update/list tasks
+  - Formats responses in chat-friendly way
+- **Where it runs:** On a server, connected to both Matrix and Vikunja
+
+#### 3. **Vikunja** (The Task Management Backend)
 - **What it is:** A task management application (like Trello or Todoist)
-- **What it needs:** Your email address to create your account and send you reminders
-- **The problem:** It doesn't know who you are or what your email is
-- **Location:** https://vikunja.factumerit.app
+- **What it stores:** Your tasks, projects, labels, due dates
+- **Two interfaces:**
+  - API: The bot talks to this
+  - Web UI: You can use this directly at https://vikunja.factumerit.app
 
-#### 2. **MAS** (The Gatekeeper)
+#### 4. **MAS** (The Gatekeeper for Web Login)
 - **Full name:** Matrix Authentication Service
 - **What it is:** A security service that verifies who you are
-- **What it knows:** Your Matrix username, email, and password
-- **Its job:** Check if you're really you, then tell Vikunja your email
+- **When you use it:** Only when logging into the Vikunja web interface
+- **What it does:** Checks your Matrix password, tells Vikunja your email
 - **Location:** https://matrix.factumerit.app
 
-#### 3. **Synapse** (The Database)
-- **What it is:** The Matrix server that stores all your Matrix data
-- **What it knows:** Everything about your Matrix account
-- **Its job:** Store your messages, contacts, and account information
+#### 5. **Synapse** (The Matrix Server)
+- **What it is:** The server that runs Matrix
+- **What it stores:** Your Matrix messages, contacts, account info
+- **Its job:** Handle chat messages, federation with other Matrix servers
 - **Note:** MAS talks to Synapse to verify your password
 
 ---
 
-### The Login Journey (In Plain English)
+### The Web Login Journey (In Plain English)
 
-Imagine you're trying to get into a VIP club (Vikunja), but you don't have a membership card. However, you DO have a membership at a partner club (Matrix). Here's what happens:
+**Context:** This is what happens when you want to use the Vikunja web interface instead of chatting with the bot.
+
+**Note:** Most users primarily use the bot in Matrix. The web interface is for when you want a visual dashboard or need to do bulk operations.
+
+---
+
+Imagine you're trying to get into a VIP club (Vikunja web interface), but you don't have a membership card. However, you DO have a membership at a partner club (Matrix). Here's what happens:
 
 #### Step 1: You Ask to Enter
-- You go to Vikunja and click "Login with Factumerit"
+- You go to https://vikunja.factumerit.app and click "Login with Factumerit"
 - Vikunja says: "I don't know you, but I trust MAS. Go ask MAS to vouch for you."
 
 #### Step 2: Vikunja Sends You to MAS
@@ -710,11 +773,11 @@ Imagine you're trying to get into a VIP club (Vikunja), but you don't have a mem
 #### Step 6: Vikunja Exchanges the Code for Information
 - Vikunja takes the secret code and calls MAS directly (not through your browser)
 - Vikunja says: "Here's the code you gave me. Now give me the user's information."
-- MAS says: "OK, here's their email: ivan@ivantohelpyou.com"
+- MAS says: "OK, here's their email: ivan@ivantohelpyou.com and username: ivantohelpyou"
 
 #### Step 7: You're In!
-- Vikunja creates your account with your email
-- You're logged in and can start using Vikunja
+- Vikunja finds your existing account (created during bot provisioning) using your email
+- You're logged in and can see all the tasks you've been managing via chat
 - Next time you log in, Vikunja recognizes you
 
 ---
@@ -835,17 +898,37 @@ MAS responds with a package of information:
 
 #### Why This Design?
 
-**Before (Complex):**
+**The Complete System:**
 ```
-Vikunja → Authentik → MAS → Synapse
+User → Matrix (chat) → Bot → Vikunja API
+                ↓
+        (optional) Vikunja Web UI
+                ↓
+              MAS → Synapse
+```
+
+**Primary Flow (Bot):**
+- User chats with bot in Matrix
+- Bot calls Vikunja API directly
+- Fast, natural language interface
+- No web login needed
+
+**Secondary Flow (Web UI):**
+- User wants visual dashboard
+- Logs into Vikunja web interface via MAS
+- Same tasks as in chat (shared backend)
+
+**Before (Complex Web Login):**
+```
+Vikunja Web → Authentik → MAS → Synapse
 ```
 - 4 services to maintain
 - More points of failure
 - Cost: $65/month
 
-**After (Simple):**
+**After (Simple Web Login):**
 ```
-Vikunja → MAS → Synapse
+Vikunja Web → MAS → Synapse
 ```
 - 3 services to maintain
 - Fewer points of failure
@@ -855,10 +938,35 @@ Vikunja → MAS → Synapse
 - Authentik was acting as a "middleman" between Vikunja and MAS
 - It wasn't adding value - just passing information through
 - By connecting Vikunja directly to MAS, we simplified the system
+- The bot doesn't need Authentik at all - it uses API tokens
+
+**Why the bot is the primary interface:**
+- **Faster:** Type "what's due today" vs clicking through web UI
+- **Natural:** Conversational instead of forms and buttons
+- **Accessible:** Works on any device with Matrix client
+- **AI-powered:** Bot understands context and intent
+- **Always available:** Matrix notifications work everywhere
 
 ---
 
 ### Common Questions
+
+#### Q: Do I need to use the web interface at all?
+
+**A:** No! Most users only use the bot.
+
+- The bot can do everything: create tasks, list tasks, update status, search, etc.
+- The web interface is optional - for when you want a visual dashboard
+- Some users never use the web interface and that's perfectly fine
+
+#### Q: How does the bot access my tasks?
+
+**A:** Through an API token created during provisioning.
+
+- When you click the one-click setup link, the system creates a Vikunja account for you
+- It generates an API token (like a password just for the bot)
+- The bot stores this token (encrypted) and uses it to call Vikunja's API
+- The bot never sees your Matrix password
 
 #### Q: Why can't Vikunja just ask for my password directly?
 
@@ -867,16 +975,35 @@ Vikunja → MAS → Synapse
 - **Security:** If Vikunja stored your password, and Vikunja got hacked, your Matrix password would be compromised
 - **Convenience:** You only need to remember one password (Matrix), not separate passwords for every app
 - **Trust:** MAS is the only service that sees your password, and it's designed specifically for security
+- **Note:** This only applies to web login - the bot uses API tokens, not passwords
+
+#### Q: What happens if the bot goes down?
+
+**A:** You can still use the web interface.
+
+- Your tasks are stored in Vikunja, not the bot
+- If the bot is down, you can log into https://vikunja.factumerit.app
+- Once the bot comes back up, it will see all the tasks you created via web
 
 #### Q: What happens if MAS goes down?
 
-**A:** You can't log in to Vikunja (but existing sessions still work).
+**A:** The bot keeps working, but you can't log into the web interface.
 
-- If you're already logged in, you can keep using Vikunja
+- The bot uses API tokens, not MAS, so it's unaffected
+- If you're already logged into the web interface, you can keep using it
 - If you try to log in while MAS is down, you'll get an error
-- Once MAS comes back up, login works again
+- Once MAS comes back up, web login works again
 
-#### Q: Can Vikunja see my Matrix messages?
+#### Q: Can the bot see my Matrix messages?
+
+**A:** Only messages you send directly to it.
+
+- The bot only receives messages in DMs with you
+- It cannot see your messages in other rooms or with other people
+- It cannot see your contacts or any other Matrix data
+- It only knows what you tell it
+
+#### Q: Can Vikunja (web) see my Matrix messages?
 
 **A:** No, absolutely not.
 
@@ -896,17 +1023,107 @@ Vikunja → MAS → Synapse
 
 #### Q: What if I want to revoke Vikunja's access?
 
-**A:** You can revoke it in MAS settings.
+**A:** You can revoke web access in MAS settings.
 
 - Go to https://matrix.factumerit.app
 - Log in
 - Go to Settings → Sessions & Devices
 - Find Vikunja and click "Revoke"
-- Vikunja will no longer be able to access your information
+- This only affects web login - the bot will still work (it uses API tokens)
+
+#### Q: Can I use my own Vikunja instance instead of the hosted one?
+
+**A:** Yes! (Advanced users)
+
+- DM the bot: "config add https://my.vikunja.io vkt_yourtoken"
+- The bot will connect to your instance instead
+- You can have multiple Vikunja instances connected
+- This is called "BYOV" (Bring Your Own Vikunja)
+
+---
+
+### How Bot Provisioning Works (Technical)
+
+**When you click the one-click setup link, here's what happens behind the scenes:**
+
+#### Step 1: Link Validation
+- The link contains your Matrix ID and a one-time nonce (random code)
+- The system checks: Is this nonce valid? Has it expired? (1 hour limit)
+- If invalid: "Link expired or invalid"
+- If valid: Continue to Step 2
+
+#### Step 2: Vikunja Account Creation
+- System calls Vikunja Admin API: "Create user with email from Matrix"
+- Username is sanitized from Matrix ID: `@alice:matrix.org` → `alice_matrix_org`
+- Email comes from your Matrix account (from MAS)
+- Password is randomly generated (you'll never need it - you use Matrix login)
+
+#### Step 3: Default Projects Setup
+- System creates three starter projects:
+  - "Inbox" (for quick captures)
+  - "Personal" (for personal tasks)
+  - "Work" (for work tasks)
+- You can rename/delete these later
+
+#### Step 4: API Token Generation
+- System generates an API token for the bot
+- This token allows the bot to access your tasks
+- Token is stored encrypted in the bot's database
+- Token is linked to your Matrix ID
+
+#### Step 5: Database Storage
+- System stores the connection:
+  ```
+  Matrix ID: @alice:matrix.org
+  Vikunja URL: https://vikunja.factumerit.app
+  API Token: vkt_abc123... (encrypted)
+  ```
+- This is how the bot knows which Vikunja account belongs to which Matrix user
+
+#### Step 6: Nonce Invalidation
+- The one-time link is marked as used
+- If someone tries to use it again, it won't work
+- Security: Prevents replay attacks
+
+#### Step 7: Success!
+- You see a success page
+- You return to Matrix
+- Bot now responds to your commands with your tasks
+
+**Security Notes:**
+- The nonce expires in 1 hour
+- The nonce can only be used once
+- API tokens are stored encrypted
+- The bot never sees your Matrix password
+- Each user's tasks are completely isolated
 
 ---
 
 ### Troubleshooting for Non-Specialists
+
+#### "The bot isn't responding to my messages"
+
+**Possible causes:**
+1. Bot is offline or restarting
+2. You're not in a DM with the bot (you're in a room)
+3. Bot hasn't been provisioned yet
+
+**Try:**
+- Check if you're DMing `@tasks:factumerit.app` directly
+- Wait 30 seconds and try again
+- Send "help" to see if bot responds
+
+#### "I clicked the setup link but got an error"
+
+**Possible causes:**
+1. Link expired (1 hour limit)
+2. Link already used
+3. Vikunja service is down
+
+**Try:**
+- DM the bot again to get a new link
+- Check if https://vikunja.factumerit.app is accessible
+- Contact administrator
 
 #### "I clicked login but nothing happened"
 
