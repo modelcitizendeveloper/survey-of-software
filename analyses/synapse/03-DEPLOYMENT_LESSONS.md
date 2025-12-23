@@ -175,6 +175,8 @@ Only these scopes are allowed by default:
 **NOT allowed** (causes "authorization denied by policy"):
 - `profile` ✗ - common OIDC scope but blocked by MAS default
 
+**Gotcha**: If you update your client config to remove `profile` but the OIDC flow still fails, check that the client container was actually redeployed. The old config may be cached in the running container.
+
 ### Getting redirect_uri Right
 1. Check what URL the client actually sends (browser Network tab)
 2. Match exactly in MAS `redirect_uris`
