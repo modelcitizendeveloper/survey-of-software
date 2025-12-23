@@ -1,7 +1,9 @@
 # 02: Synapse Capabilities Unlocked
 
 **Date**: 2025-12-22
-**Related**: ADR-021 (Synapse over Dendrite)
+**Status**: Deployed (verification pending)
+**Updated**: 2025-12-23 - MAS patched for email claims
+**Related**: ADR-021 (Synapse over Dendrite), ADR-024 (MAS patch)
 
 ---
 
@@ -157,10 +159,18 @@ Current deployment: **$14/mo** (Starter + PostgreSQL basic)
 
 ## New Capabilities Roadmap
 
-### Phase 1: Foundation ✅
+### Phase 1: Foundation (In Progress)
 - [x] Deploy Synapse + MAS
-- [ ] Verify MAS user registration
-- [ ] Test Vikunja OIDC login
+- [x] Discover MAS email claims bug (solutions-55jz)
+- [x] Patch MAS source code for email support
+- [x] Deploy patched MAS to Render
+- [ ] Verify MAS userinfo returns email claims
+- [/] Test Vikunja OIDC login (via Authentik - working, testing direct)
+
+### Phase 1.5: Architecture Simplification (Pending)
+- [ ] Test direct Vikunja → MAS connection (solutions-hfes)
+- [ ] If successful, deprecate Authentik (save $25/mo)
+- [ ] Update architecture docs with final state
 
 ### Phase 2: Enhanced Bots
 - [ ] Register Application Service for task bot

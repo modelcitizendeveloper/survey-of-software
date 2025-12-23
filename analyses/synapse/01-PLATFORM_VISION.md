@@ -1,8 +1,8 @@
 # 01: Matrix as Multi-Project Platform
 
 **Date**: 2025-12-22
-**Status**: Exploration
-**Updated**: Pivoted from Dendrite to Synapse (ADR-021)
+**Status**: Phase 1 Deployed (verification pending)
+**Updated**: 2025-12-23 - MAS patched, Vikunja OIDC via Authentik deployed
 
 ---
 
@@ -124,19 +124,24 @@ All bots share:
 | Synapse + MAS | $7-25/mo | Unlimited bots, users, rooms (RAM dependent) |
 | Bot services | $7/mo each | One service per bot (or combined) |
 | PostgreSQL | $7/mo | Shared database |
+| Authentik (if needed) | $25/mo | IdP bridge, MFA, user management |
 
+**Current (2025-12-23)**: $65/mo (Synapse+MAS+Authentik+Vikunja+PostgreSQL+Render Pro)
+**Potential optimized**: $40/mo (if Authentik can be removed after MAS patch verification)
 **Minimum viable**: $21/mo (Synapse Starter + 1 combined bot service + PostgreSQL)
-**If RAM upgrade needed**: +$18/mo for Standard plan
 
 ---
 
 ## Implementation Strategy
 
-### Phase 1: Foundation (current)
-- Deploy Synapse + MAS
-- Launch `@tasks:factumerit.app` (Vikunja MVP)
-- Enable "Login with Matrix" for Vikunja
-- Prove the model works
+### Phase 1: Foundation (Deployed - Verification Pending)
+- [x] Deploy Synapse + MAS
+- [x] Discover and patch MAS email claims bug
+- [x] Deploy Authentik as IdP bridge (workaround)
+- [x] Launch Vikunja with "Login with Matrix" (via Authentik)
+- [ ] Verify MAS patch works
+- [ ] Test direct Vikunja → MAS connection
+- [ ] Prove the model works end-to-end
 
 ### Phase 2: Research Access
 - Add `@research:factumerit.app`
