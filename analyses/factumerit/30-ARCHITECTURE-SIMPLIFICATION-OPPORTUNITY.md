@@ -1,7 +1,11 @@
 # 30: Architecture Simplification Opportunity
 
 **Date**: 2025-12-23
-**Status**: Proposal
+**Status**: ✅ Implemented (2025-12-23)
+
+> **Outcome**: Authentik was deployed, then bypassed and torn down. Vikunja now connects directly to MAS. Saving $25/mo.
+>
+> See [vikunja-mas-login-lifecycle.md](./vikunja-mas-login-lifecycle.md) for the canonical system documentation.
 
 ---
 
