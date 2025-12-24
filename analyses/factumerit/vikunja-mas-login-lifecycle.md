@@ -930,6 +930,139 @@ This appendix explains the Factumerit system in simple terms for non-specialists
 
 ---
 
+### The Shared Codebase Architecture
+
+**Key Innovation:** The Matrix bot and the MCP server share the same codebase. This means:
+
+#### What is MCP?
+
+**MCP (Model Context Protocol)** is a standard way for AI assistants like Claude Desktop to connect to external tools and data sources.
+
+**In Factumerit's case:**
+- The same Python code that powers the Matrix bot also runs as an MCP server
+- Users can connect Claude Desktop (or other AI tools) to their Vikunja instance
+- Claude gets access to all 58+ task management tools
+- Works locally on your computer (no cloud required)
+
+#### How It Works
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    SHARED CODEBASE                               │
+│                  vikunja-mcp/server.py                           │
+│                                                                   │
+│  ┌────────────────────────────────────────────────────────┐     │
+│  │  TOOL REGISTRY (Single Source of Truth)                │     │
+│  │  - create_task, update_task, list_tasks                │     │
+│  │  - create_project, list_projects                       │     │
+│  │  - set_task_position, batch_create_tasks               │     │
+│  │  - 58+ tools total                                     │     │
+│  └────────────────────────────────────────────────────────┘     │
+│                           │                                      │
+│                           │                                      │
+│         ┌─────────────────┴─────────────────┐                   │
+│         │                                   │                   │
+│         ▼                                   ▼                   │
+│  ┌─────────────┐                    ┌─────────────┐            │
+│  │ Matrix Bot  │                    │ MCP Server  │            │
+│  │ Interface   │                    │ Interface   │            │
+│  └─────────────┘                    └─────────────┘            │
+└─────────────────────────────────────────────────────────────────┘
+         │                                      │
+         │                                      │
+         ▼                                      ▼
+┌─────────────────┐                  ┌─────────────────┐
+│  Matrix Chat    │                  │ Claude Desktop  │
+│  (Slack, etc.)  │                  │ (or other AI)   │
+└─────────────────┘                  └─────────────────┘
+         │                                      │
+         │                                      │
+         └──────────────┬───────────────────────┘
+                        │
+                        ▼
+                ┌──────────────┐
+                │ Vikunja API  │
+                └──────────────┘
+```
+
+#### Why This Matters
+
+**1. Code Reuse:**
+- Write a tool once, use it in Matrix bot AND MCP server
+- Bug fixes apply to both interfaces automatically
+- New features available everywhere instantly
+
+**2. Multiple Interfaces:**
+- **Matrix Bot:** Chat-based, mobile-friendly, always online
+- **MCP Server:** Local, integrates with Claude Desktop, works offline
+- **Future:** Slack bot, Discord bot, etc. (same codebase)
+
+**3. Tool Registry Pattern:**
+```python
+# Single source of truth for all tools
+TOOL_REGISTRY = {
+    "create_task": {
+        "description": "Create a new task",
+        "input_schema": {...},
+        "implementation": create_task_impl
+    },
+    # ... 58+ more tools
+}
+
+# Matrix bot uses it
+SLACK_TOOLS = [tool for tool in TOOL_REGISTRY if ...]
+
+# MCP server uses it
+@mcp.tool()
+def create_task(...):
+    return TOOL_REGISTRY["create_task"]["implementation"](...)
+```
+
+#### Current Deployment
+
+| Interface | Status | Where It Runs | Who Uses It |
+|-----------|--------|---------------|-------------|
+| **Matrix Bot** | 🚧 In Development | Render.com (cloud) | Factumerit users via Matrix chat |
+| **MCP Server** | ✅ Working | Local (WSL2) | Ivan via Claude Desktop |
+| **Slack Bot** | ⏸️ Paused | N/A | Paused due to TOS concerns |
+
+#### Example: Same Tool, Different Interfaces
+
+**Via Matrix Bot:**
+```
+User: "Add task: Buy groceries tomorrow"
+Bot: ✅ Created task #123: Buy groceries (due: 2025-12-24)
+```
+
+**Via Claude Desktop (MCP):**
+```
+User: "Add a task to buy groceries tomorrow"
+Claude: [calls create_task tool]
+Claude: "I've created the task 'Buy groceries' with a due date of December 24, 2025."
+```
+
+**Same backend code, different user experience!**
+
+#### Technical Details
+
+**Shared Components:**
+- `_request()`: Makes authenticated API calls to Vikunja
+- `_get_instance_config()`: Handles multi-instance support
+- All tool implementations (`create_task_impl`, `list_tasks_impl`, etc.)
+- Vikunja API wrapper logic
+
+**Interface-Specific:**
+- **Matrix Bot:** `matrix-nio` for Matrix protocol, message formatting for chat
+- **MCP Server:** `FastMCP` for MCP protocol, JSON-RPC over stdio
+- **Slack Bot:** `slack-bolt` for Slack Events API (paused)
+
+**Configuration:**
+- **Matrix Bot:** Stores user tokens in PostgreSQL, provisions via one-click link
+- **MCP Server:** Reads from `~/.vikunja-mcp/config.yaml`, supports multiple instances
+- Both support BYOV (Bring Your Own Vikunja)
+
+---
+
 ### The Web Login Journey (In Plain English)
 
 **Context:** This is what happens when you want to use the Vikunja web interface instead of chatting with the bot.
