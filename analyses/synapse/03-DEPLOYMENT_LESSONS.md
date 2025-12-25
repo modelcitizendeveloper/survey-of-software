@@ -13,6 +13,8 @@ Self-hosted Matrix homeserver with OIDC for "Login with Matrix" in external apps
 
 **Update 2025-12-23**: Discovered and patched MAS email claims bug. See "MAS Email Claims Bug" section below.
 
+**Update 2025-12-24**: Enabled MSC4108 (QR code device sign-in). See "MSC4108 QR Code Sign-In" section below.
+
 ---
 
 ## Architecture Decisions
@@ -202,6 +204,114 @@ Only these scopes are allowed by default:
 | "Authorization denied by policy" | Requested scope not allowed (e.g., `profile`) |
 | "No email address available" (client) | MAS userinfo not returning email (see MAS Email Claims Bug) |
 | GitGuardian warnings about .pem files | Committed test files from mas-patched/ directory |
+| TypeError: MSC3861.__init__() got unexpected keyword | `msc4108_enabled` inside `msc3861` block (see MSC4108 section) |
+
+---
+
+## MSC4108 QR Code Sign-In
+
+**Date**: 2025-12-24
+**Status**: ✅ Working
+**Feature**: Sign in to new devices by scanning QR code
+
+### Configuration
+
+MSC4108 must be enabled in **two places**:
+
+#### 1. MAS (Matrix Authentication Service)
+
+In `mas/mas.template.yaml`:
+
+```yaml
+experimental:
+  # Enable OIDC Native Authentication (required for QR code login)
+  oidc_native_authentication: true
+```
+
+#### 2. Synapse
+
+In `synapse/homeserver.template.yaml`:
+
+```yaml
+experimental_features:
+  # Enable QR code device sign-in (MSC4108)
+  msc4108_enabled: true  # ✅ ONLY HERE, NOT inside msc3861!
+  msc3861:
+    enabled: true
+    # DO NOT put msc4108_enabled here - it's not a valid MSC3861 parameter!
+    issuer: "http://localhost:8080/"
+    client_id: 0000000000000000000SYNAPSE
+    # ... rest of config
+```
+
+### ⚠️ CRITICAL: Config Gotcha
+
+**WRONG (causes crash):**
+```yaml
+experimental_features:
+  msc4108_enabled: true
+  msc3861:
+    enabled: true
+    msc4108_enabled: true  # ❌ INVALID - MSC3861 class doesn't accept this!
+```
+
+**Error:**
+```
+TypeError: MSC3861.__init__() got an unexpected keyword argument 'msc4108_enabled'
+```
+
+**RIGHT:**
+```yaml
+experimental_features:
+  msc4108_enabled: true  # ✅ Only at top level
+  msc3861:
+    enabled: true
+    # No msc4108_enabled here!
+```
+
+### How It Works
+
+1. **User initiates QR login** in Element (Settings → Sessions → Link new device)
+2. **Element generates QR code** with OIDC authorization URL
+3. **User scans QR** with new device
+4. **MAS handles OIDC flow** (oidc_native_authentication)
+5. **Synapse validates** via MSC4108 + MSC3861 delegation
+6. **New device authenticated** without password
+
+### Testing
+
+**In Element Web:**
+1. Go to Settings → Sessions
+2. Click "Link new device"
+3. Should see "Sign in with QR code" option
+4. Scan with mobile device
+5. Should redirect to MAS login/consent flow
+
+**Known Issue:**
+- QR code redirects to homepage (`/`) instead of Element Web (`/chat`)
+- This is cosmetic - the authentication still works
+- User can manually navigate to `/chat` after login
+
+### Troubleshooting
+
+| Issue | Solution |
+|-------|----------|
+| "QR code not supported" in Element | Check `msc4108_enabled: true` in Synapse config |
+| Synapse crashes on startup | Remove `msc4108_enabled` from inside `msc3861` block |
+| QR code shows but fails | Check MAS has `oidc_native_authentication: true` |
+| Redirects to wrong page | Known issue, user can navigate manually |
+
+### References
+
+- [MSC4108: OIDC Native Flow](https://github.com/matrix-org/matrix-spec-proposals/pull/4108)
+- [Synapse Issue #18027](https://github.com/element-hq/synapse/issues/18027) (misleading - suggests putting in both places)
+- Synapse source: `synapse/config/experimental.py` line 510 (MSC3861 class definition)
+
+### Deployment History
+
+- **2025-12-24 09:25** - Commit 444a2c4: Added MSC4108 (broke - had it in both places)
+- **2025-12-24 18:19** - Commit 0753b7e: Fixed (removed from msc3861 block)
+- **2025-12-24 18:22** - Deploy successful, QR code working ✅
 
 ---
 
