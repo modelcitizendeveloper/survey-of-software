@@ -1,0 +1,109 @@
+experiment_number: "2.082"
+title: "Service Discovery Patterns for SMCP"
+date: "2026-01-08"
+status: complete
+
+description: |
+  Research into service discovery patterns from Consul, etcd, DNS-SD, and CoreDNS
+  to extract just-enough patterns for SMCP's Paulina registry component.
+  Focus on single-node to small cluster scale, explicitly avoiding enterprise
+  service mesh complexity.
+
+target_component: Paulina (MCP Server Registry)
+target_scale: "Single node to small cluster (1-5 nodes)"
+
+research_questions:
+  - question: "Service Registration: Push vs pull?"
+    answer: "ADOPT push-based self-registration - natural fit for MCP servers"
+  - question: "Health Check Patterns: TTL, heartbeat, TCP/HTTP probes?"
+    answer: "ADOPT TTL with lease refresh - works for all transports"
+  - question: "Service Discovery: DNS, API, sidecar?"
+    answer: "ADOPT API-based discovery - better metadata support than DNS"
+  - question: "Metadata & Tags: How to store capabilities?"
+    answer: "ADOPT K/V metadata with capability schema"
+  - question: "What Can We Skip for Single-Node SMCP?"
+    answer: "SKIP consensus (Raft/Paxos), agents, multi-DC, service mesh, DNS-SD"
+
+sources:
+  consul:
+    - url: "https://developer.hashicorp.com/consul/docs/register/service/vm"
+      title: "Consul Service Registration"
+    - url: "https://developer.hashicorp.com/consul/docs/register/health-check/vm"
+      title: "Consul Health Checks"
+    - url: "https://developer.hashicorp.com/consul/docs/use-case/service-discovery"
+      title: "Consul Service Discovery"
+    - url: "https://developer.hashicorp.com/consul/api-docs/catalog"
+      title: "Consul Catalog API"
+
+  etcd:
+    - url: "https://etcd.io/docs/v3.5/tutorials/how-to-create-lease/"
+      title: "etcd Lease Tutorial"
+    - url: "https://www.pixelstech.net/article/1615108646-Service-discovery-with-etcd"
+      title: "Service Discovery with etcd"
+    - url: "https://etcd.io/docs/v3.4/learning/api/"
+      title: "etcd v3 API"
+
+  dns_sd:
+    - url: "https://datatracker.ietf.org/doc/html/rfc6763"
+      title: "RFC 6763 - DNS-Based Service Discovery"
+    - url: "https://dn.org/mdns-and-dns-sd-service-discovery-in-local-networks/"
+      title: "mDNS and DNS-SD in Local Networks"
+
+  coredns:
+    - url: "https://kubernetes.io/docs/tasks/administer-cluster/coredns/"
+      title: "CoreDNS for Kubernetes"
+    - url: "https://coredns.io/plugins/kubernetes/"
+      title: "CoreDNS Kubernetes Plugin"
+
+  patterns:
+    - url: "https://microservices.io/patterns/client-side-discovery.html"
+      title: "Client-Side Service Discovery Pattern"
+    - url: "https://microservices.io/patterns/server-side-discovery.html"
+      title: "Server-Side Service Discovery Pattern"
+    - url: "https://www.baeldung.com/cs/service-discovery-microservices"
+      title: "Service Discovery in Microservices"
+
+  comparisons:
+    - url: "https://ahmettsoner.medium.com/advanced-service-discovery-in-microservices-consul-etcd-and-zookeeper-b8860dce8363"
+      title: "Consul vs etcd vs Zookeeper"
+    - url: "https://stackshare.io/stackups/consul-vs-etcd-vs-zookeeper"
+      title: "StackShare Comparison"
+
+outputs:
+  - file: "01_PATTERN_CATALOG.md"
+    description: "Comprehensive catalog of service discovery patterns"
+    lines: ~280
+  - file: "02_SMCP_RECOMMENDATIONS.md"
+    description: "ADOPT/SKIP/SIMPLIFY recommendations for Paulina"
+    lines: ~320
+
+key_recommendations:
+  adopt:
+    - "Self-Registration via API"
+    - "TTL-Based Health with Lease Refresh"
+    - "Key-Value Metadata for Capabilities"
+    - "API-Based Discovery (Not DNS)"
+    - "In-Process Registry for Single Node"
+
+  skip:
+    - "Raft/Paxos Consensus"
+    - "Agent-Per-Node Architecture"
+    - "Multi-Datacenter Replication"
+    - "Service Mesh / Sidecar Proxies"
+    - "DNS-SD/mDNS for Discovery"
+    - "Active HTTP/TCP Health Probes"
+
+  simplify:
+    - "Health Checking -> Single-Level TTL"
+    - "Tags -> Simple String Array"
+    - "Service Catalog -> In-Memory Dict + Optional Persistence"
+    - "Client Discovery -> Direct API Calls"
+
+tags:
+  - service-discovery
+  - consul
+  - etcd
+  - dns-sd
+  - smcp
+  - paulina
+  - mcp-registry
