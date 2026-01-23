@@ -1,11 +1,11 @@
 ---
 sidebar_position: 101
-slug: /research/methodology
+slug: /survey/methodology
 id: four-pass-solution-survey
 title: "Methodology"
 ---
 
-# Four-Pass Survey (4PS)
+# Four-Pass Discovery (4PS)
 
 **Systematic Library Research Using Four Independent Perspectives**
 
