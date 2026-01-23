@@ -1,0 +1,52 @@
+/**
+ * Any CSS included here will be global. The classic template
+ * bundles Infima by default. Infima is a CSS framework designed to
+ * work well for content-centric websites.
+ */
+
+/* Model Citizen Developer Brand Colors */
+:root {
+  /* Primary: Teal/Turquoise (#5AADBB) - header backgrounds, accents */
+  --ifm-color-primary: #5AADBB;
+  --ifm-color-primary-dark: #4a9fb0;
+  --ifm-color-primary-darker: #4295a6;
+  --ifm-color-primary-darkest: #357b88;
+  --ifm-color-primary-light: #6bb9c5;
+  --ifm-color-primary-lighter: #7dc3cd;
+  --ifm-color-primary-lightest: #a1d5dc;
+
+  /* Accent: Yellow (#F4D35E) - buttons, highlights */
+  --ifm-color-accent: #F4D35E;
+  --ifm-color-accent-dark: #f2ca47;
+  --ifm-color-accent-darker: #f1c53b;
+  --ifm-color-accent-darkest: #edb616;
+  --ifm-color-accent-light: #f6dc75;
+  --ifm-color-accent-lighter: #f7e181;
+  --ifm-color-accent-lightest: #faeea3;
+
+  --ifm-code-font-size: 95%;
+  --docusaurus-highlighted-code-line-bg: rgba(90, 173, 187, 0.1);
+}
+
+/* For readability concerns, you should choose a lighter palette in dark mode. */
+[data-theme='dark'] {
+  /* Primary: Lighter teal for dark mode */
+  --ifm-color-primary: #6bb9c5;
+  --ifm-color-primary-dark: #5aadbb;
+  --ifm-color-primary-darker: #4fa5b4;
+  --ifm-color-primary-darkest: #3a8a98;
+  --ifm-color-primary-light: #7dc3cd;
+  --ifm-color-primary-lighter: #8dcad4;
+  --ifm-color-primary-lightest: #a8d8df;
+
+  /* Accent: Slightly muted yellow for dark mode */
+  --ifm-color-accent: #F6DC75;
+  --ifm-color-accent-dark: #f4d35e;
+  --ifm-color-accent-darker: #f2ca47;
+  --ifm-color-accent-darkest: #edb616;
+  --ifm-color-accent-light: #f8e28c;
+  --ifm-color-accent-lighter: #f9e798;
+  --ifm-color-accent-lightest: #fbf1b4;
+
+  --docusaurus-highlighted-code-line-bg: rgba(90, 173, 187, 0.3);
+}
