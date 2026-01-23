@@ -73,7 +73,7 @@ const config: Config = {
           label: 'The Survey',
         },
         {
-          href: 'https://newsletter.modelcitizendeveloper.com',
+          href: 'https://newsletter.modelcitizendeveloper.com/newsletter',
           label: 'Newsletter',
           position: 'right',
         },
@@ -113,7 +113,7 @@ const config: Config = {
           items: [
             {
               label: 'Newsletter',
-              href: 'https://newsletter.modelcitizendeveloper.com',
+              href: 'https://newsletter.modelcitizendeveloper.com/newsletter',
             },
           ],
         },
