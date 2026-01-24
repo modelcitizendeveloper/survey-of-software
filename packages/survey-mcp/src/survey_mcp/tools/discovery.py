@@ -74,3 +74,37 @@ def register_discovery_tools(mcp: FastMCP):
                     break
 
         return results
+
+    @mcp.tool()
+    def get_survey(survey_id: str) -> dict:
+        """
+        Fetch a specific survey by ID.
+
+        Retrieves the full survey content including title, HTML content,
+        and all 4PS sections (S1-S4) if available.
+
+        Args:
+            survey_id (str): Survey ID (e.g., "1-002", "1.002", "2-015")
+                            Accepts both dot and dash formats
+
+        Returns:
+            dict: Survey data:
+                {
+                    "category": "1-002",
+                    "title": "Fuzzy Search",
+                    "content": "<full HTML content>",
+                    "s1_rapid": "<S1 section HTML>" or None,
+                    "s2_comprehensive": "<S2 section HTML>" or None,
+                    "s3_need_driven": "<S3 section HTML>" or None,
+                    "s4_strategic": "<S4 section HTML>" or None
+                }
+
+        Example:
+            >>> survey = get_survey("1-002")
+            >>> print(survey["title"])
+            "Fuzzy Search"
+            >>> print(survey["s1_rapid"][:100])
+            "<p>S1 Rapid analysis of fuzzy search..."
+        """
+        cache = get_cache_manager()
+        return cache.parse_survey_page(survey_id)
