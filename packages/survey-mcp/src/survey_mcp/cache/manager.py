@@ -98,7 +98,7 @@ class CacheManager:
         title = title_elem.get_text(strip=True) if title_elem else category
 
         # Extract 4PS sections
-        # Look for headings with "S1", "S2", "S3", "S4" or "01-discovery", "02-comparison", etc.
+        # Look for h1 headings with "S1", "S2", "S3", "S4" markers
         result = {
             "category": category,
             "title": title,
@@ -109,27 +109,28 @@ class CacheManager:
             "s4_strategic": None
         }
 
-        # Find all headings (h2, h3) to locate pass sections
-        for heading in soup.find_all(['h2', 'h3']):
+        # Find all h1 tags (4PS sections are marked with h1)
+        for heading in soup.find_all('h1'):
             heading_text = heading.get_text(strip=True).lower()
 
-            # Collect content until next heading
+            # Collect content until next h1 heading (section boundary)
             content_parts = []
             for sibling in heading.find_next_siblings():
-                if sibling.name in ['h2', 'h3']:
+                if sibling.name == 'h1':
+                    # Hit next section, stop
                     break
                 content_parts.append(str(sibling))
 
             section_html = "\n".join(content_parts)
 
-            # Identify pass type
-            if 's1' in heading_text or 'rapid' in heading_text or '01-discovery' in heading_text:
+            # Identify pass type based on h1 heading
+            if 's1' in heading_text or 'rapid' in heading_text:
                 result['s1_rapid'] = section_html
-            elif 's2' in heading_text or 'comprehensive' in heading_text or '02-comparison' in heading_text:
+            elif 's2' in heading_text or 'comprehensive' in heading_text:
                 result['s2_comprehensive'] = section_html
-            elif 's3' in heading_text or 'need-driven' in heading_text or '03-need-driven' in heading_text:
+            elif 's3' in heading_text or 'need-driven' in heading_text or 'need driven' in heading_text:
                 result['s3_need_driven'] = section_html
-            elif 's4' in heading_text or 'strategic' in heading_text or '04-strategic' in heading_text:
+            elif 's4' in heading_text or 'strategic' in heading_text:
                 result['s4_strategic'] = section_html
 
         return result
