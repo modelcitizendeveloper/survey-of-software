@@ -76,35 +76,71 @@ def register_discovery_tools(mcp: FastMCP):
         return results
 
     @mcp.tool()
-    def get_survey(survey_id: str) -> dict:
+    def get_survey(survey_id: str, section: str = "summary") -> dict:
         """
         Fetch a specific survey by ID.
 
-        Retrieves the full survey content including title, HTML content,
-        and all 4PS sections (S1-S4) if available.
+        Retrieves survey content. Use 'summary' for metadata only,
+        or specify a section (s1, s2, s3, s4) to get that pass's content.
 
         Args:
             survey_id (str): Survey ID (e.g., "1-002", "1.002", "2-015")
                             Accepts both dot and dash formats
+            section (str): Which content to return:
+                          - "summary": Just title and metadata (default)
+                          - "s1": S1 Rapid pass content only
+                          - "s2": S2 Comprehensive pass content only
+                          - "s3": S3 Need-Driven pass content only
+                          - "s4": S4 Strategic pass content only
+                          - "full": All content (may be very large)
 
         Returns:
-            dict: Survey data:
-                {
-                    "category": "1-002",
-                    "title": "Fuzzy Search",
-                    "content": "<full HTML content>",
-                    "s1_rapid": "<S1 section HTML>" or None,
-                    "s2_comprehensive": "<S2 section HTML>" or None,
-                    "s3_need_driven": "<S3 section HTML>" or None,
-                    "s4_strategic": "<S4 section HTML>" or None
-                }
+            dict: Survey data based on section parameter
 
-        Example:
-            >>> survey = get_survey("1-002")
+        Examples:
+            >>> survey = get_survey("1-002")  # Summary only
             >>> print(survey["title"])
-            "Fuzzy Search"
-            >>> print(survey["s1_rapid"][:100])
-            "<p>S1 Rapid analysis of fuzzy search..."
+            "1.002 Fuzzy Search"
+
+            >>> s1 = get_survey("1-002", section="s1")  # Just S1 content
+            >>> print(s1["s1_rapid"][:100])
         """
         cache = get_cache_manager()
-        return cache.parse_survey_page(survey_id)
+        full_survey = cache.parse_survey_page(survey_id)
+
+        if section == "summary":
+            # Return metadata only, no HTML content
+            return {
+                "category": full_survey["category"],
+                "title": full_survey["title"],
+                "has_s1": full_survey["s1_rapid"] is not None,
+                "has_s2": full_survey["s2_comprehensive"] is not None,
+                "has_s3": full_survey["s3_need_driven"] is not None,
+                "has_s4": full_survey["s4_strategic"] is not None,
+            }
+        elif section == "s1":
+            return {
+                "category": full_survey["category"],
+                "title": full_survey["title"],
+                "s1_rapid": full_survey["s1_rapid"]
+            }
+        elif section == "s2":
+            return {
+                "category": full_survey["category"],
+                "title": full_survey["title"],
+                "s2_comprehensive": full_survey["s2_comprehensive"]
+            }
+        elif section == "s3":
+            return {
+                "category": full_survey["category"],
+                "title": full_survey["title"],
+                "s3_need_driven": full_survey["s3_need_driven"]
+            }
+        elif section == "s4":
+            return {
+                "category": full_survey["category"],
+                "title": full_survey["title"],
+                "s4_strategic": full_survey["s4_strategic"]
+            }
+        else:  # "full" or unknown
+            return full_survey
