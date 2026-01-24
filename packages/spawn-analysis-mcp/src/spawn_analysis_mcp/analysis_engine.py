@@ -70,6 +70,7 @@ class AnalysisEngine:
         analyst_ids: Optional[List[str]] = None,
         prior_confidence: float = 0.5,
         user_id: Optional[str] = None,
+        registry=None,
     ) -> AnalysisSession:
         """
         Conduct a spawn-analysis decision analysis.
@@ -86,6 +87,7 @@ class AnalysisEngine:
             analyst_ids: List of analyst IDs to use (None = all analysts)
             prior_confidence: Starting Bayesian confidence (0.0-1.0)
             user_id: User identifier for privacy/scoping (optional)
+            registry: Optional analyst registry to use (overrides self.registry)
 
         Returns:
             AnalysisSession object (status: pending)
@@ -93,15 +95,19 @@ class AnalysisEngine:
         Raises:
             ValueError: If analyst IDs are invalid
         """
+        # Use provided registry or fall back to instance registry
+        if registry is None:
+            registry = self.registry
+
         # Validate analysts
         if analyst_ids is None:
             # Use all analysts in order
-            analysts = self.registry.get_all_analysts()
+            analysts = registry.get_all_analysts()
             analyst_ids = [a.id for a in analysts]
         else:
             # Validate provided IDs
             for aid in analyst_ids:
-                if not self.registry.get_analyst(aid):
+                if not registry.get_analyst(aid):
                     raise ValueError(f"Unknown analyst: {aid}")
 
         # Generate session ID

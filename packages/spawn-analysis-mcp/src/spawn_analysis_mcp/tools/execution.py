@@ -84,13 +84,14 @@ def register_execution_tools(mcp: FastMCP):
         engine = get_engine()
         registry = get_registry(analyst_set=analyst_set)
 
-        # Create analysis session
+        # Create analysis session with specific registry
         session = engine.conduct_analysis(
             question=question,
             context=context,
             analyst_ids=analyst_ids,
             prior_confidence=prior_confidence,
             user_id=user_id,
+            registry=registry,
         )
 
         # Always save to storage (user_id defaults to "default_user")
