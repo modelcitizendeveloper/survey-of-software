@@ -5,7 +5,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 // This runs in Node.js - Don't use client-side code here (browser APIs, JSX...)
 
 const config: Config = {
-  title: 'Survey of Software - Model Citizen Developer',
+  title: 'Survey of Software | Model Citizen Developer',
   tagline: 'Mapping the Territory for Model Citizen Developers',
   favicon: 'img/favicon.ico',
 
