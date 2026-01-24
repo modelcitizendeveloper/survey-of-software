@@ -26,6 +26,7 @@ def register_execution_tools(mcp: FastMCP):
         question: str,
         context: str = "",
         analyst_ids: Optional[List[str]] = None,
+        analyst_set: str = "general",
         prior_confidence: float = 0.5,
         user_id: str = "default_user",
     ) -> dict:
@@ -39,7 +40,11 @@ def register_execution_tools(mcp: FastMCP):
             question (str): The decision question to analyze
             context (str): Additional context (Vikunja data, background, constraints)
             analyst_ids (List[str], optional): Specific analysts to use.
-                If None, uses all 8 analysts in order.
+                If None, uses all analysts from the chosen set.
+            analyst_set (str): Which analyst set to use:
+                - "general": Business/project decision analysts (8 analysts)
+                - "software": Software selection analysts (5 analysts)
+                Default: "general"
             prior_confidence (float): Starting Bayesian confidence (0.0-1.0).
                 Default: 0.5 (uncertain)
             user_id (str): User identifier for privacy/scoping.
@@ -77,7 +82,7 @@ def register_execution_tools(mcp: FastMCP):
             ...     pass
         """
         engine = get_engine()
-        registry = get_registry()
+        registry = get_registry(analyst_set=analyst_set)
 
         # Create analysis session
         session = engine.conduct_analysis(

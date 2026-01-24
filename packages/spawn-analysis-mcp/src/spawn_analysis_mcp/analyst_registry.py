@@ -45,20 +45,27 @@ class Analyst:
 class AnalystRegistry:
     """Registry for spawn-analysis analysts."""
 
-    def __init__(self, analysts_dir: Optional[Path] = None):
+    def __init__(self, analysts_dir: Optional[Path] = None, analyst_set: str = "general"):
         """
         Initialize the analyst registry.
 
         Args:
             analysts_dir: Directory containing analyst prompt files.
-                         If None, uses analysts/ relative to this module.
+                         If None, uses analysts/ or analysts-software/ relative to this module.
+            analyst_set: Which analyst set to load:
+                        - "general": Business/project decision analysts (analysts/)
+                        - "software": Software selection analysts (analysts-software/)
         """
         if analysts_dir is None:
-            # Default: analysts/ directory next to the package
+            # Default: choose directory based on analyst_set
             module_dir = Path(__file__).parent
-            analysts_dir = module_dir.parent.parent / "analysts"
+            if analyst_set == "software":
+                analysts_dir = module_dir.parent.parent / "analysts-software"
+            else:
+                analysts_dir = module_dir.parent.parent / "analysts"
 
         self.analysts_dir = Path(analysts_dir)
+        self.analyst_set = analyst_set
         self._analysts: Dict[str, Analyst] = {}
         self._load_analysts()
 
@@ -168,18 +175,29 @@ class AnalystRegistry:
         return len(self._analysts)
 
 
-# Singleton instance for easy access
-_registry: Optional[AnalystRegistry] = None
+# Singleton instances for each analyst set
+_registry_general: Optional[AnalystRegistry] = None
+_registry_software: Optional[AnalystRegistry] = None
 
 
-def get_registry() -> AnalystRegistry:
+def get_registry(analyst_set: str = "general") -> AnalystRegistry:
     """
-    Get the singleton analyst registry instance.
+    Get the analyst registry instance for a specific analyst set.
+
+    Args:
+        analyst_set: "general" for business/project analysts,
+                    "software" for software selection analysts
 
     Returns:
         AnalystRegistry instance
     """
-    global _registry
-    if _registry is None:
-        _registry = AnalystRegistry()
-    return _registry
+    global _registry_general, _registry_software
+
+    if analyst_set == "software":
+        if _registry_software is None:
+            _registry_software = AnalystRegistry(analyst_set="software")
+        return _registry_software
+    else:
+        if _registry_general is None:
+            _registry_general = AnalystRegistry(analyst_set="general")
+        return _registry_general
