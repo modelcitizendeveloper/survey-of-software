@@ -337,7 +337,7 @@ CRITICAL: Stay authentic to your methodology.
 
 ---
 
-## When to Use MPSE
+## When to Use 4PS
 
 **Good Candidates:**
 - General-purpose libraries
@@ -351,7 +351,7 @@ CRITICAL: Stay authentic to your methodology.
 - Proprietary business tools
 - Vertical-specific software
 
-**The Hardware Store Principle:** MPSE works for components you'd find in a hardware store—general-purpose tools, not custom applications.
+**The Hardware Store Principle:** 4PS works for components you'd find in a hardware store—general-purpose tools, not custom applications.
 
 ---
 

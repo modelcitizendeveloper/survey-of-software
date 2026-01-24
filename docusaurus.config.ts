@@ -43,7 +43,7 @@ const config: Config = {
           routeBasePath: '/', // Make docs the root path
           sidebarPath: './sidebars.ts',
           editUrl:
-            'https://github.com/modelcitizendeveloper/survey-of-software/tree/main/research-site/',
+            'https://github.com/modelcitizendeveloper/survey-of-software/tree/main/',
         },
         blog: false, // Disable blog
         theme: {

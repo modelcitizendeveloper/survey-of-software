@@ -16,7 +16,7 @@ In the 19th century, the British undertook an ambitious 70-year project to accur
 **We're doing the same for software libraries:**
 
 - **Not marketing claims** → Systematic measurement
-- **Not blog post opinions** → Rigorous methodology (MPSE)
+- **Not blog post opinions** → Rigorous methodology (4PS)
 - **Not one-off tutorials** → Replicable research + working implementations
 - **Not framework lock-in** → Components you understand and own
 
@@ -49,7 +49,7 @@ Each research piece is a **surveyed triangulation point** on the map of the soft
 ## Quality Bar & Limitations
 
 ### Investment Per Piece
-Each research piece represents deep investigation, analysis, and synthesis using the MPSE methodology—the kind of work you don't do while neck-deep in development. **Now you don't have to.**
+Each research piece represents deep investigation, analysis, and synthesis using the 4PS methodology—the kind of work you don't do while neck-deep in development. **Now you don't have to.**
 
 ### Research-Grade Confidence
 **Overall confidence:** 70-80% (directionally strong guidance)
@@ -101,7 +101,7 @@ The Great Trigonometrical Survey of India took 70 years. We're not mapping a phy
 ### Current Progress (January 2026)
 - **38 triangulation points** measured
 - **7 major domains** covered
-- **MPSE methodology** validated across diverse problems
+- **4PS methodology** validated across diverse problems
 - **Public research** freely accessible
 
 ### The Vision (Multi-Year)
@@ -129,6 +129,6 @@ The Great Trigonometrical Survey of India took 70 years. We're not mapping a phy
 
 ## Disclaimers
 
-This research is provided "as-is" for informational purposes. While we apply rigorous methodology (MPSE), research-grade confidence (~70-80%) is not professional consulting advice. Findings decay as ecosystems evolve. Verify critical decisions with hands-on testing. See individual research pieces for methodology details and confidence levels.
+This research is provided "as-is" for informational purposes. While we apply rigorous methodology (4PS), research-grade confidence (~70-80%) is not professional consulting advice. Findings decay as ecosystems evolve. Verify critical decisions with hands-on testing. See individual research pieces for methodology details and confidence levels.
 
 No vendor relationships, sponsorships, or financial incentives influence research findings. Pure systematic measurement.

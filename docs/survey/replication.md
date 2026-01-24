@@ -106,7 +106,7 @@ The **Four-Pass Survey (4PS)** is the methodology used for all library research.
 - Benchmark and performance evaluation patterns
 - Open source attribution guidelines
 
-**[View the complete 4PS →](/research/methodology)**
+**[View the complete 4PS →](/survey/methodology)**
 
 ---
 
