@@ -66,13 +66,14 @@ title: "The Survey"
 
 ## 1.030-039: String & Text Algorithms
 
-**Completed: 4/10**
+**Completed: 5/10**
 
 - **1.030** String Matching - Exact, approximate, regex engines
 - **1.031** Text Diff - Myers, patience diff, semantic diff
 - **1.032** String Metrics - Edit distance, Jaro-Winkler, cosine
 - ✅ [**1.033** NLP Libraries](/survey/1-033) - spaCy, Transformers, NLTK
   - ✅ [**1.033.1** Intent Classification](/survey/1-033-1) - Zero-Shot, SetFit, sentence-transformers
+  - ✅ [**1.033.2** Chinese Word Segmentation](/survey/1-033-2) - Jieba, CKIP, pkuseg, LTP
 - ✅ [**1.034** Email Libraries](/survey/1-034) - smtplib, yagmail, MIME handling
 - **1.035** Tokenization - Wordpiece, BPE, SentencePiece
 - **1.036** Stemming & Lemmatization - Porter, Snowball, WordNet
@@ -298,6 +299,34 @@ title: "The Survey"
 
 ---
 
+## 1.160-169: Character-Based Writing Systems (CJK)
+
+**Completed: 2/10**
+
+- ✅ [**1.160** Character Databases](/survey/1-160) - Unihan, CHISE, IDS, CJKVI
+- **1.161** Radical & Component Analysis - Character decomposition, semantic parts
+- **1.162** Handwriting Recognition (CJK) - Tesseract CJK, EasyOCR, PaddleOCR
+- **1.163** Character Encoding - Big5, GB2312, Unicode CJK
+- ✅ [**1.164** Traditional ↔ Simplified Conversion](/survey/1-164) - OpenCC, HanziConv, zhconv-rs
+- **1.165** Stroke Order & Writing - Character writing systems
+- **1.166** OCR (CJK-specific) - Specialized CJK optical character recognition
+- **1.167-1.169** _Available for future use_
+
+---
+
+## 1.170-179: Translation & Alignment
+
+**Completed: 0/10**
+
+- **1.170** Machine Translation APIs - Google Translate, DeepL, Azure
+- **1.171** Sentence Alignment - Parallel corpora alignment
+- **1.172** Translation Memory - TM systems, CAT tools
+- **1.173** Computer-Assisted Translation - CAT tool comparison
+- **1.174** Literary Translation Tools - Context-aware translation
+- **1.175-1.179** _Available for future use_
+
+---
+
 ## 1.200-209: LLM & AI Stack
 
 **Completed: 1/10**
@@ -317,9 +346,9 @@ title: "The Survey"
 
 ## Research Status
 
-**Total Defined**: 169 research slots
-**Completed**: 41 pieces (24%)
-**Remaining**: 128 pieces
+**Total Defined**: 189 research slots (including CJK expansion)
+**Completed**: 44 pieces (23%)
+**Remaining**: 145 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
