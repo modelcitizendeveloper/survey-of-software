@@ -1,0 +1,121 @@
+#!/bin/bash
+# OBS Overlay Update - Unified interface for all overlay scripts
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+
+show_help() {
+    cat << 'EOF'
+OBS Overlay Update - Quick Control Interface
+
+USAGE:
+    obs-update <command> [args]
+
+COMMANDS:
+    ticker [--rotate|--push "msg"|--pop]
+        Update ticker display
+
+    price <full|discount|live|--clear>
+        Update price display
+
+    qty [--set N] [--inc|--dec] [--mode up|down] [--clear]
+        Update quantity counter
+
+    timer [--start N] [--update] [--stop]
+        Control countdown timer
+
+    status
+        Show current overlay state
+
+    clear
+        Clear all overlays
+
+    help | cheat
+        Show this help / detailed cheatsheet
+
+EXAMPLES:
+    obs-update ticker --rotate          # Next ticker message
+    obs-update price live               # Show $29 price
+    obs-update qty --dec                # Decrement quantity
+    obs-update timer --start 30         # Start 30-min countdown
+    obs-update status                   # Show all current values
+    obs-update clear                    # Clear everything
+
+CHEATSHEET:
+    obs-update cheat                    # Full examples & workflows
+EOF
+}
+
+show_cheatsheet() {
+    cat "$SCRIPT_DIR/OBS-UPDATE-CHEATSHEET.md"
+}
+
+show_status() {
+    echo "📊 Current OBS Overlay Status"
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+
+    if [ -f /mnt/c/obs-overlay/ticker.txt ]; then
+        echo "🎬 Ticker:   $(cat /mnt/c/obs-overlay/ticker.txt | head -c 60)..."
+    fi
+
+    if [ -f /mnt/c/obs-overlay/price.txt ]; then
+        echo "💰 Price:    $(cat /mnt/c/obs-overlay/price.txt)"
+    fi
+
+    if [ -f /mnt/c/obs-overlay/qty.txt ]; then
+        echo "📦 Quantity: $(cat /mnt/c/obs-overlay/qty.txt)"
+    fi
+
+    if [ -f /mnt/c/obs-overlay/timer.txt ]; then
+        echo "⏱️  Timer:    $(cat /mnt/c/obs-overlay/timer.txt)"
+    fi
+
+    echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+    echo ""
+    echo "Config: /mnt/c/obs-overlay/config.json"
+}
+
+clear_all() {
+    echo "🧹 Clearing all overlays..."
+    python "$SCRIPT_DIR/obs-update-ticker.py" --pop 2>/dev/null || true
+    python "$SCRIPT_DIR/obs-update-price.py" --clear
+    python "$SCRIPT_DIR/obs-update-qty.py" --clear
+    python "$SCRIPT_DIR/obs-update-timer.py" --clear
+    echo "✓ All overlays cleared"
+}
+
+# Route commands
+case "$1" in
+    ticker)
+        shift
+        python "$SCRIPT_DIR/obs-update-ticker.py" "$@"
+        ;;
+    price)
+        shift
+        python "$SCRIPT_DIR/obs-update-price.py" "$@"
+        ;;
+    qty)
+        shift
+        python "$SCRIPT_DIR/obs-update-qty.py" "$@"
+        ;;
+    timer)
+        shift
+        python "$SCRIPT_DIR/obs-update-timer.py" "$@"
+        ;;
+    status)
+        show_status
+        ;;
+    clear)
+        clear_all
+        ;;
+    cheat|cheatsheet)
+        show_cheatsheet
+        ;;
+    help|--help|-h|"")
+        show_help
+        ;;
+    *)
+        echo "Unknown command: $1"
+        echo "Run 'obs-update help' for usage"
+        exit 1
+        ;;
+esac
