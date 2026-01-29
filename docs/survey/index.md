@@ -66,7 +66,7 @@ title: "The Survey"
 
 ## 1.030-039: String & Text Algorithms
 
-**Completed: 6/10**
+**Completed: 7/10**
 
 - **1.030** String Matching - Exact, approximate, regex engines
 - **1.031** Text Diff - Myers, patience diff, semantic diff
@@ -74,6 +74,7 @@ title: "The Survey"
 - ✅ [**1.033** NLP Libraries](/survey/1-033) - spaCy, Transformers, NLTK
   - ✅ [**1.033.1** Intent Classification](/survey/1-033-1) - Zero-Shot, SetFit, sentence-transformers
   - ✅ [**1.033.2** Chinese Word Segmentation](/survey/1-033-2) - Jieba, CKIP, pkuseg, LTP
+  - ✅ [**1.033.3** CJK Tokenizers for LLMs](/survey/1-033-3) - SentencePiece, tiktoken, HuggingFace
   - ✅ [**1.033.4** Named Entity Recognition (CJK)](/survey/1-033-4) - spaCy, Stanford NER, BERT-NER
 - ✅ [**1.034** Email Libraries](/survey/1-034) - smtplib, yagmail, MIME handling
 - **1.035** Tokenization - Wordpiece, BPE, SentencePiece
