@@ -138,14 +138,14 @@ title: "The Survey"
 
 ## 1.070-079: Machine Learning Algorithms
 
-**Completed: 3/10**
+**Completed: 4/10**
 
 - **1.070** Clustering - scikit-learn vs hdbscan vs fastcluster
 - ✅ [**1.071** Dimensionality Reduction](/survey/1-071) - UMAP, t-SNE, PCA
 - **1.072** Anomaly Detection - Isolation Forest, LOF, autoencoders
 - ✅ [**1.073** Time Series Forecasting](/survey/1-073) - Prophet, Darts, statsmodels
 - ✅ [**1.074** Gradient Boosting](/survey/1-074) - XGBoost, LightGBM, CatBoost
-- **1.075** Deep Learning Frameworks - PyTorch, TensorFlow, JAX
+- ✅ [**1.075** Deep Learning Frameworks](/survey/1-075) - PyTorch, TensorFlow, JAX, MXNet
 - **1.076** Reinforcement Learning - Stable Baselines, Ray RLlib
 - **1.077** AutoML - auto-sklearn vs TPOT vs H2O
 - **1.078** Feature Engineering - Featuretools, tsfresh
@@ -301,12 +301,12 @@ title: "The Survey"
 
 ## 1.160-169: Character-Based Writing Systems (CJK)
 
-**Completed: 2/10**
+**Completed: 4/10**
 
 - ✅ [**1.160** Character Databases](/survey/1-160) - Unihan, CHISE, IDS, CJKVI
-- **1.161** Radical & Component Analysis - Character decomposition, semantic parts
+- ✅ [**1.161** Radical & Component Analysis](/survey/1-161) - Character decomposition, semantic components
 - **1.162** Handwriting Recognition (CJK) - Tesseract CJK, EasyOCR, PaddleOCR
-- **1.163** Character Encoding - Big5, GB2312, Unicode CJK
+- ✅ [**1.163** Character Encoding](/survey/1-163) - Big5, GB2312, GBK, GB18030, Unicode CJK
 - ✅ [**1.164** Traditional ↔ Simplified Conversion](/survey/1-164) - OpenCC, HanziConv, zhconv-rs
 - **1.165** Stroke Order & Writing - Character writing systems
 - **1.166** OCR (CJK-specific) - Specialized CJK optical character recognition
@@ -347,8 +347,8 @@ title: "The Survey"
 ## Research Status
 
 **Total Defined**: 189 research slots (including CJK expansion)
-**Completed**: 44 pieces (23%)
-**Remaining**: 145 pieces
+**Completed**: 47 pieces (25%)
+**Remaining**: 142 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
