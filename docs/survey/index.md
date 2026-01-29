@@ -66,7 +66,7 @@ title: "The Survey"
 
 ## 1.030-039: String & Text Algorithms
 
-**Completed: 5/10**
+**Completed: 6/10**
 
 - **1.030** String Matching - Exact, approximate, regex engines
 - **1.031** Text Diff - Myers, patience diff, semantic diff
@@ -74,6 +74,7 @@ title: "The Survey"
 - ✅ [**1.033** NLP Libraries](/survey/1-033) - spaCy, Transformers, NLTK
   - ✅ [**1.033.1** Intent Classification](/survey/1-033-1) - Zero-Shot, SetFit, sentence-transformers
   - ✅ [**1.033.2** Chinese Word Segmentation](/survey/1-033-2) - Jieba, CKIP, pkuseg, LTP
+  - ✅ [**1.033.4** Named Entity Recognition (CJK)](/survey/1-033-4) - spaCy, Stanford NER, BERT-NER
 - ✅ [**1.034** Email Libraries](/survey/1-034) - smtplib, yagmail, MIME handling
 - **1.035** Tokenization - Wordpiece, BPE, SentencePiece
 - **1.036** Stemming & Lemmatization - Porter, Snowball, WordNet
@@ -301,11 +302,11 @@ title: "The Survey"
 
 ## 1.160-169: Character-Based Writing Systems (CJK)
 
-**Completed: 4/10**
+**Completed: 5/10**
 
 - ✅ [**1.160** Character Databases](/survey/1-160) - Unihan, CHISE, IDS, CJKVI
 - ✅ [**1.161** Radical & Component Analysis](/survey/1-161) - Character decomposition, semantic components
-- **1.162** Handwriting Recognition (CJK) - Tesseract CJK, EasyOCR, PaddleOCR
+- ✅ [**1.162** Handwriting Recognition (CJK)](/survey/1-162) - Zinnia, Tegaki, Google Cloud Vision, Azure
 - ✅ [**1.163** Character Encoding](/survey/1-163) - Big5, GB2312, GBK, GB18030, Unicode CJK
 - ✅ [**1.164** Traditional ↔ Simplified Conversion](/survey/1-164) - OpenCC, HanziConv, zhconv-rs
 - **1.165** Stroke Order & Writing - Character writing systems
