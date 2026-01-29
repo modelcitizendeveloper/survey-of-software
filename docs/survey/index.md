@@ -66,13 +66,16 @@ title: "The Survey"
 
 ## 1.030-039: String & Text Algorithms
 
-**Completed: 4/10**
+**Completed: 7/10**
 
 - **1.030** String Matching - Exact, approximate, regex engines
 - **1.031** Text Diff - Myers, patience diff, semantic diff
 - **1.032** String Metrics - Edit distance, Jaro-Winkler, cosine
 - ✅ [**1.033** NLP Libraries](/survey/1-033) - spaCy, Transformers, NLTK
   - ✅ [**1.033.1** Intent Classification](/survey/1-033-1) - Zero-Shot, SetFit, sentence-transformers
+  - ✅ [**1.033.2** Chinese Word Segmentation](/survey/1-033-2) - Jieba, CKIP, pkuseg, LTP
+  - ✅ [**1.033.3** CJK Tokenizers for LLMs](/survey/1-033-3) - SentencePiece, tiktoken, HuggingFace
+  - ✅ [**1.033.4** Named Entity Recognition (CJK)](/survey/1-033-4) - spaCy, Stanford NER, BERT-NER
 - ✅ [**1.034** Email Libraries](/survey/1-034) - smtplib, yagmail, MIME handling
 - **1.035** Tokenization - Wordpiece, BPE, SentencePiece
 - **1.036** Stemming & Lemmatization - Porter, Snowball, WordNet
@@ -137,14 +140,14 @@ title: "The Survey"
 
 ## 1.070-079: Machine Learning Algorithms
 
-**Completed: 3/10**
+**Completed: 4/10**
 
 - **1.070** Clustering - scikit-learn vs hdbscan vs fastcluster
 - ✅ [**1.071** Dimensionality Reduction](/survey/1-071) - UMAP, t-SNE, PCA
 - **1.072** Anomaly Detection - Isolation Forest, LOF, autoencoders
 - ✅ [**1.073** Time Series Forecasting](/survey/1-073) - Prophet, Darts, statsmodels
 - ✅ [**1.074** Gradient Boosting](/survey/1-074) - XGBoost, LightGBM, CatBoost
-- **1.075** Deep Learning Frameworks - PyTorch, TensorFlow, JAX
+- ✅ [**1.075** Deep Learning Frameworks](/survey/1-075) - PyTorch, TensorFlow, JAX, MXNet
 - **1.076** Reinforcement Learning - Stable Baselines, Ray RLlib
 - **1.077** AutoML - auto-sklearn vs TPOT vs H2O
 - **1.078** Feature Engineering - Featuretools, tsfresh
@@ -266,17 +269,21 @@ title: "The Survey"
 
 ## 1.140-149: Language Learning & Linguistics
 
-**Completed: 4/10**
+**Completed: 8/10**
 
 - ✅ [**1.140** Classical Languages](/survey/1-140) - CLTK, pyLatinam, PyWORDS
 - ✅ [**1.141** Spaced Repetition](/survey/1-141) - SM-2, SM-18, FSRS algorithms
 - ✅ [**1.142** Flashcard Systems](/survey/1-142) - Anki, genanki, AnkiConnect
 - **1.143** Language Detection - langdetect, polyglot, fastText
 - **1.144** Phonetics - IPA transcription, eSpeak, Forvo API
+  - ✅ [**1.144.1** Pinyin/Zhuyin Conversion](/survey/1-144-1) - pypinyin, dragonmapper, pinyin
+  - ✅ [**1.144.2** Tone Analysis](/survey/1-144-2) - librosa, praatio, pitch detection, tone sandhi
 - **1.145** Grammar Checking - LanguageTool, GrammarBot
 - **1.146** Vocabulary Databases - WordNet, ConceptNet, Wiktionary
 - **1.147** Language Corpora - Brown Corpus, CoNLL datasets
 - ✅ [**1.148** Morphological Analysis](/survey/1-148) - SudachiPy, pymorphy3, UDPipe
+  - ✅ [**1.148.1** Chinese Morphological Analysis](/survey/1-148-1) - HanLP, Stanza, LTP, cjklib
+  - ✅ [**1.148.2** Classical Chinese Parsing](/survey/1-148-2) - Stanford CoreNLP, ctext.org tools, Kanbun
 - **1.149** SLA Tools - CEFR assessment, proficiency testing
 
 ---
@@ -298,9 +305,37 @@ title: "The Survey"
 
 ---
 
+## 1.160-169: Character-Based Writing Systems (CJK)
+
+**Completed: 6/10**
+
+- ✅ [**1.160** Character Databases](/survey/1-160) - Unihan, CHISE, IDS, CJKVI
+- ✅ [**1.161** Radical & Component Analysis](/survey/1-161) - Character decomposition, semantic components
+- ✅ [**1.162** Handwriting Recognition (CJK)](/survey/1-162) - Zinnia, Tegaki, Google Cloud Vision, Azure
+- ✅ [**1.163** Character Encoding](/survey/1-163) - Big5, GB2312, GBK, GB18030, Unicode CJK
+- ✅ [**1.164** Traditional ↔ Simplified Conversion](/survey/1-164) - OpenCC, HanziConv, zhconv-rs
+- ✅ [**1.165** Stroke Order & Writing (CJK)](/survey/1-165) - Make Me a Hanzi, KanjiVG, animCJK
+- **1.166** OCR (CJK-specific) - Specialized CJK optical character recognition
+- **1.167-1.169** _Available for future use_
+
+---
+
+## 1.170-179: Translation & Alignment
+
+**Completed: 2/10**
+
+- ✅ [**1.170** Machine Translation APIs](/survey/1-170) - DeepL, Google Translate, Azure Translator, Amazon Translate
+- ✅ [**1.171** Sentence Alignment](/survey/1-171) - Hunalign, Bleualign, vecalign
+- **1.172** Translation Memory - TM systems, CAT tools
+- **1.173** Computer-Assisted Translation - CAT tool comparison
+- **1.174** Literary Translation Tools - Context-aware translation
+- **1.175-1.179** _Available for future use_
+
+---
+
 ## 1.200-209: LLM & AI Stack
 
-**Completed: 1/10**
+**Completed: 3/10**
 
 - ✅ [**1.200** LLM Orchestration](/survey/1-200) - LangChain, LlamaIndex, RAG
 - **1.201** LLM Agent Frameworks - AutoGen, CrewAI, MetaGPT
@@ -312,14 +347,16 @@ title: "The Survey"
 - **1.207** Fine-Tuning - Hugging Face Trainer, LoRA, QLoRA
 - **1.208** Model Compression - Quantization, pruning, distillation
 - **1.209** Local LLM Serving - Ollama, vLLM, llama.cpp
+- ✅ [**1.210** Multilingual & CJK LLMs](/survey/1-210) - BLOOM, XLM-RoBERTa, mBERT, ERNIE
+- ✅ [**1.211** CJK Embedding Models](/survey/1-211) - M3E, text2vec-chinese, LaBSE, multilingual-e5
 
 ---
 
 ## Research Status
 
-**Total Defined**: 169 research slots
-**Completed**: 41 pieces (24%)
-**Remaining**: 128 pieces
+**Total Defined**: 189 research slots (including CJK expansion)
+**Completed**: 47 pieces (25%)
+**Remaining**: 142 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 

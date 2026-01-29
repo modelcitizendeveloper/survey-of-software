@@ -1,0 +1,3 @@
+code: "1.075"
+title: "Deep Learning Frameworks"
+description: "PyTorch, TensorFlow, JAX, and MXNet comparison. Core frameworks for neural network development, from research prototyping to production deployment. Covers ecosystem maturity, performance, and learning curves."

@@ -1,0 +1,3 @@
+code: "1.171"
+title: "Sentence Alignment"
+description: "Aligning parallel sentences in bilingual corpora for machine translation and linguistic analysis. Survey of Hunalign (fast dictionary-based), Bleualign (BLEU-based), and vecalign (multilingual embedding-based)."
