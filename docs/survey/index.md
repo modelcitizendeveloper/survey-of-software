@@ -269,17 +269,19 @@ title: "The Survey"
 
 ## 1.140-149: Language Learning & Linguistics
 
-**Completed: 4/10**
+**Completed: 6/10**
 
 - ✅ [**1.140** Classical Languages](/survey/1-140) - CLTK, pyLatinam, PyWORDS
 - ✅ [**1.141** Spaced Repetition](/survey/1-141) - SM-2, SM-18, FSRS algorithms
 - ✅ [**1.142** Flashcard Systems](/survey/1-142) - Anki, genanki, AnkiConnect
 - **1.143** Language Detection - langdetect, polyglot, fastText
 - **1.144** Phonetics - IPA transcription, eSpeak, Forvo API
+  - ✅ [**1.144.1** Pinyin/Zhuyin Conversion](/survey/1-144-1) - pypinyin, dragonmapper, pinyin
 - **1.145** Grammar Checking - LanguageTool, GrammarBot
 - **1.146** Vocabulary Databases - WordNet, ConceptNet, Wiktionary
 - **1.147** Language Corpora - Brown Corpus, CoNLL datasets
 - ✅ [**1.148** Morphological Analysis](/survey/1-148) - SudachiPy, pymorphy3, UDPipe
+  - ✅ [**1.148.1** Chinese Morphological Analysis](/survey/1-148-1) - HanLP, Stanza, LTP, cjklib
 - **1.149** SLA Tools - CEFR assessment, proficiency testing
 
 ---
@@ -318,9 +320,9 @@ title: "The Survey"
 
 ## 1.170-179: Translation & Alignment
 
-**Completed: 0/10**
+**Completed: 1/10**
 
-- **1.170** Machine Translation APIs - Google Translate, DeepL, Azure
+- ✅ [**1.170** Machine Translation APIs](/survey/1-170) - DeepL, Google Translate, Azure Translator, Amazon Translate
 - **1.171** Sentence Alignment - Parallel corpora alignment
 - **1.172** Translation Memory - TM systems, CAT tools
 - **1.173** Computer-Assisted Translation - CAT tool comparison
@@ -331,7 +333,7 @@ title: "The Survey"
 
 ## 1.200-209: LLM & AI Stack
 
-**Completed: 1/10**
+**Completed: 2/10**
 
 - ✅ [**1.200** LLM Orchestration](/survey/1-200) - LangChain, LlamaIndex, RAG
 - **1.201** LLM Agent Frameworks - AutoGen, CrewAI, MetaGPT
@@ -343,6 +345,7 @@ title: "The Survey"
 - **1.207** Fine-Tuning - Hugging Face Trainer, LoRA, QLoRA
 - **1.208** Model Compression - Quantization, pruning, distillation
 - **1.209** Local LLM Serving - Ollama, vLLM, llama.cpp
+- ✅ [**1.210** Multilingual & CJK LLMs](/survey/1-210) - BLOOM, XLM-RoBERTa, mBERT, ERNIE
 
 ---
 
