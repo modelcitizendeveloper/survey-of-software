@@ -52,6 +52,7 @@ const sidebars = {
     {type: "doc", id: "survey/1-162"},
     {type: "doc", id: "survey/1-163"},
     {type: "doc", id: "survey/1-164"},
+    {type: "doc", id: "survey/1-165"},
     {type: "doc", id: "survey/1-200"},
     {type: "doc", id: "survey/replication"},
   ],

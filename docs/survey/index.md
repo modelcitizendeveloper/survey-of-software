@@ -303,14 +303,14 @@ title: "The Survey"
 
 ## 1.160-169: Character-Based Writing Systems (CJK)
 
-**Completed: 5/10**
+**Completed: 6/10**
 
 - ✅ [**1.160** Character Databases](/survey/1-160) - Unihan, CHISE, IDS, CJKVI
 - ✅ [**1.161** Radical & Component Analysis](/survey/1-161) - Character decomposition, semantic components
 - ✅ [**1.162** Handwriting Recognition (CJK)](/survey/1-162) - Zinnia, Tegaki, Google Cloud Vision, Azure
 - ✅ [**1.163** Character Encoding](/survey/1-163) - Big5, GB2312, GBK, GB18030, Unicode CJK
 - ✅ [**1.164** Traditional ↔ Simplified Conversion](/survey/1-164) - OpenCC, HanziConv, zhconv-rs
-- **1.165** Stroke Order & Writing - Character writing systems
+- ✅ [**1.165** Stroke Order & Writing (CJK)](/survey/1-165) - Make Me a Hanzi, KanjiVG, animCJK
 - **1.166** OCR (CJK-specific) - Specialized CJK optical character recognition
 - **1.167-1.169** _Available for future use_
 
