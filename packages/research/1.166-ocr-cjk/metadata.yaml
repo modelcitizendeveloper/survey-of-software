@@ -1,0 +1,213 @@
+code: '1.166'
+title: OCR for CJK Text
+tier: 1
+category: Computer Vision / NLP
+status: completed
+completion_date: '2026-01-29'
+
+description: |
+  Comprehensive analysis of OCR technologies for CJK (Chinese, Japanese, Korean)
+  text. Covers Tesseract, PaddleOCR, and EasyOCR with focus on architecture,
+  performance, and real-world applications. Includes commercial alternatives
+  (ABBYY, Google Cloud Vision, Azure AI) and decision framework for open source
+  vs commercial trade-offs.
+
+research_output:
+  total_documents: 6
+  stages_completed: [S1-what-is-this, S2-how-does-it-work, S3-who-uses-this, S4-what-are-the-alternatives, DOMAIN_EXPLAINER, DISCOVERY_TOC]
+
+  stages:
+    S1-what-is-this:
+      content:
+        - Overview of CJK OCR challenges (100,000+ character classes)
+        - Why CJK OCR differs from Latin OCR (scale, word boundaries, vertical text)
+        - Tesseract, PaddleOCR, and EasyOCR capabilities
+        - When CJK-specific OCR is needed
+
+    S2-how-does-it-work:
+      content:
+        - General OCR pipeline architecture
+        - Tesseract LSTM architecture and CJK configurations
+        - PaddleOCR PP-OCRv5 four-stage pipeline
+        - EasyOCR dual-architecture approach (CRNN for Latin, Transformer for CJK)
+        - Evolution from traditional to deep learning approaches
+
+    S3-who-uses-this:
+      content:
+        - Market overview (USD 10.62B → USD 32.90B by 2030, 14.8% CAGR)
+        - Key industries (BFSI, healthcare, legal, logistics, manufacturing, government)
+        - Major technology providers (Microsoft, UiPath, PaddleOCR, Artificio, AsiaVerify)
+        - Real-world applications (invoice processing, Japanese vertical text, Korean ID cards)
+        - Business impact (80% time savings reported)
+
+    S4-what-are-the-alternatives:
+      content:
+        - Open source alternatives (MMOCR, KerasOCR, docTR)
+        - Modern VLM approaches (DeepSeek-OCR, Qwen2-VL, Surya)
+        - Commercial solutions (ABBYY, Google Cloud Vision, Azure AI)
+        - Performance benchmarks (PaddleOCR 96.58% vs Tesseract 87.74%)
+        - Trade-offs matrix and decision framework
+
+    DOMAIN_EXPLAINER:
+      word_count: 2400
+      content:
+        - What This Solves (character set scale, industry needs)
+        - Accessible Analogies (library organization, word boundaries, multi-script)
+        - When You Need This (decision criteria, use cases)
+        - Trade-offs (open source vs commercial, build vs buy)
+        - Cost Considerations (break-even analysis, pricing examples)
+        - Implementation Reality (timeline, team skills, pitfalls)
+
+tools_analyzed:
+  - name: Tesseract
+    version: "4.0+ with LSTM"
+    languages: 100+
+    architecture: LSTM-based line recognition
+    cjk_support: "Adequate (chi_sim, chi_tra, jpn, jpn_vert, kor)"
+    best_for: Widest language support, established ecosystem
+    accuracy: "87.74% (invoice benchmark)"
+
+  - name: PaddleOCR
+    version: PP-OCRv5
+    languages: 80+
+    architecture: Four-stage pipeline (detection, orientation, recognition)
+    cjk_support: "Excellent (Baidu-developed, unified Simplified/Traditional/Japanese model)"
+    best_for: Chinese text, invoice processing, high accuracy
+    accuracy: "96.58% (invoice benchmark), 98-99% (financial documents)"
+
+  - name: EasyOCR
+    version: Current
+    languages: 80+
+    architecture: Dual-architecture (CRNN for Latin, Transformer for CJK)
+    cjk_support: "Good (ch_sim, ch_tra, ja, ko with Gen2 models)"
+    best_for: Beginners, quick setup, scene text
+    accuracy: High accuracy reported on benchmarks
+
+  - name: ABBYY FineReader
+    type: Commercial
+    languages: 190-201
+    accuracy: "99.8%"
+    best_for: Compliance-critical, maximum accuracy, on-premises
+    notes: Deep control over preprocessing and zoning
+
+  - name: Google Cloud Vision OCR
+    type: Commercial (API)
+    languages: 100+
+    best_for: Complex documents, cloud-first
+    notes: Top 2 in benchmarks, layout-aware OCR
+
+  - name: Azure AI Document Intelligence
+    type: Commercial (API)
+    languages: Many (CJK supported)
+    best_for: Microsoft ecosystem, hybrid cloud
+    notes: Containerized deployment option
+
+key_findings:
+  - finding: "PaddleOCR outperforms Tesseract on CJK documents (96.58% vs 87.74% on invoices)"
+    impact: "For Chinese-heavy workloads, PaddleOCR (free) often matches commercial APIs"
+
+  - finding: "CJK requires different architectures: attention-based vs CTC due to large character sets"
+    impact: "Generic OCR tuned for Latin scripts underperforms on CJK"
+
+  - finding: "PaddleOCR PP-OCRv5 unified model supports 5 scripts (Simplified/Traditional Chinese, Japanese, English, Pinyin)"
+    impact: "13% accuracy improvement, single model for multilingual mixed documents"
+
+  - finding: "Preprocessing matters more than model choice for accuracy"
+    impact: "80% of accuracy gains from image preprocessing (deskew, denoise, contrast)"
+
+  - finding: "The 95% accuracy barrier: last 5% as hard as first 90%"
+    impact: "Budget accordingly, consider human review workflows for edge cases"
+
+  - finding: "Market growing from USD 10.62B (2022) to USD 32.90B (2030), Asia-Pacific highest CAGR"
+    impact: "Strong demand for CJK OCR in financial services, healthcare, logistics"
+
+  - finding: "Japanese OCR must handle vertical text (tategaki) and mixed scripts (Kanji/Hiragana/Katakana)"
+    impact: "Use jpn_vert models or verify commercial API handles vertical correctly"
+
+  - finding: "Commercial APIs offer 99%+ accuracy but cost $0.60-1.50 per 1,000 pages"
+    impact: "Break-even at ~100K pages/year between cloud API and self-hosted"
+
+recommendations:
+  default: "PaddleOCR for Chinese-heavy workloads, Tesseract for maximum language support, EasyOCR for quick prototypes"
+
+  by_use_case:
+    chinese_documents: "PaddleOCR (Baidu-optimized, 96%+ accuracy, free)"
+    japanese_vertical_text: "Tesseract jpn_vert or commercial APIs with tategaki support"
+    korean_government_forms: "Commercial APIs (ABBYY, Google) for 99%+ accuracy"
+    multilingual_mixed: "PaddleOCR PP-OCRv5 (unified model) or commercial APIs"
+    quick_prototype: "EasyOCR (easiest setup, 80+ languages)"
+
+  by_requirements:
+    compliance_critical: "ABBYY or Google Cloud Vision (99%+ accuracy, audit trails)"
+    data_cannot_leave_infrastructure: "Self-hosted Tesseract or PaddleOCR"
+    budget_constrained: "PaddleOCR (free, 96%+ accuracy) with GPU infrastructure"
+    variable_volume: "Commercial APIs (pay per use, auto-scaling)"
+    high_volume_predictable: "Self-hosted PaddleOCR (fixed infrastructure cost)"
+
+  by_timeline:
+    need_results_in_days: "Commercial APIs (Google, Azure, ABBYY)"
+    have_90_days: "Self-hosted PaddleOCR with tuning for production-ready system"
+    quick_POC: "EasyOCR or commercial API trial"
+
+cost_comparison:
+  self_hosted_paddleocr:
+    gpu_instance: "$300-1000/month"
+    setup_time: "2-4 weeks"
+    ml_engineer: "$120-200K/year (part-time)"
+    break_even: ">100K pages/year"
+
+  google_cloud_vision:
+    pricing: "$0.60-1.50 per 1,000 pages"
+    setup_time: "2-3 days"
+    expertise_required: "Backend developer"
+    break_even: "<100K pages/year"
+
+  abbyy:
+    accuracy: "99.8%"
+    deployment: "On-premises or cloud"
+    pricing: "Enterprise (contact sales)"
+
+market_data:
+  global_market_2022: "USD 10.62 billion"
+  global_market_2030: "USD 32.90 billion"
+  cagr_2024_2030: "14.8%"
+  highest_growth_region: "Asia-Pacific"
+  business_impact: "Up to 80% time savings, reduced processing costs"
+
+related_research:
+  adjacent:
+    - code: '1.165'
+      title: Stroke Order Recognition
+      relationship: CJK handwriting recognition shares character complexity challenges
+
+    - code: '1.211'
+      title: CJK Embedding Models
+      relationship: Embeddings for CJK text require similar character-level understanding
+
+  downstream:
+    - code: '1.033'
+      title: Word Segmentation
+      relationship: OCR output for Chinese/Japanese needs segmentation (no word boundaries)
+
+estimated_hours: 3-5
+actual_hours: 4
+completion_notes: |
+  Completed January 29, 2026. Research demonstrates that PaddleOCR (Baidu-developed,
+  free) often outperforms Western commercial APIs for Chinese text despite being
+  open source, due to CJK-specific optimization.
+
+  Key strategic insight: CJK OCR is qualitatively different from Latin OCR due to
+  100,000+ character classes and lack of word boundaries. Generic OCR systems tuned
+  for alphabetic languages underperform significantly (87% vs 96%+ accuracy).
+
+  Critical finding: Preprocessing (deskew, denoise, contrast adjustment) provides
+  80% of accuracy gains - more impactful than model choice. The 95% accuracy barrier
+  is real: last 5% as hard as first 90%, budget accordingly.
+
+  Practical impact: Break-even analysis shows commercial APIs cost-effective for
+  <100K pages/year, while self-hosted PaddleOCR wins at higher volumes. For
+  compliance-critical use cases, ABBYY/Google offer 99%+ accuracy with audit trails.
+
+  DOMAIN_EXPLAINER provides accessible introduction to CJK OCR challenges using
+  universal analogies (library organization, items without separators), making
+  research accessible to non-specialists while maintaining technical accuracy.

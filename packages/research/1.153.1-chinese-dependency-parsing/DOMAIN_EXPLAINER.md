@@ -1,0 +1,256 @@
+# Chinese Dependency Parsing: A Decision Maker's Guide
+
+## What This Solves
+
+When you read text, you automatically understand how words relate to each other: which word is the subject, which is the action, which is the object. "The cat chased the mouse" is clear because your brain instantly maps the relationships: cat (who) → chased (did what) → mouse (to whom).
+
+Computers don't have this ability. Dependency parsing teaches machines to identify these word relationships, creating a map of how each word depends on others to form meaning.
+
+**The Chinese Challenge**: Most languages use spaces to separate words (like items on a shelf with gaps between them). Chinese doesn't (like items packed tightly in a box with no gaps). Before you can even start mapping word relationships, you must first figure out where one word ends and another begins. This creates a two-layer problem unique to Chinese: first segment the text into words, then parse the relationships between those words.
+
+**Who encounters this**: Anyone building Chinese language applications needs dependency parsing when their system must understand *what's being said*, not just *which words appear*. This includes chatbots that need to know who did what to whom, information extraction systems finding relationships between entities, question-answering systems that must match questions to relevant facts, and machine translation systems that need to preserve meaning across languages.
+
+**Why it matters**: Without dependency parsing, your Chinese NLP system is like someone who can recognize individual tools but doesn't understand how they work together to build something. You can find the words "购买" (purchase), "公司" (company), and "股票" (stock), but you won't know whether the company purchased stock or someone purchased the company's stock. In business applications, this distinction can mean everything.
+
+## Accessible Analogies
+
+### The Family Tree Analogy
+
+Dependency parsing creates a family tree for a sentence. Each word is a family member, and the arrows show who depends on whom.
+
+In "老师教学生中文" (teacher teaches students Chinese):
+- "教" (teaches) is the ancestor - the main action everything else relates to
+- "老师" (teacher) is a child of "teaches" (who teaches?)
+- "学生" (students) is a child of "teaches" (teaches whom?)
+- "中文" (Chinese) is a child of "teaches" (teaches what?)
+
+Just as in a family tree, every member (except the root ancestor) has exactly one parent, but can have multiple children.
+
+### The Segmentation Problem: Finding Invisible Boundaries
+
+Imagine reading a book where all the spaces have been removed: "thecatchasedthemouse". You can still read it, but you must constantly make decisions: is it "the cat" or "theca t"? Now imagine doing this in a language where words can be 1-4 characters long and there are multiple valid ways to segment the same sequence.
+
+Chinese: "我要回家" could be:
+- "我 要 回家" (I want to go home)
+- "我 要回 家" (I want to return home) - same meaning, different segmentation
+
+For humans, context makes this obvious. For machines, this ambiguity means that errors in word segmentation propagate to dependency parsing. If you incorrectly segment "美国会" as "美 国会" (beautiful national meeting) instead of "美国 会" (USA will), your dependency tree will be fundamentally wrong.
+
+### Joint Processing: The Dance Partnership
+
+Early Chinese parsers worked like an assembly line: first segment words, then tag parts of speech, then parse dependencies. Each stage could introduce errors that the next stage had to live with.
+
+Modern joint models work like dance partners who adjust their movements based on each other in real-time. The word segmentation considers what would make sense for dependency parsing, and the dependency parser provides feedback on whether the segmentation makes grammatical sense. This back-and-forth reduces error accumulation.
+
+Think of it like transcribing handwritten text: if you transcribe letter-by-letter without considering word context, "demist" could become "dentist". But if you look at the whole word while considering the sentence meaning ("I need to demist the windshield"), you're less likely to make mistakes.
+
+## When You Need This
+
+### You NEED dependency parsing when:
+
+1. **Understanding relationships, not just words**: Your chatbot must know whether "delete my account" means the user wants to delete their account or they're asking about a feature that deletes other accounts. Keyword matching sees "delete" and "account" but misses the crucial relationship.
+
+2. **Extracting structured information**: You're mining business documents to find "Company X acquired Company Y for $Z" patterns. You need to know which company is the acquirer and which is the target, not just that both companies and a dollar amount appear in the same sentence.
+
+3. **Question answering**: Users ask "谁发明了电话?" (Who invented the telephone?). You need to identify that "谁" (who) is seeking the subject of "发明" (invented), not just matching keywords between question and candidate answers.
+
+4. **Machine translation quality**: Translating "The cat that chased the mouse ran away" requires understanding that "ran away" connects to "cat", not "mouse". Dependency parsing preserves these relationships across languages.
+
+5. **Semantic search**: Users search for "companies acquired by Google" and you need to distinguish this from "companies that acquired Google's products". The words are similar, but the dependency structure is inverted.
+
+### You DON'T need dependency parsing when:
+
+1. **Simple keyword matching suffices**: Searching for documents containing "machine learning" doesn't require understanding sentence structure.
+
+2. **Classification tasks with bag-of-words**: Sentiment analysis often works fine with "positive words count" vs "negative words count" without parsing.
+
+3. **Named entity recognition alone**: Finding person names, locations, and organizations in text doesn't inherently require dependency parsing (though it can improve accuracy).
+
+4. **Document clustering**: Grouping similar documents often works with simpler methods like TF-IDF without structural analysis.
+
+### The Decision Criteria
+
+Ask yourself: "Does my application need to know WHO did WHAT to WHOM?" If yes, you need dependency parsing. If you only need to know WHETHER certain concepts appear together, simpler methods may suffice.
+
+Also consider your accuracy requirements. If 70% accuracy is acceptable, simpler methods might work. If you need 90%+ accuracy on relationship extraction, invest in dependency parsing.
+
+## Trade-offs
+
+### Implementation Approach: Joint vs Pipeline
+
+**Pipeline Approach** (segment → tag → parse):
+- **Pro**: Simpler to implement, easier to debug each stage separately
+- **Pro**: Can swap components (use better segmenter without changing parser)
+- **Con**: Error propagation compounds (3% segmentation error + 2% tagging error = worse parsing)
+- **Con**: Can't use character-level language models (BERT, etc.) directly
+
+**Joint Approach** (all tasks learned together):
+- **Pro**: Reduced error propagation, each task informs others
+- **Pro**: Can use modern pre-trained language models
+- **Con**: More complex to implement and debug
+- **Con**: Less modular, harder to improve individual components
+
+**Recommendation**: Use joint models for production systems where accuracy matters. Use pipeline for prototyping or when you need to understand/debug specific stages.
+
+### Build vs Buy: Cloud API vs Self-Hosted
+
+**Cloud API** (Google NLP, NLP Cloud, LTP-Cloud):
+- **Pro**: Instant start, no infrastructure management
+- **Pro**: Automatic updates and improvements
+- **Pro**: Scales up/down with zero planning
+- **Con**: Costs scale with usage (~$1-2 per 1000 requests)
+- **Con**: Data privacy concerns (sending text to third party)
+- **Con**: API rate limits and internet dependency
+
+**Self-Hosted** (HanLP, Stanford CoreNLP, spaCy):
+- **Pro**: Fixed cost regardless of volume (after ~500K sentences/month)
+- **Pro**: Full data privacy and control
+- **Pro**: Customizable for your domain
+- **Con**: Requires ML/NLP expertise to deploy and maintain
+- **Con**: Infrastructure costs (GPU recommended for speed)
+- **Con**: Manual updates and model management
+
+**Break-even point**: Around 500K-1M Chinese sentences per month. Below that, cloud APIs are usually cheaper and easier. Above that, self-hosting becomes economical.
+
+### Library Choice: Which Framework?
+
+**HanLP**:
+- **Best for**: Chinese-specific projects, need for Ancient Chinese support
+- **Strengths**: Purpose-built for Chinese, Apache 2.0 license (commercial friendly), active development
+- **Weaknesses**: Smaller community than Stanford, fewer resources for non-Chinese languages
+
+**Stanford CoreNLP**:
+- **Best for**: Research projects, need for multi-language consistency
+- **Strengths**: Strong academic foundation, well-documented, established benchmarks
+- **Weaknesses**: Java-based (less Python-friendly), GPL license (legal review for commercial use), slower than modern neural approaches
+
+**spaCy with Chinese models**:
+- **Best for**: Python-native projects, need for industrial-strength NLP pipeline
+- **Strengths**: Fast, excellent documentation, MIT license, easy integration
+- **Weaknesses**: Chinese models less mature than English, may need custom training
+
+**Recommendation**: HanLP for Chinese-focused production systems, Stanford for academic research or multi-language projects, spaCy for Python-centric teams building broader NLP pipelines.
+
+## Cost Considerations
+
+### Cloud API Economics
+
+**Google Cloud Natural Language API**:
+- Free tier: 5,000 syntax analysis requests/month
+- After free tier: ~$1 per 1,000 requests
+- Example: Processing 100K sentences/month = ~$95/month
+
+**LTP-Cloud** (Chinese-specific):
+- Pricing varies, contact for enterprise rates
+- Generally competitive with Google for Chinese text
+- Optimized for Chinese, may outperform general-purpose APIs
+
+### Self-Hosted Economics
+
+**Small-Scale** (< 100K sentences/month):
+- CPU-only VM: ~$50-100/month
+- Developer setup time: 8-16 hours
+- Ongoing maintenance: 2-4 hours/month
+
+**Medium-Scale** (100K-1M sentences/month):
+- GPU VM: ~$300-500/month
+- Developer setup time: 16-24 hours
+- Ongoing maintenance: 4-8 hours/month
+- Model training/fine-tuning: 20-40 hours if needed
+
+**Large-Scale** (1M+ sentences/month):
+- Multiple GPU instances: $1,000-2,000/month
+- DevOps required: Container orchestration, load balancing
+- Ongoing maintenance: 16-20 hours/month
+
+### Hidden Costs
+
+**Build (Self-Hosted)**:
+- Model training data: If you need domain-specific models, annotating training data costs $50-200 per 1,000 sentences
+- Expertise: ML engineer time at $100-200/hour
+- Infrastructure surprises: Disk space for models, network bandwidth, backup storage
+
+**Buy (Cloud API)**:
+- Data transfer costs: Uploading/downloading large text volumes
+- Vendor lock-in: Switching costs if you change providers later
+- Rate limiting: May need to pay for higher tier to avoid throttling
+- Currency risk: International APIs may have exchange rate fluctuations
+
+### ROI Calculation Framework
+
+1. **Estimate volume**: How many sentences/month?
+2. **Calculate cloud cost**: Volume × $1 per 1K (rough estimate)
+3. **Calculate self-host cost**: Infrastructure + (developer hours × rate)
+4. **Add hidden costs**: Data annotation, maintenance, opportunity cost
+5. **Compare**: If self-host is < 70% of cloud cost, it's usually worth it (the 30% buffer covers uncertainties)
+
+## Implementation Reality
+
+### First 90 Days: What to Expect
+
+**Weeks 1-2: Evaluation Phase**
+- Test multiple libraries with sample data
+- Measure accuracy on YOUR specific text (news, social media, legal docs all parse differently)
+- Benchmark speed: Can you process your daily volume in acceptable time?
+- Reality check: Plan for 40-60% of your time just getting libraries installed and configured correctly, especially if you're new to the ecosystem
+
+**Weeks 3-4: Integration**
+- Connect parser to your data pipeline
+- Handle edge cases: empty strings, mixed language text, special characters
+- Expect surprises: Text encoding issues, unexpected input formats, memory usage spikes
+- Common mistake: Assuming parsing quality is uniform across text types. Test thoroughly on representative samples.
+
+**Weeks 5-8: Optimization**
+- Cache common phrases (many sentences have repeated structures)
+- Batch processing for efficiency
+- Error handling: What happens when parsing fails?
+- Performance tuning: You'll likely find your first implementation is 10x slower than needed
+
+**Weeks 9-12: Production Hardening**
+- Monitoring: Track parse times, error rates, quality metrics
+- Fallbacks: What to do when the parser is unavailable or too slow?
+- Documentation: Future you will forget why you made certain choices
+- User acceptance testing: Does the parsed output actually help your application?
+
+### Team Skills Required
+
+**Minimum Viable Team**:
+- One developer comfortable with Python/Java (depending on library choice)
+- Basic understanding of NLP concepts (can explain what POS tagging means)
+- DevOps basics if self-hosting (can deploy a web service)
+
+**Recommended Team**:
+- NLP engineer (has parsed text before, understands evaluation metrics)
+- Backend engineer (can build scalable processing pipeline)
+- DevOps engineer if self-hosting at scale
+- Domain expert (knows what "correct" parsing means for your content)
+
+**Don't need**: PhD in linguistics, deep learning expertise (unless you're training custom models)
+
+### Common Pitfalls
+
+1. **Assuming one model fits all**: Parsing quality varies dramatically across domains. A parser trained on news text may fail on social media slang or legal documents. Budget time for domain adaptation.
+
+2. **Ignoring word segmentation quality**: In Chinese, dependency parsing quality is limited by segmentation quality. If segmentation is 90% accurate, dependency parsing can't exceed that accuracy. Test segmentation separately.
+
+3. **Over-optimizing before validating**: Teams spend months fine-tuning parsers before confirming that parsing actually improves their end application. Parse accuracy doesn't always correlate with application performance.
+
+4. **Underestimating data variability**: Your sample data is cleaner than production data. Add 30% buffer to expected error rates.
+
+5. **Not having a fallback**: When parsing fails (and it will), what does your application do? Crash? Return partial results? Fall back to keyword matching?
+
+### First Success Indicators
+
+You'll know you're on the right track when:
+- Parsing completes on representative samples without crashing
+- Your application shows measurable improvement using parsed output vs without it
+- Error rates are stable (not improving rapidly, which suggests you're still in the tuning phase)
+- Team can explain what the parser is doing wrong on failure cases (understanding failure modes means you can fix them)
+
+**Timeline Reality**: Getting "something working" takes 2-4 weeks. Getting "production-ready" takes 8-12 weeks. Getting "optimized" is ongoing.
+
+---
+
+**Word count**: ~2,150 words
+
+**Key takeaway**: Chinese dependency parsing is powerful but not magic. It solves relationship understanding problems, not keyword matching problems. Expect a 3-month journey from evaluation to production, and choose cloud APIs for prototyping or low volume, self-hosted for high volume or sensitive data. The unique challenge of Chinese (word segmentation) means joint models outperform pipeline approaches, and testing on YOUR specific text type is critical before committing to a solution.

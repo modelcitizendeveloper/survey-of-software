@@ -290,12 +290,14 @@ title: "The Survey"
 
 ## 1.150-159: Reading & Text Analysis (Language Learning)
 
-**Completed: 0/10**
+**Completed: 2/10**
 
 - **1.150** Classical Text Corpora - Perseus, PHI5/PHI7, Latin Library
 - **1.151** Vocabulary Frequency - DCC Core, Dickinson College
 - **1.152** Reading Difficulty & Readability - Flesch-Kincaid, lexical coverage, i+1 detection
+  - ✅ [**1.152.1** CJK Readability](/survey/1-152-1) - Character frequency, HSK/TOCFL levels, graded readers
 - **1.153** Sentence Parsing - Universal Dependencies parsers, Stanza, syntax trees
+  - ✅ [**1.153.1** Chinese Dependency Parsing](/survey/1-153-1) - UD Chinese, Stanford CoreNLP, HanLP
 - **1.154** Graded Reader Generation - Text leveling, vocab substitution
 - **1.155** Parallel Text Alignment - Latin-English, sentence alignment
 - **1.156** Text Annotation UI - Glossing, interlinear display
@@ -307,7 +309,7 @@ title: "The Survey"
 
 ## 1.160-169: Character-Based Writing Systems (CJK)
 
-**Completed: 6/10**
+**Completed: 7/10**
 
 - ✅ [**1.160** Character Databases](/survey/1-160) - Unihan, CHISE, IDS, CJKVI
 - ✅ [**1.161** Radical & Component Analysis](/survey/1-161) - Character decomposition, semantic components
@@ -315,18 +317,18 @@ title: "The Survey"
 - ✅ [**1.163** Character Encoding](/survey/1-163) - Big5, GB2312, GBK, GB18030, Unicode CJK
 - ✅ [**1.164** Traditional ↔ Simplified Conversion](/survey/1-164) - OpenCC, HanziConv, zhconv-rs
 - ✅ [**1.165** Stroke Order & Writing (CJK)](/survey/1-165) - Make Me a Hanzi, KanjiVG, animCJK
-- **1.166** OCR (CJK-specific) - Specialized CJK optical character recognition
+- ✅ [**1.166** OCR (CJK-specific)](/survey/1-166) - Tesseract, PaddleOCR, EasyOCR
 - **1.167-1.169** _Available for future use_
 
 ---
 
 ## 1.170-179: Translation & Alignment
 
-**Completed: 2/10**
+**Completed: 3/10**
 
 - ✅ [**1.170** Machine Translation APIs](/survey/1-170) - DeepL, Google Translate, Azure Translator, Amazon Translate
 - ✅ [**1.171** Sentence Alignment](/survey/1-171) - Hunalign, Bleualign, vecalign
-- **1.172** Translation Memory - TM systems, CAT tools
+- ✅ [**1.172** Translation Memory](/survey/1-172) - TMX format, OmegaT, MemoQ
 - **1.173** Computer-Assisted Translation - CAT tool comparison
 - **1.174** Literary Translation Tools - Context-aware translation
 - **1.175-1.179** _Available for future use_
