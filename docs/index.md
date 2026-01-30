@@ -113,6 +113,7 @@ The survey now includes **dimensional coverage** across three axes:
 - 1.001.1: CJK Collation & Sorting (radical-stroke, pinyin order)
 - 1.033.5: Chinese Dialect NLP (PyCantonese, taibun for Hokkien)
 - 1.035.1: Chinese Tokenization Strategies (jieba, pkuseg, word segmentation)
+- 1.153.1: Chinese Dependency Parsing (UD Chinese, Stanford CoreNLP, HanLP)
 - 1.154.1: Chinese Text Simplification (MCTS dataset, neural approaches)
 
 **3. Specialized Tools**
@@ -120,7 +121,9 @@ The survey now includes **dimensional coverage** across three axes:
 - 1.167: CJK Text Layout & Wrapping
 - 1.175: Furigana & Ruby Annotation
 
-**Total Research Topics:** 38+ topics across general-purpose libraries and CJK-specific tools
+- 1.172: TMX File Format Libraries (Translation Memory)
+
+**Total Research Topics:** 40+ topics across general-purpose libraries and CJK-specific tools
 
 ---
 

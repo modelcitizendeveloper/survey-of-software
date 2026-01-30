@@ -9,6 +9,8 @@ title: "About"
 
 > **Stop guessing which library to use. Consult the map.**
 
+Pre-done library research across dozens of categories. Use it to decide faster, don't redo months of research.
+
 ## The Problem: An Unmapped Landscape
 
 You're building something. You need a graph algorithm library. Or a JSON parser. Or an LLM wrapper.
@@ -27,13 +29,6 @@ You're building something. You need a graph algorithm library. Or a JSON parser.
 Like the Great Trigonometric Survey of India mapped an entire subcontinent through systematic measurement, **we're triangulating the software library landscape**—one category at a time.
 
 **I needed these measurements for my own projects.** Now you don't have to do the research.
-
-Think of it as a **hardware store for software components:**
-- Not custom applications (those are buildings)
-- Not vertical-specific solutions (those are blueprints)
-- **General-purpose tools, nuts, bolts, and power tools**
-
-You bring the blueprint. We provide the component catalog.
 
 ---
 
@@ -90,17 +85,21 @@ Each research piece uses **4PS - The Four-Pass Survey**, revealing different asp
 **Approach:** Maintenance, team expertise, ecosystem fit, vendor stability
 **Output:** Strategic insights for multi-year choices
 
-### Explainer
+**Why four perspectives?** Different discovery approaches reveal different optimal solutions. A library that's "best" for rapid prototyping might be wrong for production. Strategic constraints might override technical superiority. **Single-methodology discovery misses better paths.**
+
+### Supplementary: Explainers
 **When:** You're new to the domain
 **Philosophy:** "Make it accessible to everyone"
 **Approach:** Domain fundamentals without assuming expertise
 **Output:** Foundational understanding
 
-**Why four perspectives?** Different discovery approaches reveal different optimal solutions. A library that's "best" for rapid prototyping might be wrong for production. Strategic constraints might override technical superiority. **Single-methodology discovery misses better paths.**
+*Note: Explainers are supplementary content, not one of the four passes. They provide domain context when needed.*
 
 ---
 
-## How To Use This Research
+# How To Use This Research
+
+**Choose your approach based on your timeline and depth needs:**
 
 ### Quick Decision (5-15 minutes)
 1. **Read S1** - Get the landscape overview
