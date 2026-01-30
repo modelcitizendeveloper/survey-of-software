@@ -5,7 +5,7 @@ id: vision
 title: "Vision"
 ---
 
-# Why Map Software Mountains When You Can Build Them?
+# Stop Guessing. Start Building.
 
 > **The Great Trigonometric Survey of India (1802-1880) mapped an entire subcontinent—including Mt. Everest—using triangulation from known points. We're doing the same for software: systematically surveying the library landscape so you can assemble your own mountains.**
 
