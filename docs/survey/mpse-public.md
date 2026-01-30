@@ -367,4 +367,151 @@ CRITICAL: Stay authentic to your methodology.
 
 ---
 
+## Replication Guide: Step-by-Step
+
+**Want to replicate this research or survey a new category? Here's the practical recipe.**
+
+### Prerequisites
+- Claude Code CLI installed
+- A library category to research (e.g., "PDF libraries", "graph databases")
+- 60-90 minutes for full 4PS run
+
+### Step 1: Set Up Your Workspace
+
+```bash
+# Create directory structure
+mkdir -p research/1.XXX-library-name/01-discovery/{S1-rapid,S2-comprehensive,S3-need-driven,S4-strategic}
+cd research/1.XXX-library-name
+```
+
+### Step 2: Launch Claude Code
+
+```bash
+claude-code
+```
+
+### Step 3: Run Parallel 4PS Discovery
+
+**Copy and adapt this prompt:**
+
+```
+I need you to research [LIBRARY CATEGORY] using the Four-Pass Survey (4PS) methodology.
+
+Launch 4 independent agents in parallel (single message, 4 task calls):
+
+AGENT 1 - S1 Rapid Discovery:
+- Workspace: research/1.XXX/01-discovery/S1-rapid/
+- Philosophy: "Popular libraries exist for a reason"
+- Approach: GitHub stars, PyPI downloads, community adoption
+- Output: approach.md, library-X.md (top 3-5), recommendation.md
+- Time: 10-15 minutes
+- DO NOT read other agents' work
+
+AGENT 2 - S2 Comprehensive:
+- Workspace: research/1.XXX/01-discovery/S2-comprehensive/
+- Philosophy: "Understand entire solution space"
+- Approach: Benchmarks, feature matrices, deep technical analysis
+- Output: approach.md, library-X.md (all viable), feature-comparison.md, recommendation.md
+- Time: 30-40 minutes
+- DO NOT read other agents' work
+
+AGENT 3 - S3 Need-Driven:
+- Workspace: research/1.XXX/01-discovery/S3-need-driven/
+- Philosophy: "Start with requirements, find exact fit"
+- Approach: Use case scenarios, requirement validation
+- Output: approach.md, use-case-X.md, recommendation.md
+- Time: 20-30 minutes
+- DO NOT read other agents' work
+
+AGENT 4 - S4 Strategic:
+- Workspace: research/1.XXX/01-discovery/S4-strategic/
+- Philosophy: "Think long-term, consider ecosystem"
+- Approach: Maintenance health, community sustainability, 5-10 year outlook
+- Output: approach.md, library-X-maturity.md, recommendation.md
+- Time: 15-20 minutes
+- DO NOT read other agents' work
+
+CRITICAL REQUIREMENTS:
+1. Complete independence - no cross-reading
+2. Each agent writes ONLY to their directory
+3. Stay authentic to methodology philosophy
+4. Make independent recommendations
+
+Launch all 4 in parallel. Total time: 60-90 minutes.
+```
+
+### Step 4: Monitor Progress
+
+Claude Code will run all 4 agents in parallel. Watch for:
+- All 4 agents completing successfully
+- Files created in correct directories
+- No cross-contamination (agents stayed independent)
+
+### Step 5: Create the Discovery TOC
+
+After agents complete:
+
+```
+Now create research/1.XXX/01-discovery/DISCOVERY_TOC.md:
+
+Read S1-S4 recommendation.md files and create an index with:
+1. Summary of each methodology's top pick
+2. Convergence analysis (where do they agree?)
+3. Divergence insights (what trade-offs revealed?)
+4. Quick reference table of all 4 recommendations
+
+This is the "executive summary" users read first.
+```
+
+### Step 6: Optional - Create Explainer
+
+If the domain needs foundational context:
+
+```
+Create research/1.XXX/LIBRARY_EXPLAINER.md:
+
+Explain the core technical concepts for readers new to [DOMAIN].
+- What problem does this solve?
+- Key technical concepts
+- When you need this category
+- When you don't
+
+Target: Someone technical but new to this specific domain.
+```
+
+### Step 7: Review & Publish
+
+1. **Independence check**: Did each agent stay true to their methodology?
+2. **Quality check**: Are recommendations backed by evidence?
+3. **Convergence analysis**: What patterns emerged?
+4. **Commit**: `git add research/1.XXX && git commit -m "research: Add 4PS survey for XXX libraries"`
+
+---
+
+## Tips for Successful Replication
+
+**Do:**
+- ✅ Keep agents independent (this is critical!)
+- ✅ Let each methodology shine (don't force convergence)
+- ✅ Document your sources
+- ✅ Run benchmarks yourself when possible
+
+**Don't:**
+- ❌ Let agents read each other's work mid-research
+- ❌ Force all 4 to pick the same library
+- ❌ Skip methodologies ("I'll just do S1")
+- ❌ Treat findings as gospel (they're directional guidance)
+
+**The magic happens when methods *disagree*** - that reveals trade-offs you wouldn't see from a single perspective.
+
+---
+
+## Questions?
+
+Built something using this methodology? **[Share your story →](#)** (coming soon)
+
+Found a gap or improvement? Open an issue on the [GitHub repo](https://github.com/modelcitizendeveloper/survey-of-software).
+
+---
+
 **Four-Pass Survey (4PS)** - Systematic, replicable, open methodology for evaluating general-purpose software libraries.
