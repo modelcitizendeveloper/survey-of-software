@@ -1,0 +1,59 @@
+code: '1.153.1'
+title: Chinese Dependency Parsing
+tier: 1
+category: NLP / Syntax Analysis
+status: completed
+completion_date: '2026-01-29'
+
+description: |
+  Comprehensive analysis of dependency parsing tools and techniques for Chinese text.
+  Covers syntactic analysis, word relationship mapping, and the unique challenges of
+  Chinese parsing (segmentation + parsing). Includes Stanford CoreNLP, spaCy, HanLP,
+  and modern neural approaches.
+
+research_output:
+  total_documents: 6
+  stages_completed: [S1-overview, S2-technical-depth, S3-practical-implementation, S4-ecosystem, DOMAIN_EXPLAINER, DISCOVERY_TOC]
+
+  stages:
+    S1-overview:
+      content:
+        - What dependency parsing is and why it matters
+        - Chinese-specific challenges (no word boundaries)
+        - Overview of major parsing frameworks
+        - Use cases and applications
+
+    S2-technical-depth:
+      content:
+        - Parsing algorithms and architectures
+        - Neural vs traditional approaches
+        - Dependency relation types
+        - Technical implementation details
+
+    S3-practical-implementation:
+      content:
+        - Tool comparison (Stanford, spaCy, HanLP)
+        - Implementation patterns
+        - Performance considerations
+        - Integration approaches
+
+    S4-ecosystem:
+      content:
+        - Ecosystem overview
+        - Related tools and libraries
+        - Research trends
+        - Future directions
+
+    DOMAIN_EXPLAINER:
+      content:
+        - What dependency parsing solves
+        - Accessible analogies (family tree, invisible boundaries)
+        - When you need this
+        - Trade-offs and decision framework
+
+estimated_hours: 3-4
+actual_hours: 3
+completion_notes: |
+  Completed January 29, 2026. Research provides comprehensive overview of Chinese
+  dependency parsing for NLP applications including chatbots, information extraction,
+  question answering, and machine translation.
