@@ -46,11 +46,11 @@ I created a classification system for software libraries, organized like the Dew
 - **1.160-1.169** - Compression & Encoding
 - **1.170-1.209** - LLMs & Natural Language
 
-The system currently spans from **1.001 Sorting Libraries** to **1.209 Local LLM Serving**, with room to grow.
+The system starts from **1.001 Sorting Libraries** and continues expanding across algorithms, data structures, ML frameworks, and infrastructure components.
 
 ## The 4PS Methodology: Four-Pass Survey
 
-Using Claude Code's task tool, I conduct deep research in each category following what I call **4PS - The Four-Pass Survey:**
+I conduct deep research in each category following what I call **4PS - The Four-Pass Survey:**
 
 ### S1: Rapid Discovery
 Find the popular libraries. Quick comparison table. When you need an answer *now*.
@@ -66,11 +66,11 @@ Think long-term. Consider maintenance, team expertise, ecosystem fit, vendor sta
 
 **Plus:** An explainer pass for technical generalists who need context without overwhelming detail.
 
-## Current Progress
+## The Research
 
-- **40+ categories** researched with 4PS methodology
-- **128 categories** remaining in the roadmap
-- **40,000+ tokens** per deep research piece
+Each survey piece represents deep investigation using the 4PS methodology:
+- **Systematic coverage** across algorithms, data processing, ML, and infrastructure
+- **40,000+ tokens** of analysis per category
 - **Publicly accessible** at research.modelcitizendeveloper.com
 
 Having this repository makes it possible to do **extremely rapid development with greater confidence** because I don't have to:
@@ -143,20 +143,15 @@ We aim for **quarterly updates** to major categories and treat research as **liv
 
 ---
 
-## The Road Ahead: 70 Years to Map a Continent
+## The Road Ahead: Systematic Expansion
 
-The Great Trigonometric Survey took 70 years to map India. We're not mapping a physical continent, but the software landscape is equally vast.
+The Great Trigonometric Survey took 70 years to map India. We're mapping a different kind of landscape, but the principle holds: **systematic measurement, one triangulation point at a time.**
 
-**Accept the timeline:**
-- Year 1: 40 points, few notice
-- Year 2: 70 points, some attention
-- Year 3: 100 points, momentum builds
-- Year 4: 150 points, undeniable value
-- Year 5: 200 points, the map emerges
+Each new survey makes the next easier. Patterns emerge across categories. Reusable methodologies compound.
 
-Each triangulation point makes the next easier. Patterns emerge across measurements. **India wasn't mapped in a day. Neither will the software landscape be.**
+**India wasn't mapped in a day. Neither will the software landscape be.** But every measurement adds value immediately—you don't wait for completion to use the map.
 
-But when it's done? You'll have a map that lets you assemble code mountains with confidence.
+When enough triangulation points exist, you'll see the whole landscape and assemble code mountains with confidence.
 
 ---
 

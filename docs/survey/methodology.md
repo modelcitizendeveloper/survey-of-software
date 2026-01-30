@@ -521,6 +521,25 @@ Share your findings! Open source the research or publish it internally.
 
 ---
 
+## Advanced: Production Workflow
+
+The instructions above work with any LLM tool that supports parallel task execution (Claude Code, Cursor, etc.).
+
+**For production-scale research workflows,** the creator uses:
+- **Gas Town** - Multi-agent workspace manager with parallel polecat workers
+- **Beads** - Distributed issue tracking across git worktrees
+- **Parallel execution** - Launch 4+ research projects simultaneously
+
+This setup enables:
+- Multiple surveys running in parallel
+- Persistent work queues across sessions
+- Structured handoffs between agents
+- Git-based synchronization
+
+Not required for replication, but significantly increases throughput when running many surveys.
+
+---
+
 ## Questions?
 
 Built something using this methodology? **[Share your story →](#)** (coming soon)
