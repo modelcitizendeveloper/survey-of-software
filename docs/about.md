@@ -25,6 +25,8 @@ title: "About"
 - ML frameworks (PyTorch, TensorFlow, ONNX)
 - Infrastructure components (databases, messaging, caching)
 - Development tools (testing, logging, monitoring)
+- Speech & vision (OCR, TTS, ASR with multilingual support)
+- NLP & text processing (summarization, spell-checking, CJK-specific tools)
 - **The nuts, bolts, and power tools of software**
 
 ❌ **What we exclude:**

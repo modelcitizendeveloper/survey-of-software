@@ -94,3 +94,36 @@ Each piece contains 5 sections:
 **Ready to explore?** [Start with the Research Library →](/survey)
 
 **Want the bigger picture?** [Read our Vision →](/vision)
+
+## 🔍 Recent Additions
+
+### Dimensional Research Expansion (January 2026)
+
+The survey now includes **dimensional coverage** across three axes:
+
+**1. Core Topics** - General-purpose library research (1.xxx)
+- 1.081: OCR Libraries (Tesseract, EasyOCR, PaddleOCR)
+- 1.088: ASR Libraries (Whisper, SpeechRecognition)
+- 1.089: TTS Libraries (MeloTTS, gTTS, pyttsx3)
+- 1.169: Text Summarization (Sumy, snownlp, TextRank)
+
+**2. Language-Specific Variants** (1.xxx.n)
+- 1.001.1: CJK Collation & Sorting (radical-stroke, pinyin order)
+- 1.033.5: Chinese Dialect NLP (PyCantonese, taibun for Hokkien)
+
+**3. Specialized Tools**
+- 1.168: Chinese Spell & Grammar Checking
+- 1.167: CJK Text Layout & Wrapping
+- 1.175: Furigana & Ruby Annotation
+
+**Total Research Topics:** 34+ topics across general-purpose libraries and CJK-specific tools
+
+---
+
+## 🐉 "Here Be Dragons"
+
+Some areas reveal **gaps in the software ecosystem** - categories where libraries don't yet exist:
+- Wu & Hakka NLP libraries (corpora exist, no pip-installable tools)
+- Low-resource tonal languages (Thai, Vietnamese, Burmese)
+
+These gaps show what software still needs to be built.
