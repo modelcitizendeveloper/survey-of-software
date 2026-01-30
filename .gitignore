@@ -32,3 +32,9 @@ lerna-debug.log*
 # Testing
 coverage/
 .nyc_output/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
