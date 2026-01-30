@@ -151,7 +151,7 @@ Library ecosystems change:
 **Estimated accuracy:**
 - **At publication:** 70-80%
 - **12 months:** 50-70%
-- **36 months:** <30%
+- **36 months:** \<30%
 
 **Treat this as a living map, not a textbook.** The research guides investigation—you validate with hands-on testing.
 

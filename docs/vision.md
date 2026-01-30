@@ -137,7 +137,7 @@ Library ecosystems evolve constantly:
 **Estimated accuracy:**
 - **At publication:** 70-80%
 - **12 months:** 50-70%
-- **36 months:** <30%
+- **36 months:** \<30%
 
 We aim for **quarterly updates** to major categories and treat research as **living documents** that guide investigation, not gospel truth.
 
