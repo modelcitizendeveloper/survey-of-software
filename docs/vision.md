@@ -107,7 +107,7 @@ The map already exists. I just consult it and build.
 
 If you build something using this survey, **I want to hear about it!**
 
-I write case studies on my "Model Citizen Developer" newsletter on LinkedIn and would love to feature your project. Whether it's a production system, a research project, or a weekend hack—if you assembled your code mountain using this map, let's share the story.
+I write case studies and would love to feature your project. Whether it's a production system, a research project, or a weekend hack—if you assembled your code mountain using this map, let's share the story.
 
 **The vision:** Make it possible for developers and organizations to DIY solutions they would have paid vendors for before. The map is open. The methodology is transparent. The code is yours.
 
