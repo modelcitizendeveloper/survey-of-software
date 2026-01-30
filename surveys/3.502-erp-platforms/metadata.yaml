@@ -1,0 +1,59 @@
+category: "3.500-599: Business Platforms"
+number: "3.502"
+name: "ERP Platforms"
+status: "complete"
+published: false
+started: "2025-11-02"
+completed: "2025-11-02"
+
+scope: |
+  Enterprise Resource Planning (ERP) platforms - integrated business management systems
+  that unify core business processes across accounting, inventory, manufacturing, HR,
+  CRM, supply chain, and more into a single system of record.
+
+key_questions:
+  - "When to use ERP vs standalone accounting software (3.006)?"
+  - "What triggers graduation from QuickBooks/Xero to NetSuite/SAP?"
+  - "Can modular approach (accounting + inventory + CRM) delay ERP investment?"
+  - "Open source (Odoo/ERPNext) vs commercial ERP - when does each make sense?"
+  - "Cloud ERP vs on-premise - cost, control, customization trade-offs?"
+
+platforms:
+  mid_market:
+    - NetSuite
+    - Microsoft Dynamics 365
+    - SAP Business One
+    - Odoo Enterprise
+    - Acumatica
+    - Epicor
+  enterprise:
+    - SAP S/4HANA
+    - Oracle ERP Cloud
+    - Workday (financial management)
+    - Infor CloudSuite
+  open_source:
+    - Odoo Community
+    - ERPNext
+    - Dolibarr
+    - Tryton
+
+integration_points:
+  - "3.006: Accounting Software (ERP includes accounting as one module)"
+  - "1.139: Self-hosted Business Applications (open source ERP options)"
+  - "3.070: Inventory Management (often bundled in ERP)"
+  - "3.501: CRM Platforms (ERP includes CRM module)"
+  - "3.503: HRIS/HCM (HR often part of ERP suite)"
+
+decision_framework:
+  accounting_vs_erp:
+    - "Revenue threshold: $5M-$50M typical ERP adoption range"
+    - "Complexity triggers: multi-entity, manufacturing, complex inventory"
+    - "Integration pain: when point solutions don't communicate well"
+
+  erp_selection:
+    - "Company size: SMB (Odoo/Acumatica) vs Mid-market (NetSuite) vs Enterprise (SAP)"
+    - "Industry: vertical specialization (manufacturing, distribution, services)"
+    - "Deployment: cloud-first vs on-premise requirements"
+    - "Customization: low-code (Odoo) vs heavy custom (SAP)"
+
+research_approach: "MPSE v3.0 - S1 (rapid), S2 (comprehensive), S3 (need-driven), S4 (strategic)"

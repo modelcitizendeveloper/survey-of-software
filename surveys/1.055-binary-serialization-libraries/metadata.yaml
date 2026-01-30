@@ -1,0 +1,74 @@
+id: "1.055"
+title: "Binary Serialization Libraries"
+subtitle: "MessagePack, Protocol Buffers, Apache Avro, Pickle"
+tier: 1
+category: "Data Processing"
+cluster: "algorithms"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://msgpack.org/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "MessagePack - Efficient binary serialization"
+
+    - url: https://github.com/msgpack/msgpack-python
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "msgpack-python GitHub repository"
+
+    - url: https://pypi.org/project/msgpack/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "msgpack on PyPI"
+
+    - url: https://protobuf.dev/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Protocol Buffers"
+
+    - url: https://github.com/protocolbuffers/protobuf
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Protocol Buffers GitHub repository"
+
+tags:
+  - serialization
+  - msgpack
+  - protobuf
+  - binary-format
+
+libraries_evaluated:
+  - name: "MessagePack"
+    recommendation: "schemaless"
+    license: "Apache-2.0"
+
+  - name: "Protocol Buffers"
+    recommendation: "schema-based"
+    license: "BSD-3-Clause"
+
+key_findings:
+  - "MessagePack best for schemaless serialization"
+  - "Protocol Buffers best with schemas"
+
+related_research:
+  - "1.056"  # JSON libraries
+  - "1.050"  # Compression
+
+cross_references:
+  use_cases:
+    - api-communication
+    - data-storage

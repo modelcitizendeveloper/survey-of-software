@@ -1,0 +1,20 @@
+published: false
+---
+experiment_number: "2.060"
+experiment_sequence: 2
+experiment_date: "2025-10-11"
+experiment_status: complete
+discovery_method: detailed_toc
+migrated_from: null
+notes: "Second 2.XXX open standards experiment - OAuth 2.0 / OpenID Connect (IETF RFC 6749 + OpenID Foundation). Tests 2.XXX methodology with partial portability standard (flows standardized 15-30%, features proprietary 70-85%). Successfully demonstrated S1-S4 divergence pattern (95% → 65-70% → context-dependent → 75-80% confidence) vs OpenTelemetry's convergence. Key finding: Adopt for SSO capability, not portability (80-150 hr migrations vs 1-4 hrs). Completed with S1-S4 discovery (24 files), DISCOVERY_TOC, STANDARD_EXPLAINER, and comprehensive vs partial standards comparison report."
+
+findings:
+  - id: F001
+    title: "Email Claim Availability Across OIDC Providers"
+    date: "2025-12-30"
+    category: "Identity Claims"
+    impact: "Critical"
+    summary: "Not all OIDC providers share email addresses. Email claim is optional per spec. Applications must implement fallback to provider-scoped sub claim."
+    source: "Factumerit OIDC middleware implementation"
+    file: "findings/F001-email-claim-availability.md"
+---

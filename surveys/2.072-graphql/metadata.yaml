@@ -1,0 +1,113 @@
+code: "2.072"
+title: GraphQL
+tier: 2
+status: paused_s1_complete
+published: false
+date_started: 2025-11-19
+date_completed: null
+date_paused: 2025-11-19
+estimated_hours: 7-9
+actual_hours: 2.5
+completion_level: s1_only
+
+description: |
+  Research on GraphQL as an open API design standard. Focus on portability
+  across implementations, migration costs, and lock-in assessment.
+
+  GraphQL Foundation (Linux Foundation) specification enables schema-first,
+  client-driven API design with built-in introspection.
+
+use_case: |
+  Primary: API design portability across server implementations
+  - Schema-first contract-driven development
+  - Switch between Node.js, Postgres-native, Python, Go implementations
+  - Federation patterns without vendor lock-in
+  - Minimize proprietary extensions (Apollo Federation concerns)
+
+key_questions:
+  - How portable are GraphQL schemas across implementations?
+  - What is the migration cost between implementations?
+  - Which features are standard vs proprietary?
+  - How does Apollo Federation create lock-in?
+  - GraphQL vs REST/gRPC for portability?
+
+implementations_to_analyze: 7
+implementations:
+  - Apollo Server (Node.js, most popular)
+  - Hasura (Haskell, auto-generates from Postgres)
+  - Postgraphic (Postgres-native)
+  - GraphQL Yoga (Node.js, lightweight)
+  - Hot Chocolate (.NET)
+  - Strawberry (Python)
+  - gqlgen (Go)
+  - Juniper (Rust)
+
+deliverables:
+  s1_documents: 3
+  s2_documents: 0
+  s3_scenarios: 0
+  s4_strategic: 0
+  total_docs: 3
+  s1_status: complete
+  s2_status: not_started
+  s3_status: not_started
+  s4_status: not_started
+
+integration_relationships:
+  complements:
+    - code: "2.070"
+      title: OpenAPI/REST
+      reason: GraphQL is alternative/complement to REST for API design
+    - code: "2.071"
+      title: gRPC
+      reason: Both are alternatives to REST, different strengths
+  references: []
+  enables: []
+
+research_priorities:
+  - Schema portability across implementations
+  - Migration cost analysis (switching servers)
+  - Federation patterns (Apollo vs open standards)
+  - Lock-in assessment (proprietary extensions)
+  - GraphQL vs REST/gRPC comparison
+
+standards_body: GraphQL Foundation (Linux Foundation)
+specification_url: https://spec.graphql.org/
+maturity: production
+specification_version: October 2021 (living standard)
+
+key_findings_s1:
+  - GraphQL spec is highly portable (SDL 100%, queries 100%, resolvers 0%)
+  - Lock-in varies 15/100 (GraphQL Yoga) to 60-70/100 (Apollo Federation)
+  - Apollo Federation is major lock-in risk (proprietary directives, ELv2 license)
+  - Open Federation (MIT, 2023) is emerging alternative (20-30/100 lock-in)
+  - Database-first (Hasura, Postgraphile) trades portability for speed
+  - Performance varies 9× (Hasura vs Apollo Server)
+
+paused_reason: |
+  S1 completed successfully with clear findings on portability and lock-in.
+  Paused pending specific use case need for GraphQL research.
+
+  S1 findings sufficient for high-level understanding:
+  - GraphQL Yoga recommended for maximum portability (15/100 lock-in)
+  - Avoid Apollo Federation, prefer Open Federation
+  - SDL is 100% portable across implementations
+
+resume_triggers:
+  - Building GraphQL API and need implementation selection
+  - Evaluating Apollo Federation vs Open Federation
+  - Need detailed migration cost analysis between implementations
+  - Require S3 use case scenarios (multi-service, real-time, etc.)
+
+notes: |
+  This is a Tier 2 (Open Standards) experiment, so focus is on STANDARD
+  portability, not specific implementation selection. Server implementations
+  are Tier 1 concerns.
+
+  S1 COMPLETE (2.5 hours): Specification overview, 8 implementations surveyed,
+  synthesis with recommendations. Key finding: Apollo Federation creates
+  60-70/100 lock-in despite GraphQL spec being open (Open Federation is
+  the mitigation strategy).
+
+  S2-S4 DEFERRED: Backend compatibility testing, migration guides, use case
+  scenarios, strategic analysis can be completed when specific need arises.

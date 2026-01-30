@@ -1,0 +1,80 @@
+published: false
+---
+experiment_number: "3.062"
+experiment_sequence: 9
+experiment_date: "2025-10-11"
+experiment_status: complete
+discovery_method: detailed_toc
+migrated_from: "2.062"
+notes: "Web analytics - Complete with S0-S4 discovery, TOC, and EXPLAINER. Rediscovered with parallel MPSE_V2 methodology on 2025-10-11. Moved from 2.040 to 2.062 in Oct 2025 reorganization, then renumbered from 2.062 to 3.062 in October 2025 to create control-to-convenience spectrum (1.XXX DIY → 2.XXX Open Standards → 3.XXX Managed Services)"
+
+# Execution Statistics (Parallel S0-S4)
+execution_stats:
+  methodology: parallel
+  total_wall_time: "63 minutes"
+
+  S0_scoping:
+    manual: true
+    duration: "5m"
+
+  S1_rapid:
+    tool_uses: 31
+    tokens: 33600
+    duration: "5m 7s"
+
+  S2_comprehensive:
+    tool_uses: 39
+    tokens: 84600
+    duration: "20m 4s"
+
+  S3_need_driven:
+    tool_uses: 16
+    tokens: 99900
+    duration: "19m 0s"
+
+  S4_strategic:
+    tool_uses: 16
+    tokens: 140100
+    duration: "19m 24s"
+
+  totals:
+    tool_uses: 102
+    tokens: 358200
+    duration: "63m 35s"
+
+# Discovery Output
+deliverables:
+  - S0-EXPERIMENT-SCOPE.md
+  - 01-discovery/S1-rapid/ (17 files)
+  - 01-discovery/S2-comprehensive/ (16 files)
+  - 01-discovery/S3-need-driven/ (8 files)
+  - 01-discovery/S4-strategic/ (8 files)
+  - 01-discovery/DISCOVERY_TOC.md
+  - WEB_ANALYTICS_EXPLAINER.md (preserved from 2.040)
+  - Cross-experiment synthesis in /synthesis/2.06x-observability-analytics-synthesis.md
+
+total_files: 49
+providers_analyzed: 15
+
+# Key Findings
+key_insights:
+  - "Privacy-first analytics dominate modern landscape (GDPR compliance)"
+  - "Google Analytics 4 has hidden TCO of $2K-15K/year for EU businesses"
+  - "PostHog (free <1M events) replaces 4 separate tools at 86% cost savings"
+  - "Self-hosting break-even: >10M pageviews/month"
+  - "75% of providers face 50%+ acquisition risk within 3-5 years"
+
+convergence:
+  high:
+    - "Plausible/Fathom for privacy-first (95%+ confidence)"
+    - "PostHog free tier for SaaS (<1M events, 90% confidence)"
+    - "GoatCounter for open-source/content (96% confidence)"
+  moderate:
+    - "Enterprise choice varies: Piwik PRO (compliance) vs Matomo (features)"
+
+decision_frameworks:
+  - "Privacy vs features decision tree"
+  - "Quick decision guide by context (7 scenarios)"
+  - "Strategic vendor viability analysis (3-5 year outlook)"
+  - "Self-hosted vs managed break-even analysis"
+---

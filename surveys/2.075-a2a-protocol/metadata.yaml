@@ -1,0 +1,75 @@
+id: "2.075"
+title: "A2A (Agent2Agent Protocol)"
+tier: 2
+category: "AI Agent Communication Standards"
+status: "s1-complete"
+published: false
+governance: "Linux Foundation (A2A Project)"
+initiated_by: "Google"
+spec_version: "0.3"
+
+dates:
+  created: "2025-12-18"
+  s1_completed: "2025-12-18"
+
+summary: |
+  Open protocol for agent-to-agent communication, enabling AI agents from
+  different vendors to discover, negotiate, and collaborate. Complements MCP
+  (agent↔tool) with horizontal integration (agent↔agent).
+
+key_findings:
+  - "A2A = agent↔agent, MCP = agent↔tool (complementary, not competing)"
+  - "Task-based model with lifecycle (submitted→working→completed)"
+  - "Agent Cards for capability discovery (/.well-known/agent.json)"
+  - "JSON-RPC 2.0 over HTTP(S), with SSE streaming and webhook push"
+  - "150+ organizations adopted, Linux Foundation governance"
+  - "Python SDK: pip install a2a-sdk"
+
+core_concepts:
+  agent_cards: "JSON metadata describing agent capabilities, published at well-known URL"
+  tasks: "Stateful work units with lifecycle (submitted, working, completed, failed)"
+  messages: "Multi-turn conversations with role-based (user/agent) messages"
+  parts: "Modality-independent content (TextPart, FilePart, DataPart)"
+  artifacts: "Deliverables from completed tasks"
+
+protocol:
+  transport: "HTTP(S) with TLS 1.3+"
+  payload: "JSON-RPC 2.0"
+  streaming: "Server-Sent Events (SSE)"
+  push: "Webhook notifications"
+  bindings: ["JSON-RPC", "gRPC", "REST"]
+
+adoption:
+  github_stars: 21100
+  organizations: 150+
+  sdks: ["Python", "Go", "JavaScript", "Java", ".NET"]
+  major_adopters:
+    - "Google"
+    - "Atlassian"
+    - "Salesforce"
+    - "SAP"
+    - "LangChain"
+    - "ServiceNow"
+
+related_standards:
+  - id: "2.074"
+    name: "MCP"
+    relationship: "Complementary - MCP for tools, A2A for agents"
+  - id: "2.076"
+    name: "ACP"
+    relationship: "Alternative/complementary message infrastructure"
+  - id: "2.077"
+    name: "ANP"
+    relationship: "Broader scope - decentralized networks"
+
+sources:
+  - "https://a2a-protocol.org/latest/specification/"
+  - "https://github.com/a2aproject/A2A"
+  - "https://github.com/a2aproject/a2a-python"
+
+tags:
+  - "agent-communication"
+  - "interoperability"
+  - "linux-foundation"
+  - "json-rpc"
+  - "multi-agent"

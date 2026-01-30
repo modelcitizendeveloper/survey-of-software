@@ -1,0 +1,235 @@
+id: "3.074"
+title: "Production Scheduling (Commercial Kitchen)"
+category: "3.070-079 Food Service & Hospitality Operations"
+subcategory: "Production & Workflow Management"
+tier: 3
+status: "completed"
+published: false
+date_started: "2025-11-24"
+date_completed: "2025-11-24"
+
+research_trigger:
+  source: "operations_research_overlap"
+  context: "Commercial kitchen production scheduling - batch cooking, multi-product workflows, capacity constraints"
+  date_initiated: "2025-11-24"
+
+use_cases:
+  primary:
+    - "Bakery production scheduling (batch baking, oven capacity)"
+    - "Catering prep workflows (multi-day production planning)"
+    - "Meal prep services (weekly batch cooking)"
+    - "Commissary kitchens (shared equipment scheduling)"
+    - "Ghost kitchens (multi-brand production coordination)"
+  workflows:
+    - "Multi-day production planning (prep → cook → finish → pack)"
+    - "Equipment capacity optimization (ovens, mixers, refrigeration)"
+    - "Recipe scaling and ingredient availability"
+    - "Prep sequencing (what can be done in advance vs timed delivery)"
+    - "Multi-product scheduling (minimize makespan, optimize throughput)"
+
+research_stages:
+  s1_rapid:
+    status: "completed"
+    date_completed: "2025-11-24"
+    time_spent: "4 hours"
+    deliverables:
+      - "Platform landscape (14 platforms identified)"
+      - "Pricing tiers ($20/year to $50K+/year)"
+      - "Market segmentation (micro/small/medium/enterprise)"
+
+  s2_comprehensive:
+    status: "completed"
+    date_completed: "2025-11-24"
+    time_spent: "6 hours"
+    deliverables:
+      - "Feature matrix (6 platforms, 100+ features)"
+      - "Pricing TCO (per-user fees analysis)"
+      - "Integration ecosystem (accounting, POS, inventory gaps)"
+
+  s3_need_driven:
+    status: "completed"
+    date_completed: "2025-11-24"
+    time_spent: "6 hours"
+    deliverables:
+      - "Wholesale bakery use case (ROI: 3,333-4,508%)"
+      - "Catering company use case (ROI: 658-2,569%)"
+      - "Pattern recognition (production model determines platform)"
+
+  s4_strategic:
+    status: "completed"
+    date_completed: "2025-11-24"
+    time_spent: "2 hours"
+    deliverables:
+      - "Build vs buy analysis (break-even by operation size)"
+      - "Vendor viability (survival probability 60-98%)"
+      - "Lock-in risk analysis (data portability scores)"
+
+platforms_to_evaluate:
+  production_mrp:
+    - "Katana MRP (cloud manufacturing for small batch)"
+    - "MRPeasy (simple MRP for food production)"
+    - "Odoo Manufacturing (ERP module)"
+    - "ERPNext Manufacturing (open-source ERP)"
+
+  food_specific:
+    - "FoodDocs Production (HACCP + production planning)"
+    - "Crafty (production management for CPG food brands)"
+    - "FlexiBake (bakery-specific ERP)"
+    - "BatchMaster (process manufacturing for food/beverage)"
+
+  general_tools:
+    - "Spreadsheets (Excel/Google Sheets templates)"
+    - "Project management (ClickUp, Monday.com with manufacturing templates)"
+    - "Custom scheduling (constraint solvers - defer to 1.096)"
+
+key_questions:
+  - "SaaS MRP ($99-300/mo) vs ERP modules vs spreadsheets?"
+  - "Food-specific platforms vs general manufacturing MRP?"
+  - "Recipe integration (scaling, ingredient availability)?"
+  - "Equipment capacity modeling (ovens, mixers, holding capacity)?"
+  - "Multi-day production planning (prep sequencing)?"
+  - "Integration with inventory (3.070) and recipe management (3.071)?"
+  - "Real-time vs planning mode (adjust during production vs plan-ahead)?"
+
+key_findings:
+  s1:
+    - "14 platforms identified (CakeBoss $20/year → BatchMaster $50K+/year)"
+    - "Market segmentation: solo bakers → CPG startups → bakeries → enterprise food mfg"
+    - "70-80% of commercial kitchens still use spreadsheets (except wholesale bakeries)"
+
+  s2:
+    - "FlexiBake per-user pricing: $375/mo advertised → $1,035/mo reality (5 users) = 2.8× multiplier"
+    - "Katana unlimited users advantage: 23% cheaper than FlexiBake at 5 users despite higher base"
+    - "Equipment capacity optimization gap: No mid-market platform has advanced capacity modeling"
+    - "POS integration gap: FlexiBake/Katana don't integrate with Toast/Square (retail bakery pain)"
+
+  s3:
+    - "Production model determines platform: Make-to-stock → MRP, Make-to-order → Project mgmt"
+    - "Equipment optimization is primary ROI driver ($650K opportunity) not time savings ($12K)"
+    - "Event-driven businesses (catering) overpay 5× for manufacturing MRP (Katana $10K vs CaterZen $2K)"
+    - "Wholesale bakery ROI: 3,333-4,508% (FlexiBake $12K → $412K-557K value)"
+    - "Catering company ROI: 658-2,569% (CaterZen $2K → $27K-32K value)"
+
+  s4:
+    - "Break-even: <$2M SaaS wins, $2M-10M Odoo if have tech, $10M+ Odoo + custom modules, $20M+ pure custom"
+    - "Vendor survival: Established 95-98% (FlexiBake, BatchMaster), VC-backed 70-80% (Katana), niche 60-70% (CaterZen)"
+    - "Lock-in: High (FlexiBake $50K switching), Moderate (CaterZen $6K-12K), Low (Katana $3K-6K), Zero (Odoo)"
+    - "Open source (Odoo) 50-80% cheaper than SaaS IF have technical capacity (sysadmin + developer)"
+    - "FlexiBake acquisition risk 20-30% (5 years) → expect price +30-50%, support degradation"
+
+recommendations:
+  primary:
+    micro: "Craftybase ($240/year) or spreadsheets ($0)"
+    small_make_to_order: "CaterZen ($1.2K-3.6K/year) or ClickUp ($1.8K/year)"
+    small_make_to_stock: "Katana ($10K/year) or Odoo ($3K/year if have tech)"
+    medium_bakery: "FlexiBake ($12K/year) or Odoo ($3K/year if have tech)"
+    medium_general: "Katana ($10K/year) or Odoo ($3K/year if have tech)"
+    large: "Odoo + custom modules ($50K-80K/year) or BatchMaster ($60K+/year)"
+    enterprise: "Custom build ($150K+/year) or Odoo + heavy custom ($100K-150K/year)"
+
+  by_use_case:
+    wholesale_bakery: "FlexiBake Professional ($12,420/year) - bakery-specific, ROI 3,333-4,508%"
+    catering_company: "CaterZen ($1,188-3,588/year) - event-driven workflows, ROI 658-2,569%"
+    meal_prep_service: "Katana ($9,588/year) or MRPeasy ($1,788/year) - make-to-stock MRP"
+    retail_bakery: "BakeSmart ($1,188/year) - POS integration, small operations"
+    cpg_food_brand: "Katana ($9,588/year) or BatchMaster ($60K+/year if enterprise)"
+
+integration_points:
+  - tool: "3.070 Food Service Inventory"
+    integration: "Ingredient availability, recipe explosion"
+
+  - tool: "3.071 Recipe Management"
+    integration: "Recipe scaling, batch size calculations"
+
+  - tool: "3.005 POS Systems"
+    integration: "Order volume forecasting (catering orders)"
+
+  - tool: "1.096 Scheduling Libraries"
+    integration: "Custom constraint solvers (Tier 1 algorithmic approach)"
+
+  - tool: "1.120 Discrete Event Simulation"
+    integration: "Kitchen workflow simulation (capacity planning)"
+
+related_research:
+  algorithms:
+    - "1.096: Scheduling Libraries (constraint-based scheduling)"
+    - "1.120: Discrete Event Simulation (kitchen workflow modeling)"
+    - "1.022: Optimization (linear programming for production)"
+
+  managed_services:
+    - "3.070: Food Service Inventory (ingredient availability)"
+    - "3.071: Recipe Management (batch scaling)"
+    - "3.502: ERP Platforms (manufacturing modules)"
+
+scope:
+  domain: "Commercial Kitchen Production Scheduling"
+  definition: "Planning and optimizing batch cooking, prep workflows, and equipment usage in food production environments"
+
+  includes:
+    - "Batch production planning (what to make when)"
+    - "Equipment capacity constraints (ovens, mixers, refrigeration)"
+    - "Multi-day production workflows (prep → cook → finish)"
+    - "Recipe scaling and ingredient dependencies"
+    - "Prep sequencing (parallel vs sequential tasks)"
+    - "Production to order vs production to inventory"
+
+  excludes:
+    - "Real-time kitchen order management (covered in 3.005 POS - KDS)"
+    - "Staff scheduling (covered in 3.075 Labor Scheduling)"
+    - "Inventory management (covered in 3.070)"
+    - "Recipe creation/management (covered in 3.071)"
+    - "Custom algorithmic approaches (deferred to 1.096 Scheduling Libraries)"
+
+business_context:
+  pain_points:
+    - "Manual spreadsheet planning (error-prone, time-consuming)"
+    - "Equipment bottlenecks (oven is free but mixer is busy)"
+    - "Wasted prep time (made items that couldn't be finished)"
+    - "Ingredient shortages discovered mid-production"
+    - "Inefficient sequencing (cold items waiting while oven items cook)"
+    - "No visibility into production timeline (when will order be ready?)"
+
+  value_proposition:
+    - "Reduce production time 15-30% (better sequencing)"
+    - "Increase equipment utilization 20-40% (optimize capacity)"
+    - "Reduce ingredient waste 10-20% (better planning)"
+    - "Improve delivery reliability (accurate production estimates)"
+    - "Scale production without proportional labor increase"
+
+target_personas:
+  - "Bakery owners (wedding cakes, wholesale bread)"
+  - "Catering companies (event prep, multi-day planning)"
+  - "Meal prep services (weekly batch cooking)"
+  - "Commissary kitchen operators (shared equipment)"
+  - "Ghost kitchen operators (multi-brand coordination)"
+  - "CPG food brands (packaged food production)"
+
+market_context:
+  market_size: "Subset of food service operations ($1.2T US food service industry)"
+  addressable_segment: "Batch production operations (bakeries, catering, meal prep)"
+  adoption_barriers:
+    - "Spreadsheets 'good enough' for small operations"
+    - "Learning curve for MRP systems"
+    - "Integration complexity (inventory, recipes, orders)"
+    - "Cost sensitivity ($100-300/mo for small bakery)"
+
+notes: |
+  This research focuses on COMMERCIAL production scheduling platforms (Tier 3 SaaS).
+
+  Algorithmic approaches (constraint solvers, simulation) deferred to:
+  - 1.096 Scheduling Libraries (OR-Tools, PuLP, constraint programming)
+  - 1.120 Discrete Event Simulation (SimPy for kitchen workflow)
+
+  Research maintains "hardware store" approach:
+  - Generic commercial kitchen use cases
+  - Platform comparison across bakery, catering, meal prep
+  - No personal examples (Thanksgiving baking = out of scope)
+
+  Open source (Odoo, ERPNext) included in platform landscape but NOT primary focus.
+  Open source viability analysis deferred to 1.xxx algorithmic research.
+
+  Integration overlap:
+  - Heavy overlap with 3.070 inventory (ingredient availability)
+  - Heavy overlap with 3.071 recipes (scaling, batch sizes)
+  - Some overlap with 3.075 labor (production crew scheduling)
+  - Connection to 1.096 scheduling libraries (custom builds)

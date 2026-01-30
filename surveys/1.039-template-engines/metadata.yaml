@@ -1,0 +1,170 @@
+id: "1.039"
+title: "Template Engines"
+subtitle: "Jinja2, Handlebars, React JSX, Mustache, Twig, EJS"
+tier: 1
+category: "Web Development"
+cluster: "frontend"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://jinja.palletsprojects.com/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Jinja2 - Python template engine"
+
+    - url: https://github.com/pallets/jinja
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Jinja2 GitHub repository"
+
+    - url: https://pypi.org/project/Jinja2/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "Jinja2 on PyPI"
+
+    - url: https://handlebarsjs.com/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Handlebars.js template engine"
+
+    - url: https://github.com/handlebars-lang/handlebars.js
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Handlebars.js GitHub repository"
+
+    - url: https://www.npmjs.com/package/handlebars
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "Handlebars on npm"
+
+    - url: https://react.dev/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "React - Component-based UI library"
+
+    - url: https://github.com/facebook/react
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "React GitHub repository"
+
+    - url: https://mustache.github.io/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Mustache - Logic-less templates"
+
+    - url: https://github.com/mustache/mustache
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Mustache specification repository"
+
+    - url: https://twig.symfony.com/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Twig - PHP template engine"
+
+    - url: https://github.com/twigphp/Twig
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Twig GitHub repository"
+
+    - url: https://ejs.co/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "EJS - Embedded JavaScript templates"
+
+    - url: https://github.com/mde/ejs
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "EJS GitHub repository"
+
+    - url: https://www.npmjs.com/package/ejs
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "EJS on npm"
+
+  secondary:
+    - url: https://vuejs.org/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Vue.js - Progressive framework"
+
+    - url: https://github.com/vuejs/core
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Vue.js GitHub repository"
+
+tags:
+  - template-engines
+  - web-development
+  - jinja2
+  - handlebars
+  - react
+  - server-side-rendering
+
+libraries_evaluated:
+  - name: "Jinja2"
+    recommendation: "primary-python"
+    stars: 9500
+    license: "BSD-3-Clause"
+    language: "Python"
+
+  - name: "Handlebars.js"
+    recommendation: "javascript"
+    stars: 17000
+    license: "MIT"
+    language: "JavaScript"
+
+  - name: "React JSX"
+    recommendation: "spa"
+    stars: 220000
+    license: "MIT"
+    language: "JavaScript"
+
+  - name: "Mustache"
+    recommendation: "logic-less"
+    stars: 16000
+    license: "MIT"
+    language: "Multi-language"
+
+  - name: "Twig"
+    recommendation: "php"
+    stars: 8000
+    license: "BSD-3-Clause"
+    language: "PHP"
+
+  - name: "EJS"
+    recommendation: "nodejs"
+    stars: 7500
+    license: "Apache-2.0"
+    language: "JavaScript"
+
+key_findings:
+  - "Jinja2 industry standard for Python web applications"
+  - "React JSX dominates modern SPAs"
+  - "Handlebars reliable for server-side templates"
+  - "Mustache best for language-agnostic simple templates"
+  - "Security: Auto-escaping critical for XSS prevention"
+
+related_research:
+  - "1.110"  # Frontend frameworks
+  - "1.100"  # Text processing
+
+cross_references:
+  use_cases:
+    - server-side-rendering
+    - email-templates
+    - static-site-generation
+    - web-applications

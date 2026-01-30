@@ -1,0 +1,372 @@
+published: false
+# 3.200: LLM APIs - Experiment Metadata
+
+experiment:
+  id: "3.200"
+  title: "LLM APIs"
+  category: "AI & Advanced Capabilities"
+  tier: 3
+  status: "complete"
+  started: "2025-11-05"
+  completed: "2025-11-05"
+  discovery_method: "detailed_toc"
+
+trigger:
+  source: "Tier 3 Roadmap Priority"
+  date: "2025-11-05"
+  description: "Priority 3: Round Out Tier 1 & Tier 3 (after completing Tier 2 open standards roadmap)"
+  validation: "Foundational managed service category - every AI product needs LLM API selection"
+  related_research: "1.XXX algorithm experiments may use LLM APIs for AI-powered features"
+
+scope:
+  domain: "LLM APIs (Large Language Model APIs)"
+  definition: "Commercial AI model inference services providing access to frontier language models via API"
+  includes:
+    - "Frontier model APIs (GPT-4, Claude, Gemini)"
+    - "Mid-range model APIs (GPT-4 Turbo, Claude Sonnet, Gemini Flash)"
+    - "Fast/cheap model APIs (GPT-3.5, Claude Haiku)"
+    - "Open-source model hosting (Llama via Groq, Together AI, Replicate)"
+    - "Embeddings APIs (semantic search, RAG)"
+    - "Function calling / tool use"
+    - "Multimodal APIs (vision, audio, video)"
+    - "Fine-tuning services"
+  excludes:
+    - "Self-hosted models without API (see Tier 1 DIY)"
+    - "Model training platforms (not inference)"
+    - "ML platforms (SageMaker, Vertex AI full suite)"
+    - "Specialized AI APIs (speech-to-text, image recognition only)"
+
+providers:
+  tier_1_frontier:
+    - name: "OpenAI"
+      research_depth: "full"
+      line_count: 326
+      rationale: "Market leader (60-70% share), GPT-4 frontier model, ecosystem maturity"
+    - name: "Anthropic"
+      research_depth: "full"
+      line_count: 332
+      rationale: "Claude 3.5 Sonnet best reasoning, 200K context, prompt caching"
+    - name: "Google"
+      research_depth: "full"
+      line_count: 336
+      rationale: "Gemini 1.5 Pro cost leader, 2M context, native video support"
+
+  tier_2_alternative_commercial:
+    - name: "Mistral AI"
+      research_depth: "full"
+      line_count: 317
+      rationale: "European sovereignty, open-source (Apache 2.0), multilingual"
+    - name: "Cohere"
+      research_depth: "full"
+      line_count: 374
+      rationale: "RAG specialization, best embeddings (MTEB leader), reranking"
+
+  tier_3_open_source:
+    - name: "Meta Llama"
+      research_depth: "full"
+      line_count: 436
+      rationale: "Llama 3.1 405B/70B/8B via Groq/Together AI, cost leadership, speed (10-20×)"
+
+research_questions:
+  primary:
+    - "Which LLM API provides best combination of capabilities, cost, reliability, strategic positioning?"
+    - "What is the cost range across providers? (min/max, use case TCO)"
+    - "Which provider for which use case? (support, content, code, analysis)"
+    - "What is lock-in risk? (API compatibility, switching costs)"
+    - "When to self-host vs use managed API?"
+
+  secondary:
+    - "How do context window costs scale? (8K → 128K → 1M tokens)"
+    - "What are multi-provider strategies? (primary + fallback, tiered by complexity)"
+    - "Which providers have best embeddings/RAG support?"
+    - "What is provider viability? (funding, runway, 10-year outlook)"
+    - "How to mitigate vendor lock-in? (abstraction layers, standards)"
+
+mpse_stages:
+  s1_rapid:
+    status: "completed"
+    completed_date: "2025-11-05"
+    goal: "Provider overviews, 6 providers (OpenAI, Anthropic, Google, Mistral, Cohere, Llama)"
+    providers: 6
+    time_actual: "2-3 hours"
+    deliverables:
+      - "approach.md"
+      - "provider-openai.md (326 lines, full depth)"
+      - "provider-anthropic.md (332 lines, full depth)"
+      - "provider-google.md (336 lines, full depth)"
+      - "provider-mistral.md (317 lines, full depth)"
+      - "provider-cohere.md (374 lines, full depth)"
+      - "provider-meta-llama.md (436 lines, full depth)"
+      - "recommendations.md (synthesis)"
+    total_lines: ~2600
+
+  s2_comprehensive:
+    status: "completed"
+    completed_date: "2025-11-05"
+    goal: "Feature matrix, pricing TCO, performance benchmarks, integration complexity, enterprise features"
+    time_actual: "1 day"
+    deliverables:
+      - "approach.md (458 lines)"
+      - "feature-matrix.md (667 lines, 55 features × 6 providers = 330 data points)"
+      - "pricing-tco.md (787 lines, 6 use case scenarios with 3-year/5-year TCO)"
+      - "performance-benchmarks.md (973 lines, MMLU/HumanEval/Chatbot Arena, speed, reliability)"
+      - "integration-complexity.md (700+ lines, SDK maturity, migration effort, lock-in)"
+      - "enterprise-features.md (901 lines, compliance, SLAs, data residency, support)"
+      - "synthesis.md (1,115 lines, cross-cutting insights, provider archetypes, decision matrices)"
+    total_lines: ~6600
+
+  s3_need_driven:
+    status: "completed"
+    completed_date: "2025-11-05"
+    goal: "6 use case scenarios with decision trees, architecture patterns, migration playbooks"
+    scenarios: 6
+    time_actual: "1 day"
+    deliverables:
+      - "approach.md (436 lines)"
+      - "customer-support-chatbot.md (1,209 lines, Claude cached + Groq fallback, $1,538/3-yr)"
+      - "document-analysis.md (1,254 lines, Claude cached, $848/3-yr, 34% caching savings)"
+      - "code-generation.md (580 lines, Codestral + Claude fallback, $5,450/3-yr)"
+      - "content-generation.md (595 lines, Gemini Flash, $372/3-yr, 98% vs OpenAI)"
+      - "rag-system.md (612 lines, Cohere complete stack, $4,860/3-yr, reranking = 56% cost)"
+      - "video-analysis.md (585 lines, Gemini Pro only option, $62,505/3-yr, Google monopoly)"
+      - "synthesis.md (707 lines, cross-scenario insights, provider suitability matrix)"
+    total_lines: ~8300
+
+  s4_strategic:
+    status: "completed"
+    completed_date: "2025-11-05"
+    goal: "Vendor viability, lock-in mitigation, API standardization, 5-10 year AI trajectory"
+    time_actual: "1 day"
+    deliverables:
+      - "approach.md (421 lines, S4 methodology, strategic analysis framework)"
+      - "vendor-viability.md (858 lines, 5-year & 10-year survival probability for 6 providers)"
+      - "lock-in-mitigation.md (1,085 lines, 4-level mitigation framework, migration playbooks)"
+      - "api-compatibility.md (802 lines, OpenAI format standardization, 2025-2030 trends)"
+      - "ai-trajectory.md (721 lines, 6 trends: quality convergence, pricing deflation, AGI impact)"
+      - "synthesis.md (715 lines, strategic decision frameworks, time horizon planning)"
+    total_lines: ~4700
+
+integration_relationships:
+  upstream:
+    - experiment: "1.XXX"
+      title: "Algorithm Experiments"
+      relationship: "Algorithm experiments may embed LLM APIs for AI-powered features (e.g., NLP, code generation)"
+
+  downstream:
+    - experiment: "3.201"
+      title: "Vector Databases (proposed)"
+      relationship: "LLM embeddings (from 3.200) stored in vector databases for RAG systems"
+
+  parallel:
+    - experiment: "3.044"
+      title: "Data Warehouses (proposed)"
+      relationship: "LLMs may query data warehouses for data-driven insights (e.g., SQL generation)"
+
+key_findings:
+  s1_discoveries:
+    google_cost_leader:
+      finding: "Gemini 1.5 Flash is 7-20× cheaper than equivalent models ($0.0375/M vs $0.25-0.50/M)"
+      evidence: "Flash: $0.0375/M (in) vs Claude Haiku $0.25/M vs GPT-3.5 $0.50/M"
+      market_impact: "Budget-critical use cases (high volume) favor Google Gemini"
+
+    claude_prompt_caching:
+      finding: "Claude's prompt caching delivers 90% cost reduction on repeated prompts (5-min cache)"
+      evidence: "Standard: $3/M (in), Cached: $0.30/M (in) - 10× cheaper"
+      market_impact: "Document analysis, RAG systems with high context reuse favor Claude"
+
+    price_variance_120x:
+      finding: "120× price difference between cheapest (Llama 3.1 8B via Groq $0.05/M) and most expensive (GPT-4 $30/M + $60/M output)"
+      implication: "Provider selection dramatically impacts TCO for high-volume use cases"
+
+    context_not_cost_proportional:
+      finding: "Longer context windows don't always cost more: Gemini 1M context ($7/M) cheaper per token than GPT-4 128K ($30/M)"
+      evidence: "Gemini: $0.007 per 1K, GPT-4: $0.030 per 1K (4.3× more expensive)"
+      recommendation: "Use Gemini for huge context (1M), Claude for 200K, GPT-4 only if ecosystem required"
+
+    groq_speed_champion:
+      finding: "Groq achieves 10-20× faster inference (700-1,000 tokens/sec) vs typical APIs (50-100 tokens/sec)"
+      evidence: "Llama 3.1 via Groq: 700+ tokens/sec, cost: $0.05-0.08/M (cheaper than GPT-3.5)"
+      implication: "Low-latency applications (real-time chat, streaming) favor Llama + Groq"
+
+    no_universal_winner:
+      finding: "Provider ranking changes by use case - no single 'best' provider"
+      evidence: "Reasoning: Claude > GPT-4 Turbo; Speed: Groq > all; Cost: Gemini > others; Context: Gemini (1M) > Claude (200K) > GPT-4 (128K)"
+      recommendation: "Evaluate providers per use case, not universally"
+
+    lock_in_high:
+      finding: "No W3C/IETF/CNCF standard for LLM APIs - each provider has proprietary format"
+      evidence: "Migration cost: 20-80 hours engineering; abstraction layer adds 10% overhead"
+      recommendation: "Architectural decision early: lock-in vs abstraction cost trade-off"
+
+  provider_comparison:
+    openai_market_leader:
+      - "Market share: 60-70% (first mover advantage)"
+      - "Ecosystem: Most mature (SDKs, tutorials, community)"
+      - "Cost: Premium ($0.50-$30/M input)"
+      - "10-year survival: 90-95% (Microsoft backing)"
+
+    anthropic_reasoning_leader:
+      - "Claude 3.5 Sonnet: Best reasoning quality at mid-tier cost ($3/M input)"
+      - "Context: 200K tokens (vs GPT-4 128K)"
+      - "Prompt caching: 90% cost reduction (unique differentiator)"
+      - "10-year survival: 85-90% (Google + Amazon backing)"
+
+    google_cost_leader:
+      - "Gemini 1.5 Flash: Cheapest frontier-adjacent model ($0.0375/M input, 7-20× cheaper)"
+      - "Context: 1M-2M tokens (longest available)"
+      - "Multimodal: Native video support (unique capability)"
+      - "10-year survival: 95%+ (public company, cloud integration)"
+
+    mistral_sovereignty_leader:
+      - "European sovereignty: GDPR-native, no US data transfer"
+      - "Open-source: Apache 2.0 models (Mistral 7B, Mixtral 8x7B)"
+      - "Cost: Mid-range ($0.10-$2/M input)"
+      - "10-year survival: 70-80% (EU champion, $640M raised)"
+
+    cohere_rag_leader:
+      - "Embeddings: MTEB leaderboard leader (best semantic search)"
+      - "Reranking: Integrated reranking API (unique)"
+      - "RAG: End-to-end RAG stack (Embed + Rerank + Command)"
+      - "10-year survival: 65-75% (enterprise focus, $445M raised)"
+
+    llama_cost_speed_leader:
+      - "Cost: Cheapest option (Llama 3.1 8B via Groq $0.05/M, 10-20× cheaper than GPT-3.5)"
+      - "Speed: Groq hardware delivers 10-20× faster inference (700-1,000 tokens/sec)"
+      - "Open-source: Apache 2.0, deploy anywhere (on-prem, private cloud)"
+      - "10-year survival: 95%+ (Meta commitment to open AI)"
+
+  use_case_recommendations:
+    customer_support_chatbot:
+      winner: "Gemini 1.5 Flash"
+      cost: "$18.75/month (10K conversations, 2K tokens each)"
+      alternative: "Claude 3.5 Sonnet ($180/month for best quality)"
+      savings: "90% cost savings (Flash vs Sonnet)"
+
+    document_analysis:
+      winner: "Claude 3.5 Sonnet"
+      cost: "$27/month (100 documents, 50K tokens each)"
+      rationale: "200K context + best reasoning + cheapest frontier"
+      alternative: "GPT-4 Turbo ($70/month, 2.6× more expensive)"
+
+    code_generation:
+      winner: "Codestral (Mistral)"
+      cost: "$6/month (50 devs, 10 requests/day)"
+      alternative: "Claude 3.5 Sonnet ($270/month for best quality)"
+      savings: "98% cost savings (Codestral vs Claude)"
+
+    content_generation:
+      winner: "Gemini 1.5 Flash"
+      cost: "$2.72/month (500 articles, 4K tokens each)"
+      alternative: "Claude 3 Haiku ($2.82/month, best quality at low tier)"
+      rationale: "High volume, simple task = cheapest model wins"
+
+    rag_system:
+      winner: "Cohere"
+      cost: "$50-100/month (end-to-end RAG stack)"
+      rationale: "Best embeddings (MTEB leader) + integrated reranking"
+      alternative: "Llama 3.1 + local embeddings ($5-20/month, DIY)"
+
+    video_analysis:
+      winner: "Gemini 1.5 Pro"
+      cost: "$28/month (100 videos, 10 min each)"
+      rationale: "Only provider with native video support"
+      alternative: "GPT-4 Vision ($40/month, frame extraction workflow)"
+
+  multi_provider_strategies:
+    primary_fallback:
+      setup: "Claude 3.5 Sonnet (primary) + Gemini 1.5 Flash (fallback)"
+      cost: "+5-10% for abstraction layer (LangChain/LlamaIndex)"
+      benefit: "99.9%+ uptime (provider outages mitigated)"
+      use_when: "Availability-critical applications"
+
+    tiered_by_complexity:
+      setup: "Gemini Flash (simple) + Claude Sonnet (complex) + GPT-4 (expert)"
+      cost_savings: "50-70% vs using GPT-4 for everything"
+      complexity: "Requires routing logic (classifier)"
+      use_when: "Mixed workload (simple + complex tasks)"
+
+    best_of_n:
+      setup: "Send prompt to 3 providers, choose best response"
+      cost: "3× higher (OpenAI + Anthropic + Google)"
+      benefit: "Highest quality, mitigate hallucinations"
+      use_when: "Quality-critical, low volume (<100K tokens/month)"
+
+    hybrid_local_cloud:
+      setup: "Llama 3.1 70B (local, 90% traffic) + Claude Sonnet (cloud, complex 10%)"
+      cost_savings: "80-90% vs cloud-only"
+      complexity: "High (infrastructure + routing)"
+      breakeven: "50M tokens/month (local infra cost < API cost)"
+
+success_criteria:
+  s1_complete: "✅ 6 provider profiles exist (2,121 lines), recommendations synthesis complete"
+  s2_complete: "Feature matrix (50+ features), pricing/TCO (6 use cases), performance benchmarks, integration complexity complete"
+  s3_complete: "6 use case scenarios with provider matching, catalog application methodology documented"
+  s4_complete: "Vendor viability, lock-in mitigation, API compatibility, AI trajectory (5-year outlook) complete"
+  full_complete: "Decision-maker can match use case + budget to provider shortlist using catalog research"
+
+business_value:
+  market_size: "Every AI product needs LLM API selection (universal service)"
+  decision_frequency: "Initial selection (year 0), re-evaluate yearly (pricing changes, new models)"
+  annual_spend: "$100-$100K+ depending on volume (100K → 1B tokens/month)"
+  critical_finding: "Provider selection can yield 90-98% cost savings (Gemini Flash vs GPT-4) for high-volume use cases"
+
+  hardware_store_application:
+    catalog: "6 provider profiles + feature matrix + use case mapping = generic hardware store catalog (this research)"
+    application: "Client context (use case, volume, budget, privacy) → provider shortlist (separate consulting engagement)"
+    value: "Catalog is timeless; application is context-specific"
+
+timeline:
+  s1_rapid: "Nov 5, 2025 (2-3 hours - completed)"
+  s2_comprehensive: "Nov 5, 2025 (1 day - completed)"
+  s3_need_driven: "Nov 5, 2025 (1 day - completed)"
+  s4_strategic: "Nov 5, 2025 (1 day - completed)"
+  total_time_actual: "1 day (all stages completed Nov 5, 2025)"
+
+notes:
+  - "No Tier 2 open standard exists (unlike databases/storage) - lock-in risk is HIGH"
+  - "Google Gemini 1.5 Flash is cost leader (7-20× cheaper than competitors) - budget-critical use cases favor Google"
+  - "Claude prompt caching (90% cost reduction) is game-changer for high-context, repeated-prompt use cases"
+  - "Llama 3.1 via Groq is speed champion (10-20× faster) - low-latency applications favor Groq"
+  - "Provider ranking changes by use case - no universal winner (evaluate per use case)"
+  - "Research follows hardware store principle: generic catalog content, no client-specific recommendations"
+  - "Multi-provider strategy recommended for critical applications (primary + fallback = 99.9%+ uptime)"
+
+created: "2025-11-05"
+updated: "2025-11-05"
+version: "1.0"
+
+completion_summary:
+  overall_status: "COMPLETE"
+  completion_date: "2025-11-05"
+  total_documents: 35
+  total_lines: ~23000
+  research_output: "~900 KB strategic intelligence"
+
+  document_breakdown:
+    domain_explainer: "1 file (business-focused LLM API concepts)"
+    s1_rapid: "8 files (~2,600 lines - 6 provider profiles + recommendations)"
+    s2_comprehensive: "7 files (~6,600 lines - feature matrix, TCO, benchmarks, integration, enterprise, synthesis)"
+    s3_need_driven: "8 files (~8,300 lines - 6 use case scenarios + synthesis)"
+    s4_strategic: "6 files (~4,700 lines - vendor viability, lock-in, API compatibility, AI trajectory, synthesis)"
+    metadata: "1 file (comprehensive tracking)"
+
+  key_deliverables:
+    provider_profiles: "6 (OpenAI, Anthropic, Google, Mistral, Cohere, Meta Llama - all full depth)"
+    feature_comparison: "55 features across 6 providers (330 data points)"
+    pricing_analysis: "6 use case TCO models (3-year and 5-year projections)"
+    use_case_scenarios: "6 scenarios with decision trees and architecture patterns"
+    strategic_frameworks: "Vendor viability (5-10 year), lock-in mitigation (4 levels), AI trajectory (2025-2030)"
+
+  critical_findings:
+    price_variance_1200x: "Llama 3.1 8B $0.05/M → GPT-4 $60/M output (1,200× spread)"
+    google_triple_advantage: "Gemini cheapest (7-20×) + longest context (1M-2M) + only paid-tier SLA (99.5%)"
+    anthropic_caching_moat: "Prompt caching delivers 34-78% cost savings (unique feature creates lock-in)"
+    groq_speed_breakthrough: "10-20× faster inference (850 TPS) at frontier-adjacent quality"
+    no_universal_winner: "Provider ranking changes by use case (customer support ≠ code generation ≠ video analysis)"
+    specialization_wins: "Code-specific (Codestral) and RAG-specific (Cohere) beat general models"
+    multi_provider_savings: "50-98% cost reduction vs. defaulting to single premium provider"
+    lock_in_severity_varies: "5× range (Llama 1/5 → Cohere 4/5), migration effort 5-100 hours"
+    ai_trajectory_commoditization: "50% probability quality convergence (92-94% MMLU) and multimodal standardization by 2028"
+    vendor_viability_spread: "90-95% 10-year survival (Google, Meta Llama) vs. 65-75% (Cohere)"
+
+  research_status: "COMPLETE - Ready for client application (billable consulting when engaged)"

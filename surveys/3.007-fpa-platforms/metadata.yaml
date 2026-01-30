@@ -1,0 +1,360 @@
+published: false
+# 3.007: FP&A Platforms - Experiment Metadata
+
+experiment:
+  id: "3.007"
+  title: "FP&A Platforms"
+  category: "Business Platforms"
+  tier: 3
+  status: "complete"
+  started: "2025-11-01"
+  completed: "2025-11-01"
+  updated: "2025-11-13"
+  discovery_method: "detailed_toc"
+  update_notes: "Nov 13, 2025: Added Una, Pigment, Datarails (full depth). Expanded from 9 to 12 platforms. Client request for decision analysis."
+
+trigger:
+  source: "CFO Forum Post Analysis"
+  date: "2025-10-31"
+  description: "Runway vs Planful decision (Planful lost due to no Rippling HRIS integration)"
+  validation: "Real market need, integration quality as decision driver"
+  related_research: "3.503 HRIS/HCM (HRIS provides data to FP&A platforms)"
+
+scope:
+  domain: "FP&A (Financial Planning & Analysis)"
+  definition: "Strategic finance platforms for budgeting, forecasting, workforce planning, scenario modeling, and financial consolidation"
+  includes:
+    - "Financial modeling and planning"
+    - "Cash flow forecasting and runway tracking"
+    - "Headcount planning and workforce modeling"
+    - "Departmental budgeting and approval workflows"
+    - "Revenue and expense forecasting"
+    - "Scenario planning (optimistic/base/pessimistic)"
+    - "Financial consolidation (multi-entity, multi-currency)"
+    - "Reporting and dashboards"
+  excludes:
+    - "Cash flow tools only (see 3.004 Cash Flow Management)"
+    - "Accounting software (see 3.006 Accounting Software)"
+    - "Pure budgeting tools without forecasting"
+    - "Spreadsheet templates without platform"
+
+platforms:
+  tier_1_startup:
+    - name: "Runway"
+      research_depth: "full"
+      line_count: 563
+      rationale: "Forum post decision platform (won deal)"
+    - name: "Causal"
+      research_depth: "reduced"
+      line_count: 315
+      rationale: "Tier 1 alternative, data warehouse focus"
+    - name: "Una"
+      research_depth: "full"
+      line_count: 865
+      rationale: "Revenue-centered FP&A, early-stage (founded 2023), ADDED Nov 13, 2025"
+      added: "2025-11-13"
+
+  tier_2_mid_market:
+    - name: "Cube"
+      research_depth: "full"
+      line_count: 990
+      rationale: "Spreadsheet-native mid-market platform (Excel/Sheets), Added Nov 5, 2025"
+    - name: "Vena"
+      research_depth: "reduced"
+      line_count: 370
+      rationale: "Excel-based alternative"
+    - name: "Prophix"
+      research_depth: "reduced"
+      line_count: 387
+      rationale: "Automation-focused alternative"
+    - name: "Adaptive Insights"
+      research_depth: "reduced"
+      line_count: 419
+      rationale: "Workday ecosystem platform"
+    - name: "Datarails"
+      research_depth: "full"
+      line_count: 976
+      rationale: "Excel-native, 200+ integrations, FP&A Genius AI, ADDED Nov 13, 2025"
+      added: "2025-11-13"
+
+  tier_3_enterprise:
+    - name: "Planful"
+      research_depth: "full"
+      line_count: 577
+      rationale: "Forum post decision platform (lost deal due to no Rippling integration)"
+    - name: "Anaplan"
+      research_depth: "reduced"
+      line_count: 410
+      rationale: "Enterprise connected planning"
+    - name: "OneStream"
+      research_depth: "reduced"
+      line_count: 462
+      rationale: "Unified CPM, recent IPO"
+    - name: "Pigment"
+      research_depth: "full"
+      line_count: 835
+      rationale: "AI-powered enterprise FP&A, unicorn $1B valuation, ADDED Nov 13, 2025"
+      added: "2025-11-13"
+
+research_questions:
+  primary:
+    - "When to use FP&A platform vs cash flow tools (3.004)?"
+    - "How does HRIS integration quality affect platform selection?"
+    - "What are employee count graduation triggers (Tier 1 → 2 → 3)?"
+    - "Build vs buy decision framework for FP&A?"
+    - "Which platforms integrate with which HRIS/ERP systems?"
+
+  secondary:
+    - "AI capabilities maturity (Ambient Intelligence, Plan Assistant, AI Agents)"
+    - "Data warehouse integration trends (Snowflake, BigQuery native)"
+    - "Implementation complexity vs time-to-value trade-offs"
+    - "Pricing transparency and TCO analysis"
+    - "Vendor viability and acquisition risk (5-year outlook)"
+
+mpse_stages:
+  s1_rapid:
+    status: "completed"
+    completed_date: "2025-11-01"
+    updated_date: "2025-11-13"
+    goal: "Platform overviews, 12 platforms (Cube Nov 5, Una/Pigment/Datarails Nov 13)"
+    platforms: 12
+    time_actual: "1 day (initial), +4 hours (Nov 13 update)"
+    deliverables:
+      - "approach.md"
+      - "runway.md (563 lines, full depth)"
+      - "planful.md (577 lines, full depth)"
+      - "cube.md (990 lines, full depth - ADDED Nov 5, 2025)"
+      - "una.md (865 lines, full depth - ADDED Nov 13, 2025)"
+      - "datarails.md (976 lines, full depth - ADDED Nov 13, 2025)"
+      - "pigment.md (835 lines, full depth - ADDED Nov 13, 2025)"
+      - "causal.md (315 lines, reduced)"
+      - "vena.md (370 lines, reduced)"
+      - "prophix.md (387 lines, reduced)"
+      - "adaptive-insights.md (419 lines, reduced)"
+      - "anaplan.md (410 lines, reduced)"
+      - "onestream.md (462 lines, reduced)"
+      - "recommendations.md (synthesis - needs update for 3 new platforms)"
+    total_lines: ~7176 (original 4500 + 2676 new lines Nov 13)
+
+  s2_comprehensive:
+    status: "completed"
+    completed_date: "2025-11-01"
+    goal: "Feature matrix, pricing, integrations, AI capabilities"
+    time_actual: "1 day"
+    deliverables:
+      - "approach.md"
+      - "feature-matrix.md (550+ lines, 82 features across 9 platforms - Cube added Nov 5)"
+      - "integrations-deep-dive.md (544 lines, HRIS/ERP/data warehouse matrices)"
+      - "pricing-tco.md (708 lines, 3-year/5-year TCO scenarios)"
+      - "implementation-complexity.md (605 lines, timeline/training/risk analysis)"
+      - "ai-capabilities-coverage.md (578 lines, AI maturity + Path A/B/C)"
+      - "synthesis.md (526 lines, cross-cutting insights)"
+    total_lines: ~3400
+
+  s3_need_driven:
+    status: "completed"
+    completed_date: "2025-11-01"
+    goal: "5 business scenarios (generic, not client-specific)"
+    scenarios: 5
+    time_actual: "1 day"
+    deliverables:
+      - "approach.md"
+      - "tech-startup-50-employees.md (449 lines, Rippling integration requirement)"
+      - "saas-scaleup-200-employees.md (578 lines, Snowflake data warehouse focus)"
+      - "manufacturing-500-employees.md (562 lines, NetSuite multi-entity consolidation)"
+      - "enterprise-migration-2000-employees.md (596 lines, Oracle migration cost reduction)"
+      - "pe-portfolio-consolidation.md (600 lines, 10-entity sub-consolidation)"
+      - "synthesis.md (652 lines, catalog application methodology)"
+    total_lines: ~3600
+
+  s4_strategic:
+    status: "completed"
+    completed_date: "2025-11-01"
+    goal: "Frameworks, vendor viability, 5-year AI outlook"
+    time_actual: "1 day"
+    deliverables:
+      - "approach.md"
+      - "graduation-frameworks.md (617 lines, Excel → Tier 1 → 2 → 3 triggers)"
+      - "build-vs-buy.md (589 lines, DIY vs platform economics, breakeven analysis)"
+      - "vendor-viability.md (848 lines, acquisition predictions + 5-year AI evolution)"
+      - "integration-ecosystem.md (606 lines, HRIS/ERP partnerships, data warehouse trends)"
+      - "synthesis.md (510 lines, strategic decision frameworks)"
+    total_lines: ~3200
+
+integration_relationships:
+  upstream:
+    - experiment: "3.006"
+      title: "Accounting Software"
+      relationship: "FP&A platforms pull actuals from accounting systems (QuickBooks, NetSuite, Oracle)"
+
+    - experiment: "3.503"
+      title: "HRIS/HCM Platforms"
+      relationship: "FP&A platforms pull headcount data from HRIS (Rippling, Workday, ADP)"
+      critical_finding: "Runway won forum post deal due to native Rippling integration; Planful lost due to integration gap"
+
+  downstream:
+    - experiment: "3.004"
+      title: "Cash Flow Management"
+      relationship: "Cash flow tools are lightweight FP&A (graduation trigger analysis needed)"
+
+  parallel:
+    - experiment: "3.008"
+      title: "AP Automation & Expense Management (proposed)"
+      relationship: "Spend data flows to FP&A platforms for opex tracking"
+
+key_findings:
+  s1_discoveries:
+    hris_integration_critical:
+      finding: "HRIS integration quality (specifically Rippling support) was deal-breaker in forum post decision"
+      evidence: "Planful lost to Runway because no direct Rippling integration"
+      market_impact: "SMB buyers (50-500 employees) using Rippling/Gusto locked into Runway/Causal; cannot choose Planful/Anaplan"
+
+    price_variance_70x:
+      finding: "70x price difference between cheapest (Causal $11K) and most expensive (OneStream $734K) 3-year TCO"
+      implication: "Platform selection must match budget, not just features"
+
+    implementation_time_hidden_cost:
+      finding: "Startup platforms (Runway 1-2 weeks) vs enterprise (Anaplan 4-12 months) - 24x implementation time difference"
+      implication: "Urgency situations favor Tier 1 platforms; enterprise features justify longer timeline"
+
+    ai_too_new:
+      finding: "Most AI features launched <1 year ago (Runway Ambient Intelligence July 2024, Planful Plan Assistant 2025, OneStream AI Agents May 2025)"
+      recommendation: "Don't overpay for AI today; will be table stakes by 2027-2028"
+
+    data_warehouse_trend:
+      finding: "Causal built data-warehouse-first (Snowflake/BigQuery native), Runway supports (Gold tier), enterprise platforms lag (ETL required)"
+      prediction: "FP&A platforms will prioritize data warehouse integration 2025-2027"
+
+  integration_patterns:
+    smb_hris_leaders:
+      - "Runway: Native Rippling, Gusto, BambooHR (1-click)"
+      - "Causal: Via API (moderate)"
+
+    smb_hris_gaps:
+      - "Planful: No Rippling (critical gap)"
+      - "Anaplan: Via API only"
+      - "OneStream: Enterprise HRIS only"
+
+    enterprise_hris_leaders:
+      - "Adaptive Insights: Native Workday HCM"
+      - "Anaplan: Workday, Oracle HCM, SAP SuccessFactors"
+
+    netsuite_leaders:
+      - "Planful: 600+ NetSuite customers (strongest pairing)"
+      - "OneStream: NetSuite support"
+      - "Adaptive: NetSuite native"
+
+    data_warehouse_leaders:
+      - "Causal: Snowflake/BigQuery native (data-warehouse-first architecture)"
+      - "Runway: Snowflake, BigQuery (Gold tier)"
+
+  pricing_transparency:
+    transparent:
+      - "Causal: $250/mo Launch tier (only platform with published pricing)"
+    opaque:
+      - "All others: 100% custom quotes (7 of 8 platforms)"
+
+    tco_ranges_3yr:
+      tier_1: "$11K-38K (Causal, Runway)"
+      tier_2: "$120K-230K (Vena, Prophix, Adaptive)"
+      tier_3: "$450K-734K (Planful, Anaplan, OneStream)"
+
+  ai_maturity:
+    production_2024_2025:
+      - "Runway: Ambient Intelligence (July 2024), Copilot"
+      - "Planful: Plan Assistant (2025), Analyst Assistant"
+      - "OneStream: AI Agents (May 2025)"
+      - "Vena: Copilot (2025), Insights"
+
+    established_predictive:
+      - "Adaptive Insights: AI/ML forecasting (2020+)"
+      - "Anaplan: PlanIQ predictive analytics (2018+)"
+
+    too_new_to_evaluate:
+      - "All 2024-2025 launches: <1 year production, wait 12-24 months for customer feedback"
+
+  vendor_viability:
+    public_lowest_risk:
+      - "OneStream: IPO July 2024 ($4.38B valuation)"
+      - "Adaptive Insights: Owned by Workday (public)"
+
+    pe_owned_stable:
+      - "Planful: Marlin Equity Partners (2021)"
+      - "Anaplan: Thoma Bravo (2022, $10.4B acquisition)"
+      - "Prophix: Private (38 years, mature)"
+
+    vc_backed_medium_risk:
+      - "Runway: a16z ($33.5M raised, 20x revenue growth)"
+      - "Vena: K1 Investment Management"
+
+    recently_acquired:
+      - "Causal: LucaNet (October 2024, pricing likely to increase)"
+
+success_criteria:
+  s1_complete: "✅ 8 platform profiles exist (2 full depth, 6 reduced), synthesis complete"
+  s2_complete: "✅ Feature matrix (82 features), pricing/TCO detailed, integration matrices, AI evaluation complete"
+  s3_complete: "✅ 5 scenarios with generic platform matching, catalog application methodology documented"
+  s4_complete: "✅ Graduation frameworks, build-vs-buy analysis, vendor viability with 5-year AI outlook complete"
+  full_complete: "✅ COMPLETE - CFO can match company context to platform shortlist using catalog research"
+
+business_value:
+  market_size: "Every company 50+ employees needs FP&A (or considering transition from Excel)"
+  decision_frequency: "Every 5-7 years (platform replacement cycle)"
+  annual_spend: "$5K-500K depending on company size"
+  critical_finding: "Integration quality (HRIS, ERP) determines platform viability for market segment"
+
+  hardware_store_application:
+    catalog: "8 platform profiles = generic hardware store catalog (this research)"
+    application: "Client context (company size, HRIS, budget) → platform shortlist (separate consulting engagement)"
+    value: "Catalog is timeless; application is context-specific"
+
+timeline:
+  s1_rapid: "Nov 1, 2025 (1 day - completed)"
+  s2_comprehensive: "Nov 1, 2025 (1 day - completed)"
+  s3_need_driven: "Nov 1, 2025 (1 day - completed)"
+  s4_strategic: "Nov 1, 2025 (1 day - completed)"
+  total_time: "1 day (S1-S4 all completed Nov 1, 2025)"
+
+notes:
+  - "Forum post (Runway vs Planful) provided guidance on depth allocation: full depth for decision platforms, reduced for others"
+  - "HRIS integration quality (Rippling support) was critical finding from forum post analysis"
+  - "MPSE v3.0 updated with consolidated vs detailed_toc decision criteria (Nov 1, 2025)"
+  - "Research follows hardware store principle: generic catalog content, no client-specific recommendations"
+  - "Cross-experiment integration: 3.503 HRIS provides data to 3.007 FP&A platforms"
+  - "AI capabilities evaluated with skepticism: most features <1 year old, too new for ROI validation"
+
+created: "2025-11-01"
+updated: "2025-11-05"
+version: "1.1"
+update_notes: "Added Cube Software as 9th platform (990 lines S1, integrated into S2-S4)"
+
+completion_summary:
+  total_documents: 30+
+  total_lines: ~13,700
+  research_output: "150+ KB strategic intelligence"
+
+  document_breakdown:
+    service_explainer: "1 file (FP&A domain concepts)"
+    s1_rapid: "10 files (~4,500 lines - includes Cube 990 lines)"
+    s2_comprehensive: "7 files (~3,400 lines)"
+    s3_need_driven: "7 files (~3,600 lines)"
+    s4_strategic: "6 files (~3,200 lines)"
+    metadata: "1 file (comprehensive tracking)"
+
+  key_deliverables:
+    platform_profiles: "9 (Runway, Planful, Cube full depth; Causal, Vena, Prophix, Adaptive, Anaplan, OneStream reduced)"
+    feature_comparisons: "82 features across 9 platforms"
+    integration_matrices: "HRIS (8×10), ERP (8×8), data warehouse assessment"
+    pricing_analysis: "3-year and 5-year TCO scenarios"
+    scenarios: "5 generic business scenarios with platform matching"
+    strategic_frameworks: "Graduation triggers, build-vs-buy, vendor viability, AI evolution"
+
+  critical_findings:
+    integration_quality_decisive: "Runway won forum post due to native Rippling integration; Planful lost despite 87% vs 68% feature coverage"
+    price_variance_70x: "Causal $11K → OneStream $734K (3-year TCO)"
+    implementation_time_24x: "Runway 1-2 weeks → Anaplan 4-12 months"
+    ai_commoditization: "Most AI features <1 year old; will be table stakes by 2027-2028"
+    build_almost_never: "DIY only cost-effective for 5,000+ employee companies with data science teams"
+    vendor_viability: "10-year survival: OneStream/Adaptive 90-95%, Planful/Anaplan 70-75%, Runway/Causal 50-60%"
+
+  research_status: "COMPLETE - Ready for client application (billable consulting when engaged)"

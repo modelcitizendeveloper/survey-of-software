@@ -1,0 +1,334 @@
+published: false
+# 1.204: RAG Pipelines - Research Metadata
+
+research_id: "1.204"
+title: "RAG Pipelines"
+category: "1.200-209 AI & LLM Application Frameworks"
+tier: 1
+tier_description: "YOU run the code - libraries you import and control"
+
+# Research Overview
+research_question: "How should developers build RAG (Retrieval-Augmented Generation) pipelines? What are the best practices for document loading, chunking, and retrieval in 2025?"
+scope: "Document loading, text chunking strategies, and retrieval methods for RAG systems"
+
+# Generic Use Cases (Hardware Store)
+use_cases:
+  - "Developers building document Q&A systems"
+  - "Teams implementing knowledge bases over private data"
+  - "Enterprises deploying AI assistants"
+  - "Companies building semantic search over documents"
+  - "Organizations implementing citation-backed AI responses"
+
+# MPSE Stage Tracking
+mpse_version: "v3.0"
+stages:
+  s1_rapid_discovery:
+    status: "completed"
+    date_completed: "2026-01-18"
+    time_invested: "90 minutes"
+    deliverables:
+      - "Domain explainer (what are RAG pipelines)"
+      - "Document loading tools comparison (LlamaParse, PyPDF, Unstructured)"
+      - "Text chunking strategies analysis"
+      - "Retrieval strategies (hybrid search, reranking)"
+      - "Framework comparison (LangChain vs LlamaIndex for RAG)"
+      - "Recommendation guide with decision framework"
+    key_findings:
+      - "Chunking strategy determines ~60% of RAG accuracy (more than embeddings, reranker, or LLM)"
+      - "Hybrid retrieval (BM25 + dense + reranking) delivers 40-50% precision improvement vs naive dense-only"
+      - "LlamaParse dominates complex PDF parsing in 2025 (~6s processing, 10/10 rating)"
+      - "RecursiveCharacterTextSplitter (512 tokens, 50 overlap) works for 80% of RAG applications"
+      - "Structure-aware chunking (MarkdownHeaderTextSplitter) often the biggest single improvement"
+      - "Reranking improves quality by up to 48% and reduces token costs by 25%"
+      - "LlamaIndex specialized for RAG with 35% better retrieval accuracy than general frameworks"
+      - "Page-level chunking achieved highest accuracy in NVIDIA 2024 benchmarks for financial/legal docs"
+      - "15% overlap optimal for 1024-token chunks (NVIDIA finding)"
+      - "Semantic chunking outperforms recursive by 2-3% recall"
+
+  s2_comprehensive:
+    status: "not_started"
+    scope: "Hands-on benchmarking, performance testing, cost analysis"
+
+  s3_need_driven:
+    status: "not_started"
+    scope: "Domain-specific RAG, production deployment, custom embeddings"
+
+  s4_strategic:
+    status: "not_started"
+    scope: "Reference implementation, evaluation framework, cost optimization"
+
+# RAG Pipeline Components
+
+## Document Loading Tools
+document_loaders:
+  llamaparse:
+    name: "LlamaParse"
+    developer: "LlamaIndex"
+    type: "Commercial cloud service"
+    best_for: "Complex PDFs with tables, charts, multi-column layouts"
+    performance: "~6 seconds per document"
+    accuracy_rating: "10/10 (highest in 2025 evaluations)"
+    unique_strength: "Preserves table structure as markdown, fine-grained citation mapping"
+    limitations: "Cloud-only (requires API), not suitable for offline/on-premise use cases"
+
+  pypdf:
+    name: "PyPDF / PyPDFLoader"
+    developer: "Open source community"
+    type: "Open-source library"
+    best_for: "Simple text-based PDFs"
+    performance: "Fast, lightweight"
+    accuracy: "Good for basic documents, loses table structure"
+    limitations: "Poor handling of complex layouts, tables, multi-column text"
+
+  unstructured:
+    name: "Unstructured"
+    developer: "Unstructured.io"
+    type: "Open-source + commercial"
+    best_for: "Complex layouts, OCR for scanned documents"
+    accuracy_status: "Declining quality reported in 2025"
+    features: "Advanced text segmentation (paragraphs, titles, tables), OCR support"
+    limitations: "Recent performance degradation, struggles with complex layouts"
+
+  docling:
+    name: "Docling"
+    developer: "Open source"
+    type: "Open-source alternative"
+    best_for: "Open-source alternative to LlamaParse"
+    accuracy: "Good"
+    limitations: "Lacks support for forms and handwriting, fewer features than LlamaParse"
+
+  reducto:
+    name: "Reducto"
+    developer: "Commercial"
+    type: "Commercial service"
+    accuracy: "20% higher parsing accuracy vs average"
+    unique_strength: "Fine-grained citation mapping for LLM ground-truthing"
+    limitations: "Commercial pricing"
+
+## Text Chunking Strategies
+chunking_strategies:
+  recursive_character:
+    name: "RecursiveCharacterTextSplitter"
+    framework: "LangChain (also available in others)"
+    approach: "Hierarchical splitting by separators ([\\n\\n, \\n, ' ', ''])"
+    best_for: "General-purpose baseline (80% of RAG applications)"
+    recommended_params: "512 tokens chunk size, 50 token overlap"
+    performance: "Good baseline, respects semantic boundaries"
+
+  structure_aware:
+    name: "Structure-Aware Chunking"
+    examples: ["MarkdownHeaderTextSplitter", "HTMLHeaderTextSplitter"]
+    approach: "Split on document structure (headers, sections)"
+    best_for: "Markdown, HTML, documents with clear hierarchy"
+    performance: "Often the biggest single improvement over fixed-size"
+
+  semantic_chunking:
+    name: "Semantic Chunking"
+    approach: "Group sentences by semantic similarity of embeddings"
+    best_for: "Thematically coherent chunks"
+    performance: "+2-3% recall vs RecursiveCharacterTextSplitter"
+    methods:
+      - "Percentile threshold (split when similarity < 95th percentile)"
+      - "Standard deviation (split when similarity differs by >1 std dev)"
+      - "Interquartile range (IQR-based threshold)"
+
+  parent_child:
+    name: "Parent-Child (Small-to-Large)"
+    approach: "Small chunks for retrieval, large chunks for context"
+    best_for: "Complex Q&A needing both precision and context"
+    complexity: "More complex to implement"
+
+  page_level:
+    name: "Page-Level Chunking"
+    approach: "One chunk per page"
+    best_for: "Financial reports, legal documents, research papers"
+    performance: "Highest accuracy in NVIDIA 2024 benchmarks"
+
+  fixed_size:
+    name: "Fixed-Size Chunking"
+    approach: "Split every N tokens/characters"
+    best_for: "Baseline comparison only"
+    limitations: "Ignores document structure, may split mid-sentence"
+
+chunk_size_guidelines:
+  factual_qa: "256-512 tokens (precision over context)"
+  context_heavy: "512-1024 tokens (summaries, analysis)"
+  optimal_overlap: "15% (NVIDIA finding for 1024-token chunks)"
+  tradeoffs:
+    smaller_chunks: "Better precision, fragments context"
+    larger_chunks: "Preserves meaning, dilutes similarity scores"
+
+## Retrieval Strategies
+retrieval_methods:
+  hybrid_search:
+    name: "Hybrid Search (BM25 + Dense)"
+    components:
+      - "BM25: Keyword-based sparse retrieval (exact term matches)"
+      - "Dense retrieval: Embedding-based semantic search"
+      - "Reciprocal Rank Fusion (RRF): Combine both rankings"
+    performance: "40-50% precision improvement vs dense-only"
+    status: "2025 production standard"
+
+  reranking:
+    name: "Cross-Encoder Reranking"
+    approach: "Re-score top-K candidates with cross-encoder model"
+    performance: "Up to 48% quality improvement, 25% token cost reduction"
+    typical_flow: "Retrieve top-20 with hybrid → Rerank → Return top-5"
+
+  dense_only:
+    name: "Dense Retrieval Only"
+    approach: "Embed query and chunks, return top-k by cosine similarity"
+    status: "Outdated as of 2025 (hybrid outperforms by 40-50%)"
+    limitations: "Misses exact keyword matches (dates, IDs, specific terms)"
+
+  bm25_only:
+    name: "BM25 Only"
+    approach: "Statistical keyword matching"
+    limitations: "No semantic understanding, exact matches only"
+    use_case: "Legacy systems, ultra-low-latency requirements"
+
+hybrid_retrieval_pipeline:
+  stage_1: "BM25 keyword search → Find exact term matches"
+  stage_2: "Dense embedding search → Find semantic matches"
+  stage_3: "Reciprocal Rank Fusion → Combine rankings"
+  stage_4: "Cross-encoder reranking → Optimize top candidates"
+  stage_5: "Metadata filtering → Access control, compliance"
+  expected_improvement: "40-50% precision vs baseline (dense-only, fixed-size chunks)"
+
+# Framework Comparison for RAG
+frameworks_for_rag:
+  llamaindex:
+    name: "LlamaIndex"
+    specialization: "Purpose-built for RAG"
+    retrieval_accuracy: "35% boost vs general frameworks (2025 benchmarks)"
+    retrieval_speed: "40% faster in specific tests (2025)"
+    data_connectors: "160+ via LlamaHub"
+    chunking_tools: "Sophisticated NodeParsers producing optimized Nodes"
+    best_for: "Document-heavy RAG systems, high-performance retrieval"
+
+  langchain:
+    name: "LangChain"
+    specialization: "General-purpose LLM orchestration"
+    document_loaders: "Flexible, customizable"
+    chunking_tools: "RecursiveCharacterTextSplitter (widely used)"
+    best_for: "Multi-step workflows, broader LLM orchestration"
+
+  complementary_usage:
+    pattern: "LlamaIndex for ingestion/retrieval + LangChain for orchestration/agents"
+    rationale: "Use each framework for its strength"
+
+# Performance Benchmarks
+benchmarks:
+  chunking_impact: "~60% of RAG accuracy (research finding)"
+  hybrid_vs_dense: "40-50% precision improvement"
+  reranking_improvement: "Up to 48% quality, 25% cost reduction"
+  semantic_vs_recursive: "+2-3% recall"
+  llamaparse_speed: "~6 seconds per document"
+  llamaindex_vs_langchain_retrieval: "35% better accuracy, 40% faster"
+
+# Evaluation Metrics
+evaluation:
+  metrics:
+    - "Context relevancy: Are retrieved chunks actually relevant?"
+    - "Precision@K: How many of top-K results are relevant?"
+    - "Recall@K: What % of all relevant docs are in top-K?"
+  approach: "Create evaluation datasets from real user queries, vary one parameter at a time"
+
+# Cross-References
+related_research:
+  - id: "1.200"
+    title: "LLM Orchestration Frameworks"
+    relationship: "RAG pipelines run INSIDE these frameworks (LangChain, LlamaIndex)"
+
+  - id: "1.203"
+    title: "Vector Databases"
+    relationship: "RAG retrieval USES vector databases (Pinecone, Chroma, Weaviate)"
+
+  - id: "1.205"
+    title: "LLM Evaluation"
+    relationship: "Measuring RAG quality with precision@K, recall@K, context relevancy"
+
+  - id: "3.200"
+    title: "LLM APIs"
+    relationship: "RAG augments prompts to THESE APIs (OpenAI, Anthropic, etc.)"
+
+# Market Trends (2025-2026)
+trends:
+  - "Hybrid retrieval (BM25 + dense + reranking) is production standard"
+  - "LlamaParse dominates complex PDF parsing market"
+  - "Semantic chunking adoption growing (2-3% better recall)"
+  - "Agentic RAG emerging: LLMs dynamically selecting chunking strategies"
+  - "Graph RAG: Knowledge graphs supplementing vector search"
+  - "Multi-modal RAG: Images, tables, charts as first-class citizens"
+  - "Fine-tuned embeddings: Domain-specific models for better retrieval"
+  - "Continuous evaluation: Monitoring retrieval quality becoming standard"
+
+# Common Mistakes
+common_mistakes:
+  - "Using dense-only retrieval (hybrid improves by 40-50%)"
+  - "Ignoring document structure (structure-aware chunking often biggest win)"
+  - "Wrong chunk size (too small fragments, too large dilutes)"
+  - "No chunk overlap (context split across boundaries)"
+  - "No reranking (missing 48% quality improvement)"
+  - "Poor document parsing (PyPDF on complex tables breaks retrieval)"
+
+# Best Practices (2025 Baseline)
+best_practices:
+  document_loading:
+    simple_pdfs: "PyPDFLoader"
+    complex_pdfs: "LlamaParse"
+    multiple_formats: "LlamaIndex connectors (160+ types)"
+
+  chunking:
+    no_structure: "RecursiveCharacterTextSplitter (512 tokens, 50 overlap)"
+    markdown_html: "MarkdownHeaderTextSplitter / HTMLHeaderTextSplitter"
+    financial_legal: "Page-level chunking (NVIDIA 2024 best accuracy)"
+
+  retrieval:
+    baseline: "Hybrid search (BM25 + dense + RRF)"
+    production: "Hybrid + cross-encoder reranking"
+    enterprise: "Hybrid + reranking + metadata filtering"
+
+  framework:
+    rag_focused: "LlamaIndex (35% better retrieval)"
+    orchestration: "LangChain"
+    both_needs: "LlamaIndex (retrieval) + LangChain (agents)"
+
+# Resources
+official_resources:
+  llamaparse: "https://www.llamaindex.ai/llamaparse"
+  llamaindex: "https://www.llamaindex.ai/"
+  llamahub: "https://llamahub.ai/"
+  langchain: "https://www.langchain.com/"
+  pypdf: "https://pypdf.readthedocs.io/"
+  unstructured: "https://unstructured.io/"
+
+research_papers:
+  nvidia_chunking: "https://developer.nvidia.com/blog/finding-the-best-chunking-strategy-for-accurate-ai-responses/"
+  weaviate_chunking: "https://weaviate.io/blog/chunking-strategies-for-rag"
+  pinecone_chunking: "https://www.pinecone.io/learn/chunking-strategies/"
+  hybrid_search: "https://superlinked.com/vectorhub/articles/optimizing-rag-with-hybrid-search-reranking"
+
+# Research Metadata
+research_methodology: "Web search, performance benchmarks, framework documentation, production case studies"
+data_currency: "2024-2026"
+last_updated: "2026-01-18"
+maintained_by: "spawn-solutions research team"
+
+# Tags
+tags:
+  - "rag"
+  - "retrieval-augmented-generation"
+  - "document-loading"
+  - "text-chunking"
+  - "hybrid-search"
+  - "llamaindex"
+  - "langchain"
+  - "llamaparse"
+  - "bm25"
+  - "dense-retrieval"
+  - "reranking"
+  - "semantic-chunking"
+  - "vector-search"
+  - "tier-1"
+  - "production"

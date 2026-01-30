@@ -1,0 +1,10 @@
+published: false
+code: '1.101'
+title: PDF Generation Libraries
+tier: 1
+category: Library/Package Discovery
+status: in_progress
+
+description: |
+  Research on Python libraries for PDF generation, including ReportLab, WeasyPrint,
+  and other tools for creating PDFs programmatically.

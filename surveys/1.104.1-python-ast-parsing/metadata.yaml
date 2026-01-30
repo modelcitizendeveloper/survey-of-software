@@ -1,0 +1,134 @@
+experiment_id: 1.104.1
+category: python-ast-parsing
+title: "Python Code Parsing & AST Libraries"
+tier: 1 (Self-Operated)
+status: in_progress
+published: true
+priority: CRITICAL
+blocking: true
+
+timeline:
+  start_date: 2025-11-07
+  estimated_duration: 1 week
+  phases:
+    - S1_rapid: Day 1
+    - S2_comprehensive: Day 2
+    - S3_need_driven: Day 3
+    - S4_strategic: Day 4
+    - validation: Day 5
+
+blocking_for:
+  - schema-evolution-framework/orchestrator
+  - code-generation-tools
+  - automated-refactoring
+
+research_questions:
+  primary: "Which Python AST library best balances parsing accuracy, code preservation, and modification capabilities?"
+  secondary:
+    - "How to preserve comments, docstrings, and formatting?"
+    - "How to find insertion points (e.g., last field in User class)?"
+    - "How to validate generated code before writing?"
+    - "How to handle syntax errors gracefully?"
+    - "Performance requirements (<100ms to parse typical models.py)?"
+
+candidate_libraries:
+  - name: ast
+    category: "Standard Library AST"
+    stars: builtin
+    description: "Built-in Python AST module"
+
+  - name: libcst
+    category: "Concrete Syntax Tree"
+    stars: 4800
+    maintainer: "Instagram/Meta"
+    description: "Preserves all formatting/comments, designed for code modification"
+
+  - name: redbaron
+    category: "Full Syntax Tree"
+    stars: 1200
+    description: "Simple API for modifications"
+
+  - name: rope
+    category: "Refactoring Library"
+    stars: 1900
+    description: "Full refactoring capabilities, project-aware"
+
+  - name: parso
+    category: "Python Parser"
+    stars: 600
+    description: "Error-tolerant, preserves formatting (used by Jedi)"
+
+  - name: bowler
+    category: "Refactoring Tool"
+    stars: 1500
+    maintainer: "Facebook"
+    description: "High-level refactoring, built on LibCST"
+
+evaluation_criteria:
+  - criterion: "Formatting Preservation"
+    weight: 30%
+    description: "CRITICAL - Must preserve indentation, comments"
+
+  - criterion: "Modification API"
+    weight: 25%
+    description: "Ease of finding/modifying code elements"
+
+  - criterion: "Performance"
+    weight: 15%
+    description: "<100ms to parse typical file"
+
+  - criterion: "Error Handling"
+    weight: 15%
+    description: "Graceful handling of partial/invalid code"
+
+  - criterion: "Maturity"
+    weight: 10%
+    description: "Production usage, maintenance status"
+
+  - criterion: "Learning Curve"
+    weight: 5%
+    description: "Team onboarding time"
+
+predicted_winner: "libcst"
+predicted_winner_rationale: "Designed specifically for code modification, preserves all formatting/comments, production-proven at Instagram, active maintenance"
+
+success_criteria:
+  - "Can parse models.py from experiments in <100ms"
+  - "Can find insertion points (e.g., last field in class) programmatically"
+  - "Can insert code while preserving indentation/comments"
+  - "Can validate syntax before writing"
+  - "Clear API for common operations (find class, add field, update function)"
+
+use_cases:
+  - name: "Find insertion point"
+    description: "Locate last field in User class"
+
+  - name: "Add field"
+    description: "Insert new mapped_column with proper indentation"
+
+  - name: "Update signature"
+    description: "Add parameter to function"
+
+  - name: "Preserve style"
+    description: "Keep existing formatting/comments"
+
+  - name: "Validate syntax"
+    description: "Check before writing file"
+
+integration_with:
+  - "1.039 (Template engines - Jinja2)"
+  - "1.049.1 (Database schema inspection)"
+  - "1.104.2 (Code formatting)"
+
+related_experiments:
+  - 1.039: "Template engines (code generation)"
+  - 1.049.1: "Database schema inspection"
+  - 1.104.2: "Code formatting libraries"
+
+tags:
+  - code-generation
+  - ast
+  - parsing
+  - refactoring
+  - schema-evolution
+  - blocking-research

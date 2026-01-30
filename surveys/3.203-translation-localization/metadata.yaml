@@ -1,0 +1,87 @@
+code: '3.203'
+title: Translation & Localization Services
+tier: 3
+category: Speech & Audio AI
+status: s1_complete
+published: false
+started: 2025-11-26
+s1_completed: 2025-11-26
+estimated_hours: 6-8
+actual_hours_s1: 3
+s2_s3_s4_status: planned_not_started
+
+rationale: |
+  MEDIUM PRIORITY - Language-learning app translation needs (Latin ↔ English, Japanese ↔ English).
+  Translation (text → text) separate from transcription (audio → text).
+  Split from 3.202 multilingual scenario - bidirectional translation for vocabulary drills.
+
+platforms_evaluated:
+  traditional_apis:
+    - Google Cloud Translation (100+ languages, $15/M, 500K free tier ongoing)
+    - DeepL (30+ languages, $25/M, European quality premium)
+    - Amazon Translate (75 languages, $15/M, AWS integration)
+  llm_based:
+    - Claude 3.5 (Haiku $4.80/M, Sonnet $18/M, best Asian languages, pedagogical)
+    - GPT-4o ($12.50/M, Korean advantage, widespread adoption)
+    - Gemini (Flash $0.375/M, Pro $6.25/M, cheapest LLM option)
+
+key_findings:
+  - No universal winner (depends on languages, volume, pedagogy needs)
+  - Hybrid approach optimal (traditional APIs for bulk, LLMs for pedagogy)
+  - Claude 3.5 Haiku best value ($4.80/M, 68% cheaper than Google, pedagogical)
+  - Gemini Flash game-changer ($0.375/M, 97.5% cheaper than Google, LLM quality)
+  - Google Translate permanent free tier (500K/month) best for small apps
+  - DeepL quality premium (67% more expensive) only justified for European business docs
+  - Translation costs <2.5% of revenue (negligible at any scale)
+  - Pedagogical features essential (grammar explanations, cultural context, error correction)
+  - LLMs required for language learning (traditional APIs insufficient)
+  - Latin support: Google + LLMs only (DeepL/Amazon don't support)
+
+recommended_platforms:
+  latin_learning: "Google Translate (bulk) + Claude 3.5 Haiku (pedagogical)"
+  japanese_learning: "Claude 3.5 Haiku (best Japanese quality, WMT24 winner)"
+  european_languages: "DeepL (quality premium) or Claude 3.5 Haiku (81% cheaper)"
+  multi_language: "Google Translate (100+ languages) + Claude 3.5 Haiku (pedagogy)"
+  high_volume_bulk: "Google Translate (simple vocabulary lookup)"
+  budget_constrained: "Gemini Flash ($0.375/M, LLM quality, 97.5% cheaper)"
+
+s1_documents:
+  - 00-SYNTHESIS.md (comprehensive comparison + decision framework)
+  - 01-google-cloud-translation.md
+  - 02-deepl-api.md
+  - 03-amazon-translate.md
+  - 04-llm-translation.md (Claude, GPT-4, Gemini)
+
+s1_stats:
+  documents: 5
+  platforms: 7 (3 traditional APIs, 3 LLM models)
+  lines: 1822
+  size_kb: 80
+
+next_steps:
+  s2_comprehensive:
+    - Feature matrix (50+ features × 7 platforms)
+    - Pricing TCO (6 volume scenarios: 1K to 10M translations/month)
+    - Quality benchmarks (BLEU scores, WMT competition results, human evaluation)
+    - Integration complexity (time-to-first-translation, code examples)
+  s3_need_driven:
+    - 6 use case scenarios (Latin learning, Japanese learning, European learning, multi-language, high-volume, budget-constrained)
+    - Architecture patterns (hybrid traditional+LLM, LLM-only, budget-optimized)
+    - Implementation guides (code examples, prompt engineering)
+  s4_strategic:
+    - Vendor viability (10-year survival probability)
+    - Lock-in mitigation strategies (API compatibility, switching costs)
+    - Technology evolution (2025-2030 LLM trajectory, traditional API convergence)
+    - Build vs buy decision framework
+
+trigger: Language-learning app translation integration (Nov 24, 2025) + 3.202 multilingual scenario
+related_research:
+  - 3.202 Speech & Audio AI (completed Nov 24, 2025)
+  - 3.204 Text-to-Speech (completed S1+S2 Nov 25, 2025)
+  - 3.205 Pronunciation Assessment (completed S1 Nov 25, 2025)
+  - 1.105 Translation & i18n Libraries (Tier 1 self-hosted alternatives)
+
+integration_relationships:
+  upstream: "3.202 Speech-to-Text (transcription → translation)"
+  downstream: "Language-learning app (translation drills, flashcard generation, semantic validation)"
+  adjacent: "3.204 TTS (translate text → speak audio), 3.205 Pronunciation (translate → assess)"

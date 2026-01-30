@@ -1,0 +1,149 @@
+id: "1.040"
+title: "Advanced Collections Libraries"
+subtitle: "sortedcontainers, polars, pyrsistent, cytoolz, more-itertools"
+tier: 1
+category: "Data Structures & Algorithms"
+cluster: "algorithms"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://grantjenks.com/docs/sortedcontainers/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "sortedcontainers - Pure Python sorted collections"
+
+    - url: https://github.com/grantjenks/python-sortedcontainers
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "sortedcontainers GitHub repository"
+
+    - url: https://pypi.org/project/sortedcontainers/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "sortedcontainers on PyPI"
+
+    - url: https://pola.rs/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Polars - Fast DataFrame library"
+
+    - url: https://github.com/pola-rs/polars
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Polars GitHub repository"
+
+    - url: https://pypi.org/project/polars/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "Polars on PyPI"
+
+    - url: https://pyrsistent.readthedocs.io/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "pyrsistent - Immutable collections"
+
+    - url: https://github.com/tobgu/pyrsistent
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "pyrsistent GitHub repository"
+
+    - url: https://pypi.org/project/pyrsistent/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "pyrsistent on PyPI"
+
+    - url: https://github.com/pytoolz/cytoolz
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "cytoolz - Cython functional utilities"
+
+    - url: https://pypi.org/project/cytoolz/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "cytoolz on PyPI"
+
+    - url: https://more-itertools.readthedocs.io/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "more-itertools - Extended iteration"
+
+    - url: https://github.com/more-itertools/more-itertools
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "more-itertools GitHub repository"
+
+    - url: https://pypi.org/project/more-itertools/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "more-itertools on PyPI"
+
+tags:
+  - collections
+  - data-structures
+  - performance
+  - functional-programming
+  - immutable-data
+  - sorted-collections
+  - dataframes
+
+libraries_evaluated:
+  - name: "sortedcontainers"
+    recommendation: "sorted-collections"
+    stars: 3000
+    license: "Apache-2.0"
+    performance: "10x faster than bintrees"
+
+  - name: "polars"
+    recommendation: "dataframes"
+    stars: 27000
+    license: "MIT"
+    performance: "5-100x faster than pandas"
+
+  - name: "pyrsistent"
+    recommendation: "immutable"
+    stars: 2600
+    license: "MIT"
+    performance: "O(log n) with structural sharing"
+
+  - name: "cytoolz"
+    recommendation: "functional-utils"
+    stars: 900
+    license: "BSD-3-Clause"
+    performance: "2-5x faster than toolz"
+
+  - name: "more-itertools"
+    recommendation: "iteration"
+    stars: 3500
+    license: "MIT"
+    downloads: "129M+/month"
+
+key_findings:
+  - "sortedcontainers outperforms C extensions in pure Python"
+  - "Polars revolutionizing dataframes with 5-100x speedup"
+  - "pyrsistent enables functional programming with efficient immutability"
+  - "cytoolz always preferred over pure Python toolz"
+  - "more-itertools most downloaded (129M+/month)"
+
+related_research:
+  - "1.001"    # Sorting libraries
+  - "1.022"    # Optimization
+
+cross_references:
+  use_cases:
+    - sorted-data-structures
+    - large-scale-data-processing
+    - functional-programming
+    - immutable-data-structures

@@ -1,0 +1,367 @@
+---
+experiment_id: "1.131"
+title: "Self-Hosted Project Management Platforms"
+category: "business-application-platforms"
+subcategory: "project-management"
+tier: 1
+status: "in_progress"
+published: true
+date_started: "2025-11-07"
+date_completed: null
+mpse_version: "3.0"
+
+# Summary
+summary: |
+  Research into self-hosted project management platforms as alternatives to SaaS PM
+  tools like JIRA, Asana, Monday, and Trello. Analysis covers 8 platforms across
+  three tiers: lightweight task boards (WeKan, Vikunja, Focalboard), full-featured
+  agile platforms (Plane, Taiga, Worklenz), and enterprise-grade systems (OpenProject,
+  Redmine).
+
+  Key drivers for self-hosting: data sovereignty, compliance requirements, vendor
+  lock-in avoidance, and cost control at scale. Platforms divide by methodology
+  (Agile vs Kanban vs Traditional), technical complexity (Docker-first vs complex),
+  and enterprise readiness.
+
+  Status: S1 Complete (November 7, 2025)
+  Next: S2 Comprehensive Discovery with performance benchmarks, feature matrix,
+  and TCO analysis.
+
+# Platform Analysis
+platforms_analyzed:
+  plane:
+    type: "modern_fullstack"
+    tech_stack: "React, Django, PostgreSQL"
+    deployment_models: ["Docker", "Kubernetes"]
+    license: "AGPL-3.0"
+    github_stars: "~13K+"
+    active_development: "very_active"
+    maturity: "growing (launched 2022)"
+    hosting_requirements: "2-4GB RAM, 2 vCPU minimum"
+    skill_level: "intermediate"
+    best_for: "Modern JIRA/Linear alternative, AI-assisted planning"
+    customization_depth: "medium-high (open source, modern codebase)"
+    integration_approach: "REST API, webhooks"
+    notes: "Modern UI/UX, AI integration, multiple PM frameworks support"
+
+  taiga:
+    type: "agile_focused"
+    tech_stack: "Python (Django), Angular"
+    deployment_models: ["Docker", "VPS", "Cloud ($10/month)"]
+    license: "AGPL-3.0"
+    github_stars: "~10K+"
+    active_development: "active"
+    maturity: "mature (launched 2014)"
+    hosting_requirements: "2-4GB RAM, 2 vCPU"
+    skill_level: "intermediate"
+    best_for: "Agile teams (Scrum/Kanban), design-conscious teams"
+    customization_depth: "high (API, webhooks, extensions)"
+    integration_approach: "REST API, webhooks, Slack/GitHub/GitLab pre-configured"
+    notes: "Beautiful UI, excellent Scrum/Kanban, methodology switching"
+
+  worklenz:
+    type: "modern_allinone"
+    tech_stack: "React, TypeScript, Express.js, PostgreSQL, MinIO"
+    deployment_models: ["Docker", "Self-hosted"]
+    license: "GPL-3.0"
+    github_stars: "~3K+"
+    active_development: "very_active"
+    maturity: "new (launched 2023)"
+    hosting_requirements: "2-4GB RAM, 2 vCPU, S3-compatible storage"
+    skill_level: "intermediate"
+    best_for: "Modern tech stack, SMBs, efficient teams"
+    customization_depth: "medium (open source, TypeScript/React)"
+    integration_approach: "REST API"
+    notes: "Free limited to 5 users, 3 projects, 1GB; modern stack"
+
+  openproject:
+    type: "enterprise_comprehensive"
+    tech_stack: "Ruby on Rails, Angular, PostgreSQL"
+    deployment_models: ["Docker", "VPS", "Kubernetes", "Cloud ($7.25-19.50/user/mo)"]
+    license: "GPL-3.0 (Community), Commercial (Enterprise)"
+    github_stars: "~9K+"
+    active_development: "very_active"
+    maturity: "mature (launched 2011)"
+    hosting_requirements: "4-8GB RAM, 2-4 vCPU"
+    skill_level: "intermediate-to-advanced"
+    best_for: "Enterprise, mixed methodologies (agile/waterfall/hybrid)"
+    customization_depth: "very_high (plugin system, comprehensive API)"
+    integration_approach: "REST API, webhooks, GitHub/GitLab/Nextcloud integrations"
+    notes: "Community free (unlimited users/projects), Enterprise $405/5 users/year"
+
+  redmine:
+    type: "legacy_enterprise"
+    tech_stack: "Ruby on Rails"
+    deployment_models: ["VPS (native Rails)", "Docker"]
+    license: "GPL-2.0"
+    github_stars: "~5K+"
+    active_development: "active"
+    maturity: "legacy (launched 2006, 19 years old)"
+    hosting_requirements: "2-8GB RAM, 2-4 vCPU (varies with plugins)"
+    skill_level: "advanced (Rails + DevOps expertise)"
+    best_for: "Enterprises with Rails expertise, multi-project hierarchies"
+    customization_depth: "very_high (1000+ plugins, REST API)"
+    integration_approach: "REST API, VCS integration (Git, SVN, Mercurial), plugins"
+    notes: "Dated UI, vast plugin ecosystem, 60+ new plugins in 2024"
+
+  wekan:
+    type: "lightweight_kanban"
+    tech_stack: "Meteor.js"
+    deployment_models: ["Docker", "Local network (air-gapped)"]
+    license: "MIT"
+    github_stars: "~19K+"
+    active_development: "active"
+    maturity: "mature (launched 2015)"
+    hosting_requirements: "1-2GB RAM, 1 vCPU"
+    skill_level: "beginner-to-intermediate"
+    best_for: "Trello replacement, simple Kanban, GDPR compliance"
+    customization_depth: "low-medium (limited to Kanban)"
+    integration_approach: "REST API, webhooks, Trello import"
+    notes: "MIT license, 60 languages, swimlanes, local network capable"
+
+  vikunja:
+    type: "lightweight_tasks"
+    tech_stack: "Go, Vue.js"
+    deployment_models: ["Docker", "Raspberry Pi capable"]
+    license: "AGPL-3.0"
+    github_stars: "~6K+"
+    active_development: "active"
+    maturity: "mature (launched 2018)"
+    hosting_requirements: "512MB-1GB RAM, 1 vCPU (very lightweight)"
+    skill_level: "beginner"
+    best_for: "Personal productivity, small teams, task management"
+    customization_depth: "low-medium (focused on simplicity)"
+    integration_approach: "REST API, webhooks"
+    notes: "Multiple views (List, Gantt, Table, Kanban), hierarchical projects"
+
+  focalboard:
+    type: "lightweight_notion_alternative"
+    tech_stack: "React, Go"
+    deployment_models: ["Docker", "Self-hosted", "Mattermost integration"]
+    license: "MIT (Community Edition)"
+    github_stars: "~21K+"
+    active_development: "active"
+    maturity: "growing (launched 2021)"
+    hosting_requirements: "1-2GB RAM, 1 vCPU"
+    skill_level: "beginner-to-intermediate"
+    best_for: "Mattermost users, Notion/Trello alternative"
+    customization_depth: "medium (MIT license, React/Go)"
+    integration_approach: "Mattermost integration, REST API"
+    notes: "Backed by Mattermost, Kanban/table/gallery/calendar views"
+
+# Selection Criteria
+selection_criteria:
+  primary: "Methodology support (Agile/Kanban/Waterfall), deployment complexity, technical stack"
+  secondary: ["Team size", "DevOps capability", "Budget", "Enterprise readiness"]
+  tertiary: ["UI/UX preferences", "Integration needs", "Community size", "Maturity"]
+
+# Key Decision Dimensions
+decision_dimensions:
+  methodology_support:
+    agile_native: ["Plane", "Taiga", "Worklenz"]
+    waterfall_traditional: ["OpenProject", "Redmine"]
+    hybrid_flexible: ["OpenProject", "Plane"]
+    kanban_only: ["WeKan", "Focalboard"]
+    task_focused: ["Vikunja"]
+
+  deployment_effort:
+    quick_under_30min: ["Plane", "Taiga", "WeKan", "Vikunja", "Focalboard (all Docker)"]
+    moderate_1_2hours: ["Worklenz", "OpenProject"]
+    complex_4plus_hours: ["Redmine (Rails environment)"]
+
+  resource_requirements:
+    lightweight: ["Vikunja (Raspberry Pi capable)", "WeKan"]
+    medium: ["Plane (2-4GB)", "Taiga", "Focalboard", "Worklenz"]
+    heavy: ["OpenProject", "Redmine"]
+
+  enterprise_readiness:
+    enterprise_grade: ["OpenProject (commercial support)", "Redmine (mature)"]
+    growing: ["Plane", "Taiga"]
+    smb_focused: ["Worklenz", "WeKan", "Vikunja", "Focalboard"]
+
+# Market Trends (2024-2025)
+market_trends:
+  - trend: "Renewed self-hosting interest"
+    drivers:
+      - "Data privacy regulations (GDPR, CCPA, data sovereignty)"
+      - "Remote/hybrid work normalization"
+      - "SaaS cost escalation (subscription fatigue)"
+      - "Vendor lock-in concerns (Atlassian pricing changes)"
+
+  - trend: "Modern UX expectations"
+    characteristics:
+      - "Contemporary interfaces matching Linear, Notion"
+      - "AI integration (Plane leads)"
+      - "Multiple view types (Kanban, Gantt, Table, Calendar)"
+
+  - trend: "Docker-first deployment"
+    benefits:
+      - "Simplifies self-hosting complexity"
+      - "Quick trials (< 30 min to production)"
+      - "Supports hybrid cloud strategies"
+
+  - trend: "Integration ecosystem maturity"
+    table_stakes:
+      - "Git platforms (GitHub, GitLab)"
+      - "Chat (Slack, Mattermost, Teams)"
+      - "File storage (Nextcloud, S3, OneDrive)"
+      - "CI/CD pipelines"
+
+  - trend: "Methodology flexibility"
+    approach: "Modern platforms support multiple methodologies; hybrid approaches common"
+
+# Research Progress
+research_stages:
+  s1_rapid:
+    status: "completed"
+    date_completed: "2025-11-07"
+    deliverable: "Platform landscape, 8 platforms analyzed, selection framework"
+    documents: ["S1_RAPID_DISCOVERY.md"]
+    lines: ~850
+    platforms_analyzed: 8
+
+  s2_comprehensive:
+    status: "pending"
+    planned_content:
+      - "Performance benchmarks (100/1000/10k users)"
+      - "Feature matrix (50+ dimensions)"
+      - "TCO analysis (infrastructure + maintenance + migration)"
+      - "Security & compliance (auth methods, RBAC, audit logging)"
+      - "Integration architecture (API quality, webhooks, SSO)"
+      - "Operational complexity (backup/restore, upgrades, HA)"
+
+  s3_need_driven:
+    status: "pending"
+    planned_content:
+      - "Generic use case patterns (software dev, agencies, construction, etc.)"
+      - "Architecture decision trees"
+      - "TCO models for different scales"
+
+  s4_strategic:
+    status: "pending"
+    planned_content:
+      - "Vendor/project viability (5-year horizon)"
+      - "Community health metrics (GitHub activity)"
+      - "Commercial backing assessment"
+      - "Technology evolution trajectories"
+      - "Lock-in mitigation strategies"
+      - "Build vs buy frameworks"
+
+# Business Value
+business_value:
+  cost_impact: "very_high"  # $0-200/month infra vs $500-5,000/month SaaS PM
+  complexity_reduction: "negative"  # Adds operational complexity vs managed SaaS
+  operational_independence: "very_high"  # Full control, no vendor dependency
+  scalability_impact: "high"  # Flat costs vs per-user explosion
+  strategic_control: "very_high"  # Own data, platform, roadmap
+
+# Technical Profile
+technical_profile:
+  setup_complexity: "low-to-medium"  # Docker platforms: <30min; Redmine: 4+ hours
+  operational_complexity: "medium"  # 2-8 hours/month maintenance
+  learning_curve: "low-to-steep"  # Vikunja/WeKan (low) to Redmine/OpenProject (steep)
+  customization_depth: "medium-to-very-high"  # Open source = deep customization
+  data_portability: "excellent"  # Full database ownership
+  update_management: "manual"  # Self-controlled update schedule
+  backup_responsibility: "self"  # Must implement backup strategy
+
+# Key Findings (S1)
+key_findings:
+  platform_tiers:
+    modern_fullstack: "Plane, Taiga, Worklenz offer modern UX matching/exceeding proprietary SaaS"
+    enterprise_grade: "OpenProject (comprehensive free), Redmine (legacy but proven)"
+    lightweight: "WeKan, Vikunja, Focalboard for simple Kanban/task management"
+
+  deployment_simplification:
+    docker_dominance: "All modern platforms Docker-first; quick deployment (<30 min)"
+    complexity_barrier: "Redmine requires Rails expertise; others accessible"
+
+  cost_structure:
+    infrastructure: "$10-200/month (varies by platform and scale)"
+    maintenance: "$250-1,500/month (2-8 hours @ $125/hr OR staff time)"
+    breakeven_vs_saas: "5-20 users depending on platform"
+    scaling_advantage: "Costs scale logarithmically, not linearly like SaaS"
+
+  modern_vs_legacy:
+    plane_2022: "Modern UX rivals Linear, AI integration, contemporary stack"
+    redmine_2006: "Dated UI, complex deployment, but vast plugin ecosystem (1000+)"
+
+  market_positioning:
+    renewed_interest: "2024-2025 sees self-hosting resurgence (privacy, costs, lock-in)"
+    ux_gap_closed: "Open source no longer means 'ugly but free'"
+
+# Recommendations (Quick Reference)
+recommendations:
+  by_use_case:
+    modern_jira_alternative: "Plane"
+    agile_teams: "Taiga"
+    enterprise_mixed_methodology: "OpenProject"
+    trello_replacement: "WeKan"
+    personal_small_team_tasks: "Vikunja"
+    mattermost_users: "Focalboard"
+    legacy_rails_expertise: "Redmine"
+    modern_tech_stack: "Worklenz"
+
+  by_technical_capability:
+    beginner: "Vikunja, WeKan (Docker, simple)"
+    intermediate: "Plane, Taiga, Worklenz (Docker-based, modern)"
+    advanced: "OpenProject, Redmine (complex setup, enterprise features)"
+
+  by_team_size:
+    "1-10_users": "Vikunja, WeKan, Worklenz (free tier)"
+    "10-50_users": "Plane, Taiga, OpenProject Community"
+    "50+_users": "OpenProject Enterprise, Odoo (see 1.130), Redmine"
+
+# Gaps for S2 Research
+gaps_for_s2:
+  - "Performance benchmarks under load (100/1000/10k users)"
+  - "Detailed feature matrix (50+ dimensions)"
+  - "TCO models with real infrastructure costs"
+  - "Security/compliance depth (LDAP, SAML, audit logs)"
+  - "Migration complexity from JIRA/Asana/Trello"
+  - "Mobile app capabilities comparison"
+
+# Relationships
+related_experiments:
+  - "1.130"  # Self-Hosted CRM (similar business app category)
+  - "1.132"  # Self-Hosted Collaboration (Nextcloud, Mattermost)
+  - "3.050"  # PaaS (hosting infrastructure alternative)
+  - "3.501"  # Managed CRM (cross-reference for SaaS comparison)
+
+# Quality Metrics
+mpse_confidence: "medium"  # S1 complete, S2-S4 pending
+research_depth: "rapid"  # S1 only
+validation_level: "theoretical"  # Web research, no hands-on testing yet
+
+# Notes
+notes: |
+  1.131 covers self-hosted project management platforms as alternatives to SaaS PM
+  tools like JIRA, Asana, Monday, Trello.
+
+  **Key Distinction from SaaS PM (future 3.XXX research)**:
+  - 1.131: Self-hosted platforms YOU run and control
+  - 3.XXX: Vendor-operated SaaS where THEY run infrastructure
+
+  **Platform Tiers**:
+  1. Modern full-featured (Plane, Taiga, Worklenz) - 2020+, Docker-first, modern UX
+  2. Enterprise-grade (OpenProject, Redmine) - Mature, comprehensive, complex
+  3. Lightweight (WeKan, Vikunja, Focalboard) - Simple Kanban/task boards
+
+  **Market Context (2024-2025)**:
+  - Renewed self-hosting interest (privacy regulations, SaaS cost escalation)
+  - Docker-first deployment simplifies self-hosting
+  - Modern open source matches/exceeds proprietary UX (Plane vs JIRA)
+  - Methodology flexibility (hybrid Scrum/Kanban/Waterfall) now expected
+
+  **Research Structure** (MPSE v3.0):
+  - S1 (Rapid): ✅ Platform landscape (8 platforms), selection framework
+  - S2 (Comprehensive): 🔲 Feature matrix, performance, TCO, security
+  - S3 (Need-Driven): 🔲 Use case patterns, architecture decisions
+  - S4 (Strategic): 🔲 Vendor viability, community health, lock-in mitigation
+
+  **IMPORTANT**: Generic research only - no application-specific analysis
+
+# Last Updated
+last_updated: "2025-11-07"
+analyst: "claude-sonnet-4.5"
+---

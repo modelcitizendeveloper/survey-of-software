@@ -1,0 +1,273 @@
+published: true
+---
+experiment_number: "1.127"
+experiment_sequence: 127
+experiment_date: "2025-10-22"
+experiment_completed: "2025-10-22"
+experiment_status: complete
+discovery_method: mpse_v2_monolithic
+tier: 1
+category: "Financial Simulation & Modeling"
+migrated_from: null
+notes: "Second research item using MPSE v2.0 monolithic format. Completes top-down discovery cycle (3.004 Tier 3 SaaS → 1.127 Tier 1 Libraries) for cash flow management. Data sources fully accessible (PyPI, GitHub - no blocks unlike 3.004 G2/Capterra restrictions)."
+
+summary: |
+  Comprehensive analysis of 8 Python financial simulation libraries across 4 methodologies (S1-S4). Research evaluated pandas, numpy-financial, QuantLib, Prophet, vectorbt, PyMC, statsmodels, scipy.stats for business finance, quant finance, and research use cases. Key finding: No Swiss Army knife - must combine pandas (universal foundation, 99.9% 10-year survival) + domain-specific library (numpy-financial for cash flow, QuantLib for derivatives, Prophet for forecasting). SaaS vs DIY breakpoint: $800/month (below → buy 3.004 SaaS like Pulse/Finmark, above → DIY with libraries). Integrated 1.127 with 3.004 research: SaaS for collaboration/ease-of-use, libraries for customization/cost-savings at scale. Multi-methodology validation confirmed: S1 market structure, S2 technical comparison, S3 scenario mapping, S4 long-term viability - all four essential for complete picture.
+
+key_findings:
+  market_structure:
+    no_swiss_army_knife: "Must combine pandas (foundation) + domain library (numpy-financial, QuantLib, Prophet, PyMC, vectorbt, statsmodels)"
+    two_worlds: "Business finance (numpy-financial, Prophet, scipy.stats) vs Quant finance (QuantLib, vectorbt, PyMC) - minimal overlap"
+    universal_foundation: "pandas appears in 100% of scenarios (12 of 12), 80M downloads/month, 99.9% 10-year survival"
+    download_spectrum: "scipy/pandas (100M/mo) → statsmodels (20M) → Prophet (2M) → numpy-financial (500K) → QuantLib (150K) → vectorbt (50K)"
+    learning_curve_spectrum: "numpy-financial (2 hours) → pandas (5 hours) → Prophet (10 hours) → PyMC (40 hours) → QuantLib (100 hours)"
+
+  library_profiles:
+    tier_1_universal: "pandas (99.9% survival, 80M dl/mo, NumFOCUS), scipy (99.9%, 100M dl/mo, NumFOCUS)"
+    tier_2_business_finance: "numpy-financial (95% survival, 500K dl/mo, NumPy heritage), Prophet (70%, 2M dl/mo, Meta maintenance mode)"
+    tier_3_quant_finance: "QuantLib (95% survival, 150K dl/mo, financial industry), vectorbt (60%, 50K dl/mo, single maintainer)"
+    tier_4_statistical: "statsmodels (90% survival, 20M dl/mo, NumFOCUS), PyMC (85%, 800K dl/mo, NumFOCUS)"
+    tier_5_foundation: "scipy.stats (99.9% survival, part of scipy, NumFOCUS)"
+
+  saas_vs_diy_decision:
+    breakpoint_monthly: "$800/month SaaS cost (10-year TCO breakeven)"
+    below_300_mo: "Buy SaaS (Pulse $59-89/mo, Finmark $100-200/mo) - DIY not cost-effective"
+    300_800_mo: "Depends (SaaS if collaboration priority, DIY if data warehouse or custom models)"
+    above_800_mo: "DIY competitive (Causal $700/mo vs pandas+Prophet $22,860 3-year TCO, Mosaic $1,500/mo vs pandas+Prophet)"
+    custom_models_always_diy: "Derivatives (QuantLib), Bayesian (PyMC) - no SaaS alternative"
+
+  tco_3yr_analysis:
+    saas_pulse: "$1,044-3,204 (3.004 research)"
+    saas_finmark: "$7,200 (3.004)"
+    saas_causal: "$28,800 (3.004)"
+    saas_mosaic: "$54,000 (3.004)"
+    diy_pandas_numpy: "$11,430 (45 hours initial + 10 hours/year maintenance at $150/hour)"
+    diy_pandas_prophet: "$22,860 (90 hours initial + 20 hours/year)"
+    diy_quantlib: "$81,720 (420 hours initial + 40 hours/year)"
+
+  ten_year_survival_probability:
+    99_percent: "pandas, scipy (NumFOCUS, foundational, 15-20+ years, universal dependency)"
+    90_95_percent: "numpy-financial (NumPy heritage, 20+ year API), QuantLib (financial industry, 20+ years), statsmodels (NumFOCUS, academic)"
+    70_85_percent: "PyMC (NumFOCUS but niche, backend changes), Prophet (Meta maintenance mode, stable)"
+    60_percent: "vectorbt (single maintainer Oleg Polakow, 5 years, growing but risky)"
+    survival_correlates_governance: "NumFOCUS sponsorship = 85-99.9% survival, single maintainer = 60%"
+
+  breaking_change_risk:
+    zero_breaks_10yr: "numpy-financial (API frozen since 2001), statsmodels (v0.x 15+ years)"
+    low_breaks_10yr: "scipy (long deprecation cycles), QuantLib (mostly additions), pandas (1 major break per 5 years)"
+    medium_breaks_10yr: "PyMC (v3→v4 major 2022, v5 possible 2027-2028), Prophet (v0→v1 2021, now stable)"
+    high_breaks_10yr: "vectorbt (3 major breaks in 5 years, API redesigns every 18 months)"
+    migration_cost: "5-40 hours per breaking change (pandas, statsmodels) to 40-200 hours (PyMC model rewrites)"
+
+  skill_market:
+    abundant: "pandas (5M+ developers, $75-150/hour, days to hire)"
+    common: "numpy-financial, Prophet, statsmodels (50-100K developers, $100-200/hour, weeks to hire)"
+    specialized: "PyMC (10K developers, $175-300/hour, months to hire)"
+    rare: "QuantLib (1-5K specialists globally, $250-400/hour, months to hire, quant PhD often required)"
+    training_success_rate: "pandas+numpy-financial (80% Excel analysts succeed), QuantLib (20% - requires quant background)"
+
+  integration_3004:
+    defines_diy_category: "3.004 identified DIY ($27-45K 3yr TCO), 1.127 specifies stack (pandas+numpy-financial+Prophet)"
+    saas_below_800: "3.004 Pulse/Finmark/Jirav win (<$10K 3yr TCO, DIY not competitive)"
+    saas_above_800: "3.004 Causal/Mosaic ($28K-54K 3yr TCO), 1.127 DIY competitive ($11-23K)"
+    hybrid_approach: "Keep SaaS for board reporting (UI, collaboration), use libraries for custom analysis (derivatives, Bayesian)"
+    lock_in_comparison: "3.004 SaaS lock-in ($750-9K escape cost), 1.127 libraries zero lock-in (but time to rebuild)"
+
+  ecosystem_trends_10yr:
+    python_dominance: "70% market share (2025) → 85% (2035), R declining (25% → 10%), Excel VBA declining (40% → 15%)"
+    bayesian_growth: "PyMC downloads 4x (2020-2025), uncertainty quantification mainstream (ML regulation, risk management)"
+    julia_niche: "Grows in HPC (physics, climate) but stays <5% finance (network effects favor Python)"
+    quantlib_entrenched: "No challenger in 10 years, will remain derivatives pricing standard (95% survival)"
+    prophet_maintenance: "Meta stopped feature development (2023), 50% chance community fork by 2030 if Meta archives"
+
+  scenario_based_recommendations:
+    solo_founder_technical: "DIY (pandas + numpy-financial, $0 - your time)"
+    solo_founder_nontechnical: "SaaS (Finmark $100-200/mo, $3,600 3yr)"
+    small_business_no_dev: "SaaS (Pulse $59-89/mo, $1,044-3,204 3yr)"
+    startup_series_a_no_warehouse: "SaaS (Finmark or Causal, $7,200-28,800 3yr)"
+    startup_series_a_have_data_team: "DIY (pandas + Prophet, $22,860 3yr)"
+    mid_market_saas_expensive: "DIY (pandas + Prophet + numpy-financial, $22,860 3yr vs Mosaic $54,000)"
+    hedge_fund_derivatives: "DIY (QuantLib + pandas, $81,720 3yr - no SaaS alternative)"
+    nonprofit_limited_budget: "SaaS (PlanGuru $300-400/yr, $1,050 3yr)"
+    real_estate_one_time: "DIY (consultant, pandas + numpy-financial, $13,500 one-time)"
+    options_trader_backtesting: "DIY (vectorbt, $12,000 3yr)"
+    researcher_econometrics: "DIY (statsmodels, $0 - your time)"
+    insurance_actuary: "Hybrid (SaaS for compliance, DIY for research, varies)"
+
+  methodology_validation:
+    mpse_v2_monolithic_confirmed: "Single files per methodology (S1-4) vs multiple files - reduced file count from 30-40 to 5 files"
+    multi_methodology_essential: "S1 market structure, S2 technical depth, S3 scenario mapping, S4 long-term viability - no single methodology sufficient"
+    top_down_validated: "3.004 (Tier 3 SaaS) → 1.127 (Tier 1 Libraries) completes build-vs-buy decision framework"
+    data_sources_clean: "No blocks (vs 3.004 G2/Capterra 403 errors) - PyPI, GitHub designed for programmatic access"
+    cross_tier_integration: "1.127 defines DIY stack from 3.004, provides $800/mo SaaS breakpoint, lock-in comparison"
+
+data_sources:
+  accessible:
+    - "PyPI download statistics (pypistats.org) - public data, no restrictions"
+    - "GitHub repository data (stars, forks, commits, contributors, issues)"
+    - "Library documentation (official docs, API references)"
+    - "NumFOCUS project listings (governance, funding)"
+    - "Stack Overflow question counts (community support proxy)"
+    - "Technical blog posts and case studies"
+
+  no_blocked_sources:
+    - "Unlike 3.004 (G2/Capterra blocked), Tier 1 library research had zero access restrictions"
+    - "PyPI and GitHub designed for programmatic access"
+    - "No T&C violations (open data, open source)"
+
+  data_quality_caveats:
+    - "PyPI downloads include CI/CD (inflates numbers), not just production use"
+    - "GitHub stars = popularity contest, not usage metric (academic/research over-starred)"
+    - "Stack Overflow questions = community size proxy, not library quality"
+    - "Mitigation: Triangulate multiple sources (downloads + stars + docs + NumFOCUS backing)"
+
+  why_tier_1_cleaner_than_tier_3:
+    - "Open source = transparent (vs SaaS proprietary metrics)"
+    - "No vendor marketing bias (vs 3.004 platform-published materials)"
+    - "Factual capabilities in documentation (vs subjective user reviews)"
+
+libraries_analyzed:
+  tier_1_universal:
+    - name: "pandas"
+      downloads_per_month: "80M"
+      github_stars: "43,000"
+      survival_10yr: "99.9%"
+      learning_hours: 5
+      use_case: "Universal data foundation, time series, DataFrames"
+      governance: "NumFOCUS Sponsored"
+
+    - name: "scipy (scipy.stats module)"
+      downloads_per_month: "100M (scipy total)"
+      github_stars: "13,000"
+      survival_10yr: "99.9%"
+      learning_hours: 5
+      use_case: "Statistical distributions, Monte Carlo sampling"
+      governance: "NumFOCUS Sponsored"
+
+  tier_2_business_finance:
+    - name: "numpy-financial"
+      downloads_per_month: "500K"
+      github_stars: "~300"
+      survival_10yr: "95%"
+      learning_hours: 2
+      use_case: "Excel formulas (NPV, IRR, PMT, FV, PV)"
+      governance: "Community (NumPy heritage)"
+
+    - name: "Prophet"
+      downloads_per_month: "2M"
+      github_stars: "18,000"
+      survival_10yr: "70%"
+      learning_hours: 10
+      use_case: "Time series forecasting (revenue, seasonality)"
+      governance: "Meta (maintenance mode)"
+
+  tier_3_quant_finance:
+    - name: "QuantLib"
+      downloads_per_month: "150K"
+      github_stars: "5,000"
+      survival_10yr: "95%"
+      learning_hours: 100
+      use_case: "Derivatives pricing, fixed income, risk management"
+      governance: "QuantLib Foundation"
+
+    - name: "vectorbt"
+      downloads_per_month: "50K"
+      github_stars: "4,000"
+      survival_10yr: "60%"
+      learning_hours: 20
+      use_case: "Trading strategy backtesting, portfolio optimization"
+      governance: "Single maintainer (Oleg Polakow)"
+
+  tier_4_statistical:
+    - name: "statsmodels"
+      downloads_per_month: "20M"
+      github_stars: "10,000"
+      survival_10yr: "90%"
+      learning_hours: 10
+      use_case: "Econometrics, regression, ARIMA, VAR"
+      governance: "NumFOCUS Affiliated"
+
+    - name: "PyMC"
+      downloads_per_month: "800K"
+      github_stars: "8,000"
+      survival_10yr: "85%"
+      learning_hours: 40
+      use_case: "Bayesian inference, MCMC, uncertainty quantification"
+      governance: "NumFOCUS Sponsored"
+
+next_research_steps:
+  tier_4_architecture: "Create 4.0XX Financial Modeling Architecture decision framework (do you need formal financial modeling? Excel → SaaS → Libraries → Custom)"
+  tier_2_open_standards: "Research if open standards exist for financial data models (OFX format, FpML derivatives, likely sparse tier)"
+  cross_tier_synthesis: "Integrate 3.004 (SaaS) + 1.127 (Libraries) + future 4.0XX (Architecture) into unified decision tree"
+  application_specific: "Apply 1.127 research to specific client contexts using applications/ directory (build vs buy decision, library selection, TCO analysis)"
+
+related_research:
+  tier_3_managed_services:
+    - "3.004: Cash Flow & Financial Planning SaaS (completed) - DIY category defined by 1.127"
+
+  tier_1_libraries:
+    - "1.056: JSON Libraries (completed) - data serialization for financial models (pandas → JSON → SaaS API)"
+    - "1.040: Collections (completed) - data structures for portfolio modeling"
+    - "1.050: Compression (completed) - compress large time series datasets"
+
+  tier_4_architecture:
+    - "4.090: CRM Architecture (completed) - provides model for financial modeling architecture decision"
+
+files_created:
+  discovery:
+    - "01-discovery/S1-RAPID.md (5,500 words - market structure, 8 libraries, 3 categories)"
+    - "01-discovery/S2-COMPREHENSIVE.md (8,000 words - feature matrix, API design, performance, TCO)"
+    - "01-discovery/S3-NEED-DRIVEN.md (8,500 words - 12 scenarios mapped to library stacks)"
+    - "01-discovery/S4-STRATEGIC.md (9,500 words - 10-year survival, ecosystem trends, build-vs-buy)"
+
+  synthesis:
+    - "SYNTHESIS.md (7,500 words - integrated findings, unified decision framework, cross-tier integration with 3.004)"
+
+  metadata:
+    - "metadata.yaml (this file - structured data, key findings, data sources)"
+
+  explainer:
+    - "FINANCIAL_SIMULATION_EXPLAINER.md (planned - educational guide for Python financial libraries)"
+
+  total: "6 files (S1-4, SYNTHESIS, metadata), ~39,000 words + explainer pending, comprehensive research"
+
+client_engagement_models:
+  cto_market:
+    entry_point: "Should we build financial models in-house or buy SaaS?"
+    deliverable: "1.127 library evaluation + 3.004 SaaS evaluation + build-vs-buy TCO analysis"
+    pricing: "$10,000 strategic framework"
+    outcome: "Clear build vs buy decision, library selection if DIY, SaaS selection if buy"
+
+  data_science_team_market:
+    entry_point: "Which Python libraries should we learn for financial modeling?"
+    deliverable: "1.127 library training roadmap (pandas → numpy-financial → Prophet/QuantLib)"
+    pricing: "$2,000 consultation + training materials"
+    outcome: "Prioritized learning path, 40-hour curriculum"
+
+  hedge_fund_market:
+    entry_point: "Need derivatives pricing, VaR calculation, portfolio optimization"
+    deliverable: "QuantLib implementation (custom models, risk dashboard)"
+    pricing: "$50,000-200,000 implementation (depends on complexity)"
+    outcome: "Production derivatives pricing system, in-house risk analytics"
+
+  startup_cfo_market:
+    entry_point: "Mosaic quoted $1,500/month, should we DIY instead?"
+    deliverable: "TCO analysis (Mosaic vs pandas+Prophet), migration roadmap if DIY"
+    pricing: "$5,000 advisory package"
+    outcome: "Build vs buy decision, 3-year TCO comparison, implementation plan"
+
+framework_insights:
+  top_down_discovery_validated: "Starting at Tier 3 (3.004 SaaS) before Tier 1 (1.127 Libraries) is optimal - most companies buy first, then DIY when SaaS expensive/insufficient"
+  hardware_store_model_confirmed: "Generic catalog (3.004 + 1.127 research) + application-specific analysis (client TCO) = timeless value"
+  multi_methodology_essential: "S1-S4 each revealed different dimension - S1 (market structure), S2 (technical depth), S3 (scenarios), S4 (long-term viability)"
+  context_dependent_recommendations: "No universal 'best' library - segment matching (domain: business vs quant, size: solo vs enterprise, tech capability: analyst vs PhD)"
+  cross_tier_integration_powerful: "1.127 + 3.004 = complete build-vs-buy framework (SaaS for collaboration/ease, libraries for custom/cost at scale)"
+  numfocus_as_stability_signal: "NumFOCUS-backed libraries (pandas, scipy, statsmodels, PyMC) = 85-99.9% survival vs single maintainer (vectorbt) = 60%"
+
+alternative_ecosystems_assessed:
+  python_vs_r: "Python 70% market share (2025) growing to 85% (2035), R declining 25% → 10% (academia survives)"
+  python_vs_julia: "Julia grows in HPC but stays <5% finance (network effects favor Python, hiring pool too small)"
+  python_vs_excel: "Excel survives (1B users), but VBA declining 40% → 15% (Python-in-Excel growing)"
+  python_vs_cpp: "C++ for performance-critical (HFT, QuantLib core), but Python dominates (ease-of-use, broader ecosystem)"
+  recommendation: "Bet on Python for next 10 years (growing dominance, ML integration, corporate adoption)"
+---

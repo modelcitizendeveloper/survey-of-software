@@ -1,0 +1,104 @@
+id: "1.074"
+title: "Gradient Boosting Libraries"
+subtitle: "XGBoost, LightGBM, CatBoost"
+tier: 1
+category: "Machine Learning"
+cluster: "ml"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://xgboost.readthedocs.io/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "XGBoost - Extreme Gradient Boosting"
+
+    - url: https://github.com/dmlc/xgboost
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "XGBoost GitHub repository"
+
+    - url: https://pypi.org/project/xgboost/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "XGBoost on PyPI"
+
+    - url: https://lightgbm.readthedocs.io/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "LightGBM - Light Gradient Boosting Machine"
+
+    - url: https://github.com/microsoft/LightGBM
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "LightGBM GitHub repository"
+
+    - url: https://pypi.org/project/lightgbm/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "LightGBM on PyPI"
+
+    - url: https://catboost.ai/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "CatBoost - Categorical Boosting"
+
+    - url: https://github.com/catboost/catboost
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "CatBoost GitHub repository"
+
+    - url: https://pypi.org/project/catboost/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "CatBoost on PyPI"
+
+tags:
+  - gradient-boosting
+  - machine-learning
+  - xgboost
+  - lightgbm
+  - catboost
+
+libraries_evaluated:
+  - name: "XGBoost"
+    recommendation: "primary"
+    stars: 25000
+    license: "Apache-2.0"
+    downloads: "26M+/month"
+
+  - name: "LightGBM"
+    recommendation: "speed"
+    stars: 16000
+    license: "MIT"
+    downloads: "10M+/month"
+
+  - name: "CatBoost"
+    recommendation: "categorical"
+    stars: 7700
+    license: "Apache-2.0"
+
+key_findings:
+  - "XGBoost established leader with highest adoption"
+  - "LightGBM faster, rising star for Kaggle"
+  - "CatBoost best for categorical features"
+
+related_research:
+  - "1.070"  # Machine learning
+
+cross_references:
+  use_cases:
+    - structured-data-ml
+    - kaggle-competitions

@@ -1,0 +1,117 @@
+published: false
+id: "3.134"
+title: "AI Content Generation & Copywriting"
+category: "Marketing & Content"
+subcategory: "Content Creation Tools"
+
+research_trigger:
+  source: "market_research"
+  context: "Growing demand for AI-powered content generation among consultants and small businesses"
+  date_initiated: "2025-11-19"
+
+use_cases:
+  primary:
+    - "Social media posts (LinkedIn, Twitter/X)"
+    - "Blog content drafting"
+    - "Marketing copy"
+  workflows:
+    - "Content repurposing: 1 long-form → 10-15 social posts"
+    - "Automated content calendar population"
+    - "Brand voice consistency across platforms"
+
+research_stages:
+  s1_rapid:
+    status: "complete"
+    date_completed: "2025-11-19"
+    time_spent: "90 minutes"
+    deliverables:
+      - "Provider profiles (5 platforms)"
+      - "Comparison matrix"
+      - "Recommendation summary"
+
+  s2_comprehensive:
+    status: "not_started"
+    planned: false
+
+  s3_need_driven:
+    status: "not_started"
+    planned: false
+
+  s4_strategic:
+    status: "not_started"
+    planned: false
+
+platforms_evaluated:
+  - name: "Copy.ai"
+    focus: "Social media & short-form content"
+    pricing_range: "$0-249/mo"
+
+  - name: "Jasper"
+    focus: "Blog posts & long-form marketing"
+    pricing_range: "$39-125/mo"
+
+  - name: "API-Based (Claude/GPT-4)"
+    focus: "Custom workflows & high volume"
+    pricing_range: "$0.80-75/million tokens"
+
+  - name: "Writesonic"
+    focus: "All-in-one with SEO features"
+    pricing_range: "$39-399/mo"
+
+  - name: "Budget Alternatives (Rytr)"
+    focus: "Low-cost entry point"
+    pricing_range: "$0-29/mo"
+
+key_findings:
+  pricing_sweet_spot: "$39-79/month for consultants"
+  best_free_option: "Copy.ai (2000 words/month)"
+  best_value: "Rytr ($29/mo unlimited)"
+  best_quality: "Jasper or Claude Sonnet API"
+  best_repurposing: "Copy.ai workflows + Buffer AI Assistant"
+
+recommendations:
+  social_media_focus: "Copy.ai Pro ($49/mo)"
+  social_media_rationale: "Best balance of social media focus, repurposing workflows, and ease of use"
+
+  blog_content_focus: "Jasper Creator ($39/mo annual)"
+  blog_content_rationale: "Premium quality for long-form content and thought leadership"
+
+  technical_users: "Claude Sonnet 4 API ($3/mo typical usage)"
+  technical_rationale: "Custom workflows and maximum cost efficiency for developers"
+
+  budget_conscious: "Rytr Unlimited ($29/mo)"
+  budget_rationale: "Best value for unlimited content generation"
+
+integration_points:
+  - tool: "3.135 Social Media Scheduling"
+    integration: "Copy.ai/Jasper → Buffer/Hootsuite"
+
+  - tool: "1.131 Project Management (Vikunja)"
+    integration: "Content calendar and task management"
+
+  - tool: "Email Marketing"
+    integration: "Repurpose blog content to newsletters"
+
+application_notes:
+  implementation:
+    - "Start with free tiers to validate AI content workflow"
+    - "Test multiple platforms before committing to paid plans"
+    - "Build prompt library and brand voice guidelines"
+    - "Integrate with social scheduling tools for automation"
+
+  future_research:
+    - "S2: Comprehensive testing of API-based workflows"
+    - "S3: Custom automation pipeline development"
+    - "Integration with content management systems"
+
+related_research:
+  - "3.135: Social Media Scheduling & Automation"
+  - "1.131: Project Management (Vikunja)"
+  - "1.003: Full-text Search"
+
+notes: |
+  This research focuses on consultant and small business needs (1-5 person teams),
+  not enterprise features. Evaluation criteria prioritize ease of use, cost-effectiveness,
+  social media content generation, and content repurposing capabilities. Quality
+  assessments based on 2025 industry reports and platform documentation. Research
+  provides a "hardware store" of options for different use cases and budgets.

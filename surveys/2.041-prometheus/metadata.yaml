@@ -1,0 +1,10 @@
+published: false
+---
+experiment_number: "2.041"
+experiment_sequence: 2
+experiment_date: "2025-10-17"
+experiment_status: complete
+discovery_method: detailed_toc
+migrated_from: null
+notes: "Second Tier 2 observability standard (companion to 2.040 OpenTelemetry). Prometheus exposition format is de-facto metrics standard with 30+ compatible backends (Prometheus, Grafana Cloud, Datadog, New Relic, VictoriaMetrics, Thanos, Cortex, Mimir, M3DB, CloudWatch, Azure Monitor). CNCF Graduated 2016, production-mature. Key findings: (1) Metrics format is portable (switch backends via config, 1-5 hours); (2) PromQL query language creates dashboard/alert lock-in (20-40 hours migration); (3) OpenTelemetry metrics converging with Prometheus format (use OTel for new instrumentation); (4) True portability at exposition layer, partial lock-in at query layer. Strategic recommendation: Adopt Prometheus format for metrics portability, but expect PromQL migration costs when switching visualization backends. Real-world validation: Shopify saved millions migrating from Datadog to Prometheus+Grafana because apps already exposed Prometheus metrics. Completed with S1-S4 discovery (11 files, ~2,600 lines) plus PROMETHEUS_EXPLAINER."
+---

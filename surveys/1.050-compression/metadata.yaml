@@ -1,0 +1,68 @@
+id: "1.050"
+title: "Compression Libraries"
+subtitle: "Zstandard, LZ4, gzip, brotli"
+tier: 1
+category: "Data Processing"
+cluster: "algorithms"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://github.com/facebook/zstd
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Zstandard compression"
+
+    - url: https://pypi.org/project/zstandard/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "zstandard on PyPI"
+
+    - url: https://github.com/python-lz4/python-lz4
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "LZ4 Python bindings"
+
+    - url: https://pypi.org/project/lz4/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "lz4 on PyPI"
+
+tags:
+  - compression
+  - zstandard
+  - lz4
+  - performance
+
+libraries_evaluated:
+  - name: "Zstandard"
+    recommendation: "primary"
+    license: "BSD/GPLv2"
+
+  - name: "LZ4"
+    recommendation: "speed"
+    license: "BSD-2-Clause"
+
+key_findings:
+  - "Zstandard best compression ratio"
+  - "LZ4 fastest compression speed"
+
+related_research:
+  - "1.055"  # Binary serialization
+
+cross_references:
+  use_cases:
+    - data-compression
+    - file-archiving

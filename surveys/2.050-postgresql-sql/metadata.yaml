@@ -1,0 +1,10 @@
+published: false
+---
+experiment_number: "2.050"
+experiment_sequence: 1
+experiment_date: "2025-10-16"
+experiment_status: complete
+discovery_method: detailed_toc
+migrated_from: null
+notes: "First Tier 2 data standards experiment - PostgreSQL as database portability standard. De-facto open standard with 50+ compatible managed providers (Supabase, Neon, AWS RDS, Google Cloud SQL, Azure Database, DigitalOcean, Render, Railway, Heroku, Crunchy Data, Timescale, plus distributed: CockroachDB, YugabyteDB, Aurora PostgreSQL). PostgreSQL Global Development Group governance (community, 30+ years stable). Key findings: (1) 96% SQL:2016 standard compliance (170/177 mandatory features); (2) pg_dump/restore provides schema+data portability across all providers (8-40 hours migration depending on size); (3) Lock-in: LOW for core SQL, MEDIUM for extensions (PostGIS, pgvector, TimescaleDB provider support varies); (4) Performance portable with standard query patterns, tuning may differ by provider; (5) Strategic recommendation: Choose PostgreSQL for database portability—switch providers via dump/restore vs months rewriting for MongoDB/DynamoDB migrations. Completed with S1-S4 discovery (4 files, ~1,800 lines) plus POSTGRESQL_EXPLAINER (business-focused). Migration complexity: Core features 8-16 hours, with extensions 20-40 hours, vs 80-200 hours for NoSQL migrations."
+---

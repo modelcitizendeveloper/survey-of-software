@@ -1,0 +1,10 @@
+published: false
+---
+experiment_number: "3.080.2"
+experiment_sequence: 15  # 15th Tier 3 experiment
+experiment_date: "2025-10-20"
+experiment_status: monolithic
+discovery_method: monolithic
+migrated_from: null
+notes: "Venue/space booking management software for private events. Covers restaurants, wine bars, event spaces, hotels, conference centers. Comprehensive analysis delivered as single MPSE_ANALYSIS.md file (72KB). Content covers S1-S4 methodologies but not structured as separate files per MPSE v3.0 spec. Evaluates 15+ platforms including Perfect Venue, Tripleseat, Event Temple, Planning Pod. Generic reference material - no application-specific content."
+---

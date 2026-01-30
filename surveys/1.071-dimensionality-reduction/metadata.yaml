@@ -1,0 +1,83 @@
+id: "1.071"
+title: "Dimensionality Reduction"
+subtitle: "scikit-learn, UMAP, t-SNE, PCA"
+tier: 1
+category: "Machine Learning"
+cluster: "ml"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://scikit-learn.org/stable/modules/decomposition.html
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "scikit-learn dimensionality reduction"
+
+    - url: https://github.com/scikit-learn/scikit-learn
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "scikit-learn GitHub repository"
+
+    - url: https://pypi.org/project/scikit-learn/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "scikit-learn on PyPI"
+
+    - url: https://umap-learn.readthedocs.io/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "UMAP - Uniform Manifold Approximation"
+
+    - url: https://github.com/lmcinnes/umap
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "UMAP GitHub repository"
+
+    - url: https://pypi.org/project/umap-learn/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "umap-learn on PyPI"
+
+tags:
+  - dimensionality-reduction
+  - machine-learning
+  - pca
+  - umap
+  - tsne
+
+libraries_evaluated:
+  - name: "scikit-learn"
+    recommendation: "primary"
+    stars: 58000
+    license: "BSD-3-Clause"
+
+  - name: "UMAP"
+    recommendation: "visualization"
+    stars: 7000
+    license: "BSD-3-Clause"
+
+key_findings:
+  - "scikit-learn dominant for dimensionality reduction"
+  - "UMAP rising star for visualization"
+  - "PCA most common technique"
+
+related_research:
+  - "1.070"  # Machine learning
+
+cross_references:
+  use_cases:
+    - data-visualization
+    - feature-extraction
+    - data-compression

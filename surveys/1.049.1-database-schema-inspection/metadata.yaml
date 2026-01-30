@@ -1,0 +1,52 @@
+published: true
+---
+experiment_number: "1.049.1"
+experiment_sequence: 29
+experiment_date: "2025-12-04"
+experiment_status: in_progress
+discovery_method: detailed_toc
+migrated_from: null
+notes: "Database schema inspection, diffing, and migration generation tools. SQLAlchemy Inspector, Alembic, sqlalchemy-diff, sqlacodegen."
+
+data_sources:
+  performance_benchmarks:
+    - source: "official_documentation"
+      notes: "No custom benchmarks - focus on capabilities"
+  pricing_data:
+    source: "N/A"
+    accessed: "2025-12-04"
+    notes: "All tools are open source"
+  feature_comparisons:
+    source: "official_documentation"
+    accessed: "2025-12-04"
+  market_data:
+    github_stars: "github_api"
+    downloads: "pypistats.org"
+
+legal_review:
+  tos_compliance: "verified"
+  tos_issues: []
+  prohibited_sources: []
+  copyright_cleared: true
+
+publication_clearance:
+  can_publish_publicly: true
+  reasons: []
+  safe_for_subscribers: true
+  requires_disclaimer: false
+
+benchmark_methodology:
+  captured: false
+  environment: ""
+  reproducible: false
+  code_available: ""
+
+token_usage:
+  total_tokens: 0
+  input_tokens: 0
+  output_tokens: 0
+  model: "claude-opus-4-5"
+  session_count: 1
+  cost_estimate: "$0.00"
+  notes: "To be updated on completion"
+---

@@ -1,0 +1,139 @@
+id: "1.002"
+title: "Fuzzy String Search Libraries"
+subtitle: "RapidFuzz, FuzzyWuzzy/TheFuzz, Levenshtein, Jellyfish, difflib"
+tier: 1
+category: "Text Processing & NLP"
+cluster: "text-processing"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://github.com/maxbachmann/RapidFuzz
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "RapidFuzz - Fast fuzzy string matching"
+
+    - url: https://pypi.org/project/rapidfuzz/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "RapidFuzz on PyPI"
+
+    - url: https://github.com/seatgeek/thefuzz
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "TheFuzz (formerly FuzzyWuzzy)"
+
+    - url: https://pypi.org/project/thefuzz/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "TheFuzz on PyPI"
+
+    - url: https://github.com/maxbachmann/Levenshtein
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "python-Levenshtein library"
+
+    - url: https://pypi.org/project/Levenshtein/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "Levenshtein on PyPI"
+
+    - url: https://github.com/jamesturk/jellyfish
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Jellyfish - Phonetic matching"
+
+    - url: https://pypi.org/project/jellyfish/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "Jellyfish on PyPI"
+
+    - url: https://docs.python.org/3/library/difflib.html
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Python difflib (built-in)"
+
+  secondary:
+    - url: https://github.com/moj-analytical-services/splink
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Splink - Scalable record linkage"
+
+    - url: https://github.com/dedupeio/dedupe
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "dedupe - ML-powered deduplication"
+
+    - url: https://github.com/J535D165/recordlinkage
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Python Record Linkage Toolkit"
+
+tags:
+  - fuzzy-matching
+  - string-similarity
+  - levenshtein-distance
+  - text-processing
+  - deduplication
+  - record-linkage
+
+libraries_evaluated:
+  - name: "RapidFuzz"
+    recommendation: "primary"
+    stars: 3200
+    license: "MIT"
+    performance: "2500 pairs/sec"
+
+  - name: "FuzzyWuzzy/TheFuzz"
+    recommendation: "legacy"
+    stars: 2100
+    license: "GPL"
+    performance: "1200 pairs/sec"
+
+  - name: "python-Levenshtein"
+    recommendation: "specialized"
+    stars: 1500
+    license: "BSD"
+    performance: "1800 pairs/sec"
+
+  - name: "Jellyfish"
+    recommendation: "phonetic"
+    stars: 2000
+    license: "BSD"
+    performance: "1600 pairs/sec"
+
+  - name: "Python difflib"
+    recommendation: "built-in"
+    license: "Python"
+    performance: "1000 pairs/sec"
+
+key_findings:
+  - "RapidFuzz is 40% faster than FuzzyWuzzy with MIT license"
+  - "Drop-in replacement for FuzzyWuzzy - trivial migration"
+  - "Jellyfish best for phonetic matching (Soundex, Metaphone)"
+  - "python-Levenshtein excels with non-Latin characters"
+  - "difflib suitable when external dependencies not allowed"
+
+related_research:
+  - "1.100"  # Text processing
+  - "1.032"  # String metrics (planned)
+  - "1.030"  # String matching (planned)
+
+cross_references:
+  applications:
+    - data-deduplication
+    - spell-checking
+    - entity-matching
+    - name-matching

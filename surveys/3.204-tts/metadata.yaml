@@ -1,0 +1,116 @@
+code: '3.204'
+title: Text-to-Speech / Speech Synthesis
+tier: 3
+category: Speech & Audio AI
+status: s1_s2_complete
+published: false
+started: 2025-11-25
+s1_completed: 2025-11-25
+s2_completed: 2025-11-25
+estimated_hours: 8-10
+actual_hours_s1: 3
+actual_hours_s2: 3
+actual_hours_total: 6
+s3_s4_status: planned_not_started
+
+rationale: |
+  HIGH PRIORITY - Language-learning app integration (listening comprehension drills).
+  Generate native pronunciation audio for vocabulary practice.
+  Discovered from 3.202 research + language-learning app ROADMAP (line 267: "Audio pronunciation (forvo API?)").
+
+platforms_evaluated:
+  cloud_enterprise:
+    - Google Cloud TTS (380+ voices, 75+ languages, $16/M)
+    - Amazon Polly (60+ voices, 30+ languages, $16/M)
+    - Azure TTS (400+ voices, 140+ languages, $16/M)
+  cloud_premium:
+    - ElevenLabs (70+ languages, $20-66/M, best quality)
+    - Play.ht (800+ voices, $99/month unlimited)
+  open_source:
+    - Coqui TTS (17 languages, voice cloning, $0/char)
+    - Piper TTS (50+ languages, edge-friendly, $0/char)
+
+key_findings:
+  - No universal winner (depends on volume, quality needs, budget)
+  - Azure TTS unique for pronunciation assessment (language learning)
+  - Play.ht Unlimited best value for >6M chars/month ($99/month flat)
+  - ElevenLabs 4-16× more expensive but best voice quality (4.14 MOS)
+  - Piper TTS fastest open-source (runs on Raspberry Pi)
+  - Coqui TTS best open-source voice cloning (6-second samples)
+  - Cloud providers clustered at $16/M (Google/Azure/Amazon)
+
+recommended_platforms:
+  language_learning_basic: "Google Cloud TTS (75+ languages, SSML, $16/M)"
+  language_learning_advanced: "Azure TTS (pronunciation assessment built-in)"
+  language_learning_high_volume: "Play.ht Unlimited ($99/month flat rate)"
+  premium_ux: "ElevenLabs (best voice quality)"
+  voice_cloning_paid: "ElevenLabs"
+  voice_cloning_free: "Coqui TTS"
+  edge_offline: "Piper TTS (Raspberry Pi compatible)"
+
+s1_documents:
+  - 00-SYNTHESIS.md (comprehensive comparison + recommendations)
+  - 01-google-cloud-tts.md
+  - 02-amazon-polly.md
+  - 03-azure-tts.md
+  - 04-elevenlabs.md
+  - 05-playht.md
+  - 06-coqui-tts.md
+  - 07-piper-tts.md
+
+s1_stats:
+  documents: 8
+  platforms: 7
+  lines: 1523
+  size_kb: 92
+
+s2_documents:
+  - 00-README.md (S2 summary)
+  - 01-feature-matrix.md (60+ features × 7 platforms)
+  - 02-pricing-tco.md (6 volume scenarios, break-even analysis)
+  - 03-quality-latency-benchmarks.md (MOS scores, latency measurements)
+  - 04-integration-complexity.md (time-to-first-audio, code complexity)
+
+s2_stats:
+  documents: 5
+  platforms: 7
+  lines: 2202
+  size_kb: 96
+
+total_stats:
+  documents: 13
+  lines: 3725
+  size_kb: 188
+
+domain_explainer:
+  created: 2025-11-25
+  purpose: Business-facing technical glossary (MOS, prosody, neural voices, SSML, latency, pricing models)
+  audience: Non-technical decision-makers, product managers, founders
+
+next_steps:
+  s2_comprehensive:
+    - Feature matrix (50+ features × 7 providers)
+    - Pricing TCO (6 volume scenarios)
+    - Voice quality benchmarks (subjective MOS testing)
+    - Latency benchmarks (real-time synthesis)
+    - Integration complexity (time-to-first-audio)
+  s3_need_driven:
+    - 6 use case scenarios (startup, enterprise, voice assistant, audiobook, accessibility, localization)
+    - Architecture patterns (cloud, hybrid, self-hosted)
+    - Implementation guides (code examples)
+  s4_strategic:
+    - Vendor viability deep-dive (10-year horizon)
+    - Lock-in mitigation strategies
+    - SSML standardization vs proprietary
+    - Voice quality evolution (2025-2030)
+
+trigger: Language-learning app audio integration (Nov 24, 2025)
+related_research:
+  - 3.202 Speech & Audio AI (completed Nov 24, 2025)
+  - 3.205 Pronunciation Assessment (next in queue)
+  - 1.106.2 TTS Libraries (Tier 1 self-hosted alternatives)
+
+integration_relationships:
+  upstream: "3.202 Speech-to-Text (transcription)"
+  downstream: "3.205 Pronunciation Assessment (speaks + scores)"
+  adjacent: "3.203 Translation Services (text transformation)"

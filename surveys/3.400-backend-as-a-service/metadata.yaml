@@ -1,0 +1,10 @@
+published: false
+---
+experiment_number: "3.400"
+experiment_sequence: 11
+experiment_date: "2025-10-09"
+experiment_status: complete
+discovery_method: detailed_toc
+migrated_from: "2.400"
+notes: "BaaS platform discovery - detailed TOC structure. Moved from 2.200 to 2.400 in Oct 2025 reorganization (platform aggregations tier), then renumbered from 2.400 to 3.400 in October 2025 to create control-to-convenience spectrum (1.XXX DIY → 2.XXX Open Standards → 3.XXX Managed Services)"
+---

@@ -1,0 +1,110 @@
+published: false
+code: "1.209"
+title: "Local LLM Serving"
+category: "AI & ML Infrastructure"
+status: "4ps-complete"
+started: "2026-01-18"
+completed: "2026-01-18"
+methodology: "4PS"
+
+description: |
+  Comprehensive evaluation of local LLM serving solutions (Ollama, vLLM, llama.cpp, LM Studio).
+  Four-Pass Solution Survey methodology revealed market segmentation into complementary niches.
+  No universal winner - choose based on constraint: ease (Ollama), performance (vLLM), portability (llama.cpp), GUI (LM Studio).
+
+research_question: |
+  What are the leading local LLM serving solutions in 2026?
+  How do they compare in performance, ease of use, and long-term viability?
+  Which solution is best for different deployment scenarios?
+
+libraries_profiled:
+  - name: "Ollama"
+    github_stars: 57000
+    primary_strength: "Ease of use (5-min setup)"
+    best_for: "Development, internal tools, small production"
+
+  - name: "vLLM"
+    github_stars: 19000
+    primary_strength: "Performance (24x faster, 85% GPU util)"
+    best_for: "Production scale, high concurrency"
+
+  - name: "llama.cpp"
+    github_stars: 51000
+    primary_strength: "Portability (runs everywhere)"
+    best_for: "CPU/edge/mobile deployment"
+
+  - name: "LM Studio"
+    downloads: "1M+"
+    primary_strength: "GUI experience"
+    best_for: "Personal desktop, non-developers"
+
+key_findings:
+  - finding: "Market has segmented into complementary solutions, not competing ones"
+    implication: "Choose based on primary constraint, not 'best overall'"
+
+  - finding: "vLLM provides 3x higher throughput than Ollama (2400 vs 800 tok/s)"
+    implication: "Performance premium justifies complexity for high-traffic production"
+
+  - finding: "llama.cpp is only viable CPU option (30 tok/s vs 0 for vLLM)"
+    implication: "Required tool for edge/IoT deployments"
+
+  - finding: "Ollama covers 80% of use cases with minimal setup"
+    implication: "Safe default for most developers"
+
+  - finding: "vLLM has lowest strategic risk (UC Berkeley backing, 95% 5-year confidence)"
+    implication: "Best choice for long-term production infrastructure"
+
+recommendations:
+  default: "Ollama (ease + good enough performance)"
+  production_scale: "vLLM (high traffic, maximum GPU utilization)"
+  edge_deployment: "llama.cpp (CPU/mobile/IoT)"
+  personal_desktop: "LM Studio (GUI required)"
+  strategic_bet: "vLLM (institutional backing, lowest long-term risk)"
+
+methodology_results:
+  s1_rapid:
+    primary_rec: "Ollama"
+    confidence: "80%"
+    rationale: "Most popular, easiest to use"
+
+  s2_comprehensive:
+    primary_rec: "vLLM"
+    confidence: "85%"
+    rationale: "3x faster throughput, best GPU efficiency"
+
+  s3_need_driven:
+    primary_rec: "Ollama"
+    confidence: "85%"
+    rationale: "Fits most common use cases"
+
+  s4_strategic:
+    primary_rec: "vLLM"
+    confidence: "85%"
+    rationale: "Institutional backing, lowest 5-10 year risk"
+
+convergence_pattern: "MEDIUM-HIGH"
+convergence_notes: |
+  All 4 methodologies agree on top 3 solutions (Ollama, vLLM, llama.cpp).
+  Divergence on primary recommendation reveals trade-offs:
+  - S1 & S3 prioritize ease of use → Ollama
+  - S2 & S4 prioritize performance/viability → vLLM
+  - Context determines winner (no universal best)
+
+documents_created: 30
+total_lines: 5268
+research_hours: 2.5
+
+4ps_structure:
+  domain_explainer: "DOMAIN_EXPLAINER.md (12-min read)"
+  s1_rapid: "6 files (approach + 4 libraries + recommendation)"
+  s2_comprehensive: "7 files (approach + 4 libraries + feature matrix + recommendation)"
+  s3_need_driven: "7 files (approach + 5 use cases + recommendation)"
+  s4_strategic: "6 files (approach + 4 maturity assessments + recommendation)"
+  synthesis: "DISCOVERY_TOC.md (convergence analysis)"
+
+sources:
+  - "GitHub repositories (Ollama, vLLM, llama.cpp)"
+  - "Official benchmarks and documentation"
+  - "Community discussions (r/LocalLLaMA, HN)"
+  - "Production deployment case studies"
+  - "PyPI/Docker Hub metrics"

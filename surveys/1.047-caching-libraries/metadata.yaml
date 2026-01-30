@@ -1,0 +1,82 @@
+id: "1.047"
+title: "Caching Libraries"
+subtitle: "redis-py, memcached, cachetools, DiskCache"
+tier: 1
+category: "Performance & Optimization"
+cluster: "backend"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://github.com/redis/redis-py
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "redis-py - Python client for Redis"
+
+    - url: https://pypi.org/project/redis/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "redis-py on PyPI"
+
+    - url: https://github.com/linsomniac/python-memcached
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "python-memcached client"
+
+    - url: https://github.com/grantjenks/python-diskcache
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "DiskCache - Disk and file backed cache"
+
+    - url: https://pypi.org/project/diskcache/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "DiskCache on PyPI"
+
+tags:
+  - caching
+  - redis
+  - memcached
+  - performance
+
+libraries_evaluated:
+  - name: "redis-py"
+    recommendation: "primary"
+    stars: 12000
+    license: "MIT"
+
+  - name: "memcached"
+    recommendation: "specialized"
+    stars: 900
+    license: "Python"
+
+  - name: "DiskCache"
+    recommendation: "local-persistence"
+    stars: 2000
+    license: "Apache-2.0"
+
+key_findings:
+  - "Redis dominates distributed caching"
+  - "Memcached best for pure caching without features"
+  - "DiskCache excellent for local persistence"
+
+related_research:
+  - "1.043.1"  # Task queues
+
+cross_references:
+  use_cases:
+    - distributed-caching
+    - session-storage
+    - api-rate-limiting

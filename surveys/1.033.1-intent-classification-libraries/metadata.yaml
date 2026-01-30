@@ -1,0 +1,131 @@
+id: "1.033.1"
+title: "Intent Classification Libraries"
+subtitle: "SetFit, BART Zero-Shot, DistilBERT, Rasa DIET"
+tier: 1
+category: "Text Processing & NLP"
+cluster: "text-processing"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://huggingface.co/facebook/bart-large-mnli
+      type: official_model
+      accessed: "2025-10-17"
+      description: "BART Zero-Shot Classification model"
+
+    - url: https://huggingface.co/docs/transformers/main_classes/pipelines#transformers.ZeroShotClassificationPipeline
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Zero-Shot Classification Pipeline docs"
+
+    - url: https://github.com/huggingface/setfit
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "SetFit - Efficient few-shot learning"
+
+    - url: https://pypi.org/project/setfit/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "SetFit on PyPI"
+
+    - url: https://huggingface.co/distilbert-base-uncased
+      type: official_model
+      accessed: "2025-10-17"
+      description: "DistilBERT base model"
+
+    - url: https://huggingface.co/docs/transformers/model_doc/distilbert
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "DistilBERT documentation"
+
+    - url: https://rasa.com/docs/rasa/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Rasa NLU documentation"
+
+    - url: https://github.com/RasaHQ/rasa
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Rasa GitHub repository"
+
+    - url: https://pypi.org/project/rasa/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "Rasa on PyPI"
+
+  secondary:
+    - url: https://www.sbert.net/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Sentence Transformers (underlying SetFit)"
+
+    - url: https://platform.openai.com/docs/guides/fine-tuning
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "GPT-4 Fine-tuning (mentioned for comparison)"
+
+tags:
+  - intent-classification
+  - nlp
+  - few-shot-learning
+  - zero-shot-learning
+  - conversational-ai
+  - setfit
+  - transformers
+
+libraries_evaluated:
+  - name: "BART Zero-Shot"
+    recommendation: "rapid-prototyping"
+    latency: "200-500ms"
+    accuracy: "85-90%"
+    training_required: "None"
+
+  - name: "SetFit"
+    recommendation: "primary"
+    latency: "50-100ms"
+    accuracy: "95%+"
+    training_required: "8-64 examples"
+
+  - name: "DistilBERT"
+    recommendation: "production-speed"
+    latency: "<50ms"
+    accuracy: "95%+"
+    training_required: "100-1000 examples"
+
+  - name: "Rasa DIET"
+    recommendation: "conversational"
+    latency: "100-200ms"
+    accuracy: "95%+"
+    training_required: "500+ examples"
+
+key_findings:
+  - "SetFit best balance: 95%+ accuracy with 8-64 examples"
+  - "DistilBERT fastest for production (<50ms latency)"
+  - "Zero-shot best for dynamic categories, no training"
+  - "Rasa DIET best for conversational AI with entity extraction"
+  - "All solutions faster than Ollama prototype (2-5s)"
+
+related_research:
+  - "1.033"    # NLP libraries (parent)
+  - "1.200"    # LLM orchestration
+  - "3.200"    # LLM APIs
+
+cross_references:
+  applications:
+    - qrcards
+  use_cases:
+    - support-ticket-triage
+    - chatbot-intent
+    - command-classification

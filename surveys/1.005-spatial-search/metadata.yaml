@@ -1,0 +1,183 @@
+id: "1.005"
+title: "Spatial Search"
+subtitle: "PostGIS, Google Maps, Elasticsearch Geo, Leaflet, Shapely"
+tier: 1
+category: "Spatial & GIS"
+cluster: "spatial-analysis"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://postgis.net/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "PostGIS - Spatial database extension for PostgreSQL"
+
+    - url: https://github.com/postgis/postgis
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "PostGIS GitHub repository"
+
+    - url: https://leafletjs.com/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Leaflet - Open-source JavaScript mapping library"
+
+    - url: https://github.com/Leaflet/Leaflet
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Leaflet GitHub repository"
+
+    - url: https://shapely.readthedocs.io/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Shapely - Python geometric objects"
+
+    - url: https://github.com/shapely/shapely
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Shapely GitHub repository"
+
+    - url: https://pypi.org/project/shapely/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "Shapely on PyPI"
+
+    - url: https://trac.osgeo.org/geos/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "GEOS - Geometry Engine Open Source"
+
+    - url: https://github.com/libgeos/geos
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "GEOS GitHub repository"
+
+    - url: https://turfjs.org/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Turf.js - Geospatial analysis for JavaScript"
+
+    - url: https://github.com/Turfjs/turf
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Turf.js GitHub repository"
+
+    - url: https://www.elastic.co/guide/en/elasticsearch/reference/current/geo-queries.html
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Elasticsearch Geo Queries"
+
+    - url: https://github.com/elastic/elasticsearch
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Elasticsearch GitHub repository"
+
+  secondary:
+    - url: https://developers.google.com/maps
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Google Maps Platform"
+
+    - url: https://aws.amazon.com/location/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "AWS Location Service"
+
+    - url: https://www.mongodb.com/docs/manual/geospatial-queries/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "MongoDB Geospatial Queries"
+
+    - url: https://github.com/uber/h3
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "H3 - Hexagonal hierarchical spatial index"
+
+    - url: https://github.com/Project-OSRM/osrm-backend
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "OSRM - Open Source Routing Machine"
+
+    - url: https://sedona.apache.org/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Apache Sedona - Spatial data processing"
+
+    - url: https://qgis.org/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "QGIS - Open source GIS"
+
+tags:
+  - spatial-search
+  - geospatial
+  - gis
+  - mapping
+  - location
+  - postgis
+  - elasticsearch
+  - geocoding
+
+libraries_evaluated:
+  - name: "PostGIS"
+    recommendation: "primary"
+    stars: 2000
+    license: "GPL-2.0"
+
+  - name: "Leaflet"
+    recommendation: "primary"
+    stars: 40000
+    license: "BSD-2-Clause"
+
+  - name: "Shapely"
+    recommendation: "primary"
+    stars: 3500
+    license: "BSD-3-Clause"
+
+  - name: "Elasticsearch Geo"
+    recommendation: "search-integration"
+    stars: 69000
+    license: "SSPL"
+
+  - name: "Turf.js"
+    recommendation: "javascript"
+    stars: 8500
+    license: "MIT"
+
+  - name: "GEOS"
+    recommendation: "underlying-engine"
+    stars: 1000
+    license: "LGPL"
+
+key_findings:
+  - "PostGIS is the gold standard for spatial databases"
+  - "Leaflet dominates open-source web mapping"
+  - "Google Maps best for customer-facing features"
+  - "Elasticsearch excellent for location + text search"
+  - "80/20 rule: Google Maps + PostGIS covers most needs"
+
+related_research:
+  - "1.087"  # Geographic libraries (planned)
+  - "1.089"  # Spatial indexing (planned)
+  - "1.010"  # Graph analysis
+
+cross_references:
+  use_cases:
+    - location-search
+    - routing
+    - geofencing
+    - spatial-analytics
+    - mapping

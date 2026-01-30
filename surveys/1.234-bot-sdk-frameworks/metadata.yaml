@@ -1,0 +1,48 @@
+id: "1.234"
+title: "Bot SDK Frameworks"
+tier: 1
+category: "Self-Operated Tools - Bot Development"
+status: "S1 complete"
+published: false
+created: "2025-12-22"
+updated: "2025-12-22"
+
+discovery:
+  S1_rapid: "complete"
+  S2_comprehensive: "not started"
+  S3_need_driven: "not started"
+  S4_strategic: "not started"
+
+platforms_analyzed:
+  - name: "Matrix"
+    sdk: "matrix-nio"
+    language: "Python"
+  - name: "Discord"
+    sdk: "discord.py"
+    language: "Python"
+  - name: "Telegram"
+    sdk: "python-telegram-bot"
+    language: "Python"
+  - name: "Nostr"
+    sdk: "nostr-tools"
+    language: "JavaScript"
+  - name: "Slack"
+    sdk: "slack-bolt"
+    language: "Python"
+
+key_findings:
+  - "Discord has best slash command UX but centralized"
+  - "Telegram fastest MVP (2-4h) but centralized"
+  - "Matrix only option with E2EE + self-hosting"
+  - "Matrix lacks native slash commands (use ! prefix)"
+  - "Nostr lacks interactive components, has Lightning payments"
+
+trigger: "Bot SDK comparison for chat platform integrations"
+
+tags:
+  - "bot-sdk"
+  - "matrix-nio"
+  - "discord-py"
+  - "telegram-bot"
+  - "nostr-tools"
+  - "slack-bolt"

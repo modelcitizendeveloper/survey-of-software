@@ -1,0 +1,82 @@
+id: "1.061"
+title: "Hashing Libraries"
+subtitle: "xxhash, blake3, hashlib, sha3"
+tier: 1
+category: "Security & Cryptography"
+cluster: "security"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://github.com/ifduyue/python-xxhash
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "python-xxhash - Fast hashing"
+
+    - url: https://pypi.org/project/xxhash/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "xxhash on PyPI"
+
+    - url: https://github.com/oconnor663/blake3-py
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "blake3-py - Modern cryptographic hashing"
+
+    - url: https://pypi.org/project/blake3/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "blake3 on PyPI"
+
+    - url: https://docs.python.org/3/library/hashlib.html
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "hashlib - Built-in hashing"
+
+tags:
+  - hashing
+  - cryptography
+  - blake3
+  - xxhash
+
+libraries_evaluated:
+  - name: "xxhash"
+    recommendation: "non-crypto"
+    stars: 400
+    license: "BSD-2-Clause"
+
+  - name: "blake3"
+    recommendation: "crypto"
+    stars: 900
+    license: "Apache-2.0"
+
+  - name: "hashlib"
+    recommendation: "baseline"
+    license: "Python"
+
+key_findings:
+  - "xxhash best for non-cryptographic hashing"
+  - "blake3 modern cryptographic choice"
+  - "hashlib universal baseline"
+
+related_research:
+  - "1.060"  # Cryptographic libraries
+  - "1.062"  # Password hashing
+
+cross_references:
+  use_cases:
+    - checksums
+    - data-integrity
+    - cryptographic-hashing

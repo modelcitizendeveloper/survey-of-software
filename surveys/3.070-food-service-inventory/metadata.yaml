@@ -1,0 +1,288 @@
+published: false
+# 3.070: Food Service Inventory Management - Experiment Metadata
+
+experiment:
+  id: "3.070"
+  title: "Food Service Inventory Management"
+  category: "Operations & Business Management"
+  tier: 3
+  status: "s1_complete"
+  started: "2025-11-30"
+  completed: null
+  discovery_method: "detailed_toc"
+
+trigger:
+  source: "Restaurant industry cost pressure analysis"
+  date: "2025-11-24"
+  description: "Seattle restaurant cost reduction opportunity - food waste and inventory management gap in existing research"
+  validation: "Food waste = 4-10% of food costs ($20K-100K/year for medium restaurant). Systematic inventory tracking reduces waste 2-6 percentage points."
+  related_research:
+    - "3.005: POS Systems (sales data integration)"
+    - "3.006: Accounting Software (COGS tracking)"
+    - "3.072: Food service suppliers (ordering integration)"
+    - "3.075: Labor Scheduling (labor cost optimization)"
+    - "1.096: Scheduling Libraries (DIY scheduling algorithms)"
+    - "1.120: Simulation Libraries (inventory optimization modeling)"
+
+scope:
+  domain: "Food Service Inventory Management Platforms"
+  definition: "SaaS and open-source platforms for tracking ingredient inventory, recipe costing, purchasing, waste management, and COGS reporting for commercial kitchens"
+  includes:
+    - "Restaurant inventory management (MarketMan, xtraCHEF, BlueCart)"
+    - "Bar inventory management (WISK, Craftable Bevager)"
+    - "Hotel F&B inventory (Craftable House)"
+    - "Open-source ERP solutions (Odoo, ERPNext+URY)"
+    - "Recipe explosion and ingredient tracking"
+    - "Invoice automation and digitization"
+    - "Perishable inventory with expiry dates"
+    - "Waste tracking (spoilage, over-portioning, theft)"
+    - "Variance analysis (theoretical vs actual usage)"
+    - "Purchase order automation"
+    - "Multi-location inventory management"
+    - "POS integration for COGS tracking"
+  excludes:
+    - "Generic retail inventory systems (not food-specific)"
+    - "Supply chain management (transportation, warehousing)"
+    - "Menu engineering software (separate category)"
+    - "Recipe development tools (cooking-focused, not inventory)"
+    - "Production scheduling (separate 3.074)"
+    - "Labor scheduling (separate 3.075)"
+
+providers:
+  tier_1_saas_comprehensive:
+    - name: "MarketMan"
+      research_depth: "s1_complete"
+      rationale: "Market leader, AI forecasting, multi-location, $200-400/mo"
+    - name: "xtraCHEF by Toast"
+      research_depth: "s1_complete"
+      rationale: "Toast ecosystem, invoice automation, $149/mo starting"
+    - name: "Craftable (Foodager/Bevager/House)"
+      research_depth: "s1_complete"
+      rationale: "Bar/hotel specialization, fast counts (30-45 min), profit management"
+
+  tier_2_saas_ordering_focused:
+    - name: "BlueCart"
+      research_depth: "s1_complete"
+      rationale: "Supplier marketplace, predictive AI (2025), low cost ($0.01-150/mo)"
+
+  tier_3_saas_premium_bar:
+    - name: "WISK"
+      research_depth: "s1_complete"
+      rationale: "Bar-focused, hardware scales, 99.7% accuracy, $249/mo, premium positioning"
+
+  tier_4_open_source_erp:
+    - name: "Odoo"
+      research_depth: "s1_complete"
+      rationale: "Open-source ERP, Community (free) + Enterprise ($35-150/user), restaurant modules available"
+    - name: "ERPNext + URY"
+      research_depth: "s1_complete"
+      rationale: "Open-source ERP, restaurant-specific URY extension, proven 10+ outlets, free + hosting costs"
+
+research_questions:
+  primary:
+    - "SaaS vs open-source ERP - ROI comparison for single location vs multi-location?"
+    - "What is cost range? (per month, per location, per user)"
+    - "Food waste reduction potential - which platforms deliver 2-6% savings?"
+    - "Bar shrink reduction - which platforms catch theft/overpouring (5-15% typical shrink)?"
+    - "Implementation complexity - time to first inventory count?"
+
+  secondary:
+    - "Invoice automation ROI - time savings vs platform cost?"
+    - "POS integration depth - which platforms sync real-time COGS?"
+    - "Supplier marketplace value - does BlueCart network reduce procurement costs?"
+    - "Hardware integration - do Bluetooth scales justify premium (WISK)?"
+    - "Multi-location scalability - when does open-source ERP become cost-effective?"
+    - "Offline mode - which platforms work without internet (ERPNext+URY, WISK)?"
+
+mpse_stages:
+  s1_rapid:
+    status: "completed"
+    completed_date: "2025-11-30"
+    goal: "Platform overviews - 7 solutions (5 SaaS + 2 open source)"
+    providers: 7
+    time_actual: "4 hours"
+    deliverables:
+      - "00-SYNTHESIS-quick-recommendations.md"
+      - "01-marketman.md"
+      - "02-xtrachef-toast.md"
+      - "03-bluecart.md"
+      - "04-craftable.md"
+      - "05-wisk.md"
+      - "06-odoo.md"
+      - "07-erpnext-ury.md"
+
+  s2_comprehensive:
+    status: "planned"
+    goal: "Feature matrix (100+ features × 7 platforms), pricing TCO (6 scenarios), integration complexity, waste reduction benchmarks"
+    time_estimate: "6-8 hours"
+    deliverables:
+      - "approach.md"
+      - "feature-matrix.md"
+      - "pricing-tco.md"
+      - "waste-reduction-benchmarks.md"
+      - "integration-complexity.md"
+      - "synthesis.md"
+
+  s3_need_driven:
+    status: "planned"
+    goal: "8 restaurant scenarios - cafe, food truck, single restaurant, multi-location, bar/nightclub, hotel F&B, bakery/catering, budget-constrained"
+    scenarios: 8
+    time_estimate: "8-10 hours"
+    deliverables:
+      - "approach.md"
+      - "small-cafe.md"
+      - "food-truck-catering.md"
+      - "single-restaurant.md"
+      - "multi-location-group.md"
+      - "bar-nightclub.md"
+      - "hotel-fb.md"
+      - "bakery-production.md"
+      - "budget-constrained-diy.md"
+      - "synthesis.md"
+
+  s4_strategic:
+    status: "planned"
+    goal: "Vendor viability (5/10-year survival), platform consolidation trends, open-source ERP longevity, Toast ecosystem strategy"
+    time_estimate: "4-6 hours"
+    deliverables:
+      - "approach.md"
+      - "vendor-viability.md"
+      - "market-consolidation.md"
+      - "open-source-sustainability.md"
+      - "toast-ecosystem-strategy.md"
+      - "synthesis.md"
+
+integration_relationships:
+  upstream:
+    - experiment: "3.005"
+      title: "POS Systems"
+      relationship: "POS sales data feeds inventory depletion tracking (xtraCHEF+Toast integration)"
+
+    - experiment: "3.072"
+      title: "Food Service Suppliers"
+      relationship: "Supplier ordering integrates with inventory management (BlueCart marketplace, EDI connections)"
+
+  downstream:
+    - experiment: "3.006"
+      title: "Accounting Software"
+      relationship: "Inventory COGS flows into accounting (QuickBooks, Xero integrations)"
+
+  parallel:
+    - experiment: "3.075"
+      title: "Labor Scheduling (Restaurant-Specific)"
+      relationship: "Complementary cost reduction - labor + inventory = 60-65% of restaurant costs"
+
+    - experiment: "3.074"
+      title: "Production Scheduling (Commercial Kitchen)"
+      relationship: "Inventory availability constrains production scheduling (recipe ingredients, equipment capacity)"
+
+  related_tier1:
+    - experiment: "1.096"
+      title: "Scheduling Libraries"
+      relationship: "DIY alternative for automated reordering algorithms (par levels, lead times)"
+
+    - experiment: "1.120"
+      title: "Simulation Libraries"
+      relationship: "Discrete event simulation for inventory optimization (SimPy for demand modeling)"
+
+key_findings:
+  s1_findings:
+    - "7 platforms evaluated: MarketMan ($200-400/mo), xtraCHEF ($149/mo), BlueCart ($0.01-150/mo), Craftable ($150-300/mo est), WISK ($249/mo), Odoo ($0-150/user), ERPNext ($0-150/user)"
+    - "ROI range: 400-1150% for food waste reduction (2-6% savings on food costs)"
+    - "Bar shrink reduction: 151-421% ROI for high-shrink bars (5-15% typical loss)"
+    - "Open-source ERP: Cheapest long-term for multi-location (3+ outlets), requires technical resources"
+    - "BlueCart unique value: Supplier marketplace reduces procurement costs 3-8%"
+    - "WISK premium: 99.7% accuracy with hardware scales, bar-focused variance analysis"
+    - "xtraCHEF integration: Seamless Toast POS integration, invoice automation leader"
+
+  expected_s2_s4_findings:
+    - "Feature parity: All platforms cover basic inventory, diverge on AI forecasting, variance analysis, multi-location"
+    - "TCO break-even: Open-source cheaper at 3+ locations (Year 2+), SaaS cheaper Year 1 (implementation cost)"
+    - "Vendor consolidation: 50-70% acquisition risk for BlueCart/Craftable/WISK (Toast/MarketMan likely buyers)"
+    - "Toast ecosystem lock-in: xtraCHEF creates POS+inventory bundle, migration cost increases over time"
+    - "Open-source risk: URY (ERPNext extension) longevity depends on maintainer commitment (10 months production, small community)"
+
+success_criteria:
+  s1_complete: "7 platform profiles, synthesis with decision tree, quick recommendations by scenario"
+  s2_complete: "Feature matrix (100+ features), TCO models (6 scenarios × 7 platforms), waste reduction benchmarks, integration complexity"
+  s3_complete: "8 restaurant scenarios with platform matching, ROI calculations, decision frameworks"
+  s4_complete: "Vendor viability (5/10-year), market consolidation predictions, open-source sustainability analysis, strategic recommendations"
+  full_complete: "Restaurant operator can match (type, size, budget, technical resources) → platform shortlist with ROI forecast"
+
+business_value:
+  market_size: "Universal need for commercial kitchens (restaurants, bars, hotels, catering, institutional food service)"
+  decision_frequency: "Initial selection (year 0), re-evaluate every 2-3 years (vendor consolidation, pricing changes)"
+  annual_spend: "$1,800-$4,800/year (SaaS, single location) OR $1,200-$6,000/year (open-source ERP, self-hosted)"
+  roi_potential: "Food waste reduction: $11,700-$18,000/year for $1.5M revenue restaurant. Bar shrink reduction: $4,500-$12,500/year for $1M bar."
+
+  hardware_store_application:
+    catalog: "7 platform profiles + feature matrix + TCO models + scenario mapping = generic hardware store catalog (this research)"
+    application: "Restaurant context (type, size, budget, POS, technical resources) → platform shortlist + implementation plan (separate applications/ folder)"
+    value: "Catalog is timeless; application is context-specific and lives in applications/restaurant-ops/ or business/restaurant-clients/"
+
+timeline:
+  s1_rapid: "Nov 30, 2025 (actual: 4 hours)"
+  s2_comprehensive: "Dec 2025 (estimate: 6-8 hours)"
+  s3_need_driven: "Dec 2025 (estimate: 8-10 hours)"
+  s4_strategic: "Dec 2025 (estimate: 4-6 hours)"
+  total_time_estimate: "4-5 days (22-28 hours total)"
+
+notes:
+  - "Maintain separation: Generic research in research/3.070/, restaurant-specific recommendations in applications/restaurant-ops/"
+  - "Food waste = 4-10% of food costs is industry standard (ReFED study, $25B annual loss in US)"
+  - "ROI highly dependent on current waste/shrink levels - audit before platform selection"
+  - "Open-source ERP requires technical resources (IT staff or consultant $500-1,500/mo ongoing)"
+  - "Toast ecosystem integration creates switching costs - evaluate xtraCHEF with long-term POS strategy"
+  - "Bar operations: WISK/Craftable specialized features justify premium vs general restaurant platforms"
+  - "Multi-location break-even: Open-source cheaper at 3-5+ locations (Year 2+), implementation cost higher Year 1"
+  - "BlueCart supplier network: ROI depends on active use of marketplace (price shopping, competitive bidding)"
+
+created: "2025-11-30"
+updated: "2025-11-30"
+version: "1.0"
+
+# Data Sources & Attribution
+data_sources:
+  performance_benchmarks:
+    - source: "vendor_marketing_claims"
+      notes: "No independent benchmarks performed - vendor-reported figures (99.7% accuracy WISK, 5× faster counts)"
+
+  pricing_data:
+    source: "official_pricing_pages + vendor_reviews"
+    accessed: "2025-11-30"
+    notes: "Public pricing for xtraCHEF/WISK, estimated ranges for MarketMan/Craftable (no public pricing), Odoo/ERPNext official pricing"
+
+  feature_comparisons:
+    source: "official_documentation + vendor_demos"
+    accessed: "2025-11-30"
+    notes: "Feature claims from vendor websites, review sites (Capterra, G2) for validation only"
+
+  market_data:
+    roi_studies: "industry_reports"
+    sources:
+      - "ReFED food waste study ($25B annual US loss)"
+      - "Supy blog (ROI analysis)"
+      - "CrunchTime blog (waste reduction 2-6%)"
+      - "MarketMan blog (waste reduction case studies)"
+
+legal_review:
+  tos_compliance: "verified"
+  tos_issues: []
+  prohibited_sources: ["G2 reviews used for validation only, not republished", "Capterra reviews used for validation only"]
+  copyright_cleared: true
+
+publication_clearance:
+  can_publish_publicly: false
+  reasons: ["vendor_pricing_comparisons", "competitive_analysis", "ROI_calculations"]
+  safe_for_subscribers: true
+  requires_disclaimer: true
+
+token_usage:
+  total_tokens: null  # To be updated after S2-S4 complete
+  input_tokens: null
+  output_tokens: null
+  model: "claude-sonnet-4-5"
+  session_count: 1
+  cost_estimate: null
+  breakdown:
+    s1_rapid: 67595  # Tokens through S1 completion

@@ -1,0 +1,38 @@
+published: false
+---
+experiment_number: "2.071"
+experiment_sequence: 5
+experiment_date: "2025-10-17"
+experiment_status: complete
+discovery_method: detailed_toc
+migrated_from: null
+notes: "Fifth 2.XXX open standards experiment - gRPC (CNCF Graduated). Evaluates RPC protocol standard for service-to-service communication with protobuf serialization, HTTP/2 transport, and multi-language support. Critical for microservices architecture decisions and Path 2 evaluation for inter-service communication patterns. Completes Tier 2 expansion strategy (5→8 standards)."
+summary: |
+  **gRPC (CNCF Graduated)** is the high-performance RPC framework with 50% adoption in new microservices architectures and 100% adoption in Kubernetes ecosystem. Based on Google's internal Stubby RPC (15+ years), provides 3-10x faster performance than REST via Protocol Buffers (binary serialization) and HTTP/2 transport, with 90% confidence for 10+ year commitments. Portability: 75-80% (API contracts/.proto files fully portable across languages and clouds, infrastructure requires adaptation). Migration costs: $10k-30k per service (3-5 weeks), break-even 6-12 months for high-traffic services (>1,000 req/sec). Primary use cases: internal microservices (performance + type safety), mobile backends (battery efficiency), IoT/telemetry (low overhead streaming). REST remains dominant for public APIs (90%+) due to browser compatibility, but gRPC winning internal service-to-service communication. CNCF governance (graduated 2017), multi-vendor contributions (Netflix, Uber, Square, Dropbox). Future-proof: HTTP/3 support (experimental), gRPC-Web for browsers (requires proxy), GraphQL complementary (40% use hybrid GraphQL gateway → gRPC backends). Cost savings: $40k-50k/year per 50 microservices (compute + operational). Service mesh (Istio, Linkerd) recommended for production (automatic mTLS, L7 load balancing, 60% adoption). Key insight: gRPC is "phone system for software services"—fast, reliable, type-safe communication between microservices.
+key_findings:
+  - standard_name: "gRPC (CNCF Graduated)"
+  - governance: "CNCF (Cloud Native Computing Foundation, Linux Foundation project, graduated 2017), Google-led but multi-vendor (Netflix, Uber, Square)"
+  - adoption: "50% new microservices (2025), 100% Kubernetes ecosystem, 20-30% mobile backends, 30-40% IoT"
+  - portability: "75-80% effective (API contracts/.proto fully portable, infrastructure cloud-specific), migration 1-3 weeks ($5k-15k)"
+  - competitors: "REST 90% public APIs (slower but browser-compatible), GraphQL 10-15% (complementary), Thrift <5% (declining)"
+  - viability_score: "85/100, 10-year confidence 90% (CNCF governance, Kubernetes lock-in, Google investment)"
+  - performance: "3-10x faster than REST (binary protobuf vs JSON), 60-80% payload size reduction, streaming support (bidirectional)"
+  - migration_costs: "$10k-30k per service (3-5 weeks), break-even 6-12 months for high-traffic (>1,000 req/sec)"
+  - cost_savings: "$40k-50k/year per 50 microservices (compute + operational), 30-50% infrastructure reduction"
+  - future_compatibility: "HTTP/3 support (experimental), gRPC-Web (browser via proxy), GraphQL hybrid (40% adoption)"
+  - best_practices: "Service mesh (Istio/Linkerd) for mTLS + L7 load balancing, OpenTelemetry native instrumentation, shared .proto repository"
+research_artifacts:
+  - "S1-rapid: Ecosystem overview (11,000 words) - adoption, competitors, portability, language support"
+  - "S2-comprehensive: Technical deep dive (9,000 words) - Protocol Buffers encoding, HTTP/2 transport, streaming, load balancing, security"
+  - "S3-need-driven: Use cases & migration (6,000 words) - REST→gRPC migration, cost analysis, polyglot architectures"
+  - "S4-strategic: Long-term viability (5,500 words) - CNCF governance, network effects, HTTP/3 roadmap, risk analysis"
+  - "STANDARD_EXPLAINER: Business guide (7,000 words) - CTOs, PMs, finance teams, non-technical overview"
+strategic_implications:
+  - "gRPC complements REST: gRPC for internal microservices (performance), REST for public APIs (browser compatibility)"
+  - "gRPC + GraphQL hybrid: 40% use GraphQL gateway → gRPC backends (flexible frontend queries, fast backend)"
+  - "Kubernetes lock-in: 100% of K8s components use gRPC (kubelet, kube-apiserver) → ecosystem won't abandon gRPC"
+  - "Service mesh requirement: Long-lived HTTP/2 connections require L7 load balancing (Envoy, Istio, Linkerd)"
+  - "Type safety advantage: Compile-time errors when APIs change (vs REST runtime errors), reduces operational incidents"
+  - "Multi-language support: Same .proto file generates Go, Python, Java, Node.js, C# (polyglot microservices)"
+  - "Migration strategy: Start with high-traffic services (>1,000 req/sec), run gRPC + REST in parallel, gradual cutover"
+---

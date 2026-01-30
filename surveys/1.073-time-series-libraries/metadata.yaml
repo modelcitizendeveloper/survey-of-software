@@ -1,0 +1,75 @@
+id: "1.073"
+title: "Time Series Libraries"
+subtitle: "Prophet, pandas, statsmodels, scikit-learn"
+tier: 1
+category: "Machine Learning"
+cluster: "ml"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://facebook.github.io/prophet/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Prophet - Forecasting at scale"
+
+    - url: https://github.com/facebook/prophet
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Prophet GitHub repository"
+
+    - url: https://pypi.org/project/prophet/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "Prophet on PyPI"
+
+    - url: https://pandas.pydata.org/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "pandas - Time series manipulation"
+
+    - url: https://www.statsmodels.org/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "statsmodels - Statistical modeling"
+
+tags:
+  - time-series
+  - forecasting
+  - prophet
+  - pandas
+
+libraries_evaluated:
+  - name: "Prophet"
+    recommendation: "forecasting"
+    stars: 18000
+    license: "MIT"
+
+  - name: "pandas"
+    recommendation: "manipulation"
+    stars: 42000
+    license: "BSD-3-Clause"
+
+key_findings:
+  - "Prophet best for business forecasting"
+  - "pandas universal for time series manipulation"
+
+related_research:
+  - "1.070"  # Machine learning
+
+cross_references:
+  use_cases:
+    - forecasting
+    - time-series-analysis

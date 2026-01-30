@@ -1,0 +1,159 @@
+id: "1.033"
+title: "Natural Language Processing Libraries"
+subtitle: "spaCy, Transformers, NLTK, TextBlob, Gensim"
+tier: 1
+category: "Text Processing & NLP"
+cluster: "text-processing"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://spacy.io/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "spaCy - Industrial-strength NLP"
+
+    - url: https://github.com/explosion/spaCy
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "spaCy GitHub repository"
+
+    - url: https://pypi.org/project/spacy/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "spaCy on PyPI"
+
+    - url: https://huggingface.co/docs/transformers
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Hugging Face Transformers"
+
+    - url: https://github.com/huggingface/transformers
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Transformers GitHub repository"
+
+    - url: https://pypi.org/project/transformers/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "Transformers on PyPI"
+
+    - url: https://www.nltk.org/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "NLTK - Natural Language Toolkit"
+
+    - url: https://github.com/nltk/nltk
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "NLTK GitHub repository"
+
+    - url: https://pypi.org/project/nltk/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "NLTK on PyPI"
+
+    - url: https://textblob.readthedocs.io/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "TextBlob - Simplified text processing"
+
+    - url: https://github.com/sloria/TextBlob
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "TextBlob GitHub repository"
+
+    - url: https://pypi.org/project/textblob/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "TextBlob on PyPI"
+
+    - url: https://radimrehurek.com/gensim/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Gensim - Topic modeling and word embeddings"
+
+    - url: https://github.com/RaRe-Technologies/gensim
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Gensim GitHub repository"
+
+    - url: https://pypi.org/project/gensim/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "Gensim on PyPI"
+
+tags:
+  - nlp
+  - natural-language-processing
+  - text-analysis
+  - machine-learning
+  - spacy
+  - transformers
+  - bert
+  - gpt
+
+libraries_evaluated:
+  - name: "spaCy"
+    recommendation: "primary-production"
+    stars: 29000
+    license: "MIT"
+    use_case: "Production NLP pipelines"
+
+  - name: "Transformers"
+    recommendation: "state-of-the-art"
+    stars: 130000
+    license: "Apache-2.0"
+    use_case: "Modern language models"
+
+  - name: "NLTK"
+    recommendation: "educational"
+    stars: 13000
+    license: "Apache-2.0"
+    use_case: "Learning and research"
+
+  - name: "TextBlob"
+    recommendation: "prototyping"
+    stars: 9000
+    license: "MIT"
+    use_case: "Simple NLP tasks"
+
+  - name: "Gensim"
+    recommendation: "specialized"
+    stars: 15000
+    license: "LGPL-2.1"
+    use_case: "Topic modeling, embeddings"
+
+key_findings:
+  - "spaCy optimal for production - fast and reliable"
+  - "Transformers essential for state-of-the-art models"
+  - "NLTK best for education but declining in production"
+  - "TextBlob excellent for simple prototypes"
+  - "Gensim specialized in topic modeling and word2vec"
+  - "spaCy + Transformers becoming standard pattern"
+
+related_research:
+  - "1.033.1"  # Intent classification
+  - "1.100"    # Text processing
+  - "1.035"    # Tokenization (planned)
+  - "1.200"    # LLM orchestration
+
+cross_references:
+  use_cases:
+    - named-entity-recognition
+    - sentiment-analysis
+    - text-classification
+    - topic-modeling
+    - pos-tagging

@@ -1,0 +1,103 @@
+id: "1.043.1"
+title: "Task Queue Libraries"
+subtitle: "Celery, RQ, Dramatiq, Huey, ARQ"
+tier: 1
+category: "Distributed Systems"
+cluster: "backend"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://docs.celeryq.dev/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Celery - Distributed task queue"
+
+    - url: https://github.com/celery/celery
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Celery GitHub repository"
+
+    - url: https://pypi.org/project/celery/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "Celery on PyPI"
+
+    - url: https://python-rq.org/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "RQ - Simple task queue for Python"
+
+    - url: https://github.com/rq/rq
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "RQ GitHub repository"
+
+    - url: https://pypi.org/project/rq/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "RQ on PyPI"
+
+    - url: https://dramatiq.io/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "Dramatiq - Fast and reliable task processing"
+
+    - url: https://github.com/Bogdanp/dramatiq
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "Dramatiq GitHub repository"
+
+    - url: https://pypi.org/project/dramatiq/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "Dramatiq on PyPI"
+
+tags:
+  - task-queue
+  - distributed-systems
+  - celery
+  - background-jobs
+  - async-processing
+
+libraries_evaluated:
+  - name: "Celery"
+    recommendation: "enterprise"
+    stars: 23000
+    license: "BSD-3-Clause"
+
+  - name: "RQ"
+    recommendation: "simple"
+    stars: 9500
+    license: "BSD-2-Clause"
+
+  - name: "Dramatiq"
+    recommendation: "performance"
+    stars: 4000
+    license: "LGPL-3.0"
+
+key_findings:
+  - "Celery most feature-rich for enterprise"
+  - "RQ simplest for small projects"
+  - "Dramatiq best performance and reliability"
+
+related_research:
+  - "1.047"  # Caching
+
+cross_references:
+  use_cases:
+    - background-jobs
+    - distributed-processing
+    - async-tasks

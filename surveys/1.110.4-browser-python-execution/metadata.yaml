@@ -1,0 +1,318 @@
+published: false
+# MPSE V3 Metadata
+# Browser Python Execution Research Domain (1.110.4)
+# Multi-Perspective Systematic Exploration - Version 3
+
+experiment_info:
+  experiment_number: "1.110.4"
+  experiment_name: "Browser Python Execution"
+  experiment_date: "2025-12-02"
+  experiment_status: "complete"
+  completion_date: "2025-12-02"
+
+discovery_method:
+  method: "detailed_toc"
+  description: "Modular subdirectory organization (S1-S4 methodologies)"
+  toc_location: "01-discovery/DISCOVERY_TOC.md"
+  rationale: "Four independent discovery methodologies applied in parallel for comprehensive evaluation of browser Python solutions"
+
+methodologies_applied:
+  - methodology_id: "S1"
+    name: "Rapid Library Search"
+    status: "complete"
+    philosophy: "Trust popularity metrics and ecosystem validation as proxy for quality"
+    time_budget: "90 minutes"
+    primary_output: "01-discovery/S1-rapid/recommendation.md"
+    winner: "Pyodide"
+    confidence: "HIGH (9/10)"
+
+  - methodology_id: "S2"
+    name: "Comprehensive Solution Analysis"
+    status: "complete"
+    philosophy: "Systematic multi-dimensional comparison across performance, security, ecosystem, and integration"
+    time_budget: "8-12 hours"
+    primary_output: "01-discovery/S2-comprehensive/recommendation.md"
+    winner: "Context-dependent (Pyodide/JupyterLite for data science, PyScript for educational)"
+    confidence: "VERY HIGH"
+
+  - methodology_id: "S3"
+    name: "Need-Driven Discovery"
+    status: "complete"
+    philosophy: "Requirements-first validation through actual testing, use case patterns over technology"
+    time_budget: "6-8 hours"
+    primary_output: "01-discovery/S3-need-driven/recommendation.md"
+    winner: "Context-dependent (JupyterLite for notebooks, PyScript for tutorials, JavaScript for simple widgets)"
+    confidence: "VERY HIGH"
+
+  - methodology_id: "S4"
+    name: "Strategic Solution Selection"
+    status: "complete"
+    philosophy: "5-year viability, ecosystem stability, governance sustainability over immediate features"
+    time_budget: "8-12 hours"
+    primary_output: "01-discovery/S4-strategic/recommendation.md"
+    winner: "JupyterLite (9.5/10), Pyodide (9.0/10), PyScript (8.5/10)"
+    confidence: "VERY HIGH"
+
+solutions_analyzed:
+  tier_1_wasm_based:
+    - name: "Pyodide"
+      architecture: "CPython compiled to WebAssembly"
+      python_version: "3.11"
+      github_stars: "13,900"
+      s1_rating: "9/10 (RECOMMENDED)"
+      s2_profile: "Full scientific stack, 7-20MB bundle, 2-3s startup"
+      s3_use_cases: "Custom Python runtime, data science dashboards, embedded interpreters"
+      s4_viability: "9.0/10 (volunteer-driven but critical dependency)"
+
+    - name: "JupyterLite"
+      architecture: "Serverless Jupyter notebooks (Pyodide-powered)"
+      python_version: "3.11 (via Pyodide)"
+      github_stars: "4,669"
+      s1_rating: "8/10 (Niche - notebooks)"
+      s2_profile: "Full notebook UX, 15MB bundle, 8-12s startup"
+      s3_use_cases: "Educational platforms, data science courses, interactive research"
+      s4_viability: "9.5/10 (Linux Foundation backing, highest confidence)"
+
+    - name: "PyScript"
+      architecture: "HTML-first framework (Pyodide/MicroPython dual runtime)"
+      python_version: "3.11 (Pyodide) / 3.4 (MicroPython)"
+      github_stars: "18,600"
+      s1_rating: "6/10 (Conditional - performance trade-offs)"
+      s2_profile: "6.8MB bundle, 4.2s startup, beginner-friendly"
+      s3_use_cases: "Interactive tutorials, documentation, rapid prototyping"
+      s4_viability: "8.5/10 (Anaconda backing, beta status)"
+
+  tier_2_transpilers:
+    - name: "Brython"
+      architecture: "Python-to-JavaScript transpiler (runtime)"
+      python_version: "3.x"
+      github_stars: "6,458"
+      s1_rating: "6/10 (Niche - lightweight scripting)"
+      s2_profile: "1-2MB bundle, <1s startup, no scientific stack"
+      s3_use_cases: "Simple DOM manipulation, lightweight scripting"
+      s4_viability: "5.0/10 (single maintainer risk, architecturally obsolete)"
+
+  tier_3_legacy:
+    - name: "Skulpt"
+      architecture: "Python 2.x implementation in JavaScript"
+      python_version: "2.x (incomplete 3.x)"
+      github_stars: "3,375"
+      s1_rating: "3/10 (NOT RECOMMENDED - legacy only)"
+      s2_profile: "~2MB bundle, slow performance, limited libraries"
+      s3_use_cases: "Maintaining legacy Python 2.x educational content"
+      s4_viability: "2.0/10 (OBSOLETE - Python 2 EOL, immediate migration required)"
+
+data_sources:
+  - source: "GitHub"
+    type: "quantitative"
+    metrics: "Stars, contributors, commit activity, release cadence, maintainer activity"
+    repositories:
+      - "pyodide/pyodide"
+      - "jupyterlite/jupyterlite"
+      - "pyscript/pyscript"
+      - "brython-dev/brython"
+      - "skulpt/skulpt"
+    date_accessed: "2025-12-02"
+
+  - source: "npm Registry / PyPI"
+    type: "quantitative"
+    metrics: "Download counts, package metadata, dependency graphs"
+    date_accessed: "2025-12-02"
+
+  - source: "Official Documentation"
+    type: "qualitative"
+    content: "Technical specifications, API documentation, architecture guides, security models"
+    sources:
+      - "https://pyodide.org/en/stable/"
+      - "https://jupyterlite.readthedocs.io/"
+      - "https://pyscript.net/"
+      - "https://brython.info/"
+      - "https://skulpt.org/"
+
+  - source: "Performance Benchmarks"
+    type: "quantitative"
+    methodology: "Published benchmarks, community testing, official documentation claims"
+    metrics: "Startup time, execution speed, bundle size, memory usage"
+
+  - source: "Academic Papers"
+    type: "qualitative"
+    content: "WebAssembly performance research, browser Python security analysis"
+    note: "Public research papers on WASM and browser sandboxing"
+
+  - source: "Community Channels"
+    type: "qualitative"
+    platforms: "Discord, GitHub Discussions, Stack Overflow, Reddit"
+    purpose: "Production usage patterns, pain points, real-world adoption evidence"
+
+legal_review:
+  data_collection_method: "Public sources only"
+  copyright_status: "All data from publicly accessible sources"
+  trademark_usage: "Solution names used for factual comparison only"
+  licensing:
+    - solution: "Pyodide"
+      license: "Mozilla Public License 2.0"
+      verification: "https://github.com/pyodide/pyodide/blob/main/LICENSE"
+    - solution: "JupyterLite"
+      license: "BSD-3-Clause"
+      verification: "https://github.com/jupyterlite/jupyterlite/blob/main/LICENSE"
+    - solution: "PyScript"
+      license: "Apache 2.0"
+      verification: "https://github.com/pyscript/pyscript/blob/main/LICENSE"
+    - solution: "Brython"
+      license: "BSD-3-Clause"
+      verification: "https://github.com/brython-dev/brython/blob/master/LICENCE.txt"
+    - solution: "Skulpt"
+      license: "MIT"
+      verification: "https://github.com/skulpt/skulpt/blob/master/LICENSE"
+  verification_date: "2025-12-02"
+  verified_by: "GitHub repository license files and documentation review"
+
+publication_clearance:
+  can_publish_publicly: true
+  publication_readiness: "ready"
+  restrictions: "none"
+  justification: "Generic research domain with no proprietary information, no client references, no project-specific code"
+  recommended_venues:
+    - "Technical blogs and documentation"
+    - "Open source educational materials"
+    - "Engineering documentation sites"
+    - "Developer community resources"
+    - "Academic/research publications"
+  clearance_date: "2025-12-02"
+
+content_classification:
+  contains_proprietary_info: false
+  contains_client_references: false
+  contains_internal_tooling: false
+  contains_sensitive_data: false
+  contains_project_specifics: false
+  educational_value: "very high"
+  reusability: "universal"
+  audience: "Any developer/organization evaluating browser Python solutions"
+
+deliverables:
+  core:
+    - file: "01-discovery/DISCOVERY_TOC.md"
+      lines: 765
+      purpose: "Navigation document and research synthesis across all methodologies"
+      audience: "Technical researchers, implementers, decision-makers"
+
+    - file: "metadata.yaml"
+      lines: 317
+      purpose: "MPSE V3 experiment metadata"
+      audience: "Research process documentation"
+
+  methodology_files:
+    s1_rapid:
+      files:
+        - "approach.md (83 lines)"
+        - "recommendation.md (174 lines)"
+        - "pyodide.md (88 lines)"
+        - "jupyterlite.md (88 lines)"
+        - "pyscript.md (101 lines)"
+        - "brython.md (100 lines)"
+        - "skulpt.md (112 lines)"
+      total_lines: 746
+      key_output: "Pyodide recommended (9/10 confidence) for 90% of use cases"
+
+    s2_comprehensive:
+      files:
+        - "approach.md (97 lines)"
+        - "recommendation.md (469 lines)"
+        - "feature-comparison.md (345 lines)"
+        - "pyodide.md (209 lines)"
+        - "jupyterlite.md (272 lines)"
+        - "pyscript.md (339 lines)"
+        - "brython.md (350 lines)"
+        - "skulpt.md (385 lines)"
+      total_lines: 2466
+      key_output: "Context-dependent recommendations with comprehensive trade-off analysis"
+
+    s3_need_driven:
+      files:
+        - "approach.md (90 lines)"
+        - "recommendation.md (407 lines)"
+        - "README.md (100 lines)"
+        - "jupyter-notebooks.md (419 lines)"
+        - "interactive-tutorials.md (314 lines)"
+        - "python-repls.md (599 lines)"
+        - "computational-widgets.md (624 lines)"
+        - "security-sandboxing.md (711 lines)"
+      total_lines: 3264
+      key_output: "Use case-driven validation: JupyterLite for notebooks, PyScript for tutorials, JavaScript-first for widgets"
+
+    s4_strategic:
+      files:
+        - "approach.md (134 lines)"
+        - "recommendation.md (460 lines)"
+        - "solution-maturity.md (531 lines)"
+        - "synthesis.md (540 lines)"
+      total_lines: 1665
+      key_output: "JupyterLite highest viability (9.5/10), Skulpt obsolete (immediate migration required)"
+
+file_statistics:
+  total_markdown_files: 27
+  total_lines: 8141
+  average_lines_per_file: 301
+  largest_file: "security-sandboxing.md (711 lines)"
+  smallest_file: "approach.md (83 lines)"
+
+token_usage:
+  conversation_tokens: "~45000"
+  estimated_output_tokens: "~8000"
+  total_estimated: "~53000"
+  methodology: "Token count from metadata/TOC generation session (does not include original research sessions)"
+  note: "Research was conducted across multiple sessions; this count represents final documentation generation only"
+
+research_quality:
+  methodology_rigor: "very high"
+  evidence_based: true
+  cross_methodology_validation: true
+  convergence_analysis: "Strong convergence on WebAssembly-based solutions (Pyodide/JupyterLite/PyScript) as viable, transpilers as declining"
+  divergence_analysis: "Methodologies diverge on use case specificity: S1 favors Pyodide broadly, S2-S4 emphasize context-dependent selection"
+  confidence_overall: "Very High (90-95%)"
+
+key_findings:
+  - "WebAssembly-based solutions (Pyodide, JupyterLite, PyScript) are strategic winners for 5+ year horizon"
+  - "JupyterLite has highest viability confidence (9.5/10) due to Linux Foundation backing"
+  - "JavaScript transpilers (Brython, Skulpt) face declining strategic relevance"
+  - "Skulpt is obsolete (Python 2 EOL) - immediate migration required for existing deployments"
+  - "No universal 'best' solution - choice depends on use case requirements (notebooks vs tutorials vs widgets)"
+  - "Most computational widgets DON'T need Python - JavaScript is 3000x smaller and 200x faster"
+  - "Security requires multi-layer defense: Web Workers + timeouts + memory limits + network filtering"
+  - "Scientific computing (NumPy/Pandas) requires Pyodide-based solutions (Pyodide/JupyterLite/PyScript)"
+
+recommendations_by_context:
+  data_science_notebooks: "JupyterLite (Linux Foundation backing, full Jupyter UX, proven at 500k-student scale)"
+  scientific_computing: "Pyodide or PyScript (NumPy/Pandas/Matplotlib support)"
+  interactive_tutorials: "PyScript <py-repl> (zero-config, beginner-friendly, 4s startup)"
+  embedded_repls: "PyScript or raw Pyodide (professional REPL UI vs minimal bundle)"
+  computational_widgets: "JavaScript FIRST (3000x smaller), Pyodide only if NumPy/SciPy required"
+  secure_code_execution: "Pyodide + multi-layer defense (Web Workers, timeouts, memory limits)"
+  mobile_first_apps: "PyScript (MicroPython) or Brython (<1MB bundles, <1s startup)"
+  rapid_prototyping: "PyScript (HTML-first, dual runtime flexibility)"
+  custom_integration: "Pyodide (maximum control, 6.4MB core)"
+  legacy_python_2: "Skulpt (migration to Python 3 required - DO NOT adopt for new projects)"
+
+anti_recommendations:
+  - "Don't use Skulpt for new projects (Python 2 EOL, obsolete)"
+  - "Don't use browser Python for simple calculators (JavaScript is 3000x smaller)"
+  - "Don't use Pyodide/JupyterLite for mobile-first apps (6-15MB bundles, 3-12s startup)"
+  - "Don't use PyScript for mission-critical production (beta status, evolving API)"
+  - "Don't use Brython for data science (no NumPy/Pandas support)"
+  - "Don't rely on Pyodide alone for security (requires defensive engineering)"
+
+version_control:
+  repository: "spawn-solutions"
+  branch: "main"
+  commit_status: "pending"
+  last_updated: "2025-12-02"
+
+maintainer_notes:
+  - "All four methodologies (S1-S4) completed and documented"
+  - "Research is generic and shareable (no proprietary references, no project-specific information)"
+  - "8,141 lines of detailed analysis across 27 markdown files"
+  - "Strong convergence on WebAssembly-based solutions as future, transpilers as legacy"
+  - "Highest confidence research: S3 (requirements-first validation) and S4 (governance analysis)"
+  - "Ready for public publication and educational use"
+  - "Research domain is GENERIC - applicable to any browser Python use case"

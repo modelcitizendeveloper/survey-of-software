@@ -1,0 +1,147 @@
+id: "1.010"
+title: "Graph Analysis Libraries"
+subtitle: "NetworkX, igraph, NetworKit, graph-tool, rustworkx"
+tier: 1
+category: "Graph Algorithms & Analysis"
+cluster: "graph-algorithms"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://networkx.org/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "NetworkX - Network analysis in Python"
+
+    - url: https://github.com/networkx/networkx
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "NetworkX GitHub repository"
+
+    - url: https://pypi.org/project/networkx/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "NetworkX on PyPI"
+
+    - url: https://igraph.org/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "igraph - Network analysis library"
+
+    - url: https://github.com/igraph/python-igraph
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "python-igraph GitHub repository"
+
+    - url: https://pypi.org/project/igraph/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "igraph on PyPI"
+
+    - url: https://networkit.github.io/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "NetworKit - Large-scale network analysis"
+
+    - url: https://github.com/networkit/networkit
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "NetworKit GitHub repository"
+
+    - url: https://pypi.org/project/networkit/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "NetworKit on PyPI"
+
+    - url: https://graph-tool.skewed.de/
+      type: official_documentation
+      accessed: "2025-10-17"
+      description: "graph-tool - Efficient graph analysis"
+
+    - url: https://git.skewed.de/count0/graph-tool
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "graph-tool Git repository"
+
+    - url: https://github.com/Qiskit/rustworkx
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "rustworkx - Rust-powered graph library"
+
+    - url: https://pypi.org/project/rustworkx/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "rustworkx on PyPI"
+
+tags:
+  - graph-analysis
+  - network-analysis
+  - graph-algorithms
+  - social-networks
+  - performance
+  - networkx
+  - igraph
+
+libraries_evaluated:
+  - name: "NetworkX"
+    recommendation: "learning-prototyping"
+    stars: 14000
+    license: "BSD-3-Clause"
+    performance: "baseline"
+    downloads: "2.3M+/day"
+
+  - name: "igraph"
+    recommendation: "primary"
+    stars: 1200
+    license: "GPL-2.0"
+    performance: "10-40x faster than NetworkX"
+
+  - name: "NetworKit"
+    recommendation: "large-scale"
+    stars: 700
+    license: "MIT"
+    performance: "extremely fast for specific algorithms"
+
+  - name: "graph-tool"
+    recommendation: "maximum-performance"
+    stars: 600
+    license: "GPL-3.0"
+    performance: "40-250x faster than NetworkX"
+
+  - name: "rustworkx"
+    recommendation: "rust-alternative"
+    stars: 1000
+    license: "Apache-2.0"
+    performance: "high via Rust backend"
+
+key_findings:
+  - "NetworkX best for learning - 2.3M+ daily downloads"
+  - "igraph optimal balance of performance and usability"
+  - "NetworKit designed for billion-edge networks"
+  - "graph-tool fastest overall (up to 250x vs NetworkX)"
+  - "rustworkx brings Rust performance to Python"
+  - "Performance vs usability trade-off is key decision factor"
+
+related_research:
+  - "1.011"  # Graph databases
+  - "1.012"  # Community detection (planned)
+  - "1.015"  # Graph visualization (planned)
+
+cross_references:
+  use_cases:
+    - social-network-analysis
+    - recommendation-systems
+    - network-topology
+    - knowledge-graphs

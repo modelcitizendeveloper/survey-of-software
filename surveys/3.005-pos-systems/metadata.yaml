@@ -1,0 +1,106 @@
+---
+category: "3.005"
+title: "Point of Sale (POS) Systems"
+domain: "Payment Processing & Business Operations"
+tags:
+  - pos-systems
+  - payment-processing
+  - inventory-management
+  - retail-technology
+  - restaurant-technology
+  - brick-and-mortar
+  - omnichannel
+created: 2025-10-20
+updated: 2025-10-20
+status: complete
+published: false
+mpse_version: "3.0"
+
+scope:
+  what_it_is: "Comprehensive analysis of Point of Sale (POS) systems for brick-and-mortar businesses"
+  what_it_covers:
+    - Payment acceptance (card-present, contactless, mobile)
+    - Inventory management (tracking, reordering, variants, multi-location)
+    - Staff management (permissions, scheduling, time tracking, payroll)
+    - Customer relationship management (CRM, loyalty, purchase history)
+    - Reporting and analytics (sales, inventory, staff performance)
+    - Hardware requirements (terminals, tablets, printers, cash drawers)
+    - Integration ecosystem (accounting, e-commerce, delivery apps)
+    - Multi-location chain management
+    - Vertical-specific features (restaurants, retail, services)
+  what_it_excludes:
+    - Pure online payment processing (see 3.001 Payment Processing)
+    - E-commerce-only solutions without physical POS capability
+    - Custom enterprise solutions without off-the-shelf availability
+    - Region-specific systems unavailable in North America/Europe
+
+relationship_to_other_categories:
+  "3.001_payment_processing":
+    relationship: "complementary_with_overlap"
+    description: "POS systems include payment processing but add operational management"
+    documented_in: "CATEGORY_RELATIONSHIP.md"
+
+use_cases:
+  - Restaurant operations (QSR, full-service, bars, cafes)
+  - Retail stores (boutiques, specialty shops, multi-location chains)
+  - Service businesses (salons, spas, fitness studios)
+  - Hybrid businesses (physical store + online sales)
+  - Mobile merchants (food trucks, pop-up shops, markets)
+
+target_personas:
+  - Restaurant operators
+  - Retail store owners
+  - Service business owners
+  - Multi-location chain managers
+  - Hybrid business operators
+
+key_decision_factors:
+  - Business type and vertical specialization
+  - Single vs multi-location requirements
+  - Transaction volume and processing fee sensitivity
+  - Hardware investment capacity
+  - E-commerce integration needs
+  - Contract flexibility and lock-in tolerance
+  - Total cost of ownership (TCO)
+  - Migration complexity and switching costs
+
+market_overview:
+  market_leaders:
+    - Square (Block Inc.) - 25.73% market share
+    - Toast - 21.74% market share
+    - Clover (Fiserv) - 6.07% market share
+    - Lightspeed Commerce
+    - Shopify POS - 0.94% market share
+  market_size: "$17 billion (2025) projected to $38 billion by 2032"
+  growth_rate: "~9.5% CAGR (2025-2032)"
+  typical_processing_fees: "2.6% + 10¢ to 3.5% + 15¢ per transaction"
+
+mpse_methodologies_applied:
+  S1_rapid:
+    focus: "Popular and widely-adopted POS platforms"
+    outcome: "Market leaders identified with quick differentiation"
+  S2_comprehensive:
+    focus: "Deep feature-by-feature comparison across platforms"
+    outcome: "Detailed analysis of capabilities, pricing, hardware, integrations"
+  S3_need_driven:
+    focus: "Solutions tailored to specific business types and use cases"
+    outcome: "Recommendations by vertical (restaurant, retail, services, hybrid)"
+  S4_strategic:
+    focus: "Long-term viability, lock-in risks, TCO analysis"
+    outcome: "Strategic considerations for sustainable POS selection"
+
+research_sources:
+  - Market share data (6sense, market research reports 2025)
+  - Provider websites and pricing pages
+  - Independent review platforms (G2, Capterra, Software Advice)
+  - Industry analysis (NerdWallet, Tech.co, Business.com)
+  - Payment processing rate comparisons
+  - Integration documentation
+
+notes:
+  - This is GENERIC reference material for any brick-and-mortar business
+  - No specific business names or application-specific recommendations included
+  - Pricing and features current as of October 2025
+  - Processing fees and terms subject to negotiation for high-volume businesses
+  - Some providers require custom quotes for enterprise deployments
+---

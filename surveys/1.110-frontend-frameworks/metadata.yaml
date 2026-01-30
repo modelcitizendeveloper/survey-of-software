@@ -1,0 +1,106 @@
+published: true
+---
+experiment_number: "1.110"
+experiment_sequence: TBD
+experiment_date: "2025-10-17"
+experiment_completed: "2025-10-18"
+experiment_status: complete
+discovery_method: detailed_toc
+tier: 1
+category: "Frontend Libraries"
+migrated_from: null
+notes: "Frontend frameworks comparison - React, Vue, Svelte, Angular, Solid + meta-frameworks (Next.js, Nuxt, SvelteKit, SolidStart). Tier 1 DIY library research focused on maximum control and customization."
+
+summary: |
+  Comprehensive analysis of five major frontend frameworks (React, Vue, Svelte, Angular, Solid) and their meta-frameworks (Next.js, Nuxt, SvelteKit, SolidStart). Research covers performance benchmarks, ecosystem maturity, developer experience, hiring considerations, migration patterns, and future architectural trends (server components, islands, signals). Strategic recommendation: React + Next.js for 80% of use cases (ecosystem, hiring, Vercel integration), Svelte + SvelteKit for performance-critical applications (50-70% smaller bundles, 30-50% faster FCP), avoid Angular for new projects (declining market share, lowest satisfaction).
+
+key_findings:
+  market_share:
+    react: "70% (stable dominance, 50,000+ job listings)"
+    vue: "15% (stable, strong in Asia/Europe, 8,000+ jobs)"
+    angular: "8% (declining from 15% in 2020, 5,000+ jobs but maintenance-focused)"
+    svelte: "5% (growing, high satisfaction 90%, limited jobs 1,500)"
+    solid: "2% (emerging, highest satisfaction 95%, very limited jobs 300)"
+
+  performance:
+    bundle_sizes:
+      svelte: "10kb minimum (70% smaller than React)"
+      solid: "15kb minimum (65% smaller than React)"
+      vue: "35kb minimum (25% smaller than React)"
+      react: "45kb minimum (industry baseline)"
+      angular: "200kb+ minimum (4-5x larger than React)"
+    runtime_performance:
+      solid: "1.1x baseline (fastest, JS Framework Benchmark)"
+      svelte: "1.05x baseline (second fastest)"
+      vue: "0.95x baseline (good)"
+      react: "0.85x baseline (industry standard)"
+      angular: "0.75x baseline (slowest)"
+    first_contentful_paint:
+      svelte_sveltekit: "30-50% faster than React for typical app"
+      react_nextjs: "Industry baseline (acceptable for 90% of apps)"
+      angular: "20-30% slower than React (large bundle overhead)"
+
+  ecosystem_maturity:
+    react: "100,000+ npm packages, 10+ mature component libraries (Material-UI, Ant Design, Chakra UI), largest tutorial/course library (10,000+)"
+    vue: "10,000+ npm packages, 5+ mature component libraries (Vuetify, Element Plus), good documentation (2,000+ courses)"
+    angular: "5,000+ npm packages, Angular Material (official), declining new development"
+    svelte: "1,000+ npm packages, 2-3 mature component libraries (SvelteUI), growing but limited (500+ courses)"
+    solid: "500+ npm packages, early ecosystem, limited component libraries (50+ courses)"
+
+  meta_framework_adoption:
+    nextjs_react: "60% of React projects use Next.js, industry standard, Vercel backing, production-ready server components"
+    nuxt_vue: "50% of Vue projects use Nuxt, mature SSR/SSG, experimental server components"
+    sveltekit_svelte: "80% of Svelte projects use SvelteKit, excellent DX, built-in adapters for edge deployment"
+    solidstart_solid: "Early beta, experimental, not production-ready"
+
+  developer_experience:
+    satisfaction_scores:
+      solid: "95% (highest satisfaction, State of JS 2024)"
+      svelte: "90% (minimal boilerplate, 1-2 week onboarding)"
+      react: "80% (ecosystem benefits offset complexity)"
+      vue: "78% (gentlest learning curve 2-4 weeks)"
+      angular: "50% (verbose, complex, 8-12 week onboarding)"
+    typescript_support:
+      angular: "Excellent (TypeScript-first, best template type-checking)"
+      solid: "Excellent (built with TypeScript)"
+      react: "Very Good (community types via DefinitelyTyped)"
+      vue: "Good (Vue 3 rewritten in TypeScript)"
+      svelte: "Good (preprocessor-based, improving in Svelte 5)"
+    tooling:
+      vite_adoption: "Svelte/Vue/Solid default to Vite (50ms HMR), React transitioning from Webpack, Angular slowest (200-500ms)"
+      devtools_maturity: "React (10+ years, feature-complete) > Vue (8 years, stable) > Svelte (3 years, improving) > Solid (1-2 years, basic)"
+
+  hiring_considerations:
+    react: "50,000+ job listings, easiest hiring, salaries $120k-$180k, largest talent pool"
+    vue: "8,000+ job listings, moderate hiring, salaries $100k-$150k (10-15% lower than React)"
+    angular: "5,000+ job listings (mostly legacy maintenance), salaries $110k-$160k"
+    svelte: "1,500+ job listings (33x fewer than React), salaries $100k-$150k, difficult hiring"
+    solid: "300+ job listings (166x fewer than React), salaries $110k-$170k, very difficult hiring"
+    retention_risk: "Angular 50% satisfaction = high turnover risk, Svelte/Solid 90-95% satisfaction = low turnover"
+
+  migration_patterns:
+    angular_to_react: "800-1,200 hours (3-6 months for 50-component app), high risk, justified by Angular's decline"
+    cra_to_nextjs: "100-200 hours (1-2 weeks), low risk, same framework (React), high ROI"
+    react_to_svelte: "400-800 hours (2-4 months), moderate risk, performance gains 50-70% bundle reduction"
+    vue_to_react: "400-800 hours, moderate risk, justified only for ecosystem needs"
+    framework_switching_cost: "Semi-permanent decision, switching expensive ($50k-$200k for mid-sized apps)"
+
+  strategic_trends:
+    server_components: "React/Next.js leads (production-ready 2024+, 30-40% adoption), Vue/Nuxt experimental, Svelte/SolidStart planned"
+    islands_architecture: "Astro pioneered (50,000+ sites), SvelteKit partial support, Next.js via RSC, niche but growing"
+    signals_reactivity: "Solid/Svelte lead (compile-time/runtime fine-grained reactivity), Angular adopting (replacing Zone.js), React resistant (committed to virtual DOM)"
+    edge_computing: "Next.js/Vercel excellent, SvelteKit/Cloudflare good, Nuxt moderate, Angular limited"
+    progressive_enhancement: "SvelteKit excellent (forms work without JS), Next.js moderate (via server components), others poor"
+
+  recommendation:
+    default_choice: "React + Next.js (80% of use cases)"
+    default_rationale: "Largest ecosystem (100,000+ packages), easiest hiring (50,000+ jobs), best documentation, production-ready server components, Vercel integration, acceptable performance for 90% of apps"
+    performance_choice: "Svelte + SvelteKit"
+    performance_rationale: "50-70% smaller bundles (10kb vs 45kb React), 30-50% faster FCP, best developer satisfaction (90%), compile-time optimization eliminates manual performance work, acceptable ecosystem for focused use cases"
+    learning_curve_choice: "Vue + Nuxt"
+    learning_curve_rationale: "Gentlest learning curve (2-4 weeks vs 4-8 weeks React), template-based syntax familiar to HTML developers, good ecosystem (10,000+ packages), lower salaries (10-15% less than React)"
+    avoid: "Angular for new projects"
+    avoid_rationale: "Declining market share (15% → 8%), lowest developer satisfaction (50% = retention risk), largest bundle size (200kb+ = performance penalty), verbose syntax (2x more code than Svelte), not adopting modern patterns (server components, islands)"
+    emerging_option: "Solid + SolidStart (experimental, high-risk)"
+    emerging_rationale: "Highest satisfaction (95%), best performance (signals-based reactivity 20-30% faster than React), smallest ecosystem (500+ packages = 200x fewer than React), very limited hiring (300 jobs = 166x fewer than React), only for senior teams comfortable with bleeding edge"
+---

@@ -1,0 +1,69 @@
+id: "1.056"
+title: "JSON Libraries"
+subtitle: "orjson, ujson, rapidjson, msgspec"
+tier: 1
+category: "Data Processing"
+cluster: "algorithms"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2025-10-17"
+  s1_completed: "2025-10-17"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://github.com/ijl/orjson
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "orjson - Fast JSON library"
+
+    - url: https://pypi.org/project/orjson/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "orjson on PyPI"
+
+    - url: https://github.com/ultrajson/ultrajson
+      type: official_repo
+      accessed: "2025-10-17"
+      description: "ujson - Ultra fast JSON"
+
+    - url: https://pypi.org/project/ujson/
+      type: package_registry
+      accessed: "2025-10-17"
+      description: "ujson on PyPI"
+
+tags:
+  - json
+  - serialization
+  - performance
+
+libraries_evaluated:
+  - name: "orjson"
+    recommendation: "primary"
+    stars: 5500
+    license: "Apache-2.0"
+
+  - name: "ujson"
+    recommendation: "alternative"
+    stars: 4200
+    license: "BSD-3-Clause"
+
+key_findings:
+  - "orjson fastest JSON library"
+  - "ujson simple drop-in replacement"
+
+related_research:
+  - "1.055"  # Binary serialization
+
+cross_references:
+  use_cases:
+    - api-responses
+    - json-parsing
