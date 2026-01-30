@@ -66,7 +66,7 @@ title: "The Survey"
 
 ## 1.030-039: String & Text Algorithms
 
-**Completed: 7/10**
+**Completed: 8/10**
 
 - **1.030** String Matching - Exact, approximate, regex engines
 - **1.031** Text Diff - Myers, patience diff, semantic diff
@@ -78,6 +78,7 @@ title: "The Survey"
   - ✅ [**1.033.4** Named Entity Recognition (CJK)](/survey/1-033-4) - spaCy, Stanford NER, BERT-NER
 - ✅ [**1.034** Email Libraries](/survey/1-034) - smtplib, yagmail, MIME handling
 - **1.035** Tokenization - Wordpiece, BPE, SentencePiece
+  - ✅ [**1.035.1** Chinese Tokenization](/survey/1-035-1) - jieba, pkuseg, word segmentation strategies
 - **1.036** Stemming & Lemmatization - Porter, Snowball, WordNet
 - **1.037** String Compression - LZ4, Snappy, Zstandard for strings
 - **1.038** Unicode Handling - Normalization, transliteration
@@ -290,13 +291,16 @@ title: "The Survey"
 
 ## 1.150-159: Reading & Text Analysis (Language Learning)
 
-**Completed: 0/10**
+**Completed: 3/10**
 
 - **1.150** Classical Text Corpora - Perseus, PHI5/PHI7, Latin Library
 - **1.151** Vocabulary Frequency - DCC Core, Dickinson College
 - **1.152** Reading Difficulty & Readability - Flesch-Kincaid, lexical coverage, i+1 detection
+  - ✅ [**1.152.1** CJK Readability](/survey/1-152-1) - Character frequency, HSK/TOCFL levels, graded readers
 - **1.153** Sentence Parsing - Universal Dependencies parsers, Stanza, syntax trees
+  - ✅ [**1.153.1** Chinese Dependency Parsing](/survey/1-153-1) - UD Chinese, Stanford CoreNLP, HanLP
 - **1.154** Graded Reader Generation - Text leveling, vocab substitution
+  - ✅ [**1.154.1** Chinese Text Simplification](/survey/1-154-1) - MCTS dataset, neural approaches
 - **1.155** Parallel Text Alignment - Latin-English, sentence alignment
 - **1.156** Text Annotation UI - Glossing, interlinear display
 - **1.157** Reading Comprehension - Question generation, validation
@@ -307,7 +311,7 @@ title: "The Survey"
 
 ## 1.160-169: Character-Based Writing Systems (CJK)
 
-**Completed: 6/10**
+**Completed: 7/10**
 
 - ✅ [**1.160** Character Databases](/survey/1-160) - Unihan, CHISE, IDS, CJKVI
 - ✅ [**1.161** Radical & Component Analysis](/survey/1-161) - Character decomposition, semantic components
@@ -315,20 +319,21 @@ title: "The Survey"
 - ✅ [**1.163** Character Encoding](/survey/1-163) - Big5, GB2312, GBK, GB18030, Unicode CJK
 - ✅ [**1.164** Traditional ↔ Simplified Conversion](/survey/1-164) - OpenCC, HanziConv, zhconv-rs
 - ✅ [**1.165** Stroke Order & Writing (CJK)](/survey/1-165) - Make Me a Hanzi, KanjiVG, animCJK
-- **1.166** OCR (CJK-specific) - Specialized CJK optical character recognition
+- ✅ [**1.166** OCR (CJK-specific)](/survey/1-166) - Tesseract, PaddleOCR, EasyOCR
 - **1.167-1.169** _Available for future use_
 
 ---
 
 ## 1.170-179: Translation & Alignment
 
-**Completed: 2/10**
+**Completed: 4/10**
 
 - ✅ [**1.170** Machine Translation APIs](/survey/1-170) - DeepL, Google Translate, Azure Translator, Amazon Translate
 - ✅ [**1.171** Sentence Alignment](/survey/1-171) - Hunalign, Bleualign, vecalign
-- **1.172** Translation Memory - TM systems, CAT tools
-- **1.173** Computer-Assisted Translation - CAT tool comparison
-- **1.174** Literary Translation Tools - Context-aware translation
+- ✅ [**1.172** Translation Memory](/survey/1-172) - TMX format, OmegaT, MemoQ
+- ✅ [**1.173** Terminology Extraction](/survey/1-173) - KeyBERT, PyATE, YAKE, spaCy
+- **1.174** Computer-Assisted Translation - CAT tool comparison
+- **1.175** Literary Translation Tools - Context-aware translation
 - **1.175-1.179** _Available for future use_
 
 ---
@@ -355,8 +360,8 @@ title: "The Survey"
 ## Research Status
 
 **Total Defined**: 189 research slots (including CJK expansion)
-**Completed**: 47 pieces (25%)
-**Remaining**: 142 pieces
+**Completed**: 53 pieces (28%)
+**Remaining**: 136 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 

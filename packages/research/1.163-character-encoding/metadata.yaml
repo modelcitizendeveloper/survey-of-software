@@ -1,3 +1,113 @@
-code: "1.163"
-title: "Character Encoding (CJK)"
-description: "Big5, GB2312, GBK, GB18030, and Unicode CJK encoding systems. Essential for handling legacy text, cross-platform compatibility, and understanding character set evolution across Taiwan, Hong Kong, and Mainland China."
+id: "1.163"
+title: "Character Encoding (Big5, GB2312, Unicode CJK)"
+category: "Text Processing"
+tags:
+  - encoding
+  - cjk
+  - chinese
+  - big5
+  - gb2312
+  - unicode
+  - mojibake
+  - traditional-chinese
+  - simplified-chinese
+
+description: |
+  Character encoding detection, transcoding, and CJK text handling.
+  Covers Big5 (Traditional Chinese), GB2312/GBK/GB18030 (Simplified Chinese),
+  Unicode CJK blocks, variant handling, round-trip conversion, and mojibake debugging.
+
+problem_statement: |
+  When working with multilingual text, especially Chinese, Japanese, and Korean content,
+  developers face several challenges:
+  1. Detecting unknown encodings (Big5 vs GBK vs UTF-8)
+  2. Transcoding between legacy encodings and Unicode
+  3. Repairing mojibake (garbled text from encoding errors)
+  4. Converting Traditional ↔ Simplified Chinese
+  5. Handling regional variants (Taiwan, Hong Kong, Mainland)
+  6. Preserving round-trip fidelity
+
+key_libraries:
+  detection:
+    - name: "charset-normalizer"
+      purpose: "Modern encoding detection (95%+ accuracy)"
+      status: "active"
+    - name: "cchardet"
+      purpose: "Fast encoding detection (C extension, 10-100x faster)"
+      status: "sporadic"
+    - name: "chardet"
+      purpose: "Pure Python detection (maintenance mode)"
+      status: "maintenance"
+
+  transcoding:
+    - name: "Python codecs"
+      purpose: "Standard library encoding/decoding"
+      status: "active"
+
+  repair:
+    - name: "ftfy"
+      purpose: "Mojibake repair (fixes garbled text)"
+      status: "active"
+
+  cjk_conversion:
+    - name: "OpenCC"
+      purpose: "Traditional↔Simplified (context-aware, phrase dictionaries)"
+      status: "active"
+    - name: "zhconv"
+      purpose: "Traditional↔Simplified (lightweight, character-level)"
+      status: "active"
+
+discovery_phases:
+  s1_rapid:
+    status: "complete"
+    date: "2026-01-28"
+    findings: |
+      Identified 8 libraries across 4 problem domains:
+      1. Detection: charset-normalizer (accuracy), cchardet (speed)
+      2. Transcoding: Python codecs (stdlib)
+      3. Repair: ftfy (mojibake recovery)
+      4. CJK variants: OpenCC (context-aware), zhconv (fast)
+
+  s2_comprehensive:
+    status: "not_started"
+    focus: |
+      - Benchmark detection accuracy on real-world datasets
+      - Test edge cases (GB18030, Big5-HKSCS, variant selectors)
+      - Integration testing (detection → repair → conversion pipeline)
+      - Error handling robustness
+
+  s3_need_driven:
+    status: "not_started"
+    focus: |
+      - Legacy system integration (Taiwan banking, Mainland APIs)
+      - Web scraping unknown encodings
+      - User uploads with claimed vs actual encoding
+      - Bilingual content management (Taiwan + Mainland sites)
+      - Data migration from Big5/GB2312 to UTF-8
+
+  s4_strategic:
+    status: "not_started"
+    focus: |
+      - Library longevity and maintenance trends
+      - Ecosystem dependencies (charset-normalizer in urllib3/requests)
+      - GB18030 compliance requirements (Chinese government mandate)
+      - Unicode CJK future (Extension H, new variants)
+
+related_topics:
+  - "1.100: Text Processing"
+  - "1.033: NLP Libraries"
+  - "1.056: JSON Libraries (UTF-8 handling)"
+
+notes: |
+  Character encoding is a foundational problem - every application that handles
+  text eventually encounters it. The problem space has evolved:
+  - 1990s: Multiple competing encodings (Big5, GB2312, Shift-JIS)
+  - 2000s: Unicode adoption, but legacy encodings persist
+  - 2010s: UTF-8 dominance, but mojibake from mistakes
+  - 2020s: Regional variants, GB18030 mandate, variant selectors
+
+  Modern best practice: UTF-8 everywhere internally, detect/convert at boundaries.
+  But real-world data is messy - detection and repair tools remain essential.
+
+created: "2026-01-28"
+updated: "2026-01-28"

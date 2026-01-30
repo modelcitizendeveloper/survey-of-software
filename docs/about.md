@@ -7,108 +7,168 @@ title: "About"
 
 # About the Survey of Software
 
-> **SoS**: Systematic research on general-purpose libraries, tools, and frameworks.
+> **Stop guessing which library to use. Consult the map.**
 
-## Mapping the Software Landscape
+Pre-done library research across dozens of categories. Use it to decide faster, don't redo months of research.
 
-**The software library landscape is unmapped.** Each library has its own documentation, but there's no systematic survey across the category. When you need a JSON parser or graph algorithm library, you're on your own to figure out what exists and which one to pick.
+## The Problem: An Unmapped Landscape
 
-**That's why this exists.** Like a surveying expedition, we're systematically measuring the landscape—one triangulation point at a time. I needed these measurements for my own projects. Now you don't have to do the research.
+You're building something. You need a graph algorithm library. Or a JSON parser. Or an LLM wrapper.
+
+**What do you do?**
+
+- Google it? (Get marketing pages and outdated blog posts)
+- Ask Claude to pick one? (Roll the dice on what it knows)
+- Use the first result on PyPI? (Hope it's maintained)
+- Stop everything and research for hours? (There goes your sprint)
+
+**The software library landscape is unmapped.** Each library has its own documentation, but there's no systematic survey across categories. You're on your own to figure out what exists and which one to pick.
+
+## The Solution: Systematic Triangulation
+
+Like the Great Trigonometric Survey of India mapped an entire subcontinent through systematic measurement, **we're triangulating the software library landscape**—one category at a time.
+
+**I needed these measurements for my own projects.** Now you don't have to do the research.
 
 ---
 
 ## What We Catalog
 
-✅ **General-purpose software components:**
-- Algorithm libraries (sorting, graph algorithms, compression)
-- Data processing tools (JSON parsing, serialization, streaming)
-- ML frameworks (PyTorch, TensorFlow, ONNX)
-- Infrastructure components (databases, messaging, caching)
-- Development tools (testing, logging, monitoring)
-- **The nuts, bolts, and power tools of software**
+### ✅ In Scope: General-Purpose Software Components
 
-❌ **What we exclude:**
+- **Algorithm libraries** - Sorting, graph algorithms, compression
+- **Data processing tools** - JSON parsing, serialization, streaming
+- **ML frameworks** - PyTorch, TensorFlow, ONNX
+- **Infrastructure components** - Databases, messaging, caching
+- **Development tools** - Testing, logging, monitoring
+- **Speech & vision** - OCR, TTS, ASR with multilingual support
+- **NLP & text processing** - Summarization, spell-checking, CJK-specific tools
+
+**The components you assemble into larger systems.**
+
+### ❌ Out of Scope
+
 - Application-specific integrations
 - Vertical-specific solutions (e.g., language learning apps)
 - Business logic implementations
 - Custom SaaS platforms
 
-**The Hardware Store Principle:** This catalog covers components you'd find in a hardware store—general-purpose tools, not custom applications.
+**The buildings built from components.**
 
 ---
 
-## The Four-Pass Discovery Framework
+## The 4PS Methodology: Four Ways to See the Same Landscape
 
-Each research piece uses the **Four-Pass Discovery Framework** - four methodologies that reveal different aspects of the solution space:
+Each research piece uses **4PS - The Four-Pass Survey**, revealing different aspects of the solution space:
 
 ### S1: Rapid Discovery
+**When:** You need an answer *now*
 **Philosophy:** "Popular libraries exist for a reason"
-**Approach:** Speed-focused, ecosystem-driven discovery
-**When to use:** Need fast, proven solutions
+**Approach:** Speed-focused, ecosystem-driven
+**Output:** Quick comparison table, 5-10 minute read
 
 ### S2: Comprehensive Analysis
+**When:** You need to know *everything*
 **Philosophy:** "Understand the entire solution space before choosing"
-**Approach:** Thorough, evidence-based, optimization-focused
-**When to use:** Complex problems requiring deep analysis
+**Approach:** Feature matrices, deep comparisons, optimization-focused
+**Output:** Complete technical analysis
 
 ### S3: Need-Driven Discovery
+**When:** You know *exactly what you're building*
 **Philosophy:** "Start with requirements, find exact-fit solutions"
-**Approach:** Requirement-focused, validation-oriented
-**When to use:** Specific use cases where generic solutions fall short
+**Approach:** Scenario-based selection, validation-oriented
+**Output:** Requirement → library mapping
 
 ### S4: Strategic Selection
+**When:** You're making *architectural decisions*
 **Philosophy:** "Think long-term and consider broader context"
-**Approach:** Balanced, future-focused, ecosystem-aware
-**When to use:** Architectural decisions with multi-year implications
+**Approach:** Maintenance, team expertise, ecosystem fit, vendor stability
+**Output:** Strategic insights for multi-year choices
 
-### Explainer
+**Why four perspectives?** Different discovery approaches reveal different optimal solutions. A library that's "best" for rapid prototyping might be wrong for production. Strategic constraints might override technical superiority. **Single-methodology discovery misses better paths.**
+
+### Supplementary: Explainers
+**When:** You're new to the domain
 **Philosophy:** "Make it accessible to everyone"
-**Approach:** Domain fundamentals for readers new to the technology
-**When to use:** Building foundational understanding
+**Approach:** Domain fundamentals without assuming expertise
+**Output:** Foundational understanding
 
-**Why multiple perspectives?** Different discovery approaches reveal different optimal solutions. Single-methodology discovery misses potentially better paths.
-
----
-
-## How To Use This Research
-
-### For Decision-Making
-
-1. **Start with S1** - Get the landscape in 5-10 minutes
-2. **Read S4** - Strategic insights for long-term choices
-3. **Check Explainer** - If you're new to the domain
-4. **Deep dive S2/S3** - When you need comprehensive details
-
-### For Learning
-
-1. **Read Explainer first** - Build foundational understanding
-2. **Skim S1** - See what's possible in the domain
-3. **Study S3** - Understand methodology and use cases
-4. **Reference S2** - Technical deep-dive when needed
-
-### For Architecture
-
-- **S4 insights** reveal patterns across the ecosystem
-- **S3 methodologies** inform your evaluation approach
-- **S2 technical analysis** provides implementation details
+*Note: Explainers are supplementary content, not one of the four passes. They provide domain context when needed.*
 
 ---
 
-## Quality Standards
+# How To Use This Research
 
-**Research-grade confidence** (not Consumer Reports certainty):
-- S1 Rapid: 70-80% confidence (speed-optimized)
-- S2 Comprehensive: 80-90% confidence (depth-optimized)
-- S3 Need-Driven: 75-85% confidence (context-specific)
-- S4 Strategic: 60-70% confidence (forward-looking)
+**Choose your approach based on your timeline and depth needs:**
 
-**Information decay** - Library ecosystems evolve:
-- At publication: 70-80% accuracy
-- 12 months: 50-70% accuracy
-- 36 months: &lt;30% accuracy
+### Quick Decision (5-15 minutes)
+1. **Read S1** - Get the landscape overview
+2. **Scan S4** - Check for strategic red flags
+3. **Pick and validate** - Test your top choice
 
-Treat research as living documents that guide investigation, not gospel truth.
+### Deep Analysis (30-60 minutes)
+1. **Start with Explainer** (if new to domain)
+2. **Read S1** - Context and quick comparison
+3. **Study S4** - Strategic considerations
+4. **Deep dive S2** - Technical details for your top 2-3 choices
+5. **Cross-check S3** - Validate against your specific requirements
+
+### Architecture Planning
+- **S4 first** - Strategic insights reveal ecosystem patterns
+- **S3 methodology** - Inform your evaluation approach
+- **S2 technical analysis** - Implementation details
+
+### Learning a New Domain
+1. **Explainer** - Build foundational understanding
+2. **S1** - See what's possible
+3. **S3** - Understand real-world use cases
+4. **S2** - Technical deep-dive when ready
 
 ---
 
-**[Browse the Research Library →](/survey)**
+## Quality Standards & Limitations
+
+### Research-Grade Confidence (Not Consumer Reports Certainty)
+
+This is strategic guidance, not absolute truth:
+- **S1 Rapid:** 70-80% confidence (speed-optimized)
+- **S2 Comprehensive:** 80-90% confidence (depth-optimized)
+- **S3 Need-Driven:** 75-85% confidence (context-specific)
+- **S4 Strategic:** 60-70% confidence (forward-looking)
+
+**Why not 95%+ certainty?** Because library ecosystems evolve constantly, and deep certainty requires hands-on experience with production workloads. This research gets you **directionally correct** so you can make informed validation decisions.
+
+### Information Decay
+
+Library ecosystems change:
+- Pricing models shift
+- Features get added
+- New competitors emerge
+- Vendors pivot or get acquired
+- Maintenance status changes
+
+**Estimated accuracy:**
+- **At publication:** 70-80%
+- **12 months:** 50-70%
+- **36 months:** \<30%
+
+**Treat this as a living map, not a textbook.** The research guides investigation—you validate with hands-on testing.
+
+---
+
+## What This Enables
+
+With this map, you can:
+- **Build faster** - No more stopping mid-sprint to research
+- **Choose confidently** - Understand trade-offs before committing
+- **Avoid pitfalls** - Learn from analyzed failures
+- **Think strategically** - See ecosystem patterns across categories
+- **Assemble your own mountains** - Combine components into systems
+
+**The map is open. The methodology is transparent. The code is yours.**
+
+---
+
+**Ready to explore?** [Browse the Research Library →](/survey)
+
+**Want the bigger picture?** [Read the Vision →](/vision)
