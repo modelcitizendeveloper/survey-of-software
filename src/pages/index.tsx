@@ -15,11 +15,7 @@ function HomepageHeader() {
         <Heading as="h1" className="hero__title">
           Survey of Software
         </Heading>
-        <p className="hero__subtitle">Systematic library research for Python developers</p>
-        <p style={{fontSize: '1.1rem', marginTop: '1.5rem', maxWidth: '700px', margin: '1.5rem auto 0'}}>
-          Like the Great Trigonometric Survey mapped India over 70 years,
-          we're systematically triangulating the software library landscape—one measurement at a time.
-        </p>
+        <p className="hero__subtitle">Give your agents a map.</p>
       </div>
     </header>
   );
@@ -34,7 +30,7 @@ type NavCardProps = {
 
 function NavCard({title, description, link, icon}: NavCardProps) {
   return (
-    <div className={clsx('col col--3')}>
+    <div className={clsx('col col--6 col--md-4 col--lg-2')}>
       <Link to={link} className="card" style={{
         height: '100%',
         padding: '1.5rem',
@@ -70,6 +66,12 @@ function NavigationCards() {
       icon: '📖',
     },
     {
+      title: 'Collections',
+      description: 'Thematic groupings for common use cases',
+      link: '/collections',
+      icon: '🎯',
+    },
+    {
       title: 'Vision',
       description: 'The origin story and long-term vision',
       link: '/vision',
@@ -78,7 +80,7 @@ function NavigationCards() {
     {
       title: 'Methodology',
       description: 'Replicate the research yourself',
-      link: '/survey/methodology',
+      link: '/survey/replication',
       icon: '🔬',
     },
     {
@@ -102,32 +104,6 @@ function NavigationCards() {
   );
 }
 
-function NewsletterCTA() {
-  return (
-    <section style={{
-      padding: '4rem 0',
-      background: 'var(--ifm-color-emphasis-100)',
-      borderTop: '1px solid var(--ifm-color-emphasis-300)',
-      borderBottom: '1px solid var(--ifm-color-emphasis-300)',
-    }}>
-      <div className="container">
-        <div style={{maxWidth: '700px', margin: '0 auto', textAlign: 'center'}}>
-          <Heading as="h2" style={{marginBottom: '1rem'}}>
-            Built Something With This?
-          </Heading>
-          <p style={{fontSize: '1.1rem', marginBottom: '1.5rem', color: 'var(--ifm-color-emphasis-700)'}}>
-            We're collecting case studies of developers who assembled their own code mountains
-            using this research. If you've built a project using the Survey of Software,
-            we want to feature your story.
-          </p>
-          <p style={{fontSize: '0.95rem', color: 'var(--ifm-color-emphasis-600)'}}>
-            Newsletter launching soon. Check back for updates.
-          </p>
-        </div>
-      </div>
-    </section>
-  );
-}
 
 export default function Home(): ReactNode {
   const {siteConfig} = useDocusaurusContext();
@@ -137,7 +113,6 @@ export default function Home(): ReactNode {
       <HomepageHeader />
       <main>
         <NavigationCards />
-        <NewsletterCTA />
       </main>
     </Layout>
   );
