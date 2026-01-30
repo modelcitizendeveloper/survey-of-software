@@ -376,28 +376,38 @@ CRITICAL: Stay authentic to your methodology.
 - A library category to research (e.g., "PDF libraries", "graph databases")
 - 60-90 minutes for full 4PS run
 
-### Step 1: Set Up Your Workspace
+### Step 1: Launch Claude Code
 
 ```bash
-# Create directory structure
-mkdir -p research/1.XXX-library-name/01-discovery/{S1-rapid,S2-comprehensive,S3-need-driven,S4-strategic}
-cd research/1.XXX-library-name
-```
-
-### Step 2: Launch Claude Code
-
-```bash
+cd your-workspace
 claude-code
 ```
 
-### Step 3: Run Parallel 4PS Discovery
+### Step 2: Download This Methodology
+
+**Option A:** If this site is public, tell Claude Code:
+```
+Read the methodology from https://research.modelcitizendeveloper.com/survey/methodology
+```
+
+**Option B:** Save this page as `4ps-methodology.md` in your workspace, then:
+```
+Read the 4PS methodology from 4ps-methodology.md
+```
+
+### Step 3: Run the Research
 
 **Copy and adapt this prompt:**
 
 ```
-I need you to research [LIBRARY CATEGORY] using the Four-Pass Survey (4PS) methodology.
+I need you to research [LIBRARY CATEGORY] using the Four-Pass Survey (4PS) methodology
+you just read in the methodology file.
 
-Launch 4 independent agents in parallel (single message, 4 task calls):
+FIRST: Set up the directory structure:
+- Create research/1.XXX-[library-name]/01-discovery/
+- Create subdirectories: S1-rapid/, S2-comprehensive/, S3-need-driven/, S4-strategic/
+
+THEN: Launch 4 independent agents in parallel (single message, 4 task calls):
 
 AGENT 1 - S1 Rapid Discovery:
 - Workspace: research/1.XXX/01-discovery/S1-rapid/
@@ -438,53 +448,58 @@ CRITICAL REQUIREMENTS:
 4. Make independent recommendations
 
 Launch all 4 in parallel. Total time: 60-90 minutes.
+
+When agents complete, create research/1.XXX/01-discovery/DISCOVERY_TOC.md with
+convergence analysis.
 ```
+
+That's it! Claude Code will:
+1. Set up directories
+2. Launch 4 parallel agents
+3. Each agent writes to their directory independently
+4. Create the Discovery TOC summary
 
 ### Step 4: Monitor Progress
 
-Claude Code will run all 4 agents in parallel. Watch for:
+Watch for:
 - All 4 agents completing successfully
 - Files created in correct directories
 - No cross-contamination (agents stayed independent)
 
-### Step 5: Create the Discovery TOC
+### Step 5: Review the Results
 
-After agents complete:
+After completion:
 
 ```
-Now create research/1.XXX/01-discovery/DISCOVERY_TOC.md:
 
-Read S1-S4 recommendation.md files and create an index with:
-1. Summary of each methodology's top pick
-2. Convergence analysis (where do they agree?)
-3. Divergence insights (what trade-offs revealed?)
-4. Quick reference table of all 4 recommendations
-
-This is the "executive summary" users read first.
-```
+Check convergence:
+- Where do all 4 methodologies agree? (strong signal)
+- Where do they disagree? (trade-offs revealed)
 
 ### Step 6: Optional - Create Explainer
 
 If the domain needs foundational context:
 
 ```
-Create research/1.XXX/LIBRARY_EXPLAINER.md:
-
-Explain the core technical concepts for readers new to [DOMAIN].
-- What problem does this solve?
-- Key technical concepts
-- When you need this category
-- When you don't
-
-Target: Someone technical but new to this specific domain.
+Create research/1.XXX/LIBRARY_EXPLAINER.md explaining the core technical
+concepts for readers new to this domain. What problem does this solve?
+Key concepts? When you need it? When you don't?
 ```
 
-### Step 7: Review & Publish
+### Step 7: Commit & Share
 
-1. **Independence check**: Did each agent stay true to their methodology?
-2. **Quality check**: Are recommendations backed by evidence?
-3. **Convergence analysis**: What patterns emerged?
-4. **Commit**: `git add research/1.XXX && git commit -m "research: Add 4PS survey for XXX libraries"`
+Quick checklist:
+- ✅ All 4 agents completed independently?
+- ✅ Recommendations backed by evidence?
+- ✅ Convergence patterns clear?
+
+```bash
+git add research/1.XXX
+git commit -m "research: Add 4PS survey for [LIBRARY] libraries"
+git push
+```
+
+Share your findings! Open source the research or publish it internally.
 
 ---
 
