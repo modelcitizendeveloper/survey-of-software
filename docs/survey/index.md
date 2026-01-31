@@ -16,31 +16,31 @@ title: "The Survey"
 
 ## 1.001-009: Sorting & Searching Algorithms
 
-**Completed: 5/9**
+**Completed: 7/9**
 
 - ✅ [**1.001** Sorting Libraries](/survey/1-001) - Timsort, parallel sorts, radix sorts
 - ✅ [**1.002** Fuzzy Search](/survey/1-002) - FuzzyWuzzy, RapidFuzz, TheFuzz
 - ✅ [**1.003** Full-Text Search](/survey/1-003) - Whoosh, Tantivy, MeiliSearch clients
 - ✅ [**1.004** Binary Search Trees](/survey/1-004) - B-trees, AVL, Red-Black implementations
 - ✅ [**1.005** Spatial Search](/survey/1-005) - PostGIS, Elasticsearch Geo, rtree
-- **1.006** Graph Search - A*, Dijkstra, BFS/DFS implementations
+- ✅ [**1.006** Graph Search](/survey/1-006) - A*, Dijkstra, BFS/DFS implementations
 - **1.007** Pattern Matching - KMP, Boyer-Moore, Aho-Corasick
 - **1.008** Time Series Search - DTW, shapelet discovery
-- **1.009** Similarity Search - LSH, MinHash, SimHash
+- ✅ [**1.009** Similarity Search](/survey/1-009) - LSH, MinHash, SimHash
 
 ---
 
 ## 1.010-019: Graph & Network Algorithms
 
-**Completed: 1/10**
+**Completed: 4/10**
 
 - ✅ [**1.010** Graph Analysis](/survey/1-010) - NetworkX, graph-tool, igraph
 - **1.011** Graph Database Clients - Neo4j, ArangoDB, TigerGraph
-- **1.012** Community Detection - Louvain, label propagation, spectral
+- ✅ [**1.012** Community Detection](/survey/1-012) - Louvain, label propagation, spectral
 - **1.013** Shortest Path Optimization - Specialized path algorithms
 - **1.014** Network Flow - Max flow, min cost flow
-- **1.015** Graph Visualization - Graphviz, Gephi, Cytoscape
-- **1.016** Social Network Analysis - Centrality, clustering coefficient
+- ✅ [**1.015** Graph Visualization](/survey/1-015) - Graphviz, Gephi, Cytoscape
+- ✅ [**1.016** Social Network Analysis](/survey/1-016) - Centrality, clustering coefficient
 - **1.017** Bipartite Matching - Hungarian algorithm, Hopcroft-Karp
 - **1.018** Graph Embedding - node2vec, DeepWalk, Graph Neural Networks
 - **1.019** Dynamic Graphs - Temporal networks, streaming graphs
@@ -66,10 +66,10 @@ title: "The Survey"
 
 ## 1.030-039: String & Text Algorithms
 
-**Completed: 8/10**
+**Completed: 10/10**
 
-- **1.030** String Matching - Exact, approximate, regex engines
-- **1.031** Text Diff - Myers, patience diff, semantic diff
+- ✅ [**1.030** String Matching](/survey/1-030) - Exact, approximate, regex engines
+- ✅ [**1.031** Text Diff](/survey/1-031) - Myers, patience diff, semantic diff
 - **1.032** String Metrics - Edit distance, Jaro-Winkler, cosine
 - ✅ [**1.033** NLP Libraries](/survey/1-033) - spaCy, Transformers, NLTK
   - ✅ [**1.033.1** Intent Classification](/survey/1-033-1) - Zero-Shot, SetFit, sentence-transformers
@@ -360,8 +360,8 @@ title: "The Survey"
 ## Research Status
 
 **Total Defined**: 189 research slots (including CJK expansion)
-**Completed**: 53 pieces (28%)
-**Remaining**: 136 pieces
+**Completed**: 59 pieces (31%)
+**Remaining**: 130 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
