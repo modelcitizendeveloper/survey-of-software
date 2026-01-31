@@ -66,7 +66,7 @@ title: "The Survey"
 
 ## 1.030-039: String & Text Algorithms
 
-**Completed: 10/10**
+**Completed: 10/15**
 
 - ✅ [**1.030** String Matching](/survey/1-030) - Exact, approximate, regex engines
 - ✅ [**1.031** Text Diff](/survey/1-031) - Myers, patience diff, semantic diff
