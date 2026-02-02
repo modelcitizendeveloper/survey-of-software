@@ -121,6 +121,10 @@ const config: Config = {
           title: 'More',
           items: [
             {
+              label: 'License',
+              to: '/license',
+            },
+            {
               label: 'GitHub',
               href: 'https://github.com/modelcitizendeveloper/survey-of-software',
             },
