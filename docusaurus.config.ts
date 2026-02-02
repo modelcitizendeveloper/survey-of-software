@@ -121,13 +121,17 @@ const config: Config = {
           title: 'More',
           items: [
             {
+              label: 'License',
+              to: '/license',
+            },
+            {
               label: 'GitHub',
               href: 'https://github.com/modelcitizendeveloper/survey-of-software',
             },
           ],
         },
       ],
-      copyright: `Copyright © ${new Date().getFullYear()} Model Citizen Developer. Built with Docusaurus.`,
+      copyright: `© ${new Date().getFullYear()} Model Citizen Developer. Licensed under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener noreferrer">CC BY 4.0</a>. Built with Docusaurus.`,
     },
     prism: {
       theme: prismThemes.github,
