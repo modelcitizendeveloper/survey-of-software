@@ -66,11 +66,11 @@ title: "The Survey"
 
 ## 1.030-039: String & Text Algorithms
 
-**Completed: 10/15**
+**Completed: 11/15**
 
 - ✅ [**1.030** String Matching](/survey/1-030) - Exact, approximate, regex engines
 - ✅ [**1.031** Text Diff](/survey/1-031) - Myers, patience diff, semantic diff
-- **1.032** String Metrics - Edit distance, Jaro-Winkler, cosine
+- ✅ [**1.032** String Metrics](/survey/1-032) - Edit distance, Jaro-Winkler, cosine
 - ✅ [**1.033** NLP Libraries](/survey/1-033) - spaCy, Transformers, NLTK
   - ✅ [**1.033.1** Intent Classification](/survey/1-033-1) - Zero-Shot, SetFit, sentence-transformers
   - ✅ [**1.033.2** Chinese Word Segmentation](/survey/1-033-2) - Jieba, CKIP, pkuseg, LTP
@@ -360,8 +360,8 @@ title: "The Survey"
 ## Research Status
 
 **Total Defined**: 189 research slots (including CJK expansion)
-**Completed**: 59 pieces (31%)
-**Remaining**: 130 pieces
+**Completed**: 60 pieces (32%)
+**Remaining**: 129 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
