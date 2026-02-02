@@ -91,9 +91,66 @@ Each piece contains 5 sections:
 
 ---
 
+## 🗺️ Library Landscape Visualization
+
+**Beyond the Saul Steinberg view:** Most library recommendations give you the "View from 9th Avenue"—numpy and pandas as skyscrapers, everything else tiny. We mapped the entire landscape.
+
+### What Libraries Cluster Together?
+
+Using 75 research topics covering 432 Python libraries, we trained embeddings that reveal **how libraries relate** in practice:
+
+**Machine Learning Ecosystem:**
+```
+torch → transformers, datasets, onnxruntime
+```
+
+**Data Science Stack:**
+```
+pandas → scipy, matplotlib, networkx, plotly
+```
+
+**Modern Web Services:**
+```
+fastapi → pydantic, celery, boto3, prometheus
+```
+
+### Library Analogies That Work
+
+Just like word embeddings learned `king - man + woman = queen`, library embeddings discover functional relationships:
+
+| Question | Vector Arithmetic | Result |
+|----------|-------------------|--------|
+| Async version of Flask? | `flask - threading + asyncio` | **fastapi** (0.987) |
+| Async HTTP client? | `requests - threading + asyncio` | **fastapi, pydantic** (0.99) |
+| ML inference engine? | `torch - transformers + onnxruntime` | **tensorflow, celery** (0.99) |
+
+### How It Works
+
+1. **Extract relationships** from research topics (which libraries appear together)
+2. **Train embeddings** using Word2Vec on "sentences" of co-occurring libraries
+3. **Discover clusters** where similar libraries group naturally
+4. **Enable analogies** through vector arithmetic
+
+**Vocabulary:** 97 libraries learned from research metadata
+**Training data:** 75 research topics as "sentences"
+**Dimensions:** 50d, 100d, 300d embeddings available
+
+### What This Reveals
+
+**Pragmatic co-use patterns:**
+- Libraries actually imported together in research contexts
+- Ecosystem boundaries (ML vs web vs data science)
+- Substitution patterns (sync → async transitions)
+
+**Next:** Adding real codebase analysis (500-1000 repos) to capture how developers **actually** combine libraries in production code.
+
+---
+
 **Ready to explore?** [Start with the Research Library →](/survey)
 
 **Want the bigger picture?** [Read our Vision →](/vision)
+
+**Explore the embeddings:** [Technical methodology →](https://github.com/modelcitizendeveloper/survey-of-software/tree/main/embeddings)
 
 ## 🔍 Recent Additions
 
