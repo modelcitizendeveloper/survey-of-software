@@ -369,3 +369,37 @@ title: "The Survey"
 
 **Want to understand our approach?** [Read the Vision →](/vision)
 **Want to replicate this research?** [See the Methodology →](/survey/replication)
+
+---
+
+## 1.220-229: Calendar & Scheduling
+
+**Completed: 1/10**
+
+- ✅ [**1.220** CalDAV/iCalendar](/survey/1-220) - icalendar, caldav, vobject
+- **1.221** Calendar Sync - Google Calendar, Outlook, iCloud
+- **1.222** Meeting Scheduling - Calendly alternatives
+- **1.223** Timezone Handling - pytz, zoneinfo, dateutil
+- **1.224** Recurring Events - RRULE parsing, cron expressions
+- **1.225** Calendar Visualization - Timeline views, heatmaps
+- **1.226** Availability Detection - Free/busy calculation
+- **1.227** Event Reminders - Notification systems
+- **1.228** Calendar Import/Export - ICS, CSV conversion
+- **1.229** Calendar Widgets - Embeddable components
+
+---
+
+## 1.230-239: Social Networks & Messaging
+
+**Completed: 2/10**
+
+- ✅ [**1.230** Open Social Networks](/survey/1-230) - ActivityPub, AT Protocol, Matrix, Nostr
+- **1.231** AT Protocol/Bluesky - Decentralized social graph
+- **1.232** Matrix Protocol - Federated chat & E2EE
+- **1.233** Nostr - Simple relay protocol, Lightning payments
+- ✅ [**1.234** Bot SDK Frameworks](/survey/1-234) - matrix-nio, discord.py, python-telegram-bot
+- **1.235** Social Media APIs - Twitter, Reddit, Mastodon
+- **1.236** Chat Webhooks - Slack, Discord, Teams
+- **1.237** Push Notifications - FCM, APNs, WebPush
+- **1.238** RSS/Atom Feeds - feedparser, aggregation
+- **1.239** Social Graph Analysis - Follow relationships, communities
