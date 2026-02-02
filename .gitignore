@@ -39,5 +39,5 @@ __pycache__/
 *.pyd
 research-site-public/
 
-# Source research files (canonical version is docs/survey/)
-packages/research/
+# NOTE: packages/research/ IS tracked (source research with 4PS structure)
+# docs/survey/ contains converted Docusaurus MDX (also tracked)
