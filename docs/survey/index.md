@@ -25,7 +25,7 @@ title: "The Survey"
 - ✅ [**1.005** Spatial Search](/survey/1-005) - PostGIS, Elasticsearch Geo, rtree
 - ✅ [**1.006** Graph Search](/survey/1-006) - A*, Dijkstra, BFS/DFS implementations
 - **1.007** Pattern Matching - KMP, Boyer-Moore, Aho-Corasick
-- ✅ [**1.008**]Time Series Search - DTW, shapelet discovery
+- ✅ [**1.008** Time Series Search - DTW, shapelet discovery](/survey/1-008)
 - ✅ [**1.009** Similarity Search](/survey/1-009) - LSH, MinHash, SimHash
 
 ---
@@ -35,10 +35,10 @@ title: "The Survey"
 **Completed: 0/0**
 
 - ✅ [**1.010** Graph Analysis](/survey/1-010) - NetworkX, graph-tool, igraph
-- ✅ [**1.011**]Graph Database Clients - Neo4j, ArangoDB, TigerGraph
+- ✅ [**1.011** Graph Database Clients - Neo4j, ArangoDB, TigerGraph](/survey/1-011)
 - ✅ [**1.012** Community Detection](/survey/1-012) - Louvain, label propagation, spectral
 - **1.013** Shortest Path Optimization - Specialized path algorithms
-- ✅ [**1.014**]Network Flow - Max flow, min cost flow
+- ✅ [**1.014** Network Flow - Max flow, min cost flow](/survey/1-014)
 - ✅ [**1.015** Graph Visualization](/survey/1-015) - Graphviz, Gephi, Cytoscape
 - ✅ [**1.016** Social Network Analysis](/survey/1-016) - Centrality, clustering coefficient
 - **1.017** Bipartite Matching - Hungarian algorithm, Hopcroft-Karp
@@ -128,7 +128,7 @@ title: "The Survey"
 
 - ✅ [**1.060** Cryptographic Libraries](/survey/1-060) - cryptography vs PyNaCl
 - ✅ [**1.061** Hashing](/survey/1-061) - hashlib, xxhash, blake3
-- ✅ [**1.062**]Password Hashing - argon2-cffi vs bcrypt (covered in 1.060)
+- ✅ [**1.062** Password Hashing - argon2-cffi vs bcrypt (covered in 1.060)](/survey/1-062)
 - ✅ [**1.063** JWT Libraries](/survey/1-063) - PyJWT, python-jose, Authlib
 - **1.064** _Covered by 1.060_
 - **1.065** _Covered by 1.060_
@@ -183,7 +183,7 @@ title: "The Survey"
   - **1.091.1** Object Detection - YOLO, Detectron2, MMDetection
   - ✅ [**1.091.2** Face Detection](/survey/1-091-2) - MediaPipe, Dlib, InsightFace
   - **1.091.3** OCR - Tesseract, EasyOCR, PaddleOCR
-- ✅ [**1.092**]Signal Processing - scipy.signal vs librosa
+- ✅ [**1.092** Signal Processing - scipy.signal vs librosa](/survey/1-092)
 - **1.093** Quantum Computing - Qiskit vs Cirq vs Pennylane
 - ✅ [**1.094** Constraint Solving](/survey/1-094) - Z3, OR-Tools, PySMT
 - **1.095** Game Theory & Auctions - Nashpy, game theory solvers
@@ -199,7 +199,7 @@ title: "The Survey"
 **Completed: 0/0**
 
 - ✅ [**1.100** Text Processing](/survey/1-100) - Regex, string manipulation, NLP utilities
-- ✅ [**1.101**]PDF Processing - ReportLab, WeasyPrint, PyPDF2
+- ✅ [**1.101** PDF Processing - ReportLab, WeasyPrint, PyPDF2](/survey/1-101)
 - **1.102** Document Parsing - python-docx, openpyxl, pandas Excel
 - **1.103** Markdown Processing - markdown-it, mistune, commonmark
 - **1.104** Syntax Highlighting - Pygments, highlight.js
@@ -222,14 +222,14 @@ title: "The Survey"
   - **1.110.2** Vue Meta-Frameworks - Nuxt, VitePress
   - **1.110.3** Svelte Meta-Frameworks - SvelteKit
   - **1.110.4** Browser Python - Pyodide, JupyterLite, PyScript
-- ✅ [**1.111**]State Management - Redux, Zustand, Jotai, Pinia
-- ✅ [**1.112**]CSS Frameworks - Tailwind, Bootstrap, Material UI
-- ✅ [**1.113**]UI Component Libraries - shadcn/ui, Radix, Headless UI
-- ✅ [**1.114**]Build Tools - Vite, Webpack, Turbopack, esbuild
-- ✅ [**1.115**]Form & Validation - React Hook Form, Zod, Yup
-- ✅ [**1.116**]Data Visualization - D3.js, Chart.js, Recharts
+- ✅ [**1.111** State Management - Redux, Zustand, Jotai, Pinia](/survey/1-111)
+- ✅ [**1.112** CSS Frameworks - Tailwind, Bootstrap, Material UI](/survey/1-112)
+- ✅ [**1.113** UI Component Libraries - shadcn/ui, Radix, Headless UI](/survey/1-113)
+- ✅ [**1.114** Build Tools - Vite, Webpack, Turbopack, esbuild](/survey/1-114)
+- ✅ [**1.115** Form & Validation - React Hook Form, Zod, Yup](/survey/1-115)
+- ✅ [**1.116** Data Visualization - D3.js, Chart.js, Recharts](/survey/1-116)
 - **1.117** Animation - Framer Motion, GSAP, React Spring
-- ✅ [**1.118**]Testing - Jest, Vitest, Playwright, Cypress
+- ✅ [**1.118** Testing - Jest, Vitest, Playwright, Cypress](/survey/1-118)
 - **1.119** Mobile Frameworks - React Native, Flutter, Expo
 
 ---
@@ -343,15 +343,15 @@ title: "The Survey"
 **Completed: 0/0**
 
 - ✅ [**1.200** LLM Orchestration](/survey/1-200) - LangChain, LlamaIndex, RAG
-- ✅ [**1.201**]LLM Agent Frameworks - AutoGen, CrewAI, MetaGPT
+- ✅ [**1.201** LLM Agent Frameworks - AutoGen, CrewAI, MetaGPT](/survey/1-201)
 - **1.202** Prompt Engineering - DSPy, guidance, LMQL
-- ✅ [**1.203**]Vector Databases - ChromaDB, Pinecone, Qdrant
-- ✅ [**1.204**]RAG Pipelines - Document loading, chunking, retrieval
-- ✅ [**1.205**]LLM Evaluation - RAGAS, DeepEval, PromptFoo
+- ✅ [**1.203** Vector Databases - ChromaDB, Pinecone, Qdrant](/survey/1-203)
+- ✅ [**1.204** RAG Pipelines - Document loading, chunking, retrieval](/survey/1-204)
+- ✅ [**1.205** LLM Evaluation - RAGAS, DeepEval, PromptFoo](/survey/1-205)
 - **1.206** LLM Caching - GPTCache, prompt caching patterns
 - **1.207** Fine-Tuning - Hugging Face Trainer, LoRA, QLoRA
 - **1.208** Model Compression - Quantization, pruning, distillation
-- ✅ [**1.209**]Local LLM Serving - Ollama, vLLM, llama.cpp
+- ✅ [**1.209** Local LLM Serving - Ollama, vLLM, llama.cpp](/survey/1-209)
 - ✅ [**1.210** Multilingual & CJK LLMs](/survey/1-210) - BLOOM, XLM-RoBERTa, mBERT, ERNIE
 - ✅ [**1.211** CJK Embedding Models](/survey/1-211) - M3E, text2vec-chinese, LaBSE, multilingual-e5
 
