@@ -13,6 +13,14 @@
 
 **Why it matters:** Exact matching is too brittle for real-world text. "John Smith" and "Jon Smith" refer to the same person, but exact matching sees them as completely different. String similarity metrics quantify "how close" two strings are, enabling fuzzy matching that works with imperfect human-generated data.
 
+## Related Research
+
+**Cross-reference with 1.002 (Fuzzy Search):**
+- **1.032 (this document)**: Foundational **algorithms and libraries** for calculating string similarity (Levenshtein, Jaro-Winkler, cosine similarity, etc.)
+- **1.002**: Application-level **search engines** that *use* these algorithms (Whoosh, Tantivy, Pyserini implementing fuzzy search)
+
+**Conceptual difference:** This research (1.032) covers the building blocks - the metrics and libraries you'd import to calculate similarity. Research 1.002 covers platforms that have already integrated these metrics into search functionality. Use 1.032 when you need fine-grained control over similarity calculations; use 1.002 when you need full-text search with fuzzy matching built-in.
+
 ## Accessible Analogies
 
 ### The Editing Distance Concept
