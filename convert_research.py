@@ -617,6 +617,13 @@ def main():
         if not match:
             continue
 
+        code = match.group(1)
+
+        # ONLY process 1.xxx items (public research)
+        # 2.xxx and 3.xxx are private and should not be converted/deployed
+        if not code.startswith('1.'):
+            continue
+
         # Check if research is complete (has discovery content)
         has_metadata = (item / "metadata.yaml").exists()
         has_discovery = (item / "01-discovery").exists()

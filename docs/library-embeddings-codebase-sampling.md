@@ -80,8 +80,8 @@
 **Approach:**
 1. **Stage 1:** Query GitHub Search API for Python repos
    - Filter: `language:Python stars:10..1000 size:>100`
-   - Rationale: 10+ stars = some usage, <1000 stars = not mega-popular
-   - size:>100KB = non-trivial codebase
+   - Rationale: 10+ stars = some usage, &lt;1000 stars = not mega-popular
+   - size:&gt;100KB = non-trivial codebase
 2. **Stage 2:** Random sample 2000 repos from results
 3. **Stage 3:** Clone + parse imports from all `.py` files
 4. **Stage 4:** Filter to repos using ≥3 libraries from our vocabulary
