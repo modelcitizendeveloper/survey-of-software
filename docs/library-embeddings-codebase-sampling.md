@@ -191,7 +191,7 @@ Only sample repos with OSI-approved licenses:
 **500-1000 repositories** across 10 domains
 
 **Rationale:**
-- Small enough to process in <1 day on single machine
+- Small enough to process in &lt;1 day on single machine
 - Large enough to capture domain diversity
 - Comparable to academic studies (e.g., PROMISE dataset, StackOverflow survey)
 
@@ -200,13 +200,13 @@ Only sample repos with OSI-approved licenses:
 Assuming 500 repos:
 - Clone repos: ~10 sec/repo × 500 = **83 minutes**
 - Parse imports: ~2 sec/repo × 500 = **17 minutes**
-- Build co-occurrence matrix: **<1 minute**
+- Build co-occurrence matrix: **&lt;1 minute**
 - **Total: ~2 hours** (parallelizable)
 
 ### Storage
 
 - 500 repos × 5MB average = **2.5GB** disk space
-- Extracted import data: **<1MB** (just library names + counts)
+- Extracted import data: **&lt;1MB** (just library names + counts)
 - Can delete repos after extraction (keep only metadata)
 
 ---
