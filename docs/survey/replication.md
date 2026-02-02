@@ -83,7 +83,7 @@ This research provides **strategic direction**, not Consumer Reports certainty:
 **Information decay:**
 - At publication: 70-80% accuracy
 - 12 months: 50-70% accuracy
-- 36 months: \<30% accuracy
+- 36 months: \&lt;30% accuracy
 
 Library ecosystems evolve. Treat research as living documents that guide investigation, not gospel truth.
 
