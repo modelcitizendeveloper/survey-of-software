@@ -1,0 +1,11 @@
+# Python virtual environment
+.venv/
+__pycache__/
+*.pyc
+
+# Training session logs
+training_sessions.jsonl
+test_log.jsonl
+
+# User data
+*.log

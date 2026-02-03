@@ -1,0 +1,289 @@
+---
+experiment_number: "1.141"
+experiment_sequence: null
+experiment_date: "2026-01-16"
+experiment_status: complete
+discovery_method: detailed_toc
+migrated_from: null
+notes: "Spaced repetition algorithms - SM-2, SM-18, FSRS - comprehensive S1-S4 discovery"
+
+# Key Findings
+findings:
+  primary_recommendation: "FSRS (production) or SM-2 (MVP/simple)"
+  educational_choice: "SM-2 (learning) or FSRS (production-ready)"
+  proprietary_choice: "SM-18 (SuperMemo licensing required)"
+
+  algorithm_tiers:
+    tier1_production:
+      - name: "FSRS (Free Spaced Repetition Scheduler)"
+        performance: "89.6% success rate"
+        release: "2023"
+        maturity: "Production-ready, rapidly adopted"
+        focus: "ML-driven, DSR model (Difficulty, Stability, Retrievability)"
+        parameters: "21 (ML-optimized)"
+        sponsor: "Open Spaced Repetition community"
+        adoption: "Anki 23.10+ (native), ~1.7B reviews training data"
+        license: "Open-source (MIT)"
+
+      - name: "SM-18 (SuperMemo 18)"
+        performance: "Best-in-class (proprietary benchmarks)"
+        release: "2019 (May)"
+        maturity: "Mature, production-proven"
+        focus: "Two-component memory model (Stability, Retrievability)"
+        parameters: "Proprietary matrices"
+        sponsor: "SuperMemo (30+ year company)"
+        adoption: "SuperMemo 18 exclusive"
+        license: "Proprietary (licensing required)"
+
+    tier2_proven:
+      - name: "SM-2 (SuperMemo 2)"
+        performance: "47-60% success rate (baseline)"
+        release: "1988"
+        maturity: "Proven (38 years of use)"
+        focus: "Simple interval calculation (Easiness Factor)"
+        parameters: "0 (hardcoded logic)"
+        sponsor: "Public domain"
+        adoption: "Anki (legacy), Mnemosyne, countless implementations"
+        license: "Public domain"
+        note: "50-70% time reduction vs traditional methods"
+
+    tier3_emerging:
+      - name: "LECTOR (LLM-Enhanced)"
+        performance: "90.2% success rate"
+        release: "2025 (research)"
+        maturity: "Experimental"
+        focus: "LLM-enhanced concept-based test-oriented repetition"
+        note: "Requires significant LLM compute cost"
+
+  convergence_points:
+    - "FSRS rapidly becoming industry standard (Anki adoption)"
+    - "SM-2 remains baseline for MVPs (public domain, simple)"
+    - "SM-18 best performance but proprietary (licensing barrier)"
+    - "FSRS: 20-30% fewer reviews than SM-2 for same retention"
+    - "Market size: $1.23B (2024) → $4B flashcard apps by 2035 (6.3% CAGR)"
+    - "Medical education: Primary use case (Anki adoption in medical schools)"
+    - "Open-source dominance: SM-2 and FSRS vs proprietary SM-18"
+
+  technical_architecture:
+    sm2:
+      variables: "n (repetitions), EF (easiness factor), I (interval)"
+      formula: "EF' = EF + (0.1 - (5-q) * (0.08 + (5-q) * 0.02))"
+      interval_calc: "I(1)=1, I(2)=6, I(n)=I(n-1)*EF for n>2"
+      quality_scale: "0-5 (blackout to perfect)"
+      initial_ef: "2.5"
+      min_ef: "1.3"
+      limitations: "Hardcoded first intervals, static difficulty"
+      implementation: "~50 lines of code"
+
+    fsrs:
+      variables: "D (difficulty), S (stability), R (retrievability)"
+      model: "DSR (Difficulty, Stability, Retrievability)"
+      forgetting_curve: "R(t,S) = (1.0 + F*(t/S))^C where F=19/81, C=-0.5"
+      parameters: "21 (w_i, ML-optimized)"
+      training_data: "~1.7B reviews from 20K users (2026)"
+      version: "FSRS-6 (latest)"
+      implementation: "~100-200 lines of code"
+      advantages: "Dynamic difficulty, configurable retention target"
+
+    sm18:
+      variables: "S (stability), R (retrievability)"
+      model: "Two-component memory model"
+      improvements: "Dynamic item difficulty (anchoring effects)"
+      stabilization: "Improved approximation vs SM-17"
+      matrices: "Stabilization matrix (SInc[]), Recall matrix (Recall[])"
+      implementation: "Proprietary (not publicly available)"
+      advantages: "Accounts for changing difficulty over time"
+
+  performance_benchmarks_2025:
+    lector: "90.2%"
+    fsrs: "89.6%"
+    ssp_mmc: "88.4%"
+    anki_sm2: "60.5%"
+    sm2: "47.1%"
+
+  library_ecosystem:
+    python_sm2:
+      - "anki-sm-2 (open-spaced-repetition)"
+      - "sm-2 (open-spaced-repetition)"
+      - "supermemo2 (PyPI)"
+    python_fsrs:
+      - "fsrs-rs-python (Rust bindings, 6MB)"
+      - "py-fsrs (pure Python, optimized)"
+      - "fsrs4anki (Anki integration)"
+    organization: "Open Spaced Repetition (GitHub org)"
+
+  use_cases:
+    medical_education:
+      primary: true
+      evidence: "KKSOM class of 2026 study (n=36)"
+      performance_gains:
+        - "Course I: +6.4% (p<0.001)"
+        - "Course II: +6.2% (p=0.002)"
+        - "Course III: +7.0% (p=0.002)"
+        - "CBSE: +12.9% (p=0.003)"
+      step1_correlation: "Daily Anki use → increased Step 1 scores (p=0.039)"
+      wellness: "Association with increased sleep quality (p=0.01)"
+
+    language_learning:
+      effectiveness: "50-70% time reduction vs traditional methods"
+      applications: "Vocabulary, grammar, pronunciation, reading"
+
+    professional_certification:
+      - "Bar exam (legal)"
+      - "CPA (accounting)"
+      - "Technical certifications"
+
+    other:
+      - "K-12 and university education"
+      - "Corporate training (onboarding, compliance)"
+      - "Personal development"
+      - "Healthcare (patient education)"
+
+  development_costs_2026:
+    mvp_simple: "$30K-$80K (3-4 months, basic SM-2)"
+    medium: "$80K-$150K (4-6 months, FSRS + cloud sync)"
+    complex: "$150K-$250K+ (6-12 months, AI-driven multi-platform)"
+
+    mvp_timeline:
+      week1: "Data model, local persistence ($7.5K-$15K)"
+      week2: "SM-2 scheduling, review UI ($7.5K-$15K)"
+      week3: "Onboarding, notifications ($7.5K-$15K)"
+      week4: "Import/export, analytics ($7.5K-$15K)"
+      total: "$30K-$60K (4 weeks)"
+
+    cost_savings:
+      cross_platform: "30-40% savings (React Native/Flutter vs native)"
+      open_source_algorithms: "Zero licensing cost (SM-2, FSRS)"
+
+  operating_costs:
+    infrastructure:
+      mvp: "$50-$200/month (DigitalOcean, AWS t3.medium)"
+      growth: "$200-$1K/month (load balancing, scaling)"
+      scale: "$1K-$10K+/month (multi-region, CDN)"
+
+    database:
+      sqlite_local: "$0 (mobile-only)"
+      postgresql: "$15-$500/month (Supabase, AWS RDS)"
+      firebase: "$25-$500/month (scale-dependent)"
+
+    algorithm_licensing:
+      sm2: "$0 (public domain)"
+      fsrs: "$0 (open-source MIT)"
+      sm18: "Unknown (SuperMemo licensing)"
+
+    maintenance: "15-20% of development cost annually"
+
+  migration_paths:
+    sm2_to_fsrs:
+      complexity: "Moderate"
+      duration: "2-4 weeks"
+      cost: "$10K-$30K"
+      data_loss: "Minimal"
+      steps: "Export history → Map EF to D/S → Optimize parameters"
+
+    fsrs_to_sm2:
+      complexity: "High"
+      duration: "1-2 weeks"
+      cost: "$5K-$15K"
+      data_loss: "Significant (D, S, R → EF, I)"
+
+    sm18_to_fsrs:
+      complexity: "Very High"
+      duration: "4-8 weeks"
+      cost: "$20K-$50K"
+      data_loss: "Complete (proprietary state)"
+
+  lock_in_scores:
+    # Scale 0-10 across 5 dimensions: Algorithm, Data, Platform, Ecosystem, Knowledge
+    sm2:
+      algorithm: 0
+      data: 1
+      platform: 0
+      ecosystem: 2
+      knowledge: 2
+      total: 5
+      risk: "Very Low"
+
+    fsrs:
+      algorithm: 1
+      data: 3
+      platform: 0
+      ecosystem: 4
+      knowledge: 5
+      total: 13
+      risk: "Low"
+
+    sm18:
+      algorithm: 10
+      data: 8
+      platform: 9
+      ecosystem: 7
+      knowledge: 6
+      total: 40
+      risk: "Very High"
+
+  market_trends:
+    - "Market size: $1.23B (2024), growing 6.3% CAGR"
+    - "Flashcard apps: $4B by 2035"
+    - "Post-pandemic e-learning surge driving adoption"
+    - "Medical education: Primary adoption driver"
+    - "Anki dominance in open-source space"
+    - "FSRS integration into Anki (23.10) accelerating adoption"
+    - "SuperMemo API expected 2026 (may open SM-18 licensing)"
+
+  strategic_recommendations:
+    startups: "SM-2 (MVP) → FSRS (post-PMF)"
+    mid_market: "FSRS (default choice)"
+    enterprise: "FSRS (open-source) or SM-18 (if licensing budget allows)"
+    agencies: "FSRS (client flexibility)"
+
+# Attribution & Legal Compliance
+data_sources:
+  academic_research:
+    source: "PubMed, SAGE Journals, PMC"
+    accessed: "2026-01-16"
+    notes: "Medical student Anki studies (2023-2026 cohorts)"
+
+  algorithm_documentation:
+    source: "SuperMemo.com, GitHub (open-spaced-repetition)"
+    accessed: "2026-01-16"
+
+  market_data:
+    source: "DataIntelo, WiseGuyReports"
+    accessed: "2026-01-16"
+    notes: "SRS market size, flashcard app projections"
+
+  cost_data:
+    source: "App development cost reports (TopFlightApps, AppInventiv)"
+    accessed: "2026-01-16"
+    notes: "2026 mobile app development pricing guides"
+
+legal_review:
+  tos_compliance: "verified"
+  tos_issues: []
+  prohibited_sources: []
+  copyright_cleared: true
+
+publication_clearance:
+  can_publish_publicly: false
+  reasons: ["market_statistics", "cost_estimates"]
+  safe_for_subscribers: true
+  requires_disclaimer: true
+
+benchmark_methodology:
+  captured: true
+  environment: "Academic studies, GitHub benchmarks"
+  reproducible: true
+  code_available: "https://github.com/open-spaced-repetition/srs-benchmark"
+  notes: "Performance claims from academic papers and open-source benchmarks"
+
+# Token Usage & Cost Tracking
+token_usage:
+  total_tokens: ~50000
+  input_tokens: ~15000
+  output_tokens: ~35000
+  model: "claude-sonnet-4-5"
+  session_count: 1
+  cost_estimate: "$0.60"
+  notes: "Web search-based research, single session, S1-S4 complete"
+---

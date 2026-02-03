@@ -1,0 +1,74 @@
+{
+  "nauta": {
+    "lemma": "nauta",
+    "declension": "1st",
+    "gender": "masculine",
+    "pos": "NOUN",
+    "forms": {
+      "nauta": {"case": "nominative", "number": "singular"},
+      "nautae": {"case": "genitive", "number": "singular"},
+      "nautam": {"case": "accusative", "number": "singular"},
+      "nauta": {"case": "ablative", "number": "singular"},
+      "nautae": {"case": "nominative", "number": "plural"},
+      "nautarum": {"case": "genitive", "number": "plural"},
+      "nautis": {"case": "dative", "number": "plural"},
+      "nautas": {"case": "accusative", "number": "plural"},
+      "nautis": {"case": "ablative", "number": "plural"}
+    }
+  },
+  "scriba": {
+    "lemma": "scriba",
+    "declension": "1st",
+    "gender": "masculine",
+    "pos": "NOUN",
+    "forms": {
+      "scriba": {"case": "nominative", "number": "singular"},
+      "scribae": {"case": "genitive", "number": "singular"},
+      "scribam": {"case": "accusative", "number": "singular"},
+      "scribarum": {"case": "genitive", "number": "plural"}
+    }
+  },
+  "pirata": {
+    "lemma": "pirata",
+    "declension": "1st",
+    "gender": "masculine",
+    "pos": "NOUN",
+    "forms": {
+      "pirata": {"case": "nominative", "number": "singular"},
+      "piratae": {"case": "genitive", "number": "singular"},
+      "piratam": {"case": "accusative", "number": "singular"},
+      "piratarum": {"case": "genitive", "number": "plural"}
+    }
+  },
+  "tempus": {
+    "lemma": "tempus",
+    "declension": "3rd",
+    "gender": "neuter",
+    "pos": "NOUN",
+    "forms": {
+      "tempus": {"case": "nominative", "number": "singular"},
+      "temporis": {"case": "genitive", "number": "singular"},
+      "tempori": {"case": "dative", "number": "singular"},
+      "tempore": {"case": "ablative", "number": "singular"},
+      "tempora": {"case": "nominative", "number": "plural"},
+      "temporum": {"case": "genitive", "number": "plural"},
+      "temporibus": {"case": "dative", "number": "plural"}
+    }
+  },
+  "mos": {
+    "lemma": "mos",
+    "declension": "3rd",
+    "gender": "masculine",
+    "pos": "NOUN",
+    "forms": {
+      "mos": {"case": "nominative", "number": "singular"},
+      "moris": {"case": "genitive", "number": "singular"},
+      "mori": {"case": "dative", "number": "singular"},
+      "morem": {"case": "accusative", "number": "singular"},
+      "more": {"case": "ablative", "number": "singular"},
+      "mores": {"case": "nominative", "number": "plural"},
+      "morum": {"case": "genitive", "number": "plural"},
+      "moribus": {"case": "dative", "number": "plural"}
+    }
+  }
+}

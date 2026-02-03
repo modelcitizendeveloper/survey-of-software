@@ -1,0 +1,90 @@
+id: "1.116"
+title: "Data Visualization Libraries"
+category: "Frontend"
+status: "S1-complete"
+started: "2025-12-12"
+completed: "2025-12-12"
+methodology: "MPSE"
+
+research_question: |
+  What are the leading data visualization libraries for React in 2025?
+  How do high-level libraries (Recharts, Nivo, Victory) compare?
+  When should you use low-level D3 vs high-level abstractions?
+  What about performance with large datasets?
+
+libraries_profiled:
+  react_high_level:
+    - name: "Recharts"
+      github_stars: 25600
+      npm_weekly_downloads: 9000000
+      rendering: "SVG"
+      status: "dominant"
+
+    - name: "Nivo"
+      github_stars: 13600
+      npm_weekly_downloads: 500000
+      rendering: "SVG/Canvas/HTML"
+      status: "growing"
+
+    - name: "Victory"
+      github_stars: 11200
+      npm_weekly_downloads: 284000
+      rendering: "SVG"
+      status: "stable"
+
+  react_low_level:
+    - name: "visx"
+      github_stars: 19000
+      npm_weekly_downloads: 350000
+      rendering: "SVG"
+      status: "stable"
+      maintainer: "Airbnb"
+
+  framework_agnostic:
+    - name: "Chart.js"
+      github_stars: 64000
+      npm_weekly_downloads: 3000000
+      rendering: "Canvas"
+      status: "dominant"
+
+    - name: "Apache ECharts"
+      github_stars: 61000
+      npm_weekly_downloads: 1000000
+      rendering: "Canvas/SVG/WebGL"
+      status: "enterprise"
+
+    - name: "D3.js"
+      github_stars: 108000
+      npm_weekly_downloads: 4500000
+      rendering: "SVG/Canvas"
+      status: "foundational"
+
+key_findings:
+  - finding: "Recharts dominates React charts with 9M weekly downloads"
+    implication: "Default choice for React dashboards"
+
+  - finding: "Canvas outperforms SVG for 1000+ data points"
+    implication: "Use ECharts or Chart.js for large datasets"
+
+  - finding: "D3.js has 108K stars but steep learning curve"
+    implication: "Use for custom visualizations only"
+
+  - finding: "visx bridges D3 power with React idioms"
+    implication: "Choose for complex custom charts in React"
+
+  - finding: "ECharts supports WebGL for massive datasets"
+    implication: "Best for 10K+ data points"
+
+recommendations:
+  react_dashboards: "Recharts"
+  react_custom: "visx"
+  large_datasets: "ECharts or Chart.js"
+  enterprise: "ECharts or Highcharts"
+  low_level_custom: "D3.js"
+  cross_platform: "Victory (React + React Native)"
+
+sources:
+  - "https://blog.logrocket.com/best-react-chart-libraries-2025/"
+  - "https://npmtrends.com/nivo-vs-recharts-vs-victory"
+  - "https://github.com/airbnb/visx"
+  - "https://echarts.apache.org/"

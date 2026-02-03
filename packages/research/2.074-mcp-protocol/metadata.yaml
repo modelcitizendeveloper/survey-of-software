@@ -1,0 +1,107 @@
+id: "2.074"
+title: "MCP Protocol"
+subtitle: "Model Context Protocol Standard"
+tier: 2
+category: "API & Data Exchange Standards"
+
+status:
+  overall: "s1-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "not-started"
+  s3_need_driven: "not-started"
+  s4_strategic: "not-started"
+
+dates:
+  created: "2025-12-14"
+  s1_completed: "2025-12-14"
+
+tags:
+  - mcp
+  - model-context-protocol
+  - open-standard
+  - llm-integration
+  - anthropic
+  - linux-foundation
+  - agentic-ai
+
+standard_assessment:
+  qualifies_as_2xxx: true
+  governance: "Agentic AI Foundation (Linux Foundation)"
+  original_creator: "Anthropic"
+  license: "MIT"
+  first_release: "2024-11-05"
+  current_version: "2025-11-25"
+
+maturity_criteria:
+  vendor_neutral_governance: true
+  multiple_implementations: true
+  production_maturity: true
+  true_portability: true
+  industry_adoption: true
+
+adoption_metrics:
+  monthly_sdk_downloads: "97M+"
+  active_servers: "10,000+"
+  registered_servers: "5,800+"
+  mcp_clients: "300+"
+
+major_adopters:
+  - company: "Anthropic"
+    date: "2024-11"
+    products: ["Claude Desktop", "Claude.ai"]
+  - company: "OpenAI"
+    date: "2025-03"
+    products: ["ChatGPT Desktop", "Agents SDK", "Responses API"]
+  - company: "Google"
+    date: "2025-04"
+    products: ["Gemini", "Agent Development Kit", "Managed MCP servers"]
+  - company: "Microsoft"
+    date: "2025-05"
+    products: ["VS Code", "Windows", "Copilot"]
+  - company: "AWS"
+    date: "2025"
+    products: ["Lambda", "ECS", "EKS", "Fargate", "Bedrock"]
+
+lock_in_assessment:
+  risk_level: "LOW"
+  switching_cost_hours: "1-4"
+  reasons:
+    - "Open specification (MIT license)"
+    - "Vendor-neutral governance (Linux Foundation)"
+    - "Multiple SDKs and implementations"
+    - "Protocol-level portability"
+
+related_protocols:
+  - name: "A2A (Agent-to-Agent)"
+    creator: "Google"
+    relationship: "Complementary (horizontal vs vertical)"
+  - name: "ACP (Agent Communication Protocol)"
+    creator: "IBM"
+    relationship: "Complementary (framework-to-framework)"
+
+spec_versions:
+  - version: "2024-11-05"
+    status: "Legacy"
+    notes: "Initial release, no auth"
+  - version: "2025-03-26"
+    status: "Supported"
+    notes: "OAuth 2.1, Streamable HTTP, Tool annotations"
+  - version: "2025-06-18"
+    status: "Supported"
+    notes: "Structured outputs, RFC 8707"
+  - version: "2025-11-25"
+    status: "Current"
+    notes: "Tasks abstraction, community features"
+
+related_research:
+  - "1.210"  # MCP Server Implementation
+  - "1.200"  # LLM Orchestration Frameworks
+  - "3.200"  # LLM APIs
+
+dependencies:
+  upstream:
+    - "1.210"  # Library research completed
+  downstream: []
+
+cross_references:
+  beads: "solutions-6mqb"

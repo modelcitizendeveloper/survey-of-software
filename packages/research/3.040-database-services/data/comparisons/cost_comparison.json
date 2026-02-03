@@ -1,0 +1,126 @@
+{
+  "research_id": "3.040",
+  "comparison_type": "3_year_tco",
+  "date": "2025-10-17",
+  "scale_assumption": "Small to medium database (1K-10K users)",
+
+  "path1_diy_postgresql": {
+    "path_name": "Self-Hosted PostgreSQL",
+    "year1_cost_usd": {
+      "infrastructure": 1200,
+      "note_infrastructure": "$100/month VPS",
+      "engineering_time_hours": 240,
+      "engineering_cost_usd": 36000,
+      "note_engineering": "20 hours/month @ $150/hour",
+      "opportunity_cost_usd": 12000,
+      "note_opportunity": "10 hours/month @ $100/hour opportunity cost",
+      "total_usd": 49200
+    },
+    "year3_total_cost_usd": {
+      "min": 29180,
+      "max": 244000,
+      "note": "Infrastructure + engineering + opportunity + risk costs"
+    }
+  },
+
+  "path2_managed_postgresql": {
+    "path_name": "Managed PostgreSQL (Supabase, Neon, etc.)",
+    "providers": [
+      {
+        "provider": "Supabase",
+        "tier": "Pro",
+        "monthly_cost_usd": 25,
+        "year1_cost_usd": 300,
+        "year3_cost_usd": 900,
+        "includes": ["database", "auth", "storage", "realtime"]
+      },
+      {
+        "provider": "Neon",
+        "tier": "Launch",
+        "monthly_cost_usd": 19,
+        "year1_cost_usd": 228,
+        "year3_cost_usd": 684,
+        "includes": ["database", "branching", "autoscaling"]
+      },
+      {
+        "provider": "Railway",
+        "tier": "Standard",
+        "monthly_cost_usd": 20,
+        "year1_cost_usd": 240,
+        "year3_cost_usd": 720,
+        "includes": ["database"]
+      }
+    ],
+    "year3_cost_range_usd": {
+      "min": 684,
+      "max": 900,
+      "note": "Managed PostgreSQL providers"
+    }
+  },
+
+  "path3_proprietary": {
+    "path_name": "Proprietary Database (MongoDB, DynamoDB)",
+    "providers": [
+      {
+        "provider": "MongoDB Atlas",
+        "tier": "M10",
+        "monthly_cost_usd": 57,
+        "year1_cost_usd": 684,
+        "year3_cost_usd": 2052,
+        "note": "Minimum production tier"
+      },
+      {
+        "provider": "DynamoDB",
+        "pricing_model": "Usage-based",
+        "cost_variability": "HIGH",
+        "note": "Can be 10x more expensive than PostgreSQL at scale"
+      }
+    ]
+  },
+
+  "cost_comparison_summary": {
+    "diy_vs_managed_ratio": "40-200x",
+    "diy_cost_3yr_usd": {
+      "min": 29180,
+      "max": 244000
+    },
+    "managed_cost_3yr_usd": {
+      "min": 684,
+      "max": 900
+    },
+    "savings_managed_vs_diy_usd": {
+      "min": 28280,
+      "max": 243100
+    },
+    "break_even_point": {
+      "monthly_spend_usd": {
+        "min": 5000,
+        "max": 10000
+      },
+      "note": "DIY becomes cost-competitive above $5K-10K/month database spend"
+    }
+  },
+
+  "bundle_economics": {
+    "supabase_bundle": {
+      "cost_usd_monthly": 25,
+      "includes": ["PostgreSQL (8GB)", "Auth (100K MAU)", "Storage (100GB)", "Realtime"],
+      "equivalent_unbundled_cost": 67,
+      "savings_usd_monthly": 42,
+      "savings_percent": 63
+    },
+    "note": "Bundles (Supabase) win on simplicity and cost for <$50/month spend"
+  },
+
+  "data_lineage": {
+    "source_documents": [
+      "research/3.040-database-services/SECTION_0_STANDARDS.md",
+      "research/3.040-database-services/DATABASE_SERVICES_EXPLAINER.md"
+    ],
+    "extracted_at": "2025-10-17T00:00:00Z",
+    "extraction_method": "manual_conversion",
+    "source_urls": [],
+    "credibility": "second_party",
+    "note": "Costs extracted from EXPLAINER business impact sections"
+  }
+}

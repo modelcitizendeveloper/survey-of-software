@@ -1,0 +1,93 @@
+---
+experiment_number: "1.011"
+experiment_sequence: 36
+experiment_date: "2025-12-28"
+experiment_status: complete
+discovery_method: detailed_toc
+migrated_from: null
+notes: "Graph database Python client libraries - Neo4j, ArangoDB, TigerGraph, Dgraph, Gremlin, RDF"
+
+# Key Findings
+findings:
+  primary_recommendation: "neo4j (official driver) + neomodel (OGM)"
+  portability_choice: "gremlinpython (Apache TinkerPop)"
+  deprecated: "py2neo (EOL April 2025)"
+
+  library_tiers:
+    tier1_production:
+      - neo4j (520K downloads, official)
+      - gremlinpython (5.7M downloads, multi-DB)
+      - rdflib (1.45M downloads, RDF/SPARQL)
+      - python-arango (350K-1.2M, official)
+    tier2_mature:
+      - neomodel (25K downloads, OGM)
+    tier3_niche:
+      - pydgraph (8K downloads, horizontal scaling)
+      - pyTigerGraph (5.6K downloads, graph ML)
+    tier4_avoid:
+      - py2neo (EOL)
+      - pyorient (stale since 2017)
+
+  convergence_points:
+    - "neo4j driver is clear winner for most new projects"
+    - "gremlinpython for multi-database portability"
+    - "py2neo is dead - migrate immediately"
+    - "Async support varies: neo4j best, others need separate packages"
+
+  lock_in_analysis:
+    gremlin: 9/10 portability
+    cypher_gql: 7/10 portability (improving)
+    gsql: 2/10 portability (severe lock-in)
+
+  market_trends:
+    - "GQL ISO standard (2024) - Cypher converging"
+    - "GraphRAG revolution - Microsoft open-sourced July 2024"
+    - "Neo4j dominant ($2B valuation, $581M funding)"
+    - "Multi-model convergence (PostgreSQL AGE)"
+
+# Attribution & Legal Compliance
+data_sources:
+  performance_benchmarks:
+    - source: "official_documentation"
+      notes: "No custom benchmarks performed"
+
+  pricing_data:
+    source: "official_pricing_pages"
+    accessed: "2025-12-28"
+
+  feature_comparisons:
+    source: "official_documentation"
+    accessed: "2025-12-28"
+
+  market_data:
+    github_stars: "github_api"
+    downloads: "pypistats.org"
+
+legal_review:
+  tos_compliance: "verified"
+  tos_issues: []
+  prohibited_sources: []
+  copyright_cleared: true
+
+publication_clearance:
+  can_publish_publicly: false
+  reasons: ["vendor_comparisons", "download_statistics"]
+  safe_for_subscribers: true
+  requires_disclaimer: true
+
+benchmark_methodology:
+  captured: false
+  environment: ""
+  reproducible: false
+  code_available: ""
+
+# Token Usage & Cost Tracking
+token_usage:
+  total_tokens: ~150000
+  input_tokens: ~50000
+  output_tokens: ~100000
+  model: "claude-opus-4-5"
+  session_count: 1
+  cost_estimate: "$3.00"
+  notes: "Parallel execution, 4 agents in single session"
+---

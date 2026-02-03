@@ -1,0 +1,32 @@
+{
+  "research_id": "3.040",
+  "research_title": "Database Services",
+  "tier2_standard_id": "2.050",
+  "tier2_standard_name": "PostgreSQL SQL (Database Portability)",
+  "date_assessed": "2025-10-17",
+  "standard_exists": true,
+  "standard_type": "database_portability",
+
+  "what_it_standardizes": [
+    "SQL dialect (PostgreSQL-flavored SQL)",
+    "Wire protocol (PostgreSQL connection protocol)",
+    "Extensions ecosystem (PostGIS, pgvector, TimescaleDB)",
+    "Dump/restore format (pg_dump/pg_restore)"
+  ],
+
+  "governance": {
+    "body": "PostgreSQL Global Development Group",
+    "type": "community-led",
+    "stability_years": 30,
+    "status": "stable"
+  },
+
+  "data_lineage": {
+    "source_document": "research/3.040-database-services/SECTION_0_STANDARDS.md",
+    "extracted_at": "2025-10-17T00:00:00Z",
+    "extraction_method": "manual_conversion",
+    "llm_attribution": null,
+    "source_urls": [],
+    "credibility": "first_party"
+  }
+}

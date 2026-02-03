@@ -1,0 +1,3 @@
+code: "1.201"
+title: "LLM Agent Frameworks"
+description: "Multi-agent orchestration frameworks for building collaborative AI systems. Analyzes AutoGen (Microsoft, cross-language), CrewAI (role-based, production-ready), and MetaGPT (software dev specialist). CrewAI recommended for 80% of teams with proven deployments (Piracanjuba, PwC). Full 4PS methodology with high convergence (77.5% confidence)."

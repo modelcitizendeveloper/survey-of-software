@@ -1,0 +1,4 @@
+code: '1.204'
+title: RAG Pipelines
+description: RAG pipeline frameworks (LangChain, LlamaIndex, Haystack) using Four-Pass Solution Survey. No universal best—optimal choice depends on use case, time horizon, and risk tolerance. Completed Jan 18, 2026 (S1-S4, 22 docs, 5,001 lines)
+path: research/1.204-rag-pipelines

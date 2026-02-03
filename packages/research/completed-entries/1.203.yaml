@@ -1,0 +1,4 @@
+code: '1.203'
+title: Vector Databases
+description: Four-Pass Solution Survey comparing ChromaDB, Pinecone, Qdrant, and Weaviate for vector search and RAG applications. Qdrant recommended for performance/cost (20k+ QPS, 90% savings via quantization), Weaviate for hybrid search (BM25+vector), ChromaDB for prototyping. Completed Dec 2025 (S1-S4, 28 docs, 75-85% confidence)
+path: research/1.203-vector-databases

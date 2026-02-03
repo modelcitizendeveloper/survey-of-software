@@ -1,0 +1,3 @@
+code: "1.033.2"
+title: "Chinese Word Segmentation"
+description: "Chinese text has no word boundaries - word segmentation is the fundamental problem. Survey of Jieba (most popular), CKIP (traditional Chinese), pkuseg (domain-specific), and LTP (comprehensive NLP toolkit)."

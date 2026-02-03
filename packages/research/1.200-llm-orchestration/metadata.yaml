@@ -1,0 +1,228 @@
+# 1.200: LLM Orchestration Frameworks - Research Metadata
+
+research_id: "1.200"
+title: "LLM Orchestration Frameworks"
+category: "1.200-209 AI & LLM Application Frameworks"
+tier: 1
+tier_description: "YOU run the code - libraries you import and control"
+
+# Research Overview
+research_question: "Which LLM orchestration framework should developers use for building AI applications? What are the trade-offs between frameworks?"
+scope: "Frameworks for building LLM applications (chains, agents, RAG systems)"
+
+# Generic Use Cases (Hardware Store)
+use_cases:
+  - "Developers building chatbots"
+  - "Teams building RAG systems"
+  - "Agencies building AI products"
+  - "Enterprises deploying AI applications"
+  - "Researchers building AI prototypes"
+
+# MPSE Stage Tracking
+mpse_version: "v3.0"
+stages:
+  s1_rapid_discovery:
+    status: "completed"
+    date_completed: "2025-11-19"
+    time_invested: "90 minutes"
+    deliverables:
+      - "5 framework profiles (LangChain, LlamaIndex, Haystack, Semantic Kernel, DSPy)"
+      - "Comparison matrix across 15+ dimensions"
+      - "Recommendation guide with decision framework"
+      - "Domain explainer document"
+      - "Project README"
+    key_findings:
+      - "LangChain is most popular (111k stars) and best for prototyping (3x faster)"
+      - "LlamaIndex specialized for RAG with 35% better retrieval accuracy"
+      - "Haystack best for production (Fortune 500 adoption, 5.9ms overhead, 1.57k tokens)"
+      - "Semantic Kernel unique for multi-language (C#, Python, Java) and Microsoft ecosystem"
+      - "DSPy lowest overhead (3.53ms) but research-focused with smaller community"
+      - "51% of organizations deploy agents in production (2025)"
+      - "All frameworks are model-agnostic (OpenAI, Anthropic, local models)"
+      - "Complexity threshold: Use framework at 100+ lines or multi-step workflows"
+
+  s2_comprehensive:
+    status: "not_started"
+    scope: "Hands-on testing, performance benchmarking, cost analysis"
+
+  s3_need_driven:
+    status: "not_started"
+    scope: "Deep dive for specific client use case"
+
+  s4_strategic:
+    status: "not_started"
+    scope: "Reference architecture implementation, production deployment guide"
+
+# Frameworks Researched
+frameworks:
+  langchain:
+    name: "LangChain"
+    developer: "LangChain Inc."
+    first_release: "October 2022"
+    languages: ["Python", "JavaScript/TypeScript"]
+    license: "MIT"
+    github_stars: "~111,000"
+    specialization: "General-purpose orchestration"
+    best_for: "Rapid prototyping, multi-agent systems, largest ecosystem"
+    limitations: "Breaking changes every 2-3 months, higher overhead (10ms, 2.40k tokens)"
+
+  llamaindex:
+    name: "LlamaIndex"
+    developer: "Jerry Liu and LlamaIndex team"
+    first_release: "November 2022"
+    languages: ["Python", "TypeScript"]
+    license: "MIT"
+    specialization: "RAG and retrieval-heavy applications"
+    best_for: "Document search, RAG systems, enterprise knowledge bases"
+    key_metric: "35% better retrieval accuracy (2025)"
+    limitations: "Less suitable for non-RAG use cases, moderate overhead (6ms)"
+
+  haystack:
+    name: "Haystack"
+    developer: "deepset AI (Germany)"
+    first_release: "~2019"
+    languages: ["Python"]
+    license: "Apache 2.0"
+    specialization: "Production-first enterprise deployment"
+    best_for: "Fortune 500 production, on-premise deployment, best performance"
+    performance: "5.9ms overhead, 1.57k tokens (best token efficiency)"
+    enterprise_users: ["Airbus", "Intel", "Netflix", "Apple", "NVIDIA", "Comcast"]
+    limitations: "Python only, slower prototyping, steeper learning curve"
+
+  semantic_kernel:
+    name: "Semantic Kernel"
+    developer: "Microsoft"
+    first_release: "March 2023"
+    languages: ["C#", "Python", "Java"]
+    license: "MIT"
+    specialization: "Microsoft ecosystem, multi-language enterprise"
+    best_for: "Azure integration, stable APIs (v1.0+), multi-language support"
+    unique_strength: "Only framework with C#, Python, AND Java support"
+    limitations: "Microsoft-centric, smaller community than LangChain"
+
+  dspy:
+    name: "DSPy"
+    developer: "Stanford NLP"
+    first_release: "~2023"
+    languages: ["Python"]
+    license: "MIT"
+    github_stars: "~16,000"
+    specialization: "Automated prompt optimization, research"
+    best_for: "Performance-critical apps, research, minimal boilerplate"
+    performance: "3.53ms overhead (lowest)"
+    limitations: "Steepest learning curve, smallest community, research focus"
+
+# Performance Comparison
+performance_metrics:
+  framework_overhead:
+    dspy: "3.53ms"
+    haystack: "5.9ms"
+    llamaindex: "6ms"
+    langchain: "10ms"
+
+  token_usage:
+    haystack: "1.57k (best)"
+    llamaindex: "1.60k"
+    dspy: "2.03k"
+    langchain: "2.40k (worst)"
+
+# Cross-References
+related_research:
+  - id: "3.200"
+    title: "LLM APIs"
+    relationship: "These frameworks CALL LLM APIs (OpenAI, Anthropic, etc.)"
+
+  - id: "3.134"
+    title: "AI Content Generation"
+    relationship: "S4 build-vs-buy mentions LangChain - this is the deep dive"
+
+  - id: "1.203"
+    title: "Vector Databases"
+    relationship: "RAG workflows need vector DBs (Pinecone, Chroma, etc.)"
+
+# Market Trends (2025)
+trends:
+  - "Agent frameworks maturing (LangGraph, Semantic Kernel Agent Framework GA)"
+  - "RAG evolution from naive retrieval to agentic retrieval"
+  - "Observability now critical (LangSmith, Langfuse, Phoenix)"
+  - "51% of organizations deploy agents in production"
+  - "Framework consolidation around LangChain, LlamaIndex, Haystack"
+  - "Microsoft push with Semantic Kernel as enterprise standard"
+  - "Performance focus (3.53ms - 10ms overhead range matters)"
+
+# Key Decision Factors
+decision_factors:
+  by_use_case:
+    chatbot: "LangChain"
+    rag: "LlamaIndex"
+    enterprise_production: "Haystack or Semantic Kernel"
+    multi_agent: "LangChain + LangGraph"
+    rapid_mvp: "LangChain"
+    research: "DSPy"
+
+  by_team_size:
+    solo_small: "LangChain (most tutorials)"
+    mid_size: "Match to use case"
+    enterprise: "Haystack or Semantic Kernel (stable APIs)"
+
+  by_expertise:
+    beginner: "LangChain (easiest learning curve)"
+    intermediate: "Match to use case"
+    advanced: "Choose best tool for job"
+
+  by_requirements:
+    stability: "Semantic Kernel (v1.0+) or Haystack"
+    performance: "DSPy (3.53ms) or Haystack (1.57k tokens)"
+    ecosystem: "LangChain (111k stars)"
+    rag_quality: "LlamaIndex (35% accuracy boost)"
+
+# Complexity Threshold
+when_to_use_raw_api:
+  - "Single LLM call, no chaining"
+  - "Under 50 lines of code"
+  - "No memory or state management"
+  - "Simple use cases (translation, sentiment analysis)"
+
+when_to_use_framework:
+  - "Multi-step workflows (chains)"
+  - "Agent systems with tool calling"
+  - "RAG systems with retrieval"
+  - "Production deployment"
+  - "Over 100 lines of LLM code"
+  - "Team collaboration required"
+
+# Resources
+official_websites:
+  langchain: "https://www.langchain.com/"
+  llamaindex: "https://www.llamaindex.ai/"
+  haystack: "https://haystack.deepset.ai/"
+  semantic_kernel: "https://learn.microsoft.com/en-us/semantic-kernel/"
+  dspy: "https://dspy.ai/"
+
+observability_tools:
+  langsmith: "https://www.langchain.com/langsmith (commercial)"
+  langfuse: "https://langfuse.com/ (open-source)"
+  phoenix: "https://phoenix.arize.com/ (Arize AI)"
+
+# Research Metadata
+research_methodology: "Web search, GitHub analysis, documentation review, production case studies"
+data_currency: "2024-2025"
+last_updated: "2025-11-19"
+maintained_by: "spawn-solutions research team"
+
+# Tags
+tags:
+  - "llm"
+  - "frameworks"
+  - "orchestration"
+  - "langchain"
+  - "llamaindex"
+  - "haystack"
+  - "semantic-kernel"
+  - "dspy"
+  - "rag"
+  - "agents"
+  - "ai-applications"
+  - "tier-1"
+  - "production"
+  - "enterprise"
