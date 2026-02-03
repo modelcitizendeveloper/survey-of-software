@@ -1,2 +1,0 @@
-[console_scripts]
-lib-emb = library_embeddings.cli:main
