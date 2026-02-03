@@ -24,6 +24,12 @@ title: "The Survey"
 - ✅ [**1.004** Binary Search Trees](/survey/1-004) - B-trees, AVL, Red-Black implementations
 - ✅ [**1.005** Spatial Search](/survey/1-005) - PostGIS, Elasticsearch Geo, rtree
 - ✅ [**1.006** Graph Search](/survey/1-006) - A*, Dijkstra, BFS/DFS implementations
+- ✅ [**1.007** Pattern Matching Algorithms](/survey/1-007) - Comprehensive analysis of pattern matching algorithms and libraries across multiple
+platforms. Covers KMP, Boyer-Moore, Aho-Corasick, and Rabin-Karp algorithms with
+practical implementations in C/C++, Python, Rust, Go, and Java. Includes specialized
+tools for network security (Hyperscan), bioinformatics (BLAST, Bowtie), and text
+processing.
+
 - **1.007** Pattern Matching - KMP, Boyer-Moore, Aho-Corasick
 - ✅ [**1.008** Time Series Search - DTW, shapelet discovery](/survey/1-008)
 - ✅ [**1.009** Similarity Search](/survey/1-009) - LSH, MinHash, SimHash
@@ -360,8 +366,8 @@ title: "The Survey"
 ## Research Status
 
 **Total Defined**: 189 research slots (including CJK expansion)
-**Completed**: 99 pieces (52%)
-**Remaining**: 90 pieces
+**Completed**: 100 pieces (52%)
+**Remaining**: 89 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
