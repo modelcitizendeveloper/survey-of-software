@@ -2,6 +2,7 @@ code: '1.007'
 title: Pattern Matching Algorithms
 tier: 1
 category: Library/Package Discovery
+domain: string-algorithms
 status: completed
 completion_date: '2026-02-02'
 
