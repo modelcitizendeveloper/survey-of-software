@@ -1,0 +1,44 @@
+title: Pattern Matching Algorithms
+short_description: KMP, Boyer-Moore, Aho-Corasick, Rabin-Karp
+domain: algorithms
+experiment_number: "1.007"
+experiment_date: "2025-02-02"
+experiment_status: completed
+
+research_focus:
+  - String search algorithms
+  - Pattern matching performance
+  - Multiple pattern matching
+  - Library implementations
+
+key_algorithms:
+  - name: "Knuth-Morris-Pratt (KMP)"
+    complexity: "O(n+m)"
+    use_case: "Single pattern with preprocessing"
+  - name: "Boyer-Moore"
+    complexity: "O(n/m) best case"
+    use_case: "Single pattern, right-to-left scanning"
+  - name: "Aho-Corasick"
+    complexity: "O(n+m+z)"
+    use_case: "Multiple patterns simultaneously"
+  - name: "Rabin-Karp"
+    complexity: "O(nm) worst, O(n+m) average"
+    use_case: "Multiple patterns with rolling hash"
+
+languages_covered:
+  - Python
+  - Rust
+  - C/C++
+  - Go
+
+data_sources:
+  - "Python standard library (str.find, re module)"
+  - "pyahocorasick library"
+  - "aho-corasick (Rust crate)"
+  - "Academic literature (Knuth, Morris, Pratt 1977)"
+  - "Academic literature (Boyer, Moore 1977)"
+  - "Academic literature (Aho, Corasick 1975)"
+
+publication_clearance:
+  can_publish_publicly: true
+  safe_for_subscribers: true
