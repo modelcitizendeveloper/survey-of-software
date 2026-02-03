@@ -6,9 +6,14 @@ on:
     paths:
       - 'packages/research/**'
 
+# Prevent infinite loop: don't trigger on commits by github-actions bot
+# Only trigger on commits that actually change research content
+
 jobs:
   integrate:
     runs-on: ubuntu-latest
+    # Skip if commit author is github-actions bot (prevents infinite loop)
+    if: github.actor != 'github-actions[bot]'
 
     steps:
       - name: Checkout code
