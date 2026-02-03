@@ -14,6 +14,9 @@ class Recipe:
     title: str
     ingredients: List[str]  # NER-parsed ingredient list
     source: int  # 0=Gathered, 1=Recipes1M
+    raw_ingredients: Optional[List[str]] = None  # Full ingredients with quantities
+    directions: Optional[List[str]] = None  # Cooking instructions
+    link: Optional[str] = None  # Source URL
 
     def __repr__(self):
         return f"Recipe({self.id}, {self.title!r}, {len(self.ingredients)} ingredients)"
@@ -85,11 +88,34 @@ class RecipeDatabase:
                         ingredients = [ing.lower().strip() for ing in ner if ing]
 
                         if ingredients:
+                            # Parse full ingredients and directions
+                            raw_ingredients = None
+                            directions = None
+                            link = None
+
+                            try:
+                                raw_ingredients = json.loads(row['ingredients']) if isinstance(row['ingredients'], str) else row['ingredients']
+                            except (json.JSONDecodeError, TypeError, KeyError):
+                                pass
+
+                            try:
+                                directions = json.loads(row['directions']) if isinstance(row['directions'], str) else row['directions']
+                            except (json.JSONDecodeError, TypeError, KeyError):
+                                pass
+
+                            try:
+                                link = row['link'] if 'link' in row and pd.notna(row['link']) else None
+                            except (KeyError, TypeError):
+                                pass
+
                             self.recipes.append(Recipe(
                                 id=row['Unnamed: 0'],
                                 title=row['title'],
                                 ingredients=ingredients,
-                                source=row['source']
+                                source=row['source'],
+                                raw_ingredients=raw_ingredients,
+                                directions=directions,
+                                link=link
                             ))
                             recipe_count += 1
 
@@ -112,6 +138,7 @@ class RecipeDatabase:
                         min_match: float = 0.5,
                         similarity_threshold: float = 0.6,
                         use_similarity: bool = True,
+                        min_ingredients: int = 3,
                         topn: int = 20) -> List[RecipeMatch]:
         """Search for recipes matching pantry contents.
 
@@ -133,6 +160,10 @@ class RecipeDatabase:
         pantry_set = set(pantry)
 
         for recipe in self.recipes:
+            # Filter recipes with too few ingredients (incomplete NER)
+            if len(recipe.ingredients) < min_ingredients:
+                continue
+
             recipe_set = set(recipe.ingredients)
 
             # Exact matches
@@ -227,6 +258,60 @@ def load_pantry_from_file(file_path: str) -> List[str]:
     return parse_pantry(content)
 
 
+def format_recipe_full(recipe: Recipe) -> str:
+    """Format full recipe details for display."""
+    lines = []
+
+    # Header
+    lines.append("=" * 70)
+    lines.append(f"{recipe.title}")
+    lines.append(f"Recipe ID: {recipe.id}")
+    lines.append("=" * 70)
+
+    # Ingredients
+    lines.append("\nINGREDIENTS:")
+    if recipe.raw_ingredients:
+        for i, ing in enumerate(recipe.raw_ingredients, 1):
+            lines.append(f"  {i}. {ing}")
+    else:
+        lines.append("  (ingredients not available)")
+
+    # Directions
+    lines.append("\nDIRECTIONS:")
+    if recipe.directions:
+        for i, step in enumerate(recipe.directions, 1):
+            # Wrap long steps
+            step_lines = []
+            words = step.split()
+            current_line = f"  {i}. "
+            indent = " " * len(current_line)
+
+            for word in words:
+                if len(current_line) + len(word) + 1 > 70:
+                    step_lines.append(current_line)
+                    current_line = indent + word
+                else:
+                    if current_line.endswith(". "):
+                        current_line += word
+                    else:
+                        current_line += " " + word
+
+            if current_line.strip():
+                step_lines.append(current_line)
+
+            lines.extend(step_lines)
+    else:
+        lines.append("  (directions not available)")
+
+    # Source
+    if recipe.link:
+        lines.append(f"\nSource: {recipe.link}")
+
+    lines.append("=" * 70)
+
+    return '\n'.join(lines)
+
+
 def format_recipe_match(match: RecipeMatch, show_details: bool = True,
                        show_similar: bool = True) -> str:
     """Format recipe match for display."""
@@ -234,7 +319,7 @@ def format_recipe_match(match: RecipeMatch, show_details: bool = True,
 
     # Title and score
     score_pct = match.total_score * 100
-    lines.append(f"{match.recipe.title}")
+    lines.append(f"{match.recipe.title} [ID: {match.recipe.id}]")
     lines.append(f"  Match: {score_pct:.0f}% "
                 f"({len(match.exact_matches)}/{len(match.recipe.ingredients)} ingredients)")
 

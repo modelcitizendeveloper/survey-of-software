@@ -6,7 +6,7 @@ import sys
 from pathlib import Path
 from gensim.models import KeyedVectors
 from .pantry import (RecipeDatabase, parse_pantry, load_pantry_from_file,
-                     format_recipe_match)
+                     format_recipe_match, format_recipe_full)
 
 
 class RecipeEmbeddings:
@@ -237,6 +237,201 @@ def cmd_search(args):
     return 0
 
 
+def categorize_ingredient(ingredient):
+    """Categorize an ingredient into food groups."""
+    ing_lower = ingredient.lower()
+
+    # Expanded category definitions
+    categories = []
+
+    # Proteins
+    protein_words = [
+        'chicken', 'beef', 'pork', 'fish', 'shrimp', 'turkey', 'bacon', 'sausage',
+        'tofu', 'egg', 'salmon', 'tuna', 'cod', 'ham', 'lamb', 'duck', 'venison',
+        'crab', 'lobster', 'scallop', 'anchovy', 'sardine', 'tempeh', 'seitan'
+    ]
+    if any(p in ing_lower for p in protein_words):
+        categories.append('protein')
+
+    # Vegetables
+    veggie_words = [
+        'onion', 'tomato', 'pepper', 'carrot', 'celery', 'mushroom', 'broccoli',
+        'spinach', 'potato', 'zucchini', 'eggplant', 'cabbage', 'lettuce', 'kale',
+        'chard', 'beet', 'radish', 'turnip', 'squash', 'pumpkin', 'cucumber',
+        'asparagus', 'artichoke', 'brussels', 'cauliflower', 'pea', 'bean',
+        'corn', 'avocado', 'leek', 'fennel', 'arugula', 'bok choy', 'collard'
+    ]
+    if any(v in ing_lower for v in veggie_words):
+        categories.append('vegetables')
+
+    # Aromatics (subset of vegetables, but more specific)
+    aromatic_words = ['garlic', 'ginger', 'shallot', 'scallion', 'leek', 'onion']
+    if any(a in ing_lower for a in aromatic_words):
+        categories.append('aromatics')
+
+    # Herbs
+    herb_words = [
+        'basil', 'parsley', 'cilantro', 'thyme', 'rosemary', 'oregano', 'sage',
+        'mint', 'dill', 'tarragon', 'chive', 'bay', 'marjoram', 'savory'
+    ]
+    if any(h in ing_lower for h in herb_words):
+        categories.append('herbs')
+
+    # Spices
+    spice_words = [
+        'pepper', 'cumin', 'paprika', 'cinnamon', 'nutmeg', 'clove', 'cardamom',
+        'coriander', 'turmeric', 'curry', 'chili', 'cayenne', 'garam', 'masala',
+        'saffron', 'star anise', 'fennel seed', 'mustard seed', 'sesame seed',
+        'poppy', 'caraway', 'allspice', 'mace', 'za\'atar', 'sumac'
+    ]
+    if any(s in ing_lower for s in spice_words):
+        categories.append('spices')
+
+    # Dairy
+    dairy_words = [
+        'butter', 'cream', 'cheese', 'milk', 'yogurt', 'sour cream', 'cream cheese',
+        'mozzarella', 'parmesan', 'cheddar', 'ricotta', 'feta', 'goat cheese',
+        'mascarpone', 'cottage cheese', 'whey', 'buttermilk', 'ghee'
+    ]
+    if any(d in ing_lower for d in dairy_words):
+        categories.append('dairy')
+
+    # Fruits
+    fruit_words = [
+        'apple', 'banana', 'orange', 'lemon', 'lime', 'berry', 'grape', 'melon',
+        'peach', 'pear', 'plum', 'cherry', 'mango', 'pineapple', 'strawberry',
+        'blueberry', 'raspberry', 'blackberry', 'cranberry', 'date', 'fig',
+        'apricot', 'nectarine', 'kiwi', 'papaya', 'guava', 'passion fruit'
+    ]
+    if any(f in ing_lower for f in fruit_words):
+        categories.append('fruits')
+
+    # Grains & Starches
+    grain_words = [
+        'rice', 'pasta', 'flour', 'bread', 'quinoa', 'couscous', 'oat', 'barley',
+        'wheat', 'rye', 'corn', 'tortilla', 'noodle', 'macaroni', 'spaghetti'
+    ]
+    if any(g in ing_lower for g in grain_words):
+        categories.append('grains')
+
+    # Oils & Fats
+    oil_words = [
+        'oil', 'fat', 'lard', 'shortening', 'ghee', 'schmaltz'
+    ]
+    if any(o in ing_lower for o in oil_words) and 'olive' not in ing_lower:
+        categories.append('oils')
+
+    if not categories:
+        categories.append('other')
+
+    return categories
+
+
+def cmd_pair(args):
+    """Handle 'pair' command - ingredient pairing suggestions."""
+    emb = RecipeEmbeddings(dimension=args.dim)
+
+    # Get more results for filtering (need to search deep for category filtering)
+    search_multiplier = 20 if args.category else 2
+    results, error = emb.similar(args.ingredient, topn=min(args.top * search_multiplier, 200))
+
+    if error:
+        print(f"❌ '{args.ingredient}' not in vocabulary")
+        if error:
+            print(f"\n💡 Did you mean:")
+            for word in error:
+                print(f"   - {word}")
+        return 1
+
+    # Parse requested categories
+    requested_categories = []
+    if args.category:
+        requested_categories = [c.strip().lower() for c in args.category.split(',')]
+
+    # Filter results
+    base_ingredient = args.ingredient.lower()
+    filtered = []
+
+    for word, score in results:
+        word_lower = word.lower()
+
+        # Skip if it's the same ingredient
+        if args.exclude_self and word_lower == base_ingredient:
+            continue
+
+        # Skip close variations of the same ingredient (unless it's a useful form)
+        if args.exclude_self and (base_ingredient in word_lower or word_lower in base_ingredient):
+            # Allow useful variations
+            if not any(prefix in word_lower for prefix in ['fresh', 'dried', 'ground', 'chopped', 'minced']):
+                continue
+
+        # Category filtering
+        if requested_categories:
+            ing_categories = categorize_ingredient(word)
+            if not any(cat in ing_categories for cat in requested_categories):
+                continue
+
+        filtered.append((word, score))
+
+        if len(filtered) >= args.top:
+            break
+
+    print(f"\nCooking with '{args.ingredient}'? Consider adding:")
+    print("=" * 60)
+
+    if args.group:
+        # Group by category (simple heuristic)
+        proteins = []
+        vegetables = []
+        aromatics = []
+        herbs_spices = []
+        dairy = []
+        other = []
+
+        protein_words = ['chicken', 'beef', 'pork', 'fish', 'shrimp', 'turkey', 'bacon', 'sausage', 'tofu', 'egg']
+        veggie_words = ['onion', 'tomato', 'pepper', 'carrot', 'celery', 'mushroom', 'broccoli', 'spinach', 'potato']
+        aromatic_words = ['garlic', 'ginger', 'shallot', 'scallion', 'leek']
+        herb_spice_words = ['basil', 'parsley', 'thyme', 'rosemary', 'oregano', 'cilantro', 'cumin', 'paprika', 'pepper', 'cinnamon']
+        dairy_words = ['butter', 'cream', 'cheese', 'milk', 'yogurt']
+
+        for word, score in filtered:
+            word_lower = word.lower()
+            if any(p in word_lower for p in protein_words):
+                proteins.append((word, score))
+            elif any(v in word_lower for v in veggie_words):
+                vegetables.append((word, score))
+            elif any(a in word_lower for a in aromatic_words):
+                aromatics.append((word, score))
+            elif any(h in word_lower for h in herb_spice_words):
+                herbs_spices.append((word, score))
+            elif any(d in word_lower for d in dairy_words):
+                dairy.append((word, score))
+            else:
+                other.append((word, score))
+
+        # Print grouped results
+        categories = [
+            ("Aromatics", aromatics),
+            ("Herbs & Spices", herbs_spices),
+            ("Vegetables", vegetables),
+            ("Proteins", proteins),
+            ("Dairy & Fats", dairy),
+            ("Other", other)
+        ]
+
+        for category, items in categories:
+            if items:
+                print(f"\n{category}:")
+                for word, score in items[:5]:
+                    print(f"  • {word} (pairs well, {score:.2f} similarity)")
+    else:
+        # Simple list
+        for i, (word, score) in enumerate(filtered, 1):
+            print(f"  {i:2d}. {word} (similarity: {score:.2f})")
+
+    return 0
+
+
 def cmd_info(args):
     """Handle 'info' command."""
     emb = RecipeEmbeddings(dimension=args.dim)
@@ -271,6 +466,85 @@ def cmd_info(args):
         print(f"    {i:2d}. {word}")
 
     return 0
+
+
+def cmd_show(args):
+    """Handle 'show' command - display full recipe details."""
+    import subprocess
+    import csv
+    import json
+    from io import StringIO
+
+    # Find dataset
+    package_dir = Path(__file__).parent.parent
+    dataset_path = package_dir / "data" / "dataset" / "full_dataset.csv"
+
+    if not dataset_path.exists():
+        print(f"❌ Dataset not found: {dataset_path}")
+        print("Run extract_ingredients.py first to download and process the dataset.")
+        return 1
+
+    # Fast lookup using grep (much faster than loading entire database)
+    print(f"Looking up recipe {args.recipe_id}...")
+
+    try:
+        # Grep for the recipe ID in the first column
+        # Format: ^<id>,  (start of line, ID, comma)
+        result = subprocess.run(
+            ['grep', '-m', '1', f'^{args.recipe_id},', str(dataset_path)],
+            capture_output=True,
+            text=True,
+            check=False
+        )
+
+        if result.returncode != 0 or not result.stdout.strip():
+            print(f"❌ Recipe ID {args.recipe_id} not found")
+            return 1
+
+        # Parse the CSV line (format: id,title,ingredients,directions,link,source,NER)
+        csv_reader = csv.reader(StringIO(result.stdout))
+        row = next(csv_reader)
+
+        if len(row) < 7:
+            print(f"❌ Invalid recipe data")
+            return 1
+
+        recipe_id, title, ingredients_json, directions_json, link, source_str, ner_json = row
+
+        # Parse JSON fields
+        try:
+            raw_ingredients = json.loads(ingredients_json) if ingredients_json else []
+            directions = json.loads(directions_json) if directions_json else []
+            ner = json.loads(ner_json) if ner_json else []
+        except json.JSONDecodeError:
+            raw_ingredients = []
+            directions = []
+            ner = []
+
+        # Map source string to int (Gathered=0, Recipes1M=1)
+        source = 0 if source_str == "Gathered" else 1
+
+        # Create Recipe object
+        from .pantry import Recipe
+        recipe = Recipe(
+            id=int(recipe_id),
+            title=title,
+            ingredients=ner,
+            source=source,
+            raw_ingredients=raw_ingredients,
+            directions=directions,
+            link=link if link else None
+        )
+
+        # Display full recipe
+        print()
+        print(format_recipe_full(recipe))
+
+        return 0
+
+    except Exception as e:
+        print(f"❌ Error reading recipe: {e}")
+        return 1
 
 
 def cmd_pantry(args):
@@ -320,6 +594,7 @@ def cmd_pantry(args):
         min_match=args.min_match,
         similarity_threshold=args.similarity_threshold,
         use_similarity=not args.no_similarity,
+        min_ingredients=args.min_ingredients,
         topn=args.top
     )
 
@@ -337,6 +612,35 @@ def cmd_pantry(args):
         print(f"{i}. {format_recipe_match(match, show_details=args.details, show_similar=not args.no_similarity)}")
         print()
 
+    # Interactive mode
+    if args.interactive:
+        print("=" * 60)
+        print("Enter a recipe number to view full details, or 'q' to quit")
+        print("=" * 60)
+
+        while True:
+            try:
+                choice = input("\nSelect recipe (1-{}, q to quit): ".format(len(matches))).strip().lower()
+
+                if choice == 'q' or choice == 'quit':
+                    break
+
+                try:
+                    idx = int(choice) - 1
+                    if 0 <= idx < len(matches):
+                        selected_match = matches[idx]
+                        print()
+                        print(format_recipe_full(selected_match.recipe))
+                        print()
+                    else:
+                        print(f"❌ Please enter a number between 1 and {len(matches)}")
+                except ValueError:
+                    print("❌ Please enter a number or 'q' to quit")
+
+            except (EOFError, KeyboardInterrupt):
+                print("\n")
+                break
+
     return 0
 
 
@@ -349,12 +653,18 @@ def main():
         epilog="""
 Examples:
   recipe-emb similar butter
+  recipe-emb pair salmon --category herbs
+  recipe-emb pair chicken --category vegetables,spices --group
   recipe-emb substitute butter --exclude dairy,milk
   recipe-emb analogy "beef - meat + vegetarian"
   recipe-emb pantry --ingredients "chicken,rice,onion,garlic,soy sauce"
-  recipe-emb pantry --file pantry.txt --top 20
+  recipe-emb pantry --file pantry.txt --interactive
+  recipe-emb show 12345
   recipe-emb search "cream of"
   recipe-emb info
+
+Available categories for --category flag:
+  aromatics, dairy, fruits, grains, herbs, oils, protein, spices, vegetables, other
 
 For more information: https://github.com/yourusername/recipe-embeddings
         """
@@ -380,6 +690,48 @@ For more information: https://github.com/yourusername/recipe-embeddings
     parser_similar.add_argument('-n', '--top', type=int, default=10,
                                help='Number of results (default: 10)')
     parser_similar.set_defaults(func=cmd_similar)
+
+    # Pair command
+    parser_pair = subparsers.add_parser(
+        'pair',
+        aliases=['complement', 'with'],
+        help='Suggest ingredient pairings',
+        description='Find ingredients that pair well with the given ingredient',
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Categories:
+  aromatics    - garlic, ginger, shallot, scallion, leek, onion
+  dairy        - butter, cream, cheese, milk, yogurt, ghee
+  fruits       - apple, banana, lemon, lime, berries, mango
+  grains       - rice, pasta, flour, bread, quinoa, couscous
+  herbs        - basil, parsley, cilantro, thyme, rosemary, dill
+  oils         - olive oil, vegetable oil, sesame oil, coconut oil
+  protein      - chicken, beef, pork, fish, shrimp, tofu, eggs
+  spices       - pepper, cumin, paprika, cinnamon, nutmeg, curry
+  vegetables   - onion, tomato, pepper, carrot, celery, mushroom
+  other        - everything else
+
+Examples:
+  recipe-emb pair salmon --category herbs
+    → dill, chives, tarragon (herbs that pair with salmon)
+
+  recipe-emb pair chicken --category vegetables,spices
+    → onion, peppers, paprika, cumin (veggies and spices for chicken)
+
+  recipe-emb pair pasta --category dairy --group
+    → cheese varieties (grouped output)
+        """
+    )
+    parser_pair.add_argument('ingredient', help='Ingredient to find pairings for')
+    parser_pair.add_argument('-n', '--top', type=int, default=10,
+                            help='Number of results (default: 10)')
+    parser_pair.add_argument('-g', '--group', action='store_true',
+                            help='Group results by category')
+    parser_pair.add_argument('-c', '--category',
+                            help='Filter by category (comma-separated): aromatics, dairy, fruits, grains, herbs, oils, protein, spices, vegetables, other')
+    parser_pair.add_argument('--exclude-self', action='store_true', default=True,
+                            help='Exclude variations of the same ingredient (default: True)')
+    parser_pair.set_defaults(func=cmd_pair)
 
     # Substitute command
     parser_sub = subparsers.add_parser(
@@ -426,6 +778,15 @@ For more information: https://github.com/yourusername/recipe-embeddings
     )
     parser_info.set_defaults(func=cmd_info)
 
+    # Show command
+    parser_show = subparsers.add_parser(
+        'show',
+        help='Display full recipe details',
+        description='Show complete recipe with ingredients and directions'
+    )
+    parser_show.add_argument('recipe_id', type=int, help='Recipe ID to display')
+    parser_show.set_defaults(func=cmd_show)
+
     # Pantry command
     parser_pantry = subparsers.add_parser(
         'pantry',
@@ -448,8 +809,12 @@ For more information: https://github.com/yourusername/recipe-embeddings
                               help='Only use high-quality recipes (default: all sources)')
     parser_pantry.add_argument('--max-recipes', type=int,
                               help='Limit recipes to search (for testing)')
+    parser_pantry.add_argument('--min-ingredients', type=int, default=3,
+                              help='Minimum ingredients per recipe (default: 3, filters incomplete recipes)')
     parser_pantry.add_argument('--details', action='store_true', default=True,
                               help='Show detailed ingredient matches')
+    parser_pantry.add_argument('--interactive', '-I', action='store_true',
+                              help='Interactive mode: select a recipe to view full details')
     parser_pantry.set_defaults(func=cmd_pantry)
 
     # Parse arguments
