@@ -98,16 +98,19 @@ jobs:
 
           git add docs/survey/*.md docs/survey/index.md sidebars.ts
 
-          git commit -m "docs: Auto-integrate research ${codes}
+          git commit -m "$(cat <<'EOF'
+          docs: Auto-integrate research ${codes}
 
-Automated conversion and integration:
-- Converted packages/research/ to docs/survey/
-- Updated survey index with new entries
-- Updated sidebar navigation
+          Automated conversion and integration:
+          - Converted packages/research/ to docs/survey/
+          - Updated survey index with new entries
+          - Updated sidebar navigation
 
-Research codes: ${codes}
+          Research codes: ${codes}
 
-Co-Authored-By: github-actions[bot] <github-actions[bot]@users.noreply.github.com>"
+          Co-Authored-By: github-actions[bot] <github-actions[bot]@users.noreply.github.com>
+          EOF
+          )"
 
           git push
 
