@@ -24,7 +24,7 @@ title: "The Survey"
 - ✅ [**1.004** Binary Search Trees](/survey/1-004) - B-trees, AVL, Red-Black implementations
 - ✅ [**1.005** Spatial Search](/survey/1-005) - PostGIS, Elasticsearch Geo, rtree
 - ✅ [**1.006** Graph Search](/survey/1-006) - A*, Dijkstra, BFS/DFS implementations
-- ✅ [**1.007** Pattern Matching Algorithms](/survey/1-007) - KMP, Boyer-Moore, Aho-Corasick, Rabin-Karp
+- **1.007** Pattern Matching - KMP, Boyer-Moore, Aho-Corasick
 - ✅ [**1.008** Time Series Search - DTW, shapelet discovery](/survey/1-008)
 - ✅ [**1.009** Similarity Search](/survey/1-009) - LSH, MinHash, SimHash
 
@@ -360,8 +360,8 @@ title: "The Survey"
 ## Research Status
 
 **Total Defined**: 189 research slots (including CJK expansion)
-**Completed**: 100 pieces (52%)
-**Remaining**: 89 pieces
+**Completed**: 99 pieces (52%)
+**Remaining**: 90 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 

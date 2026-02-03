@@ -7,7 +7,6 @@ const sidebars = {
     {type: "doc", id: "survey/1-004"},
     {type: "doc", id: "survey/1-005"},
     {type: "doc", id: "survey/1-006"},
-    {type: "doc", id: "survey/1-007"},
     {type: "doc", id: "survey/1-008"},
     {type: "doc", id: "survey/1-009"},
     {type: "doc", id: "survey/1-010"},
