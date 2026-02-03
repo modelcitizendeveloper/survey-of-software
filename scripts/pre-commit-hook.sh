@@ -65,12 +65,14 @@ if git diff --cached --name-only | grep -q "^packages/research/"; then
             # Run validation if the script exists
             if [ -f "scripts/validate_research.py" ]; then
                 score=$(python3 scripts/validate_research.py "$code" 2>/dev/null | grep "Overall Score" | grep -oP '\d+(?=%)' || echo "0")
-                if [ "$score" -lt 60 ]; then
-                    echo "    ❌ Research $code scored ${score}% (minimum: 60%)"
+                if [ "$score" -lt 75 ]; then
+                    echo "    ❌ Research $code scored ${score}% (minimum: 75% required)"
                     echo "       Run: python3 scripts/validate_research.py $code"
+                    echo "       Missing components must be completed before committing"
                     ISSUES=$((ISSUES + 1))
-                elif [ "$score" -lt 75 ]; then
-                    echo "    ⚠️  Research $code scored ${score}% (recommended: 75%+)"
+                elif [ "$score" -lt 90 ]; then
+                    echo "    ⚠️  Research $code scored ${score}% (target: 90%+)"
+                    echo "       Consider completing optional components"
                 else
                     echo "    ✅ Research $code scored ${score}%"
                 fi
