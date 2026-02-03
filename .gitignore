@@ -45,7 +45,3 @@ research-site-public/
 # Build artifacts
 .build/
 library-metadata*.json
-
-# Separate projects (not part of SoS)
-recipe-embeddings/
-library-embeddings/
