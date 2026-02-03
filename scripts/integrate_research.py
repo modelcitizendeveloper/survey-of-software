@@ -508,7 +508,8 @@ def main():
     else:
         print(f"Completed: {index_changes + sidebar_changes} changes made")
 
-    return 0 if (index_changes == 0 and sidebar_changes == 0) else 1
+    # Return 0 for success (standard Unix convention)
+    return 0
 
 
 if __name__ == "__main__":
