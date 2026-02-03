@@ -204,7 +204,7 @@ title: "The Survey"
 - **1.103** Markdown Processing - markdown-it, mistune, commonmark
 - **1.104** Syntax Highlighting - Pygments, highlight.js
   - ✅ [**1.104.1** Code Parsing & AST](/survey/1-104-1) - libcst, ast, redbaron
-  - **1.104.2** Code Formatting - Black, Prettier, ruff
+  - ✅ [**1.104.2** Code Formatting](/survey/1-104-2) - Code formatting and linting libraries for Python and JavaScript/TypeScript. Black, ruff, autopep8, Prettier, ESLint.
 - **1.105** Translation & i18n - gettext, Babel, i18next
 - **1.106** Speech Recognition & TTS - Whisper, Coqui, Piper
 - **1.107** OCR Libraries - Tesseract, EasyOCR
@@ -221,7 +221,7 @@ title: "The Survey"
   - **1.110.1** React Meta-Frameworks - Next.js, Remix, Gatsby
   - **1.110.2** Vue Meta-Frameworks - Nuxt, VitePress
   - **1.110.3** Svelte Meta-Frameworks - SvelteKit
-  - **1.110.4** Browser Python - Pyodide, JupyterLite, PyScript
+  - ✅ [**1.110.4** Browser Python Execution](/survey/1-110-4)
 - ✅ [**1.111** State Management - Redux, Zustand, Jotai, Pinia](/survey/1-111)
 - ✅ [**1.112** CSS Frameworks - Tailwind, Bootstrap, Material UI](/survey/1-112)
 - ✅ [**1.113** UI Component Libraries - shadcn/ui, Radix, Headless UI](/survey/1-113)
@@ -360,8 +360,8 @@ title: "The Survey"
 ## Research Status
 
 **Total Defined**: 189 research slots (including CJK expansion)
-**Completed**: 98 pieces (51%)
-**Remaining**: 91 pieces
+**Completed**: 99 pieces (52%)
+**Remaining**: 90 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 

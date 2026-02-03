@@ -67,12 +67,12 @@ class SurveyIndexUpdater:
         #   '1-110-4' -> '1.110.4-*'
         parts = doc_code.split('-')
         if len(parts) == 2:
-            # Simple case: '1-001' -> '1.001'
-            num_part = parts[1].lstrip('0') or '0'
+            # Simple case: '1-001' -> '1.001' (preserve leading zeros)
+            num_part = parts[1]
             pattern = f"1.{num_part}-*"
         else:
-            # Sub-number case: '1-104-2' -> '1.104.2'
-            main_num = parts[1].lstrip('0') or '0'
+            # Sub-number case: '1-104-2' -> '1.104.2' (preserve leading zeros)
+            main_num = parts[1]
             sub_num = parts[2]
             pattern = f"1.{main_num}.{sub_num}-*"
 
@@ -86,19 +86,34 @@ class SurveyIndexUpdater:
         if metadata_file.exists():
             try:
                 with open(metadata_file) as f:
-                    metadata = yaml.safe_load(f)
+                    # Handle multi-document YAML by loading all and taking first
+                    docs = list(yaml.safe_load_all(f))
+                    metadata = docs[0] if docs else {}
+
                     # Handle different metadata formats
                     title = (
                         metadata.get("title") or
                         metadata.get("experiment_info", {}).get("experiment_name") or
-                        "Unknown"
+                        None
                     )
+
+                    # If no title, try to extract from directory name
+                    if not title:
+                        dir_name = research_dir.name
+                        # Extract readable name from directory (e.g., "1.104.2-code-formatting" -> "Code Formatting")
+                        match = re.match(r'[\d.]+-(.*)', dir_name)
+                        if match:
+                            name_part = match.group(1)
+                            # Convert kebab-case to Title Case
+                            title = name_part.replace('-', ' ').title()
+
                     description = (
                         metadata.get("short_description") or
                         metadata.get("description") or
+                        metadata.get("notes") or
                         ""
                     )
-                    return {"title": title, "description": description}
+                    return {"title": title or "Unknown", "description": description}
             except Exception as e:
                 print(f"Warning: Could not parse {metadata_file}: {e}")
 
@@ -126,6 +141,175 @@ class SurveyIndexUpdater:
         else:
             return f"- ✅ [**{display_code}** {title}](/survey/{doc_code})"
 
+    def find_section_for_entry(self, doc_code: str) -> Tuple[int, int]:
+        """Find the section (e.g., 1.030-039) that contains this doc code.
+        Returns (start_num, end_num) or raises ValueError if not found."""
+        # Extract the main number (e.g., '1-035' -> 35)
+        parts = doc_code.split('-')
+        if len(parts) >= 2:
+            main_num = int(parts[1])
+        else:
+            raise ValueError(f"Invalid doc code: {doc_code}")
+
+        # Sections are 1.000-009, 1.010-019, 1.020-029, etc.
+        # Find which section this belongs to
+        section_start = (main_num // 10) * 10
+        section_end = section_start + 9
+
+        return (section_start, section_end)
+
+    def insert_entries(self, content: str, missing: List[str]) -> str:
+        """Insert missing entries into index content in numerical order."""
+        lines = content.split('\n')
+        result_lines = []
+        i = 0
+
+        while i < len(lines):
+            line = lines[i]
+            result_lines.append(line)
+
+            # Check if this is a survey entry line
+            entry_match = re.search(r'\[.*?\]\(/survey/(1-[\d-]+)\)', line)
+            if entry_match:
+                current_code = entry_match.group(1)
+
+                # Check if any missing entries should go after this one
+                to_insert = []
+                for doc_code in missing[:]:  # Iterate over copy
+                    if self._should_insert_after(current_code, doc_code, lines, i):
+                        to_insert.append(doc_code)
+                        missing.remove(doc_code)
+
+                # Insert entries
+                for doc_code in sorted(to_insert):
+                    entry_line = self.format_entry(doc_code)
+                    # Match indentation of current line
+                    indent = len(line) - len(line.lstrip())
+                    result_lines.append(' ' * indent + entry_line)
+
+            i += 1
+
+        return '\n'.join(result_lines)
+
+    def _should_insert_after(self, current_code: str, new_code: str, lines: List[str], current_idx: int) -> bool:
+        """Determine if new_code should be inserted after current_code."""
+        # Check if they're in the same section
+        try:
+            current_section = self.find_section_for_entry(current_code)
+            new_section = self.find_section_for_entry(new_code)
+            if current_section != new_section:
+                return False
+        except ValueError:
+            return False
+
+        # Compare numerical order
+        current_num = self._extract_sort_key(current_code)
+        new_num = self._extract_sort_key(new_code)
+
+        if new_num <= current_num:
+            return False
+
+        # Check if there's a next entry - don't insert if next entry would come before
+        next_entry_code = self._find_next_entry(lines, current_idx)
+        if next_entry_code:
+            next_num = self._extract_sort_key(next_entry_code)
+            if next_num <= new_num:
+                return False
+
+        return True
+
+    def _extract_sort_key(self, doc_code: str) -> Tuple[int, ...]:
+        """Extract sortable tuple from doc code (e.g., '1-035-1' -> (35, 1))."""
+        parts = doc_code.split('-')
+        if len(parts) == 2:
+            return (int(parts[1]),)
+        else:
+            return (int(parts[1]), int(parts[2]))
+
+    def _find_next_entry(self, lines: List[str], current_idx: int) -> str:
+        """Find the next survey entry after current_idx."""
+        for i in range(current_idx + 1, len(lines)):
+            match = re.search(r'\[.*?\]\(/survey/(1-[\d-]+)\)', lines[i])
+            if match:
+                return match.group(1)
+        return None
+
+    def update_section_counts(self, content: str) -> str:
+        """Update 'Completed: X/Y' counts in section headers."""
+        lines = content.split('\n')
+        result_lines = []
+
+        i = 0
+        while i < len(lines):
+            line = lines[i]
+
+            # Check if this is a section header with count
+            if line.startswith('## 1.') and '**Completed:' in lines[i+1] if i+1 < len(lines) else False:
+                result_lines.append(line)
+                i += 1
+
+                # Count completed entries in this section
+                completed = 0
+                total = 0
+                j = i + 1
+                while j < len(lines) and not lines[j].startswith('##'):
+                    entry_line = lines[j]
+                    if re.search(r'- (?:✅ )?\[?\*\*1\.\d+', entry_line):
+                        total += 1
+                        if '✅' in entry_line:
+                            completed += 1
+                    j += 1
+
+                # Update count line
+                result_lines.append(f"\n**Completed: {completed}/{total}**")
+                i += 1
+                continue
+
+            result_lines.append(line)
+            i += 1
+
+        return '\n'.join(result_lines)
+
+    def update_total_counts(self, content: str) -> str:
+        """Update total counts in Research Status section."""
+        lines = content.split('\n')
+
+        # Count total completed entries
+        completed = 0
+        for line in lines:
+            if '✅' in line and re.search(r'\[.*?\]\(/survey/1-', line):
+                completed += 1
+
+        # Find and update Research Status section
+        result_lines = []
+        for i, line in enumerate(lines):
+            if line.startswith('**Total Defined**'):
+                # Keep total defined count as-is (manually maintained)
+                result_lines.append(line)
+            elif line.startswith('**Completed**'):
+                # Extract total defined from previous line
+                prev_line = lines[i-1] if i > 0 else ''
+                match = re.search(r'(\d+) research slots', prev_line)
+                total = int(match.group(1)) if match else 189  # fallback
+                remaining = total - completed
+                percentage = int((completed / total) * 100) if total > 0 else 0
+                result_lines.append(f"**Completed**: {completed} pieces ({percentage}%)")
+            elif line.startswith('**Remaining**'):
+                # Extract total from previous lines
+                total_match = None
+                for prev_line in result_lines[-5:]:
+                    match = re.search(r'(\d+) research slots', prev_line)
+                    if match:
+                        total_match = match
+                        break
+                total = int(total_match.group(1)) if total_match else 189
+                remaining = total - completed
+                result_lines.append(f"**Remaining**: {remaining} pieces")
+            else:
+                result_lines.append(line)
+
+        return '\n'.join(result_lines)
+
     def update_index(self, dry_run: bool = False) -> int:
         """Add missing entries to index.md"""
         missing = self.get_missing_docs()
@@ -143,10 +327,21 @@ class SurveyIndexUpdater:
             print("(dry-run mode - no changes made)")
             return len(missing)
 
-        # TODO: Implement actual insertion logic
-        # For now, just report what would be added
-        print("\nTODO: Implement automatic insertion into index.md")
-        print("For now, manually add these entries in numerical order")
+        # Read current content
+        content = self.index_path.read_text()
+
+        # Insert missing entries
+        content = self.insert_entries(content, missing.copy())
+
+        # Update section counts
+        content = self.update_section_counts(content)
+
+        # Update total counts
+        content = self.update_total_counts(content)
+
+        # Write back
+        self.index_path.write_text(content)
+        print(f"\n✓ Updated {self.index_path} with {len(missing)} new entries")
 
         return len(missing)
 
@@ -187,6 +382,79 @@ class SidebarUpdater:
         missing = sorted(converted - in_sidebar)
         return missing
 
+    def insert_sidebar_entries(self, content: str, missing: List[str]) -> str:
+        """Insert missing entries into sidebars.ts in numerical order."""
+        lines = content.split('\n')
+        result_lines = []
+        i = 0
+
+        while i < len(lines):
+            line = lines[i]
+            result_lines.append(line)
+
+            # Check if this is a sidebar entry line
+            entry_match = re.search(r'"survey/(1-[\d-]+)"', line)
+            if entry_match:
+                current_code = entry_match.group(1)
+
+                # Skip index entry
+                if current_code == 'index':
+                    i += 1
+                    continue
+
+                # Check if any missing entries should go after this one
+                to_insert = []
+                for doc_code in missing[:]:  # Iterate over copy
+                    if self._should_insert_sidebar_after(current_code, doc_code, lines, i):
+                        to_insert.append(doc_code)
+                        missing.remove(doc_code)
+
+                # Insert entries
+                for doc_code in sorted(to_insert, key=lambda x: self._extract_sort_key(x)):
+                    # Match indentation of current line
+                    indent = len(line) - len(line.lstrip())
+                    result_lines.append(' ' * indent + f'{{type: "doc", id: "survey/{doc_code}"}},')
+
+            i += 1
+
+        return '\n'.join(result_lines)
+
+    def _should_insert_sidebar_after(self, current_code: str, new_code: str, lines: List[str], current_idx: int) -> bool:
+        """Determine if new_code should be inserted after current_code in sidebar."""
+        # Compare numerical order
+        current_num = self._extract_sort_key(current_code)
+        new_num = self._extract_sort_key(new_code)
+
+        if new_num <= current_num:
+            return False
+
+        # Check if there's a next entry - don't insert if next entry would come before
+        next_entry_code = self._find_next_sidebar_entry(lines, current_idx)
+        if next_entry_code:
+            next_num = self._extract_sort_key(next_entry_code)
+            if next_num <= new_num:
+                return False
+
+        return True
+
+    def _find_next_sidebar_entry(self, lines: List[str], current_idx: int) -> str:
+        """Find the next sidebar entry after current_idx."""
+        for i in range(current_idx + 1, len(lines)):
+            match = re.search(r'"survey/(1-[\d-]+)"', lines[i])
+            if match:
+                code = match.group(1)
+                if code != 'index':
+                    return code
+        return None
+
+    def _extract_sort_key(self, doc_code: str) -> Tuple[int, ...]:
+        """Extract sortable tuple from doc code (e.g., '1-035-1' -> (35, 1))."""
+        parts = doc_code.split('-')
+        if len(parts) == 2:
+            return (int(parts[1]),)
+        else:
+            return (int(parts[1]), int(parts[2]))
+
     def update_sidebar(self, dry_run: bool = False) -> int:
         """Add missing entries to sidebars.ts"""
         missing = self.get_missing_docs()
@@ -203,9 +471,15 @@ class SidebarUpdater:
             print("(dry-run mode - no changes made)")
             return len(missing)
 
-        # TODO: Implement actual insertion logic
-        print("\nTODO: Implement automatic insertion into sidebars.ts")
-        print("For now, manually add these entries in numerical order")
+        # Read current content
+        content = self.sidebar_path.read_text()
+
+        # Insert missing entries
+        content = self.insert_sidebar_entries(content, missing.copy())
+
+        # Write back
+        self.sidebar_path.write_text(content)
+        print(f"\n✓ Updated {self.sidebar_path} with {len(missing)} new entries")
 
         return len(missing)
 
