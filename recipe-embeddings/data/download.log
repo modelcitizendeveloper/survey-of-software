@@ -1,0 +1,22 @@
+`trust_remote_code` is not supported anymore.
+Please check that the Hugging Face dataset 'mbien/recipe_nlg' isn't based on a loading script and remove `trust_remote_code`.
+If the dataset is based on a loading script, please ask the dataset author to remove it and convert it to a standard format like Parquet.
+Downloading RecipeNLG dataset from Hugging Face...
+This may take several minutes (2.2M recipes)...
+Traceback (most recent call last):
+  File "/home/ivanadamin/gt/research/crew/ivan/recipe-embeddings/scripts/download_recipenlg.py", line 95, in <module>
+    download_recipenlg()
+  File "/home/ivanadamin/gt/research/crew/ivan/recipe-embeddings/scripts/download_recipenlg.py", line 20, in download_recipenlg
+    dataset = load_dataset("mbien/recipe_nlg", trust_remote_code=True)
+              ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ivanadamin/gt/research/crew/ivan/recipe-embeddings/.venv/lib/python3.12/site-packages/datasets/load.py", line 1488, in load_dataset
+    builder_instance = load_dataset_builder(
+                       ^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ivanadamin/gt/research/crew/ivan/recipe-embeddings/.venv/lib/python3.12/site-packages/datasets/load.py", line 1133, in load_dataset_builder
+    dataset_module = dataset_module_factory(
+                     ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ivanadamin/gt/research/crew/ivan/recipe-embeddings/.venv/lib/python3.12/site-packages/datasets/load.py", line 1032, in dataset_module_factory
+    raise e1 from None
+  File "/home/ivanadamin/gt/research/crew/ivan/recipe-embeddings/.venv/lib/python3.12/site-packages/datasets/load.py", line 992, in dataset_module_factory
+    raise RuntimeError(f"Dataset scripts are no longer supported, but found {filename}")
+RuntimeError: Dataset scripts are no longer supported, but found recipe_nlg.py
