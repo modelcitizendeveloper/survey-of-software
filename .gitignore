@@ -41,3 +41,7 @@ research-site-public/
 
 # NOTE: packages/research/ IS tracked (source research with 4PS structure)
 # docs/survey/ contains converted Docusaurus MDX (also tracked)
+
+# Build artifacts
+.build/
+library-metadata*.json
