@@ -1,9 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
 [project]
 name = "recipe-embeddings"
 version = "0.1.0"
+description = "Recipe ingredient embeddings for dietary substitutions"
 requires-python = ">=3.9"
 dependencies = [
     "datasets>=2.0",
     "gensim>=4.0",
     "numpy>=1.20",
 ]
+
+[project.scripts]
+recipe-emb = "recipe_emb.cli:main"
+
+[tool.setuptools]
+packages = ["recipe_emb"]
