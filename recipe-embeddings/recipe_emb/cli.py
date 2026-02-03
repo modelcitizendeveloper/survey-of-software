@@ -5,6 +5,8 @@ import argparse
 import sys
 from pathlib import Path
 from gensim.models import KeyedVectors
+from .pantry import (RecipeDatabase, parse_pantry, load_pantry_from_file,
+                     format_recipe_match)
 
 
 class RecipeEmbeddings:
@@ -271,6 +273,73 @@ def cmd_info(args):
     return 0
 
 
+def cmd_pantry(args):
+    """Handle 'pantry' command."""
+    emb = RecipeEmbeddings(dimension=args.dim)
+
+    # Get pantry ingredients
+    if args.file:
+        pantry = load_pantry_from_file(args.file)
+        print(f"Loaded {len(pantry)} ingredients from {args.file}")
+    elif args.ingredients:
+        pantry = parse_pantry(args.ingredients)
+    else:
+        print("❌ Must provide either --ingredients or --file")
+        return 1
+
+    if not pantry:
+        print("❌ No ingredients provided")
+        return 1
+
+    print(f"\nYour pantry ({len(pantry)} ingredients):")
+    print(f"  {', '.join(pantry)}")
+
+    # Find dataset
+    package_dir = Path(__file__).parent.parent
+    dataset_path = package_dir / "data" / "dataset" / "full_dataset.csv"
+
+    if not dataset_path.exists():
+        print(f"\n❌ Dataset not found: {dataset_path}")
+        print("Run extract_ingredients.py first to download and process the dataset.")
+        return 1
+
+    # Load database
+    print(f"\nSearching recipe database...")
+    db = RecipeDatabase(str(dataset_path))
+
+    # Load recipes (limit for performance)
+    max_recipes = args.max_recipes if hasattr(args, 'max_recipes') else None
+    high_quality = args.high_quality_only
+
+    db.load(max_recipes=max_recipes, high_quality_only=high_quality)
+
+    # Search
+    matches = db.search_by_pantry(
+        pantry=pantry,
+        embeddings=emb.wv,
+        min_match=args.min_match,
+        similarity_threshold=args.similarity_threshold,
+        use_similarity=not args.no_similarity,
+        topn=args.top
+    )
+
+    if not matches:
+        print(f"\n❌ No recipes found with >={args.min_match * 100:.0f}% match")
+        print("Try lowering --min-match threshold")
+        return 0
+
+    # Display results
+    print(f"\n{'='*60}")
+    print(f"Found {len(matches)} recipes you can make")
+    print(f"{'='*60}\n")
+
+    for i, match in enumerate(matches, 1):
+        print(f"{i}. {format_recipe_match(match, show_details=args.details, show_similar=not args.no_similarity)}")
+        print()
+
+    return 0
+
+
 def main():
     """Main CLI entry point."""
     parser = argparse.ArgumentParser(
@@ -282,6 +351,8 @@ Examples:
   recipe-emb similar butter
   recipe-emb substitute butter --exclude dairy,milk
   recipe-emb analogy "beef - meat + vegetarian"
+  recipe-emb pantry --ingredients "chicken,rice,onion,garlic,soy sauce"
+  recipe-emb pantry --file pantry.txt --top 20
   recipe-emb search "cream of"
   recipe-emb info
 
@@ -354,6 +425,32 @@ For more information: https://github.com/yourusername/recipe-embeddings
         description='Display information about the loaded model'
     )
     parser_info.set_defaults(func=cmd_info)
+
+    # Pantry command
+    parser_pantry = subparsers.add_parser(
+        'pantry',
+        help='Find recipes from pantry contents',
+        description='Search for recipes you can make with ingredients in your pantry'
+    )
+    parser_pantry.add_argument('-i', '--ingredients',
+                              help='Comma-separated list of ingredients')
+    parser_pantry.add_argument('-f', '--file',
+                              help='File with ingredients (one per line)')
+    parser_pantry.add_argument('-n', '--top', type=int, default=10,
+                              help='Number of results (default: 10)')
+    parser_pantry.add_argument('--min-match', type=float, default=0.5,
+                              help='Minimum match ratio 0.0-1.0 (default: 0.5)')
+    parser_pantry.add_argument('--similarity-threshold', type=float, default=0.6,
+                              help='Similarity threshold for partial matches (default: 0.6)')
+    parser_pantry.add_argument('--no-similarity', action='store_true',
+                              help='Disable similarity-based matching')
+    parser_pantry.add_argument('--high-quality-only', action='store_true',
+                              help='Only use high-quality recipes (default: all sources)')
+    parser_pantry.add_argument('--max-recipes', type=int,
+                              help='Limit recipes to search (for testing)')
+    parser_pantry.add_argument('--details', action='store_true', default=True,
+                              help='Show detailed ingredient matches')
+    parser_pantry.set_defaults(func=cmd_pantry)
 
     # Parse arguments
     args = parser.parse_args()
