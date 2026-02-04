@@ -110,6 +110,49 @@ python3 convert_research.py 2>&1 | less
 npm run build 2>&1 | less
 ```
 
+**Common build errors**:
+
+1. **Out of memory** (heap limit exceeded):
+   ```bash
+   # Error: FATAL ERROR: Reached heap limit Allocation failed - JavaScript heap out of memory
+
+   # Fix: Increase Node memory limit
+   export NODE_OPTIONS="--max-old-space-size=4096"
+   npm run build
+   ```
+
+2. **MDX syntax errors** (unescaped brackets):
+   ```bash
+   # Error: Unexpected token { or }
+
+   # Fix: Auto-fix MDX brackets
+   python3 scripts/fix-mdx-brackets.py docs/survey/1-XXX.md
+   npm run build
+   ```
+
+3. **Missing frontmatter**:
+   ```bash
+   # Error: Missing frontmatter
+
+   # Fix: Re-run conversion
+   python3 scripts/convert_research.py
+   npm run build
+   ```
+
+4. **Broken internal links**:
+   ```bash
+   # Error: Broken link to /docs/survey/X-YYY
+
+   # Fix: Update sidebar or check file exists
+   ls docs/survey/X-YYY.md
+   python3 scripts/integrate_research.py
+   ```
+
+**Production build requirements**:
+- Node.js memory: 4GB+ recommended (`NODE_OPTIONS="--max-old-space-size=4096"`)
+- Disk space: ~500MB for build artifacts
+- Time: ~2-5 minutes depending on machine
+
 ### Check what's deployed
 - Local: http://localhost:3000
 - Production: https://research.modelcitizendeveloper.com/
