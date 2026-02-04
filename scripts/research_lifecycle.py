@@ -174,17 +174,27 @@ def close_bead(bead_id, comment, repo_root):
     print(f"✅ Closed {bead_id}")
 
 
+def find_repo_root(polecat=None):
+    """Find the repository root with scripts/ and packages/ directories."""
+    candidates = [
+        Path.home() / "gt" / "research" / "refinery" / "rig",
+        Path.home() / "gt" / "research" / "crew" / "ivan",
+    ]
+
+    if polecat:
+        candidates.insert(0, Path.home() / "gt" / "research" / "polecats" / polecat / "research")
+
+    for path in candidates:
+        if path.exists() and (path / "scripts").exists() and (path / "packages").exists():
+            return path
+
+    print(f"❌ Could not find repository root with scripts/ and packages/ directories")
+    sys.exit(1)
+
+
 def complete_workflow(args):
     """Run the complete research completion workflow."""
-    repo_root = Path.home() / "gt" / "research" / "polecats" / args.polecat / "research"
-
-    if not repo_root.exists():
-        # Try crew location
-        repo_root = Path.home() / "gt" / "research" / "crew" / "ivan"
-
-    if not repo_root.exists():
-        print(f"❌ Could not find repository at {repo_root}")
-        sys.exit(1)
+    repo_root = find_repo_root(args.polecat)
 
     print(f"📁 Working in: {repo_root}\n")
 
@@ -313,20 +323,14 @@ def main():
     if args.command == 'complete':
         complete_workflow(args)
     elif args.command == 'validate':
-        repo_root = Path.home() / "gt" / "research" / "polecats" / args.polecat / "research"
-        if not repo_root.exists():
-            repo_root = Path.home() / "gt" / "research" / "crew" / "ivan"
+        repo_root = find_repo_root(args.polecat)
         passed, score = validate_research(args.research_id, repo_root)
         sys.exit(0 if passed else 1)
     elif args.command == 'push':
-        repo_root = Path.home() / "gt" / "research" / "polecats" / args.polecat / "research"
-        if not repo_root.exists():
-            repo_root = Path.home() / "gt" / "research" / "crew" / "ivan"
+        repo_root = find_repo_root(args.polecat)
         git_commit_and_push(args.research_id, args.commit_message, repo_root)
     elif args.command == 'close-bead':
-        repo_root = Path.home() / "gt" / "research" / "polecats" / args.polecat / "research"
-        if not repo_root.exists():
-            repo_root = Path.home() / "gt" / "research" / "crew" / "ivan"
+        repo_root = find_repo_root(args.polecat)
         close_bead(args.bead_id, args.comment, repo_root)
 
 
