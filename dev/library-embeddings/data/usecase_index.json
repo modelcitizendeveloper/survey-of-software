@@ -1,0 +1,1253 @@
+{
+  "use_cases": [
+    {
+      "use_case": "Sorting Libraries",
+      "summary": "Python provides a rich ecosystem of sorting algorithms and libraries optimized for different use cases. The default Timsort (built-in `sorted()` and `list.sort()`) handles 95% of general-purpose sorti",
+      "top_libraries": [
+        "numpy",
+        "sortedcontainers",
+        "external_sort",
+        "struct"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-001"
+    },
+    {
+      "use_case": "Fuzzy Search",
+      "summary": "**TLDR: Use RapidFuzz for 99% of fuzzy string matching needs. It's 40% faster than alternatives, MIT licensed, and a drop-in replacement for FuzzyWuzzy.**",
+      "top_libraries": [
+        "rapidfuzz",
+        "jellyfish",
+        "fuzzywuzzy"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-002"
+    },
+    {
+      "use_case": "Full-text Search Libraries",
+      "summary": "S1 rapid discovery identified **5 Python full-text search libraries** across three performance tiers: **High Performance (Compiled)**: - **Tantivy** (Rust) - 0.27ms queries, 10,875 docs/sec indexing -",
+      "top_libraries": [
+        "whoosh",
+        "tantivy",
+        "pyserini",
+        "xapian",
+        "lunr"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-003"
+    },
+    {
+      "use_case": "Spatial Search",
+      "summary": "",
+      "top_libraries": [
+        "psycopg2",
+        "shapely",
+        "requests"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-005"
+    },
+    {
+      "use_case": "Time Series Search Libraries",
+      "summary": "",
+      "top_libraries": [
+        "numpy",
+        "dtaidistance",
+        "sklearn",
+        "pyts",
+        "matplotlib"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-008"
+    },
+    {
+      "use_case": "Graph Analysis",
+      "summary": "**TL;DR:** Use **NetworkX** for learning/prototyping, **igraph** for balanced performance/usability, **NetworKit** for large-scale analysis, **graph-tool** for maximum performance, or **rustworkx** fo",
+      "top_libraries": [
+        "networkx",
+        "igraph",
+        "networkit",
+        "graph_tool",
+        "rustworkx"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-010"
+    },
+    {
+      "use_case": "Graph Databases",
+      "summary": "",
+      "top_libraries": [
+        "gremlin_python",
+        "neptune_python_utils",
+        "neo4j",
+        "py2neo"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-011"
+    },
+    {
+      "use_case": "Community Detection Libraries",
+      "summary": "",
+      "top_libraries": [
+        "networkx",
+        "cdlib",
+        "leidenalg",
+        "igraph"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-012"
+    },
+    {
+      "use_case": "Python Optimization Libraries",
+      "summary": "Based on research of Python optimization libraries (PyPI statistics, GitHub activity, documentation quality, and community feedback), selection depends primarily on **problem type**, followed by solve",
+      "top_libraries": [
+        "numpy",
+        "scipy"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-022"
+    },
+    {
+      "use_case": "1.033.1 Intent Classification Libraries",
+      "summary": "Identified 5 production-ready solutions for intent classification with varying trade-offs between accuracy, speed, and ease of use: 1. **Hugging Face Zero-Shot Classification** (facebook/bart-large-mn",
+      "top_libraries": [
+        "transformers",
+        "setfit",
+        "openai"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-033-1"
+    },
+    {
+      "use_case": "1.033.2 Chinese Word Segmentation",
+      "summary": "Identified 4 production-ready Chinese word segmentation libraries with distinct strengths optimized for different use cases: 1. **Jieba** - Best for rapid prototyping and general-purpose applications ",
+      "top_libraries": [
+        "ckiptagger",
+        "jieba",
+        "pkuseg"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-033-2"
+    },
+    {
+      "use_case": "1.033.4 Named Entity Recognition (CJK)",
+      "summary": "Identified 7 production-ready solutions for CJK Named Entity Recognition with varying trade-offs between accuracy, language coverage, and deployment complexity: 1. **HanLP** - Best for Chinese (Tradit",
+      "top_libraries": [
+        "hanlp",
+        "stanza",
+        "spacy",
+        "google"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-033-4"
+    },
+    {
+      "use_case": "Nlp Libraries",
+      "summary": "",
+      "top_libraries": [
+        "spacy"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-033"
+    },
+    {
+      "use_case": "Email Libraries",
+      "summary": "",
+      "top_libraries": [
+        "Flask-Mail",
+        "django-anymail",
+        "yagmail",
+        "redmail"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-034"
+    },
+    {
+      "use_case": "Template Engines",
+      "summary": "",
+      "top_libraries": [
+        "flask",
+        "jinja2"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-039"
+    },
+    {
+      "use_case": "Collections",
+      "summary": "For developers needing immediate decisions on Python collections libraries in 2025, here are the **top 5 libraries** with clear use-case guidance: 1. **sortedcontainers** - Use for sorted collections ",
+      "top_libraries": [
+        "sortedcontainers",
+        "polars",
+        "pyrsistent",
+        "cytoolz",
+        "more_itertools"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-040"
+    },
+    {
+      "use_case": "Trie Libraries",
+      "summary": "",
+      "top_libraries": [
+        "pygtrie",
+        "datrie",
+        "marisa_trie"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-042"
+    },
+    {
+      "use_case": "1.043.1 Task Queue Libraries",
+      "summary": "",
+      "top_libraries": [
+        "redis"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-043-1"
+    },
+    {
+      "use_case": "Caching Libraries",
+      "summary": "",
+      "top_libraries": [
+        "redis",
+        "cachetools",
+        "diskcache"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-047"
+    },
+    {
+      "use_case": "1.049.1 Database Schema Inspection",
+      "summary": "**Top 3 Candidates:** 1. **SQLAlchemy Inspector** - Industry standard, built-in introspection for all SQLAlchemy dialects 2. **Alembic Autogenerate** - Migration-focused schema comparison, built on In",
+      "top_libraries": [
+        "alembic",
+        "sqlalchemy"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-049-1"
+    },
+    {
+      "use_case": "Compression",
+      "summary": "**Use Zstandard for 95% of compression needs.** It's the clear winner in 2025 with 80M monthly PyPI downloads, official Python standard library inclusion pending, and the best balance of speed vs comp",
+      "top_libraries": [
+        "brotli",
+        "zlib_ng",
+        "gzip"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-050"
+    },
+    {
+      "use_case": "Binary Serialization Libraries",
+      "summary": "",
+      "top_libraries": [
+        "person_pb2",
+        "flatbuffers",
+        "MyGame",
+        "msgpack",
+        "avro"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-055"
+    },
+    {
+      "use_case": "Json Libraries",
+      "summary": "",
+      "top_libraries": [
+        "orjson",
+        "msgspec",
+        "ujson"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-056"
+    },
+    {
+      "use_case": "Python Cryptographic Libraries",
+      "summary": "",
+      "top_libraries": [
+        "cryptography"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-060"
+    },
+    {
+      "use_case": "Python Password Hashing Libraries",
+      "summary": "",
+      "top_libraries": [
+        "argon2",
+        "bcrypt",
+        "hashlib",
+        "passlib"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-062"
+    },
+    {
+      "use_case": "Python JWT (JSON Web Token) Libraries",
+      "summary": "",
+      "top_libraries": [
+        "authlib"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-063"
+    },
+    {
+      "use_case": "Time Series Libraries",
+      "summary": "",
+      "top_libraries": [
+        "prophet",
+        "pandas"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-073"
+    },
+    {
+      "use_case": "1.080.1 Qr Code Generation",
+      "summary": "",
+      "top_libraries": [
+        "qrcode",
+        "segno",
+        "PyQRCode",
+        "qrcodegen"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-080-1"
+    },
+    {
+      "use_case": "Text Processing",
+      "summary": "Based on rapid discovery research, the Python text classification landscape in 2024 is dominated by transformer-based models (Hugging Face Transformers) for accuracy, while traditional libraries (scik",
+      "top_libraries": [
+        "FastText"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-100"
+    },
+    {
+      "use_case": "1.104.1 Python Code Parsing & AST Libraries",
+      "summary": "After comprehensive research into 6 Python AST/code parsing libraries, **LibCST emerges as the clear frontrunner** for code modification use cases requiring formatting preservation, followed by Python",
+      "top_libraries": [
+        "libcst",
+        "rope"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-104-1"
+    },
+    {
+      "use_case": "Monte Carlo Simulation",
+      "summary": "Applied S1 methodology to discover Python libraries for Monte Carlo simulation with focus on speed and popularity metrics. Discovered that the standard NumPy/SciPy stack + SALib covers 100% of require",
+      "top_libraries": [
+        "numpy",
+        "scipy",
+        "SALib"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-122"
+    },
+    {
+      "use_case": "Classical Language Libraries",
+      "summary": "",
+      "top_libraries": [
+        "cltk",
+        "inspect"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-140"
+    },
+    {
+      "use_case": "Spaced Repetition Algorithms",
+      "summary": "",
+      "top_libraries": [
+        "fsrs",
+        "supermemo2"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-141"
+    },
+    {
+      "use_case": "Flashcard Systems & Integrations",
+      "summary": "",
+      "top_libraries": [
+        "genanki"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-142"
+    },
+    {
+      "use_case": "1.144.2 Tone Analysis",
+      "summary": "",
+      "top_libraries": [
+        "librosa",
+        "praatio",
+        "parselmouth"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-144-2"
+    },
+    {
+      "use_case": "1.148.2 Classical Chinese Parsing",
+      "summary": "",
+      "top_libraries": [
+        "requests"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-148-2"
+    },
+    {
+      "use_case": "1.154.1 Chinese Text Simplification",
+      "summary": "**Finding**: No pip-installable libraries exist specifically for Chinese text simplification as of 2026. This is a **BUILD, not BUY** problem. **Recommended approach**: Hybrid stack combining existing",
+      "top_libraries": [
+        "jieba"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-154-1"
+    },
+    {
+      "use_case": "Handwriting Recognition (CJK)",
+      "summary": "",
+      "top_libraries": [
+        "azure",
+        "msrest",
+        "google"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-162"
+    },
+    {
+      "use_case": "Character Encoding (Big5, GB2312, Unicode CJK)",
+      "summary": "",
+      "top_libraries": [
+        "codecs",
+        "charset_normalizer",
+        "ftfy",
+        "opencc",
+        "cchardet"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-163"
+    },
+    {
+      "use_case": "Traditional \u2194 Simplified Conversion",
+      "summary": "",
+      "top_libraries": [
+        "hanziconv",
+        "opencc"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-164"
+    },
+    {
+      "use_case": "Sentence Alignment",
+      "summary": "",
+      "top_libraries": [
+        "bleualign"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-171"
+    },
+    {
+      "use_case": "Terminology Extraction",
+      "summary": "Seven pip-installable libraries identified for terminology extraction in Python. Clear split between **statistical/linguistic** approaches (RAKE, YAKE, pyate) and **semantic/transformer** approaches (",
+      "top_libraries": [
+        "spacy",
+        "pyate"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-173"
+    },
+    {
+      "use_case": "RAG Pipelines",
+      "summary": "",
+      "top_libraries": [
+        "llama_index",
+        "langchain"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-204"
+    },
+    {
+      "use_case": "Bot SDK Frameworks",
+      "summary": "Comparison of bot SDKs for building interactive bots (commands, buttons, integrations): | Platform | Recommended SDK | Language | Time to MVP | Best For | |----------|-----------------|----------|----",
+      "top_libraries": [
+        "asyncio",
+        "discord",
+        "telegram",
+        "slack_bolt"
+      ],
+      "domain": "libraries",
+      "survey_id": "1-234"
+    },
+    {
+      "use_case": "Prometheus",
+      "summary": "**Is Prometheus metrics format a real standard?** \u2705 **YES** - CNCF graduated project (2018) with de-facto industry standard status **Portability viability**: \u2705 **HIGH** - 30+ compatible backends, swit",
+      "top_libraries": [
+        "prometheus_client"
+      ],
+      "domain": "standards",
+      "survey_id": "2-041"
+    },
+    {
+      "use_case": "Graph Databases",
+      "summary": "**Top Recommendations for Knowledge Graph (Research Project):** 1. **Memgraph Community (self-hosted)** - $25-50/month - \u2705 Best value: Lowest cost, full MAGE algorithms, 10\u00d7 faster than Neo4j - \u2705 Low ",
+      "top_libraries": [
+        "Gremlin",
+        "openCypher",
+        "SPARQL"
+      ],
+      "domain": "services",
+      "survey_id": "3-045"
+    },
+    {
+      "use_case": "Platform As A Service",
+      "summary": "",
+      "top_libraries": [
+        "Render",
+        "Heroku",
+        "Railway",
+        "Fly.io"
+      ],
+      "domain": "services",
+      "survey_id": "3-050"
+    },
+    {
+      "use_case": "Social Media Scheduling & Automation",
+      "summary": "This S1 Rapid Discovery evaluates social media scheduling and automation tools for solo consultants and small businesses focused on LinkedIn, Twitter/X, and potentially Instagram/Facebook. The analysi",
+      "top_libraries": [
+        "Buffer",
+        "Hootsuite",
+        "Later",
+        "SocialBee",
+        "Publer"
+      ],
+      "domain": "services",
+      "survey_id": "3-135"
+    }
+  ],
+  "by_keyword": {
+    "sorting": [
+      "Sorting Libraries"
+    ],
+    "libraries": [
+      "Sorting Libraries",
+      "Full-text Search Libraries",
+      "Time Series Search Libraries",
+      "Community Detection Libraries",
+      "Python Optimization Libraries",
+      "1.033.1 Intent Classification Libraries",
+      "Nlp Libraries",
+      "Email Libraries",
+      "Trie Libraries",
+      "1.043.1 Task Queue Libraries",
+      "Caching Libraries",
+      "Binary Serialization Libraries",
+      "Json Libraries",
+      "Python Cryptographic Libraries",
+      "Python Password Hashing Libraries",
+      "Python JWT (JSON Web Token) Libraries",
+      "Time Series Libraries",
+      "1.104.1 Python Code Parsing & AST Libraries",
+      "Classical Language Libraries"
+    ],
+    "fuzzy": [
+      "Fuzzy Search"
+    ],
+    "search": [
+      "Fuzzy Search",
+      "Full-text Search Libraries",
+      "Spatial Search",
+      "Time Series Search Libraries"
+    ],
+    "fulltext": [
+      "Full-text Search Libraries"
+    ],
+    "spatial": [
+      "Spatial Search"
+    ],
+    "time": [
+      "Time Series Search Libraries",
+      "Time Series Libraries"
+    ],
+    "series": [
+      "Time Series Search Libraries",
+      "Time Series Libraries"
+    ],
+    "graph": [
+      "Graph Analysis",
+      "Graph Databases",
+      "Graph Databases"
+    ],
+    "analysis": [
+      "Graph Analysis",
+      "1.144.2 Tone Analysis"
+    ],
+    "databases": [
+      "Graph Databases",
+      "Graph Databases"
+    ],
+    "community": [
+      "Community Detection Libraries"
+    ],
+    "detection": [
+      "Community Detection Libraries"
+    ],
+    "python": [
+      "Python Optimization Libraries",
+      "Python Cryptographic Libraries",
+      "Python Password Hashing Libraries",
+      "Python JWT (JSON Web Token) Libraries",
+      "1.104.1 Python Code Parsing & AST Libraries"
+    ],
+    "optimization": [
+      "Python Optimization Libraries"
+    ],
+    "10331": [
+      "1.033.1 Intent Classification Libraries"
+    ],
+    "intent": [
+      "1.033.1 Intent Classification Libraries"
+    ],
+    "classification": [
+      "1.033.1 Intent Classification Libraries"
+    ],
+    "10332": [
+      "1.033.2 Chinese Word Segmentation"
+    ],
+    "chinese": [
+      "1.033.2 Chinese Word Segmentation",
+      "1.148.2 Classical Chinese Parsing",
+      "1.154.1 Chinese Text Simplification"
+    ],
+    "word": [
+      "1.033.2 Chinese Word Segmentation"
+    ],
+    "segmentation": [
+      "1.033.2 Chinese Word Segmentation"
+    ],
+    "10334": [
+      "1.033.4 Named Entity Recognition (CJK)"
+    ],
+    "named": [
+      "1.033.4 Named Entity Recognition (CJK)"
+    ],
+    "entity": [
+      "1.033.4 Named Entity Recognition (CJK)"
+    ],
+    "recognition": [
+      "1.033.4 Named Entity Recognition (CJK)",
+      "Handwriting Recognition (CJK)"
+    ],
+    "cjk": [
+      "1.033.4 Named Entity Recognition (CJK)",
+      "Handwriting Recognition (CJK)",
+      "Character Encoding (Big5, GB2312, Unicode CJK)"
+    ],
+    "nlp": [
+      "Nlp Libraries"
+    ],
+    "email": [
+      "Email Libraries"
+    ],
+    "template": [
+      "Template Engines"
+    ],
+    "engines": [
+      "Template Engines"
+    ],
+    "collections": [
+      "Collections"
+    ],
+    "trie": [
+      "Trie Libraries"
+    ],
+    "10431": [
+      "1.043.1 Task Queue Libraries"
+    ],
+    "task": [
+      "1.043.1 Task Queue Libraries"
+    ],
+    "queue": [
+      "1.043.1 Task Queue Libraries"
+    ],
+    "caching": [
+      "Caching Libraries"
+    ],
+    "10491": [
+      "1.049.1 Database Schema Inspection"
+    ],
+    "database": [
+      "1.049.1 Database Schema Inspection"
+    ],
+    "schema": [
+      "1.049.1 Database Schema Inspection"
+    ],
+    "inspection": [
+      "1.049.1 Database Schema Inspection"
+    ],
+    "compression": [
+      "Compression"
+    ],
+    "binary": [
+      "Binary Serialization Libraries"
+    ],
+    "serialization": [
+      "Binary Serialization Libraries"
+    ],
+    "json": [
+      "Json Libraries",
+      "Python JWT (JSON Web Token) Libraries"
+    ],
+    "cryptographic": [
+      "Python Cryptographic Libraries"
+    ],
+    "password": [
+      "Python Password Hashing Libraries"
+    ],
+    "hashing": [
+      "Python Password Hashing Libraries"
+    ],
+    "jwt": [
+      "Python JWT (JSON Web Token) Libraries"
+    ],
+    "web": [
+      "Python JWT (JSON Web Token) Libraries"
+    ],
+    "token": [
+      "Python JWT (JSON Web Token) Libraries"
+    ],
+    "10801": [
+      "1.080.1 Qr Code Generation"
+    ],
+    "code": [
+      "1.080.1 Qr Code Generation",
+      "1.104.1 Python Code Parsing & AST Libraries"
+    ],
+    "generation": [
+      "1.080.1 Qr Code Generation"
+    ],
+    "text": [
+      "Text Processing",
+      "1.154.1 Chinese Text Simplification"
+    ],
+    "processing": [
+      "Text Processing"
+    ],
+    "11041": [
+      "1.104.1 Python Code Parsing & AST Libraries"
+    ],
+    "parsing": [
+      "1.104.1 Python Code Parsing & AST Libraries",
+      "1.148.2 Classical Chinese Parsing"
+    ],
+    "ast": [
+      "1.104.1 Python Code Parsing & AST Libraries"
+    ],
+    "monte": [
+      "Monte Carlo Simulation"
+    ],
+    "carlo": [
+      "Monte Carlo Simulation"
+    ],
+    "simulation": [
+      "Monte Carlo Simulation"
+    ],
+    "classical": [
+      "Classical Language Libraries",
+      "1.148.2 Classical Chinese Parsing"
+    ],
+    "language": [
+      "Classical Language Libraries"
+    ],
+    "spaced": [
+      "Spaced Repetition Algorithms"
+    ],
+    "repetition": [
+      "Spaced Repetition Algorithms"
+    ],
+    "algorithms": [
+      "Spaced Repetition Algorithms"
+    ],
+    "flashcard": [
+      "Flashcard Systems & Integrations"
+    ],
+    "systems": [
+      "Flashcard Systems & Integrations"
+    ],
+    "integrations": [
+      "Flashcard Systems & Integrations"
+    ],
+    "11442": [
+      "1.144.2 Tone Analysis"
+    ],
+    "tone": [
+      "1.144.2 Tone Analysis"
+    ],
+    "11482": [
+      "1.148.2 Classical Chinese Parsing"
+    ],
+    "11541": [
+      "1.154.1 Chinese Text Simplification"
+    ],
+    "simplification": [
+      "1.154.1 Chinese Text Simplification"
+    ],
+    "handwriting": [
+      "Handwriting Recognition (CJK)"
+    ],
+    "character": [
+      "Character Encoding (Big5, GB2312, Unicode CJK)"
+    ],
+    "encoding": [
+      "Character Encoding (Big5, GB2312, Unicode CJK)"
+    ],
+    "big5": [
+      "Character Encoding (Big5, GB2312, Unicode CJK)"
+    ],
+    "gb2312": [
+      "Character Encoding (Big5, GB2312, Unicode CJK)"
+    ],
+    "unicode": [
+      "Character Encoding (Big5, GB2312, Unicode CJK)"
+    ],
+    "traditional": [
+      "Traditional \u2194 Simplified Conversion"
+    ],
+    "simplified": [
+      "Traditional \u2194 Simplified Conversion"
+    ],
+    "conversion": [
+      "Traditional \u2194 Simplified Conversion"
+    ],
+    "sentence": [
+      "Sentence Alignment"
+    ],
+    "alignment": [
+      "Sentence Alignment"
+    ],
+    "terminology": [
+      "Terminology Extraction"
+    ],
+    "extraction": [
+      "Terminology Extraction"
+    ],
+    "rag": [
+      "RAG Pipelines"
+    ],
+    "pipelines": [
+      "RAG Pipelines"
+    ],
+    "bot": [
+      "Bot SDK Frameworks"
+    ],
+    "sdk": [
+      "Bot SDK Frameworks"
+    ],
+    "frameworks": [
+      "Bot SDK Frameworks"
+    ],
+    "prometheus": [
+      "Prometheus"
+    ],
+    "platform": [
+      "Platform As A Service"
+    ],
+    "service": [
+      "Platform As A Service"
+    ],
+    "social": [
+      "Social Media Scheduling & Automation"
+    ],
+    "media": [
+      "Social Media Scheduling & Automation"
+    ],
+    "scheduling": [
+      "Social Media Scheduling & Automation"
+    ],
+    "automation": [
+      "Social Media Scheduling & Automation"
+    ]
+  },
+  "by_library": {
+    "numpy": [
+      "Sorting Libraries",
+      "Time Series Search Libraries",
+      "Python Optimization Libraries",
+      "Monte Carlo Simulation"
+    ],
+    "sortedcontainers": [
+      "Sorting Libraries",
+      "Collections"
+    ],
+    "external_sort": [
+      "Sorting Libraries"
+    ],
+    "struct": [
+      "Sorting Libraries"
+    ],
+    "rapidfuzz": [
+      "Fuzzy Search"
+    ],
+    "jellyfish": [
+      "Fuzzy Search"
+    ],
+    "fuzzywuzzy": [
+      "Fuzzy Search"
+    ],
+    "whoosh": [
+      "Full-text Search Libraries"
+    ],
+    "tantivy": [
+      "Full-text Search Libraries"
+    ],
+    "pyserini": [
+      "Full-text Search Libraries"
+    ],
+    "xapian": [
+      "Full-text Search Libraries"
+    ],
+    "lunr": [
+      "Full-text Search Libraries"
+    ],
+    "psycopg2": [
+      "Spatial Search"
+    ],
+    "shapely": [
+      "Spatial Search"
+    ],
+    "requests": [
+      "Spatial Search",
+      "1.148.2 Classical Chinese Parsing"
+    ],
+    "dtaidistance": [
+      "Time Series Search Libraries"
+    ],
+    "sklearn": [
+      "Time Series Search Libraries"
+    ],
+    "pyts": [
+      "Time Series Search Libraries"
+    ],
+    "matplotlib": [
+      "Time Series Search Libraries"
+    ],
+    "networkx": [
+      "Graph Analysis",
+      "Community Detection Libraries"
+    ],
+    "igraph": [
+      "Graph Analysis",
+      "Community Detection Libraries"
+    ],
+    "networkit": [
+      "Graph Analysis"
+    ],
+    "graph_tool": [
+      "Graph Analysis"
+    ],
+    "rustworkx": [
+      "Graph Analysis"
+    ],
+    "gremlin_python": [
+      "Graph Databases"
+    ],
+    "neptune_python_utils": [
+      "Graph Databases"
+    ],
+    "neo4j": [
+      "Graph Databases"
+    ],
+    "py2neo": [
+      "Graph Databases"
+    ],
+    "cdlib": [
+      "Community Detection Libraries"
+    ],
+    "leidenalg": [
+      "Community Detection Libraries"
+    ],
+    "scipy": [
+      "Python Optimization Libraries",
+      "Monte Carlo Simulation"
+    ],
+    "transformers": [
+      "1.033.1 Intent Classification Libraries"
+    ],
+    "setfit": [
+      "1.033.1 Intent Classification Libraries"
+    ],
+    "openai": [
+      "1.033.1 Intent Classification Libraries"
+    ],
+    "ckiptagger": [
+      "1.033.2 Chinese Word Segmentation"
+    ],
+    "jieba": [
+      "1.033.2 Chinese Word Segmentation",
+      "1.154.1 Chinese Text Simplification"
+    ],
+    "pkuseg": [
+      "1.033.2 Chinese Word Segmentation"
+    ],
+    "hanlp": [
+      "1.033.4 Named Entity Recognition (CJK)"
+    ],
+    "stanza": [
+      "1.033.4 Named Entity Recognition (CJK)"
+    ],
+    "spacy": [
+      "1.033.4 Named Entity Recognition (CJK)",
+      "Nlp Libraries",
+      "Terminology Extraction"
+    ],
+    "google": [
+      "1.033.4 Named Entity Recognition (CJK)",
+      "Handwriting Recognition (CJK)"
+    ],
+    "Flask-Mail": [
+      "Email Libraries"
+    ],
+    "django-anymail": [
+      "Email Libraries"
+    ],
+    "yagmail": [
+      "Email Libraries"
+    ],
+    "redmail": [
+      "Email Libraries"
+    ],
+    "flask": [
+      "Template Engines"
+    ],
+    "jinja2": [
+      "Template Engines"
+    ],
+    "polars": [
+      "Collections"
+    ],
+    "pyrsistent": [
+      "Collections"
+    ],
+    "cytoolz": [
+      "Collections"
+    ],
+    "more_itertools": [
+      "Collections"
+    ],
+    "pygtrie": [
+      "Trie Libraries"
+    ],
+    "datrie": [
+      "Trie Libraries"
+    ],
+    "marisa_trie": [
+      "Trie Libraries"
+    ],
+    "redis": [
+      "1.043.1 Task Queue Libraries",
+      "Caching Libraries"
+    ],
+    "cachetools": [
+      "Caching Libraries"
+    ],
+    "diskcache": [
+      "Caching Libraries"
+    ],
+    "alembic": [
+      "1.049.1 Database Schema Inspection"
+    ],
+    "sqlalchemy": [
+      "1.049.1 Database Schema Inspection"
+    ],
+    "brotli": [
+      "Compression"
+    ],
+    "zlib_ng": [
+      "Compression"
+    ],
+    "gzip": [
+      "Compression"
+    ],
+    "person_pb2": [
+      "Binary Serialization Libraries"
+    ],
+    "flatbuffers": [
+      "Binary Serialization Libraries"
+    ],
+    "MyGame": [
+      "Binary Serialization Libraries"
+    ],
+    "msgpack": [
+      "Binary Serialization Libraries"
+    ],
+    "avro": [
+      "Binary Serialization Libraries"
+    ],
+    "orjson": [
+      "Json Libraries"
+    ],
+    "msgspec": [
+      "Json Libraries"
+    ],
+    "ujson": [
+      "Json Libraries"
+    ],
+    "cryptography": [
+      "Python Cryptographic Libraries"
+    ],
+    "argon2": [
+      "Python Password Hashing Libraries"
+    ],
+    "bcrypt": [
+      "Python Password Hashing Libraries"
+    ],
+    "hashlib": [
+      "Python Password Hashing Libraries"
+    ],
+    "passlib": [
+      "Python Password Hashing Libraries"
+    ],
+    "authlib": [
+      "Python JWT (JSON Web Token) Libraries"
+    ],
+    "prophet": [
+      "Time Series Libraries"
+    ],
+    "pandas": [
+      "Time Series Libraries"
+    ],
+    "qrcode": [
+      "1.080.1 Qr Code Generation"
+    ],
+    "segno": [
+      "1.080.1 Qr Code Generation"
+    ],
+    "PyQRCode": [
+      "1.080.1 Qr Code Generation"
+    ],
+    "qrcodegen": [
+      "1.080.1 Qr Code Generation"
+    ],
+    "FastText": [
+      "Text Processing"
+    ],
+    "libcst": [
+      "1.104.1 Python Code Parsing & AST Libraries"
+    ],
+    "rope": [
+      "1.104.1 Python Code Parsing & AST Libraries"
+    ],
+    "SALib": [
+      "Monte Carlo Simulation"
+    ],
+    "cltk": [
+      "Classical Language Libraries"
+    ],
+    "inspect": [
+      "Classical Language Libraries"
+    ],
+    "fsrs": [
+      "Spaced Repetition Algorithms"
+    ],
+    "supermemo2": [
+      "Spaced Repetition Algorithms"
+    ],
+    "genanki": [
+      "Flashcard Systems & Integrations"
+    ],
+    "librosa": [
+      "1.144.2 Tone Analysis"
+    ],
+    "praatio": [
+      "1.144.2 Tone Analysis"
+    ],
+    "parselmouth": [
+      "1.144.2 Tone Analysis"
+    ],
+    "azure": [
+      "Handwriting Recognition (CJK)"
+    ],
+    "msrest": [
+      "Handwriting Recognition (CJK)"
+    ],
+    "codecs": [
+      "Character Encoding (Big5, GB2312, Unicode CJK)"
+    ],
+    "charset_normalizer": [
+      "Character Encoding (Big5, GB2312, Unicode CJK)"
+    ],
+    "ftfy": [
+      "Character Encoding (Big5, GB2312, Unicode CJK)"
+    ],
+    "opencc": [
+      "Character Encoding (Big5, GB2312, Unicode CJK)",
+      "Traditional \u2194 Simplified Conversion"
+    ],
+    "cchardet": [
+      "Character Encoding (Big5, GB2312, Unicode CJK)"
+    ],
+    "hanziconv": [
+      "Traditional \u2194 Simplified Conversion"
+    ],
+    "bleualign": [
+      "Sentence Alignment"
+    ],
+    "pyate": [
+      "Terminology Extraction"
+    ],
+    "llama_index": [
+      "RAG Pipelines"
+    ],
+    "langchain": [
+      "RAG Pipelines"
+    ],
+    "asyncio": [
+      "Bot SDK Frameworks"
+    ],
+    "discord": [
+      "Bot SDK Frameworks"
+    ],
+    "telegram": [
+      "Bot SDK Frameworks"
+    ],
+    "slack_bolt": [
+      "Bot SDK Frameworks"
+    ],
+    "prometheus_client": [
+      "Prometheus"
+    ],
+    "Gremlin": [
+      "Graph Databases"
+    ],
+    "openCypher": [
+      "Graph Databases"
+    ],
+    "SPARQL": [
+      "Graph Databases"
+    ],
+    "Render": [
+      "Platform As A Service"
+    ],
+    "Heroku": [
+      "Platform As A Service"
+    ],
+    "Railway": [
+      "Platform As A Service"
+    ],
+    "Fly.io": [
+      "Platform As A Service"
+    ],
+    "Buffer": [
+      "Social Media Scheduling & Automation"
+    ],
+    "Hootsuite": [
+      "Social Media Scheduling & Automation"
+    ],
+    "Later": [
+      "Social Media Scheduling & Automation"
+    ],
+    "SocialBee": [
+      "Social Media Scheduling & Automation"
+    ],
+    "Publer": [
+      "Social Media Scheduling & Automation"
+    ]
+  }
+}

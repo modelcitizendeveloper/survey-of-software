@@ -1,0 +1,2881 @@
+{
+  "1-001": {
+    "NumPy's Hidden Radix": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "compatible"
+      ]
+    },
+    "SortedContainers Outperforms Repeated": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "compatible"
+      ]
+    },
+    "Parallel Sorting Has": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "complex",
+        "compatible"
+      ]
+    },
+    "External Sorting I": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "complex",
+        "compatible"
+      ]
+    },
+    "Data Structure Choice": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "complex",
+        "compatible"
+      ]
+    }
+  },
+  "1-002": {
+    "RapidFuzz": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "FuzzyWuzzy": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Jellyfish": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Python": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-003": {
+    "Whoosh": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Tantivy": {
+      "performance": [
+        "fast",
+        "scalable",
+        "memory_efficient"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Pyserini": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "memory_efficient"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "compatible"
+      ]
+    },
+    "Xapian": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "memory_efficient"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "compatible"
+      ]
+    }
+  },
+  "1-004": {
+    "Python's Strengths": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained",
+        "abandoned"
+      ],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Maintenance Matters More": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained",
+        "abandoned"
+      ],
+      "learning": [
+        "easy",
+        "compatible"
+      ]
+    },
+    "Type Specialization Unlocks": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained",
+        "abandoned"
+      ],
+      "learning": [
+        "easy",
+        "compatible"
+      ]
+    },
+    "Leaderboard": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained",
+        "abandoned"
+      ],
+      "learning": [
+        "easy",
+        "compatible"
+      ]
+    }
+  },
+  "1-005": {
+    "PostGIS": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "complex"
+      ]
+    },
+    "Google Maps API": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "complex"
+      ]
+    },
+    "Elasticsearch Geo": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "complex"
+      ]
+    },
+    "Leaflet": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "complex"
+      ]
+    },
+    "GEOS": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "complex"
+      ]
+    }
+  },
+  "1-006": {
+    "Ecosystem": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    },
+    "License": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    },
+    "NetworkX": {
+      "performance": [
+        "slow"
+      ],
+      "maturity": [],
+      "learning": []
+    }
+  },
+  "1-007": {
+    "Start": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "AC": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Hyperscan": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Linear": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Benchmark": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-008": {
+    "Primary": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Key": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Quality": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Extreme": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Minimal": {
+      "performance": [
+        "fast",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "compatible"
+      ]
+    }
+  },
+  "1-009": {
+    "What": {
+      "performance": [
+        "fast",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "What's": {
+      "performance": [
+        "fast",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-010": {
+    "Best Balanced Choice": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "compatible"
+      ]
+    },
+    "Best Rust Alternative": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [
+        "growing"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    }
+  },
+  "1-012": {
+    "Evaluation": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Comparison": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-013": {
+    "Specialize": {
+      "performance": [
+        "fast",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Safety": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "compatible"
+      ]
+    }
+  },
+  "1-014": {
+    "Start": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Benchmark": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Consider OR": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Consider": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    }
+  },
+  "1-015": {
+    "NetworkX": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Plotly": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "PyVis": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Graphviz": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-016": {
+    "NetworkX": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": [
+        "complex"
+      ]
+    },
+    "CDlib": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": [
+        "complex"
+      ]
+    },
+    "NetworKit": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": [
+        "complex"
+      ]
+    },
+    "Graph": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": [
+        "complex"
+      ]
+    },
+    "Hardware": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": [
+        "complex"
+      ]
+    }
+  },
+  "1-022": {
+    "Linear": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "beta",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Constraint Programming": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "beta",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Vehicle Routing": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "beta",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Graph Algorithms": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "beta",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-030": {
+    "Fuzzy": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Phonetic Matching": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Multi": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Enhanced Regex": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "memory_efficient"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Secure Regex": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable",
+        "memory_efficient"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    }
+  },
+  "1-031": {
+    "Semantic": {
+      "performance": [
+        "slow"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": []
+    },
+    "Object Diff": {
+      "performance": [
+        "slow"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": []
+    },
+    "Format": {
+      "performance": [
+        "slow"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": []
+    }
+  },
+  "1-033-1": {
+    "Hugging Face Zero": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "SetFit": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "DistilBERT Fine": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Rasa NLU": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "GPT": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-033-2": {
+    "Real": {
+      "performance": [
+        "fast",
+        "slow",
+        "memory_efficient",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Traditional Chinese Text": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "complex"
+      ]
+    },
+    "Domain": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Comprehensive NLP Pipelines": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Rapid Prototyping": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-033-4": {
+    "HanLP": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": []
+    },
+    "LTP": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Stanza": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Models": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Google Cloud Natural": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-033": {
+    "Transformers": {
+      "performance": [],
+      "maturity": [
+        "stable"
+      ],
+      "learning": []
+    },
+    "NLTK": {
+      "performance": [],
+      "maturity": [
+        "stable"
+      ],
+      "learning": []
+    },
+    "TextBlob": {
+      "performance": [],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Gensim": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-034": {
+    "Flask": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-035-1": {
+    "BERT": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Qwen": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-039": {
+    "Jinja2": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Handlebars.js": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "React JSX": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Mustache": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Twig": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-040": {
+    "SortedContainers": {
+      "performance": [
+        "fast",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Polars": {
+      "performance": [
+        "fast",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained",
+        "growing"
+      ],
+      "learning": [
+        "easy",
+        "compatible"
+      ]
+    },
+    "Pyrsistent": {
+      "performance": [
+        "fast",
+        "scalable",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained",
+        "growing"
+      ],
+      "learning": [
+        "easy",
+        "compatible"
+      ]
+    },
+    "CyToolz": {
+      "performance": [
+        "fast",
+        "scalable",
+        "memory_efficient",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained",
+        "growing"
+      ],
+      "learning": [
+        "easy",
+        "compatible"
+      ]
+    },
+    "More": {
+      "performance": [
+        "fast",
+        "scalable",
+        "memory_efficient",
+        "multiplier"
+      ],
+      "maturity": [
+        "maintained",
+        "growing"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    }
+  },
+  "1-042": {
+    "Standard Trie": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Compressed Trie": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Radix Tree": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Suffix Tree": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Ternary Search Tree": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-043-1": {
+    "Celery": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "complex"
+      ]
+    },
+    "RQ": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Dramatiq": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Huey": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "TaskiQ": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-049-1": {
+    "SQLAlchemy Inspector": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Alembic Autogenerate": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "complex"
+      ]
+    },
+    "Django": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained",
+        "abandoned"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-050": {
+    "Zstandard": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": []
+    },
+    "LZ4": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": []
+    },
+    "Brotli": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": []
+    },
+    "Snappy": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": []
+    }
+  },
+  "1-055": {
+    "Protocol Buffers": {
+      "performance": [
+        "fast",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": []
+    },
+    "FlatBuffers": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": [
+        "complex",
+        "compatible"
+      ]
+    },
+    "MessagePack": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Apache Avro": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Cap'n Proto": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    }
+  },
+  "1-056": {
+    "Standard": {
+      "performance": [
+        "fast",
+        "slow",
+        "memory_efficient",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy",
+        "compatible"
+      ]
+    }
+  },
+  "1-060": {
+    "Identify Candidates": {
+      "performance": [],
+      "maturity": [
+        "abandoned"
+      ],
+      "learning": []
+    },
+    "Popularity Metrics": {
+      "performance": [],
+      "maturity": [
+        "maintained",
+        "abandoned"
+      ],
+      "learning": []
+    },
+    "Quick Capability Check": {
+      "performance": [],
+      "maturity": [
+        "maintained",
+        "abandoned"
+      ],
+      "learning": []
+    },
+    "Make Decision": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained",
+        "abandoned"
+      ],
+      "learning": [
+        "easy",
+        "compatible"
+      ]
+    }
+  },
+  "1-062": {
+    "Maintenance": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    }
+  },
+  "1-063": {
+    "Ecosystem Adoption": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Maintenance Signals": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Documentation Availability": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Security Posture": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Basic Feature Coverage": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    }
+  },
+  "1-071": {
+    "UMAP": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Emerging Alternatives": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    }
+  },
+  "1-073": {
+    "Prophet": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "TensorFlow": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Darts": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "MLflow": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-074": {
+    "Speed": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "growing"
+      ],
+      "learning": [
+        "easy",
+        "compatible"
+      ]
+    },
+    "Ease": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "growing"
+      ],
+      "learning": [
+        "easy",
+        "compatible"
+      ]
+    }
+  },
+  "1-075": {
+    "GitHub": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "compatible"
+      ]
+    },
+    "Papers": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "compatible"
+      ]
+    }
+  },
+  "1-080-1": {
+    "PyQRCode": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-091-2": {
+    "Haar Cascade Classifiers": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "beta",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "LBP Cascades": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "beta",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "DNN Module": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Security Systems": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "compatible"
+      ]
+    },
+    "Photo": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "compatible"
+      ]
+    }
+  },
+  "1-100": {
+    "Hugging Face Transformers": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "FastText": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": []
+    },
+    "PyTorch": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": []
+    },
+    "TensorFlow": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    },
+    "NLTK": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-101": {
+    "Speed": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained",
+        "growing"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Memory Efficiency": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained",
+        "growing"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Ease": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained",
+        "growing"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-104-1": {
+    "LibCST": {
+      "performance": [],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Rope": {
+      "performance": [],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": []
+    }
+  },
+  "1-104-2": {
+    "Popularity Metrics": {
+      "performance": [
+        "fast",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Quick Feature Assessment": {
+      "performance": [
+        "fast",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Community Signals": {
+      "performance": [
+        "fast",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Decision": {
+      "performance": [
+        "fast",
+        "multiplier"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    }
+  },
+  "1-110-4": {
+    "Popularity": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "compatible"
+      ]
+    }
+  },
+  "1-111": {
+    "New React Project": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Enterprise React Application": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "abandoned"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Complex Derived State": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "complex"
+      ]
+    }
+  },
+  "1-112": {
+    "Ecosystem": {
+      "performance": [],
+      "maturity": [
+        "abandoned"
+      ],
+      "learning": []
+    }
+  },
+  "1-113": {
+    "New React Project": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-114": {
+    "Quick Validation": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Ecosystem Check": {
+      "performance": [],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-115": {
+    "Bundle Size Critical": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained",
+        "abandoned"
+      ],
+      "learning": []
+    },
+    "TanStack Ecosystem User": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained",
+        "abandoned"
+      ],
+      "learning": []
+    },
+    "Legacy JavaScript Project": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "maintained",
+        "abandoned"
+      ],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Existing Formik Codebase": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "maintained",
+        "abandoned"
+      ],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-116": {
+    "Standard React Dashboard": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Large Datasets": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Custom Visualizations": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Cross": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Server": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    }
+  },
+  "1-122": {
+    "Zero Installation Friction": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "beta",
+        "maintained",
+        "abandoned"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Ecosystem Integration": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "beta",
+        "maintained",
+        "abandoned"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    }
+  },
+  "1-130": {
+    "Key Trade": {
+      "performance": [
+        "slow",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    }
+  },
+  "1-131": {
+    "Plane": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Taiga": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Worklenz": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "compatible"
+      ]
+    },
+    "OpenProject": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Redmine": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    }
+  },
+  "1-141": {
+    "Quick Recommendation": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-142": {
+    "Initial Recommendation": {
+      "performance": [],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-144-2": {
+    "Pure Python": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Flexible": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Batch": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Well": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-148": {
+    "Russian Libraries": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": []
+    },
+    "Czech Libraries": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "beta",
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Quick Recommendation": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "beta",
+        "maintained"
+      ],
+      "learning": [
+        "complex"
+      ]
+    }
+  },
+  "1-153-1": {
+    "Universal Dependencies": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "complex"
+      ]
+    }
+  },
+  "1-154-1": {
+    "NLP Foundations": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "complex"
+      ]
+    },
+    "Character Conversion": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "complex"
+      ]
+    },
+    "Vocabulary Tools": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "complex"
+      ]
+    }
+  },
+  "1-160": {
+    "Package Registry Analysis": {
+      "performance": [],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "GitHub Ecosystem Signals": {
+      "performance": [],
+      "maturity": [
+        "maintained",
+        "abandoned"
+      ],
+      "learning": []
+    },
+    "Stack Overflow Mentions": {
+      "performance": [],
+      "maturity": [
+        "maintained",
+        "abandoned"
+      ],
+      "learning": []
+    },
+    "Academic": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "stable",
+        "maintained",
+        "abandoned"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-162": {
+    "Real": {
+      "performance": [
+        "memory_efficient"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": []
+    },
+    "Document Digitization": {
+      "performance": [
+        "fast",
+        "memory_efficient"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": []
+    },
+    "Language Learning Applications": {
+      "performance": [
+        "fast",
+        "memory_efficient"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": []
+    },
+    "Privacy": {
+      "performance": [
+        "fast",
+        "memory_efficient"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": []
+    },
+    "High": {
+      "performance": [
+        "fast",
+        "memory_efficient"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": []
+    }
+  },
+  "1-163": {
+    "Encoding Detection": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": []
+    },
+    "Mojibake Repair": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": []
+    },
+    "Chinese Variant Conversion": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    },
+    "Read File": {
+      "performance": [
+        "fast",
+        "slow",
+        "multiplier"
+      ],
+      "maturity": [],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-164": {
+    "Key Evaluation Questions": {
+      "performance": [],
+      "maturity": [
+        "maintained",
+        "abandoned"
+      ],
+      "learning": [
+        "easy"
+      ]
+    }
+  },
+  "1-166": {
+    "Text Recognition": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-171": {
+    "Hunalign": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [],
+      "learning": []
+    },
+    "Bleualign": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [],
+      "learning": []
+    },
+    "Translate": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [],
+      "learning": []
+    },
+    "Compute BLEU": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [],
+      "learning": []
+    }
+  },
+  "1-172": {
+    "Core": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "TMX": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "OmegaT": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Market": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    }
+  },
+  "1-201": {
+    "AutoGen": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    }
+  },
+  "1-203": {
+    "Selection Criteria": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Libraries Identified": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Quick Validation": {
+      "performance": [
+        "fast",
+        "slow",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "beta",
+        "maintained"
+      ],
+      "learning": [
+        "complex"
+      ]
+    }
+  },
+  "1-204": {
+    "Fixed": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "RecursiveCharacterTextSplitter": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Structure": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Semantic Chunking": {
+      "performance": [
+        "fast",
+        "slow"
+      ],
+      "maturity": [
+        "stable",
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    },
+    "Parent": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": [
+        "easy",
+        "complex"
+      ]
+    }
+  },
+  "1-209": {
+    "GitHub Repository Analysis": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Package Ecosystem Metrics": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Community Signals": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Documentation Quality": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained"
+      ],
+      "learning": []
+    },
+    "Popularity Metrics": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [
+        "maintained",
+        "growing"
+      ],
+      "learning": []
+    }
+  },
+  "1-211": {
+    "Chinese": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": []
+    },
+    "Multilingual Models": {
+      "performance": [
+        "fast"
+      ],
+      "maturity": [],
+      "learning": []
+    }
+  },
+  "1-230": {
+    "True Data Portability": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "beta",
+        "maintained",
+        "growing"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Clean API Design": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "beta",
+        "maintained",
+        "growing"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Identity Ownership": {
+      "performance": [
+        "fast",
+        "scalable"
+      ],
+      "maturity": [
+        "stable",
+        "beta",
+        "maintained",
+        "growing"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Algorithmic Choice": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [
+        "stable"
+      ],
+      "learning": [
+        "easy",
+        "complex",
+        "compatible"
+      ]
+    },
+    "Complexity": {
+      "performance": [
+        "scalable"
+      ],
+      "maturity": [],
+      "learning": []
+    }
+  }
+}
