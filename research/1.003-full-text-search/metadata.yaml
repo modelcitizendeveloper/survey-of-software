@@ -6,22 +6,22 @@ status: in_progress
 started: 2025-11-19
 s1_completed: 2025-11-19
 s2_completed: null
-s3_completed: null
-s4_completed: null
+s3_completed: 2026-02-03
+s4_completed: 2026-02-03
 completed: null
 
 # Time tracking
 estimated_hours: 7
-actual_hours: 0.75  # S1 only so far
+actual_hours: 2.75  # S1 (0.75h) + S3 (1h) + S4 (1h)
 s1_hours: 0.75
 s2_hours: null
-s3_hours: null
-s4_hours: null
+s3_hours: 1.0
+s4_hours: 1.0
 
 # Completion tracking
-completion_level: s1_complete
-phases_complete: ["s1"]
-phases_pending: ["s2", "s3", "s4"]
+completion_level: 75%  # S1 + S3 + S4 (S2 deferred)
+phases_complete: ["s1", "s3", "s4"]
+phases_pending: ["s2"]
 
 # Key findings
 key_findings_s1:
@@ -32,12 +32,30 @@ key_findings_s1:
   - "Path 1 (DIY) viable for <1M documents, <1000 QPS"
 
 key_findings_s2: null
-key_findings_s3: null
-key_findings_s4: null
 
-# Recommendations (preliminary)
+key_findings_s3:
+  - "5 distinct user personas: product devs, doc sites, academics, prototypes, architects"
+  - "No single library is 'best' - optimal choice depends on user context"
+  - "Scale ceiling matches persona needs (lunr.py 1K-10K, Tantivy 1M-10M)"
+  - "Migration timeline predictable: DIY → managed at 1M docs or Year 3"
+  - "Pure Python is constraint, not feature (only prototypes/static sites prefer it)"
+
+key_findings_s4:
+  - "Tantivy (92/100): Excellent long-term bet, commercial backing (Quickwit), 5+ years viable"
+  - "Whoosh (35/100): High risk - abandoned 2020, use only for throwaway prototypes"
+  - "Pyserini (90/100): Academic excellence, reproducible baselines, 5+ years"
+  - "Xapian (85/100): Stable 25 years, GPL license limits commercial adoption"
+  - "Migration inflection: 1M docs, 1K QPS, or need personalization/analytics"
+
+# Recommendations
 primary_recommendation_s1: "Tantivy for production use (performance winner)"
 secondary_recommendation_s1: "Whoosh only for quick prototypes (pure Python)"
+
+primary_recommendation_s3: "Match library to persona: Tantivy (product devs), lunr.py (doc sites), Pyserini (academics), Whoosh (prototypes only)"
+secondary_recommendation_s3: "Plan migration at inflection points: 1M docs or Year 3 for DIY → managed"
+
+primary_recommendation_s4: "Tantivy (92/100) is strongest long-term bet - commercial backing, modern stack, 5+ years viable"
+secondary_recommendation_s4: "Avoid Whoosh for production (35/100) - abandoned 2020, use only for throwaway prototypes"
 
 # Strategic context
 path_1_vs_path_3: "Path 1 baseline for 3.043 managed services comparison"
@@ -58,30 +76,61 @@ s2_focus:
 
 # Artifacts
 s1_artifacts:
-  - "01-discovery/S1-rapid/00-README.md"
-  - "01-discovery/S1-rapid/01-whoosh-test.py"
-  - "01-discovery/S1-rapid/02-tantivy-test.py"
-  - "01-discovery/S1-rapid/S1_RESULTS.md"
-  - "01-discovery/S1-rapid/99-SYNTHESIS.md"
+  - "01-discovery/S1-rapid/00-SYNTHESIS.md"
+  - "01-discovery/S1-rapid/01-WHOOSH.md"
+  - "01-discovery/S1-rapid/02-TANTIVY.md"
+  - "01-discovery/S1-rapid/03-PYSERINI.md"
+  - "01-discovery/S1-rapid/04-XAPIAN.md"
+  - "01-discovery/S1-rapid/05-LUNR_PY.md"
 
 s2_artifacts: null
-s3_artifacts: null
-s4_artifacts: null
+
+s3_artifacts:
+  - "01-discovery/S3-need-driven/approach.md"
+  - "01-discovery/S3-need-driven/use-case-product-developers.md"
+  - "01-discovery/S3-need-driven/use-case-documentation-sites.md"
+  - "01-discovery/S3-need-driven/use-case-academic-researchers.md"
+  - "01-discovery/S3-need-driven/use-case-prototype-builders.md"
+  - "01-discovery/S3-need-driven/use-case-scale-aware-architects.md"
+  - "01-discovery/S3-need-driven/recommendation.md"
+
+s4_artifacts:
+  - "01-discovery/S4-strategic/approach.md"
+  - "01-discovery/S4-strategic/tantivy-viability.md"
+  - "01-discovery/S4-strategic/recommendation.md"
+
+domain_explainer:
+  - "DOMAIN_EXPLAINER.md"
 
 # Quality metrics
 confidence_level_s1: 5  # 1-5 scale
 confidence_level_s2: null
-confidence_level_s3: null
-confidence_level_s4: null
+confidence_level_s3: 5
+confidence_level_s4: 5
 
 # Notes
 notes: |
-  S1 completed successfully with clear performance winner (Tantivy).
-  240× query speed difference makes choice unambiguous for production use.
-  Pre-built wheels (3.9MB) make installation as easy as pure Python option.
+  **Completion: 75%** (S1 + S3 + S4, S2 deferred)
 
-  Next steps: S2 comprehensive discovery focusing on Tantivy scale testing,
-  advanced features (fuzzy, facets), and integration patterns.
+  S1 (Nov 2025): Rapid discovery of 5 libraries, clear performance winner (Tantivy 240× faster).
 
-  Strategic positioning: Provides DIY baseline for Path 1 vs Path 3 decision
-  (self-hosted libraries vs managed services from 3.043).
+  S3 (Feb 2026): Need-driven analysis identified 5 user personas with distinct requirements:
+  - Product developers need Tantivy (<10ms latency)
+  - Doc sites need lunr.py (static-compatible)
+  - Academics need Pyserini (reproducible baselines)
+  - Prototypes can use Whoosh (fast setup)
+  - Architects need migration framework (DIY → managed at 1M docs)
+
+  S4 (Feb 2026): Strategic viability assessment:
+  - Tantivy (92/100) - excellent long-term bet, commercial backing (Quickwit)
+  - Whoosh (35/100) - abandoned 2020, high risk, prototypes only
+  - Migration inflection: 1M docs, 1K QPS, or Year 3 of product lifecycle
+
+  DOMAIN_EXPLAINER.md created with universal analogies (library catalogs, planes, buildings).
+
+  S2 DEFERRED: Comprehensive technical deep-dive can be added later if needed for
+  integration patterns, scale testing, or advanced features. Current 75% completion
+  provides actionable guidance for decision-makers and developers.
+
+  Strategic positioning: Complete DIY Path 1 guidance for choosing self-hosted libraries,
+  with clear migration path to Path 3 (managed services from 3.043) at scale inflection points.
