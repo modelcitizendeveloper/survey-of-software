@@ -43,6 +43,7 @@ processing.
 - ✅ [**1.010** Graph Analysis](/survey/1-010) - NetworkX, graph-tool, igraph
 - ✅ [**1.011** Graph Database Clients - Neo4j, ArangoDB, TigerGraph](/survey/1-011)
 - ✅ [**1.012** Community Detection](/survey/1-012) - Louvain, label propagation, spectral
+- ✅ [**1.013** String Algorithms](/survey/1-013)
 - **1.013** Shortest Path Optimization - Specialized path algorithms
 - ✅ [**1.014** Network Flow - Max flow, min cost flow](/survey/1-014)
 - ✅ [**1.015** Graph Visualization](/survey/1-015) - Graphviz, Gephi, Cytoscape
@@ -366,8 +367,8 @@ processing.
 ## Research Status
 
 **Total Defined**: 189 research slots (including CJK expansion)
-**Completed**: 100 pieces (52%)
-**Remaining**: 89 pieces
+**Completed**: 101 pieces (53%)
+**Remaining**: 88 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
