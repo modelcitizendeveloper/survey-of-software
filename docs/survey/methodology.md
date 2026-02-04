@@ -1,551 +1,607 @@
----
-sidebar_position: 101
-slug: /survey/methodology
-id: four-pass-solution-survey
-title: "Methodology"
----
+# 4PS Research Methodology
 
-# Four-Pass Discovery (4PS)
-
-**Systematic Library Research Using Four Independent Perspectives**
-
-> A replicable methodology for discovering and evaluating general-purpose software libraries. Four independent agents explore the same problem space using different approaches, revealing optimal solutions through convergence analysis.
+**Four-Pass Survey (4PS)** is the research methodology used for all library, standard, and service research in this repository. This document defines the MANDATORY requirements for each pass, with particular emphasis on source documentation requirements.
 
 ---
 
-## Framework Purpose
+## Core Principles
 
-This framework provides a systematic approach to library discovery that reveals the solution space from multiple angles. Different discovery methodologies uncover different optimal solutions—single-methodology discovery misses potentially better paths.
-
-**Core Principle:** Four independent agents explore the same problem space using different approaches, then we analyze where they converge (strong signal) and diverge (reveals trade-offs).
-
-**Use Cases:**
-- Algorithm libraries (sorting, graph algorithms, compression)
-- Data processing tools (JSON parsing, serialization, streaming)
-- ML frameworks (PyTorch, TensorFlow, ONNX)
-- Infrastructure libraries (caching, logging, testing)
+1. **Multi-pass approach**: Four distinct passes (S1-S4) building progressively deeper understanding
+2. **Hardware store model**: Create generic catalogs, not client-specific recommendations
+3. **Source documentation is MANDATORY**: Every claim must be attributable to a verifiable source
+4. **Replicability**: Another researcher must be able to verify every finding using documented sources
 
 ---
 
-## The Four Methodologies
+## Source Documentation (REQUIRED)
 
-### S1: Rapid Discovery
-**Philosophy:** "Popular libraries exist for a reason"
+### Why Source Documentation is Mandatory
 
-**Approach:**
-- Speed-focused, ecosystem-driven discovery
-- GitHub stars, download counts, community adoption
-- Quick validation: "does it work?"
-- 5-10 minute landscape scan
+**Replicability = Academic Credibility**
 
-**Discovery Tools:**
-- GitHub trending, awesome-lists
-- Package registries (PyPI, npm, Maven)
-- Stack Overflow mentions
-- Reddit/HN discussions
+Research without sources is opinion. Research with sources is evidence.
 
-**Selection Criteria:**
-- Popularity (stars, downloads)
-- Recent activity (commits in last 6 months)
-- Active maintenance
-- Clear documentation
+- **For verification**: Readers can validate claims independently
+- **For updates**: When pricing/features change, sources show what to re-check
+- **For credibility**: Timestamped sources prove claims were accurate at time of research
+- **For learning**: Sources are the raw material for future researchers
+- **For accountability**: Sources distinguish research from speculation
 
-**Output:**
-- Top 3-5 libraries
-- Quick pros/cons per library
-- Recommendation with confidence level
+**Critical for time-sensitive data**: Pricing (3.XXX) and feature availability change constantly. A source with a timestamp proves "this was true on DATE" even if it's outdated today.
 
----
+### Source Documentation Format
 
-### S2: Comprehensive Analysis
-**Philosophy:** "Understand the entire solution space before choosing"
+Every research document MUST include a `## Sources` section at the end, formatted as:
 
-**Approach:**
-- Thorough, evidence-based, optimization-focused
-- Performance benchmarks, feature matrices
-- Deep trade-off analysis
-- 30-60 minute deep dive
+```markdown
+## Sources
 
-**Discovery Tools:**
-- Benchmark suites (pytest-benchmark, JMH)
-- Feature comparison matrices
-- Architecture analysis
-- Dependency trees
-
-**Selection Criteria:**
-- Performance (speed, memory, throughput)
-- Feature completeness
-- API design quality
-- Ecosystem integration
-
-**Output:**
-- Complete solution space map
-- Benchmark results
-- Feature comparison matrix
-- Trade-off analysis
-- Optimized recommendation
-
----
-
-### S3: Need-Driven Discovery
-**Philosophy:** "Start with requirements, find exact-fit solutions"
-
-**Approach:**
-- Requirement-focused, validation-oriented
-- Use case mapping
-- Gap analysis
-- "Does this solve my specific problem?"
-
-**Discovery Tools:**
-- Requirement checklists
-- Use case scenarios
-- Validation testing
-- Edge case exploration
-
-**Selection Criteria:**
-- Requirement satisfaction (must-haves met?)
-- Use case fit (solves actual problem?)
-- Constraints respected (licensing, dependencies)
-- Implementation complexity
-
-**Output:**
-- Requirement mapping per library
-- Use case validation results
-- Gap analysis
-- Best-fit recommendation
-
----
-
-### S4: Strategic Selection
-**Philosophy:** "Think long-term and consider broader context"
-
-**Approach:**
-- Future-focused, ecosystem-aware
-- Maintenance health, long-term viability
-- Community sustainability
-- 5-10 year outlook
-
-**Discovery Tools:**
-- Commit history analysis
-- Maintainer health (bus factor)
-- Issue resolution speed
-- Breaking change frequency
-
-**Selection Criteria:**
-- Maintenance activity (not abandoned)
-- Community health (contributors, responsiveness)
-- Stability (semver compliance, breaking changes)
-- Ecosystem momentum (growing vs declining)
-
-**Output:**
-- Long-term viability assessment
-- Maintenance health scores
-- Ecosystem trajectory
-- Strategic recommendation
-
----
-
-## Methodology Independence Protocol
-
-**Critical Requirements:**
-
-Each methodology agent MUST:
-1. **Complete Independence**: NO ACCESS to other methodology analyses
-2. **Method Purity**: Apply ONLY your methodology's approach
-3. **No Cross-References**: Do NOT coordinate with other agents
-4. **Authentic Application**: Stay true to methodology philosophy
-5. **Workspace Isolation**: Write only to your designated directory
-
-**Why Independence Matters:**
-
-Contamination destroys the value of multi-methodology discovery. If S3 reads S2's analysis, you lose the distinct perspective that makes S3 valuable.
-
----
-
-## Directory Structure
-
-```
-research/1.XXX-library-name/
-├── LIBRARY_EXPLAINER.md              # Technical concepts
-└── 01-discovery/
-    ├── S1-rapid/
-    │   ├── approach.md              # Methodology (50-100 lines)
-    │   ├── library-X.md             # Per-library assessment
-    │   └── recommendation.md        # Final choice (50-100 lines)
-    ├── S2-comprehensive/
-    │   ├── approach.md
-    │   ├── library-X.md             # Per-library deep analysis
-    │   ├── feature-comparison.md    # Matrix across libraries
-    │   └── recommendation.md
-    ├── S3-need-driven/
-    │   ├── approach.md
-    │   ├── use-case-X.md            # Per use case analysis
-    │   └── recommendation.md
-    ├── S4-strategic/
-    │   ├── approach.md
-    │   ├── library-X-maturity.md    # Per-library viability
-    │   └── recommendation.md
-    └── DISCOVERY_TOC.md             # Index + quick summaries
+- [OpenAI Pricing](https://openai.com/pricing) - Accessed 2025-11-05
+- [Claude API Documentation](https://docs.anthropic.com/api) - Accessed 2025-11-05
+- [Gemini Rate Limits](https://ai.google.dev/gemini-api/docs/rate-limits) - Accessed 2025-11-05
+- [NumPy Radix Sort Implementation](https://github.com/numpy/numpy/blob/v1.26.0/numpy/core/src/multiarray/sort.c.src#L342) - Specific commit/line
 ```
 
-**Modular Design:** Each library gets its own file, enabling cross-research reuse.
+**Required elements**:
+- **Title**: Descriptive link text (not just "source 1")
+- **URL**: Direct link to the source
+- **Access date**: When you retrieved the information (YYYY-MM-DD format)
+- **Specific location** (if applicable): Commit hash, line number, section anchor
 
----
+### 1.XXX vs 3.XXX Attribution Patterns
 
-## Execution Protocol
+Different research tiers have different source characteristics:
 
-### Parallel Execution (Recommended)
+#### 1.XXX (Algorithm/Library Research)
 
-**Launch all 4 methodologies simultaneously:**
+**Typical sources**:
+- GitHub repositories (with commit hashes)
+- Library documentation (with version numbers)
+- PyPI package pages (with version/release dates)
+- Academic papers (with DOI or arXiv links)
+- Benchmark repositories (with specific versions)
 
-```python
-# Launch S1, S2, S3, S4 in parallel (single message, multiple tasks)
-# Each writes to separate directory
-# No coordination, complete independence
-# 60-90 minutes total vs 3-4 hours sequential
+**Example** (from 1.001 Sorting Libraries):
+```markdown
+## Sources
+
+- [Python Timsort Implementation](https://github.com/python/cpython/blob/v3.12.0/Python/bltinmodule.c#L2456) - CPython 3.12.0
+- [NumPy Radix Sort](https://github.com/numpy/numpy/blob/v1.26.0/numpy/core/src/multiarray/sort.c.src#L342) - NumPy 1.26.0
+- [SortedContainers Documentation](https://grantjenks.com/docs/sortedcontainers/) - Accessed 2025-11-14
+- [Timsort Analysis Paper](https://drops.dagstuhl.de/opus/volltexte/2018/9467/pdf/LIPIcs-ESA-2018-4.pdf) - Auger et al., 2018
 ```
 
-**Benefits:**
-- Maximum throughput (2-3× faster)
-- Guaranteed independence (no cross-contamination)
-- Minimal human intervention
+**Note**: Code sources include specific commit hashes and line numbers for exact replicability.
 
-### Post-Execution Workflow
+#### 3.XXX (Managed Service Research)
 
-1. **File Validation**: Ensure all 4 directories created
-2. **Independence Verification**: Check approaches stayed pure
-3. **TOC Generation**: Create DISCOVERY_TOC.md (5-10 minutes)
-   - Reads S1-S4 recommendation.md files
-   - Creates index with summaries
-   - Notes convergence patterns
-4. **Explainer Creation** (optional): Technical concepts document
+**Typical sources**:
+- Pricing pages (CRITICAL: with access dates - pricing changes frequently)
+- Feature documentation (with timestamps)
+- Case studies (with publication dates)
+- Competitive comparison pages
+- Status/SLA pages
+- Blog announcements (with dates)
 
----
+**Example** (from 3.200 LLM APIs):
+```markdown
+## Sources
 
-## Convergence Analysis
-
-### Recommendation Mapping
-
-| Method | Primary Rec | Confidence | Key Rationale |
-|--------|-------------|------------|---------------|
-| S1     | Library A   | High       | Most popular  |
-| S2     | Library A   | High       | Best performance |
-| S3     | Library B   | Medium     | Better fit for use case X |
-| S4     | Library A   | High       | Active maintenance |
-
-### Convergence Patterns
-
-- **High Convergence** (3-4 methods agree): Strong signal
-- **Medium Convergence** (2 methods agree): Context-dependent
-- **Low Convergence** (all different): Complex trade-offs
-- **Polarized Disagreement**: Fundamental approach differences
-
-**Example:**
-- If S1, S2, S4 all choose orjson: Strong confidence
-- If S3 chooses msgspec: Performance vs ease-of-use trade-off revealed
-
----
-
-## Quality Standards
-
-### Research-Grade Confidence
-
-- **S1 Rapid:** 70-80% confidence (speed-optimized)
-- **S2 Comprehensive:** 80-90% confidence (depth-optimized)
-- **S3 Need-Driven:** 75-85% confidence (context-specific)
-- **S4 Strategic:** 60-70% confidence (forward-looking)
-
-**Not Consumer Reports 95%+ certainty.** This provides **strategic direction**, not guarantees.
-
-### Information Decay
-
-Library ecosystems evolve:
-- **At publication:** 70-80% accuracy
-- **12 months:** 50-70% accuracy
-- **36 months:** &lt;30% accuracy
-
-Treat research as living documents that guide investigation, not gospel truth.
-
-### Data Sources (Safe for Open Source)
-
-**Always Safe:**
-- Official documentation
-- Public repository data (GitHub stars, issues, commits)
-- Package registry stats (PyPI downloads, npm downloads)
-- Your own benchmarks
-- Academic papers with proper citation
-- Public GitHub issues/discussions
-
-**Attribution:** Document sources in research for transparency.
-
----
-
-## Methodology Prompt Templates
-
-### Base Template Structure
-
-```
-You are applying the [METHOD_NAME] discovery methodology in complete isolation.
-
-DISCOVERY CHALLENGE: [Problem statement]
-
-METHODOLOGY INDEPENDENCE REQUIREMENTS:
-- You have NO ACCESS to other methodology analyses
-- Do NOT reference other discovery methods
-- Focus solely on YOUR methodology's approach
-- Make independent recommendations
-
-YOUR METHODOLOGY: [S1/S2/S3/S4]
-[Method-specific philosophy and tools]
-
-WORKSPACE: research/1.XXX-library/01-discovery/[METHOD]/
-
-DELIVERABLE: Create the following files:
-- approach.md: Your methodology and discovery process
-- library-X.md: Per-library analysis
-- recommendation.md: Final choice with confidence level
-
-CRITICAL: Stay authentic to your methodology.
+- [OpenAI Pricing](https://openai.com/pricing) - Accessed 2025-11-05
+- [Claude Prompt Caching](https://www.anthropic.com/index/prompt-caching) - Published 2024-08-14, Accessed 2025-11-05
+- [Gemini Flash Benchmarks](https://blog.google/technology/ai/google-gemini-update-flash-ai-assistant-io-2024/#gemini-15-flash) - Google I/O 2024, Accessed 2025-11-05
+- [Groq Speed Benchmarks](https://groq.com/) - Homepage claim, Accessed 2025-11-05
+- [Cohere MTEB Leaderboard](https://huggingface.co/spaces/mteb/leaderboard) - MTEB Rankings, Accessed 2025-11-05
 ```
 
----
+**Note**: Pricing sources MUST include access dates because prices change. "Accessed 2025-11-05" proves "$3/M" was accurate then, even if it's now "$5/M".
 
-## Example: JSON Library Research
+### Enforcement: Pass Incomplete Without Sources
 
-**S1 Rapid Discovery** finds:
-- `orjson` (most popular, fastest)
-- `ujson` (legacy, maintenance mode)
-- `simplejson` (pure Python, portable)
+**A research pass is NOT considered complete until sources are documented.**
 
-**S2 Comprehensive** benchmarks:
-- `orjson` 3× faster than stdlib
-- Memory profiles
-- Feature completeness matrix
-- Recommends `orjson` for performance
-
-**S3 Need-Driven** validates:
-- Use case: API serialization → `orjson`
-- Use case: Config files → stdlib (simple, portable)
-- Use case: Complex schema → `pydantic` + stdlib
-
-**S4 Strategic** assesses:
-- `orjson`: Active maintenance, growing
-- `ujson`: Declining, avoid for new projects
-- stdlib: Safe long-term, slow updates
-
-**Convergence:** 3/4 recommend `orjson` for performance-critical work, but S3 reveals context matters.
+This is enforced via metadata.yaml checklist (see below).
 
 ---
 
-## When to Use 4PS
+## The Four Passes
 
-**Good Candidates:**
-- General-purpose libraries
-- Algorithm implementations
-- Data processing tools
-- Infrastructure components
-- Development frameworks
+### Pass S1: Rapid Discovery
 
-**Not a Fit:**
-- Application-specific solutions
-- Proprietary business tools
-- Vertical-specific software
+**Goal**: Quick overview, identify key providers/libraries, create breadth-first map
 
-**The Hardware Store Principle:** 4PS works for components you'd find in a hardware store—general-purpose tools, not custom applications.
+**Time**: 2-4 hours
+
+**Deliverables**:
+- `approach.md` - Methodology for S1
+- Provider/library profiles (6-8 profiles, ~300 lines each)
+- `recommendations.md` - Synthesis and initial decision matrix
+
+**Mandatory metadata.yaml checklist**:
+```yaml
+s1_rapid:
+  status: completed
+  completed_date: '2025-11-05'
+  deliverables:
+    - approach.md
+    - provider-openai.md
+    - provider-anthropic.md
+    - provider-google.md
+    - recommendations.md
+  sources_documented:
+    - Library documentation (PyPI, GitHub README) ✅
+    - Official pricing pages ✅
+    - Vendor homepages ✅
+    - Quick-start guides ✅
+  source_examples:
+    - "https://openai.com/pricing - Accessed 2025-11-05"
+    - "https://github.com/numpy/numpy/blob/v1.26.0/README.md"
+```
+
+**Source requirements for S1**:
+- Library docs (PyPI, README files)
+- Official vendor pages (homepage, pricing, getting started)
+- Repository links (GitHub/GitLab)
+- Quick-start tutorials
+
+**Cannot complete S1 until**: Each profile has a `## Sources` section with at least 3-5 primary sources.
 
 ---
 
-## Applying This Framework
+### Pass S2: Comprehensive Analysis
 
-1. **Identify your library category** (sorting, JSON, ML, etc.)
-2. **Start with S1** rapid discovery (70% of value in 10 minutes)
-3. **Deepen with S2-S4** as needed
-4. **Analyze convergence** patterns across methodologies
-5. **Document your findings** using the directory structure
+**Goal**: Deep dive into features, pricing, integrations, performance
 
-**Remember:** Different methodologies reveal different optimal solutions. Single-methodology discovery misses potentially better paths.
+**Time**: 1-2 days
+
+**Deliverables**:
+- `approach.md` - S2 methodology
+- `feature-matrix.md` - Detailed feature comparison (50+ features)
+- `pricing-tco.md` - Total cost of ownership analysis (3-year, 5-year)
+- `performance-benchmarks.md` - Speed, accuracy, reliability data
+- `integration-complexity.md` - SDK maturity, migration effort
+- `synthesis.md` - Cross-cutting insights
+
+**Mandatory metadata.yaml checklist**:
+```yaml
+s2_comprehensive:
+  status: completed
+  completed_date: '2025-11-05'
+  deliverables:
+    - approach.md
+    - feature-matrix.md
+    - pricing-tco.md
+    - performance-benchmarks.md
+    - synthesis.md
+  sources_documented:
+    - Detailed feature documentation ✅
+    - Pricing calculators (with screenshots/calculations) ✅
+    - Third-party benchmarks (with methodology) ✅
+    - SDK documentation (with version) ✅
+    - Case studies (with dates) ✅
+  source_examples:
+    - "https://docs.anthropic.com/api - Version 2024-10-01"
+    - "https://artificialanalysis.ai/models - Benchmarks accessed 2025-11-05"
+    - "https://aws.amazon.com/bedrock/pricing/ - Accessed 2025-11-05"
+```
+
+**Source requirements for S2**:
+- Full API/feature documentation (with version numbers)
+- Pricing pages + pricing calculators (with access dates)
+- Third-party benchmarks (MTEB, HumanEval, Chatbot Arena) with methodology
+- Case studies with publication dates
+- Integration guides and SDK docs
+
+**Cannot complete S2 until**: Each analysis document has 10-15 sources, including third-party validation sources.
 
 ---
 
-## Replication Guide: Step-by-Step
+### Pass S3: Need-Driven Scenarios
 
-**Want to replicate this research or survey a new category? Here's the practical recipe.**
+**Goal**: Real-world use case scenarios with architecture patterns and decision trees
 
-### Prerequisites
-- Claude Code CLI installed
-- A library category to research (e.g., "PDF libraries", "graph databases")
-- 60-90 minutes for full 4PS run
+**Time**: 1-2 days
 
-### Step 1: Launch Claude Code
+**Deliverables**:
+- `approach.md` - S3 methodology
+- 5-6 scenario documents (customer-support-chatbot.md, document-analysis.md, etc.)
+- `synthesis.md` - Cross-scenario patterns and insights
 
+**Mandatory metadata.yaml checklist**:
+```yaml
+s3_need_driven:
+  status: completed
+  completed_date: '2025-11-05'
+  deliverables:
+    - approach.md
+    - customer-support-chatbot.md
+    - document-analysis.md
+    - code-generation.md
+    - synthesis.md
+  sources_documented:
+    - Architecture blogs (with dates) ✅
+    - Real-world case studies (with company names) ✅
+    - Implementation guides ✅
+    - Performance reports (with workload specs) ✅
+  source_examples:
+    - "https://stripe.com/blog/how-stripe-uses-gpt-4 - Published 2024-08-12"
+    - "https://docs.llamaindex.ai/en/stable/examples/chat_engine/ - Accessed 2025-11-05"
+```
+
+**Source requirements for S3**:
+- Architecture blogs and engineering posts (with dates)
+- Case studies from real companies (with publication dates)
+- Implementation guides and best practices
+- Performance reports with specific workload characteristics
+
+**Cannot complete S3 until**: Each scenario has 5-8 sources showing real-world implementations.
+
+---
+
+### Pass S4: Strategic Analysis
+
+**Goal**: Vendor viability, lock-in mitigation, 5-10 year trajectory, strategic frameworks
+
+**Time**: 1-2 days
+
+**Deliverables**:
+- `approach.md` - S4 methodology
+- `vendor-viability.md` - 5-year and 10-year survival probability
+- `lock-in-mitigation.md` - Migration playbooks, abstraction strategies
+- `api-compatibility.md` or `standards-analysis.md` - Standardization trends
+- `trajectory.md` - Market evolution, 5-10 year outlook
+- `synthesis.md` - Strategic decision frameworks
+
+**Mandatory metadata.yaml checklist**:
+```yaml
+s4_strategic:
+  status: completed
+  completed_date: '2025-11-05'
+  deliverables:
+    - approach.md
+    - vendor-viability.md
+    - lock-in-mitigation.md
+    - api-compatibility.md
+    - trajectory.md
+    - synthesis.md
+  sources_documented:
+    - Funding announcements (Crunchbase, press releases) ✅
+    - Market reports (Gartner, Forrester, if public) ✅
+    - Standards documentation (W3C, IETF, CNCF) ✅
+    - Analyst predictions (with dates) ✅
+    - Historical trends (with date ranges) ✅
+  source_examples:
+    - "https://www.crunchbase.com/organization/anthropic - Funding accessed 2025-11-05"
+    - "https://www.w3.org/TR/json-ld11/ - JSON-LD 1.1 Specification"
+    - "https://techcrunch.com/2024/06/18/anthropic-raises-450m/ - Published 2024-06-18"
+```
+
+**Source requirements for S4**:
+- Funding data (Crunchbase, press releases)
+- Market reports (Gartner, Forrester, or public analyst reports)
+- Standards documentation (W3C, IETF, CNCF specs)
+- Trend articles with timestamps
+- Historical data with date ranges
+
+**Cannot complete S4 until**: Each strategic analysis has 8-12 sources, including authoritative market/funding data.
+
+---
+
+## Metadata.yaml Integration
+
+Every research experiment's `metadata.yaml` must include a `sources_documented` checklist for each completed stage.
+
+### Example metadata.yaml (3.XXX research):
+
+```yaml
+experiment:
+  id: "3.200"
+  title: "LLM APIs"
+  status: "complete"
+
+mpse_stages:
+  s1_rapid:
+    status: "completed"
+    completed_date: "2025-11-05"
+    sources_documented:
+      library_docs: ✅
+      pricing_pages: ✅
+      vendor_homepages: ✅
+      repositories: ✅
+    source_count: 24
+    source_quality: "Primary sources (vendor docs, official pricing)"
+
+  s2_comprehensive:
+    status: "completed"
+    completed_date: "2025-11-05"
+    sources_documented:
+      feature_documentation: ✅
+      pricing_calculators: ✅
+      third_party_benchmarks: ✅
+      case_studies: ✅
+      sdk_docs: ✅
+    source_count: 47
+    source_quality: "Primary + third-party validation (MTEB, HumanEval)"
+
+  s3_need_driven:
+    status: "completed"
+    completed_date: "2025-11-05"
+    sources_documented:
+      architecture_blogs: ✅
+      real_world_case_studies: ✅
+      implementation_guides: ✅
+      performance_reports: ✅
+    source_count: 32
+    source_quality: "Real-world implementations (Stripe, Notion, etc.)"
+
+  s4_strategic:
+    status: "completed"
+    completed_date: "2025-11-05"
+    sources_documented:
+      funding_data: ✅
+      market_reports: ✅
+      standards_docs: ✅
+      analyst_predictions: ✅
+      historical_trends: ✅
+    source_count: 38
+    source_quality: "Authoritative (Crunchbase, W3C, press releases)"
+```
+
+### Example metadata.yaml (1.XXX research):
+
+```yaml
+code: '1.001'
+title: Advanced Sorting Libraries
+status: completed
+
+research_output:
+  stages:
+    S1-rapid:
+      sources_documented:
+        library_docs: ✅
+        github_repos: ✅
+        pypi_pages: ✅
+        academic_papers: ✅
+      source_count: 18
+      source_quality: "Primary (GitHub commits, PyPI, academic papers)"
+
+    S2-comprehensive:
+      sources_documented:
+        benchmark_repos: ✅
+        implementation_code: ✅
+        complexity_analysis: ✅
+        library_comparisons: ✅
+      source_count: 31
+      source_quality: "Code-level (specific commits, line numbers)"
+
+    S3-need-driven:
+      sources_documented:
+        implementation_examples: ✅
+        performance_data: ✅
+        edge_case_docs: ✅
+      source_count: 24
+      source_quality: "Implementation-focused (code examples, benchmarks)"
+
+    S4-strategic:
+      sources_documented:
+        historical_papers: ✅
+        hardware_evolution: ✅
+        future_research: ✅
+        sustainability_analysis: ✅
+      source_count: 29
+      source_quality: "Historical + predictive (papers, hardware trends)"
+```
+
+---
+
+## Source Quality Standards
+
+Not all sources are equal. Prioritize in this order:
+
+### Tier 1: Primary Authoritative Sources
+- Official vendor documentation
+- Official pricing pages
+- GitHub repositories (with commit hashes)
+- W3C/IETF/CNCF specifications
+- Academic papers (peer-reviewed, with DOI)
+- Official blog announcements
+
+### Tier 2: Verified Third-Party Sources
+- Established benchmarks (MTEB, HumanEval, Chatbot Arena)
+- Crunchbase funding data
+- Published case studies (company engineering blogs)
+- Market analysts (Gartner, Forrester - if publicly available)
+
+### Tier 3: Community Sources (use sparingly)
+- Stack Overflow (for implementation patterns)
+- Reddit/HN discussions (for sentiment, not facts)
+- Personal blogs (only if no better source exists)
+
+**Rule**: Every factual claim must have a Tier 1 or Tier 2 source. Tier 3 sources can supplement but never replace authoritative sources.
+
+---
+
+## Common Source Documentation Mistakes
+
+### ❌ Bad Example 1: No sources
+```markdown
+OpenAI charges $30/M for GPT-4. It's expensive.
+```
+**Problem**: No source to verify the claim or access date.
+
+### ✅ Good Example 1: Sourced claim
+```markdown
+OpenAI charges $30/M input for GPT-4 ([source](https://openai.com/pricing) - Accessed 2025-11-05). This is 4× more expensive than Claude 3.5 Sonnet at $3/M ([source](https://www.anthropic.com/pricing) - Accessed 2025-11-05).
+```
+
+---
+
+### ❌ Bad Example 2: Generic "documentation" reference
+```markdown
+According to the documentation, NumPy uses radix sort for integers.
+```
+**Problem**: Which documentation? Which version? Where in the docs?
+
+### ✅ Good Example 2: Specific source
+```markdown
+NumPy uses radix sort for integer arrays when `kind='stable'` is specified ([source](https://github.com/numpy/numpy/blob/v1.26.0/numpy/core/src/multiarray/sort.c.src#L342) - NumPy 1.26.0, lines 342-387).
+```
+
+---
+
+### ❌ Bad Example 3: Undated pricing claim
+```markdown
+Gemini Flash costs $0.0375/M tokens.
+```
+**Problem**: Pricing changes. Without a date, this claim is unverifiable.
+
+### ✅ Good Example 3: Timestamped pricing
+```markdown
+Gemini Flash costs $0.0375/M input tokens ([source](https://ai.google.dev/pricing) - Accessed 2025-11-05). This makes it 7× cheaper than Claude Haiku ($0.25/M) at the time of research.
+```
+
+---
+
+### ❌ Bad Example 4: Sources section without access dates
+```markdown
+## Sources
+- https://openai.com/pricing
+- https://docs.anthropic.com
+```
+**Problem**: No access dates, no descriptive titles, no context.
+
+### ✅ Good Example 4: Proper sources section
+```markdown
+## Sources
+
+- [OpenAI Pricing](https://openai.com/pricing) - Accessed 2025-11-05
+- [Claude API Documentation](https://docs.anthropic.com/api) - Version 2024-10-01, Accessed 2025-11-05
+- [Gemini Rate Limits](https://ai.google.dev/gemini-api/docs/rate-limits) - Accessed 2025-11-05
+```
+
+---
+
+## Enforcement and Validation
+
+### Pre-commit Checklist
+
+Before marking a stage as `completed` in metadata.yaml:
+
+1. ✅ Every markdown file has a `## Sources` section
+2. ✅ Every claim with a number (pricing, performance, features) has a source
+3. ✅ Every source includes an access date or version number
+4. ✅ Tier 1 (primary) sources used for all factual claims
+5. ✅ metadata.yaml includes `sources_documented` checklist with ✅ marks
+
+### Review Checklist
+
+When reviewing research:
+
+1. Open 3 random sources from each stage - do they load?
+2. Pick 3 specific claims (pricing, features, benchmarks) - can you find them in the sources?
+3. Check access dates - are they within the research date range?
+4. Verify Tier 1/2 sources used for critical claims
+
+---
+
+## Why This Matters: Real-World Example
+
+### Scenario: 6 months after research completion
+
+**User question**: "You said Claude was $3/M. Now it's $5/M. Was your research wrong?"
+
+**Without sources**:
+- ❌ Cannot prove what pricing was at time of research
+- ❌ Cannot show when pricing changed
+- ❌ Research credibility damaged
+
+**With proper sources**:
+- ✅ "Research was conducted 2025-11-05. Source: [Claude Pricing](https://www.anthropic.com/pricing) - Accessed 2025-11-05 showed $3/M"
+- ✅ "Pricing increased between 2025-11-05 and 2026-05-01"
+- ✅ Research remains credible - we documented what was true THEN
+- ✅ User knows to check for updates
+
+**This is why timestamps matter.**
+
+---
+
+## Template for New Research
+
+When starting a new research experiment, create this file structure:
+
+```
+research/X.XXX-experiment-name/
+├── metadata.yaml                    # Include sources_documented checklist
+├── 01-discovery/
+│   ├── S1-rapid/
+│   │   ├── approach.md              # Must end with ## Sources
+│   │   ├── provider-1.md            # Must end with ## Sources
+│   │   ├── provider-2.md            # Must end with ## Sources
+│   │   └── recommendations.md       # Must end with ## Sources
+│   ├── S2-comprehensive/
+│   │   ├── approach.md              # Must end with ## Sources
+│   │   ├── feature-matrix.md        # Must end with ## Sources
+│   │   ├── pricing-tco.md           # Must end with ## Sources
+│   │   └── synthesis.md             # Must end with ## Sources
+│   ├── S3-need-driven/
+│   │   ├── approach.md              # Must end with ## Sources
+│   │   ├── scenario-1.md            # Must end with ## Sources
+│   │   └── synthesis.md             # Must end with ## Sources
+│   └── S4-strategic/
+│       ├── approach.md              # Must end with ## Sources
+│       ├── vendor-viability.md      # Must end with ## Sources
+│       └── synthesis.md             # Must end with ## Sources
+```
+
+**Every `.md` file must end with `## Sources` section.**
+
+---
+
+## Summary: The Golden Rule
+
+> **A research pass is NOT complete until sources are documented.**
+
+- Every factual claim needs a source
+- Every source needs an access date or version
+- Every stage needs a sources_documented checklist in metadata.yaml
+- Replicability is not optional - it's the foundation of credible research
+
+**If you can't cite it, you can't claim it.**
+
+---
+
+## Appendix: Source Documentation Tools
+
+### Recommended Tools
+
+**Browser extensions**:
+- Wayback Machine extension - Capture page snapshots
+- Link Archiver - Auto-save accessed URLs
+
+**Documentation helpers**:
+- `wget --mirror --page-requisites URL` - Archive entire doc sites
+- Screenshot tool (Flameshot, macOS Screenshot) - Capture pricing pages
+- Git commit hash finder - For linking to specific code versions
+
+**Markdown formatters**:
 ```bash
-cd your-workspace
-claude-code
+# Quick source link generator
+echo "- [Title](URL) - Accessed $(date +%Y-%m-%d)"
 ```
 
-### Step 2: Download This Methodology
+### Source Archival Best Practices
 
-**Option A:** If this site is public, tell Claude Code:
-```
-Read the methodology from https://research.modelcitizendeveloper.com/survey/methodology
-```
+For critical sources (pricing, features that may change):
 
-**Option B:** Save this page as `4ps-methodology.md` in your workspace, then:
-```
-Read the 4PS methodology from 4ps-methodology.md
-```
+1. **Take screenshots**: Pricing pages, feature matrices
+2. **Archive URLs**: Use Wayback Machine for important claims
+3. **Save PDFs**: Technical whitepapers, case studies
+4. **Git commit references**: Always use commit hashes, not branch names
 
-### Step 3: Run the Research
-
-**Copy and adapt this prompt:**
-
-```
-I need you to research [LIBRARY CATEGORY] using the Four-Pass Survey (4PS) methodology
-you just read in the methodology file.
-
-FIRST: Set up the directory structure:
-- Create research/1.XXX-[library-name]/01-discovery/
-- Create subdirectories: S1-rapid/, S2-comprehensive/, S3-need-driven/, S4-strategic/
-
-THEN: Launch 4 independent agents in parallel (single message, 4 task calls):
-
-AGENT 1 - S1 Rapid Discovery:
-- Workspace: research/1.XXX/01-discovery/S1-rapid/
-- Philosophy: "Popular libraries exist for a reason"
-- Approach: GitHub stars, PyPI downloads, community adoption
-- Output: approach.md, library-X.md (top 3-5), recommendation.md
-- Time: 10-15 minutes
-- DO NOT read other agents' work
-
-AGENT 2 - S2 Comprehensive:
-- Workspace: research/1.XXX/01-discovery/S2-comprehensive/
-- Philosophy: "Understand entire solution space"
-- Approach: Benchmarks, feature matrices, deep technical analysis
-- Output: approach.md, library-X.md (all viable), feature-comparison.md, recommendation.md
-- Time: 30-40 minutes
-- DO NOT read other agents' work
-
-AGENT 3 - S3 Need-Driven:
-- Workspace: research/1.XXX/01-discovery/S3-need-driven/
-- Philosophy: "Start with requirements, find exact fit"
-- Approach: Use case scenarios, requirement validation
-- Output: approach.md, use-case-X.md, recommendation.md
-- Time: 20-30 minutes
-- DO NOT read other agents' work
-
-AGENT 4 - S4 Strategic:
-- Workspace: research/1.XXX/01-discovery/S4-strategic/
-- Philosophy: "Think long-term, consider ecosystem"
-- Approach: Maintenance health, community sustainability, 5-10 year outlook
-- Output: approach.md, library-X-maturity.md, recommendation.md
-- Time: 15-20 minutes
-- DO NOT read other agents' work
-
-CRITICAL REQUIREMENTS:
-1. Complete independence - no cross-reading
-2. Each agent writes ONLY to their directory
-3. Stay authentic to methodology philosophy
-4. Make independent recommendations
-
-Launch all 4 in parallel. Total time: 60-90 minutes.
-
-When agents complete, create research/1.XXX/01-discovery/DISCOVERY_TOC.md with
-convergence analysis.
-```
-
-That's it! Claude Code will:
-1. Set up directories
-2. Launch 4 parallel agents
-3. Each agent writes to their directory independently
-4. Create the Discovery TOC summary
-
-### Step 4: Monitor Progress
-
-Watch for:
-- All 4 agents completing successfully
-- Files created in correct directories
-- No cross-contamination (agents stayed independent)
-
-### Step 5: Review the Results
-
-After completion:
-
-```
-
-Check convergence:
-- Where do all 4 methodologies agree? (strong signal)
-- Where do they disagree? (trade-offs revealed)
-
-### Step 6: Optional - Create Explainer
-
-If the domain needs foundational context:
-
-```
-Create research/1.XXX/LIBRARY_EXPLAINER.md explaining the core technical
-concepts for readers new to this domain. What problem does this solve?
-Key concepts? When you need it? When you don't?
-```
-
-### Step 7: Commit & Share
-
-Quick checklist:
-- ✅ All 4 agents completed independently?
-- ✅ Recommendations backed by evidence?
-- ✅ Convergence patterns clear?
-
-```bash
-git add research/1.XXX
-git commit -m "research: Add 4PS survey for [LIBRARY] libraries"
-git push
-```
-
-Share your findings! Open source the research or publish it internally.
+**Store these in** `research/X.XXX-experiment-name/sources/` directory for future verification.
 
 ---
 
-## Tips for Successful Replication
-
-**Do:**
-- ✅ Keep agents independent (this is critical!)
-- ✅ Let each methodology shine (don't force convergence)
-- ✅ Document your sources
-- ✅ Run benchmarks yourself when possible
-
-**Don't:**
-- ❌ Let agents read each other's work mid-research
-- ❌ Force all 4 to pick the same library
-- ❌ Skip methodologies ("I'll just do S1")
-- ❌ Treat findings as gospel (they're directional guidance)
-
-**The magic happens when methods *disagree*** - that reveals trade-offs you wouldn't see from a single perspective.
-
----
-
-## Advanced: Production Workflow
-
-The instructions above work with any LLM tool that supports parallel task execution (Claude Code, Cursor, etc.).
-
-**For production-scale research workflows,** the creator uses:
-- **Gas Town** - Multi-agent workspace manager with parallel polecat workers
-- **Beads** - Distributed issue tracking across git worktrees
-- **Parallel execution** - Launch 4+ research projects simultaneously
-
-This setup enables:
-- Multiple surveys running in parallel
-- Persistent work queues across sessions
-- Structured handoffs between agents
-- Git-based synchronization
-
-Not required for replication, but significantly increases throughput when running many surveys.
-
----
-
-## Questions?
-
-Built something using this methodology? **[Share your story →](#)** (coming soon)
-
-Found a gap or improvement? Open an issue on the [GitHub repo](https://github.com/modelcitizendeveloper/survey-of-software).
-
----
-
-**Four-Pass Survey (4PS)** - Systematic, replicable, open methodology for evaluating general-purpose software libraries.
+**Version**: 1.0
+**Last Updated**: 2026-01-30
+**Authority**: This methodology is MANDATORY for all research in this repository

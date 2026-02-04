@@ -1,0 +1,113 @@
+experiment:
+  id: "1.008"
+  title: "Time series search libraries (DTW, shapelet discovery)"
+  tier: 1
+  category: "algorithm"
+  research_depth: rapid  # S1 completed
+  created_date: "2026-01-30"
+
+scope:
+  in_scope:
+    - "Dynamic Time Warping (DTW) implementations"
+    - "Shapelet discovery algorithms"
+    - "Time series similarity search"
+    - "Time series classification libraries"
+    - "Pattern matching and subsequence search"
+    - "Matrix profile methods"
+  out_of_scope:
+    - "Time series forecasting (covered in 1.073)"
+    - "Statistical modeling (ARIMA, etc.)"
+    - "Pure visualization tools"
+    - "Database time series extensions"
+
+libraries_surveyed:
+  - name: "tslearn"
+    focus: "DTW + Shapelets + ML"
+    status: "documented"
+  - name: "STUMPY"
+    focus: "Matrix Profile for pattern discovery"
+    status: "documented"
+  - name: "sktime"
+    focus: "Unified ML framework"
+    status: "documented"
+  - name: "tsfresh"
+    focus: "Automatic feature extraction"
+    status: "documented"
+  - name: "dtaidistance"
+    focus: "Fast DTW distances"
+    status: "documented"
+  - name: "pyts"
+    focus: "Imaging + Transformations"
+    status: "documented"
+
+s1_rapid:
+  status: completed
+  completed_date: '2026-01-30'
+  deliverables:
+    - approach.md
+    - tslearn.md
+    - stumpy.md
+    - sktime.md
+    - tsfresh.md
+    - dtaidistance.md
+    - pyts.md
+    - recommendations.md
+  sources_documented:
+    - GitHub repositories (tslearn, STUMPY, sktime, pyts, tsfresh, dtaidistance) ✅
+    - Official documentation (readthedocs, official sites) ✅
+    - PyPI package pages ✅
+    - Academic papers (JMLR, Neurocomputing) ✅
+  source_examples:
+    - "https://github.com/tslearn-team/tslearn - Accessed 2026-01-30"
+    - "https://stumpy.readthedocs.io/en/latest/ - Accessed 2026-01-30"
+    - "https://www.sktime.net/en/stable/ - Accessed 2026-01-30"
+    - "https://pypi.org/project/tsfresh/ - Accessed 2026-01-30"
+  time_spent: "4 hours"
+
+s2_comprehensive:
+  status: pending
+  planned_deliverables:
+    - approach.md
+    - feature-matrix.md (DTW variants, matrix profile methods, shapelet algorithms)
+    - performance-benchmarks.md (UCR datasets, speed comparisons)
+    - integration-complexity.md (dependencies, API learning curves)
+    - synthesis.md
+
+s3_need_driven:
+  status: pending
+  planned_scenarios:
+    - medical-signal-classification.md (ECG, EEG analysis)
+    - iot-anomaly-detection.md (sensor monitoring)
+    - customer-behavior-clustering.md (pattern-based segmentation)
+    - financial-pattern-matching.md (trading patterns)
+    - predictive-maintenance.md (equipment failure patterns)
+
+s4_strategic:
+  status: pending
+  planned_deliverables:
+    - approach.md
+    - library-viability.md (maintenance status, community health)
+    - ecosystem-trends.md (market evolution, research directions)
+    - integration-strategies.md (combining libraries)
+    - synthesis.md
+
+domain_explainer:
+  status: completed
+  file: "TIME_SERIES_SEARCH_EXPLAINER.md"
+  completed_date: "2026-01-30"
+  target_audience: "CTOs, Engineering Directors, Product Managers"
+  business_focus: true
+
+notes: |
+  S1 Rapid Discovery completed. Core distinction from 1.073 (forecasting):
+  - 1.073 = "What happens next?" (prediction, planning)
+  - 1.008 = "What happened before?" (pattern search, similarity, anomaly detection)
+
+  Key findings:
+  - STUMPY dominates for unsupervised pattern/anomaly discovery (matrix profiles)
+  - dtaidistance is fastest for pure DTW distance calculations (30-300x speedup)
+  - sktime/tslearn compete for classification (sktime has more algorithms, tslearn focused on DTW/shapelets)
+  - tsfresh generates statistical features (794+) for any classifier
+  - pyts uniquely provides imaging methods (GAF, MTF, RP)
+
+  Next steps (S2-S4): Detailed benchmarks, use case scenarios, strategic analysis.
