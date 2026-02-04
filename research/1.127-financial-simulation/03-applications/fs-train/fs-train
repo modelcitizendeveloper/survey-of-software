@@ -1,0 +1,739 @@
+#!/usr/bin/env python3
+"""Financial Analysis Fluency Trainer - Interactive CLI."""
+
+import sys
+import argparse
+from pathlib import Path
+from datetime import datetime
+from blessed import Terminal
+import threading
+from queue import Queue
+
+from scenario_loader import ScenarioLoader
+from view_engine import ViewEngine
+from scorer import ObservationScorer
+
+
+class FinancialTrainer:
+    """Interactive financial analysis training session."""
+
+    def __init__(self, scenario, term, use_llm=False, llm_model="llama3.2:latest"):
+        self.scenario = scenario
+        self.term = term
+        self.use_llm = use_llm
+
+        self.view_engine = ViewEngine(scenario)
+        self.scorer = ObservationScorer(
+            scenario['key_insights'],
+            llm_model=llm_model,
+            scenario_id=scenario.get('scenario_id', 'unknown')
+        )
+
+        self.current_view = 'default'
+        self.start_time = datetime.now()
+        self.observation_buffer = ""
+        self.mode = 'view'  # 'view' or 'observe' or 'results'
+        self.message = ""
+        self.llm_error = None  # Track LLM errors
+        self.finished = False  # Track if user pressed 'f' to finish
+        self.processing = False  # Track if we're processing an observation
+
+        # Async LLM evaluation
+        self.result_queue = Queue()  # Results from background threads
+        self.pending_observations = []  # Track observations being evaluated
+        self.last_llm_feedback = None  # Store full LLM feedback for modal viewing
+
+    def _fmt(self, text, *attrs):
+        """Safely apply terminal formatting, falling back to plain text.
+
+        Args:
+            text: Text to format
+            *attrs: Attribute names like 'bold', 'dim', 'green', etc.
+
+        Returns:
+            Formatted text or plain text if capabilities not supported
+        """
+        result = text
+        for attr in attrs:
+            formatter = getattr(self.term, attr, None)
+            if formatter and callable(formatter):
+                try:
+                    result = formatter(result)
+                except (TypeError, AttributeError):
+                    # Terminal doesn't support this capability
+                    pass
+        return result
+
+    def run(self):
+        """Run interactive training session."""
+        session_active = True
+
+        while session_active:
+            with self.term.fullscreen(), self.term.cbreak(), self.term.hidden_cursor():
+                self._display()
+
+                while True:
+                    key = self.term.inkey(timeout=0.1)
+
+                    # Check for async LLM results
+                    self._check_llm_results()
+
+                    if not key:
+                        continue
+
+                    # Handle quit
+                    if key.lower() == 'q':
+                        if self.mode == 'observe':
+                            # Cancel observation mode
+                            self.mode = 'view'
+                            self.observation_buffer = ""
+                            self.message = "Observation cancelled"
+                            self._display()
+                            continue
+                        else:
+                            # Confirm quit
+                            if self._confirm_quit():
+                                session_active = False
+                                break
+                            self._display()
+                            continue
+
+                    # Handle different modes
+                    if self.mode == 'view':
+                        if not self._handle_view_mode(key):
+                            break
+                    elif self.mode == 'observe':
+                        if not self._handle_observe_mode(key):
+                            break
+
+                    self._display()
+
+            # Show final results only if user pressed 'f' to finish
+            if self.finished:
+                action = self._show_final_results()
+                if action == 'back':
+                    # User wants to continue - reset finished flag and restart loop
+                    self.finished = False
+                    continue
+                else:
+                    # User wants to exit
+                    break
+            else:
+                # User quit without finishing
+                break
+
+    def _handle_view_mode(self, key):
+        """Handle input in view mode.
+
+        Returns:
+            True to continue, False to quit
+        """
+        key_str = str(key)
+
+        # View switching
+        if key == 'd' or key == '1':
+            self.current_view = 'default'
+            self.message = "Showing: Default (absolute values)"
+
+        elif key == '%' or key == '2':
+            self.current_view = '%'
+            self.message = "Showing: Percentage of Revenue"
+
+        elif key == 'm' or key == '3':
+            self.current_view = 'mom'
+            self.message = "Showing: Month-over-Month Growth"
+
+        elif key == 'g' or key == '4':
+            self.current_view = 'margin'
+            self.message = "Showing: Margin Analysis"
+
+        elif key == 'e' or key == '5':
+            self.current_view = 'detail'
+            self.message = "Showing: Detailed Breakdown"
+
+        elif key == 'c' or key == '6':
+            self.current_view = 'cash'
+            self.message = "Showing: Cash Flow"
+
+        elif key == 'b' or key == '7':
+            self.current_view = 'balance'
+            self.message = "Showing: Balance Sheet"
+
+        # Enter observation mode
+        elif key == 'o' or key == '\n':
+            self.mode = 'observe'
+            self.observation_buffer = ""
+            self.message = "Enter observation (Enter to submit, q to cancel):"
+
+        # Show hint
+        elif key == '?':
+            self._show_hint()
+
+        # Show full LLM feedback
+        elif key == 'l':
+            if self.last_llm_feedback:
+                self._show_llm_modal()
+            else:
+                self.message = "No LLM feedback available yet"
+
+        # Finish session
+        elif key.name == 'KEY_ESCAPE' or key == 'f':
+            self.finished = True
+            return False
+
+        return True
+
+    def _handle_observe_mode(self, key):
+        """Handle input in observation entry mode.
+
+        Returns:
+            True to continue, False to quit
+        """
+        # Submit observation
+        if key.name == 'KEY_ENTER':
+            # Prevent double-submission
+            if self.processing:
+                return True
+
+            if self.observation_buffer.strip():
+                observation_text = self.observation_buffer
+                self.observation_buffer = ""
+                self.mode = 'view'
+
+                # Do keyword matching immediately (fast!)
+                result = self.scorer.score_observation(
+                    observation_text,
+                    use_llm=False  # No LLM yet - that's async
+                )
+
+                # Show immediate feedback from keywords
+                if result['matches']:
+                    points = result['points']
+                    first_match = result['matches'][0]
+                    keywords = ', '.join(first_match.get('keywords_matched', [])[:3])
+                    self.message = f"✓ +{points} pts! Matched: {keywords}"
+                    if self.use_llm:
+                        self.message += " (🤖 LLM evaluating...)"
+
+                elif result.get('near_misses'):
+                    near_miss = result['near_misses'][0]
+                    suggested = ', '.join(near_miss['keywords'][:2])
+                    self.message = f"⚡ Close! Try: {suggested}"
+                    if self.use_llm:
+                        self.message += " (🤖 LLM evaluating...)"
+
+                else:
+                    if self.use_llm:
+                        self.message = "🤖 LLM evaluating..."
+                    else:
+                        self.message = "No keyword matches. Try exploring different views!"
+
+                # Launch async LLM evaluation if enabled
+                if self.use_llm:
+                    self.pending_observations.append(observation_text)
+                    thread = threading.Thread(
+                        target=self._evaluate_with_llm_async,
+                        args=(observation_text,),
+                        daemon=True
+                    )
+                    thread.start()
+
+            else:
+                self.message = "Observation was empty"
+                self.mode = 'view'
+
+        # Backspace
+        elif key.name == 'KEY_BACKSPACE' or key.name == 'KEY_DELETE' or key == '\x7f':
+            if self.observation_buffer:
+                self.observation_buffer = self.observation_buffer[:-1]
+
+        # Regular character input
+        elif key.is_sequence:
+            pass  # Ignore other special keys
+        else:
+            # Limit observation length to 250 characters
+            if len(self.observation_buffer) < 250:
+                self.observation_buffer += str(key)
+
+        return True
+
+    def _display(self):
+        """Display current UI state."""
+        print(self.term.home + self.term.clear)
+
+        # Title
+        print(self.term.move_y(1) + self.term.center(
+            self._fmt("EXERCITATIO PECUNIAE", 'bold')
+        ))
+        print(self.term.move_y(2) + self.term.center(
+            self._fmt("Financial Analysis Fluency Trainer", 'dim')
+        ))
+
+        # Scenario info
+        scenario_info = (f"{self.scenario['name']} | "
+                        f"{self.scenario['industry']} | "
+                        f"Level: {self.scenario['difficulty'].upper()}")
+        print(self.term.move_y(3) + self.term.center(scenario_info))
+
+        # Current score + LLM status
+        user_score, max_score = self.scorer.get_total_score()
+        score_text = f"Score: {user_score}/{max_score}"
+        if user_score > 0:
+            score_text = self._fmt(score_text, 'green')
+
+        # Add LLM indicator
+        if self.use_llm:
+            if self.llm_error:
+                score_text += "  🤖 LLM: " + self._fmt("Error", 'red')
+            else:
+                score_text += "  🤖 LLM: " + self._fmt("Active", 'green')
+
+        print(self.term.move_y(4) + self.term.center(score_text))
+
+        # View area
+        print(self.term.move_y(6))
+        view_text = self.view_engine.format_view(self.current_view)
+        for line in view_text.split('\n'):
+            print(self.term.center(line))
+
+        # Command area
+        cmd_y = self.term.height - 8
+
+        print(self.term.move_y(cmd_y))
+        print(self.term.center(self._fmt("─" * 60, 'reverse')))
+
+        # Mode-specific commands
+        if self.mode == 'view':
+            commands = [
+                "[d/1] Default  [%/2] Percent  [m/3] MoM  [g/4] Margin  [e/5] Detail",
+                "[c/6] Cash  [b/7] Balance  [o/Enter] Observe  [?] Hint"
+            ]
+            # Add LLM detail option if feedback available
+            if self.use_llm and self.last_llm_feedback:
+                commands[1] += "  [l] LLM"
+            commands[1] += "  [f] Finish  [q] Quit"
+        else:  # observe mode
+            # Truncate observation display if too long for screen
+            max_display_len = self.term.width - 25  # Leave room for label and cursor
+            buffer_display = self.observation_buffer
+            if len(buffer_display) > max_display_len:
+                # Show end of observation (most recent typing)
+                buffer_display = "..." + buffer_display[-(max_display_len-3):]
+
+            char_count = f"({len(self.observation_buffer)}/250)"
+            commands = [
+                f"Observation: {buffer_display}_",
+                f"[Enter] Submit  [q] Cancel  {char_count}"
+            ]
+
+        for i, cmd in enumerate(commands):
+            print(self.term.move_y(cmd_y + 1 + i) + self.term.center(cmd))
+
+        # Message area
+        if self.message:
+            print(self.term.move_y(cmd_y + 4) + self.term.center(
+                self._fmt(self.message, 'yellow')
+            ))
+
+    def _show_hint(self):
+        """Show a hint based on difficulty level."""
+        prompts = self.scenario.get('prompts', {})
+        difficulty = self.scenario.get('difficulty', 'beginner')
+
+        hints = prompts.get(difficulty, prompts.get('beginner', []))
+
+        if hints:
+            # Find a hint for an uncaught insight
+            missed = self.scorer.get_missed_insights()
+
+            if missed and hints:
+                # Match hint to missed insight category
+                hint = hints[len(self.scorer.matched_insights) % len(hints)]
+                self.message = f"💡 Hint: {hint}"
+            else:
+                self.message = "You've explored thoroughly! Try finishing the session."
+        else:
+            self.message = "No hints available for this level"
+
+    def _confirm_quit(self):
+        """Confirm quit action."""
+        print(self.term.move_y(self.term.height - 2) + self.term.center(
+            self._fmt("Really quit without finishing? [y/N] ", 'red')
+        ))
+
+        key = self.term.inkey()
+        return key.lower() == 'y'
+
+    def _show_final_results(self):
+        """Display final scoring results with option to return.
+
+        Returns:
+            'back' to return to session, 'exit' to quit
+        """
+        # Save session log for analysis
+        try:
+            log_path = self.scorer.save_session_log()
+        except Exception as e:
+            # Don't fail if logging fails
+            pass
+
+        with self.term.cbreak():
+            action = self._render_final_results()
+
+        if action == 'back':
+            # Reset mode for returning to session
+            self.mode = 'view'
+            self.message = "Resumed session - continue exploring!"
+
+        return action
+
+    def _render_final_results(self):
+        """Render the final results screen."""
+        print(self.term.clear)
+        print(self.term.move_y(2) + self.term.center(
+            self._fmt("═" * 50, 'bold')
+        ))
+        print(self.term.move_y(3) + self.term.center(
+            self._fmt("SESSION COMPLETE", 'bold')
+        ))
+        print(self.term.move_y(4) + self.term.center(
+            self._fmt("═" * 50, 'bold')
+        ))
+
+        summary = self.scorer.get_summary()
+
+        # Overall score
+        print(self.term.move_y(6) + self.term.center(
+            f"Score: {summary['user_score']}/{summary['max_score']} "
+            f"({summary['percentage']:.0f}%)"
+        ))
+        print(self.term.move_y(7) + self.term.center(
+            f"Depth Level: {self._fmt(summary['depth_level'], 'bold')}"
+        ))
+
+        # Time spent
+        duration = datetime.now() - self.start_time
+        minutes = int(duration.total_seconds() / 60)
+        seconds = int(duration.total_seconds() % 60)
+        print(self.term.move_y(8) + self.term.center(
+            f"Time: {minutes}m {seconds}s"
+        ))
+
+        # What you caught
+        print(self.term.move_y(10) + self.term.center(
+            self._fmt("✓ INSIGHTS CAUGHT:", 'green')
+        ))
+        y = 11
+        for insight in summary['caught']:
+            # Show keywords that would have matched
+            keywords = insight.get('keywords', [])
+            kw_hint = f" (keywords: {', '.join(keywords[:3])})" if keywords else ""
+            line = f"  • {insight['description']} (+{insight['points']} pts){kw_hint}"
+            print(self.term.move_y(y) + self.term.center(line))
+            y += 1
+
+        # What you missed
+        if summary['missed']:
+            y += 1
+            print(self.term.move_y(y) + self.term.center(
+                self._fmt("⚠ INSIGHTS MISSED:", 'yellow')
+            ))
+            y += 1
+            for insight in summary['missed']:
+                importance = insight.get('importance', 'medium')
+                emoji = "🔥" if importance == 'high' else "💡"
+                # Show keywords that would match
+                keywords = insight.get('keywords', [])
+                kw_hint = f" → Try: {', '.join(keywords[:3])}" if keywords else ""
+                line = f"  {emoji} {insight['description']} ({insight['points']} pts){kw_hint}"
+                print(self.term.move_y(y) + self.term.center(line))
+                y += 1
+
+        # Explain non-matches
+        non_matches = [obs for obs in self.scorer.observation_log
+                      if not obs['matches'] and not obs.get('near_misses')]
+        if non_matches and len(non_matches) <= 3:
+            y += 1
+            print(self.term.move_y(y) + self.term.center(
+                self._fmt("📝 OBSERVATIONS THAT DIDN'T MATCH:", 'dim')
+            ))
+            y += 1
+            for obs in non_matches[:3]:
+                line = f'  "{obs["observation"][:50]}" - Keep exploring or try different phrasing'
+                print(self.term.move_y(y) + self.term.center(line))
+                y += 1
+
+        # Next steps
+        y += 1
+        if summary['percentage'] < 60:
+            next_step = "Try reviewing the financial statement again with different views!"
+        elif summary['percentage'] < 80:
+            next_step = "Great work! Try connecting insights across multiple metrics."
+        else:
+            next_step = "Excellent analysis! Ready for the next scenario."
+
+        print(self.term.move_y(y) + self.term.center(next_step))
+
+        # Wait for keypress with options
+        print(self.term.move_y(self.term.height - 3) + self.term.center(
+            "[b] Back to session  |  [Any other key] Exit"
+        ))
+
+        key = self.term.inkey()
+        return 'back' if key.lower() == 'b' else 'exit'
+
+    def _evaluate_with_llm_async(self, observation: str):
+        """Evaluate observation with LLM in background thread.
+
+        Args:
+            observation: User's observation text
+        """
+        try:
+            # Call LLM evaluation
+            result = self.scorer.score_observation(
+                observation,
+                use_llm=True
+            )
+
+            # Put result in queue for main thread to process
+            self.result_queue.put({
+                'observation': observation,
+                'result': result
+            })
+
+        except Exception as e:
+            # Put error in queue
+            self.result_queue.put({
+                'observation': observation,
+                'error': str(e)
+            })
+
+    def _check_llm_results(self):
+        """Check for completed LLM evaluations and display results."""
+        while not self.result_queue.empty():
+            item = self.result_queue.get()
+            observation = item['observation']
+
+            # Remove from pending
+            if observation in self.pending_observations:
+                self.pending_observations.remove(observation)
+
+            if 'error' in item:
+                # LLM error
+                if not self.llm_error:
+                    self.llm_error = item['error']
+                    self.message = f"⚠️ LLM: {item['error']}"
+                    self._display()
+                continue
+
+            result = item['result']
+
+            # LLM can award bonus points, deduct points, or override
+            if result.get('llm_feedback'):
+                llm_bonus = result.get('llm_bonus', 0)
+                full_feedback = result['llm_feedback']
+
+                # Store full feedback for modal viewing
+                self.last_llm_feedback = {
+                    'observation': observation,
+                    'bonus': llm_bonus,
+                    'feedback': full_feedback
+                }
+
+                # Show truncated feedback (max ~80 chars on screen)
+                feedback_short = full_feedback[:80]
+                needs_more = len(full_feedback) > 80
+
+                if llm_bonus > 0:
+                    self.message = f"🤖 +{llm_bonus}! {feedback_short}"
+                elif llm_bonus < 0:
+                    self.message = f"🤖 {llm_bonus}pts: {feedback_short}"
+                else:
+                    self.message = f"🤖 {feedback_short}"
+
+                if needs_more:
+                    self.message += "... [l]"
+
+                self._display()
+
+    def _show_llm_modal(self):
+        """Show full LLM feedback in a modal overlay."""
+        if not self.last_llm_feedback:
+            return
+
+        feedback_data = self.last_llm_feedback
+        observation = feedback_data['observation']
+        bonus = feedback_data['bonus']
+        full_feedback = feedback_data['feedback']
+
+        # Calculate modal dimensions
+        modal_width = min(self.term.width - 10, 100)
+        modal_height = 20
+        start_x = (self.term.width - modal_width) // 2
+        start_y = (self.term.height - modal_height) // 2
+
+        # Word wrap the feedback
+        import textwrap
+        wrapped_lines = textwrap.wrap(full_feedback, width=modal_width - 4)
+
+        # Draw modal
+        print(self.term.home + self.term.clear)
+
+        # Border
+        print(self.term.move_y(start_y) + self.term.move_x(start_x) +
+              self._fmt("╔" + "═" * (modal_width - 2) + "╗", 'bold'))
+
+        # Title
+        title = "🤖 LLM FEEDBACK"
+        title_x = start_x + (modal_width - len(title)) // 2
+        print(self.term.move_y(start_y + 1) + self.term.move_x(start_x) +
+              self._fmt("║", 'bold') +
+              " " * (modal_width - 2) +
+              self._fmt("║", 'bold'))
+        print(self.term.move_y(start_y + 1) + self.term.move_x(title_x) +
+              self._fmt(title, 'bold', 'green'))
+
+        # Observation
+        print(self.term.move_y(start_y + 2) + self.term.move_x(start_x) +
+              self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+
+        obs_label = "Your observation:"
+        print(self.term.move_y(start_y + 3) + self.term.move_x(start_x + 2) +
+              self._fmt("║", 'bold'))
+        print(self.term.move_y(start_y + 3) + self.term.move_x(start_x + 3) +
+              self._fmt(obs_label, 'dim'))
+
+        # Wrap observation
+        obs_wrapped = textwrap.wrap(f'"{observation}"', width=modal_width - 6)
+        y = start_y + 4
+        for line in obs_wrapped[:2]:  # Max 2 lines for observation
+            print(self.term.move_y(y) + self.term.move_x(start_x) +
+                  self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+            print(self.term.move_y(y) + self.term.move_x(start_x + 3) + line)
+            y += 1
+
+        # Score
+        print(self.term.move_y(y) + self.term.move_x(start_x) +
+              self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+        y += 1
+
+        score_text = f"LLM Score: {bonus:+d} points"
+        score_color = 'green' if bonus > 0 else 'red' if bonus < 0 else 'yellow'
+        print(self.term.move_y(y) + self.term.move_x(start_x) +
+              self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+        print(self.term.move_y(y) + self.term.move_x(start_x + 3) +
+              self._fmt(score_text, score_color, 'bold'))
+        y += 1
+
+        # Feedback
+        print(self.term.move_y(y) + self.term.move_x(start_x) +
+              self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+        y += 1
+
+        for line in wrapped_lines[:8]:  # Max 8 lines for feedback
+            print(self.term.move_y(y) + self.term.move_x(start_x) +
+                  self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+            print(self.term.move_y(y) + self.term.move_x(start_x + 3) + line)
+            y += 1
+
+        # Fill remaining space
+        while y < start_y + modal_height - 1:
+            print(self.term.move_y(y) + self.term.move_x(start_x) +
+                  self._fmt("║", 'bold') + " " * (modal_width - 2) + self._fmt("║", 'bold'))
+            y += 1
+
+        # Bottom border
+        print(self.term.move_y(start_y + modal_height - 1) + self.term.move_x(start_x) +
+              self._fmt("╚" + "═" * (modal_width - 2) + "╝", 'bold'))
+
+        # Instructions
+        instructions = "Press any key to close"
+        instr_x = start_x + (modal_width - len(instructions)) // 2
+        print(self.term.move_y(start_y + modal_height) + self.term.move_x(instr_x) +
+              self._fmt(instructions, 'dim'))
+
+        # Wait for keypress
+        with self.term.cbreak():
+            self.term.inkey()
+
+        # Redraw main screen
+        self._display()
+
+
+def main():
+    """Main entry point."""
+    parser = argparse.ArgumentParser(
+        description='Financial Analysis Fluency Trainer'
+    )
+    parser.add_argument(
+        'scenario',
+        nargs='?',
+        default='001_simple_growth.yaml',
+        help='Scenario file to load (default: 001_simple_growth.yaml)'
+    )
+    parser.add_argument(
+        '--llm',
+        action='store_true',
+        help='Use LLM for observation scoring (requires Ollama)'
+    )
+    parser.add_argument(
+        '--model',
+        default='llama3.2:latest',
+        help='LLM model to use (default: llama3.2:latest)'
+    )
+    parser.add_argument(
+        '--list',
+        action='store_true',
+        help='List available scenarios'
+    )
+    parser.add_argument(
+        '--scenarios-dir',
+        default='scenarios',
+        help='Directory containing scenario files'
+    )
+
+    args = parser.parse_args()
+
+    # Initialize
+    loader = ScenarioLoader(args.scenarios_dir)
+
+    # List scenarios
+    if args.list:
+        scenarios = loader.list_scenarios()
+        print("\nAvailable Scenarios:")
+        print("=" * 60)
+        for s in scenarios:
+            print(f"{s['file']:30} | {s['difficulty']:12} | {s['name']}")
+        print()
+        return 0
+
+    # Find and load scenario
+    try:
+        # Smart scenario finding - accepts numbers, partial names, full filenames
+        scenario_file = loader.find_scenario(args.scenario)
+        scenario = loader.load_scenario(scenario_file)
+    except ValueError as e:
+        print(f"Error: {e}", file=sys.stderr)
+        print("\nAvailable scenarios:", file=sys.stderr)
+        for s in loader.list_scenarios():
+            print(f"  {s['file']}", file=sys.stderr)
+        return 1
+    except Exception as e:
+        print(f"Error loading scenario: {e}", file=sys.stderr)
+        return 1
+
+    # Run training session
+    term = Terminal()
+    trainer = FinancialTrainer(scenario, term, use_llm=args.llm, llm_model=args.model)
+
+    try:
+        trainer.run()
+    except KeyboardInterrupt:
+        print("\n\nSession interrupted.")
+        return 1
+
+    return 0
+
+
+if __name__ == '__main__':
+    sys.exit(main())

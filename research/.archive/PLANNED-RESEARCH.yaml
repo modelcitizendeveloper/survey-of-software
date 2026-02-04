@@ -1,0 +1,801 @@
+repository: spawn-solutions
+total_planned: 196
+planned_research:
+- code: '1.003'
+  title: Full-text search libraries (Whoosh, Tantivy bindings, MeiliSearch clients)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.004'
+  title: Binary search tree libraries (B-trees, AVL, Red-Black implementations)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.006'
+  title: Graph search libraries (A*, Dijkstra, BFS/DFS implementations)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.007'
+  title: Pattern matching libraries (KMP, Boyer-Moore, Aho-Corasick)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.008'
+  title: Time series search libraries (DTW, shapelet discovery)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.009'
+  title: Similarity search libraries (LSH, MinHash, SimHash)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.011'
+  title: Graph database clients (Neo4j, ArangoDB, TigerGraph)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.012'
+  title: Community detection libraries (Louvain, label propagation, spectral)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.013'
+  title: Shortest path optimization libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.014'
+  title: Network flow libraries (max flow, min cost flow)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.015'
+  title: Graph visualization libraries (Graphviz, Gephi, Cytoscape)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.016'
+  title: Social network analysis libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.017'
+  title: Bipartite matching libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.018'
+  title: Graph embedding libraries (node2vec, DeepWalk)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.019'
+  title: Dynamic graph libraries (temporal networks)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.020'
+  title: Linear algebra libraries (NumPy vs Eigen vs Armadillo)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: 1.020.1
+  title: Linear programming libraries (subset of optimization)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.021'
+  title: Statistical testing libraries (hypothesis testing, A/B testing)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.023'
+  title: Symbolic math libraries (SymPy vs SageMath)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.024'
+  title: Random number generation libraries (PCG, Mersenne Twister)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.025'
+  title: Prime number & factorization libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.026'
+  title: Combinatorics libraries (permutations, combinations, partitions)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.027'
+  title: Numerical integration libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.028'
+  title: FFT libraries (FFTW, pyFFTW, scipy.fft)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.029'
+  title: Matrix decomposition libraries (SVD, eigenvalue, QR)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.030'
+  title: String matching libraries (exact, approximate, regex)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.031'
+  title: Text diff libraries (Myers, patience diff, semantic diff)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.032'
+  title: String metric libraries (edit distance, Jaro-Winkler, cosine)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.035'
+  title: Tokenization libraries (wordpiece, BPE, sentencepiece)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.036'
+  title: Stemming & lemmatization libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.037'
+  title: String compression libraries (LZ4, Snappy, Zstandard)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.038'
+  title: Unicode handling libraries (normalization, transliteration)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.041'
+  title: Bloom filter & probabilistic data structures
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.043'
+  title: Heap & priority queue libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.043'
+  title: Heap & priority queue libraries *(primary)*
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.044'
+  title: Specialized tree & set structures (Disjoint set/Union-Find, Interval tree,
+    Segment tree)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.045'
+  title: Specialized buffer structures (Circular buffer, Ring buffer, Lock-free data
+    structures)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.046'
+  title: (available for future use)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.048'
+  title: (available for future use - task queues moved to 1.043.1)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.049'
+  title: Meta-data structure libraries (database schema inspection, code introspection,
+    type reflection)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: 1.049.2
+  title: Code introspection & reflection (inspect, typing.get_type_hints, importlib)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: 1.049.3
+  title: Data schema validation (Pydantic, marshmallow, jsonschema, cerberus)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: 1.050.1
+  title: Real-time compression (subset of general compression)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.051'
+  title: Image compression libraries (WebP, AVIF, JPEG XL)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.052'
+  title: Video codec libraries (FFmpeg bindings, av)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.053'
+  title: Audio compression libraries (FLAC, Opus, MP3)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.054'
+  title: Base encoding libraries (base64, base58, base32)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.057'
+  title: CSV parsing libraries (performance comparison)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.058'
+  title: XML processing libraries (lxml vs ElementTree vs xmltodict)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.059'
+  title: YAML libraries (PyYAML vs ruamel.yaml)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.062'
+  title: Password hashing libraries (bcrypt, scrypt, argon2)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.064'
+  title: Encryption libraries (AES, ChaCha20, RSA implementations)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.065'
+  title: Digital signature libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.066'
+  title: Key derivation libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.067'
+  title: Random token generation libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.068'
+  title: Certificate handling libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.069'
+  title: Blockchain & merkle tree libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.070'
+  title: Clustering libraries (scikit-learn vs hdbscan vs fastcluster)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+  note: Explainer exists (MACHINE_LEARNING_EXPLAINER.md), S1-S4 library comparisons pending
+- code: 1.070.1
+  title: Online learning (subset of ML algorithms)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.072'
+  title: Anomaly detection libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.075.1'
+  title: Core deep learning frameworks (PyTorch, TensorFlow, JAX, MXNet)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.075.2'
+  title: CNN architectures (ResNet, EfficientNet, Vision Transformers, ConvNeXt)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.075.3'
+  title: RNN/Transformer architectures (LSTM, GRU, Transformer, BERT, GPT)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.075.4'
+  title: Generative models (GANs, VAEs, Diffusion models, StyleGAN, Stable Diffusion)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.076'
+  title: Reinforcement learning libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.077'
+  title: AutoML libraries (auto-sklearn vs TPOT vs H2O)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.078'
+  title: Feature engineering libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.079'
+  title: Model interpretation libraries (SHAP vs LIME)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.081'
+  title: Convex hull libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.082'
+  title: Voronoi diagram & Delaunay triangulation
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.083'
+  title: Point cloud processing libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.084'
+  title: Mesh processing libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.085'
+  title: Collision detection libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.086'
+  title: Path planning libraries (RRT, PRM)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.087'
+  title: Geographic libraries (GeoPy, Folium, geopandas)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.088'
+  title: Coordinate transformation libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.089'
+  title: Spatial indexing libraries (H3, S2, Geohash)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.090'
+  title: Bioinformatics algorithms (sequence alignment, BLAST)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.091.1'
+  title: Object detection libraries (YOLO, Detectron2, TensorFlow Object Detection, MMDetection)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.091.2'
+  title: Face detection & recognition libraries (MediaPipe, Dlib, InsightFace, MTCNN, RetinaFace)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.091.3'
+  title: OCR libraries (Tesseract, EasyOCR, PaddleOCR, TrOCR)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.092'
+  title: Signal processing libraries (scipy.signal vs librosa)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.093'
+  title: Quantum computing libraries (Qiskit vs Cirq)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.095'
+  title: Game theory & auction libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.097'
+  title: Recommendation system libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.098'
+  title: Voting & consensus algorithm libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.099'
+  title: Distributed algorithm libraries (consensus, gossip protocols)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.101'
+  title: PDF generation & processing (ReportLab, WeasyPrint, pdfkit, PyPDF2)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.102'
+  title: Document parsing (python-docx, openpyxl, pandas for Excel/CSV)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.103'
+  title: Markdown & markup processing (markdown-it, mistune, commonmark)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.104'
+  title: Syntax highlighting libraries (Pygments, highlight.js, Prism, Rouge)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: 1.104.2
+  title: Code formatting libraries (Black, Prettier, autopep8, ruff)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.105'
+  title: Translation & i18n libraries (gettext, Babel, i18next)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.106'
+  title: Speech recognition & TTS (Whisper, Google Speech, pyttsx3)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.107'
+  title: OCR libraries (Tesseract, EasyOCR, PaddleOCR)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.108'
+  title: Spell checking & grammar (SymSpell, LanguageTool, Grammarly API)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.109'
+  title: Content extraction (BeautifulSoup, Scrapy, newspaper3k)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: 1.110.1
+  title: React meta-frameworks (Next.js, Remix, Gatsby)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: 1.110.2
+  title: Vue meta-frameworks (Nuxt, VitePress)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: 1.110.3
+  title: Svelte meta-frameworks (SvelteKit)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: 1.110.4
+  title: Browser Python execution (Pyodide, JupyterLite, PyScript, Brython)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+  priority: CRITICAL
+  use_case: QRCards Python API embedding (Jupyter iframe pattern), interactive Python notebooks
+  trigger: QRCards multidomain Python integration architecture
+- code: '1.111'
+  title: State management libraries (Redux, Zustand, Jotai, Pinia, MobX)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.112'
+  title: CSS frameworks & styling (Tailwind, Bootstrap, Material UI, Styled Components,
+    CSS-in-JS)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.113'
+  title: UI component libraries (shadcn/ui, Radix, Headless UI, Ant Design, Chakra)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.114'
+  title: Build tools & bundlers (Vite, Webpack, Turbopack, esbuild, Rollup)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.115'
+  title: Form & validation libraries (React Hook Form, Formik, Zod, Yup)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.116'
+  title: Data visualization libraries (D3.js, Chart.js, Recharts, Plotly, Apache ECharts)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.117'
+  title: Animation libraries (Framer Motion, GSAP, React Spring, Anime.js)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.118'
+  title: Testing libraries (Jest, Vitest, Testing Library, Playwright, Cypress)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.119'
+  title: Mobile frameworks (React Native, Flutter, Ionic, Expo)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.121'
+  title: Agent-based modeling (Mesa, FLAME, Repast)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.123'
+  title: System dynamics (PySD, BPTK-Py)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.124'
+  title: Continuous simulation (scipy.integrate, FEniCS)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.125'
+  title: Network simulation (ns-3 bindings, Mininet)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.126'
+  title: Traffic & transportation simulation (SUMO, MATSim)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.128'
+  title: Physics simulation (PyBullet, MuJoCo, Gazebo)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.129'
+  title: Hybrid simulation (discrete + continuous)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.132'
+  title: Self-hosted collaboration (Nextcloud, Mattermost, Rocket.Chat, Zulip)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.133'
+  title: Self-hosted documentation (BookStack, Wiki.js, Outline, Docusaurus)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.134'
+  title: Self-hosted e-commerce (WooCommerce, Magento, PrestaShop, Saleor)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.135'
+  title: Self-hosted analytics (Matomo, Plausible, Umami, PostHog)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.136'
+  title: Self-hosted DevOps (GitLab, Gitea, Jenkins, Drone)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.137'
+  title: Self-hosted customer support (Chatwoot, Zammad, Freescout)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.138'
+  title: Self-hosted marketing automation (Mautic, Listmonk)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.139'
+  title: Self-hosted accounting/ERP (Odoo, ERPNext, Dolibarr)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.141'
+  title: Spaced repetition algorithms (SM-2, SM-18, FSRS)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.142'
+  title: Flashcard systems & integrations (Anki, genanki, ankipandas, AnkiConnect)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.143'
+  title: Language detection & identification (langdetect, polyglot, fastText language
+    ID)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.144'
+  title: Phonetic & pronunciation libraries (IPA transcription, forvo API, eSpeak)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.145'
+  title: Grammar checking & correction (LanguageTool, GrammarBot, Ginger)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.146'
+  title: Vocabulary databases & dictionaries (WordNet, ConceptNet, Wiktionary parsers)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.147'
+  title: Language corpus libraries (Brown Corpus, Universal Dependencies, Leipzig)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.148'
+  title: 'Morphological analysis libraries (Japanese: MeCab/fugashi/SudachiPy, Russian:
+    pymorphy2, Czech: UDPipe, multi-script inflection generation)'
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.149'
+  title: Second language acquisition tools (CEFR level assessment, readability scores)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.150'
+  title: Latin text corpora (Perseus Digital Library, PHI5/PHI7, Latin Library, Open
+    Greek and Latin)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.151'
+  title: Latin vocabulary frequency lists (DCC Core Vocabulary, Dickinson College,
+    LASLA frequency data)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.152'
+  title: Reading difficulty assessment algorithms (lexical coverage, readability metrics,
+    i+1 detection)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.153'
+  title: Sentence parsing & dependency analysis (Universal Dependencies, Stanza, syntax
+    trees)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.154'
+  title: Graded reader generation (automatic text leveling, vocabulary substitution)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.155'
+  title: Parallel text alignment (Latin-English corpora, sentence alignment tools)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.156'
+  title: Text annotation tools (morphological tagging, glossing, interlinear display)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.157'
+  title: Reading comprehension assessment (question generation, answer validation)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.158'
+  title: Vocabulary acquisition tracking (learning curves, retention modeling)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.159'
+  title: Adaptive text recommendation (personalized difficulty, interest-based selection)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.200'
+  title: LLM orchestration frameworks (LangChain, LlamaIndex, Haystack, Semantic Kernel)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.201'
+  title: LLM agent frameworks (AutoGen, CrewAI, AgentGPT, BabyAGI)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.202'
+  title: Prompt engineering libraries (guidance, DSPy, PromptTools, LMQL)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.203'
+  title: Vector database clients (ChromaDB, Weaviate, Pinecone, Qdrant, Milvus)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.204'
+  title: RAG pipeline libraries
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.205'
+  title: LLM evaluation & testing (LangSmith, PromptFoo, DeepEval, Ragas)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.206'
+  title: LLM caching & optimization (GPTCache, semantic caching)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.207'
+  title: LLM observability & tracing (LangSmith, Helicone, LangFuse)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.208'
+  title: Fine-tuning frameworks (Axolotl, LLaMA Factory, Unsloth, PEFT)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '1.209'
+  title: Local LLM serving (Ollama, LM Studio, llama.cpp, vLLM)
+  tier: 'Tier 1: Algorithms & Libraries'
+  roadmap: 1.001-099-ALGORITHM_ROADMAP.md
+- code: '2.042'
+  title: Grafana/Loki
+  tier: 'Tier 2: Open Standards'
+  roadmap: 2.001-099-OPEN_STANDARDS_ROADMAP.md
+- code: '2.052'
+  title: Redis Protocol
+  tier: 'Tier 2: Open Standards'
+  roadmap: 2.001-099-OPEN_STANDARDS_ROADMAP.md
+- code: '2.061'
+  title: SAML 2.0
+  tier: 'Tier 2: Open Standards'
+  roadmap: 2.001-099-OPEN_STANDARDS_ROADMAP.md
+- code: '2.070'
+  title: OpenAPI / Swagger
+  tier: 'Tier 2: Open Standards'
+  roadmap: 2.001-099-OPEN_STANDARDS_ROADMAP.md
+- code: '2.072'
+  title: GraphQL
+  tier: 'Tier 2: Open Standards'
+  roadmap: 2.001-099-OPEN_STANDARDS_ROADMAP.md
+- code: '2.090'
+  title: AMQP (Advanced Message Queuing Protocol)
+  tier: 'Tier 2: Open Standards'
+  roadmap: 2.001-099-OPEN_STANDARDS_ROADMAP.md
+- code: '2.091'
+  title: MQTT
+  tier: 'Tier 2: Open Standards'
+  roadmap: 2.001-099-OPEN_STANDARDS_ROADMAP.md
+- code: '2.092'
+  title: CloudEvents
+  tier: 'Tier 2: Open Standards'
+  roadmap: 2.001-099-OPEN_STANDARDS_ROADMAP.md
+- code: '3.002'
+  title: Subscription Management
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.003'
+  title: Tax & Compliance
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.011'
+  title: Secrets & Certificate Management
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.021'
+  title: SMS & Voice
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.022'
+  title: Push Notifications
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.051'
+  title: DNS Services
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.052'
+  title: CI/CD Services
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.070'
+  title: Restaurant Inventory Management
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: 3.080.1
+  title: Public Event Ticketing & Registration
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: 3.080.3
+  title: Virtual & Hybrid Event Platforms
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: 3.080.4
+  title: Corporate Event Management (Enterprise)
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: 3.080.5
+  title: Restaurant/Hospitality Reservations
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: 3.080.6
+  title: Trade Show & Exhibitor Management
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: 3.080.7
+  title: Speaker & Session Management
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: 3.080.8
+  title: Event Engagement & Networking Tools
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.090'
+  title: Customer Support
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.091'
+  title: Documentation Platforms
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.092'
+  title: Legal & Compliance
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.100'
+  title: Content Management Systems
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.130'
+  title: Personal Productivity (GTD)
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.131'
+  title: Team Task Management
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.134'
+  title: AI Content Generation & Copywriting
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.135'
+  title: Social Media Scheduling & Automation
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.136'
+  title: AI Meeting Transcription & Note-Taking
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.137'
+  title: Video Editing & Production Tools
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.138'
+  title: Visual Design & Template Tools
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.139'
+  title: Video Hosting & Streaming
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.201'
+  title: Computer Vision APIs
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.202'
+  title: Speech & Audio AI
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.300'
+  title: Feature Flags & A/B Testing
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.301'
+  title: API Management & Gateways
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.302'
+  title: Forms & Survey Platforms
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.401'
+  title: E-Commerce Platforms
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md
+- code: '3.402'
+  title: Integration Platforms (iPaaS)
+  tier: 'Tier 3: Managed Services'
+  roadmap: 3.001-099-MANAGED_SERVICES_ROADMAP.md

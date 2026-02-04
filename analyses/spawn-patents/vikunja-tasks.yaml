@@ -1,0 +1,169 @@
+# spawn-patents: Patent Opportunity Analysis
+#
+# Real location: ~/spawn-patents
+# 12-methodology framework for systematic IP discovery and strategic patent planning
+#
+# Target: QRCards repository analysis (~/qrcards)
+# Goal: Identify patentable innovations and create strategic IP portfolio
+#
+# Documentation:
+# - README.md - Complete 12-methodology framework
+# - metaprompts/ - MP-001 through MP-004 (archaeological analysis)
+# - analysis/ - Patent opportunity analysis outputs
+
+project:
+  title: "spawn-patents"
+  description: "Patent opportunity analysis for QRCards - IP discovery and strategic portfolio planning"
+  parent_project_id: 13447  # Foundations - capability development
+
+tasks:
+  - title: "Contact patent lawyer for initial IP consultation"
+    description: |
+      <strong>Goal:</strong> Engage patent attorney for QRCards IP strategy consultation<br><br>
+      <strong>Scope:</strong><br>
+      - Initial consultation on patent viability<br>
+      - Review spawn-patents analysis framework<br>
+      - Discuss QRCards innovations (database orchestration, template hierarchy, etc.)<br>
+      - Assess public disclosure impact (newsletter, spawn-experiments)<br>
+      - Get cost estimates for patent filings<br><br>
+      <strong>Preparation needed:</strong><br>
+      - Review README.md (12-methodology framework)<br>
+      - Identify top 3-5 innovation candidates<br>
+      - Document technical implementations<br>
+      - List all public disclosures (newsletter posts, repos)<br>
+      - Prepare budget range discussion<br><br>
+      <strong>Key questions for attorney:</strong><br>
+      - What innovations are patentable given public disclosures?<br>
+      - What's the grace period status (US vs international)?<br>
+      - Filing costs for 1-5 patents?<br>
+      - Provisional vs non-provisional strategy?<br>
+      - Timeline for application preparation?<br><br>
+      <strong>Deliverables:</strong><br>
+      - Attorney contacted<br>
+      - Initial consultation scheduled<br>
+      - Cost estimates received<br>
+      - Filing strategy recommended
+    due_date: "2025-11-15"
+    priority: 5
+    labels:
+      - "Next Action"
+      - "@People"
+      - "High Energy"
+
+  - title: "GTD Capture: Review spawn-patents framework and create implementation tasks"
+    description: |
+      <strong>Goal:</strong> Complete GTD capture for patent analysis work<br><br>
+      <strong>Steps:</strong><br>
+      - Review README.md (12-methodology framework)<br>
+      - Check analysis/ folder for existing work<br>
+      - Review metaprompts/ (MP-001 through MP-004)<br>
+      - Identify which methodologies to run first<br>
+      - Document top innovation candidates<br><br>
+      <strong>12 Methodologies to execute:</strong><br>
+      <strong>Stage 1: Quadruple Archaeology (4 parallel)</strong><br>
+      - MP-001: Code Archaeologist (mine Python code patterns)<br>
+      - MP-002: Documentation Archaeologist (mine markdown strategies)<br>
+      - MP-003: History Archaeologist (mine git commit evolution)<br>
+      - MP-004: Public Disclosure Archaeologist (assess patent novelty)<br><br>
+      <strong>Stage 2: Specialist Analysis (4)</strong><br>
+      - Prior Art Hunter (search existing patents)<br>
+      - Innovation Spotter (identify unique approaches)<br>
+      - Market Validator (assess commercial viability)<br>
+      - Implementation Auditor (document specifications)<br><br>
+      <strong>Stage 3: Strategic Integration (3 human-prompted)</strong><br>
+      - Business Strategist (align with business goals)<br>
+      - Experience Validator (apply domain expertise)<br>
+      - Intuitive Assessor (identify non-obvious opportunities)<br><br>
+      <strong>Stage 4: Reality Testing (3)</strong><br>
+      - Patent Attorney Simulator (legal viability)<br>
+      - Cost-Benefit Analyzer (ROI analysis)<br>
+      - Risk Assessor (freedom to operate)<br><br>
+      <strong>Deliverables:</strong><br>
+      - Complete task list for patent analysis<br>
+      - Top innovation candidates identified<br>
+      - Execution timeline created
+    due_date: "2025-11-10"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+
+  - title: "Stage 1: Execute Quadruple Archaeology (MP-001 through MP-004)"
+    description: |
+      <strong>Goal:</strong> Run all 4 archaeological metaprompts against QRCards<br><br>
+      <strong>Target repository:</strong> ~/qrcards<br><br>
+      <strong>Four parallel analyses:</strong><br>
+      - MP-001: Code Archaeologist (all .py files)<br>
+      - MP-002: Documentation Archaeologist (all .md files)<br>
+      - MP-003: History Archaeologist (complete git history)<br>
+      - MP-004: Public Disclosure Archaeologist (newsletter + public repos)<br><br>
+      <strong>Expected output:</strong><br>
+      - 5-15 patentable innovation candidates identified<br>
+      - Technical pattern analysis complete<br>
+      - Public disclosure impact assessed<br>
+      - Integrated candidate list with patent novelty ratings<br><br>
+      <strong>Success criteria:</strong><br>
+      - 100% codebase coverage analyzed<br>
+      - All public disclosures documented<br>
+      - Top candidates ranked by novelty + commercial value<br><br>
+      <strong>Next step:</strong> Stage 2 specialist analysis on top candidates
+    due_date: "2025-11-30"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "@DeepWork"
+      - "Research"
+
+  - title: "Stage 2: Prior Art Hunter - Search existing patents"
+    description: |
+      <strong>Goal:</strong> Comprehensive patent search for identified innovation candidates<br><br>
+      <strong>Search databases:</strong><br>
+      - USPTO patent search<br>
+      - Google Patents<br>
+      - Patent Lens<br>
+      - International patent databases (if needed)<br><br>
+      <strong>Technology domains:</strong><br>
+      - QR code generation and management<br>
+      - Dynamic web content delivery<br>
+      - Template-based content management<br>
+      - Multi-tenant SaaS architectures<br><br>
+      <strong>Deliverables:</strong><br>
+      - Prior art landscape map<br>
+      - Freedom to operate assessment<br>
+      - Differentiation analysis vs existing patents<br>
+      - CPC/IPC classification codes identified
+    due_date: "2025-12-15"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "Research"
+      - "Writing"
+
+  - title: "Stage 4: IP Portfolio Optimizer - Create strategic filing plan"
+    description: |
+      <strong>Goal:</strong> Integrate all analyses into actionable IP strategy<br><br>
+      <strong>Inputs:</strong><br>
+      - Stage 1-3 analysis results<br>
+      - Attorney consultation feedback<br>
+      - Budget constraints<br>
+      - Business priorities<br><br>
+      <strong>Outputs:</strong><br>
+      - Prioritized patent filing list (ranked 1-N)<br>
+      - Filing timeline (provisional → non-provisional)<br>
+      - Budget allocation per patent<br>
+      - ROI projections (defensive value + licensing potential)<br>
+      - Risk mitigation strategy<br><br>
+      <strong>Success criteria:</strong><br>
+      - Clear go/no-go decision for each innovation<br>
+      - Optimized filing sequence<br>
+      - Budget-aligned strategy<br>
+      - Attorney review ready
+    due_date: "2026-01-15"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "Planning"
+      - "Writing"
+      - "High Energy"

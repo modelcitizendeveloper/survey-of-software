@@ -1,0 +1,670 @@
+#!/home/ivanadamin/spawn-solutions/research/1.140-classical-language-libraries/02-implementations/.venv/bin/python
+"""
+latin-train - Interactive Latin grammar trainer
+
+Usage:
+    latin-train parsed.jsonl --output attempts.jsonl
+    latin-train parsed.jsonl --output attempts.jsonl --resume
+
+Reads parsed JSONL from latin-parse, provides interactive training,
+and appends results to attempts file.
+"""
+
+import sys
+import json
+import argparse
+import random
+from datetime import datetime
+from blessed import Terminal
+
+# POS mapping
+POS_DISPLAY = {
+    'NOUN': 'NOUN',
+    'PROPN': 'NOUN',  # Proper nouns count as nouns
+    'VERB': 'VERB',
+    'ADJ': 'ADJ',
+    'ADP': 'PREP',
+}
+
+class LatinTrainer:
+    def __init__(self, output_file, user='default', randomize=False, exercise_file=None):
+        self.term = Terminal()
+        self.output_file = output_file
+        self.user = user
+        self.randomize = randomize
+        self.exercise_file = exercise_file  # Track which exercise file is being used
+        self.current_word = 0
+        self.user_answers = {}
+        self.input_buffer = ""
+        self.checked = False
+        self.start_time = None
+        self.word_times = {}
+        self.total_correct = 0
+        self.total_words = 0
+        self.vocabulary = {}  # Will be populated from sentences, accessed via '?' key
+
+    def show_vocabulary_modal(self):
+        """Display vocabulary in a modal overlay with proper formatting."""
+        if not self.vocabulary:
+            return
+
+        print(self.term.clear)
+
+        # Title
+        print(self.term.move_y(2) + self.term.center(self.term.bold("VOCABULARY REFERENCE")))
+        print(self.term.move_y(3) + self.term.center("=" * 60))
+        print()
+
+        # Build vocabulary list
+        vocab_lines = []
+        for lemma in sorted(self.vocabulary.keys()):
+            v = self.vocabulary[lemma]
+            vocab_lines.append(f"  {lemma}, {v['genitive']} ({v['gender']})")
+
+        # Display vocabulary in columns if it fits, otherwise list format
+        term_width = self.term.width
+        start_line = 5
+
+        if term_width >= 80:
+            # Two-column layout for wider terminals
+            mid = (len(vocab_lines) + 1) // 2
+            for i in range(mid):
+                left = vocab_lines[i].ljust(38) if i < len(vocab_lines) else ""
+                right = vocab_lines[i + mid] if i + mid < len(vocab_lines) else ""
+                print(self.term.move_y(start_line + i) + self.term.center(left + "  " + right))
+        else:
+            # Single column for narrow terminals
+            for i, line in enumerate(vocab_lines):
+                print(self.term.move_y(start_line + i) + self.term.center(line))
+
+        # Instructions
+        print()
+        print(self.term.center(self.term.dim("Press any key to return to exercise...")))
+
+        # Wait for keypress
+        with self.term.cbreak():
+            self.term.inkey()
+
+    def extract_vocabulary(self, sentences):
+        """Extract vocabulary from all sentences for reference display.
+
+        Returns dict: {lemma: {'genitive': str, 'gender': str}}
+        """
+        vocab = {}
+        for sentence_data in sentences:
+            for word in sentence_data['words']:
+                lemma = word.get('lemma')
+                if not lemma or lemma in vocab:
+                    continue
+
+                # Find genitive singular form for this lemma
+                genitive = None
+                for w in sentence_data['words']:
+                    if (w.get('lemma') == lemma and
+                        w.get('number') == 'singular' and
+                        (w.get('case') == 'genitive' or
+                         (isinstance(w.get('case'), list) and 'genitive' in w['case']))):
+                        genitive = w['text']
+                        break
+
+                if genitive:
+                    vocab[lemma] = {
+                        'genitive': genitive,
+                        'gender': word.get('gender', '?')
+                    }
+
+        return vocab
+
+    def check_interpretation(self, user_ans, interpretation, word_pos=None):
+        """Check if user answer matches a single interpretation
+
+        Args:
+            user_ans: User's answer dict
+            interpretation: Expected interpretation dict
+            word_pos: POS from word level (for multi-interpretation format)
+        """
+        # Get expected POS (either from interpretation or word level)
+        if 'pos' in interpretation:
+            expected_pos = POS_DISPLAY.get(interpretation['pos'], interpretation['pos'])
+        elif word_pos:
+            expected_pos = POS_DISPLAY.get(word_pos, word_pos)
+        else:
+            return False  # No POS to check against
+
+        # Check POS
+        if user_ans.get('pos') != expected_pos:
+            return False
+
+        # Check declension
+        if interpretation.get('declension'):
+            if user_ans.get('declension') != interpretation['declension']:
+                return False
+
+        # Check number (can be single value or list)
+        number_val = interpretation.get('number')
+        if number_val is not None:
+            if isinstance(number_val, list):
+                if user_ans.get('number') not in number_val:
+                    return False
+            else:
+                if user_ans.get('number') != number_val:
+                    return False
+
+        # Check case (can be single value or list)
+        case_val = interpretation.get('case')
+        if case_val is not None:
+            if isinstance(case_val, list):
+                if user_ans.get('case') not in case_val:
+                    return False
+            else:
+                if user_ans.get('case') != case_val:
+                    return False
+
+        # Check tense (can be single value or list)
+        tense_val = interpretation.get('tense')
+        if tense_val is not None:
+            if isinstance(tense_val, list):
+                if user_ans.get('tense') not in tense_val:
+                    return False
+            else:
+                if user_ans.get('tense') != tense_val:
+                    return False
+
+        return True
+
+    def display(self, words, sentence):
+        """Display current training state"""
+        print(self.term.home + self.term.clear)
+
+        current_line = 1
+
+        # Title
+        print(self.term.move_y(current_line) + self.term.center(
+            self.term.bold("EXERCITATIO LATINA")
+        ))
+        current_line += 1
+
+        # Vocabulary section (if enabled)
+        # Instructions (vocabulary now in modal, press '?')
+        inst = "j/k: next/prev | Ctrl-1..9: jump | Backspace: clear | n/v/a/p: POS | ?: vocab | Enter: check | q: quit"
+        print(self.term.move_y(current_line) + self.term.center(inst))
+        current_line += 1
+
+        # Grammar options
+        grammar_help = "NOUN/ADJ: 1-5 decl, then n/g/d/a/b/v case (lowercase=sing, UPPER=plural) | VERB: [p]resent [i]mperfect [f]uture pe[r]fect"
+        print(self.term.move_y(current_line) + self.term.center(grammar_help))
+        current_line += 2  # Extra space before sentence
+
+        # Sentence (italic)
+        print(self.term.move_y(current_line) + self.term.center(
+            self.term.italic(sentence)
+        ))
+        current_line += 2  # Space after sentence
+
+        # Words with indices (like [1] [2] [3])
+        word_line = ""
+        for i, word in enumerate(words):
+            if i == self.current_word:
+                word_line += self.term.bold_green(f"[{i+1}]{word['text']} ")
+            else:
+                word_line += f"[{i+1}]{word['text']} "
+
+        print(self.term.move_y(current_line) + self.term.center(word_line))
+        current_line += 2  # Space after word line
+
+        # Current word focus
+        current = words[self.current_word]
+        print(self.term.move_y(current_line) + self.term.center(
+            self.term.underline(f"Word {self.current_word + 1}: {current['text']}")
+        ))
+        current_line += 2  # Space after focus
+
+        # Answers section
+        start_y = current_line
+        for i, word in enumerate(words):
+            marker = "→" if i == self.current_word else " "
+
+            # User's answer
+            user_ans = self.user_answers.get(i, {})
+            ans_str = ""
+            if 'pos' in user_ans:
+                ans_str = user_ans['pos']
+                if user_ans.get('declension'):
+                    ans_str += f" {user_ans['declension']}"
+                if user_ans.get('number'):
+                    ans_str += f" {user_ans['number']}"
+                if user_ans.get('case'):
+                    ans_str += f" {user_ans['case']}"
+                if user_ans.get('tense'):
+                    ans_str += f" {user_ans['tense']}"
+
+            # Correct answer (if checked)
+            if self.checked:
+                # Check if word uses multi-interpretation format
+                if 'valid_interpretations' in word:
+                    # Multi-interpretation format: check against any valid interpretation
+                    word_pos = word.get('pos')
+                    is_correct = any(self.check_interpretation(user_ans, interp, word_pos)
+                                   for interp in word['valid_interpretations'])
+
+                    # Build display string showing all valid interpretations
+                    interp_strs = []
+                    pos_display = POS_DISPLAY.get(word_pos, word_pos) if word_pos else 'UNKNOWN'
+                    for interp in word['valid_interpretations']:
+                        s = pos_display
+                        if interp.get('declension'): s += f" {interp['declension']}"
+                        if interp.get('number'):
+                            nv = interp['number']
+                            s += f" {'/'.join(nv) if isinstance(nv, list) else nv}"
+                        if interp.get('case'):
+                            cv = interp['case']
+                            s += f" {'/'.join(cv) if isinstance(cv, list) else cv}"
+                        if interp.get('tense'): s += f" {interp['tense']}"
+                        interp_strs.append(s)
+                    correct_str = ' OR '.join(interp_strs)
+                else:
+                    # Original format: single interpretation with optional lists
+                    expected_pos = POS_DISPLAY.get(word['pos'], word['pos'])
+                    correct_str = expected_pos
+                    if word.get('declension'):
+                        correct_str += f" {word['declension']}"
+                    if word.get('number'):
+                        number_val = word.get('number')
+                        if isinstance(number_val, list):
+                            correct_str += f" {'/'.join(number_val)}"
+                        elif number_val:
+                            correct_str += f" {number_val}"
+                    if word.get('case'):
+                        case_val = word.get('case')
+                        if isinstance(case_val, list):
+                            correct_str += f" {'/'.join(case_val)}"
+                        elif case_val:
+                            correct_str += f" {case_val}"
+                    if word.get('tense'):
+                        correct_str += f" {word['tense']}"
+
+                    # Validate using helper
+                    is_correct = self.check_interpretation(user_ans, word)
+
+                if is_correct:
+                    ans_str = self.term.green("✓ " + ans_str)
+                else:
+                    # Build minimal correction - only show what's wrong
+                    correction_parts = []
+
+                    # Check each component to see if it's wrong
+                    if 'valid_interpretations' in word:
+                        # For multi-interpretation, just show the full correct answer
+                        correction_parts.append(correct_str)
+                    else:
+                        # Check what's wrong
+                        expected_pos = POS_DISPLAY.get(word['pos'], word['pos'])
+                        if user_ans.get('pos') != expected_pos:
+                            correction_parts.append(expected_pos)
+
+                        if word.get('declension'):
+                            if user_ans.get('declension') != word['declension']:
+                                correction_parts.append(word['declension'])
+
+                        if word.get('number'):
+                            number_val = word.get('number')
+                            if isinstance(number_val, list):
+                                if user_ans.get('number') not in number_val:
+                                    correction_parts.append('/'.join(number_val))
+                            elif user_ans.get('number') != number_val:
+                                correction_parts.append(number_val)
+
+                        if word.get('case'):
+                            case_val = word.get('case')
+                            if isinstance(case_val, list):
+                                if user_ans.get('case') not in case_val:
+                                    correction_parts.append('/'.join(case_val))
+                            elif user_ans.get('case') != case_val:
+                                correction_parts.append(case_val)
+
+                        if word.get('tense'):
+                            if user_ans.get('tense') != word['tense']:
+                                correction_parts.append(word['tense'])
+
+                    minimal_correction = ' '.join(correction_parts)
+                    ans_str = self.term.red("✗ " + ans_str + f" → {minimal_correction}")
+
+            word_display = f"{marker} [{i+1}] {word['text']:12s}  {ans_str}"
+            print(self.term.move_y(start_y + i) + "    " + word_display)
+
+        # Input buffer
+        print(self.term.move_y(start_y + len(words) + 2))
+        if not self.checked:
+            if self.current_word == len(words) - 1:
+                # On last word - show check prompt
+                # Use dim if available, otherwise just show in normal text
+                try:
+                    hint = self.term.dim('(Enter to check answers)')
+                except (TypeError, AttributeError):
+                    hint = '(Enter to check answers)'
+                print(self.term.center(f"Input: {self.term.bold(self.input_buffer)}_ {hint}"))
+            else:
+                print(self.term.center(f"Input: {self.term.bold(self.input_buffer)}_"))
+        else:
+            print(self.term.center(self.term.green("Press any key for next sentence...")))
+
+    def handle_input(self, key, words):
+        """Handle keyboard input"""
+        # Ctrl-number to jump to specific word
+        # Ctrl-1 through Ctrl-9 produce codes 1-9 (ASCII control codes)
+        if key.code is not None and 1 <= key.code <= 9:
+            if key.code - 1 < len(words):
+                self.current_word = key.code - 1
+                self.input_buffer = ""
+                return True
+
+        # Navigation
+        if key.name == 'KEY_DOWN' or key == 'j':
+            self.current_word = min(self.current_word + 1, len(words) - 1)
+            self.input_buffer = ""
+            return True
+
+        if key.name == 'KEY_UP' or key == 'k':
+            self.current_word = max(self.current_word - 1, 0)
+            self.input_buffer = ""
+            return True
+
+        # Quit
+        if key == 'q':
+            return False
+
+        # Show vocabulary modal
+        if key == '?':
+            self.show_vocabulary_modal()
+            return True
+
+        # Backspace - clear current word's input
+        if key.name == 'KEY_BACKSPACE' or key.name == 'KEY_DELETE' or key == '\x7f':
+            if not self.checked:
+                # Clear current word's answer and input buffer
+                if self.current_word in self.user_answers:
+                    del self.user_answers[self.current_word]
+                self.input_buffer = ""
+                return True
+
+        # Check answers or advance word
+        if key.name == 'KEY_ENTER':
+            if not self.checked:
+                # If in middle of sentence, advance to next word
+                if self.current_word < len(words) - 1:
+                    self.current_word += 1
+                    self.input_buffer = ""
+                    return True
+                else:
+                    # At end of sentence, check answers
+                    self.checked = True
+                    return True
+            else:
+                # Move to next sentence
+                return None  # Signal to advance
+
+        # After checking answers, any key advances to next sentence
+        if self.checked:
+            return None  # Signal to advance
+
+        # Grammar input (follow-up to POS)
+        if not self.checked:
+            ans = self.user_answers.get(self.current_word, {})
+
+            # Tense input (for verbs) - check BEFORE 'p' for PREPOSITION
+            tense_map = {'p': 'present', 'i': 'imperfect', 'f': 'future', 'r': 'perfect'}
+            if key in tense_map and ans.get('pos') == 'VERB':
+                ans['tense'] = tense_map[key]
+                self.input_buffer = ""
+                # Auto-advance
+                self.current_word = min(self.current_word + 1, len(words) - 1)
+                return True
+
+            # Declension input (for nouns/adjectives)
+            if key in '12345' and ans.get('pos') in ('NOUN', 'ADJ'):
+                decl_map = {'1': '1st', '2': '2nd', '3': '3rd', '4': '4th', '5': '5th'}
+                ans['declension'] = decl_map[key]
+                self.input_buffer += decl_map[key] + " "
+                return True
+
+            # Case input (lowercase = singular, uppercase = plural)
+            case_map = {
+                'n': 'nominative', 'g': 'genitive', 'd': 'dative',
+                'a': 'accusative', 'b': 'ablative', 'v': 'vocative',
+                'N': 'nominative', 'G': 'genitive', 'D': 'dative',
+                'A': 'accusative', 'B': 'ablative', 'V': 'vocative'
+            }
+            if key in case_map and ans.get('declension'):
+                ans['case'] = case_map[key]
+                # Set number based on case
+                ans['number'] = 'plural' if key.isupper() else 'singular'
+                self.input_buffer = ""
+                # Auto-advance
+                self.current_word = min(self.current_word + 1, len(words) - 1)
+                return True
+
+            # POS input (only if no POS set yet)
+            if not ans.get('pos'):
+                if key == 'n':
+                    self.user_answers[self.current_word] = {'pos': 'NOUN'}
+                    self.input_buffer = "NOUN "
+                    return True
+
+                if key == 'v':
+                    self.user_answers[self.current_word] = {'pos': 'VERB'}
+                    self.input_buffer = "VERB "
+                    return True
+
+                if key == 'a':
+                    self.user_answers[self.current_word] = {'pos': 'ADJ'}
+                    self.input_buffer = "ADJ "
+                    return True
+
+                if key == 'p':
+                    self.user_answers[self.current_word] = {'pos': 'PREP'}
+                    self.input_buffer = "PREP"
+                    # Auto-advance for prepositions
+                    self.current_word = min(self.current_word + 1, len(words) - 1)
+                    self.input_buffer = ""
+                    return True
+
+        return True
+
+    def train_sentence(self, sentence_data, sentence_idx):
+        """Train on a single sentence"""
+        sentence = sentence_data['sentence']
+        words = sentence_data['words'].copy()  # Make a copy to avoid modifying original
+
+        # Reset state
+        self.current_word = 0
+        self.user_answers = {}
+        self.input_buffer = ""
+        self.checked = False
+        self.start_time = datetime.now()
+        self.word_times = {}
+
+        with self.term.cbreak(), self.term.hidden_cursor():
+            while True:
+                self.display(words, sentence)
+
+                key = self.term.inkey()
+                result = self.handle_input(key, words)
+
+                if result is None:
+                    # Advance to next sentence
+                    break
+                elif not result:
+                    # Quit
+                    return False
+
+        # Save results
+        self.save_attempt(sentence_data, sentence_idx)
+        return True
+
+    def save_attempt(self, sentence_data, sentence_idx):
+        """Save attempt to output file"""
+        sentence = sentence_data['sentence']
+        words = sentence_data['words']
+
+        attempts = []
+        correct_count = 0
+        total_count = 0
+
+        for i, word in enumerate(words):
+            user_ans = self.user_answers.get(i, {})
+
+            # Check if word uses multi-interpretation format
+            if 'valid_interpretations' in word:
+                # Multi-interpretation: check against any valid interpretation
+                word_pos = word.get('pos')
+                is_correct = any(self.check_interpretation(user_ans, interp, word_pos)
+                               for interp in word['valid_interpretations'])
+                # Store all interpretations in expected
+                expected = {'valid_interpretations': word['valid_interpretations']}
+            else:
+                # Original format: single interpretation
+                expected_pos = POS_DISPLAY.get(word['pos'], word['pos'])
+                expected = {'pos': expected_pos}
+                if word.get('declension'):
+                    expected['declension'] = word['declension']
+                if word.get('number'):
+                    expected['number'] = word['number']
+                if word.get('case'):
+                    expected['case'] = word['case']
+                if word.get('tense'):
+                    expected['tense'] = word['tense']
+
+                # Validate using helper
+                is_correct = self.check_interpretation(user_ans, word)
+
+            if user_ans:  # Only count if user attempted
+                total_count += 1
+                if is_correct:
+                    correct_count += 1
+
+            attempts.append({
+                'word': word['text'],
+                'expected': expected,
+                'user_input': user_ans,
+                'correct': is_correct,
+            })
+
+        accuracy = correct_count / total_count if total_count > 0 else 0.0
+
+        # Update running totals
+        self.total_correct += correct_count
+        self.total_words += total_count
+
+        result = {
+            'sentence_id': sentence_idx,
+            'sentence': sentence,
+            'timestamp': datetime.now().isoformat(),
+            'user': self.user,
+            'exercise': self.exercise_file,  # Track which exercise this came from
+            'attempts': attempts,
+            'accuracy': accuracy,
+        }
+
+        # Append to file
+        with open(self.output_file, 'a', encoding='utf-8') as f:
+            f.write(json.dumps(result, ensure_ascii=False) + '\n')
+
+    def run(self, parsed_file, resume_from=0):
+        """Run trainer on parsed file"""
+        # Load parsed sentences (skip metadata lines)
+        sentences = []
+        with open(parsed_file, 'r', encoding='utf-8') as f:
+            for line in f:
+                data = json.loads(line)
+                # Skip metadata lines
+                if data.get('_metadata'):
+                    continue
+                sentences.append(data)
+
+        print(self.term.clear)
+        print(f"Loaded {len(sentences)} sentences")
+
+        # Extract vocabulary for reference (before randomization)
+        self.vocabulary = self.extract_vocabulary(sentences)
+        if self.vocabulary:
+            print(f"Vocabulary: {', '.join(sorted(self.vocabulary.keys()))}")
+
+        # Document-level randomization for drills
+        if self.randomize:
+            # Collect all words from all sentences
+            all_words = []
+            for sentence_data in sentences:
+                all_words.extend(sentence_data['words'])
+
+            # Remove duplicates based on text to avoid showing same word twice on a page
+            seen = {}
+            unique_words = []
+            for word in all_words:
+                word_text = word['text']
+                if word_text not in seen:
+                    seen[word_text] = True
+                    unique_words.append(word)
+
+            # Shuffle unique words
+            random.shuffle(unique_words)
+
+            # Regroup into pages of 5 words
+            page_size = 5
+            sentences = []
+            for i in range(0, len(unique_words), page_size):
+                page_words = unique_words[i:i+page_size]
+                sentence_text = ' '.join(word['text'] for word in page_words)
+                sentences.append({
+                    'sentence': sentence_text,
+                    'words': page_words
+                })
+
+            print(f"Randomized {len(unique_words)} unique words into {len(sentences)} pages of ~{page_size} words each")
+
+        if resume_from > 0:
+            print(f"Resuming from sentence {resume_from + 1}")
+            sentences = sentences[resume_from:]
+
+        print("Press Enter to start...")
+        input()
+
+        # Train on each sentence
+        with self.term.fullscreen():
+            for idx, sentence_data in enumerate(sentences, start=resume_from):
+                if not self.train_sentence(sentence_data, idx):
+                    break
+
+        # Display final score
+        print(self.term.clear)
+        if self.total_words > 0:
+            percentage = (self.total_correct / self.total_words) * 100
+            print(self.term.bold_green(f"\nFinal Score: {self.total_correct}/{self.total_words}"))
+            print(self.term.green(f"Accuracy: {percentage:.1f}%\n"))
+        else:
+            print("\nNo words attempted.\n")
+
+def main():
+    parser = argparse.ArgumentParser(description='Interactive Latin grammar trainer')
+    parser.add_argument('parsed_file', help='Parsed JSONL file from latin-parse')
+    parser.add_argument('--output', '-o', required=True, help='Output file for attempts')
+    parser.add_argument('--resume', '-r', action='store_true', help='Resume from last position')
+    parser.add_argument('--user', '-u', default='default', help='User name')
+    parser.add_argument('--randomize', '-x', action='store_true', help='Randomize word order within each sentence')
+
+    args = parser.parse_args()
+
+    # Determine resume position
+    resume_from = 0
+    if args.resume and Path(args.output).exists():
+        with open(args.output, 'r') as f:
+            lines = f.readlines()
+            if lines:
+                last = json.loads(lines[-1])
+                resume_from = last['sentence_id'] + 1
+
+    trainer = LatinTrainer(args.output, args.user, args.randomize, args.parsed_file)
+    trainer.run(args.parsed_file, resume_from)
+
+if __name__ == '__main__':
+    from pathlib import Path
+    main()

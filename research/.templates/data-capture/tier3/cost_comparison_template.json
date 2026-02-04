@@ -1,0 +1,107 @@
+{
+  "_comment": "Template for 3-year TCO cost comparisons (Path 1 DIY vs Path 2 Standards vs Path 3 Managed)",
+  "_usage": "Capture during S2 Comprehensive or S3 Need-Driven phases",
+
+  "research_id": "X.XXX",
+  "comparison_type": "3_year_tco",
+  "date": "2025-10-17",
+  "scale_assumption": "Describe the scale (1K-10K users, 1M API requests/month, etc)",
+
+  "path1_diy": {
+    "path_name": "Self-Hosted / DIY",
+    "description": "What DIY means for this service",
+    "year1_cost_usd": {
+      "infrastructure": 0,
+      "note_infrastructure": "VPS, storage, bandwidth costs",
+      "engineering_time_hours": 0,
+      "engineering_cost_usd": 0,
+      "note_engineering": "X hours/month @ $Y/hour",
+      "opportunity_cost_usd": 0,
+      "note_opportunity": "Features not built due to ops burden",
+      "risk_cost_usd": 0,
+      "note_risk": "Potential downtime, data loss, security incidents",
+      "total_usd": 0
+    },
+    "year3_total_cost_usd": {
+      "min": 0,
+      "max": 0,
+      "note": "Sum of all costs over 3 years"
+    }
+  },
+
+  "path2_open_standards": {
+    "path_name": "Managed Provider (Open Standard)",
+    "tier2_standard_id": "2.XXX",
+    "providers": [
+      {
+        "provider": "Provider Name",
+        "tier": "Tier Name",
+        "monthly_cost_usd": 0,
+        "year1_cost_usd": 0,
+        "year3_cost_usd": 0,
+        "includes": ["what's included in this price"],
+        "note": "Any gotchas or additional costs"
+      }
+    ],
+    "year3_cost_range_usd": {
+      "min": 0,
+      "max": 0,
+      "note": "Range across compatible providers"
+    },
+    "migration_cost_between_providers_hours": {
+      "min": 0,
+      "max": 0,
+      "note": "Cost to switch between Path 2 providers"
+    }
+  },
+
+  "path3_proprietary": {
+    "path_name": "Proprietary Managed Service",
+    "providers": [
+      {
+        "provider": "Provider Name",
+        "pricing_model": "usage-based|subscription|hybrid",
+        "monthly_cost_usd": 0,
+        "year3_cost_usd": 0,
+        "lock_in_hours": {
+          "min": 0,
+          "max": 0
+        },
+        "note": "What makes this proprietary vs Path 2"
+      }
+    ]
+  },
+
+  "cost_comparison_summary": {
+    "diy_vs_managed_ratio": "NNx (e.g., 40-200x)",
+    "managed_vs_proprietary_ratio": "NNx",
+    "break_even_point": {
+      "monthly_spend_usd": {
+        "min": 0,
+        "max": 0
+      },
+      "note": "When does DIY become cost-competitive?"
+    },
+    "recommendation": "Which path for which scale/context?"
+  },
+
+  "data_lineage": {
+    "source_documents": [
+      "research/X.XXX-research-name/SECTION_0_STANDARDS.md"
+    ],
+    "source_urls": [
+      {
+        "url": "https://provider.com/pricing",
+        "accessed_at": "2025-10-17T00:00:00Z",
+        "purpose": "Pricing data",
+        "status_code": 200
+      }
+    ],
+    "extracted_at": "2025-10-17T00:00:00Z",
+    "extraction_method": "manual_research|llm_extraction",
+    "credibility": "first_party|second_party|third_party",
+    "assumptions": [
+      "List any assumptions made in cost calculations"
+    ]
+  }
+}

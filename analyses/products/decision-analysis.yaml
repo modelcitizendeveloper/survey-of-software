@@ -1,0 +1,132 @@
+# Decision Analysis - Consulting Service
+#
+# Live consulting service at https://app.ivantohelpyou.com/decision-analysis
+# Live calls with clients walking through spawn-solutions and/or spawn-analysis
+#
+# This is a SERVICE, not a software product:
+# - Client calls/sessions
+# - Uses spawn-solutions (tools selection) OR spawn-analysis (decision cards)
+# - Whichever is appropriate given client context
+#
+# This is NOT:
+# - spawn-analysis (research tool in ~/spawn-analysis)
+# - spawn-solutions (research repository)
+# - ivantohelpyou (website/marketing)
+
+project:
+  title: "decision-analysis"
+  description: "Consulting service - client calls, preparation, follow-up, methodology refinement"
+  parent_project_id: 13449  # Clients - customer-facing work
+
+tasks:
+  - title: "GTD Capture: Review decision-analysis client work"
+    description: |
+      <strong>Goal:</strong> Capture active client consulting tasks<br><br>
+      <strong>Task types:</strong><br>
+      - Prep for upcoming calls (OK to use client name)<br>
+      - Follow-up work (send materials, next steps)<br>
+      - Client-specific methodology refinement<br>
+      - Marketing/outreach for new clients<br>
+      - Scheduling/logistics<br><br>
+      <strong>Service delivery:</strong><br>
+      - spawn-solutions: Help client select tools/libraries/services<br>
+      - spawn-analysis: Help client make strategic decisions<br>
+      - (use whichever fits their context)<br><br>
+      <strong>Note on client data:</strong><br>
+      - Tasks can mention client names (e.g., "Prep for Acme call")<br>
+      - Comprehensive client data lives elsewhere (CRM, private notes)<br>
+      - Archive/delete projects when client engagement ends<br><br>
+      <strong>Deliverables:</strong><br>
+      - Active client tasks in Vikunja<br>
+      - Clean up completed client work regularly
+    due_date: "2025-11-09"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+
+  - title: "Marketing: Follow up on CFO LC event (Nov 12) leads"
+    description: |
+      <strong>Goal:</strong> Convert CFO Leadership Community event attendees into clients<br><br>
+      <strong>Context:</strong><br>
+      - CFO LC event scheduled: November 12, 2025<br>
+      - Expect better results from this event vs LinkedIn launch<br>
+      - LinkedIn launch earlier this week: 0 response<br><br>
+      <strong>Follow-up actions:</strong><br>
+      - Attend CFO LC event on Nov 12<br>
+      - Collect contact information from attendees<br>
+      - Send personalized follow-up emails within 48 hours<br>
+      - Offer decision analysis sessions<br>
+      - Reference event conversation in outreach<br><br>
+      <strong>Success criteria:</strong><br>
+      - At least 3 follow-up conversations scheduled<br>
+      - At least 1 paid decision analysis session booked<br>
+      - Contacts added to CRM/pipeline
+    due_date: "2025-11-15"
+    priority: 5
+    labels:
+      - "Next Action"
+      - "@People"
+      - "High Energy"
+
+  - title: "Case Study: Document WeRise engagement for portfolio"
+    description: |
+      <strong>Goal:</strong> Create case study from WeRise decision analysis work<br><br>
+      <strong>Context:</strong><br>
+      - WeRise engagement completed or in progress<br>
+      - Can be used as proof point for CFO LC event and future marketing<br>
+      - Demonstrates decision analysis methodology in action<br><br>
+      <strong>Case study elements:</strong><br>
+      - Client context (anonymize if needed)<br>
+      - Challenge or decision they faced<br>
+      - Decision analysis process used<br>
+      - Frameworks or tools from spawn-solutions/spawn-analysis<br>
+      - Outcome and value delivered<br>
+      - Client testimonial (if available)<br><br>
+      <strong>Use cases:</strong><br>
+      - Share at CFO LC event<br>
+      - Add to ivantohelpyou.com/decision-analysis page<br>
+      - Use in follow-up emails to prospects<br>
+      - Portfolio building<br><br>
+      <strong>Success criteria:</strong><br>
+      - Case study drafted<br>
+      - Client approval obtained (if using real name)<br>
+      - Published or ready to share
+    due_date: "2025-11-20"
+    priority: 5
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "Writing"
+      - "High Energy"
+
+  - title: "Marketing: Refine LinkedIn strategy based on launch learnings"
+    description: |
+      <strong>Goal:</strong> Improve LinkedIn presence and outreach approach<br><br>
+      <strong>Context:</strong><br>
+      - Launched decision-analysis on LinkedIn earlier this week<br>
+      - Result: 0 response<br>
+      - Need to understand why and adjust approach<br><br>
+      <strong>Analysis needed:</strong><br>
+      - Review LinkedIn post content and positioning<br>
+      - Analyze audience targeting (who saw the post?)<br>
+      - Compare to successful posts or campaigns<br>
+      - Identify what resonates with CFO audience<br><br>
+      <strong>Adjustments to test:</strong><br>
+      - Different messaging (problem-focused vs solution-focused)<br>
+      - Case study or story-based content<br>
+      - Direct outreach vs public posts<br>
+      - LinkedIn articles vs short posts<br>
+      - Video or visual content<br><br>
+      <strong>Success criteria:</strong><br>
+      - Refined LinkedIn content strategy documented<br>
+      - 2-3 new approaches tested<br>
+      - Engagement metrics improving
+    due_date: "2025-11-25"
+    priority: 0
+    labels:
+      - "@Computer"
+      - "Planning"
+      - "Writing"

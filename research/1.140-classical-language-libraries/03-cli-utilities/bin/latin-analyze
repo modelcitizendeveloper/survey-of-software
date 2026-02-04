@@ -1,0 +1,301 @@
+#!/home/ivanadamin/spawn-solutions/research/1.140-classical-language-libraries/02-implementations/.venv/bin/python
+"""
+latin-analyze - Analyze Latin training attempts
+
+Usage:
+    latin-analyze attempts.jsonl
+    latin-analyze attempts.jsonl --mistakes
+    latin-analyze attempts.jsonl --progress
+    latin-analyze attempts.jsonl --export srs.json
+
+Reads attempt records from latin-train and generates statistics.
+"""
+
+import sys
+import json
+import argparse
+from datetime import datetime
+from collections import defaultdict, Counter
+
+def load_attempts(filename):
+    """Load all attempts from JSONL file"""
+    attempts = []
+    with open(filename, 'r', encoding='utf-8') as f:
+        for line in f:
+            attempts.append(json.loads(line))
+    return attempts
+
+def analyze_overall(attempts):
+    """Generate overall statistics"""
+    if not attempts:
+        print("No attempts found.")
+        return
+
+    total_sentences = len(attempts)
+    total_words = sum(len(a['attempts']) for a in attempts)
+    total_attempted = sum(
+        sum(1 for word in a['attempts'] if word['user_input'])
+        for a in attempts
+    )
+    total_correct = sum(
+        sum(1 for word in a['attempts'] if word['correct'])
+        for a in attempts
+    )
+
+    overall_accuracy = total_correct / total_attempted if total_attempted > 0 else 0.0
+
+    # Date range
+    timestamps = [datetime.fromisoformat(a['timestamp']) for a in attempts]
+    start_date = min(timestamps).strftime('%Y-%m-%d')
+    end_date = max(timestamps).strftime('%Y-%m-%d')
+
+    # User
+    user = attempts[0]['user']
+
+    print("=" * 70)
+    print("LATIN TRAINING ANALYSIS")
+    print("=" * 70)
+    print(f"User: {user}")
+    print(f"Period: {start_date} to {end_date}")
+    print()
+    print(f"Overall Accuracy: {overall_accuracy:.1%}")
+    print(f"Total Sentences: {total_sentences}")
+    print(f"Total Words Analyzed: {total_attempted}")
+    print()
+
+def analyze_mistakes(attempts):
+    """Analyze common mistake patterns"""
+    mistakes = defaultdict(list)
+
+    for session in attempts:
+        for word_attempt in session['attempts']:
+            if not word_attempt['correct'] and word_attempt['user_input']:
+                expected = word_attempt['expected']
+                user = word_attempt['user_input']
+
+                # Categorize mistake
+                if user.get('pos') != expected.get('pos'):
+                    mistakes['pos_confusion'].append({
+                        'word': word_attempt['word'],
+                        'expected_pos': expected.get('pos'),
+                        'user_pos': user.get('pos'),
+                    })
+
+                if expected.get('case') and user.get('case') != expected.get('case'):
+                    mistakes['case_confusion'].append({
+                        'word': word_attempt['word'],
+                        'expected_case': expected.get('case'),
+                        'user_case': user.get('case'),
+                    })
+
+                if expected.get('declension') and user.get('declension') != expected.get('declension'):
+                    mistakes['declension_confusion'].append({
+                        'word': word_attempt['word'],
+                        'expected_decl': expected.get('declension'),
+                        'user_decl': user.get('declension'),
+                    })
+
+                if expected.get('tense') and user.get('tense') != expected.get('tense'):
+                    mistakes['tense_confusion'].append({
+                        'word': word_attempt['word'],
+                        'expected_tense': expected.get('tense'),
+                        'user_tense': user.get('tense'),
+                    })
+
+    # Print analysis
+    print("=" * 70)
+    print("MISTAKE PATTERNS")
+    print("=" * 70)
+    print()
+
+    if mistakes['case_confusion']:
+        case_errors = Counter(
+            f"{m['expected_case']}/{m['user_case']}"
+            for m in mistakes['case_confusion']
+        )
+        print(f"Case Confusion: {len(mistakes['case_confusion'])} errors")
+        for pair, count in case_errors.most_common(5):
+            print(f"  • {pair}: {count} times")
+        print()
+
+    if mistakes['declension_confusion']:
+        decl_errors = Counter(
+            f"{m['expected_decl']}/{m['user_decl']}"
+            for m in mistakes['declension_confusion']
+        )
+        print(f"Declension Confusion: {len(mistakes['declension_confusion'])} errors")
+        for pair, count in decl_errors.most_common(5):
+            print(f"  • {pair}: {count} times")
+        print()
+
+    if mistakes['tense_confusion']:
+        tense_errors = Counter(
+            f"{m['expected_tense']}/{m['user_tense']}"
+            for m in mistakes['tense_confusion']
+        )
+        print(f"Tense Confusion: {len(mistakes['tense_confusion'])} errors")
+        for pair, count in tense_errors.most_common(5):
+            print(f"  • {pair}: {count} times")
+        print()
+
+    if mistakes['pos_confusion']:
+        pos_errors = Counter(
+            f"{m['expected_pos']}/{m['user_pos']}"
+            for m in mistakes['pos_confusion']
+        )
+        print(f"POS Confusion: {len(mistakes['pos_confusion'])} errors")
+        for pair, count in pos_errors.most_common(5):
+            print(f"  • {pair}: {count} times")
+        print()
+
+def analyze_strengths(attempts):
+    """Analyze areas of strength"""
+    accuracy_by_category = defaultdict(lambda: {'correct': 0, 'total': 0})
+
+    for session in attempts:
+        for word_attempt in session['attempts']:
+            if not word_attempt['user_input']:
+                continue
+
+            expected = word_attempt['expected']
+            is_correct = word_attempt['correct']
+
+            # POS accuracy
+            pos = expected.get('pos', 'unknown')
+            accuracy_by_category[f"pos_{pos}"]['total'] += 1
+            if is_correct:
+                accuracy_by_category[f"pos_{pos}"]['correct'] += 1
+
+            # Case accuracy
+            if expected.get('case'):
+                case = expected['case']
+                accuracy_by_category[f"case_{case}"]['total'] += 1
+                if is_correct:
+                    accuracy_by_category[f"case_{case}"]['correct'] += 1
+
+            # Declension accuracy
+            if expected.get('declension'):
+                decl = expected['declension']
+                accuracy_by_category[f"decl_{decl}"]['total'] += 1
+                if is_correct:
+                    accuracy_by_category[f"decl_{decl}"]['correct'] += 1
+
+            # Tense accuracy
+            if expected.get('tense'):
+                tense = expected['tense']
+                accuracy_by_category[f"tense_{tense}"]['total'] += 1
+                if is_correct:
+                    accuracy_by_category[f"tense_{tense}"]['correct'] += 1
+
+    # Calculate percentages
+    results = {}
+    for category, counts in accuracy_by_category.items():
+        if counts['total'] > 0:
+            results[category] = counts['correct'] / counts['total']
+
+    # Print strengths and weaknesses
+    print("=" * 70)
+    print("STRENGTHS & WEAKNESSES")
+    print("=" * 70)
+    print()
+
+    # Sort by accuracy
+    sorted_results = sorted(results.items(), key=lambda x: x[1])
+
+    print("Weaknesses (lowest accuracy):")
+    for category, accuracy in sorted_results[:5]:
+        counts = accuracy_by_category[category]
+        print(f"  • {category.replace('_', ' ').title()}: {accuracy:.1%} ({counts['correct']}/{counts['total']})")
+    print()
+
+    print("Strengths (highest accuracy):")
+    for category, accuracy in sorted_results[-5:]:
+        counts = accuracy_by_category[category]
+        print(f"  • {category.replace('_', ' ').title()}: {accuracy:.1%} ({counts['correct']}/{counts['total']})")
+    print()
+
+def show_progress(attempts):
+    """Show progress over time"""
+    print("=" * 70)
+    print("PROGRESS OVER TIME")
+    print("=" * 70)
+    print()
+
+    for i, session in enumerate(attempts, 1):
+        timestamp = datetime.fromisoformat(session['timestamp']).strftime('%Y-%m-%d %H:%M')
+        accuracy = session['accuracy']
+        sentence = session['sentence'][:50]
+
+        print(f"{i:3d}. [{timestamp}] {accuracy:.1%} - {sentence}...")
+
+def export_srs(attempts, output_file):
+    """Export mistakes to SRS format"""
+    mistakes = []
+
+    for session in attempts:
+        for word_attempt in session['attempts']:
+            if not word_attempt['correct'] and word_attempt['user_input']:
+                mistakes.append({
+                    'word': word_attempt['word'],
+                    'expected': word_attempt['expected'],
+                    'sentence': session['sentence'],
+                    'timestamp': session['timestamp'],
+                })
+
+    with open(output_file, 'w', encoding='utf-8') as f:
+        json.dump(mistakes, f, ensure_ascii=False, indent=2)
+
+    print(f"Exported {len(mistakes)} mistakes to {output_file}")
+
+def list_mistakes(attempts):
+    """List all mistakes"""
+    print("=" * 70)
+    print("ALL MISTAKES")
+    print("=" * 70)
+    print()
+
+    mistake_count = 0
+    for session in attempts:
+        for word_attempt in session['attempts']:
+            if not word_attempt['correct'] and word_attempt['user_input']:
+                mistake_count += 1
+                print(f"{mistake_count}. {word_attempt['word']}")
+                print(f"   Expected: {word_attempt['expected']}")
+                print(f"   You said: {word_attempt['user_input']}")
+                print(f"   Sentence: {session['sentence']}")
+                print()
+
+def main():
+    parser = argparse.ArgumentParser(description='Analyze Latin training attempts')
+    parser.add_argument('attempts_file', help='Attempts JSONL file from latin-train')
+    parser.add_argument('--mistakes', action='store_true', help='List all mistakes')
+    parser.add_argument('--progress', action='store_true', help='Show progress over time')
+    parser.add_argument('--export', help='Export mistakes to SRS JSON file')
+
+    args = parser.parse_args()
+
+    attempts = load_attempts(args.attempts_file)
+
+    if args.mistakes:
+        list_mistakes(attempts)
+    elif args.progress:
+        show_progress(attempts)
+    elif args.export:
+        export_srs(attempts, args.export)
+    else:
+        # Default: show overall analysis
+        analyze_overall(attempts)
+        analyze_mistakes(attempts)
+        analyze_strengths(attempts)
+
+        print("=" * 70)
+        print("RECOMMENDED PRACTICE")
+        print("=" * 70)
+        print()
+        print("Run with --mistakes to see detailed error list")
+        print("Run with --progress to see accuracy over time")
+        print("Run with --export srs.json to generate SRS review deck")
+        print()
+
+if __name__ == '__main__':
+    main()

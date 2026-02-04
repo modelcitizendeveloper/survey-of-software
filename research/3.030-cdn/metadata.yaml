@@ -1,0 +1,215 @@
+---
+experiment_number: "3.030"
+experiment_sequence: 20
+experiment_date: "2025-11-09"
+experiment_completed: "2025-11-12"
+experiment_status: complete
+discovery_method: mpse_v3
+migrated_from: null
+mpse_version: "3.0"
+
+# Execution Statistics (All Phases Complete)
+execution_stats:
+  methodology: sequential
+  total_wall_time: "90 minutes (S1) + 8 hours (S2-S4)"
+
+  S1_rapid:
+    status: complete
+    date: "2025-11-09"
+    tokens: 8100
+    duration: "90m"
+    files_created: 5
+    providers_analyzed: 8
+
+  S2_comprehensive:
+    status: complete
+    date: "2025-11-12"
+    estimated_hours: 7
+    files_created: 6
+    deliverables:
+      - feature-matrix.md (44 features, 6 providers)
+      - pricing-tco.md (4 scenarios, 5-year TCO)
+      - performance-benchmarks.md (latency, cache, throughput)
+      - geographic-coverage.md (PoP analysis, regional latency)
+      - integration-ecosystem.md (APIs, SDKs, Terraform)
+      - synthesis.md (decision frameworks, trade-offs)
+
+  S3_need_driven:
+    status: complete
+    date: "2025-11-12"
+    estimated_hours: 2
+    files_created: 3
+    scenarios_analyzed: 5
+    deliverables:
+      - scenario-1-startup-mvp.md (<100GB/month)
+      - scenario-2-growing-saas.md (1TB/month)
+      - scenarios-3-4-5-combined.md (e-commerce, news, video)
+
+  S4_strategic:
+    status: complete
+    date: "2025-11-12"
+    estimated_hours: 2
+    files_created: 2
+    deliverables:
+      - positioning-frameworks.md (market segments, decision trees, lock-in mitigation)
+      - vendor-viability-market-outlook.md (5-year survival, market trends, technology evolution)
+
+  totals:
+    completed_phases: 4
+    pending_phases: 0
+    tokens: 8100 (S1) + ~100000 (S2-S4)
+    duration: "90m (S1) + 11 hours (S2-S4)"
+    total_files_created: 16
+
+# Discovery Output (S1 Only)
+deliverables:
+  - DOMAIN_EXPLAINER.md
+  - SECTION_0_STANDARDS.md
+  - README.md
+  - metadata.yaml
+  - 01-discovery/S1-rapid/approach.md
+  - 01-discovery/S1-rapid/provider-cloudflare.md
+  - 01-discovery/S1-rapid/provider-bunnycdn.md
+  - 01-discovery/S1-rapid/provider-fastly.md
+  - 01-discovery/S1-rapid/recommendation.md
+
+total_files: 9
+total_lines: 714
+providers_analyzed: 8
+s1_confidence: "8/10 (High)"
+
+# Key Findings (S1)
+key_insights:
+  - "No open CDN standard exists - moderate lock-in (4-20h migration)"
+  - "Cost varies 12× ($10/TB BunnyCDN to $120/TB Fastly)"
+  - "Cloudflare best for 80% of teams (free tier → enterprise scale)"
+  - "BunnyCDN best for cost optimization (10× cheaper than AWS/Fastly)"
+  - "Fastly best for specific needs (instant purge <150ms, high-change-rate sites)"
+
+category: "3.030"
+title: "Content Delivery Network (CDN) Services"
+domain: "Content Delivery & Performance"
+
+scope:
+  what_it_is: "Comprehensive analysis of CDN services for global content delivery and performance optimization"
+  what_it_covers:
+    - Global content distribution and edge caching
+    - Bandwidth and pricing models
+    - DDoS protection and security features
+    - SSL/TLS certificate management
+    - Image and asset optimization
+    - Real-time analytics and logging
+    - Edge compute capabilities
+    - Cache purging and invalidation
+    - Origin shield and pull zones
+    - Multi-CDN strategies
+  what_it_excludes:
+    - Pure object storage without CDN (see 3.031 Object Storage)
+    - Web application firewalls standalone (see 3.010 WAF)
+    - Image processing services (see 3.032 Image Processing)
+    - Video streaming platforms (separate category needed)
+    - DNS services (separate from CDN caching)
+
+relationship_to_other_categories:
+  "3.031_object_storage":
+    relationship: "upstream_dependency"
+    description: "CDN caches and delivers files stored in object storage (S3, R2, Azure Blob)"
+    documented_in: "DOMAIN_EXPLAINER.md"
+  "3.010_waf":
+    relationship: "overlapping_features"
+    description: "Many CDNs include WAF and DDoS protection (Cloudflare, Fastly, Akamai)"
+    documented_in: "S2 feature matrix"
+  "3.032_image_processing":
+    relationship: "complementary"
+    description: "Image CDNs combine processing + delivery (Cloudinary, ImageKit include CDN)"
+    documented_in: "S1 provider notes"
+  "3.050_paas":
+    relationship: "integration"
+    description: "Many PaaS platforms include integrated CDN (Vercel, Netlify)"
+    documented_in: "S3 use case analysis"
+
+use_cases:
+  - Global website performance optimization
+  - E-commerce sites with global customers
+  - SaaS applications requiring low latency
+  - Media-heavy sites (images, videos, downloads)
+  - High-traffic sites needing DDoS protection
+  - API response caching for performance
+  - Mobile app asset delivery
+  - Game asset distribution
+
+target_personas:
+  - Startup CTOs evaluating CDN options
+  - DevOps engineers optimizing performance
+  - E-commerce platform managers
+  - Media site operators
+  - SaaS product managers
+  - Enterprise infrastructure teams
+
+key_decision_factors:
+  - Geographic distribution (PoPs in target regions)
+  - Bandwidth pricing and total cost of ownership
+  - DDoS protection and security features
+  - Cache hit rate and performance
+  - Origin integration (S3, custom origin, multi-origin)
+  - Ease of setup and configuration
+  - Analytics and real-time visibility
+  - Support quality and SLAs
+  - Edge compute capabilities (Fastly VCL, Cloudflare Workers)
+
+market_overview:
+  market_leaders:
+    global_giants:
+      - Cloudflare - Free tier, 200+ PoPs, integrated security
+      - AWS CloudFront - AWS ecosystem, enterprise features
+      - Fastly - Edge compute, developer-focused
+      - Akamai - Enterprise legacy leader, massive scale
+    mid_market:
+      - BunnyCDN - Budget-friendly, great value
+      - KeyCDN - Simple pricing, solid performance
+      - StackPath - Security-focused
+    platform_integrated:
+      - Vercel Edge Network - Next.js optimized
+      - Netlify Edge - Jamstack sites
+      - Google Cloud CDN - GCP integration
+  market_size: "~$20 billion (2024) projected to $50 billion by 2030"
+  growth_rate: "~15% CAGR (driven by video, global app growth)"
+  typical_pricing: "$10-100/month (small) to $500-10,000+/month (enterprise)"
+
+research_questions:
+  - When does CDN cost justify the performance benefit?
+  - How to choose between global giants vs budget CDNs?
+  - When is Cloudflare free tier sufficient vs paid plans?
+  - Multi-CDN strategy: When and how to implement?
+  - CDN + object storage integration: Best practices?
+  - How to optimize cache hit rate and reduce origin load?
+  - When to use platform-integrated CDN vs standalone?
+
+mpse_methodologies_applied:
+  S1_rapid:
+    focus: "Popular CDN providers and ecosystem landscape"
+    outcome: "Market leaders identified by segment and use case"
+  S2_comprehensive:
+    focus: "Deep comparison of features, pricing, performance, security"
+    outcome: "Detailed analysis across 10+ providers with benchmarks"
+  S3_need_driven:
+    focus: "Solutions tailored to specific traffic patterns and budgets"
+    outcome: "Recommendations by business size, geography, and use case"
+  S4_strategic:
+    focus: "Long-term viability, vendor lock-in, migration complexity"
+    outcome: "Strategic framework for CDN selection and multi-CDN strategies"
+
+research_sources:
+  - Provider websites and pricing documentation
+  - CDN performance benchmarks (httparchive.org, CDNPerf)
+  - Market research reports (Gartner, Forrester)
+  - Developer community discussions (HN, Reddit, forums)
+  - Real-world case studies and migration stories
+  - Performance testing tools (WebPageTest, Lighthouse)
+
+notes:
+  - Generic reference material for any business needing CDN
+  - Pricing current as of November 2025
+  - Focus on web/app CDN (not video streaming platforms)
+  - Many CDNs offer bundled services (CDN + WAF + DDoS)
+  - Platform-integrated CDNs (Vercel, Netlify) may be sufficient for many use cases

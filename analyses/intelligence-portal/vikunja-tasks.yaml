@@ -1,0 +1,64 @@
+# Intelligence Portal
+#
+# Status: Active
+# Original intent: Fintech-related content at https://app.ivantohelpyou.com/intelligence
+
+project:
+  title: "Intelligence Portal"
+  description: "Fintech intelligence and research content platform"
+  parent_project_id: 13448  # Applications - capability application
+
+tasks:
+  - title: "GTD Capture: Review intelligence-portal content and strategy"
+    description: |
+      <strong>Goal:</strong> Capture current state and open items for Intelligence Portal<br><br>
+      <strong>Context:</strong><br>
+      - Original intent: Fintech-related content<br>
+      - Live at: https://app.ivantohelpyou.com/intelligence<br>
+      - Similar template/approach as cookbooks project<br><br>
+      <strong>Folder location:</strong> ~/spawn-solutions/applications/intelligence-portal/<br><br>
+      <strong>Steps:</strong><br>
+      - Review folder contents<br>
+      - Check https://app.ivantohelpyou.com/intelligence for current state<br>
+      - Review any existing fintech content<br>
+      - Document content strategy and target audience<br>
+      - Identify open content items<br><br>
+      <strong>Deliverables:</strong><br>
+      - Current state assessment<br>
+      - Content inventory<br>
+      - Complete task list in Vikunja
+    due_date: "2025-11-10"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+
+  - title: "Networking: Contact Fredric Paul about BCBS/Collate deliverable"
+    description: |
+      <strong>Goal:</strong> Follow up with Fredric Paul to see final BCBS piece<br><br>
+      <strong>Context:</strong><br>
+      - Fredric Paul: Editor<br>
+      - Helped write a BCBS (Blue Cross Blue Shield) piece<br>
+      - For Collate (metadata management company)<br>
+      - Want to see the final published deliverable<br><br>
+      <strong>Purpose of contact:</strong><br>
+      - Request link to final published piece<br>
+      - Review how metadata management content was presented<br>
+      - Potential for future collaboration on fintech/enterprise content<br>
+      - Add to portfolio or case studies if appropriate<br><br>
+      <strong>Next steps:</strong><br>
+      - Find Fredric's contact information<br>
+      - Draft email requesting final deliverable<br>
+      - Review published piece when received<br>
+      - Document learnings for intelligence-portal content strategy<br><br>
+      <strong>Success criteria:</strong><br>
+      - Contact made with Fredric<br>
+      - Final BCBS/Collate piece received and reviewed<br>
+      - Insights captured for content strategy
+    due_date: "2025-11-20"
+    priority: 0
+    labels:
+      - "Next Action"
+      - "@People"

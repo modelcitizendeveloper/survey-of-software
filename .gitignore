@@ -46,7 +46,7 @@ research-site-public/
 .build/
 library-metadata*.json
 
-# Gas Town (added by gt)
+# Gas Town runtime directories
 .runtime/
 .claude/
 .logs/

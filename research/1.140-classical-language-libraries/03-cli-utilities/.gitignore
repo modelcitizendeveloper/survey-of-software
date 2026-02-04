@@ -1,0 +1,21 @@
+# User progress files
+progress/*_attempts.jsonl
+progress/*.jsonl
+
+# Python virtual environment
+.venv/
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db

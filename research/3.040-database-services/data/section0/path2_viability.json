@@ -1,0 +1,68 @@
+{
+  "research_id": "3.040",
+  "tier2_standard_id": "2.050",
+  "portability_level": "HIGH",
+  "portability_justification": "PostgreSQL standard with 50+ compatible providers, pg_dump/pg_restore tooling, minimal code changes between providers",
+
+  "compatible_providers": {
+    "self_hosted": [
+      "PostgreSQL (reference implementation)"
+    ],
+    "managed_postgresql": [
+      "Supabase",
+      "Neon",
+      "Render",
+      "Railway",
+      "Heroku",
+      "Crunchy Data"
+    ],
+    "cloud_providers": [
+      "AWS RDS",
+      "Google Cloud SQL",
+      "Azure Database for PostgreSQL",
+      "DigitalOcean"
+    ],
+    "postgresql_compatible": [
+      "CockroachDB",
+      "YugabyteDB",
+      "Amazon Aurora PostgreSQL"
+    ],
+    "total_count": "50+"
+  },
+
+  "migration_complexity": {
+    "between_postgresql_providers": {
+      "time_hours_min": 8,
+      "time_hours_max": 40,
+      "method": "pg_dump/pg_restore (standard tools)",
+      "code_changes": "ZERO",
+      "code_changes_note": "if staying within PostgreSQL standard",
+      "dashboard_changes": "ZERO",
+      "dashboard_changes_note": "connection string only"
+    },
+    "lock_in_risk": "LOW",
+    "lock_in_risk_note": "within PostgreSQL ecosystem"
+  },
+
+  "gotchas": [
+    {
+      "issue": "Extension compatibility varies",
+      "detail": "PostGIS works everywhere, pgvector limited"
+    },
+    {
+      "issue": "Performance tuning settings differ between providers",
+      "detail": "Each provider optimizes differently"
+    },
+    {
+      "issue": "Provider-specific features create soft lock-in",
+      "detail": "Supabase auth, Neon branching"
+    }
+  ],
+
+  "data_lineage": {
+    "source_document": "research/3.040-database-services/SECTION_0_STANDARDS.md",
+    "lines": [25, 49],
+    "extracted_at": "2025-10-17T00:00:00Z",
+    "extraction_method": "manual_conversion"
+  }
+}

@@ -1,0 +1,347 @@
+repository: spawn-solutions
+total_completed: 86
+research:
+- code: '1.001'
+  title: advanced sorting libraries
+  description: Advanced sorting algorithms and libraries - Timsort, NumPy radix, parallel, external sorting. Completed Nov 14, 2025 (S1-S4, 29 docs, 19,686 lines)
+  path: research/1.001-sorting-libraries
+- code: '1.002'
+  title: fuzzy search
+  description: Research on fuzzy search
+  path: research/1.002-fuzzy-search
+- code: '1.005'
+  title: spatial search
+  description: Research on spatial search
+  path: research/1.005-spatial-search
+- code: '1.010'
+  title: graph analysis
+  description: Research on graph analysis
+  path: research/1.010-graph-analysis
+- code: '1.022'
+  title: optimization
+  description: Research on optimization
+  path: research/1.022-optimization
+- code: '1.033'
+  title: nlp libraries
+  description: Research on nlp libraries
+  path: research/1.033-nlp-libraries
+- code: 1.033.1
+  title: intent classification libraries
+  description: Research on intent classification libraries
+  path: research/1.033.1-intent-classification-libraries
+- code: '1.034'
+  title: email libraries
+  description: '- **Tier**: 1 (Library/Package Discovery)'
+  path: research/1.034-email-libraries
+- code: '1.039'
+  title: template engines
+  description: Research on template engines
+  path: research/1.039-template-engines
+- code: '1.040'
+  title: collections
+  description: Research on collections
+  path: research/1.040-collections
+- code: '1.042'
+  title: trie libraries
+  description: Research on trie libraries
+  path: research/1.042-trie-libraries
+- code: 1.043.1
+  title: task queue libraries
+  description: Research on task queue libraries
+  path: research/1.043.1-task-queue-libraries
+- code: '1.047'
+  title: caching libraries
+  description: Research on caching libraries
+  path: research/1.047-caching-libraries
+- code: 1.049.1
+  title: database schema inspection
+  description: Research on database schema inspection
+  path: research/1.049.1-database-schema-inspection
+- code: '1.050'
+  title: compression
+  description: Research on compression
+  path: research/1.050-compression
+- code: '1.055'
+  title: binary serialization libraries
+  description: Research on binary serialization libraries
+  path: research/1.055-binary-serialization-libraries
+- code: '1.056'
+  title: json libraries
+  description: Research on json libraries
+  path: research/1.056-json-libraries
+- code: '1.060'
+  title: cryptographic libraries
+  description: Research on cryptographic libraries
+  path: research/1.060-cryptographic-libraries
+- code: '1.061'
+  title: hashing libraries
+  description: Research on hashing libraries
+  path: research/1.061-hashing-libraries
+- code: '1.063'
+  title: jwt libraries
+  description: Research on jwt libraries
+  path: research/1.063-jwt-libraries
+- code: '1.071'
+  title: dimensionality reduction
+  description: Research on dimensionality reduction
+  path: research/1.071-dimensionality-reduction
+- code: '1.073'
+  title: time series libraries
+  description: Research on time series libraries
+  path: research/1.073-time-series-libraries
+- code: '1.074'
+  title: gradient boosting
+  description: Research on gradient boosting
+  path: research/1.074-gradient-boosting
+- code: '1.080'
+  title: image processing
+  description: Research on image processing
+  path: research/1.080-image-processing
+- code: 1.080.1
+  title: qr code generation
+  description: Research on qr code generation
+  path: research/1.080.1-qr-code-generation
+- code: 1.091.2
+  title: face detection & recognition libraries
+  description: Face detection and recognition libraries - MediaPipe, Dlib, InsightFace, MTCNN, RetinaFace, OpenCV, commercial APIs. Completed Nov 21, 2025 (S1, 9 docs, 4,522 lines)
+  path: research/1.091.2-face-detection
+- code: '1.094'
+  title: constraint solving libraries
+  description: Research on constraint solving libraries
+  path: research/1.094-constraint-solving-libraries
+- code: '1.096'
+  title: scheduling libraries
+  description: Research on scheduling libraries
+  path: research/1.096-scheduling-libraries
+- code: '1.100'
+  title: text processing
+  description: '- **Tier**: 1 (Library/Package Discovery)'
+  path: research/1.100-text-processing
+- code: 1.104.1
+  title: python ast parsing
+  description: Research on python ast parsing
+  path: research/1.104.1-python-ast-parsing
+- code: '1.110'
+  title: frontend frameworks
+  description: Research on frontend frameworks
+  path: research/1.110-frontend-frameworks
+- code: '1.120'
+  title: discrete event simulation
+  description: Research on discrete event simulation
+  path: research/1.120-discrete-event-simulation
+- code: '1.122'
+  title: monte carlo simulation
+  description: Research on monte carlo simulation
+  path: research/1.122-monte-carlo-simulation
+- code: '1.127'
+  title: financial simulation
+  description: Research on financial simulation
+  path: research/1.127-financial-simulation
+- code: '1.130'
+  title: selfhosted crm
+  description: Research on selfhosted crm
+  path: research/1.130-selfhosted-crm
+- code: '1.131'
+  title: project management
+  description: Research on project management
+  path: research/1.131-project-management
+- code: '1.140'
+  title: classical language libraries
+  description: Classical Latin morphology libraries - CLTK, Stanza PROIEL package. Completed Nov 19, 2025 (S1-S4 MPSE, synthesis, 45%→75-80% accuracy in 26h implementation, clear path to 97-98%)
+  path: research/1.140-classical-language-libraries
+- code: '1.200'
+  title: llm orchestration frameworks
+  description: LLM Orchestration Frameworks - Completed Nov 19, 2025 (S1-S4 MPSE, 38 docs, LangChain/LlamaIndex/Haystack/Semantic Kernel/DSPy)
+  path: research/1.200-llm-orchestration
+- code: '2.040'
+  title: opentelemetry
+  description: Research on opentelemetry
+  path: research/2.040-opentelemetry
+- code: '2.041'
+  title: prometheus
+  description: '- **Tier**: 2 (Open Standards - Portability)'
+  path: research/2.041-prometheus
+- code: '2.050'
+  title: postgresql sql
+  description: '- **Tier**: 2 (Open Standards - Portability)'
+  path: research/2.050-postgresql-sql
+- code: '2.051'
+  title: s3 api
+  description: '- **Tier**: 2 (Open Standards - Portability)'
+  path: research/2.051-s3-api
+- code: '2.060'
+  title: oauth oidc
+  description: Research on oauth oidc
+  path: research/2.060-oauth-oidc
+- code: '2.071'
+  title: grpc
+  description: Research on grpc
+  path: research/2.071-grpc
+- code: '2.080'
+  title: oci docker container format
+  description: Research on oci docker container format
+  path: research/2.080-oci-docker-container-format
+- code: '2.081'
+  title: kubernetes
+  description: Research on kubernetes
+  path: research/2.081-kubernetes
+- code: '3.001'
+  title: payment processing
+  description: Research on payment processing
+  path: research/3.001-payment-processing
+- code: '3.004'
+  title: cash flow management
+  description: Research on cash flow management
+  path: research/3.004-cash-flow-management
+- code: '3.005'
+  title: pos systems
+  description: '**Comprehensive MPSE Analysis for Brick-and-Mortar Businesses**'
+  path: research/3.005-pos-systems
+- code: '3.006'
+  title: accounting software
+  description: Research on accounting software
+  path: research/3.006-accounting-software
+- code: '3.007'
+  title: fpa platforms
+  description: Research on fpa platforms
+  path: research/3.007-fpa-platforms
+- code: '3.010'
+  title: waf
+  description: Research on waf
+  path: research/3.010-waf
+- code: '3.012'
+  title: authentication
+  description: Research on authentication
+  path: research/3.012-authentication
+- code: '3.020'
+  title: email communication
+  description: Research on email communication
+  path: research/3.020-email-communication
+- code: '3.030'
+  title: cdn services
+  description: Research on CDN services (content delivery networks) - completed Nov 12, 2025 (S1-S4 MPSE methodology)
+  path: research/3.030-cdn
+- code: '3.031'
+  title: object storage
+  description: '- **Tier**: 3 (Managed Services - Convenience)'
+  path: research/3.031-object-storage
+- code: '3.032'
+  title: image media processing
+  description: Image & media processing services - Cloudinary, ImageKit, Imgix, Cloudflare Images. Completed Nov 13, 2025 (S1-S4 MPSE, 28 docs, 14,189 lines)
+  path: research/3.032-image-media-processing
+- code: '3.040'
+  title: database services
+  description: Research on database services
+  path: research/3.040-database-services
+- code: '3.043'
+  title: search services
+  description: Search-as-a-Service platforms - Algolia, Meilisearch, Typesense, Elasticsearch, OpenSearch. Completed Nov 14, 2025 (S1-S4 MPSE, 28 docs, 16,268 lines)
+  path: research/3.043-search-services
+- code: '3.042'
+  title: redis hosting
+  description: Research on redis hosting
+  path: research/3.042-redis-hosting
+- code: '3.044'
+  title: data warehouse
+  description: Research on data warehouse
+  path: research/3.044-data-warehouse
+- code: '3.045'
+  title: graph databases
+  description: Graph database platforms - Neo4j, Memgraph, Neptune, ArangoDB, Dgraph, TigerGraph, JanusGraph. Completed Nov 16, 2025 (S1-S4 MPSE, 22 docs, 7,000 lines, openCypher portability focus)
+  path: research/3.045-graph-databases
+- code: '3.050'
+  title: platform as a service
+  description: Research on platform as a service
+  path: research/3.050-platform-as-a-service
+- code: '3.060'
+  title: application monitoring
+  description: Research on application monitoring
+  path: research/3.060-application-monitoring
+- code: '3.061'
+  title: uptime monitoring
+  description: Research on uptime monitoring
+  path: research/3.061-uptime-monitoring
+- code: '3.062'
+  title: web analytics
+  description: Research on web analytics
+  path: research/3.062-web-analytics
+- code: '3.063'
+  title: product analytics
+  description: Research on product analytics
+  path: research/3.063-product-analytics
+- code: '3.064'
+  title: metadata management
+  description: Research on metadata management
+  path: research/3.064-metadata-management
+- code: '3.080'
+  title: event management
+  description: Research on event management
+  path: research/3.080-event-management
+- code: 3.080.2
+  title: venue space booking
+  description: Research on venue space booking
+  path: research/3.080.2-venue-space-booking
+- code: '3.130'
+  title: personal productivity gtd
+  description: Individual task management and GTD methodology tools
+  path: research/3.130-personal-productivity-gtd
+- code: '3.131'
+  title: team task management
+  description: Team task management platforms (3-20 people) - Asana, ClickUp, Linear, Monday.com, Airtable, Trello
+  path: research/3.131-team-task-management
+- code: '3.133'
+  title: ai productivity
+  description: '- **Tier**: 3 (Managed Services - Convenience)'
+  path: research/3.133-ai-productivity
+- code: '3.134'
+  title: ai content generation & copywriting
+  description: AI Content Generation & Copywriting - Completed Nov 19, 2025 (S1-S4 MPSE, 10 docs, triggered by Niki client engagement)
+  path: research/3.134-ai-content-generation
+- code: '3.135'
+  title: social media scheduling & automation
+  description: Social Media Scheduling platforms - Buffer, Hootsuite, Later, SocialBee, Publer. Completed Nov 20, 2025 (S1, 1,977 lines, AI features focus)
+  path: research/3.135-social-media-scheduling
+- code: '3.136'
+  title: ai meeting transcription & note-taking
+  description: Meeting transcription platforms - Fireflies, Otter, Grain, Fathom. Completed Nov 20, 2025 (S1, privacy & data policy analysis)
+  path: research/3.136-meeting-transcription
+- code: '3.200'
+  title: llm apis
+  description: '- **Tier**: 3 (Managed Services - Convenience)'
+  path: research/3.200-llm-apis
+- code: '3.400'
+  title: backend as a service
+  description: Research on backend as a service
+  path: research/3.400-backend-as-a-service
+- code: '3.501'
+  title: crm platforms
+  description: Research on crm platforms
+  path: research/3.501-crm-platforms
+- code: '3.502'
+  title: erp platforms
+  description: '**Status**: 🔄 In Progress'
+  path: research/3.502-erp-platforms
+- code: '3.503'
+  title: hris hcm
+  description: Research on hris hcm
+  path: research/3.503-hris-hcm
+- code: '1.141'
+  title: spaced repetition algorithms
+  description: Spaced repetition algorithms for language learning. FSRS clear winner - 20-47× more popular (7,324 downloads/month), adopted by Anki v23.10+, active maintenance. Completed Nov 23, 2025 (S1-only, 1.2 hours, 6 files)
+  path: research/1.141-spaced-repetition
+- code: '1.142'
+  title: flashcard systems & integrations
+  description: Flashcard system integration for language learning. genanki clear winner - 22× more popular (33,970 downloads/month), programmatic .apkg generation, MIT license. Completed Nov 23, 2025 (S1-only, 1.3 hours, 5 files)
+  path: research/1.142-flashcard-systems
+- code: '1.148'
+  title: morphological analysis libraries
+  description: Multi-language morphology (Japanese, Russian, Czech). Per-language specialists win - SudachiPy (1.9M/mo), pymorphy3 (585K/mo), UDPipe (52K/mo). Created LANGUAGE_FAMILIES_ROADMAP (11 families cataloged). Completed Nov 23, 2025 (S1-only, 1.7 hours, 8 files)
+  path: research/1.148-morphological-analysis
+- code: '3.502'
+  title: erp platforms
+  description: Enterprise Resource Planning platforms - NetSuite, Dynamics 365, SAP, Odoo, Oracle, Acumatica. Completed Nov 2, 2025 (S1-S4 MPSE, 21 docs)
+  path: research/3.502-erp-platforms
+- code: '3.503'
+  title: hris hcm platforms
+  description: HRIS/HCM platforms - Rippling, Gusto, Paycom, Workday, Oracle, ADP, BambooHR, Paylocity. Completed Oct 31, 2025 (S1-S4 MPSE, 19 docs). Triggered by CFO forum Oracle HCM migration question.
+  path: research/3.503-hris-hcm

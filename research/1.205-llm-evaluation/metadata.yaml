@@ -1,0 +1,20 @@
+code: '1.205'
+title: LLM Evaluation & Testing Frameworks
+tier: 'Tier 1: Algorithms & Libraries'
+experiment_status: in_progress
+mpse_stage: S1
+started: 2025-12-10
+libraries:
+  - DeepEval
+  - PromptFoo
+  - LangSmith
+  - Ragas
+  - TruLens
+recommendation: DeepEval (comprehensive) + Ragas (RAG-specific)
+key_findings:
+  - DeepEval has 60+ metrics with self-explaining results
+  - Ragas pioneered RAG Triad, best for retrieval evaluation
+  - PromptFoo leads for red teaming and security testing
+  - LangSmith is observability-first, evaluation secondary
+  - TruLens differentiates with OpenTelemetry native support
+  - No single tool covers everything - most teams use 2-3

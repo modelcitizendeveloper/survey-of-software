@@ -1,0 +1,209 @@
+# Python API Integration - Infrastructure Subproject
+#
+# Purpose: Enable Python execution in QRCards sites
+# Unblocks: Moving Labs:Q experiments to production
+# Parent: Infrastructure (14214) under Applications (13448)
+
+project:
+  project_id: 14241  # Add tasks to existing Python API Integration subproject
+  title: "Python API Integration"
+  description: "Enable Python execution capabilities for QRCards platform - Flask API + Jupyter integration patterns"
+
+tasks:
+  - title: "✅ Documentation: Complete Python API integration reference"
+    description: |
+      <strong>Status:</strong> COMPLETED (Nov 19, 2025)<br><br>
+      <strong>Deliverables:</strong><br>
+      - Flask API integration guides (Quickstart, Architecture, Integration Patterns)<br>
+      - Jupyter integration pattern (iframe-based Python execution)<br>
+      - Comprehensive security guide (shell access prevention, LLM/Ollama security)<br>
+      - Decision guide for choosing integration approach<br>
+      - Code templates, testing strategies, checklists<br><br>
+      <strong>Output:</strong> 13 files, 4,486 lines of documentation<br>
+      <strong>Location:</strong> ~/qrcards/project/python-api/<br><br>
+      <strong>Commit:</strong> d1368a3a (Merge docs/python-api-integration)
+    done: true
+    labels:
+      - "Writing"
+      - "@Computer"
+      - "Planning"
+
+  - title: "Assessment: Review and validate Python integration approaches"
+    description: |
+      <strong>Goal:</strong> Assess documented approaches and confirm understanding<br><br>
+      <strong>Tasks:</strong><br>
+      - Review Flask API architecture documentation<br>
+      - Review Jupyter iframe integration pattern<br>
+      - Validate security requirements against QRCards threat model<br>
+      - Confirm Flask API is the right approach vs alternatives<br>
+      - Identify any gaps in documentation<br><br>
+      <strong>Decision Points:</strong><br>
+      - Flask API vs FastAPI vs other frameworks<br>
+      - Jupyter iframe vs other sandboxing approaches<br>
+      - Hosting strategy (same server vs separate service)<br>
+      - Authentication/authorization model<br><br>
+      <strong>Success Criteria:</strong><br>
+      - Clear decision on implementation approach<br>
+      - List of open questions/concerns documented<br>
+      - Implementation plan drafted
+    priority: 3
+    labels:
+      - "Next Action"
+      - "@Computer"
+      - "@DeepWork"
+      - "Planning"
+
+  - title: "Investigation: Explore alternative Python execution approaches"
+    description: |
+      <strong>Goal:</strong> Survey alternatives to ensure we're choosing the best approach<br><br>
+      <strong>Alternatives to Investigate:</strong><br>
+      - PyScript (client-side Python via WASM)<br>
+      - Pyodide (Python in browser via WebAssembly)<br>
+      - JupyterLite (client-side Jupyter via WASM)<br>
+      - AWS Lambda / serverless Python functions<br>
+      - Containerized Python (Docker)<br>
+      - Code interpreters (PythonAnywhere, Replit, etc.)<br><br>
+      <strong>Evaluation Criteria:</strong><br>
+      - Security (sandboxing, isolation)<br>
+      - Performance (latency, throughput)<br>
+      - Cost (hosting, maintenance)<br>
+      - Developer experience (ease of integration)<br>
+      - User experience (load times, responsiveness)<br>
+      - Maintenance burden<br><br>
+      <strong>Deliverable:</strong><br>
+      - Comparison matrix of approaches<br>
+      - Recommendation with rationale
+    priority: 2
+    blocked_by:
+      - "Assessment: Review and validate Python integration approaches"
+    labels:
+      - "@Computer"
+      - "@DeepWork"
+      - "Research"
+
+  - title: "Implementation: Build Flask API prototype"
+    description: |
+      <strong>Goal:</strong> Implement working Flask API for Python execution<br><br>
+      <strong>Scope:</strong><br>
+      - Set up Flask API following documented architecture<br>
+      - Implement authentication/authorization<br>
+      - Create Python execution endpoints<br>
+      - Add security controls (sandboxing, timeouts, resource limits)<br>
+      - Integrate with QRCards session management<br>
+      - Error handling and logging<br><br>
+      <strong>Success Criteria:</strong><br>
+      - API accepts Python code from QRCards<br>
+      - Executes safely in sandboxed environment<br>
+      - Returns results (stdout, stderr, return values)<br>
+      - Handles errors gracefully<br>
+      - Logging and monitoring in place
+    priority: 2
+    blocked_by:
+      - "Investigation: Explore alternative Python execution approaches"
+    labels:
+      - "@Computer"
+      - "Code"
+      - "High Energy"
+
+  - title: "Testing: Validate Flask API security and functionality"
+    description: |
+      <strong>Goal:</strong> Comprehensive testing of Flask API implementation<br><br>
+      <strong>Test Areas:</strong><br>
+      - Unit tests for API endpoints<br>
+      - Integration tests with QRCards<br>
+      - Security tests (shell escape, file access, network access)<br>
+      - Performance tests (latency, concurrent requests)<br>
+      - Error handling tests<br>
+      - Load tests (stress testing)<br><br>
+      <strong>Security Test Cases:</strong><br>
+      - Attempt shell command execution<br>
+      - Attempt file system access<br>
+      - Attempt network requests<br>
+      - Attempt resource exhaustion (CPU, memory)<br>
+      - Attempt privilege escalation<br><br>
+      <strong>Success Criteria:</strong><br>
+      - All tests passing<br>
+      - Security vulnerabilities identified and mitigated<br>
+      - Performance meets requirements (&lt;2s execution time)<br>
+      - Test coverage &gt;80%
+    priority: 2
+    blocked_by:
+      - "Implementation: Build Flask API prototype"
+    labels:
+      - "@Computer"
+      - "Code"
+      - "High Energy"
+
+  - title: "Integration: Connect Flask API to first QRCards site"
+    description: |
+      <strong>Goal:</strong> Integrate Flask API with one site for beta testing<br><br>
+      <strong>Target Site:</strong> TBD (likely Labs:Q or personal site)<br><br>
+      <strong>Integration Tasks:</strong><br>
+      - Deploy Flask API to production environment<br>
+      - Configure site to call Flask API<br>
+      - Add Python execution UI components<br>
+      - Implement error handling on client side<br>
+      - Add usage logging/analytics<br>
+      - Document integration process<br><br>
+      <strong>Success Criteria:</strong><br>
+      - Users can execute Python code from site<br>
+      - Results display correctly<br>
+      - Errors handled gracefully<br>
+      - No security issues in production<br>
+      - Performance acceptable (&lt;2s end-to-end)
+    priority: 1
+    blocked_by:
+      - "Testing: Validate Flask API security and functionality"
+    labels:
+      - "@Computer"
+      - "Code"
+      - "High Energy"
+
+  - title: "Go-Live: Move first Labs:Q project to production with Python"
+    description: |
+      <strong>Goal:</strong> Migrate first Labs:Q experiment to production site using Python API<br><br>
+      <strong>Candidate Projects from Labs:Q (13592):</strong><br>
+      - Language learning tools<br>
+      - Financial analysis fluency trainer<br>
+      - Other Python-dependent experiments<br><br>
+      <strong>Tasks:</strong><br>
+      - Select Labs:Q project to migrate<br>
+      - Test thoroughly with Flask API<br>
+      - Deploy to production site<br>
+      - Monitor for issues<br>
+      - Document lessons learned<br><br>
+      <strong>Success Criteria:</strong><br>
+      - Labs:Q project running in production<br>
+      - Python execution working reliably<br>
+      - User feedback collected<br>
+      - Ready to migrate additional projects
+    priority: 1
+    blocked_by:
+      - "Integration: Connect Flask API to first QRCards site"
+    labels:
+      - "@Computer"
+      - "Code"
+      - "High Energy"
+
+  - title: "Documentation: Create operator's guide for Python API"
+    description: |
+      <strong>Goal:</strong> Document production operations for Flask API<br><br>
+      <strong>Documentation Needed:</strong><br>
+      - Deployment procedures<br>
+      - Monitoring and alerting setup<br>
+      - Common issues and troubleshooting<br>
+      - Performance tuning guide<br>
+      - Security incident response procedures<br>
+      - Backup and recovery procedures<br>
+      - Scaling guide (if/when needed)<br><br>
+      <strong>Audience:</strong> Future Ivan maintaining production system<br><br>
+      <strong>Success Criteria:</strong><br>
+      - Can deploy/maintain without referring to implementation docs<br>
+      - Common issues have documented solutions<br>
+      - Monitoring dashboards set up
+    priority: 1
+    blocked_by:
+      - "Go-Live: Move first Labs:Q project to production with Python"
+    labels:
+      - "@Computer"
+      - "Writing"
