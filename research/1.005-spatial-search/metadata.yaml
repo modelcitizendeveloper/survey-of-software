@@ -1,0 +1,57 @@
+---
+experiment_number: "1.005"
+experiment_sequence: 5
+experiment_date: "2025-01-28"
+experiment_status: completed
+discovery_method: comprehensive_4ps
+migrated_from: null
+notes: "Spatial search technologies including PostGIS, Google Maps Platform, AWS Location, Elasticsearch Geo, and routing libraries."
+
+data_sources:
+  performance_benchmarks:
+    - source: "official_documentation"
+      notes: "PostGIS, Elasticsearch Geo performance characteristics"
+    - source: "github_discussions"
+      notes: "Community comparisons of spatial query performance"
+  pricing_data:
+    - source: "google_cloud_pricing"
+      accessed: "2025-01-28"
+      notes: "Google Maps Platform API pricing"
+    - source: "aws_pricing"
+      accessed: "2025-01-28"
+      notes: "AWS Location Service pricing"
+  feature_comparisons:
+    source: "official_documentation"
+    accessed: "2025-01-28"
+    notes: "PostGIS, Elasticsearch Geo, cloud provider documentation"
+  market_data:
+    github_stars: "github_api"
+    downloads: "pypi, npm"
+
+legal_review:
+  tos_compliance: "verified"
+  tos_issues: []
+  prohibited_sources: []
+  copyright_cleared: true
+
+publication_clearance:
+  can_publish_publicly: true
+  reasons: []
+  safe_for_subscribers: true
+  requires_disclaimer: false
+
+benchmark_methodology:
+  captured: false
+  environment: ""
+  reproducible: false
+  code_available: ""
+
+token_usage:
+  total_tokens: 83850
+  input_tokens: 42000
+  output_tokens: 41850
+  model: "claude-sonnet-4-5"
+  session_count: 1
+  cost_estimate: "$0.84"
+  notes: "Research organization and DOMAIN_EXPLAINER creation"
+---
