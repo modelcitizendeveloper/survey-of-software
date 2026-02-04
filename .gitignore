@@ -45,3 +45,9 @@ research-site-public/
 # Build artifacts
 .build/
 library-metadata*.json
+
+# Gas Town (added by gt)
+.runtime/
+.claude/
+.logs/
+.beads/
