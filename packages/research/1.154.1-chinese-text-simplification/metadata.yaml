@@ -1,0 +1,107 @@
+code: '1.154.1'
+title: Chinese Text Simplification Libraries
+subtitle: "jieba, OpenCC, HanLP, MCTS"
+tier: 1
+category: Library/Package Discovery
+domain: chinese-nlp
+status: completed
+completion_date: '2026-02-02'
+
+description: |
+  Comprehensive analysis of Chinese text simplification libraries and approaches.
+  Covers foundational NLP libraries (segmentation, conversion), training datasets,
+  and implementation strategies for automated text simplification targeting different
+  HSK proficiency levels. Reveals no turnkey solutions exist; teams must build
+  custom hybrid stacks.
+
+research_output:
+  total_documents: 25
+  total_lines: 3500
+  stages_completed: [S1-rapid, S2-comprehensive, S3-need-driven, S4-strategic]
+
+libraries_analyzed:
+  - name: jieba
+    implementation: HMM-based Chinese word segmentation
+    performance: Millions of characters/second, ~95% accuracy
+    best_for: Foundational text segmentation for simplification pipeline
+
+  - name: OpenCC
+    implementation: Dictionary-based Traditional/Simplified conversion
+    performance: Near 100% character accuracy, very fast
+    best_for: Normalizing text variants before simplification
+
+  - name: HanLP
+    implementation: Multi-task NLP platform (segmentation, POS, NER, parsing)
+    performance: 0.5-2s per sentence, 500MB-2GB memory
+    best_for: Advanced linguistic analysis for sophisticated simplification
+
+  - name: MCTS (Dataset)
+    implementation: 691K parallel sentence pairs (complex ↔ simple Chinese)
+    performance: Training data for neural models
+    best_for: Fine-tuning transformer models for text simplification
+
+key_findings:
+  - finding: "No pip-installable text simplification libraries exist for Chinese as of 2026"
+    impact: "This is a BUILD, not BUY problem—teams must create custom solutions"
+
+  - finding: "Rule-based approach (jieba + OpenCC + custom logic) achieves 70-80% success rate"
+    impact: "Viable MVP in 2-4 weeks for $10K-15K, good enough for most use cases"
+
+  - finding: "Neural approach (mT5 + LoRA on MCTS) achieves 80-90% but with unpredictable errors"
+    impact: "Requires ML expertise, 2-4 months, $20K-60K; best for high-volume platforms"
+
+  - finding: "Hybrid stack (rules for common cases + neural for complex) optimal for production"
+    impact: "85-95% success rate, 2-3 months, $15K-35K; best ROI for sustained use"
+
+  - finding: "Chinese text simplification lags English by 3-5 years in library maturity"
+    impact: "Early movers (2026-2027) build data moats before turnkey solutions emerge"
+
+recommendations:
+  default: "Start with rule-based MVP (jieba + OpenCC + HSK vocabulary + custom rules) for fastest validation"
+
+  by_use_case:
+    language_learning_apps: "Rule-based MVP (2-4 weeks, $15K) → iterate to hybrid if volume > 5K texts/month"
+    accessibility_services: "Hybrid with mandatory review (3 months, $50K) for 90%+ accuracy and auditability"
+    publishers: "Neural + editorial workflow (4-6 months, $80K) for 95%+ accuracy at scale"
+    ai_tutoring: "Optimized neural (3 months, $50K) for low latency (< 500ms) at high volume (10K+/day)"
+
+  by_volume:
+    under_300_month: "Manual editing is cheaper (wait 2-3 years for turnkey solutions)"
+    500_5000_month: "Rule-based MVP ($15K Year 1, 60-80% cost savings vs manual)"
+    over_5000_month: "Hybrid or neural ($35K-60K Year 1, enables scale impossible manually)"
+
+sources:
+  academic_papers:
+    - "MCTS: A Multi-Reference Chinese Text Simplification Dataset - https://github.com/blcuicall/mcts"
+    - "Neural text simplification research (transformer-based approaches)"
+
+  libraries:
+    - "jieba - https://github.com/fxsjy/jieba (Chinese text segmentation)"
+    - "OpenCC - https://github.com/BYVoid/OpenCC (Traditional/Simplified conversion)"
+    - "HanLP - https://hanlp.hankcs.com/ (Comprehensive Chinese NLP)"
+    - "HSK-Character-Profiler - https://github.com/Ancastal/HSK-Character-Profiler (difficulty analysis)"
+    - "HSK 3.0 Lists - https://github.com/krmanik/HSK-3.0 (vocabulary reference)"
+
+  production_systems:
+    - "Rule-based approach used by language learning platforms (word replacement + sentence splitting)"
+    - "Neural approaches in research (not production-ready as of 2026)"
+
+related_research:
+  - code: "1.007"
+    title: "Pattern Matching Libraries"
+    relevance: "Text segmentation is pattern matching (jieba uses HMM/dictionary hybrid)"
+
+  - code: "1.008"
+    title: "Time Series Search Libraries"
+    relevance: "Sequential processing similar to sentence-level simplification"
+
+notes: |
+  This research reveals a nascent field where no production-ready simplification
+  libraries exist. Teams combine mature NLP utilities (jieba, OpenCC, HanLP) with
+  custom logic. The MCTS dataset enables neural approaches for teams with ML expertise.
+
+  Strategic window: Build now (2026-2027) for first-mover advantage, or wait until
+  2029+ when commercial solutions may emerge (losing 2-3 year competitive lead).
+
+  Most practical path: Rule-based MVP ($15K, 2-4 weeks) → validate volume → upgrade
+  to hybrid if justified by scale. Avoid full neural unless volume > 10K texts/month.
