@@ -1,9 +1,0 @@
----
-experiment_number: "3.031"
-experiment_sequence: 7
-experiment_date: "2025-10-16"
-experiment_status: complete
-discovery_method: detailed_toc
-migrated_from: null
-notes: "Seventh Tier 3 managed services experiment - Object Storage Services. Comprehensive S1-S4 analysis (16 files, ~3,900 lines) covering 8 providers across three tiers: (1) Major clouds (AWS S3, Azure Blob, Google Cloud Storage), (2) S3-compatible alternatives (Cloudflare R2 zero egress, Backblaze B2 $6/TB cheapest storage, Wasabi $6.99/TB flat pricing), (3) Developer-friendly (DigitalOcean Spaces $5/mo bundle, MinIO self-hosted). Key findings: (1) Egress costs 10-50× more than storage—Cloudflare R2 zero egress saves $9,000/mo on 100TB delivery vs AWS $9,200/mo; (2) Storage: Backblaze $600/mo vs AWS $2,300/mo for 100TB (74% savings); (3) S3 API portability (reference 2.051) enables 1-2 hour migrations between R2/B2/Wasabi; (4) Azure/GCS proprietary APIs create lock-in (20-40 hours migration); (5) Strategic recommendation: Use R2 for high-egress (video/downloads), B2 for cold storage/backups, AWS/Azure/GCS only if ecosystem integration justifies 2-4× cost premium. Completed with SERVICE_EXPLAINER (business concepts), SECTION_0_STANDARDS (S3 API portability, references 2.051), feature/pricing/compliance matrices, migration guides, vendor viability analysis."
----

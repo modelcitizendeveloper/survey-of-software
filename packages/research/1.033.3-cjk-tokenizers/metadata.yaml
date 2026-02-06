@@ -1,3 +1,0 @@
-code: "1.033.3"
-title: "CJK Tokenizers for LLMs"
-description: "Tokenization strategies for Chinese, Japanese, and Korean in large language models - SentencePiece, tiktoken, HuggingFace"

@@ -1,9 +1,0 @@
----
-experiment_number: "2.080"
-experiment_sequence: 3
-experiment_date: "2025-10-17"
-experiment_status: complete
-discovery_method: detailed_toc
-migrated_from: null
-notes: "Third 2.XXX open standards experiment - OCI (Open Container Initiative) specification. Completed comprehensive S1-S4 discovery (3 files totaling ~35,000 words) plus STANDARD_EXPLAINER. Key findings: (1) OCI is the only active container standard with 100% market adoption (Docker, Podman, Kubernetes, all clouds); (2) Three specs (Image v1.1, Runtime v1.1, Distribution v1.1) all stable 4-7 years with excellent backwards compatibility; (3) Linux Foundation governance provides exceptional long-term viability (90% confidence for 10+ year commitments); (4) Artifact support (v1.1) positions OCI for future technologies (WASM, Helm, SBOMs); (5) True 'build once, run anywhere' portability validated across runtimes and registries. Strategic recommendation: Adopt OCI as foundational standard - no alternatives exist, network effects create irreversible moat."
----

@@ -1,5 +1,0 @@
-# Testing dependencies for Latin training utilities
-
-pytest>=8.0.0
-pytest-cov>=4.1.0
-pytest-xdist>=3.5.0  # For parallel test execution
