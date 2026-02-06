@@ -1,0 +1,127 @@
+---
+experiment_id: "1.062"
+title: "Python Password Hashing Libraries"
+category: "cryptography"
+subcategory: "password-storage"
+tier: 1
+status: "completed"
+date_started: "2025-12-11"
+date_completed: "2025-12-11"
+mpse_version: "3.0"
+
+summary: |
+  Comprehensive research into Python password hashing libraries for secure credential
+  storage. Research covers algorithm security, performance characteristics, API design,
+  and long-term strategic viability. All four MPSE methodologies (S1-S4) converged on
+  argon2-cffi as primary recommendation, aligning with OWASP 2025 guidance.
+
+key_findings:
+  - "OWASP 2025 ranks Argon2id as #1 password hashing algorithm, bcrypt demoted to 'legacy systems only'"
+  - "argon2-cffi: 10.6M weekly downloads, zero CVEs, OWASP-compliant defaults out of box"
+  - "bcrypt (PyCA): 32.7M weekly downloads reflects legacy adoption, not current best practice"
+  - "passlib: UNMAINTAINED since October 2020, FastAPI/Ansible migrating away, use libpass fork"
+  - "hashlib.scrypt: Stdlib availability is convenient but parameter coupling makes tuning difficult"
+  - "Memory-hard algorithms (Argon2, scrypt) provide 40-50% breach reduction vs non-memory-hard (bcrypt, PBKDF2)"
+  - "Attack cost: Argon2 (128 MiB) requires hundreds of millions USD over 10 years vs thousands for bcrypt"
+  - "Algorithm trajectory: Argon2 ascending (RFC 9106, OWASP #1), bcrypt declining (legacy status)"
+
+libraries_analyzed:
+  argon2_cffi:
+    downloads_weekly: "10,578,390"
+    github_stars: "~500"
+    maintainer: "Hynek Schlawack (individual)"
+    maturity: "Production (since 2015)"
+    last_release: "v25.1.0 (June 2025)"
+    python_support: "3.8-3.14, PyPy"
+    cve_count: 0
+    owasp_status: "Primary recommendation"
+    score_s1: "WINNER"
+    score_s2: "8.7/10"
+    score_s4: "A (85% 5-year viability)"
+
+  bcrypt:
+    downloads_weekly: "32,700,000"
+    github_stars: "1,400"
+    maintainer: "PyCA (organization)"
+    maturity: "Production (10+ years)"
+    last_release: "v5.0.0 (Sep 2025)"
+    python_support: "3.8+, PyPy 3.11+"
+    cve_count: "0 (current)"
+    owasp_status: "Legacy systems only"
+    score_s2: "8.0/10"
+    score_s4: "B+ (95% 5-year viability)"
+
+  passlib:
+    downloads_weekly: "4,925,500"
+    maintainer: "Eli Collins (individual)"
+    status: "UNMAINTAINED since October 2020"
+    last_release: "v1.7.4 (Oct 2020)"
+    python_support: "No Python 3.13"
+    known_issues: "bcrypt 4.x incompatibility, unpatched vulnerabilities"
+    score_s2: "6.3/10"
+    score_s4: "F (10% 5-year viability)"
+
+  hashlib_scrypt:
+    availability: "Python 3.6+ stdlib"
+    requirement: "OpenSSL 1.1+"
+    owasp_status: "Second choice (after Argon2)"
+    score_s2: "6.9/10"
+    score_s4: "B (99% 5-year viability - stdlib)"
+
+selection_criteria:
+  primary: "OWASP recommendation status, CVE history, algorithm security properties"
+  secondary: ["Memory-hardness", "API usability", "Maintenance status"]
+  tertiary: ["Performance tunability", "Ecosystem integration", "Migration support"]
+
+surprising_findings:
+  - "bcrypt's 3x higher downloads reflect legacy adoption, not current recommendation"
+  - "passlib's 4+ year abandonment despite 5M weekly downloads shows ecosystem inertia"
+  - "Argon2 attack costs are 1000x+ higher than bcrypt for equivalent compute time"
+  - "OWASP explicitly demoted bcrypt to 'legacy only' in recent guidance"
+
+gaps_identified:
+  - "FIPS-140 compliance path unclear for Argon2 (PBKDF2 remains only option)"
+  - "libpass (passlib fork) has limited adoption data"
+  - "Memory-constrained embedded scenarios underrepresented"
+
+recommendations:
+  new_project: "argon2-cffi with default RFC 9106 configuration"
+  high_security: "argon2-cffi with 128 MiB memory, 3 iterations"
+  fips_compliance: "hashlib.pbkdf2_hmac with 600,000+ iterations"
+  legacy_migration: "Dual verification pattern (argon2-cffi + existing library)"
+  passlib_replacement: "libpass fork OR direct argon2-cffi/bcrypt"
+
+research_methods:
+  - "PyPI download statistics via pypistats.org"
+  - "GitHub metrics (stars, contributors, release dates)"
+  - "CVE database search and Snyk vulnerability scans"
+  - "OWASP Password Storage Cheat Sheet review"
+  - "Red Hat Research: Argon2 attack cost analysis"
+  - "Algorithm security property comparison"
+  - "Maintainer sustainability analysis"
+
+references:
+  - "OWASP Password Storage Cheat Sheet: https://cheatsheetseries.owasp.org/cheatsheets/Password_Storage_Cheat_Sheet.html"
+  - "RFC 9106: Argon2 Memory-Hard Function"
+  - "Red Hat Research: How expensive is it to crack Argon2?"
+  - "argon2-cffi documentation: https://argon2-cffi.readthedocs.io/"
+  - "PyCA bcrypt: https://github.com/pyca/bcrypt"
+  - "Security Boulevard: Comparative Analysis of Password Hashing Algorithms"
+
+related_experiments:
+  - "1.060"  # Cryptographic Libraries
+  - "1.063"  # JWT Libraries
+  - "1.064"  # Encryption Libraries
+
+notes: |
+  This is Tier 1 security-critical research. Password hashing is a foundational
+  security primitive where wrong choices lead to credential breaches. All four
+  MPSE methodologies converged on argon2-cffi as primary recommendation, with
+  bcrypt acceptable for existing deployments but not recommended for new projects.
+
+  Key insight: Higher bcrypt downloads reflect ecosystem inertia and legacy code,
+  not current best practice. OWASP 2025 explicitly ranks Argon2id above bcrypt.
+
+  FIPS compliance remains a gap - only PBKDF2 is FIPS-approved. Organizations
+  requiring FIPS should monitor NIST SP 800-132 revision discussions for potential
+  Argon2 approval.

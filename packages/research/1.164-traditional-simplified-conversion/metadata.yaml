@@ -1,0 +1,3 @@
+code: "1.164"
+title: "Traditional ↔ Simplified Conversion"
+description: "Not trivial - many-to-many mappings, regional variants (Taiwan, Hong Kong, Mainland). OpenCC (gold standard with locale-aware configs), HanziConv (lightweight), and zhconv-rs (Rust performance). Essential for Taiwan context and Unicode variant handling."

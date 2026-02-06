@@ -1,0 +1,280 @@
+code: '1.007'
+title: Pattern Matching Algorithms
+tier: 1
+category: Library/Package Discovery
+domain: string-algorithms
+status: completed
+completion_date: '2026-02-02'
+
+description: |
+  Comprehensive analysis of pattern matching algorithms and libraries across multiple
+  platforms. Covers KMP, Boyer-Moore, Aho-Corasick, and Rabin-Karp algorithms with
+  practical implementations in C/C++, Python, Rust, Go, and Java. Includes specialized
+  tools for network security (Hyperscan), bioinformatics (BLAST, Bowtie), and text
+  processing.
+
+research_output:
+  total_documents: 26
+  total_lines: 6099
+  stages_completed: [S1-rapid, S2-comprehensive, S3-need-driven, S4-strategic]
+
+  stages:
+    S1-rapid:
+      files: 7
+      lines: ~1200
+      content:
+        - 5 platform/library surveys (C/C++, Python, Rust/Go, Java/JVM, specialized)
+        - Quick selection guide by use case
+        - Performance comparison (100 MB/s to 100 GB/s)
+
+    S2-comprehensive:
+      files: 6
+      lines: ~2400
+      content:
+        - 4 algorithm deep-dives (KMP, Boyer-Moore, Aho-Corasick, Rabin-Karp)
+        - Complexity analysis (time/space, best/average/worst case)
+        - Feature comparison matrix
+        - Implementation considerations (SIMD, Unicode, cache behavior)
+
+    S3-need-driven:
+      files: 6
+      lines: ~1500
+      content:
+        - 4 use case scenarios (text editors, network IDS, bioinformatics, log analysis)
+        - Persona-based recommendations
+        - Production deployment considerations
+        - Common pitfalls and solutions
+
+    S4-strategic:
+      files: 4
+      lines: ~1000
+      content:
+        - Stdlib viability analysis (★★★★★ stability, universal availability)
+        - Hyperscan viability (★★★★☆ performance, Intel→community transition)
+        - Three strategic paths (Conservative, Performance-First, Adaptive)
+        - Long-term trends (hardware acceleration, SIMD, 2025-2030)
+
+algorithms_analyzed:
+  - name: Knuth-Morris-Pratt (KMP)
+    complexity: O(n + m)
+    characteristics: Failure function, no text backtracking, worst-case guarantee
+    best_for: Small alphabets (DNA), streaming, predictable latency
+
+  - name: Boyer-Moore
+    complexity: O(n/m) average, O(nm) worst
+    characteristics: Right-to-left scan, sublinear average case
+    best_for: Large alphabets (English, Unicode), interactive search, text editors
+
+  - name: Aho-Corasick
+    complexity: O(n + m + z)
+    characteristics: Trie + failure links, multi-pattern, single pass
+    best_for: Multiple patterns (10+), network IDS, virus scanning
+
+  - name: Rabin-Karp
+    complexity: O(n + m) average, O(nm) worst
+    characteristics: Rolling hash, O(1) space, probabilistic
+    best_for: Multiple same-length patterns, 2D matching, plagiarism detection
+
+libraries_analyzed:
+  - name: Standard Library (strstr, std::string::find, str.find)
+    implementation: Platform-dependent (often Boyer-Moore-Horspool)
+    performance: 500 MB/s - 2 GB/s
+    best_for: General-purpose, 90% of use cases
+
+  - name: Hyperscan (Intel)
+    implementation: Hybrid DFA + SIMD optimization
+    performance: 10-100 GB/s
+    best_for: Network IDS/DPI, ultra-high throughput (1000+ patterns)
+
+  - name: pyahocorasick
+    implementation: Aho-Corasick (C extension)
+    performance: 500 MB/s - 2 GB/s
+    best_for: Python multi-pattern matching
+
+  - name: Rust memchr
+    implementation: SIMD-optimized Boyer-Moore variant
+    performance: 5-10 GB/s
+    best_for: Rust single-byte/multi-byte search
+
+  - name: Rust aho-corasick
+    implementation: Aho-Corasick with DFA/NFA variants
+    performance: 1-5 GB/s
+    best_for: Rust multi-pattern matching
+
+  - name: RE2 (Google)
+    implementation: Linear-time regex (DFA-based)
+    performance: 100-500 MB/s
+    best_for: Regex with guaranteed linear time (no backtracking)
+
+  - name: ripgrep
+    implementation: Rust regex + memchr SIMD
+    performance: ~10 GB/s
+    best_for: Interactive log search, code search
+
+  - name: BWA/Bowtie2
+    implementation: BWT + FM-index
+    performance: ~1M reads/minute
+    best_for: Bioinformatics NGS read alignment
+
+  - name: BLAST
+    implementation: Seed-and-extend heuristic
+    performance: ~1 second/query
+    best_for: Bioinformatics homology search
+
+key_findings:
+  - finding: "Boyer-Moore achieves O(n/m) sublinear time - only algorithm that can skip text characters"
+    impact: "1-2 GB/s typical, 10x faster than naive for large alphabets"
+
+  - finding: "Aho-Corasick is O(n) regardless of pattern count - scales to millions of patterns"
+    impact: "Industry standard for IDS (Snort, Suricata) and virus scanning"
+
+  - finding: "Hyperscan achieves 10-100 GB/s through SIMD + DFA optimization"
+    impact: "100x faster than naive AC, enables real-time 100 Gbps network inspection"
+
+  - finding: "Alphabet size is critical factor - DNA (σ=4) vs English (σ=26) vs Unicode (σ=65K)"
+    impact: "BM excels for large alphabets, KMP competitive for small alphabets"
+
+  - finding: "Standard library implementations are 'good enough' for 90% of use cases"
+    impact: "Use stdlib first, profile before optimizing - lowest maintenance burden"
+
+  - finding: "SIMD matters more than algorithm choice for short patterns (<100 chars)"
+    impact: "SIMD naive can beat scalar KMP; memchr achieves 5-10 GB/s"
+
+  - finding: "Bioinformatics requires specialized tools, not general string matching"
+    impact: "BWT/FM-index 1000x faster than naive for genome alignment"
+
+  - finding: "Regex catastrophic backtracking is real threat for untrusted input"
+    impact: "Use RE2 or Rust regex for linear-time guarantees"
+
+  - finding: "Hardware acceleration (SmartNICs, P4) maturing for pattern matching"
+    impact: "Software Hyperscan → hardware transition likely 2027-2030"
+
+  - finding: "Intel reducing Hyperscan investment, community fork (Vectorscan) taking over"
+    impact: "70% confidence Hyperscan viable in 2030 via community, monitor closely"
+
+recommendations:
+  default: "Use stdlib (strstr, std::string::find, str.find) for single-pattern search"
+
+  by_pattern_count:
+    single: "Boyer-Moore (stdlib) - sublinear average case"
+    few_2_10: "Run BM for each or consider AC"
+    many_10_100: "Aho-Corasick library (pyahocorasick, aho-corasick crate)"
+    massive_100plus: "Aho-Corasick or Hyperscan for ultra-performance"
+
+  by_use_case:
+    text_editor: "stdlib or Rust regex - interactive, patterns change frequently"
+    network_ids: "Hyperscan - 10-100 GB/s, industry standard (Snort, Suricata)"
+    virus_scanner: "Aho-Corasick or Hyperscan - millions of signatures"
+    bioinformatics: "BWA/Bowtie2 (alignment), BLAST (homology) - domain-specific"
+    log_analysis: "Aho-Corasick (keywords), RE2 (structured), ELK (indexed)"
+    streaming: "KMP or AC - no text backtracking"
+
+  by_alphabet_size:
+    small_dna: "KMP - σ=4, BM less effective"
+    medium_english: "Boyer-Moore - σ=26, excellent skipping"
+    large_unicode: "Boyer-Moore with sparse tables or byte-level matching"
+
+  by_constraint:
+    worst_case_guarantee: "KMP (single) or Aho-Corasick (multi) - O(n) guaranteed"
+    maximum_speed: "Hyperscan (multi) or SIMD BM (single) - 10-100 GB/s"
+    minimal_memory: "Naive or Rabin-Karp - O(1) space"
+    simplicity: "stdlib - zero integration, universal knowledge"
+
+  strategic_paths:
+    conservative: "Stdlib → proven libraries (AC) → migrate only if bottleneck (lowest risk)"
+    performance_first: "Hyperscan from start - network security, deep expertise required"
+    adaptive: "Start simple, profile, evolve - growth startups, data-driven decisions"
+
+performance_benchmarks:
+  single_pattern_1gb_text:
+    naive: "~17 minutes (100 MB/s)"
+    kmp: "~1 second (1 GB/s)"
+    boyer_moore: "~0.3 seconds (3 GB/s sublinear)"
+    memchr_simd: "~0.1 seconds (10 GB/s)"
+
+  multi_pattern_10k_signatures_100mb_memory:
+    boyer_moore_x10k: "~50 minutes (sequential)"
+    aho_corasick: "~30 seconds (single pass)"
+    hyperscan: "~1 second (SIMD optimized)"
+
+  throughput_comparison:
+    stdlib_strstr: "500 MB/s - 2 GB/s"
+    python_str_find: "500 MB/s - 2 GB/s"
+    rust_memchr: "5-10 GB/s (SIMD)"
+    pyahocorasick: "500 MB/s - 2 GB/s"
+    hyperscan: "10-100 GB/s (multi-pattern)"
+    ripgrep: "~10 GB/s (interactive search)"
+
+related_research:
+  adjacent:
+    - code: '1.002'
+      title: Fuzzy Search
+      relationship: Approximate matching (edit distance, Bitap algorithm)
+
+    - code: '1.003'
+      title: Full-text Search Libraries
+      relationship: Inverted indexes vs pattern matching
+
+    - code: '1.033'
+      title: NLP Libraries
+      relationship: Tokenization often uses pattern matching
+
+  domain_specific:
+    - code: '1.033.2'
+      title: Chinese Word Segmentation
+      relationship: Pattern matching with small alphabet considerations
+
+estimated_hours: 4-6
+actual_hours: 5
+
+completion_notes: |
+  Completed February 2, 2026. Research piece #100 in the collection. Comprehensive
+  analysis of pattern matching algorithms across four classic algorithms (KMP,
+  Boyer-Moore, Aho-Corasick, Rabin-Karp) with modern library implementations.
+
+  Key strategic insight: Standard library implementations are sufficient for 90%
+  of use cases. The field is mature (40-50 year old algorithms), and future
+  improvements come from SIMD/hardware, not new algorithms. Organizations should
+  start with stdlib and migrate only when profiling proves it's a bottleneck.
+
+  Critical finding: Alphabet size dramatically affects algorithm choice. Small
+  alphabets (DNA: σ=4) make KMP competitive with BM, while large alphabets
+  (Unicode: σ=65K) favor BM's bad-character skipping. This isn't widely documented
+  in general-purpose algorithm texts.
+
+  Practical impact: Research provides concrete guidance for four major use cases
+  (text editors, network IDS, bioinformatics, log analysis) with specific library
+  recommendations and deployment considerations. Hyperscan identified as industry
+  standard for network security, though Intel's reduced investment creates medium-
+  term uncertainty (community fork Vectorscan provides safety net).
+
+  Strategic paths framework (Conservative, Performance-First, Adaptive) enables
+  organizations to choose approach based on risk tolerance and expertise, rather
+  than one-size-fits-all recommendation.
+
+  Long-term trends: Hardware acceleration (SmartNICs, P4 switches) will likely
+  complement software solutions by 2027-2030, but software pattern matching will
+  remain relevant for cost/flexibility reasons.
+
+sources:
+  academic_papers:
+    - "Knuth, Morris, Pratt (1977) - Fast Pattern Matching in Strings"
+    - "Boyer, Moore (1977) - A Fast String Searching Algorithm"
+    - "Aho, Corasick (1975) - Efficient String Matching: An Aid to Bibliographic Search"
+
+  libraries:
+    - "glibc memmem() - Two-Way algorithm implementation"
+    - "Hyperscan documentation - Intel pattern matching library"
+    - "Rust memchr crate - SIMD-optimized byte search"
+    - "pyahocorasick - Python Aho-Corasick bindings"
+
+  production_systems:
+    - "Snort 3.0 - Network IDS using Hyperscan"
+    - "Suricata - IDS/IPS with Hyperscan integration"
+    - "ripgrep - Fast text search tool"
+    - "VS Code - Text editor search implementation"
+
+  benchmarks:
+    - "Hyperscan performance benchmarks (Intel)"
+    - "Rust regex crate benchmarks"
+    - "glibc string function benchmarks"

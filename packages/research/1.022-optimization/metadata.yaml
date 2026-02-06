@@ -1,0 +1,187 @@
+---
+experiment_id: "1.022"
+title: "Python Optimization Libraries"
+category: "optimization"
+tier: 1
+status: "completed"
+date_started: "2025-10-18"
+date_completed: "2025-10-18"
+mpse_version: "3.0"
+
+summary: |
+  Comprehensive research into Python optimization libraries for mathematical programming
+  problems. Research covers library ecosystems, problem types, solver backends, and
+  practical selection criteria for generic optimization use cases.
+
+key_findings:
+  - "scipy.optimize is ubiquitous (part of 100M+ monthly scipy downloads) but limited to smaller-scale problems and lacks MILP support"
+  - "Google OR-Tools (12.6k GitHub stars) emerged as the most popular open-source solver with broad problem type coverage"
+  - "HiGHS is the rising star of open-source solvers: adopted by SciPy 1.6.0+ and MATLAB as default LP/MIP solver"
+  - "Pyomo (2.1k stars, 123k weekly downloads) leads algebraic modeling with 20+ solver backends"
+  - "CVXPY specializes in convex optimization with disciplined convex programming (DCP) analysis"
+  - "PuLP 3.3.0 offers simplest entry point for LP/MILP with bundled CBC solver"
+  - "Commercial solvers (Gurobi, CPLEX) withdrew from Mittelmann benchmarks in 2024, obscuring performance data"
+  - "Problem type (LP vs MILP vs NLP vs convex) is the primary selection criterion, not application domain"
+
+libraries_analyzed:
+  scipy_optimize:
+    download_stats: "Part of scipy package (millions of downloads per year, >13M from PyPI in 2019)"
+    github_stars: "Part of scipy/scipy repository"
+    problem_types: ["LP", "NLP", "unconstrained", "bounded", "least-squares"]
+    maturity: "Mature (20+ years)"
+    license: "BSD"
+
+  or_tools:
+    github_stars: "12,600"
+    problem_types: ["LP", "MILP", "CP", "vehicle_routing", "network_flows"]
+    maturity: "Very active (Google-maintained, Python 3.13 support)"
+    license: "Apache 2.0"
+
+  pyomo:
+    github_stars: "2,127"
+    download_stats: "123,641 weekly downloads"
+    problem_types: ["LP", "MILP", "NLP", "MINLP"]
+    solver_backends: "20+ (CBC, GLPK, IPOPT, Gurobi, CPLEX, etc.)"
+    maturity: "Active (v6.9.4, academic standard)"
+    license: "BSD"
+
+  cvxpy:
+    problem_types: ["convex", "LP", "QP", "SOCP", "SDP"]
+    solvers: ["Clarabel", "SCS", "OSQP", "ECOS", "CVXOPT"]
+    maturity: "Mature (Stanford research project, JMLR publication)"
+    license: "Apache 2.0"
+    special_features: "Disciplined convex programming (DCP) analysis"
+
+  pulp:
+    latest_version: "3.3.0 (Sept 2025)"
+    github_stars: "Part of COIN-OR"
+    problem_types: ["LP", "MILP"]
+    default_solver: "CBC (bundled)"
+    maturity: "Mature (Python >= 3.9)"
+    license: "MIT"
+
+  gekko:
+    problem_types: ["NLP", "MILP", "MINLP", "DAE", "dynamic_optimization"]
+    solvers: ["IPOPT", "APOPT", "BPOPT", "SNOPT", "MINOS"]
+    special_features: "Remote/local execution, dynamic optimization, MPC"
+    maturity: "Active (BYU PRISM lab)"
+    license: "MIT"
+
+  pymoo:
+    latest_version: "0.6.1.5 (May 2025)"
+    problem_types: ["multi-objective", "many-objective"]
+    algorithms: ["NSGA2", "NSGA3", "R-NSGA3", "MOEAD", "GA", "PSO"]
+    maturity: "Active (IEEE Access publication, MSU COIN lab)"
+    license: "Apache 2.0"
+    focus: "Multi-objective optimization"
+
+commercial_solvers:
+  gurobi:
+    performance: "Fastest commercial solver (claimed)"
+    licensing: "Free for academics, commercial license for industry"
+    problem_types: ["LP", "MILP", "QP", "MIQP"]
+    python_api: "gurobipy"
+    note: "Withdrew from Mittelmann benchmarks Aug 2024"
+
+  cplex:
+    developer: "IBM"
+    performance: "Better on high-dimensionality, non-convex MIQP"
+    licensing: "Free for academics"
+    problem_types: ["LP", "MILP", "QP", "MIQP"]
+    python_api: "docplex"
+
+  mosek:
+    specialization: "Conic optimization (SOCP, SDP)"
+    licensing: "Free for academics"
+
+open_source_solvers:
+  highs:
+    github_stars: "ERGO-Code/HiGHS"
+    problem_types: ["LP", "MILP", "QP"]
+    performance: "Competitive with commercial solvers"
+    features: "GPU support (v1.10.0+), no external dependencies"
+    adoption: "Default in SciPy 1.6.0+, MATLAB Optimization Toolbox"
+    license: "MIT"
+
+  scip:
+    latest_version: "9.0 (2024)"
+    problem_types: ["MIP", "MINLP", "CIP"]
+    performance: "Fastest academic solver for MIP/MINLP"
+    license: "Apache 2.0 (now open source)"
+
+  ipopt:
+    focus: "Large-scale nonlinear optimization"
+    algorithm: "Interior point method with filter line search"
+    license: "Eclipse Public License (EPL)"
+    developers: "Andreas Wächter, Carl Laird (COIN-OR)"
+
+  cbc:
+    focus: "Mixed-integer linear programming"
+    bundled_with: "PuLP"
+    license: "Eclipse Public License"
+    part_of: "COIN-OR project"
+
+problem_type_taxonomy:
+  - LP: "Linear Programming - linear objective, linear constraints"
+  - MILP: "Mixed-Integer Linear Programming - LP with integer variables"
+  - QP: "Quadratic Programming - quadratic objective, linear constraints"
+  - NLP: "Nonlinear Programming - nonlinear objective or constraints"
+  - MINLP: "Mixed-Integer NLP - NLP with integer variables"
+  - Convex: "Convex optimization - convex objective, convex constraints (global optimum)"
+  - CP: "Constraint Programming - logical constraints, scheduling"
+  - Multi-objective: "Multiple competing objectives (Pareto frontier)"
+  - Dynamic: "Dynamic optimization, optimal control, differential-algebraic equations"
+
+selection_criteria:
+  primary: "Problem type (LP, MILP, NLP, convex, multi-objective)"
+  secondary: ["Problem size", "Solver speed requirements", "Modeling convenience"]
+  tertiary: ["License requirements", "Integration needs", "Community support"]
+
+surprising_findings:
+  - "HiGHS adoption by scipy and MATLAB signals major shift in open-source solver landscape"
+  - "Gurobi and MindOpt withdrawal from Mittelmann benchmarks reduces transparency"
+  - "Optuna is NOT a general optimization library - it's specialized for hyperparameter tuning"
+  - "GEKKO's remote execution model is unique - can offload to high-performance servers"
+  - "CVXPY's DCP analysis automatically verifies problem convexity at modeling time"
+  - "pymoo is the only library focused exclusively on multi-objective optimization"
+
+gaps_identified:
+  - "No unified benchmarking after commercial solver withdrawal from Mittelmann"
+  - "Limited performance data for open-source solvers on large-scale MINLP"
+  - "Sparse documentation on simulation-optimization coupling patterns"
+  - "Few standardized benchmarks for multi-objective problems"
+  - "Unclear guidance on when to choose algebraic modeling vs direct API"
+
+recommendations:
+  rapid_prototyping: "PuLP or scipy.optimize"
+  production_lp_milp: "OR-Tools or HiGHS (via Pyomo/PuLP)"
+  nonlinear: "scipy.optimize (small), Pyomo+IPOPT (large), GEKKO (dynamic)"
+  convex: "CVXPY (with DCP verification)"
+  multi_objective: "pymoo"
+  multi_solver_flexibility: "Pyomo (20+ backends)"
+  commercial_justified: "Gurobi/CPLEX for large-scale MILP with strict time limits"
+
+research_methods:
+  - "Web search for PyPI statistics, GitHub metrics, documentation quality"
+  - "Review of academic publications (JMLR, IEEE Access, Nature Methods)"
+  - "Analysis of Mittelmann benchmark visualizations"
+  - "Investigation of solver adoption by major frameworks (SciPy, MATLAB)"
+  - "Comparison of problem types and solver algorithms"
+
+references:
+  - "Mittelmann Benchmarks: plato.asu.edu/bench.html"
+  - "Interactive Mittelmann visualizations: mattmilten.github.io/mittelmann-plots"
+  - "SciPy 1.0 paper: Nature Methods 2020"
+  - "CVXPY: JMLR 2016, Vol 17, No 83"
+  - "pymoo: IEEE Access 2020, Vol 8, pp 89497-89509"
+  - "SCIP Optimization Suite 9.0: Optimization Online 2024"
+
+notes: |
+  This is Tier 1 research focused on building foundational knowledge about
+  Python optimization libraries. Research is application-neutral and organized
+  by problem type rather than domain. Findings are based on actual investigation
+  of PyPI stats, GitHub metrics, documentation, and academic publications.
+
+  The optimization landscape in 2024-2025 is characterized by strong open-source
+  alternatives (HiGHS, SCIP) and reduced transparency from commercial vendors.
+  Problem type remains the dominant selection criterion.

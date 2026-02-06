@@ -1,0 +1,218 @@
+id: "1.030"
+title: "String Matching Libraries"
+subtitle: "RapidFuzz, Jellyfish, pyahocorasick, regex, google-re2"
+tier: 1
+category: "Algorithms & Data Structures"
+cluster: "string-algorithms"
+
+status:
+  overall: "s4-complete"
+  s1_rapid: "complete"
+  s2_comprehensive: "complete"
+  s3_need_driven: "complete"
+  s4_strategic: "complete"
+  explainer: "complete"
+
+dates:
+  evaluation_date: "2026-01-30"
+  s1_completed: "2026-01-30"
+  s2_completed: "2026-01-30"
+  s3_completed: "2026-01-30"
+  s4_completed: "2026-01-30"
+
+sources:
+  reconstruction_viable: true
+  primary:
+    - url: https://github.com/rapidfuzz/RapidFuzz
+      type: official_repo
+      accessed: "2026-01-30"
+      description: "RapidFuzz - Rapid fuzzy string matching"
+
+    - url: https://pypistats.org/packages/rapidfuzz
+      type: package_registry
+      accessed: "2026-01-30"
+      description: "RapidFuzz PyPI download statistics"
+
+    - url: https://github.com/rapidfuzz/JaroWinkler
+      type: official_repo
+      accessed: "2026-01-30"
+      description: "JaroWinkler implementation (RapidFuzz ecosystem)"
+
+    - url: https://github.com/jamesturk/jellyfish
+      type: official_repo
+      accessed: "2026-01-30"
+      description: "Jellyfish - Python library for string comparison and phonetic encoding"
+
+    - url: https://github.com/google/re2
+      type: official_repo
+      accessed: "2026-01-30"
+      description: "RE2 - Google's efficient, linear-time regex engine"
+
+    - url: https://github.com/facebook/pyre2/
+      type: official_repo
+      accessed: "2026-01-30"
+      description: "pyre2 - Python wrapper for RE2"
+
+    - url: https://sarnold.github.io/pyre2/README.html
+      type: official_documentation
+      accessed: "2026-01-30"
+      description: "pyre2 documentation"
+
+    - url: https://github.com/WojciechMula/pyahocorasick
+      type: official_repo
+      accessed: "2026-01-30"
+      description: "pyahocorasick - Python module for Aho-Corasick algorithm"
+
+    - url: https://pyahocorasick.readthedocs.io/
+      type: official_documentation
+      accessed: "2026-01-30"
+      description: "pyahocorasick documentation"
+
+    - url: https://github.com/G-Research/ahocorasick_rs
+      type: official_repo
+      accessed: "2026-01-30"
+      description: "ahocorasick_rs - Rust implementation alternative"
+
+    - url: https://pypi.org/project/regex/
+      type: package_registry
+      accessed: "2026-01-30"
+      description: "regex library on PyPI"
+
+    - url: https://pypistats.org/packages/regex
+      type: package_registry
+      accessed: "2026-01-30"
+      description: "regex library PyPI download statistics"
+
+    - url: https://github.com/mrabarnett/mrab-regex
+      type: official_repo
+      accessed: "2026-01-30"
+      description: "regex - Alternative regular expression module for Python"
+
+  secondary:
+    - url: https://www.datacamp.com/tutorial/fuzzy-string-python
+      type: tutorial
+      accessed: "2026-01-30"
+      description: "Fuzzy String Matching in Python Tutorial"
+
+    - url: https://medium.com/wetheitguys/python-jellyfish-for-enhanced-string-matching-6fe18ee32c8b
+      type: article
+      accessed: "2026-01-30"
+      description: "Python Jellyfish for Enhanced String Matching"
+
+    - url: https://ijeedu.com/index.php/ijeedu/article/view/188
+      type: reference
+      accessed: "2026-01-30"
+      description: "A Comparative Analysis of Python Text Matching Libraries"
+
+tags:
+  - string-matching
+  - fuzzy-matching
+  - phonetic-matching
+  - regex
+  - aho-corasick
+  - levenshtein-distance
+  - pattern-matching
+  - text-processing
+  - similarity-metrics
+
+libraries_evaluated:
+  - name: "RapidFuzz"
+    recommendation: "default-fuzzy"
+    stars: 3700
+    license: "MIT"
+    downloads_monthly: "83M+"
+    performance: "40% faster than alternatives"
+    primary_use: "Fuzzy string matching"
+    language: "C++ core + Python bindings"
+
+  - name: "Jellyfish"
+    recommendation: "phonetic-specialist"
+    stars: 2200
+    license: "MIT"
+    performance: "slower than RapidFuzz"
+    primary_use: "Phonetic matching (Soundex, Metaphone)"
+    language: "Python + C"
+
+  - name: "pyahocorasick"
+    recommendation: "multi-pattern-exact"
+    stars: 1100
+    license: "BSD-3-Clause"
+    performance: "O(n+m) linear time"
+    primary_use: "Multi-pattern exact matching"
+    language: "C + Python bindings"
+
+  - name: "regex"
+    recommendation: "enhanced-regex"
+    license: "Apache-2.0"
+    downloads_monthly: "160M+"
+    performance: "drop-in re replacement"
+    primary_use: "Enhanced regex with more features"
+    language: "Python"
+
+  - name: "google-re2"
+    recommendation: "security-critical-regex"
+    license: "BSD-3-Clause"
+    performance: "linear-time guarantee"
+    primary_use: "DoS-resistant regex"
+    language: "C++ + Python bindings"
+
+key_findings:
+  - "RapidFuzz is the de facto standard for fuzzy matching (83M monthly downloads)"
+  - "Jellyfish is the only option for phonetic matching (Soundex, Metaphone)"
+  - "pyahocorasick excels at finding thousands of patterns simultaneously"
+  - "regex library offers 160M monthly downloads as drop-in re replacement"
+  - "google-re2 provides linear-time guarantee for security-critical applications"
+  - "Standard library (re, difflib, str methods) sufficient for simple cases"
+  - "Choose specialized tools based on use case: fuzzy vs exact vs phonetic"
+  - "MIT and BSD licenses dominate (permissive for commercial use)"
+
+algorithm_support:
+  levenshtein: ["RapidFuzz", "Jellyfish"]
+  hamming: ["RapidFuzz", "Jellyfish"]
+  jaro_winkler: ["RapidFuzz", "Jellyfish"]
+  soundex: ["Jellyfish"]
+  metaphone: ["Jellyfish"]
+  aho_corasick: ["pyahocorasick", "ahocorasick_rs"]
+  regex_standard: ["re (stdlib)", "regex", "google-re2"]
+
+use_cases:
+  - persona: "Data Engineers"
+    primary_need: "Deduplication (fuzzy matching)"
+    library_recommendation: "RapidFuzz"
+    production_ready: true
+
+  - persona: "Search Engineers"
+    primary_need: "Typo-tolerant search"
+    library_recommendation: "RapidFuzz with indexing"
+    production_ready: true
+
+  - persona: "Content Moderators"
+    primary_need: "Multi-keyword filtering"
+    library_recommendation: "pyahocorasick"
+    production_ready: true
+
+  - persona: "Healthcare IT"
+    primary_need: "Name matching (phonetic)"
+    library_recommendation: "Jellyfish"
+    production_ready: true
+
+  - persona: "Security Engineers"
+    primary_need: "DoS-resistant regex"
+    library_recommendation: "google-re2"
+    production_ready: true
+
+related_research:
+  - "1.006"  # Graph search algorithms
+  - "1.001"  # Sorting libraries
+  - "1.010"  # Text processing
+
+cross_references:
+  applications:
+    - deduplication
+    - fuzzy-search
+    - typo-correction
+    - name-matching
+    - content-moderation
+    - pattern-filtering
+    - data-cleaning
+    - record-linkage

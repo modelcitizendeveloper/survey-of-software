@@ -1,0 +1,258 @@
+id: "1.013"
+title: "String Algorithms"
+subtitle: "Comprehensive Survey of String Processing Libraries and Patterns"
+domain: "algorithms"
+status: "completed"
+date_started: "2026-02-03"
+date_completed: "2026-02-03"
+methodology: "4PS (Four-Phase Survey)"
+
+# Summary
+summary: |
+  Comprehensive research on string algorithms covering pattern matching, parsing, Unicode handling,
+  and architectural patterns. Progresses from library discovery (S1) through algorithmic analysis (S2),
+  use-case scenarios (S3), to strategic decision frameworks (S4).
+
+# Primary sources - detailed research and documentation
+primary_sources:
+  - name: "Rust regex crate documentation"
+    url: "https://docs.rs/regex/latest/regex/"
+    type: "library_docs"
+    coverage: "DFA-based regex engine, linear-time guarantees"
+
+  - name: "RE2 syntax and semantics"
+    url: "https://github.com/google/re2/wiki/Syntax"
+    type: "documentation"
+    coverage: "Regular expression engine with linear time guarantee"
+
+  - name: "Unicode Standard Annex #15: Unicode Normalization Forms"
+    url: "https://unicode.org/reports/tr15/"
+    type: "specification"
+    coverage: "NFC, NFD, NFKC, NFKD normalization"
+
+  - name: "Unicode Standard Annex #29: Text Segmentation"
+    url: "https://unicode.org/reports/tr29/"
+    type: "specification"
+    coverage: "Grapheme clusters, word boundaries, sentence boundaries"
+
+  - name: "Aho-Corasick algorithm paper"
+    url: "https://dl.acm.org/doi/10.1145/360825.360855"
+    type: "academic"
+    coverage: "Efficient multi-pattern string matching"
+
+  - name: "fuse.js documentation"
+    url: "https://fusejs.io/"
+    type: "library_docs"
+    coverage: "Lightweight fuzzy-search library using Bitap algorithm"
+
+  - name: "python-slugify PyPI"
+    url: "https://pypi.org/project/python-slugify/"
+    type: "library_docs"
+    coverage: "URL slug generation with Unicode transliteration"
+
+  - name: "ICU - International Components for Unicode"
+    url: "https://icu.unicode.org/"
+    type: "library_docs"
+    coverage: "Comprehensive Unicode and internationalization support"
+
+  - name: "OWASP: Input Validation Cheat Sheet"
+    url: "https://cheatsheetsec.owasp.org/cheatsheets/Input_Validation_Cheat_Sheet.html"
+    type: "security"
+    coverage: "Security best practices for input validation"
+
+  - name: "OWASP: XSS Prevention Cheat Sheet"
+    url: "https://cheatsheetsec.owasp.org/cheatsheets/Cross_Site_Scripting_Prevention_Cheat_Sheet.html"
+    type: "security"
+    coverage: "Cross-site scripting prevention through proper escaping"
+
+# Secondary sources - supporting evidence and context
+secondary_sources:
+  - name: "Jinja2 Template Designer Documentation"
+    url: "https://jinja.palletsprojects.com/en/3.1.x/templates/"
+    type: "documentation"
+    coverage: "Auto-escaping template engine for Python"
+
+  - name: "thefuzz (fuzzywuzzy fork) GitHub"
+    url: "https://github.com/seatgeek/thefuzz"
+    type: "repository"
+    coverage: "Fuzzy string matching for Python"
+
+  - name: "Apache Commons Text"
+    url: "https://commons.apache.org/proper/commons-text/"
+    type: "library_docs"
+    coverage: "String algorithms and text processing for Java"
+
+  - name: "Rust aho-corasick crate"
+    url: "https://docs.rs/aho-corasick/"
+    type: "library_docs"
+    coverage: "Fast multi-pattern string matching for Rust"
+
+  - name: "pest parser documentation"
+    url: "https://pest.rs/"
+    type: "library_docs"
+    coverage: "PEG parser generator for Rust"
+
+  - name: "Regular Expression Matching Can Be Simple And Fast"
+    url: "https://swtch.com/~rsc/regexp/regexp1.html"
+    type: "article"
+    author: "Russ Cox"
+    coverage: "DFA vs NFA regex engines, ReDoS explanation"
+
+  - name: "Levenshtein Distance on Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Levenshtein_distance"
+    type: "reference"
+    coverage: "Edit distance algorithm and applications"
+
+  - name: "Boyer-Moore String Search on Wikipedia"
+    url: "https://en.wikipedia.org/wiki/Boyer%E2%80%93Moore_string-search_algorithm"
+    type: "reference"
+    coverage: "Efficient string searching algorithm"
+
+  - name: "Knuth-Morris-Pratt Algorithm"
+    url: "https://en.wikipedia.org/wiki/Knuth%E2%80%93Morris%E2%80%93Pratt_algorithm"
+    type: "reference"
+    coverage: "Linear-time string matching with preprocessing"
+
+  - name: "Python csv module documentation"
+    url: "https://docs.python.org/3/library/csv.html"
+    type: "library_docs"
+    coverage: "CSV parsing adhering to RFC 4180"
+
+  - name: "minimatch npm package"
+    url: "https://www.npmjs.com/package/minimatch"
+    type: "library_docs"
+    coverage: "Glob pattern matching for JavaScript"
+
+  - name: "ANTLR Documentation"
+    url: "https://www.antlr.org/index.html"
+    type: "documentation"
+    coverage: "Parser generator for structured text"
+
+  - name: "ReDoS (Regular Expression Denial of Service)"
+    url: "https://owasp.org/www-community/attacks/Regular_expression_Denial_of_Service_-_ReDoS"
+    type: "security"
+    coverage: "Regex-based DoS attacks and prevention"
+
+# Libraries evaluated across phases
+libraries_evaluated:
+  python:
+    - re
+    - regex
+    - thefuzz
+    - python-Levenshtein
+    - jellyfish
+    - pyahocorasick
+    - python-slugify
+    - PyICU
+
+  javascript:
+    - String (built-in)
+    - RegExp (built-in)
+    - fuse.js
+    - string-similarity
+    - fast-levenshtein
+    - minimatch
+    - xregexp
+    - natural
+
+  rust:
+    - regex
+    - aho-corasick
+    - strsim
+    - pest
+    - glob
+    - unicode-segmentation
+    - unicode-normalization
+
+  go:
+    - regexp (stdlib)
+    - strings (stdlib)
+    - fuzzysearch
+    - levenshtein
+    - glob
+
+  java:
+    - java.util.regex
+    - Apache Commons Lang
+    - Apache Commons Text
+    - Guava
+    - java-string-similarity
+    - ANTLR
+    - ICU4J
+
+  cpp:
+    - PCRE/PCRE2
+    - RE2
+    - Boost.Regex
+    - Boost.String_Algo
+    - ICU
+    - fmt
+    - RapidFuzz-cpp
+
+# Key findings by phase
+key_findings:
+  s1_rapid:
+    - "Most languages have mature string processing ecosystems"
+    - "Clear 'go-to' libraries exist for common needs (regex, fuzzy matching, parsing)"
+    - "Safety-focused regex engines (RE2, Rust regex) recommended for untrusted input"
+    - "Unicode support requires specialized libraries (ICU, unicode-*)"
+
+  s2_comprehensive:
+    - "Algorithm choice depends on scale: naive O(n·m) adequate for small inputs, Aho-Corasick O(n+m+z) for multi-pattern"
+    - "Regex engines divide into backtracking (expressive, exponential worst case) vs DFA (safe, linear time)"
+    - "Unicode complexity: graphemes ≠ code points ≠ bytes, normalization critical for comparison"
+    - "Security: injection vulnerabilities from string concatenation, ReDoS from nested quantifiers"
+
+  s3_need_driven:
+    - "Web applications: auto-escaping templates mandatory, validation at boundaries, normalize before storage"
+    - "CLI tools: streaming for large files, terminal detection for colors/progress, glob for file matching"
+    - "Scale determines complexity: simple solutions sufficient until measured bottleneck"
+    - "Security cannot be retrofitted: must be designed into architecture (parameterized queries, escaping, timeouts)"
+
+  s4_strategic:
+    - "Default to standard libraries (95% of use cases), deviate only for measured 10x impact"
+    - "Architecture patterns: centralized normalization, lazy parsing, string interning, compilation pipelines"
+    - "Security is a design decision with 5-year impact: choose DoS-resistant algorithms, auto-escaping templates"
+    - "Optimization is investment: ROI = (business impact × frequency) / (engineering cost × risk)"
+
+# Architecture patterns documented
+architecture_patterns:
+  - "Centralized String Normalization Gateway"
+  - "Lazy String Parsing (on-demand field access)"
+  - "String Interning for High-Cardinality Keys"
+  - "Regex Compilation Pipeline with Hot Reload"
+  - "Multi-Stage Filtering Pipeline (cheap → expensive)"
+  - "String-Based Event Sourcing with Versioned Schemas"
+  - "Content-Addressable String Storage (deduplication)"
+
+# Decision frameworks provided
+decision_frameworks:
+  - "Build vs Buy vs Wrap (for library selection)"
+  - "Performance Optimization ROI Calculation"
+  - "Security vs Usability Trade-off Spectrum"
+  - "Library Selection Governance (evaluation checklist)"
+  - "Refactoring Legacy String Code (migration strategy)"
+  - "Technical Debt Prioritization (quadrant analysis)"
+
+# Related research
+related_research:
+  - "1.007 Pattern Matching"
+  - "1.002 Fuzzy Search"
+  - "1.003 Full-Text Search"
+  - "1.033 NLP Libraries"
+  - "1.035.1 Chinese Tokenization"
+
+# Tags for categorization
+tags:
+  - algorithms
+  - string-processing
+  - pattern-matching
+  - parsing
+  - unicode
+  - security
+  - performance
+  - architecture
+  - regex
+  - fuzzy-matching
+  - validation
+  - sanitization

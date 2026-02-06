@@ -1,0 +1,13 @@
+#!/bin/bash
+# Wrapper script to run fs-train with correct Python environment
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+cd "$SCRIPT_DIR"
+
+# Use venv python if available, otherwise system python
+if [ -f .venv/bin/python3 ]; then
+    .venv/bin/python3 fs-train "$@"
+else
+    echo "Error: Virtual environment not found. Run 'uv venv' first."
+    exit 1
+fi

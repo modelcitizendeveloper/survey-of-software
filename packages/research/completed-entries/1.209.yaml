@@ -1,0 +1,4 @@
+code: '1.209'
+title: local llm serving
+description: Local LLM serving solutions (Ollama, vLLM, llama.cpp, LM Studio). Market segmented into complementary niches - choose by constraint (ease/performance/portability/GUI). Completed Jan 18, 2026 (4PS, 30 docs, 5,268 lines)
+path: research/1.209-local-llm-serving

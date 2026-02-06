@@ -1,0 +1,114 @@
+---
+title: "Network Flow Libraries"
+domain: "Graph Algorithms"
+experiment_number: "1.014"
+experiment_sequence: null
+experiment_date: "2026-01"
+experiment_status: completed
+discovery_method: comprehensive_analysis
+migrated_from: null
+notes: "Network flow algorithm libraries for Python and multi-language ecosystems. Maximum flow, minimum cost flow implementations."
+
+data_sources:
+  library_documentation:
+    - name: "NetworkX"
+      url: "https://networkx.org/documentation/"
+      type: "official_documentation"
+      accessed: "2026-01"
+      license: "BSD-3-Clause"
+      github: "https://github.com/networkx/networkx"
+      stars: "~16K"
+      downloads: "~15M/week (PyPI, Jan 2026)"
+
+    - name: "OR-Tools"
+      url: "https://developers.google.com/optimization"
+      type: "official_documentation"
+      accessed: "2026-01"
+      license: "Apache 2.0"
+      github: "https://github.com/google/or-tools"
+      stars: "~13K"
+      version: "v9.15 (Jan 2026)"
+
+    - name: "igraph"
+      url: "https://igraph.org/"
+      type: "official_documentation"
+      accessed: "2026-01"
+      license: "GPL-2.0"
+      github: "https://github.com/igraph/python-igraph"
+      stars: "~1.4K (python-igraph)"
+      downloads: ">50M total downloads"
+      version: "v1.0.0 (Oct 2025)"
+
+    - name: "graph-tool"
+      url: "https://graph-tool.skewed.de/"
+      type: "official_documentation"
+      accessed: "2026-01"
+      license: "LGPL-3.0"
+      repository: "GitLab (not publicly disclosed)"
+      notes: "High-performance C++ library with Python bindings"
+
+  performance_benchmarks:
+    - source: "library_documentation"
+      notes: "Comparative performance estimates from official docs and community benchmarks"
+    - source: "boost_graph_library"
+      url: "https://www.boost.org/doc/libs/release/libs/graph/"
+      type: "reference_implementation"
+      notes: "Algorithm complexity analysis for igraph and graph-tool implementations"
+
+  api_patterns:
+    source: "official_documentation"
+    accessed: "2026-01"
+    notes: "Code examples extracted from NetworkX, OR-Tools, igraph documentation"
+
+  community_data:
+    pypi_stats: "pypistats.org"
+    github_stars: "github_api"
+    stack_overflow: "community_sentiment_analysis"
+    accessed: "2026-01"
+
+legal_review:
+  tos_compliance: "verified"
+  tos_issues: []
+  prohibited_sources: []
+  copyright_cleared: true
+  notes: "All sources are official documentation, open source projects with permissive or GPL licenses"
+
+publication_clearance:
+  can_publish_publicly: true
+  reasons: []
+  safe_for_subscribers: true
+  requires_disclaimer: false
+
+benchmark_methodology:
+  captured: true
+  environment: "Theoretical complexity analysis and community benchmarks"
+  reproducible: false
+  code_available: ""
+  notes: "Performance estimates based on algorithmic complexity and documented community benchmarks, not custom testing"
+
+analysis_methodology:
+  approach: "Two-phase discovery"
+  phases:
+    - phase: "S1-rapid"
+      duration: "15-20 minutes per library"
+      focus: "Positioning, key metrics, algorithm coverage"
+    - phase: "S2-comprehensive"
+      duration: "30-45 minutes per library"
+      focus: "Architecture, API design, performance characteristics, integration patterns"
+
+  evaluation_dimensions:
+    - "Algorithm implementations (Ford-Fulkerson, Edmonds-Karp, Push-Relabel)"
+    - "API ergonomics and developer experience"
+    - "Performance benchmarks (small/medium/large graphs)"
+    - "Memory efficiency and scalability limits"
+    - "Integration patterns with numerical computing stacks"
+
+token_usage:
+  total_tokens: 0
+  input_tokens: 0
+  output_tokens: 0
+  model: "claude-sonnet-4-5"
+  session_count: 1
+  cost_estimate: "$0.00"
+  notes: "To be updated with actual token usage"
+---

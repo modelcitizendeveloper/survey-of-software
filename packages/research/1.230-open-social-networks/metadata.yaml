@@ -1,0 +1,55 @@
+id: "1.230"
+title: "Open Social Networks & Protocols"
+tier: 1
+category: "Self-Operated Tools - Social Networks"
+status: "S1-S4 complete"
+created: "2025-12-22"
+updated: "2025-12-22"
+
+discovery:
+  S1_rapid: "complete"
+  S2_comprehensive: "complete"
+  S3_need_driven: "complete"
+  S4_strategic: "complete"
+
+protocols_analyzed:
+  - name: "ActivityPub"
+    id: "1.230"
+    type: "protocol"
+    standardization: "W3C"
+  - name: "AT Protocol / Bluesky"
+    id: "1.231"
+    type: "protocol"
+    standardization: "open-source"
+  - name: "Matrix"
+    id: "1.232"
+    type: "protocol"
+    standardization: "open-source"
+  - name: "Nostr"
+    id: "1.233"
+    type: "protocol"
+    standardization: "community NIPs"
+
+related_categories:
+  - "3.023: Team Chat & Collaboration Platforms"
+  - "1.132: Self-hosted Collaboration"
+  - "2.074-079: AI Agent Communication Standards"
+
+key_findings:
+  - "ActivityPub is largest decentralized network (10M users, W3C standard)"
+  - "AT Protocol offers best UX and portable identities (15-20M users)"
+  - "Matrix is only protocol with built-in E2E encryption"
+  - "Nostr is simplest protocol with native Lightning payments"
+  - "No single protocol dominates all use cases"
+
+trigger: "Vikunja Slack bot - evaluate platform alternatives for team communication"
+
+tags:
+  - "decentralized-social"
+  - "activitypub"
+  - "atprotocol"
+  - "bluesky"
+  - "matrix"
+  - "nostr"
+  - "federation"
+  - "open-protocol"

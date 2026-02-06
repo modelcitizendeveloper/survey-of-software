@@ -1,0 +1,88 @@
+{
+  "provider_name": "Neon",
+  "provider_url": "https://neon.tech",
+  "database_type": "PostgreSQL",
+  "tier2_compliant": true,
+  "tier2_standard_id": "2.050",
+
+  "features": {
+    "standard_features": [
+      "PostgreSQL database (100% compatible)",
+      "SQL queries",
+      "Extensions"
+    ],
+    "proprietary_features": [
+      "Database branching (unique to Neon)",
+      "Serverless scaling (autoscaling)",
+      "Scale-to-zero compute",
+      "Built-in connection pooling (free)"
+    ]
+  },
+
+  "pricing": {
+    "free_tier": {
+      "cost_usd_monthly": 0,
+      "storage_gb": 3,
+      "compute_hours_monthly": 191.9,
+      "branches_free": 10,
+      "note": "Covers 1-3 concurrent apps or 5-10 preview environments for 6-12 months"
+    },
+    "launch_tier": {
+      "cost_usd_monthly": 19,
+      "storage_gb": 10,
+      "compute_autoscaling": true,
+      "use_case": "1K-5K users"
+    },
+    "scale_tier": {
+      "cost_usd_monthly": 69,
+      "use_case": "5K-10K users"
+    }
+  },
+
+  "lock_in_assessment": {
+    "overall_lock_in": "LOW-MEDIUM",
+    "standard_features_portable": true,
+    "proprietary_feature_migration_hours": {
+      "min": 8,
+      "max": 20,
+      "affected_features": ["Database branching workflow", "Serverless scaling architecture"]
+    },
+    "database_migration_hours": {
+      "min": 8,
+      "max": 20,
+      "method": "pg_dump/pg_restore"
+    },
+    "note": "Lose branching workflow and autoscaling, may need to rearchitect scaling"
+  },
+
+  "use_cases": [
+    "Serverless applications (Next.js on Vercel)",
+    "Applications with preview environments per Git branch",
+    "Database-only applications (no auth/storage needed)",
+    "Applications with bursty traffic (scale-to-zero saves costs)"
+  ],
+
+  "when_to_choose": [
+    "Need database branching for preview environments",
+    "Want scale-to-zero pricing (pay only when active)",
+    "Building on serverless platforms (Vercel, Netlify)",
+    "Need fast cold starts (<200ms)"
+  ],
+
+  "acquisition_status": {
+    "acquired_by": "Databricks",
+    "acquisition_date": "2025-05",
+    "price_risk": "Expect 20-40% price increase 2026-2027"
+  },
+
+  "data_lineage": {
+    "source_documents": [
+      "research/3.040-database-services/SECTION_0_STANDARDS.md",
+      "research/3.040-database-services/DATABASE_SERVICES_EXPLAINER.md"
+    ],
+    "extracted_at": "2025-10-17T00:00:00Z",
+    "extraction_method": "manual_conversion",
+    "source_urls": [],
+    "credibility": "second_party"
+  }
+}

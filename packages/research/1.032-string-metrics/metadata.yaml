@@ -1,0 +1,2 @@
+title: String Similarity Metrics
+description: Libraries and algorithms for calculating string similarity (Levenshtein, Jaro-Winkler, cosine similarity) - the building blocks for fuzzy matching and deduplication.

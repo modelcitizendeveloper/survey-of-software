@@ -1,0 +1,174 @@
+# 3.131: Team Task Management - Experiment Metadata
+
+experiment:
+  id: "3.131"
+  title: "Team Task Management"
+  category: "Business Platforms"
+  tier: 3
+  status: "in_progress"
+  started: "2025-11-12"
+  completed: null
+  discovery_method: "detailed_toc"
+
+trigger:
+  source: "Research Priority Queue"
+  date: "2025-11-12"
+  description: "Systematic discovery of team task management platforms (3-20 people tier) to complete competitive landscape catalog"
+  validation: "Priority queue identifies team task management as HIGH priority gap in research coverage"
+  related_research: "3.130 Personal Productivity (individual tier), 3.132 Enterprise PM (enterprise tier)"
+
+scope:
+  domain: "Team Task Management"
+  definition: "Task management platforms designed for small teams (3-20 people) with collaboration features, permission models, and per-seat pricing"
+  includes:
+    - "Task creation and assignment"
+    - "Team collaboration features"
+    - "Permission models (viewer, editor, admin)"
+    - "Per-seat pricing models"
+    - "Integration ecosystems"
+    - "Mobile apps and notifications"
+    - "Project views (list, board, calendar, timeline)"
+    - "Automation and workflows"
+  excludes:
+    - "Personal/individual task management only (see 3.130)"
+    - "Enterprise project management (20+ users, see 3.132)"
+    - "Self-hosted project management (see 1.131)"
+
+platforms:
+  tier_collaborative:
+    - name: "Asana"
+      research_depth: "full"
+      rationale: "Public company, market leader, $1.4B revenue"
+    - name: "ClickUp"
+      research_depth: "full"
+      rationale: "Feature-rich challenger, $4B valuation"
+    - name: "Linear"
+      research_depth: "full"
+      rationale: "Developer-focused, modern UX, $400M valuation"
+    - name: "Monday.com"
+      research_depth: "full"
+      rationale: "Public company, $900M revenue, visual workflow leader"
+    - name: "Airtable"
+      research_depth: "full"
+      rationale: "$11B valuation, database-backed, unique positioning"
+    - name: "Trello"
+      research_depth: "full"
+      rationale: "Atlassian-owned, extremely popular, kanban leader"
+
+research_questions:
+  primary:
+    - "What are the key differentiators between team task management platforms?"
+    - "How do pricing models scale from 3 to 20 users?"
+    - "Which platforms have the best integration ecosystems?"
+    - "What permission models are used for team collaboration?"
+    - "How do platforms balance simplicity vs features?"
+
+  secondary:
+    - "AI capabilities for task management (prioritization, scheduling, suggestions)"
+    - "Mobile experience quality across platforms"
+    - "API and automation capabilities"
+    - "Migration complexity between platforms"
+    - "Self-hosted alternatives comparison (1.131 Vikunja, Plane, Taiga)"
+
+mpse_stages:
+  s1_rapid:
+    status: "in_progress"
+    goal: "Platform overviews for 6 team task management tools (all full depth)"
+    platforms: 6
+    deliverables:
+      - "approach.md"
+      - "asana.md (full depth - $1.4B revenue public)"
+      - "clickup.md (full depth - $4B valuation)"
+      - "linear.md (full depth - $400M valuation dev-focused)"
+      - "monday.md (full depth - $900M revenue public)"
+      - "airtable.md (full depth - $11B valuation database hybrid)"
+      - "trello.md (full depth - Atlassian-owned, kanban leader)"
+      - "recommendations.md (synthesis)"
+
+  s2_comprehensive:
+    status: "pending"
+    goal: "Feature matrix, pricing, integrations, team collaboration"
+    deliverables:
+      - "approach.md"
+      - "feature-matrix.md"
+      - "pricing-analysis.md"
+      - "integrations-ecosystem.md"
+      - "permission-models.md"
+      - "mobile-experience.md"
+      - "synthesis.md"
+
+  s3_need_driven:
+    status: "pending"
+    goal: "5 generic team scenarios"
+    scenarios: 5
+    deliverables:
+      - "approach.md"
+      - "consulting-team-5-people.md"
+      - "dev-team-8-people.md"
+      - "marketing-agency-12-people.md"
+      - "remote-distributed-team-15-people.md"
+      - "mixed-technical-business-team-20-people.md"
+      - "synthesis.md"
+
+  s4_strategic:
+    status: "pending"
+    goal: "Positioning frameworks, vendor viability, competitive landscape"
+    deliverables:
+      - "approach.md"
+      - "personal-vs-team-vs-enterprise.md"
+      - "build-vs-buy-decision.md"
+      - "vendor-viability.md"
+      - "competitive-positioning.md"
+      - "synthesis.md"
+
+integration_relationships:
+  upstream:
+    - experiment: "3.130"
+      title: "Personal Productivity (GTD)"
+      relationship: "Team task management graduates from personal productivity (1-2 people → 3+ people)"
+
+  downstream:
+    - experiment: "3.132"
+      title: "Enterprise Project Management"
+      relationship: "Team task management graduates to enterprise PM (20+ people, SSO, compliance)"
+
+  parallel:
+    - experiment: "1.131"
+      title: "Self-hosted Project Management"
+      relationship: "Self-hosted alternatives (Vikunja, Plane, Taiga) vs managed services decision"
+
+key_findings:
+  s1_discoveries: {}
+  integration_patterns: {}
+  pricing_transparency: {}
+  vendor_viability: {}
+
+success_criteria:
+  s1_complete: "6 platform profiles exist (all full depth), synthesis complete"
+  s2_complete: "Feature matrix, pricing analysis, integration ecosystem, permission models complete"
+  s3_complete: "5 team scenarios with platform matching, catalog application methodology documented"
+  s4_complete: "Positioning frameworks, vendor viability, competitive landscape complete"
+  full_complete: "Team can match team size/context to platform shortlist using catalog research"
+
+business_value:
+  market_size: "Every team 3-20 people needs task management (or considering upgrade from spreadsheets/personal tools)"
+  decision_frequency: "Every 2-3 years (platform replacement cycle shorter than enterprise)"
+  annual_spend: "$500-10K depending on team size and platform tier"
+  critical_finding: "TBD - will identify key differentiators for GTD/PM product positioning"
+
+timeline:
+  s1_rapid: "Nov 12, 2025 (in progress)"
+  s2_comprehensive: "TBD"
+  s3_need_driven: "TBD"
+  s4_strategic: "TBD"
+  total_time: "Estimated 10-12 hours"
+
+notes:
+  - "Research follows hardware store principle: generic catalog content, no application-specific recommendations"
+  - "Focus on team tier (3-20 people) as distinct segment between personal (3.130) and enterprise (3.132)"
+  - "Cross-experiment integration: 3.130 (personal) → 3.131 (team) → 3.132 (enterprise) graduation path"
+  - "Application-specific analysis belongs in /applications/project-management/, not in generic research catalog"
+
+created: "2025-11-12"
+updated: "2025-11-12"
+version: "1.0"
