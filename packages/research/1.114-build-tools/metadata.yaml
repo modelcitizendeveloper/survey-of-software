@@ -1,0 +1,178 @@
+code: '1.114'
+title: Build Tools
+subtitle: "Vite, esbuild, Rollup, Parcel, Turbopack"
+tier: 1
+category: Library/Package Discovery
+domain: build-tools
+status: in_progress
+completion_date: null
+
+description: |
+  Comprehensive analysis of JavaScript build tools and bundlers for modern web development.
+  Covers module bundling, transpilation, development servers, and optimization strategies.
+  Analyzes five major tools (Vite, esbuild, Rollup, Parcel, Turbopack) plus strategic
+  assessment of Webpack's ecosystem position.
+
+research_output:
+  total_documents: 57
+  total_lines: 11495
+  stages_completed: [S1-rapid]
+
+libraries_analyzed:
+  - name: Vite
+    implementation: Native ESM dev server, Rollup production builds
+    performance: "Dev: ~1.2s cold start, <10ms HMR; Prod: 15-30s medium projects"
+    best_for: Modern web apps (SPA/MPA), React/Vue/Svelte projects
+    ecosystem: 38M weekly downloads, 76K GitHub stars, 75% State of JS satisfaction
+    bundle_size: Excellent tree shaking via Rollup
+
+  - name: esbuild
+    implementation: Go-based bundler, extreme compilation speed
+    performance: "10-100x faster than JavaScript bundlers"
+    best_for: Library builds, CI/CD optimization, speed-critical projects
+    ecosystem: Used by Vite, Snowpack as dependency pre-bundler
+    bundle_size: Good tree shaking, minimal overhead
+
+  - name: Rollup
+    implementation: ES module-native bundler, library-focused
+    performance: Slower than esbuild, better tree shaking than Webpack
+    best_for: JavaScript libraries, multiple output formats (ESM/CJS/UMD)
+    ecosystem: Powers Vite production builds, library ecosystem standard
+    bundle_size: Best-in-class tree shaking
+
+  - name: Parcel
+    implementation: Zero-config bundler, convention over configuration
+    performance: Moderate speed, automatic optimization
+    best_for: Rapid prototyping, learning, hackathons
+    ecosystem: Lower adoption than competitors, simplicity-focused
+    bundle_size: Automatic optimization, decent tree shaking
+
+  - name: Turbopack
+    implementation: Rust-based bundler, Next.js-specific (currently)
+    performance: Rust speed, incremental compilation
+    best_for: Next.js 15+ applications only
+    ecosystem: Vercel-backed, Next.js exclusive (for now)
+    bundle_size: Not yet documented, Next.js integration focused
+
+key_findings:
+  - finding: "Vite dominates modern ecosystem with 76K stars, highest State of JS satisfaction (75%)"
+    impact: "Clear industry consensus for new projects - largest community, most framework integrations"
+    confidence: high
+
+  - finding: "Native ESM in development revolutionizes dev server speed (Vite <10ms HMR vs Webpack 1-3s)"
+    impact: "Fundamental architecture shift - dev/prod parity trade-off for massive speed gains"
+    confidence: high
+
+  - finding: "esbuild's Go implementation achieves 10-100x speed over JavaScript bundlers"
+    impact: "Compilation speed no longer bottleneck - enables instant rebuilds in CI/CD"
+    confidence: high
+
+  - finding: "Rollup remains library build standard despite slower app building"
+    impact: "Library vs app bundler divergence - different tools for different outputs"
+    confidence: high
+
+  - finding: "Webpack ecosystem maturity (10+ years) still valuable for complex edge cases"
+    impact: "Plugin ecosystem unmatched, but declining adoption for new projects"
+    confidence: medium
+
+  - finding: "Zero-config philosophy (Vite, Parcel) wins over Webpack's configuration complexity"
+    impact: "Industry moved toward convention over configuration - faster onboarding"
+    confidence: high
+
+  - finding: "Framework-specific bundlers (Turbopack for Next.js) emerging as optimization strategy"
+    impact: "Tighter integration enables deeper optimization but reduces portability"
+    confidence: medium
+
+recommendations:
+  default: "Use Vite for 90% of modern web projects - highest satisfaction, best ecosystem, excellent speed"
+
+  by_use_case:
+    modern_web_apps: "Vite - 76K stars, framework integrations, 38M weekly downloads"
+    library_builds: "Rollup - best tree shaking, multiple output formats, ESM-native"
+    maximum_speed: "esbuild - 10-100x faster, ideal for CI/CD and build performance critical paths"
+    zero_config_prototyping: "Parcel - absolute simplest setup, learning-friendly"
+    nextjs_projects: "Turbopack - Next.js 15+ native integration, Rust performance"
+    legacy_complex_projects: "Webpack - mature plugin ecosystem for edge cases"
+
+  by_timeline:
+    one_to_two_years: "Vite (new projects), maintain Webpack (existing with complex configs)"
+    three_to_five_years: "Vite - ecosystem momentum, framework backing, active development"
+    five_plus_years: "Vite or framework-native bundlers - monitor Turbopack expansion"
+
+  strategic_guidance:
+    new_projects_2025: "Default to Vite unless specific constraints require alternatives"
+    webpack_migration: "Evaluate Vite migration for projects with slow build times"
+    library_development: "Use Rollup for best tree shaking and output format flexibility"
+    speed_optimization: "Consider esbuild for library builds and CI/CD pipelines"
+    framework_lock_in: "Be aware Turbopack currently Next.js-only, Vite framework-agnostic"
+
+sources:
+  official_documentation:
+    - title: "Vite Documentation"
+      url: "https://vitejs.dev/"
+      type: official_docs
+    - title: "esbuild Documentation"
+      url: "https://esbuild.github.io/"
+      type: official_docs
+    - title: "Rollup Documentation"
+      url: "https://rollupjs.org/"
+      type: official_docs
+    - title: "Parcel Documentation"
+      url: "https://parceljs.org/"
+      type: official_docs
+    - title: "Turbopack Documentation"
+      url: "https://turbo.build/pack"
+      type: official_docs
+
+  github_repositories:
+    - title: "vitejs/vite"
+      url: "https://github.com/vitejs/vite"
+      stars: 76309
+      downloads: "38M weekly"
+    - title: "evanw/esbuild"
+      url: "https://github.com/evanw/esbuild"
+      note: "Go-based bundler"
+    - title: "rollup/rollup"
+      url: "https://github.com/rollup/rollup"
+      note: "Library bundler standard"
+
+  ecosystem_analysis:
+    - title: "State of JS 2024 - Build Tools"
+      url: "https://stateofjs.com/"
+      type: survey_data
+      note: "Vite 75% satisfaction, #1 ranked"
+    - title: "npm trends: vite vs webpack"
+      url: "https://npmtrends.com/vite-vs-webpack"
+      type: download_statistics
+
+related_research:
+  - code: '1.111'
+    title: State Management Libraries
+    relationship: "Build tool integration for React state management libraries"
+  - code: '1.113'
+    title: UI Component Libraries
+    relationship: "Build configuration for component library bundling"
+  - code: '1.115'
+    title: Form Libraries
+    relationship: "Development server setup for form-heavy applications"
+
+methodology_notes: |
+  Research conducted using 4PS framework - currently in S1-rapid phase:
+  - S1: Library comparison across 5 major tools (Vite, esbuild, Rollup, Parcel, Turbopack)
+  - Popularity assessment via GitHub stars, npm downloads, State of JS 2024 survey
+  - Performance benchmarks from official documentation and community reports
+  - Framework adoption analysis (Vue, React, Svelte ecosystem integrations)
+
+  Document includes comprehensive domain explainer covering:
+  - Build tool fundamentals and problem space
+  - Ecosystem evolution (Webpack → Vite generation shift)
+  - Technical architecture differences (ESM vs bundling)
+  - Selection criteria and decision frameworks
+
+  Next phases (S2-S4) will add:
+  - S2: Deep technical analysis (plugin systems, optimization strategies)
+  - S3: Use case personas and decision trees
+  - S4: Long-term viability and migration strategies
+
+  Performance metrics based on official benchmarks and community testing.
+  Adoption statistics from npm trends (December 2025) and State of JS 2024.
