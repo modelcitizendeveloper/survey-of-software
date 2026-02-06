@@ -1,0 +1,322 @@
+code: '1.152.1'
+title: CJK Readability Analysis
+subtitle: "Jieba, HSK lists, TOCFL, CRIE, cntext"
+tier: 1
+category: Library/Package Discovery
+domain: chinese-language-processing
+status: completed
+completion_date: '2026-02-06'
+
+description: |
+  Comprehensive analysis of Chinese text readability assessment tools and methodologies
+  for matching content to learner proficiency levels. Covers character-based and word-based
+  approaches, HSK/TOCFL standards, frequency analysis, and machine learning methods across
+  web tools, Python libraries, and academic research systems.
+
+research_output:
+  total_documents: 11
+  total_lines: ~3500
+  stages_completed: [S1-rapid, S2-comprehensive, S3-need-driven, S4-strategic]
+
+  stages:
+    S1-rapid:
+      files: 1
+      lines: ~150
+      content:
+        - HSK and TOCFL proficiency standards overview
+        - Web-based tools (Chinese Text Analyser, HSK HSK Analyzer)
+        - Academic/research systems (CRIE, CkipTagger)
+        - Python libraries (cntext, Jieba, chinese-text-analyzer)
+        - Key frequency lists and datasets
+
+    S2-comprehensive:
+      files: 1
+      lines: ~400
+      content:
+        - Text segmentation pipeline (Jieba DAG + HMM)
+        - Character/word frequency analysis (SUBTLEX-CH, Jun Da, FineFreq)
+        - Linguistic feature extraction (82 CRIE features, 196 CTAP features)
+        - Classification approaches (simple coverage vs ML-based SVM)
+        - Technical challenges and performance considerations
+
+    S3-need-driven:
+      files: 6
+      lines: ~1800
+      content:
+        - 5 use case scenarios (learning apps, publishers, creators, reading tools, curriculum)
+        - Multi-library integration requirements
+        - Implementation priorities by use case
+        - Cost-benefit analysis for automation
+        - Decision framework (build vs manual vs third-party)
+
+    S4-strategic:
+      files: 1
+      lines: ~650
+      content:
+        - Architecture decision framework (character vs word, simple vs ML, build vs buy)
+        - Hidden complexity and gotchas (segmentation errors, HSK 3.0 migration)
+        - Cost modeling and ROI thresholds
+        - Implementation roadmap (4 phases)
+        - Market trends and adjacent technologies
+
+proficiency_standards:
+  - name: HSK (Hanyu Shuiping Kaoshi)
+    levels: 6 (old), 9 (new 2026)
+    character_range: 300 (HSK 1) to 3000+ (HSK 9)
+    focus: Mainland China, Simplified Chinese, character-based
+    transition: HSK 3.0 effective July 2026
+
+  - name: TOCFL (Test of Chinese as a Foreign Language)
+    levels: 8 (Novice 1-2, Levels 1-6)
+    vocabulary_range: 500-1000 characters (Band A) to 3100 characters (TBCL)
+    focus: Taiwan, Traditional Chinese, word-based (14,425 words)
+
+libraries_analyzed:
+  - name: Jieba
+    type: Word segmentation
+    implementation: Prefix dictionary + DAG + Dynamic programming + HMM
+    performance: ~200K chars/second
+    best_for: Text tokenization (de facto standard for Chinese NLP)
+
+  - name: cntext
+    type: Python library
+    implementation: Word frequency, readability metrics, sentiment analysis
+    features: Integrated analysis pipeline
+    best_for: Batch text analysis in Python
+
+  - name: CRIE (Chinese Readability Index Explorer)
+    type: Academic research system
+    implementation: SVM with 82 multilevel linguistic features
+    training: Taiwanese primary/secondary school textbooks
+    best_for: Research-grade accuracy, diagnostic reports
+
+  - name: CkipTagger
+    type: NLP toolkit (Sinica-Taiwan)
+    implementation: POS tagging, tokenization, NER
+    focus: Traditional Chinese, academic applications
+    best_for: Comprehensive NLP pipeline for Traditional Chinese
+
+  - name: HSK Character Profiler
+    type: Open-source tool
+    implementation: Character coverage calculation
+    features: Simple, fast, easy integration
+    best_for: MVP/prototypes, language learning apps
+
+  - name: Chinese Text Analyser (web)
+    type: Web-based tool
+    implementation: Fast segmentation and analysis
+    best_for: Manual testing, one-off analysis
+
+  - name: CTAP
+    type: Feature extraction system
+    implementation: 196 linguistic features across 4 levels
+    features: Most comprehensive feature set
+    best_for: Research, fine-grained assessment
+
+frequency_datasets:
+  - name: SUBTLEX-CH
+    size: 46.8M characters, 33.5M words
+    source: Film/TV subtitles
+    characteristics: Psychologically/cognitively relevant, reflects real usage
+
+  - name: Jun Da Corpus
+    size: 9,933 characters
+    characteristics: Most common character (的) appears 7.9M times, 1000 chars = 89% coverage
+    best_for: Simple, fast lookup
+
+  - name: BCC Corpus
+    characteristics: Web-scale, authoritative, contemporary usage
+    size: Large (requires preprocessing)
+    best_for: Comprehensive frequency reference
+
+  - name: FineFreq
+    characteristics: Web-scale multilingual dataset
+    coverage: Mandarin + other high-resource languages
+    best_for: Cross-linguistic comparisons
+
+key_findings:
+  - finding: "Character-based analysis (HSK approach) is simpler but misses vocabulary complexity"
+    impact: "Knowing 研 + 究 individually ≠ knowing 研究 'research' as a word; word-based more accurate for HSK 4+"
+
+  - finding: "Simple coverage formula (95% threshold) achieves 80-90% accuracy, good enough for learner apps"
+    impact: "Fast (milliseconds), easy to explain, but ignores sentence structure and discourse complexity"
+
+  - finding: "ML-based approach (CRIE with 82 features) provides research-grade accuracy and diagnostics"
+    impact: "Slower (requires full NLP pipeline), harder to explain, but captures linguistic complexity"
+
+  - finding: "Jieba segmentation ~95% accurate, but 5% error rate cascades into readability errors"
+    impact: "Domain-specific dictionaries required for medical/legal text; proper names cause false positives"
+
+  - finding: "HSK 3.0 migration (July 2026) changes character/word requirements across all levels"
+    impact: "All systems must maintain both HSK 2.0 and 3.0 mappings during 2026-2027 transition"
+
+  - finding: "No single library provides complete solution - all use cases require multi-library integration"
+    impact: "jieba + frequency data + HSK/TOCFL lists + custom logic is universal pattern"
+
+  - finding: "Coverage threshold (90-98%) is use-case dependent, not universal"
+    impact: "Text type (narrative vs academic), learner background, glossary availability all affect optimal threshold"
+
+  - finding: "Traditional vs Simplified Chinese not 1:1 mapping - separate frequency lists required"
+    impact: "台/臺, 后/後 have different meanings; proper conversion libraries (OpenCC) essential"
+
+  - finding: "Most common 1,000 Chinese characters cover ~90% of everyday written text"
+    impact: "HSK 3 (~900 characters) enables reading majority of common content"
+
+  - finding: "Context-dependent difficulty: character frequency ≠ character difficulty in actual usage"
+    impact: "的 (most common) vs 辩证法 (rare academic term); idioms (成语) must be learned as units"
+
+recommendations:
+  default: "Use jieba + HSK Character Profiler for MVP, upgrade to custom build at scale"
+
+  by_use_case:
+    language_learning_apps: "jieba + BCC/Jun Da + CC-CEDICT + HSK tags + custom coverage scoring (80-90% accuracy sufficient)"
+    graded_reader_publishers: "jieba + BCC + CC-CEDICT + custom proper name dictionary + editorial rules engine (CRIE-style ML if >50 books)"
+    content_creators: "jieba.js + CC-CEDICT + HSK lists + browser extension for real-time feedback + synonym suggestions"
+    reading_assistants: "jieba.js + pruned CC-CEDICT + Jun Da + IndexedDB for user vocab (prioritize speed and small bundle size)"
+    curriculum_designers: "jieba + BCC/SUBTLEX-CH + HSK/TOCFL + custom gap detection + visualization tools (CRIE-style for large programs)"
+
+  by_approach:
+    character_based: "Simpler (no segmentation), aligns with learning materials, but misses vocabulary nuance - good for HSK 1-3"
+    word_based: "Better comprehension accuracy, required for HSK 4+, but needs segmentation and harder to align with curricula"
+
+  by_implementation:
+    simple_coverage: "95% character/word coverage threshold - fast, explainable, good enough for 90% of use cases"
+    ml_based: "CRIE-style SVM with 82+ features - slower, more accurate, provides diagnostics - for publishers/educators"
+
+  strategic_paths:
+    mvp_prototype: "HSK Character Profiler (OSS) or simple coverage formula - 1 day integration, $1K-$2K year 1"
+    production_app: "Custom jieba + HSK 3.0 lists when >100K texts/month - $7K-$12K year 1, lowest per-text cost"
+    enterprise_academic: "CRIE-style ML system - 3-6 months, $50K-$100K, research-grade accuracy"
+
+  build_vs_buy:
+    build_custom: "When volume >100+ books/1000+ lessons/10K+ users, or readability is core differentiation"
+    use_manual: "When <20 books/<100 lessons, experimental/boutique programs, literary quality > consistency"
+    commercial_api: "Currently no comprehensive SaaS exists for CJK readability (as of 2026)"
+
+technical_challenges:
+  - challenge: "Segmentation ambiguity (研究生 = 'research student' or 'research born'?)"
+    mitigation: "Domain-specific dictionaries, custom NER for proper names"
+
+  - challenge: "HSK 3.0 migration July 2026 (9 levels vs 6, changed requirements)"
+    mitigation: "Maintain both HSK 2.0 and 3.0 mappings during 2026-2027 transition"
+
+  - challenge: "Context-dependent difficulty (idioms, frequency ≠ difficulty)"
+    mitigation: "Word-based analysis for HSK 4+, flag idioms separately"
+
+  - challenge: "Traditional/Simplified Chinese mapping not 1:1"
+    mitigation: "OpenCC conversion library, separate frequency lists"
+
+  - challenge: "Coverage threshold arbitrary (95% readable for whom?)"
+    mitigation: "Make configurable (90-98%), A/B test optimal value per use case"
+
+cost_analysis:
+  diy_approach:
+    setup: "$5K-$10K (1-2 weeks dev)"
+    hosting: "$20-50/month (1M texts/month)"
+    maintenance: "4-8 hours/quarter"
+    year_1_total: "$7K-$12K"
+    break_even: "100K-1M texts/month"
+
+  oss_library:
+    setup: "$500-$1.5K (1-3 days)"
+    hosting: "$0 (runs in app)"
+    maintenance: "2 hours/quarter"
+    year_1_total: "$1K-$2K"
+    sweet_spot: "100K-1M texts/month"
+
+  commercial_api:
+    setup: "$1K (1-2 days)"
+    usage: "~$1 per 1M characters (Google Cloud NLP)"
+    maintenance: "~0 (fully managed)"
+    year_1_at_50M_chars: "$46K"
+    note: "APIs don't specifically support HSK levels - still need custom logic"
+
+  enterprise_ml:
+    development: "$50K-$100K (3-6 months)"
+    suitable_for: "Publishers, large educational institutions requiring research-grade accuracy"
+
+performance_benchmarks:
+  jieba_segmentation: "~200K chars/second"
+  simple_coverage: "<100ms for 1000 characters"
+  ml_based_crie: "<500ms for 1000 characters (includes full NLP pipeline)"
+  accuracy_simple: "80-90% exact level match, 95%+ within ±1 level"
+  accuracy_ml: "90%+ exact match with diagnostic feedback"
+
+related_research:
+  adjacent:
+    - code: '1.033.2'
+      title: Chinese Word Segmentation
+      relationship: Segmentation is first step in readability pipeline
+
+    - code: '1.033'
+      title: NLP Libraries
+      relationship: Broader NLP context, POS tagging, parsing for advanced features
+
+  domain_specific:
+    - title: Chinese Language Learning Platforms
+      relationship: Primary application domain for readability analysis
+
+    - title: Educational Content Assessment
+      relationship: Readability as part of curriculum design
+
+estimated_hours: 3-4
+actual_hours: 3.5
+
+completion_notes: |
+  Completed February 6, 2026 as topic 1.152.1 (CJK Readability Analysis) under the
+  broader topic 1.152 (Chinese/Japanese/Korean Text Processing). This research focuses
+  specifically on readability assessment for Chinese language learners.
+
+  Key strategic insight: No single library solution exists - all use cases require
+  integrating multiple tools (jieba + frequency data + proficiency standards + custom
+  logic). The field is split between simple coverage formulas (fast, good enough for
+  90% of use cases) and ML-based approaches (slower, more accurate, provides diagnostics).
+
+  Critical finding: The 2026 HSK 3.0 transition (6 to 9 levels) creates immediate need
+  for tools that support both old and new standards during 2026-2027 migration period.
+  This creates opportunity for tool vendors and challenges for existing systems.
+
+  Practical impact: Research provides concrete implementation guidance for 5 major use
+  cases (learning apps, publishers, content creators, reading assistants, curriculum
+  designers) with specific library recommendations, cost models, and ROI thresholds.
+  The "build custom integration" pattern is universal - no off-the-shelf SaaS exists.
+
+  Decision framework: Character-based (simpler, HSK 1-3) vs word-based (more accurate,
+  HSK 4+); simple coverage (fast, explainable) vs ML (accurate, diagnostic); build
+  (control, low cost at scale) vs buy (currently not available for comprehensive solution).
+
+  Long-term trends: HSK 3.0 adoption will dominate 2026-2028. ML/LLM integration
+  opportunity for auto-generating level-appropriate content. Adjacent technologies
+  (personalization, translation-for-learners, multimodal assessment) create expansion
+  opportunities beyond pure readability scoring.
+
+sources:
+  academic_papers:
+    - "CRIE: An automated analyzer for Chinese texts (Sung et al., 2016)"
+    - "SUBTLEX-CH: Chinese Word and Character Frequencies Based on Film Subtitles (Cai & Brysbaert, 2010)"
+    - "CTAP for Chinese: A Linguistic Complexity Feature Analysis Tool (Chen & Meurers, 2022)"
+    - "Chinese Text Readability Assessment Based on Visualized POS Information (MDPI Algorithms, 2023)"
+
+  proficiency_standards:
+    - "The Newly Revised HSK | What You Need to Know in 2026 (StudyCLI)"
+    - "Everything You Need to Know About the 2026 HSK Overhaul (HanyuAce)"
+    - "HSK character list (HanziDB)"
+    - "Hanyu Shuiping Kaoshi - Wikipedia"
+    - "Test of Chinese as a Foreign Language - Wikipedia"
+    - "Understanding TOCFL: The Test of Chinese as a Foreign Language (NCNU)"
+
+  libraries_and_tools:
+    - "jieba · PyPI - Chinese text segmentation"
+    - "cntext · PyPI - Chinese text analysis toolkit"
+    - "Chinese Text Analyser (chinesetextanalyser.com)"
+    - "HSK HSK Analyzer (hskhsk.com/analyse)"
+    - "CkipTagger - Sinica Taiwan NLP toolkit"
+
+  frequency_datasets:
+    - "Jun Da Modern Chinese Character Frequency List"
+    - "SUBTLEX-CH corpus documentation"
+    - "Chinese character frequency and entropy (John D. Cook blog)"
+
+  technical_resources:
+    - "Chinese Word Segmentation - The challenges of splitting Chinese (Medium)"
+    - "Chinese Word Segmentation — ENC2045 Computational Linguistics (Alvin Chen)"
