@@ -1,6 +1,6 @@
 ---
 title: "Taxonomy Vision: 1.3xx Domain-Specific Data & Analysis"
-weight: 999
+weight: 1300.0
 bookHidden: true
 ---
 
