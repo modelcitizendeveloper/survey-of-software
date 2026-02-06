@@ -1,0 +1,321 @@
+code: '1.148.2'
+title: Classical Chinese Parsing
+subtitle: "Stanford CoreNLP, Jiayan, ctext.org API, domain-specific NLP challenges"
+tier: 1
+category: Library/Package Discovery
+domain: natural-language-processing
+status: completed
+completion_date: '2026-02-06'
+
+description: |
+  Comprehensive analysis of tools and approaches for parsing Classical Chinese (文言文)
+  texts. Covers general-purpose NLP tools (Stanford CoreNLP, HanLP), specialized
+  segmentation tools (Jiayan), corpus resources (ctext.org API), and strategies for
+  building custom Classical Chinese NLP pipelines. Includes technical feasibility,
+  use case analysis, market assessment, and strategic development paths.
+
+research_output:
+  total_documents: 15
+  total_lines: ~3670
+  stages_completed: [S1-rapid, S2-comprehensive, S3-need-driven, S4-strategic]
+
+  stages:
+    S1-rapid:
+      files: 3
+      lines: ~570
+      content:
+        - 2 tool surveys (Stanford CoreNLP, ctext.org API)
+        - Quick assessment of available solutions
+        - Gap analysis (no production-ready Classical Chinese parser)
+
+    S2-comprehensive:
+      files: 5
+      lines: ~1300
+      content:
+        - 3 tool deep-dives (Stanford CoreNLP, ctext.org API, Jiayan)
+        - Technical comparison (segmentation, parsing, corpus access)
+        - Phased implementation plan (12-month roadmap)
+        - Budget estimates ($5K-$365K depending on scope)
+
+    S3-need-driven:
+      files: 3
+      lines: ~1150
+      content:
+        - 3 use case scenarios (reading assistant, document digitization, literature search)
+        - Persona-based recommendations (students, researchers, institutions)
+        - Accuracy requirements by use case (70-90%)
+        - Development priorities and go-to-market strategies
+
+    S4-strategic:
+      files: 4
+      lines: ~650
+      content:
+        - Ecosystem maturity assessment (TRL 4-5, immature but viable)
+        - Market analysis (10K-50K potential users, $500K-$5M revenue potential)
+        - 5 strategic options (commercial product, grant-funded, open source, partnership, wait)
+        - Long-term viability (2-3 year strategic window)
+
+tools_analyzed:
+  - name: Stanford CoreNLP
+    implementation: Java-based NLP toolkit, Chinese language models
+    classical_support: Limited (trained on modern Chinese corpus - CTB)
+    best_for: Modern Chinese NLP, baseline for fine-tuning approaches
+
+  - name: ctext.org API
+    implementation: Digital library API for pre-modern Chinese texts
+    classical_support: Native (comprehensive Classical Chinese corpus)
+    best_for: Corpus access, text retrieval, basic search (not full parsing)
+
+  - name: Jiayan
+    implementation: Classical Chinese segmentation tool
+    classical_support: Strong (designed for 文言文)
+    best_for: Word segmentation in Classical Chinese (best available tool)
+
+  - name: HanLP
+    implementation: Chinese NLP toolkit (mentioned as option)
+    classical_support: Limited (modern Chinese focus)
+    best_for: General Chinese NLP, alternative to Stanford CoreNLP
+
+libraries_evaluated:
+  - name: Stanford CoreNLP
+    implementation: Comprehensive NLP pipeline (tokenization, POS, parsing)
+    performance: Strong for modern Chinese, requires fine-tuning for Classical
+    best_for: Organizations with existing NLP infrastructure
+
+  - name: Jiayan (嘉言)
+    implementation: Specialized Classical Chinese segmentation
+    performance: Best available for Classical Chinese word boundaries
+    best_for: Segmentation component in custom Classical Chinese pipeline
+
+  - name: ctext.org
+    implementation: HTTP API for Classical Chinese corpus access
+    performance: Comprehensive corpus coverage (2000+ years)
+    best_for: Training data source, text retrieval, research applications
+
+key_findings:
+  - finding: "No production-ready Classical Chinese parsing solution exists"
+    impact: "Organizations must build custom solutions or adapt modern Chinese tools"
+
+  - finding: "Foundation exists (corpus + segmentation) but NLP pipeline must be built"
+    impact: "Jiayan + ctext.org provide starting point, but POS tagging, parsing, NER require custom development"
+
+  - finding: "Accuracy requirements vary widely by use case (70-90%)"
+    impact: "Don't over-engineer for perfect accuracy - most use cases tolerate errors with good UX"
+
+  - finding: "Market is small but global (50K-200K students/researchers)"
+    impact: "Sustainable with niche focus, not venture-scale - best for grants/institutional services"
+
+  - finding: "Transfer learning from modern Chinese has limited success"
+    impact: "Classical Chinese grammar differs significantly - need Classical-specific training data"
+
+  - finding: "Annotated training data is critical gap (no large Classical Chinese treebank)"
+    impact: "500-2000 hours expert annotation needed for production system"
+
+  - finding: "Rule-based approaches are viable for Classical Chinese"
+    impact: "Classical grammar is well-documented - hybrid rule-based + ML approach recommended"
+
+  - finding: "Integration with existing tools more valuable than starting from scratch"
+    impact: "Partner with ctext.org, Jiayan, Pleco rather than compete"
+
+  - finding: "Strategic window of 2-3 years before competition increases"
+    impact: "Early mover advantage available for organizations entering now"
+
+  - finding: "Three viable development paths: commercial ($100K-300K), grant-funded ($500K-$1M), or open-source + services ($200K-500K)"
+    impact: "Each path has different timelines, risks, and expected outcomes"
+
+recommendations:
+  default: "Use Jiayan for segmentation + ctext.org for corpus access; build custom components for POS/parsing/NER as needed"
+
+  by_use_case:
+    reading_assistant: "Jiayan + ctext.org API + CC-CEDICT - 70-80% accuracy sufficient, fast time to market (2-4 weeks)"
+    document_digitization: "Hybrid pipeline (Jiayan + custom POS + NER + manual review) - 80%+ accuracy needed (6-12 months)"
+    literature_search: "Full pipeline (corpus indexing + structural search + quotation detection) - 90%+ recall (13-24 months)"
+
+  by_organization:
+    university_library: "Grant-funded research infrastructure ($500K-$1M over 3-4 years) - high impact, stable funding"
+    edtech_startup: "Commercial reading assistant ($100K-300K over 18 months) - niche business ($50K-200K/year revenue)"
+    individual_developer: "Partner with established player (Pleco, Skritter) - build proof-of-concept ($50K-150K), license technology"
+    research_institution: "Open-source components + services ($200K-500K over 2 years) - ecosystem leadership"
+
+  by_timeline:
+    immediate_0_3mo: "Use existing tools (Jiayan + ctext.org) for research/prototyping"
+    short_term_3_12mo: "Build reading assistant or document digitization pipeline with existing tools"
+    medium_term_12_24mo: "Develop custom POS tagger and parser with annotated training data"
+    long_term_24mo_plus: "Build comprehensive literature search engine with full NLP pipeline"
+
+  strategic_paths:
+    commercial_path: "Reading assistant → Document digitization → Literature search (18-24 months total)"
+    grant_funded_path: "Open-source NLP library → Historical NER → Research infrastructure (3-4 years)"
+    hybrid_path: "Start with Jiayan + ctext.org, evaluate market, then choose commercial vs grant approach (de-risk early)"
+
+technical_challenges:
+  segmentation:
+    challenge: "No spaces between words, Classical word boundaries differ from modern"
+    solution: "Jiayan provides best available segmentation (use with abstraction layer)"
+
+  pos_tagging:
+    challenge: "Modern Chinese POS tagsets don't fit Classical grammar"
+    solution: "Design Classical-specific tagset based on linguistic literature (2-3 months research)"
+
+  parsing:
+    challenge: "Classical syntax differs from modern (different patterns, function words)"
+    solution: "Hybrid approach - rules for structure, ML for ambiguity (6-9 months development)"
+
+  ner:
+    challenge: "Historical entities (people, places, dynasties) require specialized gazetteers"
+    solution: "Build historical entity database + pattern matching (integrate CBDB - China Biographical Database)"
+
+  training_data:
+    challenge: "No large-scale annotated Classical Chinese corpus"
+    solution: "Active learning + expert annotation (500-2000 hours) or transfer learning from modern Chinese"
+
+market_analysis:
+  user_segments:
+    students: "50,000-200,000 globally learning Classical Chinese - willing to pay $5-15/month"
+    researchers: "Thousands of Chinese studies scholars - need advanced tools, limited budgets"
+    institutions: "Hundreds of libraries/museums - grant-funded, long sales cycles"
+    edtech_companies: "Pleco, Skritter, etc. - potential partners/acquirers"
+
+  revenue_potential:
+    commercial_product: "$50K-200K/year (freemium model, student market)"
+    institutional_services: "$500K-$5M/year (licensing, hosting, consulting)"
+    grant_funding: "$500K-$1M over 3-4 years (NEH, Mellon Foundation)"
+
+  competitive_landscape:
+    current: "No dominant players, academic prototypes only"
+    5_year_outlook: "Competition will emerge if market validated - 2-3 year window"
+
+ecosystem_maturity:
+  overall: "TRL 4-5 (early development) - immature but viable"
+
+  components:
+    corpus_access: "TRL 8 (ctext.org) - mature, essential infrastructure"
+    segmentation: "TRL 5-6 (Jiayan) - best available, risky (maintainer dependency)"
+    pos_tagging: "TRL 2-3 - research needed, must build custom"
+    parsing: "TRL 2-3 - research needed, build custom or adapt"
+    ner: "TRL 2-3 - research needed, build with gazetteers"
+
+budget_estimates:
+  minimal_research:
+    timeline: "2-4 weeks"
+    cost: "$5,000-$10,000"
+    deliverable: "Basic segmentation pipeline (Jiayan + ctext.org)"
+
+  quick_adaptation:
+    timeline: "3-6 months"
+    cost: "$70,000-$140,000"
+    deliverable: "Fine-tuned Stanford CoreNLP on Classical Chinese corpus"
+
+  production_system:
+    timeline: "12 months"
+    cost: "$235,000-$365,000"
+    deliverable: "Full Classical Chinese NLP pipeline (segmentation, POS, parsing, NER)"
+    team: "2 engineers + 1 linguist consultant"
+
+implementation_phases:
+  phase_1_foundation:
+    duration: "Months 1-2"
+    deliverable: "Basic segmentation pipeline (Jiayan + ctext.org integration)"
+
+  phase_2_pos_tagging:
+    duration: "Months 3-5"
+    deliverable: "Custom POS tagger with ~75% accuracy (Classical-specific tagset)"
+
+  phase_3_parsing:
+    duration: "Months 6-9"
+    deliverable: "Hybrid parser with ~70% accuracy (rules + neural)"
+
+  phase_4_ner:
+    duration: "Months 10-12"
+    deliverable: "Production-ready NLP pipeline with historical NER"
+
+related_research:
+  adjacent:
+    - code: '1.033'
+      title: NLP Libraries
+      relationship: Classical Chinese as specialized NLP domain
+
+    - code: '1.035.1'
+      title: Chinese Tokenization
+      relationship: Segmentation as foundation for Classical Chinese parsing
+
+  domain_specific:
+    - code: '1.148.1'
+      title: Chinese Historical Text Analysis
+      relationship: Classical Chinese parsing enables historical text analysis
+
+    - code: '1.153.1'
+      title: Chinese Dependency Parsing
+      relationship: Dependency parsing techniques applicable to Classical Chinese
+
+estimated_hours: 5-8
+actual_hours: 6
+
+completion_notes: |
+  Completed February 6, 2026. Comprehensive analysis of Classical Chinese parsing
+  tools and strategies across existing solutions (Stanford CoreNLP, Jiayan, ctext.org)
+  and custom development approaches.
+
+  Key strategic insight: No production-ready solution exists, but foundation is available
+  (Jiayan for segmentation + ctext.org for corpus access). Organizations must build
+  custom POS tagging, parsing, and NER components. This creates both challenge and
+  opportunity - 2-3 year strategic window before competition increases.
+
+  Critical finding: Accuracy requirements vary widely by use case (70% for reading
+  assistants, 90%+ for literature search). Most use cases tolerate errors with good
+  UX for correction, so perfect accuracy is not necessary. This contradicts common
+  assumption that NLP systems must achieve 95%+ accuracy.
+
+  Market reality: Small but global (50K-200K potential users), sustainable with niche
+  focus but not venture-scale. Three viable paths: commercial product ($50K-200K/year
+  revenue), grant-funded infrastructure ($500K-$1M over 3-4 years), or open-source +
+  services ($100K-500K/year). Each path has different timelines, risks, and outcomes.
+
+  Technical insight: Hybrid rule-based + ML approach recommended for Classical Chinese.
+  Classical grammar is well-documented, making rule-based parsing viable for common
+  patterns. ML handles ambiguity resolution. This differs from modern NLP's pure
+  neural approach, but suits Classical Chinese's smaller training data availability.
+
+  Practical impact: Research provides concrete development roadmaps for three primary
+  use cases (reading assistant, document digitization, literature search) with specific
+  timelines (2-4 weeks to 24 months), budgets ($5K to $365K), and success criteria.
+  Phased implementation plan enables iterative development with clear milestones.
+
+  Risk assessment: Main risks are annotated training data quality (requires expert
+  Classical Chinese linguists), performance ceiling (may not reach modern Chinese
+  accuracy levels), and dependency on small number of maintainers (Jiayan, ctext.org).
+  Mitigation strategies include fork/abstraction layers, realistic accuracy targets,
+  and contingency planning for tool dependencies.
+
+  Long-term trends: Digital humanities growing, grant funding available (NEH, Mellon),
+  but commercial market remains niche. Open-source approach with institutional backing
+  most sustainable long-term. Integration with existing tools (Pleco, ctext.org) more
+  valuable than competing head-to-head.
+
+  Implementation reality: Reading assistant achievable in 2-4 weeks with existing tools,
+  production NLP pipeline requires 12 months and $235K-365K investment. Most organizations
+  underestimate annotation effort (500-2000 hours) and Classical Chinese linguistic
+  expertise requirements.
+
+sources:
+  tools:
+    - "Stanford CoreNLP - https://github.com/stanfordnlp/CoreNLP - Java-based NLP toolkit"
+    - "ctext.org API - https://ctext.org/ - Digital library of pre-modern Chinese texts"
+    - "Jiayan (嘉言) - Classical Chinese segmentation tool"
+    - "HanLP - https://github.com/hankcs/HanLP - Chinese NLP toolkit"
+
+  corpus:
+    - "Chinese Text Project (ctext.org) - Comprehensive Classical Chinese corpus"
+    - "Chinese Treebank (CTB) - Modern Chinese training data (Stanford CoreNLP)"
+    - "CBDB (China Biographical Database) - Historical entity gazetteer"
+
+  academic:
+    - "Classical Chinese grammar literature - Linguistic foundations for rule-based parsing"
+    - "Digital humanities research - Use case validation and requirements"
+
+  market:
+    - "Pleco - https://www.pleco.com/ - Chinese learning app (potential partner)"
+    - "Skritter - https://www.skritter.com/ - Chinese writing app (potential partner)"
+    - "Wenlin - https://www.wenlin.com/ - Chinese learning software"
+    - "NEH Digital Humanities grants - Funding for research infrastructure"
+    - "Mellon Foundation - Grant funding for cultural preservation projects"
