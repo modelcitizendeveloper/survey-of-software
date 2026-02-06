@@ -1,6 +1,6 @@
 ---
 title: "Replication"
-weight: 9998.0
+weight: 99998
 ---
 
 # Replicating This Research
