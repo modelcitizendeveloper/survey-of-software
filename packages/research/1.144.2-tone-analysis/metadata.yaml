@@ -1,0 +1,279 @@
+code: '1.144.2'
+title: Tone Analysis for CJK Languages
+subtitle: "Parselmouth, librosa, CREPE, PESTO, praatio"
+tier: 1
+category: Library/Package Discovery
+domain: speech-processing
+status: completed
+completion_date: '2026-02-06'
+
+description: |
+  Comprehensive analysis of tone analysis and pitch detection libraries for Chinese,
+  Japanese, and Korean (CJK) languages with focus on Mandarin tone classification.
+  Covers pitch/F0 detection, tone classification algorithms (CNN, LSTM, HMM), and
+  tone sandhi detection for pronunciation practice, speech recognition, linguistic
+  research, and content creation use cases.
+
+research_output:
+  total_documents: 25
+  total_lines: 6500
+  stages_completed: [S1-rapid, S2-comprehensive, S3-need-driven, S4-strategic]
+
+  stages:
+    S1-rapid:
+      files: 7
+      lines: ~1200
+      content:
+        - 3 primary libraries (Parselmouth, librosa, praatio)
+        - Quick selection guide by use case
+        - Decision matrix comparing accuracy and ease of use
+
+    S2-comprehensive:
+      files: 7
+      lines: ~2400
+      content:
+        - 6 deep-dive analyses (Parselmouth, librosa, praatio, tone classification, sandhi, comparison)
+        - Algorithm analysis (HMM, CNN, RNN, LSTM, CNN-LSTM-Attention)
+        - Performance benchmarks and accuracy studies
+        - Production deployment guidance
+
+    S3-need-driven:
+      files: 6
+      lines: ~1500
+      content:
+        - 5 use case scenarios (pronunciation practice, speech recognition, linguistic research, content creation, clinical assessment)
+        - Persona-based recommendations
+        - Timeline and budget estimates
+        - Common pitfalls and solutions
+
+    S4-strategic:
+      files: 7
+      lines: ~1400
+      content:
+        - Technology readiness (TRL 6-7)
+        - Market viability analysis ($100M-150M SAM)
+        - Regulatory landscape (GDPR, COPPA, FDA)
+        - Future outlook (2026-2030, commoditization risk)
+
+libraries_analyzed:
+  - name: Parselmouth
+    implementation: Praat C/C++ bindings for Python
+    performance: 2-3s per file, r=0.999 correlation with Praat
+    best_for: Production tone analysis, research-grade accuracy
+
+  - name: librosa
+    implementation: Pure Python audio analysis with pYIN pitch detection
+    performance: 2-3s per file, r=0.730 for F0 mean
+    best_for: Pure Python environments, music/audio pipelines
+
+  - name: praatio
+    implementation: Praat TextGrid file manipulation wrapper
+    performance: Fast file I/O, requires external Praat
+    best_for: TextGrid annotation workflows, legacy compatibility
+
+  - name: CREPE
+    implementation: Deep learning pitch detection (CNN)
+    performance: 0.4-1s per file (GPU), state-of-the-art accuracy
+    best_for: Maximum accuracy when GPU available
+
+  - name: PESTO
+    implementation: Real-time pitch detection (lightweight)
+    performance: <10ms latency
+    best_for: Real-time mobile apps, pronunciation practice
+
+  - name: ToneNet (CNN)
+    implementation: Convolutional neural network for tone classification
+    performance: 87-88% accuracy, moderate training cost
+    best_for: Production tone classification
+
+algorithms_analyzed:
+  - name: Praat autocorrelation
+    characteristics: Gold standard, 25+ years validation
+    accuracy: r=0.999 reference correlation
+    best_for: Research, batch processing
+
+  - name: pYIN (librosa)
+    characteristics: Probabilistic YIN with uncertainty estimates
+    accuracy: r=0.730 for F0 mean
+    best_for: Pure Python requirements, music analysis
+
+  - name: HMM/GMM
+    characteristics: Statistical models, interpretable
+    accuracy: 84-89% tone classification
+    best_for: Quick prototypes, limited data
+
+  - name: CNN (ToneNet)
+    characteristics: End-to-end learning from spectrograms
+    accuracy: 87-88% tone classification
+    best_for: Production deployment, robust to speaker variation
+
+  - name: RNN/LSTM
+    characteristics: Sequential modeling, implicit sandhi learning
+    accuracy: 88-90% tone classification
+    best_for: Sequential context, tone sandhi
+
+  - name: CNN-LSTM-Attention
+    characteristics: State-of-the-art hybrid architecture
+    accuracy: 90%+ tone classification
+    best_for: Maximum accuracy, complex sandhi patterns
+
+key_findings:
+  - finding: "Parselmouth provides Praat-level accuracy (r=0.999) with zero dependencies"
+    impact: "Production-ready alternative to Praat GUI, Pythonic interface enables automation"
+
+  - finding: "87-90% accuracy is current ceiling for tone classification"
+    impact: "Sufficient for language learning (10-13% error acceptable), insufficient for clinical diagnostics (95%+ required)"
+
+  - finding: "Tone 3 (dipping tone) is consistently hardest to classify (70-75% vs 87% average)"
+    impact: "Speakers produce incomplete Tone 3 in casual speech, requires contextual understanding"
+
+  - finding: "Hybrid rule-based + CNN approach achieves 97%+ accuracy for tone sandhi"
+    impact: "Combines explainability (rules) with accuracy (ML), best precision for production"
+
+  - finding: "Real-time feedback requires <200ms latency, standard pitch detectors take 2-3s"
+    impact: "Use PESTO (<10ms) for mobile apps, Parselmouth for batch processing"
+
+  - finding: "Foundation models may commoditize tone analysis by 2028-2029"
+    impact: "Build data moat (learner pronunciation data) before commoditization, differentiate on UX/domain"
+
+  - finding: "Mandarin tone analysis market is $100M-150M SAM, growing 17% CAGR"
+    impact: "Viable market for specialized tools, but fragmented with no dominant winner"
+
+  - finding: "Technology readiness varies: TRL 9 for pitch detection, TRL 7 for tone classification, TRL 4-5 for clinical"
+    impact: "Production-ready for consumer apps (2026), not ready for clinical diagnostics (2-5 years)"
+
+recommendations:
+  default: "Use Parselmouth for pitch detection + CNN (ToneNet) for tone classification"
+
+  by_use_case:
+    pronunciation_practice: "PESTO (real-time) + lightweight CNN (87% accuracy, <200ms latency)"
+    speech_recognition: "Parselmouth (batch) + CNN for F0 features (2-5% WER improvement)"
+    linguistic_research: "Parselmouth + manual verification (Praat compatibility, gold standard)"
+    content_creation: "Parselmouth + CNN + confidence thresholding (QC for audiobooks/podcasts)"
+    clinical_assessment: "WAIT (technology not ready, requires 95%+ accuracy + FDA clearance)"
+
+  by_constraint:
+    maximum_accuracy: "CREPE (pitch) + CNN-LSTM-Attention (tones) - 90%+ accuracy, GPU required"
+    minimum_cost: "Parselmouth + rule-based classifier - $1K-5K Year 1"
+    real_time: "PESTO + lightweight CNN - <200ms latency"
+    pure_python: "librosa + CNN - no C/C++ dependencies, lower accuracy (r=0.730)"
+
+  strategic_paths:
+    consumer_app: "Deploy Q2-Q3 2026, rule-based → CNN upgrade (Month 4-6), collect learner data"
+    b2b_asr: "Proof of concept (3-6 months), pilot customer (6-12 months), enterprise pivot option"
+    research_tools: "Open-source core + freemium SaaS, academic partnerships for credibility"
+    clinical: "WAIT 3-5 years, monitor foundation model developments, regulatory path unclear"
+
+performance_benchmarks:
+  pitch_detection:
+    parselmouth: "2-3s per file, r=0.999 with Praat"
+    librosa_pyin: "2-3s per file, r=0.730 for F0 mean"
+    crepe_gpu: "0.4-1s per file, state-of-the-art accuracy"
+    pesto_realtime: "<10ms latency, lower accuracy acceptable"
+
+  tone_classification:
+    rule_based: "80-85% accuracy, fast and explainable"
+    hmm_gmm: "84-89% accuracy, low cost ($1K Year 1)"
+    cnn_tonenet: "87-88% accuracy, moderate cost ($10K Year 1)"
+    rnn_lstm: "88-90% accuracy, implicit sandhi learning ($15K Year 1)"
+    cnn_lstm_attention: "90%+ accuracy, state-of-the-art ($22K Year 1)"
+
+  tone_sandhi:
+    rule_based: "88-97% accuracy, transparent and fast"
+    cnn: "97%+ accuracy, requires labeled data"
+    hybrid_rule_cnn: "97%+ accuracy, best precision"
+
+market_analysis:
+  pronunciation_practice:
+    tam: "$230M-350M"
+    sam: "$100M-150M"
+    som_3year: "$10M-20M (5-10% penetration)"
+    growth: "17% CAGR"
+    business_model: "Freemium ($10-15/month), LTV $60-120"
+
+  speech_recognition:
+    tam: "$680M-1.02B (Mandarin ASR)"
+    sam: "$34M-102M (tone features, 5-10% value-add)"
+    som_3year: "$3M-10M (2-5 ASR providers)"
+    business_model: "API licensing ($50K-500K/year) or usage-based"
+
+  linguistic_research:
+    tam: "$2.5M-5M"
+    sam: "$1M-2M (tone-specific tools)"
+    som_3year: "$100K-300K (50-100 institutions)"
+    business_model: "Software licenses ($500-5000/year)"
+
+related_research:
+  adjacent:
+    - code: '1.033'
+      title: NLP Libraries
+      relationship: Tokenization and speech processing pipelines
+
+    - code: '1.033.2'
+      title: Chinese Word Segmentation
+      relationship: CJK-specific language processing
+
+  future:
+    - topic: Speech Recognition Systems
+      relationship: Tone features for ASR acoustic models
+
+    - topic: Audio Signal Processing
+      relationship: Fundamental frequency (F0) extraction algorithms
+
+estimated_hours: 6-8
+actual_hours: 7
+
+completion_notes: |
+  Completed February 6, 2026. Comprehensive analysis of tone analysis technologies
+  for CJK languages (focus: Mandarin Chinese 4 tones + neutral). Research identifies
+  Parselmouth as production-ready winner for pitch detection (Praat-level accuracy
+  with zero dependencies) and CNN (ToneNet) for tone classification (87-88% accuracy).
+
+  Key strategic insight: Technology is production-ready for pronunciation practice
+  and ASR augmentation (TRL 7, 87-90% accuracy sufficient), but NOT ready for
+  clinical diagnostics (requires 95%+ accuracy, 3-5 years validation). Market
+  opportunity exists 2026-2029 before potential commoditization by foundation models.
+
+  Critical finding: 87-90% accuracy ceiling is persistent challenge. Tone 3 (dipping)
+  is hardest to classify (70-75% vs 87% average) due to incomplete production in
+  casual speech. Hybrid rule-based + CNN approach achieves 97%+ for tone sandhi.
+
+  Practical impact: Research provides concrete deployment guidance for 5 use cases
+  (pronunciation practice, ASR, research, content creation, clinical) with timeline
+  and budget estimates. Identifies technology risks (accuracy plateau, noise
+  sensitivity) and market risks (commoditization by Big Tech 2028-2029).
+
+  Go/No-Go recommendations: GO for consumer apps (deploy Q2-Q3 2026), GO for B2B
+  ASR (pilot in Year 1), GO for research tools (low priority niche), WAIT for
+  clinical (technology not ready, regulatory path unclear).
+
+sources:
+  libraries:
+    - "Parselmouth - Praat Python bindings (https://github.com/YannickJadoul/Parselmouth)"
+    - "librosa - Python audio analysis library (https://librosa.org/)"
+    - "praatio - Praat TextGrid manipulation (https://github.com/timmahrt/praatIO)"
+    - "CREPE - Deep learning pitch detection (https://github.com/marl/crepe)"
+    - "PESTO - Real-time pitch detection (https://github.com/SonyCSLParis/pesto)"
+
+  academic_papers:
+    - "Boersma & Weenink - Praat: Doing phonetics by computer (2001-2025)"
+    - "Kim et al. - CREPE: A Convolutional Representation for Pitch Estimation (2018)"
+    - "Riou et al. - PESTO: Pitch Estimation with Self-supervised Transposition-equivariant Objective (2023)"
+    - "Chen et al. - Tone classification in Mandarin using CNNs (various studies 2015-2025)"
+    - "Xu - Speech Prosody: A Methodological Review (2011)"
+
+  datasets:
+    - "AISHELL-1 - 170 hours Mandarin speech corpus"
+    - "AISHELL-3 - 85 hours multi-speaker Mandarin"
+    - "Common Voice Mandarin - Mozilla crowd-sourced dataset"
+
+  production_systems:
+    - "Chinese Tone Gym - Pronunciation practice app"
+    - "CPAIT - Chinese Pronunciation and Intonation Toolkit"
+    - "Baidu/iFlytek ASR - Mandarin speech recognition with tone features"
+    - "Praat - Gold standard phonetics software (25+ years in academia)"
+
+  benchmarks:
+    - "De Cheveigné & Kawahara - YIN pitch detection algorithm (2002)"
+    - "Parselmouth accuracy validation studies (r=0.999 with Praat)"
+    - "librosa pYIN accuracy studies (r=0.730 for F0 mean)"
