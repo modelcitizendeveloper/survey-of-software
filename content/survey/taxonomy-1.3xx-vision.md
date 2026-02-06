@@ -1,6 +1,7 @@
 ---
-sidebar_position: 99
 title: "Taxonomy Vision: 1.3xx Domain-Specific Data & Analysis"
+weight: 999
+bookHidden: true
 ---
 
 # 1.3xx Series Vision: Domain-Specific Data & Analysis

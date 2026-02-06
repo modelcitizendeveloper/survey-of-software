@@ -1,5 +1,6 @@
 ---
 title: "Methodology"
+weight: 900
 ---
 
 # 4PS Research Methodology
