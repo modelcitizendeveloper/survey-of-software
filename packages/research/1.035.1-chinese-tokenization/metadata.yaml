@@ -1,0 +1,116 @@
+code: '1.035.1'
+title: Chinese Tokenization
+subtitle: "Jieba, PKUSEG, LAC, SentencePiece, BERT"
+tier: 1
+category: Library/Package Discovery
+domain: chinese-nlp
+status: completed
+completion_date: '2026-02-06'
+
+description: |
+  Comprehensive analysis of Chinese tokenization libraries and approaches for
+  NLP preprocessing. Covers character-level vs word-level vs subword tokenization,
+  segmentation algorithms, neural approaches, and modern transformer tokenizers.
+
+research_output:
+  total_documents: 1
+  total_lines: 3129
+  stages_completed: [S1-rapid, S2-comprehensive, S3-need-driven, S4-strategic, DOMAIN_EXPLAINER]
+
+libraries_analyzed:
+  - name: Jieba
+    implementation: Dictionary + HMM hybrid
+    performance: Fast (400 KB/s), moderate accuracy (F1 ~85%)
+    best_for: Prototyping, keyword extraction, search systems
+
+  - name: PKUSEG
+    implementation: Neural network (BiLSTM-CRF), domain-specific models
+    performance: Highest accuracy (F1 ~96%) among traditional tools
+    best_for: Domain-specific production systems (news, web, medicine)
+
+  - name: LAC
+    implementation: Neural network (BiGRU-CRF), joint processing
+    performance: Best speed + accuracy combo (800 QPS, F1 > 0.91)
+    best_for: Production Chinese-only systems with POS/NER requirements
+
+  - name: bert-base-chinese
+    implementation: Character-level transformer tokenization
+    performance: High accuracy, zero OOV, battle-tested
+    best_for: Building Chinese-only transformer models
+
+  - name: SentencePiece
+    implementation: Unigram language model, language-independent
+    performance: Balanced accuracy, handles OOV well
+    best_for: Multilingual systems, custom transformer models
+
+  - name: spaCy
+    implementation: Multilingual NLP framework (uses pkuseg backend)
+    performance: Good accuracy (F1 ~94.6%)
+    best_for: Multilingual pipelines with unified API
+
+  - name: HuggingFace Tokenizers
+    implementation: Pre-trained transformer tokenizers (Qwen, ChatGLM)
+    performance: Chinese-optimized for specific models
+    best_for: Using pre-trained Chinese models
+
+key_findings:
+  - finding: "Chinese has no word boundaries - tokenization is non-trivial preprocessing"
+    impact: "Wrong tokenization cascades through all NLP tasks (7-8 BLEU points in MT)"
+
+  - finding: "Three paradigms: character-level (no segmentation), word-level (requires dictionary), subword (data-driven)"
+    impact: "Character-level dominates modern neural NLP (BERT approach) due to zero segmentation errors"
+
+  - finding: "Byte-level BPE inflates Chinese text 2-3x"
+    impact: "SentencePiece Unigram with explicit CJK support is gold standard for Chinese subword tokenization"
+
+  - finding: "Joint processing (segmentation + POS + parsing) reduces error propagation"
+    impact: "Modern tools like LAC perform joint tasks for higher accuracy in production"
+
+  - finding: "Segmentation ambiguity is inherent - same text can have multiple valid segmentations"
+    impact: "Context-dependent tokenization (transformers with attention) handles ambiguity better than fixed dictionaries"
+
+recommendations:
+  default: "Use bert-base-chinese (character-level) for most transformer-based NLP tasks - battle-tested, zero OOV, widely supported"
+
+  by_use_case:
+    prototyping: "Jieba - fastest setup, good enough accuracy for experimentation"
+    production_accuracy: "LAC or PKUSEG - highest accuracy among traditional tools, fast enough for production"
+    multilingual: "SentencePiece Unigram - language-independent, proven in T5/XLNet/mT5"
+    transformer_models: "bert-base-chinese (Chinese-only) or SentencePiece (multilingual)"
+    search_ir: "Jieba search mode or character n-grams"
+
+  strategic_guidance:
+    safest_choice: "bert-base-chinese (95% confidence viable through 2030 - Google/BERT standard)"
+    production_choice: "LAC or PKUSEG (85% confidence viable through 2029 - active maintenance)"
+    innovation_choice: "SentencePiece or HuggingFace Tokenizers (90% confidence - active ecosystem)"
+    avoid_for_new_projects: "Fixed dictionary approaches without neural backup (outdated)"
+
+sources:
+  libraries:
+    - "Jieba - https://github.com/fxsjy/jieba"
+    - "PKUSEG - https://github.com/lancopku/pkuseg-python"
+    - "LAC (Baidu) - https://github.com/baidu/lac"
+    - "BERT - https://github.com/google-research/bert"
+    - "SentencePiece - https://github.com/google/sentencepiece"
+    - "spaCy - https://spacy.io/"
+    - "HuggingFace Tokenizers - https://huggingface.co/docs/tokenizers"
+
+  academic_papers:
+    - "BERT: Pre-training of Deep Bidirectional Transformers (Devlin et al., 2018)"
+    - "SentencePiece: A simple and language independent approach to subword tokenization (Kudo & Richardson, 2018)"
+    - "Chinese Word Segmentation research (SIGHAN shared tasks)"
+    - "TACL, ACL, EMNLP conference proceedings"
+
+  production_systems:
+    - "Google BERT, Google T5, Meta XLNet use character/subword approaches"
+    - "Baidu LAC, Alibaba Qwen production usage"
+    - "CLUE benchmark, SIGHAN evaluation datasets"
+
+related_research:
+  - code: "1.153.1"
+    title: "Chinese Dependency Parsing"
+    relationship: "Dependency parsing often includes joint word segmentation"
+
+  - code: "1.XXX"
+    title: "POS Tagging Libraries"
+    relationship: "Modern tokenizers perform joint tokenization and POS tagging"
