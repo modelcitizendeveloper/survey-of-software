@@ -10,7 +10,7 @@
 {{ define "book-section-children" }}{{/* (dict "Section" .Section "CurrentPage" .CurrentPage) */}}
   <ul>
     {{ $pages := where .Section.Pages "Params.bookHidden" "ne" true }}
-    {{ range sort $pages ".Params.weight" }}
+    {{ range sort $pages ".Params.weight" "asc" }}
       {{ if .IsSection }}
         <li {{- if .Params.BookFlatSection }} class="book-section-flat" {{ end -}}>
           {{ template "book-page-link" (dict "Page" . "CurrentPage" $.CurrentPage) }}
