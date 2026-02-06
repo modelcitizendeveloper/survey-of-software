@@ -9,3 +9,9 @@ resources/_gen/
 # IDE
 .vscode/
 .idea/
+
+# Gas Town (added by gt)
+.runtime/
+.claude/
+.logs/
+.beads/
