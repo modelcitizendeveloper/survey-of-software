@@ -1,0 +1,33 @@
+/* Force white background everywhere */
+:root {
+  --body-background: white !important;
+  --body-font-color: black !important;
+  --gray-100: #f8f9fa !important;
+  --gray-200: #e9ecef !important;
+}
+
+/* Ensure body and main containers are white */
+body {
+  background: white !important;
+}
+
+.book-menu,
+.book-page,
+.book-toc,
+.book-header {
+  background: white !important;
+}
+
+/* Ensure menu items are readable */
+.book-menu-content {
+  background: white !important;
+  color: black !important;
+}
+
+.book-menu a {
+  color: #0055bb !important;
+}
+
+.book-menu a:visited {
+  color: #5500bb !important;
+}
