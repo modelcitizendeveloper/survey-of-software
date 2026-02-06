@@ -1,0 +1,242 @@
+code: '1.166'
+title: OCR for CJK Languages
+subtitle: "Tesseract, PaddleOCR, EasyOCR"
+tier: 1
+category: Library/Package Discovery
+domain: ocr-cjk
+status: completed
+completion_date: '2026-02-06'
+
+description: |
+  Comprehensive analysis of OCR (Optical Character Recognition) libraries for Chinese,
+  Japanese, and Korean (CJK) languages. Covers text recognition for printed documents,
+  handwritten text, and scene text (photos of signs, products). Includes deep analysis
+  of Tesseract (mature standard), PaddleOCR (Chinese-optimized), and EasyOCR (multi-
+  language scene text), with strategic guidance on build vs buy decisions.
+
+research_output:
+  total_documents: 19
+  stages_completed: [S1-rapid, S2-comprehensive, S3-need-driven, S4-strategic]
+
+  stages:
+    S1-rapid:
+      files: 5
+      content:
+        - 3 library surveys (Tesseract, PaddleOCR, EasyOCR)
+        - Quick comparison matrix
+        - Decision guidance by use case
+        - Character accuracy comparison (printed, handwritten, scene text)
+
+    S2-comprehensive:
+      files: 5
+      content:
+        - 3 library deep-dives (architecture, models, performance)
+        - Feature comparison matrix
+        - Technical analysis (detection pipelines, recognition models)
+        - GPU vs CPU performance benchmarks
+
+    S3-need-driven:
+      files: 4
+      content:
+        - 2 use case scenarios (healthcare forms, e-commerce product labels)
+        - Persona-based recommendations
+        - Volume and accuracy trade-offs
+        - Real-world deployment considerations
+
+    S4-strategic:
+      files: 3
+      content:
+        - Vendor viability analysis (Tesseract 7.5/10, PaddleOCR 7.0/10, EasyOCR 6.5/10)
+        - Technology roadmap (2025-2030)
+        - Build vs buy strategic framework
+        - Migration and future-proofing strategies
+
+libraries_analyzed:
+  - name: Tesseract
+    implementation: Traditional pattern matching + LSTM
+    performance: "3-6 seconds per page (CPU-only)"
+    accuracy: "85-95% printed, 20-40% handwritten CJK"
+    best_for: Simple needs, minimal dependencies, offline requirement
+    maturity: "40+ years, Google-sponsored, maintenance mode"
+
+  - name: PaddleOCR
+    implementation: Deep learning (detection + recognition pipeline)
+    performance: "20-50ms with GPU, 1-2s with CPU"
+    accuracy: "96-99% printed, 85-92% handwritten CJK"
+    best_for: Chinese-primary, highest accuracy, production systems
+    maturity: "4+ years, Baidu-sponsored, active development"
+
+  - name: EasyOCR
+    implementation: PyTorch deep learning (detection + recognition)
+    performance: "50-100ms with GPU, 2-4s with CPU"
+    accuracy: "90-96% printed, 80-87% handwritten, 90-95% scene text"
+    best_for: Multi-language, scene text, PyTorch projects
+    maturity: "4+ years, Jaided AI (startup), active development"
+
+key_findings:
+  - finding: "CJK OCR is significantly harder than Latin scripts due to character density (10,000+ unique symbols vs 26 letters)"
+    impact: "Requires specialized models; generic Latin OCR models fail on CJK"
+
+  - finding: "PaddleOCR achieves 96-99% accuracy on printed Chinese, best-in-class for CJK"
+    impact: "Recommended default for Chinese-primary applications"
+
+  - finding: "Scene text (photos) requires different optimization than document text (scans)"
+    impact: "EasyOCR excels at scene text (90-95%), Tesseract struggles (<70%)"
+
+  - finding: "Handwriting recognition remains challenging: 70-92% accuracy at best"
+    impact: "Always requires human review workflow; not reliable for full automation"
+
+  - finding: "Self-hosting justified at >50,000 images/month; below that, commercial APIs cheaper"
+    impact: "Break-even: $150-500/month API vs $500-2,000/month self-hosted GPU infrastructure"
+
+  - finding: "OCR transitioning from specialized tools to multi-modal foundation model capability (2027-2030)"
+    impact: "Current investments should enable easy migration to GPT-4V-like APIs"
+
+  - finding: "Vertical text (common in CJK) natively supported by PaddleOCR and EasyOCR, requires separate models in Tesseract"
+    impact: "Modern libraries handle CJK layout conventions better"
+
+  - finding: "GPU acceleration provides 5-10x speedup (20-50ms vs 1-3s per image)"
+    impact: "Critical for real-time applications but overkill for batch processing"
+
+  - finding: "Commercial APIs (Google Vision, Azure) offer 97-99% accuracy at $1-5 per 1,000 images"
+    impact: "Best for MVP and low-volume use cases (<10K/month)"
+
+  - finding: "Abstraction layer architecture reduces migration costs 10x (hours vs weeks)"
+    impact: "Essential for future-proofing as OCR market consolidates"
+
+recommendations:
+  default: "Start with PaddleOCR for Chinese-primary use cases, EasyOCR for multi-language"
+
+  by_use_case:
+    chinese_documents: "PaddleOCR - 96-99% accuracy, best Chinese support"
+    multi_language: "EasyOCR - 80+ languages, simultaneous multi-language"
+    scene_text_photos: "EasyOCR - 90-95% on photos of signs/products"
+    minimal_dependencies: "Tesseract - no deep learning frameworks, CPU-only"
+    healthcare_forms: "PaddleOCR + human review - 85-92% handwriting accuracy"
+    ecommerce_labels: "EasyOCR - handles product photos, varied backgrounds"
+
+  by_volume:
+    low_volume_10k_month: "Commercial API (Google Vision, Azure) - $20-50/month, zero setup"
+    medium_volume_50k_month: "Hybrid (self-hosted PaddleOCR + commercial fallback)"
+    high_volume_100k_month: "Self-hosted PaddleOCR or EasyOCR - cost-effective at scale"
+
+  by_constraint:
+    privacy_critical: "Self-hosted (PaddleOCR or EasyOCR) - data never leaves premises"
+    fastest_mvp: "Commercial API - 2 weeks to production vs 6-8 weeks self-hosted"
+    highest_accuracy: "PaddleOCR (96-99%) or commercial APIs (97-99%)"
+    pytorch_ecosystem: "EasyOCR - native PyTorch integration"
+    minimal_infrastructure: "Tesseract - runs on minimal CPU, ~100MB dependencies"
+
+  strategic_paths:
+    startup_lean: "Commercial API → self-hosted at scale (hybrid migration path)"
+    enterprise_hybrid: "Self-hosted primary + commercial fallback (reliability and control)"
+    government_regulated: "On-premise only (PaddleOCR + EasyOCR + Tesseract fallback)"
+    future_proof: "Abstraction layer + multi-vendor + plan migration to foundation models (2027-2030)"
+
+performance_benchmarks:
+  single_page_processing:
+    tesseract_cpu: "3-6 seconds"
+    paddleocr_cpu: "1-2 seconds"
+    paddleocr_gpu: "20-50ms"
+    easyocr_cpu: "2-4 seconds"
+    easyocr_gpu: "50-100ms"
+    commercial_api: "100-300ms (including network)"
+
+  accuracy_comparison:
+    printed_high_quality:
+      paddleocr: "96-99%"
+      easyocr: "90-96%"
+      tesseract: "85-95%"
+    handwritten_stylized:
+      paddleocr: "85-92%"
+      easyocr: "80-87%"
+      tesseract: "20-40%"
+    scene_text_photos:
+      easyocr: "90-95%"
+      paddleocr: "85-90%"
+      tesseract: "50-70%"
+
+cost_analysis:
+  commercial_api_100k_month:
+    google_vision: "$150/month ($1.50 per 1K)"
+    azure_vision: "$100/month ($1.00 per 1K)"
+    aws_textract: "$150-500/month (varies by features)"
+
+  self_hosted_100k_month:
+    cpu_infrastructure: "$200-500/month (slow: 1-3s per image)"
+    gpu_infrastructure: "$500-2,000/month (fast: 20-100ms per image)"
+    setup_cost: "$20K-50K (one-time: development, integration)"
+    maintenance: "$10K-30K/year (updates, monitoring, support)"
+
+  break_even_analysis:
+    threshold: "~50,000 images/month"
+    below_threshold: "Commercial API cheaper (no setup cost)"
+    above_threshold: "Self-hosted cost-effective (fixed infrastructure vs linear API fees)"
+
+related_research:
+  adjacent:
+    - code: '1.003'
+      title: Full-Text Search Libraries
+      relationship: OCR enables text extraction for indexing
+
+    - code: '1.033'
+      title: NLP Libraries
+      relationship: OCR output feeds NLP pipelines (tokenization, translation)
+
+  domain_specific:
+    - code: '1.033.2'
+      title: Chinese Word Segmentation
+      relationship: Post-OCR Chinese text requires segmentation
+
+estimated_hours: 6-8
+actual_hours: 7
+
+completion_notes: |
+  Completed February 6, 2026. Comprehensive analysis of CJK OCR libraries covering
+  the unique challenges of Chinese/Japanese/Korean character recognition (10,000+
+  unique symbols, similar character shapes, handwriting complexity).
+
+  Key strategic insight: OCR is transitioning from specialized tools to commodity
+  foundation model capability (2027-2030). Current choices should prioritize
+  migration flexibility via abstraction layers and multi-vendor strategies.
+
+  Critical finding: Self-hosting economics favor commercial APIs below 50K images/
+  month, but shift dramatically above that threshold due to fixed infrastructure
+  costs vs linear API fees. Hybrid strategies (start API, migrate self-hosted)
+  provide best risk-adjusted path.
+
+  Practical impact: Research provides concrete guidance for build vs buy decisions,
+  including TCO calculations, break-even analysis, and migration strategies. Healthcare
+  ROI example shows 650% return with 2-month payback on 1,000 forms/day workflow.
+
+  Long-term trends: Multi-modal foundation models (GPT-4V successors) will likely
+  commoditize OCR by 2027-2030. Standalone OCR tools will remain relevant only for
+  privacy-critical, offline, or extreme-scale use cases. Organizations should
+  architect for easy migration to vision-language APIs.
+
+sources:
+  academic_papers:
+    - "Smith, R. (2007) - An Overview of the Tesseract OCR Engine (Google)"
+    - "Baek et al. (2019) - Character Region Awareness for Text Detection (CRAFT)"
+    - "Du et al. (2021) - PP-OCR: A Practical Ultra Lightweight OCR System (PaddlePaddle)"
+
+  libraries:
+    - "Tesseract OCR - https://github.com/tesseract-ocr/tesseract"
+    - "PaddleOCR - https://github.com/PaddlePaddle/PaddleOCR"
+    - "EasyOCR - https://github.com/JaidedAI/EasyOCR"
+
+  production_systems:
+    - "Google Cloud Vision API - Commercial OCR service"
+    - "Azure Computer Vision - Microsoft OCR service"
+    - "AWS Textract - Document understanding with OCR"
+
+  benchmarks:
+    - "PaddleOCR performance benchmarks (Baidu)"
+    - "EasyOCR accuracy comparisons (Jaided AI)"
+    - "Tesseract accuracy studies (Google Research)"
+
+  use_cases:
+    - "Healthcare patient form digitization (OCR + review workflow)"
+    - "E-commerce product label search (mobile photo OCR)"
+    - "Digital archive creation (historical document scanning)"
+    - "Translation apps (camera-based menu translation)"
