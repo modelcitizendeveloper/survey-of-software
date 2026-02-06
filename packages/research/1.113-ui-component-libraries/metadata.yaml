@@ -1,0 +1,53 @@
+---
+experiment_number: "1.113"
+experiment_sequence: TBD
+experiment_date: "2025-12-01"
+experiment_completed: "2026-02-06"
+experiment_status: complete
+discovery_method: detailed_toc
+tier: 1
+category: "Frontend Libraries"
+migrated_from: null
+notes: "UI Component Libraries - React/Vue component systems including MUI, Ant Design, Chakra UI, Mantine, shadcn/ui, Radix UI, Headless UI. Comprehensive analysis of pre-styled vs headless approaches."
+
+summary: |
+  Comprehensive analysis of seven major UI component libraries (shadcn/ui, MUI, Ant Design, Chakra UI, Mantine, Radix UI, Headless UI). Research covers architecture patterns (pre-styled vs headless, CSS-in-JS vs utility CSS), accessibility implementation, bundle size optimization, developer experience, long-term viability, and strategic recommendations. Key finding: Three distinct approaches - full design systems (MUI, Ant), customizable prop-based (Chakra, Mantine), and headless primitives (Radix, Headless UI), plus emerging copy-paste model (shadcn/ui). Strategic recommendation: shadcn/ui for modern Tailwind stacks (fastest growth, you own code), Radix UI for headless needs (WorkOS-backed, powers shadcn), MUI/Ant Design for enterprise 10-year horizons (company backing, proven scale).
+
+data_sources:
+  performance_benchmarks:
+    - source: "official_documentation"
+      notes: "Bundle size comparisons, tree-shaking analysis"
+  feature_comparisons:
+    source: "official_documentation"
+    accessed: "2025-12-01"
+  market_data:
+    github_stars: "github_api"
+    downloads: "npm_registry"
+
+legal_review:
+  tos_compliance: "verified"
+  tos_issues: []
+  prohibited_sources: []
+  copyright_cleared: true
+
+publication_clearance:
+  can_publish_publicly: true
+  reasons: []
+  safe_for_subscribers: true
+  requires_disclaimer: false
+
+benchmark_methodology:
+  captured: false
+  environment: ""
+  reproducible: false
+  code_available: ""
+
+token_usage:
+  total_tokens: 0
+  input_tokens: 0
+  output_tokens: 0
+  model: "claude-opus-4-5"
+  session_count: 1
+  cost_estimate: "$0.00"
+  notes: "To be updated with actual token usage"
+---
