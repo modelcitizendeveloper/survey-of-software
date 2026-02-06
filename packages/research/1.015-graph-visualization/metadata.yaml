@@ -1,0 +1,262 @@
+code: '1.015'
+title: Graph Visualization
+subtitle: "NetworkX, Plotly, PyVis, Graphviz, Cytoscape"
+tier: 1
+category: Library/Package Discovery
+domain: graph-visualization
+status: completed
+completion_date: '2026-02-06'
+
+description: |
+  Comprehensive analysis of graph visualization libraries in Python. Covers static
+  and interactive visualization approaches for network graphs, hierarchical data,
+  and relationship mapping. Includes deep analysis of NetworkX (algorithmic foundation),
+  Plotly (interactive dashboards), PyVis (quick prototypes), Graphviz (documentation),
+  py4cytoscape (biological networks), and Gephi toolkit.
+
+research_output:
+  total_documents: 8
+  stages_completed: [S1-rapid, S2-comprehensive, S3-need-driven, S4-strategic]
+
+  stages:
+    S1-rapid:
+      files: 6
+      content:
+        - 6 library surveys (NetworkX, Plotly, PyVis, Graphviz, py4cytoscape, Gephi)
+        - Quick decision guide
+        - Use case coverage matrix
+        - Time investment estimate (90 minutes research)
+
+    S2-comprehensive:
+      files: 1
+      content:
+        - Comprehensive technical assessment
+        - Feature comparison matrix
+        - Performance characteristics
+        - Integration patterns
+        - Library ecosystem analysis
+
+    S3-need-driven:
+      files: 1
+      content:
+        - Use case-driven library selection
+        - Real-world scenarios and examples
+        - Timeline expectations
+        - Team skill requirements
+        - Cost analysis (infrastructure and licensing)
+
+    S4-strategic:
+      files: 2
+      content:
+        - DOMAIN_EXPLAINER (what is graph visualization and why it matters)
+        - Strategic long-term selection (3-5 year outlook)
+        - Library viability assessment
+        - Risk grading (A+ to D+)
+        - Technology evolution trends
+        - Decision framework by time horizon
+
+libraries_analyzed:
+  - name: NetworkX + matplotlib
+    implementation: Pure Python graph algorithms + plotting
+    performance: "Good for <10K nodes, analysis-focused"
+    best_for: Graph algorithms, static analysis, academic research
+    maturity: "20+ years, NumFOCUS-sponsored, excellent long-term viability"
+
+  - name: Plotly
+    implementation: Interactive JavaScript-based web visualizations
+    performance: "Handles 10K-50K nodes interactively"
+    best_for: Interactive dashboards, web apps, business intelligence
+    maturity: "10+ years, commercial backing (Plotly Inc), strong viability"
+
+  - name: PyVis
+    implementation: Python wrapper for vis.js
+    performance: "Quick setup, 1K-10K nodes typically"
+    best_for: Rapid prototyping, demos, internal tools
+    maturity: "5 years, individual-maintained, medium-high risk"
+
+  - name: Graphviz
+    implementation: DOT language rendering (C library with Python bindings)
+    performance: "Excellent for hierarchical layouts, any size"
+    best_for: Documentation, flowcharts, dependency graphs
+    maturity: "30+ years, AT&T legacy, extremely stable"
+
+  - name: py4cytoscape
+    implementation: Python interface to Cytoscape desktop
+    performance: "Desktop tool, handles large biological networks"
+    best_for: Biological networks, bioinformatics, pathway analysis
+    maturity: "15+ years (Cytoscape), niche-specific excellent viability"
+
+  - name: Gephi (Python)
+    implementation: Python wrapper for Gephi Java toolkit
+    performance: "Desktop tool, 100K+ nodes"
+    best_for: Manual exploration, large network analysis
+    maturity: "10+ years, desktop-focused, scripting integration limited"
+
+key_findings:
+  - finding: "NetworkX + Plotly combination covers 80% of use cases (compute with NetworkX, visualize with Plotly)"
+    impact: "Default recommendation for most projects - balances capability and maintainability"
+
+  - finding: "Developer time is 60-80% of total cost, not licensing or infrastructure"
+    impact: "Optimize for developer productivity, not license fees. Free vs paid matters less than learning curve."
+
+  - finding: "PyVis excellent for 5-minute demos but medium-high risk for production (vis.js maintenance uncertainty)"
+    impact: "Use PyVis for prototypes only, plan migration to Plotly for production deployments"
+
+  - finding: "Domain-specific tools (Cytoscape for biology, Graphviz for docs) outperform general tools in their niches"
+    impact: "Use specialized tools when applicable - 10x productivity gain in domain-specific workflows"
+
+  - finding: "Visual chaos threshold: ~500-1000 nodes without aggregation/filtering"
+    impact: "Large graphs require sampling strategies, hierarchical views, or interactive filtering"
+
+  - finding: "Static vs interactive is primary decision axis - determines library choice more than any other factor"
+    impact: "Choose static (NetworkX/Graphviz) for publications, interactive (Plotly) for dashboards"
+
+  - finding: "Multi-library projects create maintenance burden - commit to one visualization approach"
+    impact: "Anti-pattern: mixing PyVis + Plotly + NetworkX matplotlib. Pick one and standardize."
+
+  - finding: "Library viability ranges from A+ (NetworkX, Graphviz) to D+ (PyVis individual-maintained)"
+    impact: "3-5 year horizon: NetworkX and Plotly are safe bets. PyVis requires migration planning."
+
+  - finding: "Setup time varies 100x: 15 minutes (NetworkX) to 1-2 weeks (Cytoscape biology workflow)"
+    impact: "Factor learning curve into library selection - simple tools enable faster iteration"
+
+  - finding: "Graph layout algorithms matter more than visualization library for readability"
+    impact: "Invest time in layout selection (force-directed, hierarchical, circular) over styling"
+
+recommendations:
+  default: "NetworkX (compute) + Plotly (interactive visualize) OR NetworkX + matplotlib (static visualize)"
+
+  by_use_case:
+    static_analysis: "NetworkX + matplotlib - academia, research papers"
+    interactive_dashboards: "Plotly + Dash - business intelligence, web apps"
+    quick_prototypes: "PyVis - 5-minute demos, proof of concepts (migration plan required)"
+    documentation: "Graphviz - flowcharts, architecture diagrams, dependency graphs"
+    biological_networks: "py4cytoscape + Cytoscape desktop - pathway analysis, protein interactions"
+    massive_graphs_100k: "Gephi desktop - manual exploration (export from Python)"
+
+  by_graph_size:
+    small_1k_nodes: "Any library works - choose based on static vs interactive need"
+    medium_10k_nodes: "NetworkX + Plotly (interactive) or NetworkX + matplotlib (static)"
+    large_100k_nodes: "Gephi (manual) or graph database (Neo4j) with sampling/aggregation"
+    xlarge_1m_nodes: "Requires aggregation - visualize summaries, not raw graph"
+
+  by_constraint:
+    fastest_mvp: "PyVis - 5 minutes to first graph (but plan migration)"
+    production_ready: "Plotly - interactive, enterprise support available"
+    publication_quality: "NetworkX + matplotlib or Graphviz - precise control"
+    no_infrastructure: "Local Python libraries (NetworkX, PyVis) - no servers needed"
+    collaborative: "Plotly Chart Studio or cloud deployment - sharing and embedding"
+
+  strategic_paths:
+    startup_lean: "Start PyVis (speed) → migrate Plotly at production (sustainability)"
+    enterprise_standard: "Plotly + Dash with optional enterprise support ($150/user/month)"
+    academic_research: "NetworkX + matplotlib - proven, stable, publication-accepted"
+    biology_domain: "py4cytoscape + Cytoscape - domain standard, best-in-class for pathway analysis"
+
+performance_benchmarks:
+  rendering_time:
+    networkx_matplotlib_1k: "~1 second (static)"
+    plotly_1k_interactive: "~0.5 seconds (browser rendering)"
+    pyvis_1k_interactive: "~0.3 seconds (vis.js fast startup)"
+    graphviz_hierarchical_1k: "~2 seconds (layout computation)"
+
+  graph_size_limits:
+    networkx_matplotlib: "10K nodes practical limit (layout computation)"
+    plotly_interactive: "10K-50K nodes (browser performance ceiling)"
+    pyvis: "1K-10K typical (vis.js browser limits)"
+    graphviz: "No hard limit (scales with layout complexity)"
+    gephi_desktop: "100K-1M nodes (desktop tool, manual exploration)"
+
+  memory_usage:
+    networkx_10k_nodes: "~100MB (graph + layout)"
+    plotly_10k_nodes: "~200MB (interactive JSON payload)"
+    browser_rendering_ceiling: "~500MB (browser memory limit for smooth interaction)"
+
+cost_analysis:
+  research_project_static:
+    networkx_matplotlib: "$0 licensing, ~40 hours setup = $4K-8K labor"
+    total_3yr: "$4K-8K (labor only)"
+
+  interactive_dashboard_medium:
+    plotly_opensource: "$0 licensing"
+    hosting: "$200/month × 36 = $7,200"
+    development: "200 hours = $20K-40K"
+    total_3yr: "$27K-47K"
+
+  enterprise_dashboard_support:
+    plotly_enterprise: "$150/user/month × 10 × 36 = $54K"
+    hosting: "$500/month × 36 = $18K"
+    development: "300 hours = $30K-60K"
+    total_3yr: "$102K-132K"
+
+  biological_research_desktop:
+    cytoscape: "$0 licensing"
+    workstation: "$3K one-time"
+    training: "80 hours = $8K-16K"
+    total_3yr: "$11K-19K"
+
+  key_insight: "Developer time 60-80% of total cost. Optimize for productivity, not license savings."
+
+related_research:
+  adjacent:
+    - code: '1.011'
+      title: Graph Databases
+      relationship: Graph databases store data, visualization libraries render it
+
+    - code: '1.014'
+      title: Network Flow Algorithms
+      relationship: Flow algorithms provide data for network visualizations
+
+    - code: '1.018'
+      title: Graph Embedding
+      relationship: Embedding techniques create 2D layouts for visualization
+
+  downstream:
+    - code: '1.116'
+      title: Data Visualization Libraries
+      relationship: General visualization libraries (D3.js, Vega) superset of graph viz
+
+estimated_hours: 2-3
+actual_hours: 3
+
+completion_notes: |
+  Completed February 6, 2026. Comprehensive analysis of graph visualization libraries
+  covering the spectrum from quick prototypes (PyVis) to production dashboards (Plotly)
+  to domain-specific tools (Cytoscape for biology).
+
+  Key strategic insight: Developer time dominates costs (60-80%), so optimize for
+  productivity and long-term maintainability over license fees. NetworkX + Plotly
+  combination covers 80% of use cases with excellent viability (A/A+ risk grades).
+
+  Critical finding: PyVis excellent for rapid prototyping (5 minutes to first graph)
+  but medium-high risk for production due to individual maintenance. Use for demos
+  only, plan migration to Plotly for sustainable deployments.
+
+  Practical impact: Research provides clear decision framework by use case (static vs
+  interactive), graph size (1K vs 100K nodes), time horizon (1-2 years tactical vs
+  3-5 years strategic), and domain (general vs biological networks).
+
+  S4 DOMAIN_EXPLAINER section makes graph visualization accessible to non-technical
+  stakeholders through map metaphors, organizational chart analogies, and subway map
+  models. Critical for cross-functional teams where visualization serves communication.
+
+sources:
+  libraries:
+    - "NetworkX - https://networkx.org/"
+    - "Plotly - https://plotly.com/python/"
+    - "PyVis - https://pyvis.readthedocs.io/"
+    - "Graphviz - https://graphviz.org/"
+    - "py4cytoscape - https://py4cytoscape.readthedocs.io/"
+    - "Gephi - https://gephi.org/"
+
+  documentation:
+    - "NetworkX algorithms reference"
+    - "Plotly graph objects documentation"
+    - "Graphviz DOT language guide"
+    - "Cytoscape user manual (biological networks)"
+
+  use_cases:
+    - "Social network analysis (community detection visualization)"
+    - "Software dependency graphs (architecture documentation)"
+    - "Biological pathway analysis (protein interaction networks)"
+    - "Citation networks (academic research visualization)"
