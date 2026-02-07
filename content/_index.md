@@ -7,10 +7,10 @@ bookCollapseSection: false
 
 # Survey of Software
 
-> **Systematic coverage of general-purpose software libraries**
-> Like the Great Trigonometrical Survey mapped India, we're measuring the software library landscape.
+> **Systematic coverage of general-purpose software libraries.**
+> Measured research on algorithms, data structures, ML, and infrastructure—so you can build with confidence instead of guessing.
 
-**[What is this? →](/about)** | **[The Vision →](/vision)** | **[Methodology →](/survey/replication)**
+**[What is this? →](/about)** | **[The Vision →](/vision)** | **[Method →](/survey/method)**
 
 ---
 
