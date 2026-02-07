@@ -154,28 +154,200 @@ Library ecosystems evolve. Treat research as living documents that guide investi
 
 ## Replicating This Research
 
-### What You Get
+### The Four Passes: Detailed Requirements
 
-The complete methodology includes:
+#### Pass S1: Rapid Discovery
 
-- **Agent prompt templates** for each methodology (S1-S4)
-- **Independence protocols** (prevent cross-contamination)
-- **Directory structures** for organizing research
-- **Execution workflows** (parallel vs sequential)
-- **Quality standards** and confidence levels
-- **Step-by-step replication guide** (copy-paste prompts for Claude Code)
+**Goal**: Quick overview, identify key providers/libraries, create breadth-first map
 
-**Everything used to create the 135+ research pieces in this survey.**
+**Time**: 2-4 hours
+
+**Deliverables**:
+- `approach.md` - Methodology for S1
+- Provider/library profiles (6-8 profiles, ~300 lines each)
+- `recommendations.md` - Synthesis and initial decision matrix
+
+**Source requirements for S1**:
+- Library docs (PyPI, README files)
+- Official vendor pages (homepage, pricing, getting started)
+- Repository links (GitHub/GitLab)
+- Quick-start tutorials
+
+**Cannot complete S1 until**: Each profile has a `## Sources` section with at least 3-5 primary sources.
+
+---
+
+#### Pass S2: Comprehensive Analysis
+
+**Goal**: Deep dive into features, pricing, integrations, performance
+
+**Time**: 1-2 days
+
+**Deliverables**:
+- `approach.md` - S2 methodology
+- `feature-matrix.md` - Detailed feature comparison (50+ features)
+- `pricing-tco.md` - Total cost of ownership analysis (3-year, 5-year)
+- `performance-benchmarks.md` - Speed, accuracy, reliability data
+- `integration-complexity.md` - SDK maturity, migration effort
+- `synthesis.md` - Cross-cutting insights
+
+**Source requirements for S2**:
+- Full API/feature documentation (with version numbers)
+- Pricing pages + pricing calculators (with access dates)
+- Third-party benchmarks (MTEB, HumanEval, Chatbot Arena) with methodology
+- Case studies with publication dates
+- Integration guides and SDK docs
+
+**Cannot complete S2 until**: Each analysis document has 10-15 sources, including third-party validation sources.
+
+---
+
+#### Pass S3: Need-Driven Scenarios
+
+**Goal**: Real-world use case scenarios with architecture patterns and decision trees
+
+**Time**: 1-2 days
+
+**Deliverables**:
+- `approach.md` - S3 methodology
+- 5-6 scenario documents (customer-support-chatbot.md, document-analysis.md, etc.)
+- `synthesis.md` - Cross-scenario patterns and insights
+
+**Source requirements for S3**:
+- Architecture blogs with implementation details
+- GitHub examples with commit hashes
+- Case studies from company engineering blogs
+- Stack Overflow for implementation patterns (supplementary only)
+
+---
+
+#### Pass S4: Strategic Selection
+
+**Goal**: Long-term viability analysis, vendor risk assessment, ecosystem health
+
+**Time**: 1-2 days
+
+**Deliverables**:
+- `approach.md` - S4 methodology
+- `vendor-viability.md` - Funding, acquisition risk, company health
+- `ecosystem-momentum.md` - Community activity, fork potential, standards alignment
+- `synthesis.md` - Strategic recommendations
+
+**Source requirements for S4**:
+- GitHub activity metrics (commits, issues, contributors)
+- Funding data (Crunchbase, company announcements)
+- Company blogs and roadmaps
+- Community forums and discussion trends
+
+---
+
+### Template for New Research
+
+When starting a new research topic, create this file structure:
+
+```
+research/X.XXX-topic-name/
+├── metadata.yaml                    # Include sources_documented checklist
+├── 01-discovery/
+│   ├── S1-rapid/
+│   │   ├── approach.md              # Must end with ## Sources
+│   │   ├── provider-1.md            # Must end with ## Sources
+│   │   ├── provider-2.md            # Must end with ## Sources
+│   │   └── recommendations.md       # Must end with ## Sources
+│   ├── S2-comprehensive/
+│   │   ├── approach.md              # Must end with ## Sources
+│   │   ├── feature-matrix.md        # Must end with ## Sources
+│   │   ├── pricing-tco.md           # Must end with ## Sources
+│   │   └── synthesis.md             # Must end with ## Sources
+│   ├── S3-need-driven/
+│   │   ├── approach.md              # Must end with ## Sources
+│   │   ├── scenario-1.md            # Must end with ## Sources
+│   │   └── synthesis.md             # Must end with ## Sources
+│   └── S4-strategic/
+│       ├── approach.md              # Must end with ## Sources
+│       ├── vendor-viability.md      # Must end with ## Sources
+│       └── synthesis.md             # Must end with ## Sources
+```
+
+**Every `.md` file must end with `## Sources` section.**
+
+---
+
+### Source Documentation Best Practices
+
+**Common mistakes to avoid**:
+
+❌ **Bad**: "OpenAI charges $30/M for GPT-4. It's expensive."
+- Problem: No source, no date
+
+✅ **Good**: "OpenAI charges $30/M input for GPT-4 ([source](https://openai.com/pricing) - Accessed 2025-11-05). This is 4× more expensive than Claude 3.5 Sonnet at $3/M ([source](https://www.anthropic.com/pricing) - Accessed 2025-11-05)."
+
+---
+
+❌ **Bad**: "According to the documentation, NumPy uses radix sort for integers."
+- Problem: Which docs? Which version? Where?
+
+✅ **Good**: "NumPy uses radix sort for integer arrays when `kind='stable'` is specified ([source](https://github.com/numpy/numpy/blob/v1.26.0/numpy/core/src/multiarray/sort.c.src#L342) - NumPy 1.26.0, lines 342-387)."
+
+---
+
+### Enforcement: Pre-Commit Checklist
+
+Before marking a stage as complete:
+
+1. ✅ Every markdown file has a `## Sources` section
+2. ✅ Every claim with a number (pricing, performance, features) has a source
+3. ✅ Every source includes an access date or version number
+4. ✅ Primary sources used for all factual claims
+5. ✅ File structure matches template
+
+**Rule**: A research pass is NOT complete until sources are documented.
+
+---
+
+### Source Tiers
+
+**Tier 1: Primary Sources (REQUIRED)**
+- Official documentation (with version)
+- Library source code (with commit hash)
+- Vendor pricing pages (with access date)
+- Academic papers (with DOI)
+
+**Tier 2: Verified Third-Party Sources**
+- Established benchmarks (MTEB, HumanEval, Chatbot Arena)
+- Published case studies (company engineering blogs)
+- Market analysts (Gartner, Forrester - if publicly available)
+
+**Tier 3: Community Sources (use sparingly)**
+- Stack Overflow (for implementation patterns)
+- Reddit/HN discussions (for sentiment, not facts)
+- Personal blogs (only if no better source exists)
+
+**Rule**: Every factual claim must have a Tier 1 or Tier 2 source.
+
+---
 
 ### How to Replicate
 
-1. **Choose your topic** (general-purpose library/tool)
-2. **Run S1-S4 passes** independently (use provided prompts)
-3. **Document sources** for every claim
-4. **Cross-reference findings** to identify convergence/divergence
-5. **Publish with methodology notes**
+**Step-by-step**:
 
-Full replication guide available in the internal repository.
+1. **Choose your topic** (general-purpose library/tool)
+2. **Create directory structure** (use template above)
+3. **Run S1-S4 passes** independently
+   - Each pass uses different discovery methodology
+   - Document sources as you work (not at the end)
+4. **Cross-reference findings** to identify convergence/divergence
+5. **Validate completeness** (pre-commit checklist)
+6. **Publish with methodology notes**
+
+**Time commitment**:
+- S1: 2-4 hours
+- S2: 1-2 days
+- S3: 1-2 days
+- S4: 1-2 days
+- **Total**: ~1 week for complete coverage
+
+**You can stop after any pass** - S1 alone gives 70% of the value. Deeper passes add precision and confidence.
 
 ---
 
