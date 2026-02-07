@@ -67,6 +67,53 @@ SOFTWARE.
 
 ---
 
+## Disclaimer & Limitations
+
+### AI-Generated Research
+
+This research is produced using AI systems (primarily Claude Code). While all published content is human-reviewed, AI-generated analysis may contain errors, omissions, or outdated information.
+
+### No Warranties or Guarantees
+
+This research is provided "AS IS" without warranty of any kind. We make no guarantees regarding:
+
+- **Accuracy** — Library features, performance claims, or comparisons may be incorrect
+- **Security** — Recommended libraries may contain vulnerabilities or become compromised
+- **Maintenance** — Libraries may be abandoned, archived, or deprecated
+- **Compatibility** — Integration claims may not match your specific environment
+- **Licensing** — License information may be incomplete or change without notice
+
+### Use at Your Own Risk
+
+**You are responsible for:**
+- Verifying all claims before implementation
+- Security auditing of any libraries you adopt
+- Testing compatibility with your systems
+- Monitoring for vulnerabilities and updates
+- Complying with all applicable licenses
+
+**We are not liable for:**
+- Security breaches from recommended libraries
+- System failures or data loss
+- License violations or legal issues
+- Production incidents or downtime
+- Any damages resulting from use of this research
+
+### Information Decay
+
+Library ecosystems evolve rapidly. Research accuracy degrades over time:
+- **At publication:** 70-80% estimated accuracy
+- **After 12 months:** 50-70% estimated accuracy
+- **After 36 months:** <30% estimated accuracy
+
+**Always verify current information from primary sources.**
+
+### Caveat Lector
+
+This is research guidance, not gospel truth. Treat it as a starting point for your own investigation, not a substitute for due diligence. The responsibility for evaluating and vetting software for your use case rests entirely with you.
+
+---
+
 ## Attribution Guidelines
 
 When citing this research, please use:
