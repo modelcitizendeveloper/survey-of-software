@@ -425,4 +425,4 @@ bookCollapseSection: false
 ---
 
 © 2026 Ivan Schneider · [Model Citizen Developer](https://modelcitizendeveloper.com/)
-Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
+Licensed under [CC BY 4.0](/license/)
