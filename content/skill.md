@@ -19,26 +19,27 @@ When you ask Claude about library or framework selection:
 
 ### Option 1: Upload to Claude.ai
 
-1. **Download and package the skill:**
-   ```bash
-   # Clone the repository
-   git clone https://github.com/modelcitizendeveloper/survey-of-software.git
-   cd survey-of-software
-
-   # Package the skill
-   cd skill
-   zip -r ../survey-of-software.zip .
-   cd ..
-   ```
+1. **Download the skill:**
+   - **[⬇️ Download survey-of-software.zip](https://github.com/modelcitizendeveloper/survey-of-software/releases/download/v1.0.0/survey-of-software.zip)** (8.7 KB)
 
 2. **Upload to Claude:**
    - Go to [claude.ai](https://claude.ai) → **Settings → Skills**
    - Click **Upload skill**
-   - Upload `survey-of-software.zip`
+   - Upload the downloaded ZIP file
 
 3. **Start using:**
    - Create a new conversation in Claude.ai
    - The skill is now available for Claude to use automatically
+
+<details>
+<summary>Alternative: Package from source</summary>
+
+```bash
+git clone https://github.com/modelcitizendeveloper/survey-of-software.git
+cd survey-of-software/skill
+zip -r ../survey-of-software.zip .
+```
+</details>
 
 ### Option 2: Use in Claude Code
 
