@@ -1,0 +1,7 @@
+# https://research.modelcitizendeveloper.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap
+Sitemap: https://research.modelcitizendeveloper.com/sitemap.xml
