@@ -10,7 +10,7 @@ bookCollapseSection: false
 > **Systematic coverage of general-purpose software libraries.**
 > Measured research on algorithms, data structures, ML, and infrastructure—so you can build with confidence instead of guessing.
 
-**[What is this? →](/about)** | **[The Vision →](/vision)** | **[Method →](/survey/method)**
+**[What is this? →](/about)** | **[The Vision →](/vision)** | **[Method →](/survey/method)** | **[Newsletter →](https://newsletter.modelcitizendeveloper.com/)**
 
 ---
 
