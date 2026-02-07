@@ -15,6 +15,8 @@ aliases: ["/survey/"]
 
 **[Newsletter →](https://modelcitizendeveloper.com/)** Subscribe and get the Agent Prompt Cheat Sheet — 5 ready-made prompts for Claude, Cursor, and Copilot.
 
+**[Claude Skill →](/skill/)** Let Claude consult this research library directly in conversations. Ask about library selection, and Claude fetches surveys, synthesizes recommendations, or runs live research on uncovered topics.
+
 ---
 
 ## 1.001-009: Sorting & Searching Algorithms
