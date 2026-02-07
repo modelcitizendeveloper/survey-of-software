@@ -12,7 +12,7 @@ bookCollapseSection: false
 
 **[What is this? →](/about)** | **[The Vision →](/vision)** | **[Method →](/survey/method)**
 
-**[Newsletter →](https://newsletter.modelcitizendeveloper.com/)** Sign up for updates on new research and other resources
+**[Newsletter →](https://newsletter.modelcitizendeveloper.com/)** Subscribe and get the Agent Prompt Cheat Sheet — 5 ready-made prompts for Claude, Cursor, and Copilot.
 
 ---
 
