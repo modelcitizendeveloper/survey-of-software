@@ -1,6 +1,6 @@
 ---
 title: "Method"
-weight: 9997.0
+weight: 9997
 description: "4PS research methodology and replication guide"
 ---
 
