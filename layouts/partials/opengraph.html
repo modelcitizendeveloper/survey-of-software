@@ -1,0 +1,26 @@
+{{- $title := .Title -}}
+{{- $description := or .Description .Summary | plainify | htmlUnescape -}}
+{{- $url := .Permalink -}}
+{{- $siteName := .Site.Title -}}
+
+<!-- Open Graph / Facebook -->
+<meta property="og:type" content="article">
+<meta property="og:url" content="{{ $url }}">
+<meta property="og:title" content="{{ $title }}">
+<meta property="og:description" content="{{ $description }}">
+<meta property="og:site_name" content="{{ $siteName }}">
+
+{{- if .Params.date }}
+<meta property="article:published_time" content="{{ .Date.Format "2006-01-02T15:04:05Z07:00" }}">
+{{- end }}
+
+{{- if .Params.lastmod }}
+<meta property="article:modified_time" content="{{ .Lastmod.Format "2006-01-02T15:04:05Z07:00" }}">
+{{- end }}
+
+{{- with .Params.author }}
+<meta property="article:author" content="{{ . }}">
+{{- end }}
+
+<!-- Additional metadata -->
+<meta property="og:locale" content="en_US">

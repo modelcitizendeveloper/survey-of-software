@@ -1,0 +1,84 @@
+{{- $title := .Title -}}
+{{- $description := or .Description .Summary | plainify | htmlUnescape -}}
+{{- $url := .Permalink -}}
+{{- $datePublished := .Date.Format "2006-01-02" -}}
+{{- $dateModified := .Lastmod.Format "2006-01-02" -}}
+
+{{- if in .File.Path "survey" }}
+<!-- Schema.org TechArticle for survey pages -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "TechArticle",
+  "headline": "{{ $title }}",
+  "description": "{{ $description }}",
+  "url": "{{ $url }}",
+  "datePublished": "{{ $datePublished }}",
+  "dateModified": "{{ $dateModified }}",
+  "author": {
+    "@type": "Person",
+    "name": "Ivan Schneider",
+    "url": "https://modelcitizendeveloper.com/"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Model Citizen Developer",
+    "url": "https://modelcitizendeveloper.com/"
+  },
+  "license": "https://creativecommons.org/licenses/by/4.0/",
+  "about": {
+    "@type": "SoftwareApplication",
+    "applicationCategory": "DeveloperApplication"
+  }
+}
+</script>
+
+<!-- Breadcrumb schema -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    {
+      "@type": "ListItem",
+      "position": 1,
+      "name": "Home",
+      "item": "{{ .Site.BaseURL }}"
+    },
+    {
+      "@type": "ListItem",
+      "position": 2,
+      "name": "Survey",
+      "item": "{{ .Site.BaseURL }}survey/"
+    },
+    {
+      "@type": "ListItem",
+      "position": 3,
+      "name": "{{ $title }}",
+      "item": "{{ $url }}"
+    }
+  ]
+}
+</script>
+{{- else }}
+<!-- Schema.org Article for other pages -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Article",
+  "headline": "{{ $title }}",
+  "description": "{{ $description }}",
+  "url": "{{ $url }}",
+  "datePublished": "{{ $datePublished }}",
+  "dateModified": "{{ $dateModified }}",
+  "author": {
+    "@type": "Person",
+    "name": "Ivan Schneider"
+  },
+  "publisher": {
+    "@type": "Organization",
+    "name": "Model Citizen Developer"
+  }
+}
+</script>
+{{- end }}
