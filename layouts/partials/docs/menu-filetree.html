@@ -31,12 +31,8 @@
     {{- end }}
   {{- end }}
 
-  {{- /* Sort survey pages by numeric ID */ -}}
-  {{- $sortedSurveys := slice }}
-  {{- range $surveyPages }}
-    {{- $sortedSurveys = $sortedSurveys | append . }}
-  {{- end }}
-  {{- $sortedSurveys = sort $sortedSurveys "Title" }}
+  {{- /* Sort survey pages by weight (integer) */ -}}
+  {{- $sortedSurveys := $surveyPages.ByWeight }}
 
   {{- /* Combine: surveys first, other pages, method last */ -}}
   {{- $pages = union $sortedSurveys $otherPages }}
