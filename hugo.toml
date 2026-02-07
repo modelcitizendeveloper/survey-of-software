@@ -28,6 +28,21 @@ disableKinds = ['taxonomy', 'taxonomyTerm']
 
 [menu]
   [[menu.after]]
+    name = "What is this?"
+    url = "/survey/taxonomy-1.3xx-vision"
+    weight = 1
+
+  [[menu.after]]
+    name = "The Vision"
+    url = "/vision/"
+    weight = 2
+
+  [[menu.after]]
+    name = "Method"
+    url = "/survey/method"
+    weight = 3
+
+  [[menu.after]]
     name = "GitHub"
     url = "https://github.com/modelcitizendeveloper/survey-of-software"
     weight = 10

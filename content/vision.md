@@ -149,4 +149,4 @@ Each new survey makes the next easier. Patterns emerge across categories. Reusab
 
 ---
 
-**Ready to start building?** [Browse the Research Library →](/survey)
+**Ready to start building?** [Browse the Research Library →](/)
