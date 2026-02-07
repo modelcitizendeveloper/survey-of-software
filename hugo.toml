@@ -2,6 +2,7 @@ baseURL = 'https://research.modelcitizendeveloper.com/'
 languageCode = 'en-us'
 title = 'Survey of Software - Research Library'
 theme = 'hugo-book'
+copyright = '© 2026 Ivan Schneider · <a href="https://modelcitizendeveloper.com/">Model Citizen Developer</a> · Licensed under <a href="/license/">CC BY 4.0</a>'
 
 # Book theme specific config
 [params]

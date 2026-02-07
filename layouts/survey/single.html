@@ -1,0 +1,11 @@
+{{ define "main" }}
+  <article class="markdown book-article">
+    {{- .Content -}}
+
+    {{ if .Params.related }}
+      {{ partial "survey/related.html" . }}
+    {{ end }}
+
+    {{ partial "survey/page-metadata.html" . }}
+  </article>
+{{ end }}

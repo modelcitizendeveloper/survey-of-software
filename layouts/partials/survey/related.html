@@ -1,0 +1,21 @@
+{{ with .Params.related }}
+  {{ if gt (len .) 0 }}
+  <aside class="related-surveys" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e0e0e0;">
+    <h3>Related Surveys</h3>
+    <ul style="list-style: none; padding: 0;">
+      {{ $sorted := sort . }}
+      {{ range $sorted }}
+        {{ $relatedId := . }}
+        {{ $relatedPath := printf "/survey/%s" (replace $relatedId "." "-") }}
+        {{ with $.Site.GetPage $relatedPath }}
+          <li style="margin-bottom: 0.5rem;">
+            <a href="{{ .RelPermalink }}" style="text-decoration: none; color: #0066cc;">
+              <strong>{{ $relatedId }}</strong> {{ .Title | replaceRE "^[0-9.]+\\s+" "" }}
+            </a>
+          </li>
+        {{ end }}
+      {{ end }}
+    </ul>
+  </aside>
+  {{ end }}
+{{ end }}

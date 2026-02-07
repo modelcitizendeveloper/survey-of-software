@@ -1,0 +1,95 @@
+{{ $bookMenuBundle := .Site.Params.BookMenuBundle | default "/" }}
+
+{{ with .Site.GetPage $bookMenuBundle }}
+  {{ template "book-tree" (dict "sect" . "site" $.Site) }}
+{{ end }}
+
+{{ define "book-tree" }}
+  {{- $withContent := .sect.Params.BookCollapseSection | default false }}
+  {{- $sortBy := .sect.Params.BookSortBy | default "weight" }}
+
+  {{- $pages := where .sect.Pages "Params.bookhidden" "!=" true }}
+
+  {{- if eq $sortBy "weight" }}
+    {{- $pages = $pages.ByWeight }}
+  {{- else if eq $sortBy "title" }}
+    {{- $pages = $pages.ByTitle }}
+  {{- end }}
+
+  {{- /* Custom sorting for survey pages: numeric ID order, then "Method" at end */ -}}
+  {{- $surveyPages := slice }}
+  {{- $methodPage := slice }}
+  {{- $otherPages := slice }}
+
+  {{- range $pages }}
+    {{- if hasPrefix .Title "1." }}
+      {{- $surveyPages = $surveyPages | append . }}
+    {{- else if eq .Title "Method" }}
+      {{- $methodPage = $methodPage | append . }}
+    {{- else }}
+      {{- $otherPages = $otherPages | append . }}
+    {{- end }}
+  {{- end }}
+
+  {{- /* Sort survey pages by numeric ID */ -}}
+  {{- $sortedSurveys := slice }}
+  {{- range $surveyPages }}
+    {{- $sortedSurveys = $sortedSurveys | append . }}
+  {{- end }}
+  {{- $sortedSurveys = sort $sortedSurveys "Title" }}
+
+  {{- /* Combine: surveys first, other pages, method last */ -}}
+  {{- $pages = union $sortedSurveys $otherPages }}
+  {{- $pages = union $pages $methodPage }}
+
+  {{- with .sect }}
+    <ul>
+    {{- range $pages }}
+      {{- if .Params.BookFlatSection }}
+        <li>
+          {{ template "book-tree" (dict "sect" . "site" $.site) }}
+        </li>
+      {{- else }}
+        <li {{- if .Params.BookCollapseSection }} class="book-section-flat" {{ end }}>
+          {{ template "book-page-link" (dict "page" . "site" $.site "withContent" $withContent) }}
+
+          {{- with .Resources.Match "**" }}
+            <ul>
+            {{- range . }}
+              <li>
+                {{ template "book-page-link" (dict "page" . "site" $.site "withContent" $withContent) }}
+              </li>
+            {{- end }}
+            </ul>
+          {{- end }}
+
+          {{ if .Sections }}
+            {{ template "book-tree" (dict "sect" . "site" $.site) }}
+          {{ end }}
+        </li>
+      {{- end }}
+    {{- end }}
+    </ul>
+  {{- end }}
+{{- end }}
+
+{{ define "book-page-link" }}
+  {{- $withContent := .withContent }}
+  {{- $shouldBeSection := or .page.Sections .page.Params.BookCollapseSection }}
+  {{- $isSection := and $shouldBeSection (not .page.Params.BookFlatSection) }}
+  {{- $pageURL := (urls.Parse .page.RelPermalink) }}
+
+  {{- if $isSection }}
+    <span class="flex justify-between">
+      {{- if $withContent -}}
+        <a href="{{ .page.RelPermalink }}" class="">{{ partial "docs/title" .page }}</a>
+      {{- else -}}
+        <span>{{ partial "docs/title" .page }}</span>
+      {{- end -}}
+    </span>
+  {{- else }}
+    <a href="{{ .page.RelPermalink }}" class="{{ if eq .site.Page $pageURL }}active{{ end }}">
+      {{- partial "docs/title" .page -}}
+    </a>
+  {{- end }}
+{{ end }}

@@ -1,0 +1,13 @@
+{{ if default true (default .Site.Params.BookEditPath .Params.BookEditPath) }}
+  {{ partial "docs/edit-page" . }}
+{{ end }}
+
+{{ if .Site.Params.BookServiceWorkder }}
+  {{ partial "docs/service-worker" . }}
+{{ end }}
+
+{{ if and (default true (default .Site.Params.BookToC .Params.BookToC)) (.Page.TableOfContents) }}
+  <div class="book-calendar-icon hidden"></div>
+{{ end }}
+
+{{ partial "docs/post-prev-next" . }}

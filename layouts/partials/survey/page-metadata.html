@@ -1,0 +1,10 @@
+{{ if or .Date .Lastmod }}
+<div style="margin-top: 3rem; padding-top: 1rem; border-top: 1px solid #e0e0e0; font-size: 0.85rem; color: #666;">
+  {{ if .Date }}
+    <span>Published: {{ .Date.Format "2006-01-02" }}</span>
+  {{ end }}
+  {{ if .Lastmod }}
+    <span style="margin-left: 1rem;">Updated: {{ .Lastmod.Format "2006-01-02" }}</span>
+  {{ end }}
+</div>
+{{ end }}
