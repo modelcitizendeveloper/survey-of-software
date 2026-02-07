@@ -118,11 +118,11 @@ This is research guidance, not gospel truth. Treat it as a starting point for yo
 
 When citing this research, please use:
 
-> "Survey of Software" by Model Citizen Developer
+> "Survey of Software" by Ivan Schneider
 > https://research.modelcitizendeveloper.com
 
 For academic citations:
 ```
-Model Citizen Developer. (2026). Survey of Software.
+Schneider, I. (2026). Survey of Software.
 Retrieved from https://research.modelcitizendeveloper.com
 ```
