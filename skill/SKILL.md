@@ -1,36 +1,15 @@
 ---
 name: survey-of-software
 description: >
-  Systematic software library research using the Four-Pass Survey (4PS)
-  methodology. Consults a curated library of 119+ completed surveys AND conducts
-  new research on the fly when gaps exist. Covers algorithms, data structures,
-  ML/AI, NLP, CJK/linguistics, LLM tooling, frontend frameworks, simulation,
-  civic/government data, and more.
-
-  USE THIS SKILL whenever the user asks about choosing, comparing, or evaluating
-  software libraries or tools — even if they don't mention "survey" or "research."
-  Trigger on: "what library should I use for X?", "best Python library for Y?",
-  "compare Z libraries", "build vs buy", "should I use A or B?", "how do I do
-  fuzzy search?", "what's the best graph database?", "which CSS framework?",
-  "RAG pipeline options", library selection, framework comparison, tool evaluation.
-
-  Also trigger when users mention specific covered domains: sorting, searching,
-  fuzzy search, full-text search, spatial search, graph analysis, community
-  detection, network flow, string matching, NLP, tokenization, CJK, Chinese text
-  processing, compression, serialization, JSON, cryptography, hashing, JWT,
-  dimensionality reduction, time series, gradient boosting, deep learning, image
-  processing, QR codes, face detection, constraint solving, scheduling, PDF
-  generation, document parsing, markdown, code formatting, frontend frameworks,
-  state management, CSS frameworks, UI components, build tools, data visualization,
-  animation, testing, mobile frameworks, simulation, Monte Carlo, CRM, project
-  management, spaced repetition, flashcards, pinyin, morphological analysis,
-  classical Chinese, OCR, machine translation, sentence alignment, translation
-  memory, LLM orchestration, agents, vector databases, RAG, LLM evaluation,
-  fine-tuning, local LLM serving, CalDAV, social networks, bot frameworks,
-  public finance, government data, budget parsing, procurement.
-
-  Do NOT trigger for general coding help, debugging, or questions unrelated to
-  library/tool selection and comparison.
+  Systematic software library research using the Four-Pass Survey (4PS) methodology.
+  Consults 135+ completed surveys with ranked recommendations and decision frameworks.
+  When topics aren't covered, conducts rapid discovery research live. Covers algorithms,
+  data structures, ML/AI, NLP, CJK linguistics, LLM tooling, frontend frameworks,
+  compression, crypto, image processing, simulation, and civic tech. USE THIS SKILL
+  for library/tool selection questions: "what library for X?", "compare Y libraries",
+  "which framework should I use?", "build vs buy?". Also triggers on specific domains
+  like fuzzy search, graph analysis, vector databases, RAG pipelines, state management,
+  Chinese NLP, spaced repetition, etc. Do NOT use for general coding or debugging.
 ---
 
 # Survey of Software — Research Skill
