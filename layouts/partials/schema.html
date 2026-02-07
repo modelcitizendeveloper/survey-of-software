@@ -4,7 +4,7 @@
 {{- $datePublished := .Date.Format "2006-01-02" -}}
 {{- $dateModified := .Lastmod.Format "2006-01-02" -}}
 
-{{- if in .File.Path "survey" }}
+{{- if and .File (in .File.Path "survey") }}
 <!-- Schema.org TechArticle for survey pages -->
 <script type="application/ld+json">
 {
