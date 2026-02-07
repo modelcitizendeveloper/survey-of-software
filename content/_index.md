@@ -421,3 +421,8 @@ bookCollapseSection: false
 **Want to understand our approach?** [Read the Vision →](/vision)
 
 **Want to replicate this research?** [See the Methodology →](/survey/methodology)
+
+---
+
+© 2026 Ivan Schneider · [Model Citizen Developer](https://modelcitizendeveloper.com/)
+Licensed under [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/)
