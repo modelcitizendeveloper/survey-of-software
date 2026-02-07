@@ -3,6 +3,7 @@ title: "Survey of Software"
 weight: 1
 bookFlatSection: false
 bookCollapseSection: false
+aliases: ["/survey/"]
 ---
 
 # Survey of Software
