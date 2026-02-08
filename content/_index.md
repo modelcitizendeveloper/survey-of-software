@@ -4,6 +4,7 @@ weight: 1
 bookFlatSection: false
 bookCollapseSection: false
 aliases: ["/survey/"]
+description: "Systematic research on 134+ software libraries. Sorting, search, NLP, ML, frontend, LLMs — benchmarks, decision frameworks, production patterns."
 ---
 
 # Survey of Software
