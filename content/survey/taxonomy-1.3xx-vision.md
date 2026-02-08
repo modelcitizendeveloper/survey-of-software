@@ -1,7 +1,8 @@
 ---
-title: "Taxonomy Vision: 1.3xx Domain-Specific Data & Analysis"
-weight: 9998000
 bookHidden: true
+description: N/A
+title: 'Taxonomy Vision: 1.3xx Domain-Specific Data & Analysis'
+weight: 9998000
 ---
 
 # 1.3xx Series Vision: Domain-Specific Data & Analysis
