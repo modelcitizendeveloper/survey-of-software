@@ -14,9 +14,11 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 **[What is this? →](/about)** | **[The Vision →](/vision)** | **[Method →](/survey/method)**
 
-**[Newsletter →](https://modelcitizendeveloper.com/)** Subscribe and get the Agent Prompt Cheat Sheet — 5 ready-made prompts for Claude, Cursor, and Copilot.
-
 **[Claude Skill →](/skill/)** Let Claude consult this research library directly in conversations. Ask about library selection, and Claude fetches surveys, synthesizes recommendations, or runs live research on uncovered topics.
+
+---
+
+**Newsletter:** New library research published as it's ready. Monthly digest of what's new — [subscribe to stay current →](https://modelcitizendeveloper.com/)
 
 ---
 

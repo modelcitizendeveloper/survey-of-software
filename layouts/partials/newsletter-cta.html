@@ -1,0 +1,87 @@
+{{/*
+  Newsletter CTA Partial
+
+  Displays newsletter signup form at bottom of survey pages.
+  Copy: "Stay current" utility promise for technical audience.
+*/}}
+
+<aside class="newsletter-cta" style="margin-top: 3rem; padding: 2rem 0; border-top: 2px solid #e0e0e0;">
+  <div style="max-width: 600px; margin: 0 auto; text-align: center;">
+    <p style="margin-bottom: 1.5rem; color: #333; font-size: 1rem; line-height: 1.6;">
+      New library research published as it's ready. Monthly digest of what's new — subscribe to stay current.
+    </p>
+
+    <form
+      id="newsletter-form-{{ .File.UniqueID }}"
+      class="newsletter-form"
+      action="https://modelcitizendeveloper.com/api/newsletter/subscribe"
+      method="POST"
+      style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;"
+    >
+      <input
+        type="email"
+        name="email"
+        placeholder="your@email.com"
+        required
+        style="flex: 1; min-width: 250px; max-width: 350px; padding: 0.75rem 1.25rem; border: 2px solid #0066cc; border-radius: 4px; font-size: 1rem;"
+      >
+      <button
+        type="submit"
+        style="background: #0066cc; color: white; border: none; padding: 0.75rem 2rem; border-radius: 4px; font-size: 1rem; font-weight: 500; cursor: pointer; white-space: nowrap;"
+      >
+        Subscribe
+      </button>
+    </form>
+
+    <div
+      id="form-message-{{ .File.UniqueID }}"
+      class="form-message"
+      style="margin-top: 1rem; display: none;"
+    ></div>
+  </div>
+</aside>
+
+<script>
+(function() {
+  const form = document.getElementById('newsletter-form-{{ .File.UniqueID }}');
+  const message = document.getElementById('form-message-{{ .File.UniqueID }}');
+
+  if (form) {
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email = form.querySelector('input[name="email"]').value;
+      const button = form.querySelector('button');
+      const originalText = button.textContent;
+
+      button.textContent = 'Subscribing...';
+      button.disabled = true;
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ email })
+        });
+
+        if (response.ok) {
+          message.textContent = 'Subscribed! Check your email.';
+          message.style.display = 'block';
+          message.style.color = '#059669';
+          form.style.display = 'none';
+        } else {
+          throw new Error('Subscription failed');
+        }
+      } catch (error) {
+        message.textContent = 'Something went wrong. Try again?';
+        message.style.display = 'block';
+        message.style.color = '#dc2626';
+        button.textContent = originalText;
+        button.disabled = false;
+      }
+    });
+  }
+})();
+</script>

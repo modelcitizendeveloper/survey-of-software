@@ -7,7 +7,7 @@ weight: 9999
 
 Let Claude consult this research library directly in your conversations. The skill enables Claude to fetch surveys, synthesize recommendations, and run live research when topics aren't covered yet.
 
-**[Newsletter →](https://modelcitizendeveloper.com/)** Subscribe and get the Agent Prompt Cheat Sheet — 5 ready-made prompts for Claude, Cursor, and Copilot.
+**Newsletter:** New library research published as it's ready. Monthly digest of what's new — [subscribe to stay current →](https://modelcitizendeveloper.com/)
 
 ---
 
