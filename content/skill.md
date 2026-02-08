@@ -7,10 +7,14 @@ weight: 9999
 
 Let Claude consult this research library directly in your conversations. The skill enables Claude to fetch surveys, synthesize recommendations, and run live research when topics aren't covered yet.
 
+**[Newsletter →](https://modelcitizendeveloper.com/)** Subscribe and get the Agent Prompt Cheat Sheet — 5 ready-made prompts for Claude, Cursor, and Copilot.
+
+---
+
 ## What It Does
 
 When you ask Claude about library or framework selection:
-- **Fetches completed surveys** (135+ topics) from this research library
+- **Fetches completed surveys** from this research library
 - **Synthesizes recommendations** with decision frameworks and trade-offs
 - **Runs rapid discovery research** live when topics aren't covered yet
 - **Tailors recommendations** to your specific requirements and constraints
@@ -73,7 +77,7 @@ Once installed, try asking Claude:
 
 The skill uses two strategies depending on whether the topic has been researched:
 
-### For Covered Topics (135+ surveys)
+### For Covered Topics
 
 1. Maps your question to the research taxonomy
 2. Fetches the relevant survey from this site

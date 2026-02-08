@@ -9,6 +9,10 @@ weight: 10
 
 Pre-done library research across dozens of categories. Use it to decide faster, don't redo months of research.
 
+**[Newsletter →](https://modelcitizendeveloper.com/)** Subscribe and get the Agent Prompt Cheat Sheet — 5 ready-made prompts for Claude, Cursor, and Copilot.
+
+---
+
 ## The Problem: An Unmapped Landscape
 
 You're building something. You need a graph algorithm library. Or a JSON parser. Or an LLM wrapper.
