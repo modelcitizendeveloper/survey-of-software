@@ -1,14 +1,14 @@
 {{ if or .PrevInSection .NextInSection }}
 <div class="flex flex-wrap justify-between" style="margin-top: 3rem; padding-top: 2rem; border-top: 1px solid #e0e0e0;">
   <div style="flex: 0 1 45%; text-align: left;">
-    {{ with .PrevInSection }}
+    {{ with .NextInSection }}
       <a href="{{ .RelPermalink }}" style="text-decoration: none; color: #0066cc;">
         ← <span>{{ .Title }}</span>
       </a>
     {{ end }}
   </div>
   <div style="flex: 0 1 45%; text-align: right;">
-    {{ with .NextInSection }}
+    {{ with .PrevInSection }}
       <a href="{{ .RelPermalink }}" style="text-decoration: none; color: #0066cc;">
         <span>{{ .Title }}</span> →
       </a>
