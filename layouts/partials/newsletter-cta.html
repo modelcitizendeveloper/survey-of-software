@@ -1,87 +1,181 @@
 {{/*
-  Newsletter CTA Partial
+  Newsletter Signup Partial - Research Site
 
-  Displays newsletter signup form at bottom of survey pages.
-  Copy: "Stay current" utility promise for technical audience.
+  Adapted from qrcards/docs/integrations/newsletter-signup-hugo-partial.html
+  - Styled for research site (minimal, blue theme)
+  - Copy: "stay current" utility message
+  - Posts to newsletter.modelcitizendeveloper.com
 */}}
 
-<aside class="newsletter-cta" style="margin-top: 3rem; padding: 2rem 0; border-top: 2px solid #e0e0e0;">
-  <div style="max-width: 600px; margin: 0 auto; text-align: center;">
-    <p style="margin-bottom: 1.5rem; color: #333; font-size: 1rem; line-height: 1.6;">
-      New library research published as it's ready. Monthly digest of what's new — subscribe to stay current.
+<style>
+.newsletter-signup {
+    max-width: 600px;
+    margin: 3rem auto 2rem;
+    padding: 2rem 0;
+    border-top: 2px solid #e0e0e0;
+    text-align: center;
+}
+
+.newsletter-signup p {
+    color: #333;
+    margin-bottom: 1.5rem;
+    font-size: 1rem;
+    line-height: 1.6;
+}
+
+.newsletter-form {
+    display: flex;
+    gap: 0.75rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.newsletter-form input[type="email"] {
+    flex: 1;
+    min-width: 250px;
+    max-width: 350px;
+    padding: 0.75rem 1.25rem;
+    border: 2px solid #0066cc;
+    border-radius: 4px;
+    font-size: 1rem;
+    font-family: inherit;
+}
+
+.newsletter-form input[type="email"]:focus {
+    outline: none;
+    border-color: #0052a3;
+    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
+}
+
+.newsletter-form button {
+    background: #0066cc;
+    color: white;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.75rem 2rem;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    white-space: nowrap;
+}
+
+.newsletter-form button:hover {
+    background: #0052a3;
+}
+
+.newsletter-form button:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.newsletter-message {
+    margin-top: 1rem;
+    font-size: 0.95rem;
+    padding: 0.75rem;
+    border-radius: 4px;
+}
+
+.newsletter-message.success {
+    color: #059669;
+    background: #d1fae5;
+    border: 1px solid #059669;
+}
+
+.newsletter-message.error {
+    color: #dc2626;
+    background: #fee2e2;
+    border: 1px solid #dc2626;
+}
+
+.newsletter-message:empty {
+    display: none;
+}
+
+@media (max-width: 640px) {
+    .newsletter-form {
+        flex-direction: column;
+        align-items: stretch;
+    }
+
+    .newsletter-form input[type="email"],
+    .newsletter-form button {
+        width: 100%;
+        max-width: none;
+    }
+}
+</style>
+
+<aside class="newsletter-signup">
+    <p>
+        New library research published as it's ready. Monthly digest of what's new — subscribe to stay current.
     </p>
 
-    <form
-      id="newsletter-form-{{ .File.UniqueID }}"
-      class="newsletter-form"
-      action="https://modelcitizendeveloper.com/api/newsletter/subscribe"
-      method="POST"
-      style="display: flex; gap: 0.75rem; justify-content: center; flex-wrap: wrap;"
-    >
-      <input
-        type="email"
-        name="email"
-        placeholder="your@email.com"
-        required
-        style="flex: 1; min-width: 250px; max-width: 350px; padding: 0.75rem 1.25rem; border: 2px solid #0066cc; border-radius: 4px; font-size: 1rem;"
-      >
-      <button
-        type="submit"
-        style="background: #0066cc; color: white; border: none; padding: 0.75rem 2rem; border-radius: 4px; font-size: 1rem; font-weight: 500; cursor: pointer; white-space: nowrap;"
-      >
-        Subscribe
-      </button>
+    <form class="newsletter-form" id="newsletter-form-{{ .File.UniqueID }}">
+        <input
+            type="email"
+            name="email"
+            placeholder="your@email.com"
+            required
+            aria-label="Email address"
+        >
+        <button type="submit">Subscribe</button>
     </form>
 
-    <div
-      id="form-message-{{ .File.UniqueID }}"
-      class="form-message"
-      style="margin-top: 1rem; display: none;"
-    ></div>
-  </div>
+    <div id="newsletter-message-{{ .File.UniqueID }}" class="newsletter-message" role="alert"></div>
 </aside>
 
 <script>
 (function() {
-  const form = document.getElementById('newsletter-form-{{ .File.UniqueID }}');
-  const message = document.getElementById('form-message-{{ .File.UniqueID }}');
+    const formId = 'newsletter-form-{{ .File.UniqueID }}';
+    const messageId = 'newsletter-message-{{ .File.UniqueID }}';
+    const form = document.getElementById(formId);
+    const messageEl = document.getElementById(messageId);
 
-  if (form) {
+    if (!form || form.dataset.initialized) return;
+    form.dataset.initialized = 'true';
+
     form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+        e.preventDefault();
 
-      const email = form.querySelector('input[name="email"]').value;
-      const button = form.querySelector('button');
-      const originalText = button.textContent;
+        const email = form.querySelector('input[name="email"]').value;
+        const submitBtn = form.querySelector('button[type="submit"]');
+        const originalBtnText = submitBtn.textContent;
 
-      button.textContent = 'Subscribing...';
-      button.disabled = true;
+        // Clear previous messages
+        messageEl.textContent = '';
+        messageEl.className = 'newsletter-message';
 
-      try {
-        const response = await fetch(form.action, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ email })
-        });
+        // Disable button during submission
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Subscribing...';
 
-        if (response.ok) {
-          message.textContent = 'Subscribed! Check your email.';
-          message.style.display = 'block';
-          message.style.color = '#059669';
-          form.style.display = 'none';
-        } else {
-          throw new Error('Subscription failed');
+        try {
+            const response = await fetch('https://newsletter.modelcitizendeveloper.com/api/newsletter/subscribe', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ email })
+            });
+
+            const data = await response.json();
+
+            if (response.ok) {
+                messageEl.className = 'newsletter-message success';
+                messageEl.textContent = data.message || 'Subscribed! Check your email to confirm.';
+                form.reset();
+            } else {
+                messageEl.className = 'newsletter-message error';
+                messageEl.textContent = data.error || 'Something went wrong. Try again?';
+            }
+        } catch (error) {
+            messageEl.className = 'newsletter-message error';
+            messageEl.textContent = 'Network error. Please try again later.';
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = originalBtnText;
         }
-      } catch (error) {
-        message.textContent = 'Something went wrong. Try again?';
-        message.style.display = 'block';
-        message.style.color = '#dc2626';
-        button.textContent = originalText;
-        button.disabled = false;
-      }
     });
-  }
 })();
 </script>
