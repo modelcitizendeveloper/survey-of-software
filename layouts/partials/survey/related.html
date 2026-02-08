@@ -10,7 +10,7 @@
         {{ with $.Site.GetPage $relatedPath }}
           <li style="margin-bottom: 0.5rem;">
             <a href="{{ .RelPermalink }}" style="text-decoration: none; color: #0066cc;">
-              <strong>{{ $relatedId }}</strong> {{ .Title | replaceRE "^[0-9.]+\\s+" "" }}
+              {{ .Title }}
             </a>
           </li>
         {{ end }}
