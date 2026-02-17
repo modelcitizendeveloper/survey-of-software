@@ -130,7 +130,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ---
 
-## 1.060-069: Cryptographic & Hashing
+## 1.060-069: Cryptography, Networking & Security
 
 **Completed: 4/10**
 
@@ -138,12 +138,12 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.061** Hashing](/survey/1-061) - hashlib, xxhash, blake3
 - ✅ [**1.062** Password Hashing - argon2-cffi vs bcrypt (covered in 1.060)](/survey/1-062)
 - ✅ [**1.063** JWT Libraries](/survey/1-063) - PyJWT, python-jose, Authlib
-- **1.064** _Covered by 1.060_
-- **1.065** _Covered by 1.060_
-- **1.066** _Covered by 1.060_
-- **1.067** Random Token Generation - secrets, uuid patterns
-- **1.068** Certificate Handling - cryptography x509, certifi
-- **1.069** Blockchain Libraries - Merkle trees, hash chains
+- **1.064** Threshold Signature / Secret Sharing - FROST, Shamir's Secret Sharing, threshold ECDSA
+- **1.065** P2P / Mesh Networking - libp2p, ZeroMQ, nanomsg, NAT traversal, relay discovery
+- **1.066** Onion Routing / Anonymous Transport - Tor stem API, I2P SAM bridge, Nym mixnet
+- **1.067** WebSocket Libraries - websockets, aiohttp WS, ws, Socket.IO, µWebSockets
+- **1.068** API Proxy / MITM Frameworks - mitmproxy, Envoy, Traefik, transparent interception
+- **1.069** Mobile Secure Storage / Keychain - iOS Keychain, Android Keystore, react-native-keychain
 
 ---
 
@@ -223,7 +223,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.110-119: User Interface & Frontend
 
-**Completed: 12/14**
+**Completed: 12/16**
 
 - ✅ [**1.110** Frontend Frameworks](/survey/1-110) - React, Vue, Svelte, Angular
   - **1.110.1** React Meta-Frameworks - Next.js, Remix, Gatsby
@@ -240,14 +240,17 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.117** Animation](/survey/1-117) - Framer Motion, GSAP, React Spring, Lottie
 - ✅ [**1.118** Testing - Jest, Vitest, Playwright, Cypress](/survey/1-118)
 - ✅ [**1.119** Mobile Frameworks](/survey/1-119) - React Native, Flutter, .NET MAUI, Ionic
+  - **1.119.1** NFC Libraries - iOS CoreNFC, Android NDEF, react-native-nfc-manager, Web NFC
+  - **1.119.2** Push Notification Libraries - ntfy, Gotify, UnifiedPush, expo-notifications, Web Push/VAPID
 
 ---
 
 ## 1.120-129: Simulation & Modeling
 
-**Completed: 3/10**
+**Completed: 3/11**
 
 - ✅ [**1.120** Discrete Event Simulation](/survey/1-120) - SimPy, Salabim, Mesa
+  - **1.120.1** Network Protocol Simulation - ns-3, Shadow, Mininet for adversarial/Sybil testing
 - **1.121** Agent-Based Modeling - Mesa, FLAME, Repast
 - ✅ [**1.122** Monte Carlo Simulation](/survey/1-122) - scipy.stats, pymc
 - **1.123** System Dynamics - PySD, BPTK-Py
@@ -416,9 +419,9 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## Research Status
 
-**Total Defined**: 189 research slots (including CJK expansion)
-**Completed**: 119 pieces (63%)
-**Remaining**: 70 pieces
+**Total Defined**: 192 research slots (including CJK expansion)
+**Completed**: 119 pieces (62%)
+**Remaining**: 73 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
