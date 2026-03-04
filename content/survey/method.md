@@ -1,7 +1,7 @@
 ---
 description: 4PS research methodology and replication guide
 title: Method
-weight: 9997000
+weight: 9997.0
 ---
 
 # Research Method
