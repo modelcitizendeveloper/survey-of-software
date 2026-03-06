@@ -96,7 +96,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.040-049: Data Structure Libraries
 
-**Completed: 5/12**
+**Completed: 4/11**
 
 - ✅ [**1.040** Collections](/survey/1-040) - sortedcontainers, blist, pyrsistent
 - **1.041** Probabilistic Structures - Bloom filters, count-min sketch
@@ -109,7 +109,6 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.047** Caching](/survey/1-047) - Redis, Memcached, Varnish
 - **1.048** _Available for future use_
 - **1.049** Meta-Data Structures - Schema inspection, reflection
-  - ✅ [**1.049.1** Database Schema Inspection](/survey/1-049-1) - SQLAlchemy, Alembic
 
 ---
 
@@ -184,14 +183,16 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.090-099: Specialized Algorithm Domains
 
-**Completed: 3/13**
+**Completed: 3/15**
 
 - **1.090** Bioinformatics - Sequence alignment, BLAST, BioPython
 - **1.091** Computer Vision (category)
   - **1.091.1** Object Detection - YOLO, Detectron2, MMDetection
   - ✅ [**1.091.2** Face Detection](/survey/1-091-2) - MediaPipe, Dlib, InsightFace
   - **1.091.3** OCR - Tesseract, EasyOCR, PaddleOCR
+  - **1.091.4** Scene Detection / Video Segmentation - PySceneDetect, TransNetV2
 - **1.092** Signal Processing - scipy.signal vs librosa
+  - **1.092.1** Audio Processing - librosa, pydub, audioread
 - **1.093** Quantum Computing - Qiskit vs Cirq vs Pennylane
 - ✅ [**1.094** Constraint Solving](/survey/1-094) - Z3, OR-Tools, PySMT
 - **1.095** Game Theory & Auctions - Nashpy, game theory solvers
@@ -204,7 +205,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.100-109: Text & Document Processing
 
-**Completed: 5/12**
+**Completed: 5/13**
 
 - ✅ [**1.100** Text Processing](/survey/1-100) - Regex, string manipulation, NLP utilities
 - ✅ [**1.101** PDF Processing - ReportLab, WeasyPrint, PyPDF2](/survey/1-101)
@@ -214,7 +215,8 @@ description: "Software library research across sorting, search, NLP, ML, fronten
   - ✅ [**1.104.1** Code Parsing & AST](/survey/1-104-1) - libcst, ast, redbaron
   - ✅ [**1.104.2** Code Formatting](/survey/1-104-2) - Code formatting and linting libraries for Python and JavaScript/TypeScript. Black, ruff, autopep8, Prettier, ESLint.
 - **1.105** Translation & i18n - gettext, Babel, i18next
-- **1.106** Speech Recognition & TTS - Whisper, Coqui, Piper
+- ✅ [**1.106** Speech Recognition & TTS](/survey/1-106) - Whisper, Coqui, Piper
+  - **1.106.1** Speaker Diarization - pyannote, NeMo, who's talking
 - **1.107** OCR Libraries - Tesseract, EasyOCR
 - **1.108** Spell Checking - SymSpell, LanguageTool
 - **1.109** Content Extraction - BeautifulSoup, Scrapy, newspaper3k
@@ -303,7 +305,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.150-159: Reading & Text Analysis (Language Learning)
 
-**Completed: 3/13**
+**Completed: 3/15**
 
 - **1.150** Classical Text Corpora - Perseus, PHI5/PHI7, Latin Library
 - **1.151** Vocabulary Frequency - DCC Core, Dickinson College
@@ -347,6 +349,36 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - **1.174** Computer-Assisted Translation - CAT tool comparison
 - **1.175** Literary Translation Tools - Context-aware translation
 - **1.175-1.179** _Available for future use_
+
+---
+
+## 1.180-189: Database Libraries
+
+**Completed: 11/11**
+
+- ✅ [**1.180** Python ORMs](/survey/1-180) - SQLAlchemy, Django ORM, SQLModel, Tortoise ORM
+- ✅ [**1.181** Database Migration](/survey/1-181) - Alembic, Django migrations, Flyway
+- ✅ [**1.182** Database Diff & Schema Comparison](/survey/1-182) - Atlas, skeema, migra
+- ✅ [**1.183** Database Testing](/survey/1-183) - pytest fixtures, testcontainers, factory_boy
+- ✅ [**1.184** Connection Pool Libraries](/survey/1-184) - SQLAlchemy pool, pgBouncer, HikariCP
+- ✅ [**1.185** Query Builder Libraries](/survey/1-185) - SQLAlchemy Core, Knex.js, jOOQ
+  - ✅ [**1.185.1** Database Schema Inspection](/survey/1-185-1) - SQLAlchemy, Alembic
+- ✅ [**1.186** Time-Series Databases](/survey/1-186) - TimescaleDB, InfluxDB, QuestDB
+- ✅ [**1.187** Embedded Databases](/survey/1-187) - SQLite, DuckDB, LevelDB
+- ✅ [**1.188** Version-Controlled Databases](/survey/1-188) - Dolt, TerminusDB, lakeFS
+- ✅ [**1.189** Database Observability](/survey/1-189) - pg_stat_statements, pgBadger, PMM
+
+---
+
+## 1.190-199: Knowledge & Content Engineering
+
+**Completed: 0/4**
+
+- **1.190** Knowledge Graph Construction - Building concept maps from extracted text
+- **1.191** Corpus Analysis & Text Mining - Large document collection analysis
+- **1.192** Book/Publishing Pipeline - Pandoc, Bookdown, manuscript-to-print
+- **1.193** Digital Asset Management - Organizing large timestamped media collections
+- **1.194-1.199** _Available for future use_
 
 ---
 
@@ -419,9 +451,9 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## Research Status
 
-**Total Defined**: 192 research slots (including CJK expansion)
-**Completed**: 119 pieces (62%)
-**Remaining**: 73 pieces
+**Total Defined**: 207 research slots
+**Completed**: 130 pieces (63%)
+**Remaining**: 77 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
