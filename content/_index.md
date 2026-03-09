@@ -403,18 +403,16 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.220-229: Calendar & Scheduling
 
-**Completed: 4/10**
+**Completed: 4/8**
 
 - ✅ [**1.220** CalDAV/iCalendar](/survey/1-220) - icalendar, caldav, vobject
 - ✅ [**1.221** JavaScript Calendar UI](/survey/1-221) - FullCalendar, Schedule-X, EventCalendar, tui.calendar
 - ✅ [**1.222** Calendar Aggregation](/survey/1-222) - ical.js, tsdav, mergecal, recurring-ical-events
 - ✅ [**1.223** CalDAV Server Libraries](/survey/1-223) - Radicale, Xandikos, custom CalDAV backends
-- **1.224** Recurring Events - RRULE parsing, cron expressions
-- **1.225** Calendar Visualization - Timeline views, heatmaps
-- **1.226** Availability Detection - Free/busy calculation
-- **1.227** Event Reminders - Notification systems
-- **1.228** Calendar Import/Export - ICS, CSV conversion
-- **1.229** Calendar Widgets - Embeddable components
+- **1.224** Timezone Handling - pytz, zoneinfo, dateutil, Luxon, Temporal API
+- **1.225** Meeting Scheduling - cal.com, Calendly OSS alternatives
+- **1.226** Calendar Visualization - Gantt, timeline views, heatmaps
+- **1.227** Calendar Internationalization - non-Gregorian calendars, locale packs, RTL, CJK date formatting
 
 ---
 
