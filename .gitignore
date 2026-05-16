@@ -54,3 +54,4 @@ library-metadata*.json
 .claude/
 .logs/
 .beads/
+CLAUDE.md
