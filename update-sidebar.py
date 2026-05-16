@@ -36,7 +36,8 @@ def normalize_code(raw):
 
 
 def get_metadata_completed_codes():
-    """Return set of codes completed per packages/research/*/metadata.yaml."""
+    """Return set of codes completed per packages/research/*/metadata.yaml.
+    Keep in sync with same function in update-survey-index.py."""
     completed = set()
     for meta_path in PACKAGES_DIR.glob('*/metadata.yaml'):
         try:

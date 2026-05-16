@@ -3,8 +3,8 @@
 Auto-generate content/_index.md from data/survey-taxonomy.yaml + metadata.yaml files.
 
 Completion detection (in priority order):
-  1. packages/research/<code*>/metadata.yaml with status=completed or experiment_status=complete
-  2. content/survey/<slug>.md exists (any content file = published)
+  1. published: true in data/survey-taxonomy.yaml (bootstrapped from original index)
+  2. packages/research/<code*>/metadata.yaml with status=completed or experiment_status=complete
 
 Usage:
   uv run python update-survey-index.py [--dry-run]
