@@ -1,0 +1,1016 @@
+# Survey taxonomy — auto-extracted from content/_index.md
+# Edit here to add/remove slots. Completion status is detected dynamically.
+# Run update-survey-index.py to regenerate content/_index.md
+# Run update-sidebar.py to regenerate sidebars.ts
+
+sections:
+  - range: "1.001-009"
+    title: "Sorting & Searching Algorithms"
+    entries:
+      - code: "1.001"
+        title: Sorting Libraries
+        subtitle: "Timsort, parallel sorts, radix sorts"
+        published: true
+      - code: "1.002"
+        title: Fuzzy Search
+        subtitle: "FuzzyWuzzy, RapidFuzz, TheFuzz"
+        published: true
+      - code: "1.003"
+        title: "Full-Text Search"
+        subtitle: "Whoosh, Tantivy, MeiliSearch clients"
+        published: true
+      - code: "1.004"
+        title: Binary Search Trees
+        subtitle: "B-trees, AVL, Red-Black implementations"
+        published: true
+      - code: "1.005"
+        title: Spatial Search
+        subtitle: "PostGIS, Elasticsearch Geo, rtree"
+        published: true
+      - code: "1.006"
+        title: Graph Search
+        subtitle: "A*, Dijkstra, BFS/DFS implementations"
+        published: true
+      - code: "1.007"
+        title: Pattern Matching Algorithms
+        subtitle: "KMP, Boyer-Moore, Aho-Corasick, Rabin-Karp"
+        published: true
+      - code: "1.008"
+        title: Time Series Search
+        subtitle: "DTW, shapelet discovery"
+        published: true
+        subtitle_in_link: true
+      - code: "1.009"
+        title: Similarity Search
+        subtitle: "LSH, MinHash, SimHash"
+        published: true
+  - range: "1.010-019"
+    title: "Graph & Network Algorithms"
+    entries:
+      - code: "1.010"
+        title: Graph Analysis
+        subtitle: "NetworkX, graph-tool, igraph"
+        published: true
+      - code: "1.011"
+        title: Graph Database Clients
+        subtitle: "Neo4j, ArangoDB, TigerGraph"
+        published: true
+        subtitle_in_link: true
+      - code: "1.012"
+        title: Community Detection
+        subtitle: "Louvain, label propagation, spectral"
+        published: true
+      - code: "1.013"
+        title: String Algorithms
+        published: true
+      - code: "1.014"
+        title: Network Flow
+        subtitle: "Max flow, min cost flow"
+        published: true
+        subtitle_in_link: true
+      - code: "1.015"
+        title: Graph Visualization
+        subtitle: "Graphviz, Gephi, Cytoscape"
+        published: true
+      - code: "1.016"
+        title: Social Network Analysis
+        subtitle: "Centrality, clustering coefficient"
+        published: true
+      - code: "1.017"
+        title: Bipartite Matching Libraries
+        subtitle: "NetworkX, scipy.optimize, lapjv"
+        published: true
+      - code: "1.018"
+        title: Graph Embedding
+        subtitle: "node2vec, DeepWalk, PyTorch Geometric, DGL"
+        published: true
+      - code: "1.019"
+        title: Dynamic Graphs
+        subtitle: "NetworkX temporal, DyNetx, teneto"
+        published: true
+  - range: "1.020-029"
+    title: "Mathematical & Statistical Algorithms"
+    entries:
+      - code: "1.020.1"
+        title: Linear Programming
+        subtitle: "CVXPY, OR-Tools, PuLP optimization"
+        published: true
+      - code: "1.021"
+        title: Statistical Testing Libraries
+        subtitle: "Hypothesis testing, A/B testing"
+        published: true
+      - code: "1.022"
+        title: Optimization
+        subtitle: "scipy.optimize, OR-Tools, CVXPY, PuLP"
+        published: true
+      - code: "1.023"
+        title: Symbolic Math Libraries
+        subtitle: SymPy vs SageMath
+        published: true
+      - code: "1.024"
+        title: Random Number Generation Libraries
+        subtitle: "PCG, Mersenne Twister"
+        published: true
+      - code: "1.025"
+        title: "Prime Factorization & Primality Testing Libraries"
+        subtitle: "Factorization, primality testing"
+        published: true
+      - code: "1.026"
+        title: Combinatorics
+        subtitle: "Permutations, combinations, partitions"
+      - code: "1.027"
+        title: Numerical Integration Libraries
+        subtitle: Quadrature methods
+        published: true
+      - code: "1.028"
+        title: FFT Libraries
+        subtitle: "FFTW, pyFFTW, scipy.fft"
+      - code: "1.029"
+        title: Matrix Decomposition
+        subtitle: "SVD, eigenvalue, QR"
+  - range: "1.030-039"
+    title: "String & Text Algorithms"
+    entries:
+      - code: "1.030"
+        title: String Matching
+        subtitle: "Exact, approximate, regex engines"
+        published: true
+      - code: "1.031"
+        title: Text Diff
+        subtitle: "Myers, patience diff, semantic diff"
+        published: true
+      - code: "1.032"
+        title: String Metrics
+        subtitle: "Edit distance, Jaro-Winkler, cosine"
+        published: true
+      - code: "1.033"
+        title: NLP Libraries
+        subtitle: "spaCy, Transformers, NLTK"
+        published: true
+        children:
+          - code: "1.033.1"
+            title: Intent Classification
+            subtitle: "Zero-Shot, SetFit, sentence-transformers"
+            published: true
+          - code: "1.033.2"
+            title: Chinese Word Segmentation
+            subtitle: "Jieba, CKIP, pkuseg, LTP"
+            published: true
+          - code: "1.033.3"
+            title: CJK Tokenizers for LLMs
+            subtitle: "SentencePiece, tiktoken, HuggingFace"
+            published: true
+          - code: "1.033.4"
+            title: Named Entity Recognition (CJK)
+            subtitle: "spaCy, Stanford NER, BERT-NER"
+            published: true
+      - code: "1.034"
+        title: Email Libraries
+        subtitle: "smtplib, yagmail, MIME handling"
+        published: true
+      - code: "1.035"
+        title: Tokenization
+        subtitle: "SentencePiece, HuggingFace Tokenizers, tiktoken, YouTokenToMe"
+        published: true
+        children:
+          - code: "1.035.1"
+            title: Chinese Tokenization
+            subtitle: "jieba, pkuseg, word segmentation strategies"
+            published: true
+      - code: "1.036"
+        title: "Stemming & Lemmatization"
+        subtitle: "Porter, Snowball, WordNet"
+      - code: "1.037"
+        title: String Compression
+        subtitle: "LZ4, Snappy, Zstandard for strings"
+      - code: "1.038"
+        title: Unicode Handling
+        subtitle: "Normalization, transliteration"
+      - code: "1.039"
+        title: Template Engines
+        subtitle: "Jinja2, Handlebars, Mustache"
+        published: true
+  - range: "1.040-049"
+    title: Data Structure Libraries
+    entries:
+      - code: "1.040"
+        title: Collections
+        subtitle: "sortedcontainers, blist, pyrsistent"
+        published: true
+      - code: "1.041"
+        title: Probabilistic Structures
+        subtitle: "Bloom filters, count-min sketch"
+      - code: "1.042"
+        title: Tries
+        subtitle: "pygtrie, datrie, marisa-trie"
+        published: true
+      - code: "1.043"
+        title: "Heaps & Priority Queues"
+        subtitle: "Binary heap, Fibonacci heap"
+        children:
+          - code: "1.043.1"
+            title: Task Queues
+            subtitle: "Celery, RQ, Huey, Dramatiq"
+            published: true
+      - code: "1.044"
+        title: Specialized Trees
+        subtitle: "Union-Find, Interval tree, Segment tree"
+      - code: "1.045"
+        title: Specialized Buffers
+        subtitle: "Circular buffer, ring buffer"
+      - code: "1.046"
+        future: true
+      - code: "1.047"
+        title: Caching
+        subtitle: "Redis, Memcached, Varnish"
+        published: true
+      - code: "1.048"
+        future: true
+      - code: "1.049"
+        title: "Meta-Data Structures"
+        subtitle: "Schema inspection, reflection"
+  - range: "1.050-059"
+    title: "Compression & Encoding"
+    entries:
+      - code: "1.050"
+        title: Compression
+        subtitle: "zlib, brotli, zstd benchmarks"
+        published: true
+      - code: "1.051"
+        title: Image Compression
+        subtitle: "WebP, AVIF, JPEG XL"
+      - code: "1.052"
+        title: Video Codecs
+        subtitle: "FFmpeg bindings, av"
+      - code: "1.053"
+        title: Audio Compression
+        subtitle: "FLAC, Opus, MP3"
+      - code: "1.054"
+        title: Base Encoding
+        subtitle: "base64, base58, base32"
+      - code: "1.055"
+        title: Binary Serialization
+        subtitle: "msgpack, protobuf, flatbuffers"
+        published: true
+      - code: "1.056"
+        title: JSON Libraries
+        subtitle: "orjson, ujson, rapidjson"
+        published: true
+      - code: "1.057"
+        title: CSV Parsing
+        subtitle: Performance comparison
+      - code: "1.058"
+        title: XML Processing
+        subtitle: lxml vs ElementTree vs xmltodict
+      - code: "1.059"
+        title: YAML Libraries
+        subtitle: PyYAML vs ruamel.yaml
+  - range: "1.060-069"
+    title: "Cryptography, Networking & Security"
+    entries:
+      - code: "1.060"
+        title: Cryptographic Libraries
+        subtitle: cryptography vs PyNaCl
+        published: true
+      - code: "1.061"
+        title: Hashing
+        subtitle: "hashlib, xxhash, blake3"
+        published: true
+      - code: "1.062"
+        title: Password Hashing
+        subtitle: "argon2-cffi vs bcrypt (covered in 1.060)"
+        published: true
+        subtitle_in_link: true
+      - code: "1.063"
+        title: JWT Libraries
+        subtitle: "PyJWT, python-jose, Authlib"
+        published: true
+      - code: "1.064"
+        title: Threshold Signature / Secret Sharing
+        subtitle: "FROST, Shamir's Secret Sharing, threshold ECDSA"
+      - code: "1.065"
+        title: P2P / Mesh Networking
+        subtitle: "libp2p, ZeroMQ, nanomsg, NAT traversal, relay discovery"
+      - code: "1.066"
+        title: Onion Routing / Anonymous Transport
+        subtitle: "Tor stem API, I2P SAM bridge, Nym mixnet"
+      - code: "1.067"
+        title: WebSocket Libraries
+        subtitle: "websockets, aiohttp WS, ws, Socket.IO, µWebSockets"
+      - code: "1.068"
+        title: API Proxy / MITM Frameworks
+        subtitle: "mitmproxy, Envoy, Traefik, transparent interception"
+      - code: "1.069"
+        title: Mobile Secure Storage / Keychain
+        subtitle: "iOS Keychain, Android Keystore, react-native-keychain"
+  - range: "1.070-079"
+    title: Machine Learning Algorithms
+    entries:
+      - code: "1.070"
+        title: Clustering
+        subtitle: "scikit-learn vs hdbscan vs fastcluster"
+      - code: "1.071"
+        title: Dimensionality Reduction
+        subtitle: "UMAP, t-SNE, PCA"
+        published: true
+      - code: "1.072"
+        title: Anomaly Detection
+        subtitle: "Isolation Forest, LOF, autoencoders"
+      - code: "1.073"
+        title: Time Series Forecasting
+        subtitle: "Prophet, Darts, statsmodels"
+        published: true
+      - code: "1.074"
+        title: Gradient Boosting
+        subtitle: "XGBoost, LightGBM, CatBoost"
+        published: true
+      - code: "1.075"
+        title: Deep Learning Frameworks
+        subtitle: "PyTorch, TensorFlow, JAX, MXNet"
+        published: true
+      - code: "1.076"
+        title: Reinforcement Learning
+        subtitle: "Stable Baselines, Ray RLlib"
+      - code: "1.077"
+        title: AutoML
+        subtitle: "auto-sklearn vs TPOT vs H2O"
+      - code: "1.078"
+        title: Feature Engineering
+        subtitle: "Featuretools, tsfresh"
+      - code: "1.079"
+        title: Model Interpretation
+        subtitle: SHAP vs LIME
+  - range: "1.080-089"
+    title: "Geometric & Spatial Algorithms"
+    entries:
+      - code: "1.080"
+        title: Image Processing
+        subtitle: "OpenCV, scikit-image, Pillow"
+        published: true
+        children:
+          - code: "1.080.1"
+            title: QR Code Generation
+            subtitle: "qrcode, segno, pyqrcode"
+            published: true
+      - code: "1.081"
+        title: Convex Hull
+        subtitle: "Graham scan, Jarvis march"
+      - code: "1.082"
+        title: "Voronoi & Delaunay"
+        subtitle: "scipy.spatial, triangle"
+      - code: "1.083"
+        title: Point Cloud Processing
+        subtitle: "Open3D, PCL bindings"
+      - code: "1.084"
+        title: Mesh Processing
+        subtitle: "Trimesh, PyMesh"
+      - code: "1.085"
+        title: Collision Detection
+        subtitle: "Shapely, SAT algorithms"
+      - code: "1.086"
+        title: Path Planning
+        subtitle: "RRT, PRM, A* for robotics"
+      - code: "1.087"
+        title: Geographic Libraries
+        subtitle: "GeoPy, geopandas, Folium"
+      - code: "1.088"
+        title: Coordinate Transformation
+        subtitle: "pyproj, utm"
+      - code: "1.089"
+        title: Spatial Indexing
+        subtitle: "H3, S2, Geohash"
+  - range: "1.090-099"
+    title: Specialized Algorithm Domains
+    entries:
+      - code: "1.090"
+        title: Bioinformatics
+        subtitle: "Sequence alignment, BLAST, BioPython"
+      - code: "1.091"
+        title: Computer Vision (category)
+        children:
+          - code: "1.091.1"
+            title: Object Detection
+            subtitle: "YOLO, Detectron2, MMDetection"
+          - code: "1.091.2"
+            title: Face Detection
+            subtitle: "MediaPipe, Dlib, InsightFace"
+            published: true
+          - code: "1.091.3"
+            title: OCR
+            subtitle: "Tesseract, EasyOCR, PaddleOCR"
+          - code: "1.091.4"
+            title: Scene Detection / Video Segmentation
+            subtitle: "PySceneDetect, TransNetV2"
+      - code: "1.092"
+        title: Signal Processing
+        subtitle: scipy.signal vs librosa
+        children:
+          - code: "1.092.1"
+            title: Audio Processing
+            subtitle: "librosa, pydub, audioread"
+      - code: "1.093"
+        title: Quantum Computing
+        subtitle: Qiskit vs Cirq vs Pennylane
+      - code: "1.094"
+        title: Constraint Solving
+        subtitle: "Z3, OR-Tools, PySMT"
+        published: true
+      - code: "1.095"
+        title: "Game Theory & Auctions"
+        subtitle: "Nashpy, game theory solvers"
+      - code: "1.096"
+        title: Scheduling
+        subtitle: "APScheduler, schedule, Airflow"
+        published: true
+      - code: "1.097"
+        title: Recommendation Systems
+        subtitle: "Surprise, LightFM, Implicit"
+      - code: "1.098"
+        title: "Voting & Consensus"
+        subtitle: Social choice algorithms
+      - code: "1.099"
+        title: Distributed Algorithms
+        subtitle: "Raft, Paxos implementations"
+  - range: "1.100-109"
+    title: "Text & Document Processing"
+    entries:
+      - code: "1.100"
+        title: Text Processing
+        subtitle: "Regex, string manipulation, NLP utilities"
+        published: true
+      - code: "1.101"
+        title: PDF Processing
+        subtitle: "ReportLab, WeasyPrint, PyPDF2"
+        published: true
+        subtitle_in_link: true
+      - code: "1.102"
+        title: Document Parsing
+        subtitle: "python-docx, openpyxl, pandas Excel"
+        published: true
+      - code: "1.103"
+        title: Markdown Processing
+        subtitle: "Python-Markdown, Mistune, markdown-it-py, CommonMark"
+        published: true
+      - code: "1.104"
+        title: Syntax Highlighting
+        subtitle: "Pygments, highlight.js"
+        children:
+          - code: "1.104.1"
+            title: "Code Parsing & AST"
+            subtitle: "libcst, ast, redbaron"
+            published: true
+          - code: "1.104.2"
+            title: Code Formatting
+            subtitle: "Code formatting and linting libraries for Python and JavaScript/TypeScript. Black, ruff, autopep8, Prettier, ESLint."
+            published: true
+      - code: "1.105"
+        title: "Translation & i18n"
+        subtitle: "gettext, Babel, i18next"
+      - code: "1.106"
+        title: "Speech Recognition & TTS"
+        subtitle: "Whisper, Coqui, Piper"
+        published: true
+        children:
+          - code: "1.106.1"
+            title: Speaker Diarization
+            subtitle: "pyannote, NeMo, who's talking"
+      - code: "1.107"
+        title: OCR Libraries
+        subtitle: "Tesseract, EasyOCR"
+      - code: "1.108"
+        title: Spell Checking
+        subtitle: "SymSpell, LanguageTool"
+      - code: "1.109"
+        title: Content Extraction
+        subtitle: "BeautifulSoup, Scrapy, newspaper3k"
+  - range: "1.110-119"
+    title: "User Interface & Frontend"
+    entries:
+      - code: "1.110"
+        title: Frontend Frameworks
+        subtitle: "React, Vue, Svelte, Angular"
+        published: true
+        children:
+          - code: "1.110.1"
+            title: "React Meta-Frameworks"
+            subtitle: "Next.js, Remix, Gatsby"
+          - code: "1.110.2"
+            title: "Vue Meta-Frameworks"
+            subtitle: "Nuxt, VitePress"
+          - code: "1.110.3"
+            title: "Svelte Meta-Frameworks"
+            subtitle: SvelteKit
+          - code: "1.110.4"
+            title: Browser Python Execution
+            published: true
+          - code: "1.110.5"
+            title: Static Site Generators
+            subtitle: "Hugo, Docusaurus, MkDocs, Jekyll"
+            published: true
+      - code: "1.111"
+        title: State Management
+        subtitle: "Redux, Zustand, Jotai, Pinia"
+        published: true
+        subtitle_in_link: true
+      - code: "1.112"
+        title: CSS Frameworks
+        subtitle: "Tailwind, Bootstrap, Material UI"
+        published: true
+        subtitle_in_link: true
+      - code: "1.113"
+        title: UI Component Libraries
+        subtitle: "shadcn/ui, Radix, Headless UI"
+        published: true
+        subtitle_in_link: true
+      - code: "1.114"
+        title: Build Tools
+        subtitle: "Vite, Webpack, Turbopack, esbuild"
+        published: true
+        subtitle_in_link: true
+      - code: "1.115"
+        title: "Form & Validation"
+        subtitle: "React Hook Form, Zod, Yup"
+        published: true
+        subtitle_in_link: true
+      - code: "1.116"
+        title: Data Visualization
+        subtitle: "D3.js, Chart.js, Recharts"
+        published: true
+        subtitle_in_link: true
+      - code: "1.117"
+        title: Animation
+        subtitle: "Framer Motion, GSAP, React Spring, Lottie"
+        published: true
+      - code: "1.118"
+        title: Testing
+        subtitle: "Jest, Vitest, Playwright, Cypress"
+        published: true
+        subtitle_in_link: true
+      - code: "1.119"
+        title: Mobile Frameworks
+        subtitle: "React Native, Flutter, .NET MAUI, Ionic"
+        published: true
+        children:
+          - code: "1.119.1"
+            title: NFC Libraries
+            subtitle: "iOS CoreNFC, Android NDEF, react-native-nfc-manager, Web NFC"
+          - code: "1.119.2"
+            title: Push Notification Libraries
+            subtitle: "ntfy, Gotify, UnifiedPush, expo-notifications, Web Push/VAPID"
+  - range: "1.120-129"
+    title: "Simulation & Modeling"
+    entries:
+      - code: "1.120"
+        title: Discrete Event Simulation
+        subtitle: "SimPy, Salabim, Mesa"
+        published: true
+        children:
+          - code: "1.120.1"
+            title: Network Protocol Simulation
+            subtitle: "ns-3, Shadow, Mininet for adversarial/Sybil testing"
+      - code: "1.121"
+        title: "Agent-Based Modeling"
+        subtitle: "Mesa, FLAME, Repast"
+      - code: "1.122"
+        title: Monte Carlo Simulation
+        subtitle: "scipy.stats, pymc"
+        published: true
+      - code: "1.123"
+        title: System Dynamics
+        subtitle: "PySD, BPTK-Py"
+      - code: "1.124"
+        title: Continuous Simulation
+        subtitle: "scipy.integrate, FEniCS"
+      - code: "1.125"
+        title: Network Simulation
+        subtitle: "ns-3, Mininet"
+      - code: "1.126"
+        title: Traffic Simulation
+        subtitle: "SUMO, MATSim"
+      - code: "1.127"
+        title: Financial Simulation
+        subtitle: "QuantLib, vectorbt"
+        published: true
+      - code: "1.128"
+        title: Physics Simulation
+        subtitle: "PyBullet, MuJoCo, Gazebo"
+      - code: "1.129"
+        title: Hybrid Simulation
+        subtitle: Discrete + continuous combined
+  - range: "1.130-139"
+    title: "Business Application Platforms (Self-Hosted)"
+    entries:
+      - code: "1.130"
+        title: "Self-Hosted CRM"
+        subtitle: "Twenty CRM, Odoo, SuiteCRM"
+        published: true
+      - code: "1.131"
+        title: Project Management
+        subtitle: "Plane, Taiga, OpenProject"
+        published: true
+      - code: "1.132"
+        title: Collaboration
+        subtitle: "Nextcloud, Mattermost, Rocket.Chat"
+      - code: "1.133"
+        title: Documentation
+        subtitle: "BookStack, Wiki.js, Outline"
+      - code: "1.134"
+        title: "E-Commerce"
+        subtitle: "WooCommerce, Magento, Saleor"
+      - code: "1.135"
+        title: Analytics
+        subtitle: "Matomo, Plausible, Umami, PostHog"
+      - code: "1.136"
+        title: DevOps
+        subtitle: "GitLab, Gitea, Jenkins, Drone"
+      - code: "1.137"
+        title: Customer Support
+        subtitle: "Chatwoot, Zammad, Freescout"
+      - code: "1.138"
+        title: Marketing Automation
+        subtitle: "Mautic, Listmonk"
+      - code: "1.139"
+        title: Accounting/ERP
+        subtitle: "Odoo, ERPNext, Dolibarr"
+  - range: "1.140-149"
+    title: "Language Learning & Linguistics"
+    entries:
+      - code: "1.140"
+        title: Classical Languages
+        subtitle: "CLTK, pyLatinam, PyWORDS"
+        published: true
+      - code: "1.141"
+        title: Spaced Repetition
+        subtitle: "SM-2, SM-18, FSRS algorithms"
+        published: true
+      - code: "1.142"
+        title: Flashcard Systems
+        subtitle: "Anki, genanki, AnkiConnect"
+        published: true
+      - code: "1.143"
+        title: Language Detection
+        subtitle: "langdetect, polyglot, fastText"
+      - code: "1.144"
+        title: Phonetics
+        subtitle: "IPA transcription, eSpeak, Forvo API"
+        children:
+          - code: "1.144.1"
+            title: Pinyin/Zhuyin Conversion
+            subtitle: "pypinyin, dragonmapper, pinyin"
+            published: true
+          - code: "1.144.2"
+            title: Tone Analysis
+            subtitle: "librosa, praatio, pitch detection, tone sandhi"
+            published: true
+      - code: "1.145"
+        title: Grammar Checking
+        subtitle: "LanguageTool, GrammarBot"
+      - code: "1.146"
+        title: Vocabulary Databases
+        subtitle: "WordNet, ConceptNet, Wiktionary"
+      - code: "1.147"
+        title: Language Corpora
+        subtitle: "Brown Corpus, CoNLL datasets"
+      - code: "1.148"
+        title: Morphological Analysis
+        subtitle: "SudachiPy, pymorphy3, UDPipe"
+        published: true
+        children:
+          - code: "1.148.1"
+            title: Chinese Morphological Analysis
+            subtitle: "HanLP, Stanza, LTP, cjklib"
+            published: true
+          - code: "1.148.2"
+            title: Classical Chinese Parsing
+            subtitle: "Stanford CoreNLP, ctext.org tools, Kanbun"
+            published: true
+      - code: "1.149"
+        title: SLA Tools
+        subtitle: "CEFR assessment, proficiency testing"
+  - range: "1.150-159"
+    title: "Reading & Text Analysis (Language Learning)"
+    entries:
+      - code: "1.150"
+        title: Classical Text Corpora
+        subtitle: "Perseus, PHI5/PHI7, Latin Library"
+      - code: "1.151"
+        title: Vocabulary Frequency
+        subtitle: "DCC Core, Dickinson College"
+      - code: "1.152"
+        title: "Reading Difficulty & Readability"
+        subtitle: "Flesch-Kincaid, lexical coverage, i+1 detection"
+        children:
+          - code: "1.152.1"
+            title: CJK Readability
+            subtitle: "Character frequency, HSK/TOCFL levels, graded readers"
+            published: true
+      - code: "1.153"
+        title: Sentence Parsing
+        subtitle: "Universal Dependencies parsers, Stanza, syntax trees"
+        children:
+          - code: "1.153.1"
+            title: Chinese Dependency Parsing
+            subtitle: "UD Chinese, Stanford CoreNLP, HanLP"
+            published: true
+      - code: "1.154"
+        title: Graded Reader Generation
+        subtitle: "Text leveling, vocab substitution"
+        children:
+          - code: "1.154.1"
+            title: Chinese Text Simplification
+            subtitle: "MCTS dataset, neural approaches"
+            published: true
+      - code: "1.155"
+        title: Parallel Text Alignment
+        subtitle: "Latin-English, sentence alignment"
+      - code: "1.156"
+        title: Text Annotation UI
+        subtitle: "Glossing, interlinear display"
+      - code: "1.157"
+        title: Reading Comprehension
+        subtitle: "Question generation, validation"
+      - code: "1.158"
+        title: Vocabulary Tracking
+        subtitle: "Learning curves, retention modeling"
+      - code: "1.159"
+        title: Adaptive Recommendation
+        subtitle: Personalized difficulty
+  - range: "1.160-169"
+    title: "Character-Based Writing Systems (CJK)"
+    entries:
+      - code: "1.160"
+        title: Character Databases
+        subtitle: "Unihan, CHISE, IDS, CJKVI"
+        published: true
+      - code: "1.161"
+        title: "Radical & Component Analysis"
+        subtitle: "Character decomposition, semantic components"
+        published: true
+      - code: "1.162"
+        title: Handwriting Recognition (CJK)
+        subtitle: "Zinnia, Tegaki, Google Cloud Vision, Azure"
+        published: true
+      - code: "1.163"
+        title: Character Encoding
+        subtitle: "Big5, GB2312, GBK, GB18030, Unicode CJK"
+        published: true
+      - code: "1.164"
+        title: Traditional ↔ Simplified Conversion
+        subtitle: "OpenCC, HanziConv, zhconv-rs"
+        published: true
+      - code: "1.165"
+        title: "Stroke Order & Writing (CJK)"
+        subtitle: "Make Me a Hanzi, KanjiVG, animCJK"
+        published: true
+      - code: "1.166"
+        title: "OCR (CJK-specific)"
+        subtitle: "Tesseract, PaddleOCR, EasyOCR"
+        published: true
+      - code: "1.167-1.169"
+        future: true
+  - range: "1.170-179"
+    title: "Translation & Alignment"
+    entries:
+      - code: "1.170"
+        title: Machine Translation APIs
+        subtitle: "DeepL, Google Translate, Azure Translator, Amazon Translate"
+        published: true
+      - code: "1.171"
+        title: Sentence Alignment
+        subtitle: "Hunalign, Bleualign, vecalign"
+        published: true
+      - code: "1.172"
+        title: Translation Memory
+        subtitle: "TMX format, OmegaT, MemoQ"
+        published: true
+      - code: "1.173"
+        title: Terminology Extraction
+        subtitle: "KeyBERT, PyATE, YAKE, spaCy"
+        published: true
+      - code: "1.174"
+        title: "Computer-Assisted Translation"
+        subtitle: CAT tool comparison
+      - code: "1.175"
+        title: Literary Translation Tools
+        subtitle: "Context-aware translation"
+      - code: "1.175-1.179"
+        future: true
+  - range: "1.180-189"
+    title: Database Libraries
+    entries:
+      - code: "1.180"
+        title: Python ORMs
+        subtitle: "SQLAlchemy, Django ORM, SQLModel, Tortoise ORM"
+        published: true
+      - code: "1.181"
+        title: Database Migration
+        subtitle: "Alembic, Django migrations, Flyway"
+        published: true
+      - code: "1.182"
+        title: "Database Diff & Schema Comparison"
+        subtitle: "Atlas, skeema, migra"
+        published: true
+      - code: "1.183"
+        title: Database Testing
+        subtitle: "pytest fixtures, testcontainers, factory_boy"
+        published: true
+      - code: "1.184"
+        title: Connection Pool Libraries
+        subtitle: "SQLAlchemy pool, pgBouncer, HikariCP"
+        published: true
+      - code: "1.185"
+        title: Query Builder Libraries
+        subtitle: "SQLAlchemy Core, Knex.js, jOOQ"
+        published: true
+        children:
+          - code: "1.185.1"
+            title: Database Schema Inspection
+            subtitle: "SQLAlchemy, Alembic"
+            published: true
+      - code: "1.186"
+        title: "Time-Series Databases"
+        subtitle: "TimescaleDB, InfluxDB, QuestDB"
+        published: true
+      - code: "1.187"
+        title: Embedded Databases
+        subtitle: "SQLite, DuckDB, LevelDB"
+        published: true
+      - code: "1.188"
+        title: "Version-Controlled Databases"
+        subtitle: "Dolt, TerminusDB, lakeFS"
+        published: true
+      - code: "1.189"
+        title: Database Observability
+        subtitle: "pg_stat_statements, pgBadger, PMM"
+        published: true
+  - range: "1.190-199"
+    title: "Knowledge & Content Engineering"
+    entries:
+      - code: "1.190"
+        title: Knowledge Graph Construction
+        subtitle: Building concept maps from extracted text
+      - code: "1.191"
+        title: "Corpus Analysis & Text Mining"
+        subtitle: Large document collection analysis
+      - code: "1.192"
+        title: Book/Publishing Pipeline
+        subtitle: "Pandoc, Bookdown, manuscript-to-print"
+      - code: "1.193"
+        title: Digital Asset Management
+        subtitle: Organizing large timestamped media collections
+      - code: "1.194-1.199"
+        future: true
+  - range: "1.200-219"
+    title: "LLM & AI Stack"
+    entries:
+      - code: "1.200"
+        title: LLM Orchestration
+        subtitle: "LangChain, LlamaIndex, RAG"
+        published: true
+      - code: "1.201"
+        title: LLM Agent Frameworks
+        subtitle: "AutoGen, CrewAI, MetaGPT"
+        published: true
+        subtitle_in_link: true
+      - code: "1.202"
+        title: Prompt Engineering
+        subtitle: "DSPy, guidance, LMQL"
+      - code: "1.203"
+        title: Vector Databases
+        subtitle: "ChromaDB, Pinecone, Qdrant"
+        published: true
+        subtitle_in_link: true
+      - code: "1.204"
+        title: RAG Pipelines
+        subtitle: "Document loading, chunking, retrieval"
+        published: true
+        subtitle_in_link: true
+      - code: "1.205"
+        title: LLM Evaluation
+        subtitle: "RAGAS, DeepEval, PromptFoo"
+        published: true
+        subtitle_in_link: true
+      - code: "1.206"
+        title: RAG Chunking Patterns
+        subtitle: "Semantic, sliding window, hierarchical strategies"
+        published: true
+      - code: "1.207"
+        title: "LLM Observability & Tracing"
+        subtitle: "LangSmith, Helicone, LangFuse"
+        published: true
+      - code: "1.208"
+        title: "Fine-tuning frameworks"
+        subtitle: "Axolotl, LLaMA Factory, Unsloth, PEFT"
+        published: true
+      - code: "1.209"
+        title: Local LLM Serving
+        subtitle: "Ollama, vLLM, llama.cpp"
+        published: true
+        subtitle_in_link: true
+      - code: "1.210"
+        title: "Multilingual & CJK LLMs"
+        subtitle: "BLOOM, XLM-RoBERTa, mBERT, ERNIE"
+        published: true
+      - code: "1.211"
+        title: CJK Embedding Models
+        subtitle: "M3E, text2vec-chinese, LaBSE, multilingual-e5"
+        published: true
+  - range: "1.220-229"
+    title: "Calendar & Scheduling"
+    entries:
+      - code: "1.220"
+        title: CalDAV/iCalendar
+        subtitle: "icalendar, caldav, vobject"
+        published: true
+      - code: "1.221"
+        title: JavaScript Calendar UI
+        subtitle: "FullCalendar, Schedule-X, EventCalendar, tui.calendar"
+        published: true
+      - code: "1.222"
+        title: Calendar Aggregation
+        subtitle: "ical.js, tsdav, mergecal, recurring-ical-events"
+        published: true
+      - code: "1.223"
+        title: CalDAV Server Libraries
+        subtitle: "Radicale, Xandikos, custom CalDAV backends"
+        published: true
+      - code: "1.224"
+        title: Timezone Handling
+        subtitle: "pytz, zoneinfo, dateutil, Luxon, Temporal API"
+        published: true
+      - code: "1.225"
+        title: Meeting Scheduling
+        subtitle: "cal.com, Rallly, Easy!Appointments, CalDAV scheduling"
+        published: true
+      - code: "1.226"
+        title: Calendar Visualization
+        subtitle: "frappe-gantt, vis-timeline, cal-heatmap, echarts"
+        published: true
+      - code: "1.227"
+        title: Calendar Internationalization
+        subtitle: "Hijri, Jalali, Hebrew, CJK, ICU4X, CLDR"
+        published: true
+  - range: "1.230-239"
+    title: "Social Networks & Messaging"
+    entries:
+      - code: "1.230"
+        title: Open Social Networks
+        subtitle: "ActivityPub, AT Protocol, Matrix, Nostr"
+        published: true
+      - code: "1.231"
+        title: AT Protocol/Bluesky
+        subtitle: Decentralized social graph
+      - code: "1.232"
+        title: Matrix Protocol
+        subtitle: "Federated chat & E2EE"
+      - code: "1.233"
+        title: Nostr
+        subtitle: "Simple relay protocol, Lightning payments"
+      - code: "1.234"
+        title: Bot SDK Frameworks
+        subtitle: "matrix-nio, discord.py, python-telegram-bot"
+        published: true
+      - code: "1.235"
+        title: Social Media APIs
+        subtitle: "Twitter, Reddit, Mastodon"
+      - code: "1.236"
+        title: Chat Webhooks
+        subtitle: "Slack, Discord, Teams"
+      - code: "1.237"
+        title: Push Notifications
+        subtitle: "FCM, APNs, WebPush"
+      - code: "1.238"
+        title: RSS/Atom Feeds
+        subtitle: "feedparser, aggregation"
+      - code: "1.239"
+        title: Social Graph Analysis
+        subtitle: "Follow relationships, communities"
+  - range: "1.300-309"
+    title: "Civic & Government Data"
+    entries:
+      - code: "1.300"
+        title: Public Finance Modeling
+        subtitle: "Revenue forecasting, budget planning, fiscal analysis"
+        published: true
+      - code: "1.301"
+        title: Government Data Access
+        subtitle: "Open data APIs, FOIA tools, data.gov integration"
+        published: true
+      - code: "1.302"
+        title: Budget Document Parsing
+        subtitle: "PDF extraction, financial statement analysis"
+        published: true
+      - code: "1.303"
+        title: Civic Entity Resolution
+        subtitle: "Agency matching, jurisdiction mapping"
+        published: true
+      - code: "1.304"
+        title: "Procurement & Contracts"
+        subtitle: "Vendor analysis, contract tracking"
+        published: true
+      - code: "1.305"
+        title: Fiscal Health Metrics
+        subtitle: "Financial indicators, municipal credit analysis"
+        published: true
+      - code: "1.306-1.309"
+        future: true

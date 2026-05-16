@@ -205,7 +205,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.100-109: Text & Document Processing
 
-**Completed: 5/13**
+**Completed: 7/13**
 
 - ✅ [**1.100** Text Processing](/survey/1-100) - Regex, string manipulation, NLP utilities
 - ✅ [**1.101** PDF Processing - ReportLab, WeasyPrint, PyPDF2](/survey/1-101)
@@ -225,7 +225,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.110-119: User Interface & Frontend
 
-**Completed: 12/16**
+**Completed: 12/17**
 
 - ✅ [**1.110** Frontend Frameworks](/survey/1-110) - React, Vue, Svelte, Angular
   - **1.110.1** React Meta-Frameworks - Next.js, Remix, Gatsby
@@ -238,7 +238,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.113** UI Component Libraries - shadcn/ui, Radix, Headless UI](/survey/1-113)
 - ✅ [**1.114** Build Tools - Vite, Webpack, Turbopack, esbuild](/survey/1-114)
 - ✅ [**1.115** Form & Validation - React Hook Form, Zod, Yup](/survey/1-115)
-- ✅ [**1.116** Data Visualization - D3.js, Chart.js, Recharts](/survey/1-116)
+- ✅ [**1.116** Data Visualization Libraries - D3.js, Chart.js, Recharts](/survey/1-116)
 - ✅ [**1.117** Animation](/survey/1-117) - Framer Motion, GSAP, React Spring, Lottie
 - ✅ [**1.118** Testing - Jest, Vitest, Playwright, Cypress](/survey/1-118)
 - ✅ [**1.119** Mobile Frameworks](/survey/1-119) - React Native, Flutter, .NET MAUI, Ionic
@@ -292,7 +292,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - **1.143** Language Detection - langdetect, polyglot, fastText
 - **1.144** Phonetics - IPA transcription, eSpeak, Forvo API
   - ✅ [**1.144.1** Pinyin/Zhuyin Conversion](/survey/1-144-1) - pypinyin, dragonmapper, pinyin
-  - ✅ [**1.144.2** Tone Analysis](/survey/1-144-2) - librosa, praatio, pitch detection, tone sandhi
+  - ✅ [**1.144.2** Tone Analysis for CJK Languages](/survey/1-144-2) - librosa, praatio, pitch detection, tone sandhi
 - **1.145** Grammar Checking - LanguageTool, GrammarBot
 - **1.146** Vocabulary Databases - WordNet, ConceptNet, Wiktionary
 - **1.147** Language Corpora - Brown Corpus, CoNLL datasets
@@ -305,16 +305,16 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.150-159: Reading & Text Analysis (Language Learning)
 
-**Completed: 3/15**
+**Completed: 3/13**
 
 - **1.150** Classical Text Corpora - Perseus, PHI5/PHI7, Latin Library
 - **1.151** Vocabulary Frequency - DCC Core, Dickinson College
 - **1.152** Reading Difficulty & Readability - Flesch-Kincaid, lexical coverage, i+1 detection
-  - ✅ [**1.152.1** CJK Readability](/survey/1-152-1) - Character frequency, HSK/TOCFL levels, graded readers
+  - ✅ [**1.152.1** CJK Readability Analysis](/survey/1-152-1) - Character frequency, HSK/TOCFL levels, graded readers
 - **1.153** Sentence Parsing - Universal Dependencies parsers, Stanza, syntax trees
   - ✅ [**1.153.1** Chinese Dependency Parsing](/survey/1-153-1) - UD Chinese, Stanford CoreNLP, HanLP
 - **1.154** Graded Reader Generation - Text leveling, vocab substitution
-  - ✅ [**1.154.1** Chinese Text Simplification](/survey/1-154-1) - MCTS dataset, neural approaches
+  - ✅ [**1.154.1** Chinese Text Simplification Libraries](/survey/1-154-1) - MCTS dataset, neural approaches
 - **1.155** Parallel Text Alignment - Latin-English, sentence alignment
 - **1.156** Text Annotation UI - Glossing, interlinear display
 - **1.157** Reading Comprehension - Question generation, validation
@@ -333,7 +333,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.163** Character Encoding](/survey/1-163) - Big5, GB2312, GBK, GB18030, Unicode CJK
 - ✅ [**1.164** Traditional ↔ Simplified Conversion](/survey/1-164) - OpenCC, HanziConv, zhconv-rs
 - ✅ [**1.165** Stroke Order & Writing (CJK)](/survey/1-165) - Make Me a Hanzi, KanjiVG, animCJK
-- ✅ [**1.166** OCR (CJK-specific)](/survey/1-166) - Tesseract, PaddleOCR, EasyOCR
+- ✅ [**1.166** OCR for CJK Languages](/survey/1-166) - Tesseract, PaddleOCR, EasyOCR
 - **1.167-1.169** _Available for future use_
 
 ---
@@ -372,7 +372,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.190-199: Knowledge & Content Engineering
 
-**Completed: 0/4**
+**Completed: 0/5**
 
 - **1.190** Knowledge Graph Construction - Building concept maps from extracted text
 - **1.191** Corpus Analysis & Text Mining - Large document collection analysis
@@ -435,7 +435,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.300-309: Civic & Government Data
 
-**Completed: 6/10**
+**Completed: 6/7**
 
 - ✅ [**1.300** Public Finance Modeling](/survey/1-300) - Revenue forecasting, budget planning, fiscal analysis
 - ✅ [**1.301** Government Data Access](/survey/1-301) - Open data APIs, FOIA tools, data.gov integration
@@ -449,12 +449,13 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## Research Status
 
-**Total Defined**: 207 research slots
-**Completed**: 130 pieces (63%)
-**Remaining**: 77 pieces
+**Total Defined**: 257 research slots
+**Completed**: 142 pieces (55%)
+**Remaining**: 115 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
+---
 ---
 
 **Want to understand our approach?** [Read the Vision →](/vision)
