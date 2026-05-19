@@ -55,3 +55,9 @@ library-metadata*.json
 .logs/
 .beads/
 CLAUDE.md
+
+# Internal-only survey content (never publish to public site)
+# 2.xxx = protocol/standard surveys (move too quickly, not ready for public)
+# 3.xxx = commercial SaaS comparisons (vendor exposure risk)
+content/survey/2-*.md
+content/survey/3-*.md
