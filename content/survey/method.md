@@ -3,6 +3,7 @@ description: 4PS research methodology and replication guide
 title: Method
 weight: 9997000
 bookHidden: true
+noindex: false  # trunk page — keep indexable despite the /survey/** cascade
 ---
 
 # Research Method

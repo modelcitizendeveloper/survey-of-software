@@ -47,3 +47,15 @@ disableKinds = ['taxonomy', 'taxonomyTerm']
     name = "GitHub"
     url = "https://github.com/modelcitizendeveloper/survey-of-software"
     weight = 10
+
+# ── SEO: noindex the generated survey leaves, keep the trunk indexable ──
+# Google declined to index ~145 of the long generated survey pages (scaled-content
+# judgment). Strategy: noindex every /survey/<leaf>, keep the trunk (home, vision,
+# about, skill, license, the /survey/ index, method, taxonomy) in the index.
+# method.md and taxonomy-1.3xx-vision.md override this with `noindex: false`.
+[[cascade]]
+  [cascade.params]
+    noindex = true
+  [cascade._target]
+    path = '/survey/**'
+    kind = 'page'
