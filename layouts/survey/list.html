@@ -1,0 +1,21 @@
+{{- /*
+  /survey/ has no landing of its own — the full categorized index lives on the
+  home page, which already declares `aliases: ["/survey/"]`. That alias is
+  ignored because /survey/ is a real section, so without this template the
+  section index renders blank. Emit a clean redirect to home instead.
+  Leaves (/survey/1-xxx) use layouts/survey/single.html and are unaffected.
+*/ -}}
+{{- $home := "/" | absLangURL -}}
+<!DOCTYPE html>
+<html lang="{{ default .Site.Language.Lang .Site.LanguageCode }}">
+<head>
+  <meta charset="utf-8">
+  <title>{{ .Site.Title }}</title>
+  <link rel="canonical" href="{{ $home }}">
+  <meta name="robots" content="noindex, follow">
+  <meta http-equiv="refresh" content="0; url={{ $home }}">
+</head>
+<body>
+  Redirecting to <a href="{{ $home }}">{{ .Site.Title }}</a>&hellip;
+</body>
+</html>

@@ -30,7 +30,7 @@ disableKinds = ['taxonomy', 'taxonomyTerm']
 [menu]
   [[menu.after]]
     name = "What is this?"
-    url = "/survey/taxonomy-1.3xx-vision"
+    url = "/about/"
     weight = 1
 
   [[menu.after]]
