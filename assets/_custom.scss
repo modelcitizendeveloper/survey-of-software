@@ -1,3 +1,47 @@
+// ── Dark theme: the Model Citizen Developer palette ─────────────────────────
+//
+// hugo.toml sets BookTheme = 'auto', so the theme emits theme-light at :root and
+// theme-dark inside prefers-color-scheme: dark. This redefines theme-dark so the
+// dark side is the same ground the rest of MCD uses — hub, newsletter, commons
+// and /talks — rather than hugo-book's stock warm gray (#343a40 on #84b2ff).
+//
+// It has to be a mixin redefinition rather than a block of :root declarations.
+// book.scss imports this file BEFORE it does `:root { @include theme-… }`, so
+// declarations here would simply be overwritten; a later mixin definition wins
+// instead, which is what the theme's own "theme mixins also placed there"
+// comment is pointing at.
+//
+// The hint accents are left as hugo-book had them. They are semantic — note is
+// blue, tip is green, warning is orange, caution is red — and recoloring them to
+// match a brand would cost the reader the meaning.
+@mixin theme-dark {
+  --body-background: #0b1220;
+  --body-background-tint: none;
+
+  --body-font-color: #e2e8f0;
+
+  --color-link: #5eead4;
+  --color-visited-link: #99f6e4;
+
+  --icon-filter: brightness(0) invert(1);
+
+  --gray-100: #0f1a2e; // code and menu-hover fills
+  --gray-200: #1e293b; // rules and borders
+  --gray-500: #64748b; // muted type
+
+  @include accent("default", #64748b);
+  @include accent("note", #4486dd);
+  @include accent("tip", #3bad3b);
+  @include accent("important", #8144dd);
+  @include accent("warning", #f59e42);
+  @include accent("caution", #d84747);
+
+  // Fallback for {{< hint >}} shortcodes
+  @include accent("info", #4486dd);
+  @include accent("success", #3bad3b);
+  @include accent("danger", #d84747);
+}
+
 /* Custom overrides to ensure full sidebar display */
 
 .book-menu nav {

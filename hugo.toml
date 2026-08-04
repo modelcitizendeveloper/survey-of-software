@@ -12,6 +12,14 @@ copyright = '© 2026 Ivan Schneider · <a href="https://modelcitizendeveloper.co
   BookMenu = true
   BookToC = 3
 
+  # Follow the reader's OS setting. This is a long-form reference library and
+  # people read it the way they read everything else, so it is the one Model
+  # Citizen Developer surface that does not pick for them — the Flask surfaces
+  # (hub, newsletter, commons, talks) are dark unconditionally. 'auto' emits
+  # theme-light plus theme-dark inside prefers-color-scheme: dark; the dark side
+  # is overridden to the MCD palette in assets/_custom.scss.
+  BookTheme = 'auto'
+
   # Specify section of content to render as menu
   BookSection = 'survey'
 
