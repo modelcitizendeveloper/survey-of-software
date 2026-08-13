@@ -1,0 +1,16 @@
+{{/*
+  Persistent newsletter capture in the sticky right-hand ToC sidebar.
+
+  A survey page runs 3,400-6,200 lines, so a CTA that only appears after the
+  recommendation is a very long scroll away and most readers never reach it.
+  The theme's .book-toc-content is @include fixed, so anything injected here
+  stays on screen for the entire scroll without interrupting the prose.
+
+  Desktop only by construction — the theme hides .book-toc below its mobile
+  breakpoint, where the after-the-recommendation copy in survey/single.html is
+  the fallback. Restricted to survey pages so it does not follow readers onto
+  /about, /vision and the other trunk pages.
+*/}}
+{{- if eq .Section "survey" -}}
+  {{ partial "newsletter-cta.html" (dict "page" . "variant" "compact") }}
+{{- end -}}

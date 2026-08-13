@@ -14,7 +14,7 @@ copyright = '© 2026 Ivan Schneider · <a href="https://modelcitizendeveloper.co
   #
   # This is the MCD newsletter on the paid multi-newsletter tier — NOT the
   # Convention City Dispatch handle. Those lists stay separate on purpose.
-  # buttondownUsername = ""
+  buttondownUsername = "model-citizen-developer"
 
   # Show page navigation and menu
   BookShowPageHeader = true

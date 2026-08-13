@@ -158,8 +158,42 @@ aside.book-menu {
 }
 
 @media (max-width: 40rem) {
+  .newsletter-cta--full .newsletter-cta__input,
+  .newsletter-cta--full .newsletter-cta__button {
+    flex: 1 1 100%;
+  }
+}
+
+// Compact variant — injected into the sticky ToC sidebar via
+// _partials/docs/inject/toc-after.html so it survives the whole scroll of a
+// very long survey. The sidebar is narrow and already carries the table of
+// contents, so this stacks rather than sitting inline, and stays visually
+// subordinate to the ToC above it.
+.newsletter-cta--compact {
+  max-width: none;
+  margin: 1.5rem 0 0;
+  padding-top: 1rem;
+
+  .newsletter-cta__pitch {
+    font-size: var(--font-size-smallest, 0.8rem);
+    line-height: 1.5;
+    margin-bottom: 0.6rem;
+  }
+
+  .newsletter-cta__form {
+    display: block;
+  }
+
   .newsletter-cta__input,
   .newsletter-cta__button {
-    flex: 1 1 100%;
+    display: block;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: var(--font-size-smallest, 0.8rem);
+    padding: 0.45rem 0.6rem;
+  }
+
+  .newsletter-cta__input {
+    margin-bottom: 0.4rem;
   }
 }

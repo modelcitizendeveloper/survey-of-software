@@ -1,10 +1,23 @@
 {{/*
-  Newsletter capture — Buttondown (bead re-3o1)
+  Newsletter capture — Buttondown "Field Notes" (bead re-3o1)
 
   Replaces the Kit/Resend-era partial, which was dead twice over: it was never
   included from any layout, and it POSTed to
   newsletter.modelcitizendeveloper.com/api/newsletter/subscribe, which now
   returns 410 Gone.
+
+  Two variants, because a survey page is 3,400-6,200 lines and a single CTA at
+  the bottom is a very long scroll away:
+
+    full     — after the recommendation in layouts/survey/single.html, where
+               intent is highest. Also the only variant mobile ever sees.
+    compact  — injected into the sticky right-hand ToC sidebar via
+               layouts/_partials/docs/inject/toc-after.html, so it stays on
+               screen for the whole scroll. Desktop only: the theme sets
+               .book-toc { display: none } below its mobile breakpoint.
+
+  Call as `partial "newsletter-cta.html" .` for the full variant, or
+  `partial "newsletter-cta.html" (dict "page" . "variant" "compact")`.
 
   Design notes:
   - Native form POST. The old partial was JS-only, so a fetch failure was a
@@ -23,19 +36,35 @@
     have been unreadable on the dark palette.
 */}}
 
+{{- $page := . -}}
+{{- $variant := "full" -}}
+{{- if reflect.IsMap . -}}
+  {{- $page = .page -}}
+  {{- $variant = default "full" .variant -}}
+{{- end -}}
+
 {{- $user := site.Params.buttondownUsername -}}
-{{- $enabled := not (eq .Params.newsletter_cta false) -}}
+{{- $enabled := not (eq $page.Params.newsletter_cta false) -}}
 
 {{- if and $user $enabled -}}
 {{- $action := printf "https://buttondown.com/api/emails/embed-subscribe/%s" $user -}}
 {{- $home := printf "https://buttondown.com/%s" $user -}}
+{{- $id := printf "bd-email-%s" $variant -}}
+{{- $compact := eq $variant "compact" -}}
 
-<aside class="newsletter-cta">
+<aside class="newsletter-cta newsletter-cta--{{ $variant }}">
+  {{- if $compact }}
   <p class="newsletter-cta__pitch">
-    <strong>New surveys and changed verdicts, monthly.</strong>
+    <strong>Field Notes</strong><br>
+    New surveys and changed verdicts, monthly.
+  </p>
+  {{- else }}
+  <p class="newsletter-cta__pitch">
+    <strong>Field Notes — new surveys and changed verdicts, monthly.</strong>
     Software moves; these surveys get re-checked and the recommendations do
     change. One email a month with what is new and what flipped.
   </p>
+  {{- end }}
 
   <form
     class="newsletter-cta__form"
@@ -44,9 +73,9 @@
     target="popupwindow"
     onsubmit="window.open('{{ $home }}', 'popupwindow')"
   >
-    <label class="newsletter-cta__label" for="bd-email">Email address</label>
+    <label class="newsletter-cta__label" for="{{ $id }}">Email address</label>
     <input
-      id="bd-email"
+      id="{{ $id }}"
       class="newsletter-cta__input"
       type="email"
       name="email"
@@ -55,21 +84,24 @@
       required
     >
 
-    {{/* Entry door, not a content lane — which surface they came in through. */}}
+    {{/* Entry door, not a content lane — which surface they came in through,
+         and which placement earned the signup. */}}
     <input type="hidden" name="tag" value="research-site">
+    <input type="hidden" name="tag" value="placement-{{ $variant }}">
 
     {{/* Which survey converted them. Declare `source` as a subscriber
          metadata key in Buttondown settings to see this on the subscriber. */}}
-    <input type="hidden" name="metadata__source" value="{{ .Title }}">
+    <input type="hidden" name="metadata__source" value="{{ $page.Title }}">
 
     <input type="hidden" name="embed" value="1">
 
     <button class="newsletter-cta__button" type="submit">Subscribe</button>
   </form>
 
+  {{- if not $compact }}
   <p class="newsletter-cta__fineprint">
     No tracking pixels. Unsubscribe in one click.
   </p>
+  {{- end }}
 </aside>
 {{- end -}}
-</content>
