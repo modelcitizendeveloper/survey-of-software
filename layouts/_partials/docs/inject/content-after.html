@@ -1,0 +1,24 @@
+{{/*
+  Newsletter capture on trunk pages (bead re-8z3.4 — growth).
+
+  Survey leaves get their capture from layouts/survey/single.html and the sticky
+  sidebar in docs/inject/toc-before. This hook covers the pages a campaign links
+  to directly, which were leaking: /skill/ is the most forwardable thing on the
+  site and the home page is the default landing for "look at Survey of
+  Software", and neither had a form.
+
+  OPT-IN, not opt-out. This hook fires on every page in the site, so an
+  unconditional partial here would put a subscribe box on /license/ and on every
+  other trunk page whether it made sense or not. Pages ask for it by setting
+  `newsletter_cta: true` in front matter.
+
+  The `ne .Section "survey"` guard is what stops survey leaves rendering the
+  full variant twice — they already get it from single.html, and the opt-out
+  (`newsletter_cta: false`) still works there.
+
+  metadata.source records the page path, so /skill/ and / signups are
+  distinguishable from survey-page signups without a separate tag.
+*/}}
+{{- if and (ne .Section "survey") (eq .Params.newsletter_cta true) -}}
+  {{ partial "newsletter-cta.html" . }}
+{{- end -}}

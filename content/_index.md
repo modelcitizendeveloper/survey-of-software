@@ -1,6 +1,7 @@
 ---
 title: "Survey of Software"
 weight: 1
+newsletter_cta: true
 bookFlatSection: false
 bookCollapseSection: false
 aliases: ["/survey/"]

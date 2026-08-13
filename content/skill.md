@@ -1,6 +1,7 @@
 ---
 title: "Claude Skill"
 weight: 9999
+newsletter_cta: true
 ---
 
 # Survey of Software - Claude Skill
