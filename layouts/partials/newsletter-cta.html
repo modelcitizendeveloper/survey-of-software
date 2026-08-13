@@ -84,14 +84,27 @@
       required
     >
 
-    {{/* Entry door, not a content lane — which surface they came in through,
-         and which placement earned the signup. */}}
+    {{/* Attribution follows the convention in the qrcards rig's
+         docs/buttondown-configuration-guide.md: tags = [form_key] and
+         metadata.source = the signup page path. `method` is the form key for
+         the MCD newsletter (published as Field Notes); this site is an MCD
+         surface, so its signups belong on Method, not Speaker.
+
+         The Flask surfaces reach Buttondown through a same-origin proxy at
+         POST /api/newsletter/signup, which picks the newsletter by API key.
+         This is a static site on GitHub Pages with no same-origin backend, so
+         it posts the embed endpoint directly and names the newsletter in the
+         URL instead. Same destination, same attribution shape.
+
+         research-site is an extra segment because Buttondown automations
+         filter on tags and not on metadata, so a research-reader-specific
+         welcome needs a tag to key off. placement-* answers which of the two
+         CTA positions actually earns subscribers. */}}
+    <input type="hidden" name="tag" value="method">
     <input type="hidden" name="tag" value="research-site">
     <input type="hidden" name="tag" value="placement-{{ $variant }}">
 
-    {{/* Which survey converted them. Declare `source` as a subscriber
-         metadata key in Buttondown settings to see this on the subscriber. */}}
-    <input type="hidden" name="metadata__source" value="{{ $page.Title }}">
+    <input type="hidden" name="metadata__source" value="{{ $page.RelPermalink }}">
 
     <input type="hidden" name="embed" value="1">
 
