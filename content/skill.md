@@ -7,7 +7,7 @@ weight: 9999
 
 Let Claude consult this research library directly in your conversations. The skill enables Claude to fetch surveys, synthesize recommendations, and run live research when topics aren't covered yet.
 
-**Newsletter:** New library research published as it's ready. Monthly digest of what's new — [subscribe to stay current →](https://modelcitizendeveloper.com/)
+**Field Notes:** what gets built out of this research — explainers, talks, and the small working apps in [the Workshop](https://workshop.modelcitizendeveloper.com). [Subscribe →](https://buttondown.com/model-citizen-developer)
 
 ---
 
