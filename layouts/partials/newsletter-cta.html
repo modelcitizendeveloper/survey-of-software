@@ -49,20 +49,25 @@
 {{- if and $user $enabled -}}
 {{- $action := printf "https://buttondown.com/api/emails/embed-subscribe/%s" $user -}}
 {{- $home := printf "https://buttondown.com/%s" $user -}}
-{{- $id := printf "bd-email-%s" $variant -}}
 {{- $compact := eq $variant "compact" -}}
 
 <aside class="newsletter-cta newsletter-cta--{{ $variant }}">
+  {{/* No cadence claim anywhere in this copy, deliberately — an earlier draft
+       promised "monthly" here and in the welcome email. Both dropped so that
+       sending more often is never a broken promise. Do not reintroduce a
+       frequency on one surface without changing the other; the welcome body
+       lives in the qrcards rig at
+       content/model-citizen-developer/newsletter/welcome-research-site.md */}}
   {{- if $compact }}
   <p class="newsletter-cta__pitch">
     <strong>Field Notes</strong><br>
-    New surveys and changed verdicts, monthly.
+    New surveys, and verdicts that changed.
   </p>
   {{- else }}
   <p class="newsletter-cta__pitch">
-    <strong>Field Notes — new surveys and changed verdicts, monthly.</strong>
+    <strong>Field Notes — new surveys, and verdicts that changed.</strong>
     Software moves; these surveys get re-checked and the recommendations do
-    change. One email a month with what is new and what flipped.
+    change. Get what's new and what flipped.
   </p>
   {{- end }}
 
@@ -73,13 +78,19 @@
     target="popupwindow"
     onsubmit="window.open('{{ $home }}', 'popupwindow')"
   >
-    <label class="newsletter-cta__label" for="{{ $id }}">Email address</label>
+    {{/* aria-label rather than a <label for=...>: the theme calls
+         docs/toc-show TWICE in baseof.html (once inside <aside class="hidden">
+         at :56, once in the real sidebar at :96), so the compact variant is
+         injected twice per page. A visually-hidden label with a fixed `for`
+         gave duplicate ids and pointed the visible label at the HIDDEN input.
+         An aria-label carries the same accessible name with nothing to
+         collide, and the placeholder carries the visual cue. */}}
     <input
-      id="{{ $id }}"
       class="newsletter-cta__input"
       type="email"
       name="email"
       placeholder="you@example.com"
+      aria-label="Email address"
       autocomplete="email"
       required
     >

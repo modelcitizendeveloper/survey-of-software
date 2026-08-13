@@ -93,18 +93,6 @@ aside.book-menu {
     align-items: center;
   }
 
-  // Present for screen readers; the placeholder carries the visual cue.
-  &__label {
-    position: absolute;
-    width: 1px;
-    height: 1px;
-    padding: 0;
-    margin: -1px;
-    overflow: hidden;
-    clip: rect(0, 0, 0, 0);
-    white-space: nowrap;
-    border: 0;
-  }
 
   &__input {
     flex: 1 1 16rem;
