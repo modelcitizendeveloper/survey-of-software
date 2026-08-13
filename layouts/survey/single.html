@@ -2,6 +2,12 @@
   <article class="markdown book-article">
     {{- .Content -}}
 
+    {{/* Capture sits directly after the recommendation, while intent is
+         highest, and before the related-survey links give the reader
+         somewhere else to go. Renders nothing until hugo.toml sets
+         params.buttondownUsername. */}}
+    {{ partial "newsletter-cta.html" . }}
+
     {{ if .Params.related }}
       {{ partial "survey/related.html" . }}
     {{ end }}

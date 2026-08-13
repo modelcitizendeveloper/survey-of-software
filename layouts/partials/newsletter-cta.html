@@ -1,181 +1,75 @@
 {{/*
-  Newsletter Signup Partial - Research Site
+  Newsletter capture — Buttondown (bead re-3o1)
 
-  Adapted from qrcards/docs/integrations/newsletter-signup-hugo-partial.html
-  - Styled for research site (minimal, blue theme)
-  - Copy: "stay current" utility message
-  - Posts to newsletter.modelcitizendeveloper.com
+  Replaces the Kit/Resend-era partial, which was dead twice over: it was never
+  included from any layout, and it POSTed to
+  newsletter.modelcitizendeveloper.com/api/newsletter/subscribe, which now
+  returns 410 Gone.
+
+  Design notes:
+  - Native form POST. The old partial was JS-only, so a fetch failure was a
+    silent no-capture. This works with JavaScript disabled.
+  - target="popupwindow" keeps the reader on the survey they were reading.
+    With JS the onsubmit opens the named window; without it, the named target
+    opens a new tab and the survey page is still there. Either way the reader
+    does not lose their place.
+  - Renders nothing unless site.Params.buttondownUsername is set, so a
+    half-configured site shows no form rather than a broken one.
+  - Opt out on a single page with `newsletter_cta: false` in front matter.
+  - Styles live in assets/_custom.scss (compiled once) rather than an inline
+    <style> per page, and are written against the theme's CSS custom
+    properties so the form themes correctly in both light and dark. hugo.toml
+    sets BookTheme = 'auto'; the old partial hardcoded #333 on white and would
+    have been unreadable on the dark palette.
 */}}
 
-<style>
-.newsletter-signup {
-    max-width: 600px;
-    margin: 3rem auto 2rem;
-    padding: 2rem 0;
-    border-top: 2px solid #e0e0e0;
-    text-align: center;
-}
+{{- $user := site.Params.buttondownUsername -}}
+{{- $enabled := not (eq .Params.newsletter_cta false) -}}
 
-.newsletter-signup p {
-    color: #333;
-    margin-bottom: 1.5rem;
-    font-size: 1rem;
-    line-height: 1.6;
-}
+{{- if and $user $enabled -}}
+{{- $action := printf "https://buttondown.com/api/emails/embed-subscribe/%s" $user -}}
+{{- $home := printf "https://buttondown.com/%s" $user -}}
 
-.newsletter-form {
-    display: flex;
-    gap: 0.75rem;
-    justify-content: center;
-    flex-wrap: wrap;
-}
+<aside class="newsletter-cta">
+  <p class="newsletter-cta__pitch">
+    <strong>New surveys and changed verdicts, monthly.</strong>
+    Software moves; these surveys get re-checked and the recommendations do
+    change. One email a month with what is new and what flipped.
+  </p>
 
-.newsletter-form input[type="email"] {
-    flex: 1;
-    min-width: 250px;
-    max-width: 350px;
-    padding: 0.75rem 1.25rem;
-    border: 2px solid #0066cc;
-    border-radius: 4px;
-    font-size: 1rem;
-    font-family: inherit;
-}
+  <form
+    class="newsletter-cta__form"
+    action="{{ $action }}"
+    method="post"
+    target="popupwindow"
+    onsubmit="window.open('{{ $home }}', 'popupwindow')"
+  >
+    <label class="newsletter-cta__label" for="bd-email">Email address</label>
+    <input
+      id="bd-email"
+      class="newsletter-cta__input"
+      type="email"
+      name="email"
+      placeholder="you@example.com"
+      autocomplete="email"
+      required
+    >
 
-.newsletter-form input[type="email"]:focus {
-    outline: none;
-    border-color: #0052a3;
-    box-shadow: 0 0 0 3px rgba(0, 102, 204, 0.1);
-}
+    {{/* Entry door, not a content lane — which surface they came in through. */}}
+    <input type="hidden" name="tag" value="research-site">
 
-.newsletter-form button {
-    background: #0066cc;
-    color: white;
-    font-weight: 500;
-    font-size: 1rem;
-    padding: 0.75rem 2rem;
-    border-radius: 4px;
-    border: none;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    white-space: nowrap;
-}
+    {{/* Which survey converted them. Declare `source` as a subscriber
+         metadata key in Buttondown settings to see this on the subscriber. */}}
+    <input type="hidden" name="metadata__source" value="{{ .Title }}">
 
-.newsletter-form button:hover {
-    background: #0052a3;
-}
+    <input type="hidden" name="embed" value="1">
 
-.newsletter-form button:disabled {
-    opacity: 0.6;
-    cursor: not-allowed;
-}
+    <button class="newsletter-cta__button" type="submit">Subscribe</button>
+  </form>
 
-.newsletter-message {
-    margin-top: 1rem;
-    font-size: 0.95rem;
-    padding: 0.75rem;
-    border-radius: 4px;
-}
-
-.newsletter-message.success {
-    color: #059669;
-    background: #d1fae5;
-    border: 1px solid #059669;
-}
-
-.newsletter-message.error {
-    color: #dc2626;
-    background: #fee2e2;
-    border: 1px solid #dc2626;
-}
-
-.newsletter-message:empty {
-    display: none;
-}
-
-@media (max-width: 640px) {
-    .newsletter-form {
-        flex-direction: column;
-        align-items: stretch;
-    }
-
-    .newsletter-form input[type="email"],
-    .newsletter-form button {
-        width: 100%;
-        max-width: none;
-    }
-}
-</style>
-
-<aside class="newsletter-signup">
-    <p>
-        New library research published as it's ready. Monthly digest of what's new — subscribe to stay current.
-    </p>
-
-    <form class="newsletter-form" id="newsletter-form-{{ .File.UniqueID }}">
-        <input
-            type="email"
-            name="email"
-            placeholder="your@email.com"
-            required
-            aria-label="Email address"
-        >
-        <button type="submit">Subscribe</button>
-    </form>
-
-    <div id="newsletter-message-{{ .File.UniqueID }}" class="newsletter-message" role="alert"></div>
+  <p class="newsletter-cta__fineprint">
+    No tracking pixels. Unsubscribe in one click.
+  </p>
 </aside>
-
-<script>
-(function() {
-    const formId = 'newsletter-form-{{ .File.UniqueID }}';
-    const messageId = 'newsletter-message-{{ .File.UniqueID }}';
-    const form = document.getElementById(formId);
-    const messageEl = document.getElementById(messageId);
-
-    if (!form || form.dataset.initialized) return;
-    form.dataset.initialized = 'true';
-
-    form.addEventListener('submit', async (e) => {
-        e.preventDefault();
-
-        const email = form.querySelector('input[name="email"]').value;
-        const submitBtn = form.querySelector('button[type="submit"]');
-        const originalBtnText = submitBtn.textContent;
-
-        // Clear previous messages
-        messageEl.textContent = '';
-        messageEl.className = 'newsletter-message';
-
-        // Disable button during submission
-        submitBtn.disabled = true;
-        submitBtn.textContent = 'Subscribing...';
-
-        try {
-            const response = await fetch('https://newsletter.modelcitizendeveloper.com/api/newsletter/subscribe', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ email })
-            });
-
-            const data = await response.json();
-
-            if (response.ok) {
-                messageEl.className = 'newsletter-message success';
-                messageEl.textContent = data.message || 'Subscribed! Check your email to confirm.';
-                form.reset();
-            } else {
-                messageEl.className = 'newsletter-message error';
-                messageEl.textContent = data.error || 'Something went wrong. Try again?';
-            }
-        } catch (error) {
-            messageEl.className = 'newsletter-message error';
-            messageEl.textContent = 'Network error. Please try again later.';
-        } finally {
-            submitBtn.disabled = false;
-            submitBtn.textContent = originalBtnText;
-        }
-    });
-})();
-</script>
+{{- end -}}
+</content>

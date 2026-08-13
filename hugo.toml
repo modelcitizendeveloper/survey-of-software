@@ -6,6 +6,16 @@ copyright = '© 2026 Ivan Schneider · <a href="https://modelcitizendeveloper.co
 
 # Book theme specific config
 [params]
+  # Buttondown newsletter handle — the account name in the subscribe URL
+  # (https://buttondown.com/<handle>). Drives the capture form in
+  # layouts/partials/newsletter-cta.html, which renders NOTHING while this is
+  # unset, so the site is always safe to deploy. Set it and every survey page
+  # starts capturing on the next build.
+  #
+  # This is the MCD newsletter on the paid multi-newsletter tier — NOT the
+  # Convention City Dispatch handle. Those lists stay separate on purpose.
+  # buttondownUsername = ""
+
   # Show page navigation and menu
   BookShowPageHeader = true
   BookMenuHeader = true
