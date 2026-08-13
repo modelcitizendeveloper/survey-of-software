@@ -19,7 +19,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ---
 
-**Newsletter:** New library research published as it's ready. Monthly digest of what's new — [subscribe to stay current →](https://modelcitizendeveloper.com/)
+**Field Notes:** the surveys stay neutral; the [Reports](https://modelcitizendeveloper.com/reports) built from them argue a case, and a new one is at the center of each edition. Subscribe at the foot of this page.
 
 ---
 

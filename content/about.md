@@ -1,6 +1,7 @@
 ---
 title: "About"
 weight: 10
+newsletter_cta: true
 ---
 
 # About the Survey of Software
@@ -9,7 +10,7 @@ weight: 10
 
 Pre-done library research across dozens of categories. Use it to decide faster, don't redo months of research.
 
-**[Newsletter →](https://modelcitizendeveloper.com/)** Subscribe and get the Agent Prompt Cheat Sheet — 5 ready-made prompts for Claude, Cursor, and Copilot.
+**[Claude Skill →](/skill/)** Hand this whole library to Claude. Install it once and Claude consults the surveys directly in your conversations — one-click download, no signup.
 
 ---
 
