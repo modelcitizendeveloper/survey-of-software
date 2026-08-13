@@ -11,8 +11,9 @@
 
     full     — after the recommendation in layouts/survey/single.html, where
                intent is highest. Also the only variant mobile ever sees.
-    compact  — injected into the sticky right-hand ToC sidebar via
-               layouts/_partials/docs/inject/toc-after.html, so it stays on
+    compact  — injected at the TOP of the sticky right-hand column, above the
+               table of contents, via
+               layouts/_partials/docs/inject/toc-before.html, so it stays on
                screen for the whole scroll. Desktop only: the theme sets
                .book-toc { display: none } below its mobile breakpoint.
 
@@ -52,22 +53,30 @@
 {{- $compact := eq $variant "compact" -}}
 
 <aside class="newsletter-cta newsletter-cta--{{ $variant }}">
-  {{/* No cadence claim anywhere in this copy, deliberately — an earlier draft
-       promised "monthly" here and in the welcome email. Both dropped so that
-       sending more often is never a broken promise. Do not reintroduce a
-       frequency on one surface without changing the other; the welcome body
-       lives in the qrcards rig at
+  {{/* Copy matches the newsletter's actual positioning, which is NOT a
+       changelog of this site. A "what's new / what flipped" digest is only
+       worth anything to someone already invested in the specific surveys that
+       changed, and we deliberately do not track who reads what — so it was a
+       promise nothing could deliver. Field Notes is where the research gets
+       applied: a new Report sits at the center of each edition, and the
+       surveys are its raw material.
+
+       No cadence claim either, deliberately — an earlier draft promised
+       "monthly" here and in the welcome email, which caps the schedule at the
+       slowest rate ever intended.
+
+       Keep both in step with the welcome email, in the qrcards rig at
        content/model-citizen-developer/newsletter/welcome-research-site.md */}}
   {{- if $compact }}
   <p class="newsletter-cta__pitch">
     <strong>Field Notes</strong><br>
-    New surveys, and verdicts that changed.
+    Surveys stay neutral. The Reports built from them argue a case.
   </p>
   {{- else }}
   <p class="newsletter-cta__pitch">
-    <strong>Field Notes — new surveys, and verdicts that changed.</strong>
-    Software moves; these surveys get re-checked and the recommendations do
-    change. Get what's new and what flipped.
+    <strong>Field Notes — what happens after the comparison.</strong>
+    This survey stays neutral by design. The Reports built from these surveys
+    argue a case, and a new one is at the center of each edition.
   </p>
   {{- end }}
 

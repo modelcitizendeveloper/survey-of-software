@@ -159,8 +159,16 @@ aside.book-menu {
 // subordinate to the ToC above it.
 .newsletter-cta--compact {
   max-width: none;
-  margin: 1.5rem 0 0;
-  padding-top: 1rem;
+
+  // Sits ABOVE the table of contents (injected via docs/inject/toc-before), so
+  // the rule belongs underneath it, separating it from the ToC. The shared
+  // border-top from .newsletter-cta would otherwise draw a line across the very
+  // top of the column with nothing above it.
+  margin: 0 0 1.25rem;
+  padding-top: 0;
+  padding-bottom: 1rem;
+  border-top: 0;
+  border-bottom: 1px solid var(--gray-200);
 
   .newsletter-cta__pitch {
     font-size: var(--font-size-smallest, 0.8rem);

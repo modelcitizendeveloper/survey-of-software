@@ -1,10 +1,17 @@
 {{/*
-  Persistent newsletter capture in the sticky right-hand ToC sidebar.
+  Persistent newsletter capture at the TOP of the sticky right-hand column,
+  above the table of contents.
 
   A survey page runs 3,400-6,200 lines, so a CTA that only appears after the
   recommendation is a very long scroll away and most readers never reach it.
   The theme's .book-toc-content is @include fixed, so anything injected here
   stays on screen for the entire scroll without interrupting the prose.
+
+  toc-before rather than toc-after: the theme renders
+  inject/toc-before -> .TableOfContents -> inject/toc-after (see
+  themes/hugo-book/layouts/_partials/docs/toc.html), so toc-after put this
+  below a table of contents that is itself long on these pages, which buried
+  the thing that was supposed to be always-visible.
 
   Desktop only by construction — the theme hides .book-toc below its mobile
   breakpoint, where the after-the-recommendation copy in survey/single.html is
