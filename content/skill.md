@@ -25,7 +25,7 @@ When you ask Claude about library or framework selection:
 ### Option 1: Upload to Claude.ai
 
 1. **Download the skill:**
-   - **[⬇️ Download survey-of-software.zip](https://github.com/modelcitizendeveloper/survey-of-software/releases/download/v1.0.0/survey-of-software.zip)** (8.7 KB)
+   - **[⬇️ Download survey-of-software.zip](https://github.com/modelcitizendeveloper/survey-of-software/releases/download/v1.1.0/survey-of-software.zip)** (8.7 KB)
 
 2. **Upload to Claude:**
    - Go to [claude.ai](https://claude.ai) → **Settings → Skills**

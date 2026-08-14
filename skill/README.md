@@ -7,7 +7,7 @@ Systematic software library research using the Four-Pass Survey (4PS) methodolog
 This skill connects Claude to the Survey of Software research library at https://research.modelcitizendeveloper.com/
 
 **When you ask about library/framework selection:**
-- Fetches relevant completed surveys (135+ topics covered)
+- Fetches relevant completed surveys (180+ topics covered)
 - Synthesizes recommendations with trade-offs
 - When topics aren't covered yet, runs rapid discovery research live
 - Tailors recommendations to your specific requirements
@@ -35,7 +35,7 @@ Try asking Claude:
 
 The skill uses two strategies:
 
-### For Covered Topics (135+ surveys)
+### For Covered Topics (180+ surveys)
 1. Maps your question to the taxonomy
 2. Fetches the relevant survey from the research site
 3. Synthesizes a recommendation with decision frameworks and trade-offs

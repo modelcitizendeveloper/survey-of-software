@@ -17,10 +17,9 @@ description: >
 ## What This Is
 
 This skill connects Claude to the **Survey of Software** — a systematic, open
-research library covering software libraries, standards, and applications. It
-does two things:
+research library of software libraries. It does two things:
 
-1. **Consults existing research** — 119+ completed surveys with ranked
+1. **Consults existing research** — 180+ completed surveys with ranked
    recommendations, benchmarks, decision frameworks, and migration guides
 2. **Conducts new research** — when a topic isn't covered yet, runs the
    Four-Pass Survey methodology collaboratively with the user
@@ -28,11 +27,12 @@ does two things:
 The research lives at https://research.modelcitizendeveloper.com/ and the source
 is on GitHub at https://github.com/modelcitizendeveloper/survey-of-software.
 
-This skill covers **libraries** (1.xxx series). For related research:
-- **Standards** (2.xxx): https://research.modelcitizendeveloper.com/standards/
-- **Applications** (3.xxx): https://research.modelcitizendeveloper.com/applications/
+This skill covers the **libraries** series (1.xxx), which is what is published.
 
-When the user's question involves build-vs-buy decisions, consult all three series.
+Research on standards (2.xxx) and commercial applications (3.xxx) exists but is
+**not published** — do not construct or fetch `/standards/` or `/applications/`
+URLs, they do not resolve. For a build-vs-buy question, answer from the library
+research and say plainly that the commercial side is not covered here.
 
 ---
 
@@ -161,13 +161,14 @@ cache. If you fetch the live index and find completed surveys not listed
 in the taxonomy, note this to the user — the skill's quick-reference may
 be slightly behind the live research.
 
-### Cross-Series Research
+### Scope
 
-When a question spans libraries, standards, and applications, fetch from
-all three series. URL patterns:
+One URL pattern resolves:
 - Libraries: `https://research.modelcitizendeveloper.com/survey/{id}/`
-- Standards: `https://research.modelcitizendeveloper.com/standards/{id}/`
-- Applications: `https://research.modelcitizendeveloper.com/applications/{id}/`
+
+There is no published `/standards/` or `/applications/` path. If a question
+reaches past the library research, say so rather than guessing a URL — a 404
+tells the user nothing and a fabricated summary is worse.
 
 ---
 
@@ -403,7 +404,7 @@ When the user's question doesn't obviously map to a survey ID:
 - **"fine-tune", "LoRA", "Unsloth"** → 1.208
 - **"Ollama", "vLLM", "local LLM"** → 1.209
 - **"government data", "civic tech", "budget"** → 1.300-1.305
-- **"build vs buy", "self-hosted alternative"** → check all three series (1.xxx, 2.xxx, 3.xxx)
+- **"build vs buy", "self-hosted alternative"** → answer from 1.xxx and note that the commercial-product side is not published
 
 ---
 
