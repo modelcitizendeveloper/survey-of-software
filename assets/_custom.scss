@@ -193,3 +193,58 @@ aside.book-menu {
     margin-bottom: 0.4rem;
   }
 }
+
+
+// ── Survey endcap (scripts/endcap.py) ───────────────────────────────────────
+// Stat tiles, an SVG bar chart and a comparison table at the top of a survey,
+// rendered from metadata.yaml. Everything here uses the theme's own custom
+// properties so it follows BookTheme's light/dark rather than carrying a second
+// palette — the same reason the newsletter CTA does.
+//
+// Marks are thin, the axis is implied rather than drawn, and bar values sit
+// OUTSIDE the bar ends so a short bar can never clip its own label.
+.sos-tiles {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 12px;
+  margin: 18px 0 24px;
+}
+.sos-tile {
+  border: 1px solid var(--gray-200);
+  border-radius: 8px;
+  padding: 14px 16px;
+}
+.sos-tile-h {
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gray-500);
+}
+.sos-tile-n {
+  // Proportional figures, not tabular: equal-width digits read loose at display size.
+  font-size: 2.1rem;
+  font-weight: 700;
+  line-height: 1.15;
+  margin: 4px 0 2px;
+  color: var(--color-link);
+}
+.sos-tile-s {
+  font-size: 0.82rem;
+  color: var(--gray-500);
+  line-height: 1.45;
+}
+.sos-tile-s strong { color: var(--body-font-color); font-weight: 600; }
+
+.sos-fig { margin: 20px 0 26px; }
+.sos-fig figcaption {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--gray-500);
+  margin-bottom: 10px;
+}
+.sos-fig figcaption span { text-transform: none; letter-spacing: 0; opacity: 0.75; }
+.sos-fig svg { display: block; max-width: 100%; height: auto; overflow: visible; }
+.sos-bar { fill: var(--color-link); }
+.sos-bl  { fill: var(--body-font-color); font-size: 13px; }
+.sos-bv  { fill: var(--gray-500);        font-size: 13px; }
