@@ -223,6 +223,9 @@
   <code>O(n log n)</code>, so the gap widens as the data grows. That is why this
   passes code review on a small test and fails in production.</p>
 
+  <p>This one runs in JavaScript, so it starts instantly and downloads nothing. It
+  is a fact about algorithms rather than about a language, so it holds anywhere.</p>
+
   <div class="panel">
     <button id="run-js">Run the comparison</button>
     <button id="reset-js" class="secondary" hidden>Reset</button>
@@ -234,17 +237,22 @@
     <p class="note" id="js-note" hidden></p>
   </div>
 
-  <p class="note">This one is pure algorithm, so it holds in any language — the
-  JavaScript here is incidental. The survey measures the same shape in Python with
+  <p class="note">The survey measures the same shape in Python with
   <code>SortedContainers</code>, where the published figure is about
   <strong>1000×</strong> at 1,000 inserts.</p>
 
   <!-- ─── Layer 2: Pyodide, lazy ───────────────────────────────────────────── -->
   <h2>2. Running the real libraries</h2>
 
-  <p>The survey covers Python libraries, so the demo above is only an analogy. This
-  runs real CPython in your browser: actual <code>sorted()</code>,
-  <code>numpy</code> and <code>sortedcontainers</code>, compiled to WebAssembly.</p>
+  <p>The survey is about Python libraries, and no Python has run yet. This is real
+  CPython in your browser — actual <code>sorted()</code>, <code>numpy</code> and
+  <code>sortedcontainers</code>, compiled to WebAssembly.</p>
+
+  <p>Two comparisons run. The first sorts the same numbers two ways,
+  <code>sorted()</code> against <code>numpy.sort</code>, which asks whether the
+  library matters even when the algorithm is settled. The second repeats the
+  leaderboard test above with <code>SortedList</code> doing the work, so you can
+  watch that result hold in the language it was measured in.</p>
 
   <p>It downloads 10–20 MB the first time, so it waits until you ask for it.</p>
 
@@ -252,25 +260,24 @@
     <button id="run-py">Run the real libraries</button>
     <div class="status" id="py-status">Nothing has been downloaded yet.</div>
     <table id="py-table" hidden>
-      <thead><tr><th>Comparison</th><th>Baseline</th><th>Alternative</th><th>Ratio here</th></tr></thead>
+      <thead><tr><th>What ran</th><th>First</th><th>Second</th><th>Ratio here</th></tr></thead>
       <tbody id="py-body"></tbody>
     </table>
     <p class="note" id="py-note" hidden></p>
   </div>
 
   <!-- ─── Layer 3: cited, not run ──────────────────────────────────────────── -->
-  <h3>Too big for a browser</h3>
-
   <div class="cited">
-    <strong>100 million rows.</strong> The survey reports <code>sorted()</code> at
-    roughly 30 seconds against about 2 seconds for polars — a ~15× gap. polars is
-    available in this browser runtime, but 100M rows is not: it will not fit in a
-    tab's memory budget.
+    <strong>Why the tests stop here.</strong> Both comparisons above are sized to
+    finish in a tab. The survey's largest benchmark is not: at 100 million rows it
+    reports <code>sorted()</code> at roughly 30 seconds against about 2 seconds for
+    polars, a ~15× gap. polars runs in this browser runtime; 100 million rows do
+    not fit in one tab's memory budget.
     <br><br>
-    So this number is <strong>cited from Survey of Software 1.001, not measured
-    here</strong>. Reproducing it needs native Python and real RAM — which is the
-    honest boundary of a floor model, and the reason the research exists as well as
-    the demo.
+    That figure is <strong>cited from Survey of Software 1.001, not measured
+    here</strong> — reproducing it needs native Python and real RAM. Which is the
+    reason the research exists alongside the demo: a browser can show you the shape
+    of a result, and then it runs out of room.
   </div>
 
   <!-- ─── The part a benchmark hides ───────────────────────────────────────── -->
