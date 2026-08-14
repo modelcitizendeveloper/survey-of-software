@@ -55,6 +55,30 @@
   footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);
          font-size:.88rem;color:var(--faint)}
   footer a{margin-right:16px}
+  /* ── BYOAI chips (same pattern as the Dispatch, in this page's palette) ── */
+  .byoai{border:1px solid var(--line);border-radius:8px;background:var(--panel);
+         padding:16px 16px 18px;margin:18px 0}
+  .byoai-grp{margin-bottom:12px}
+  .byoai-grp-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;
+                   color:var(--faint);margin-bottom:6px}
+  .byoai-chips{display:flex;flex-wrap:wrap;gap:6px}
+  .byoai-chip{font:inherit;font-size:.84rem;padding:5px 12px;border-radius:999px;
+              background:transparent;border:1px solid var(--field);color:var(--dim);
+              cursor:pointer;line-height:1.25;font-weight:500}
+  .byoai-chip:hover{border-color:var(--accent);color:var(--bright)}
+  .byoai-chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);
+              color:var(--on-accent);font-weight:600}
+  .byoai-out{width:100%;box-sizing:border-box;margin-top:12px;font-family:ui-monospace,
+             SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;line-height:1.5;
+             color:var(--text);background:var(--ground);border:1px solid var(--line);
+             border-radius:6px;padding:11px;resize:vertical}
+  .byoai-actions{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px}
+  .byoai-btn{font:inherit;font-size:.85rem;font-weight:600;padding:7px 15px;
+             border-radius:5px;border:1px solid var(--accent);background:var(--accent);
+             color:var(--on-accent);cursor:pointer;text-decoration:none;display:inline-block}
+  .byoai-btn.alt{background:transparent;color:var(--accent)}
+  .byoai-note{font-size:.78rem;color:var(--faint);margin-top:10px;line-height:1.5}
+
   /* ── Mode switch ── */
   .modes{display:flex;gap:8px;margin:0 0 8px}
   .modes button{background:transparent;color:var(--dim);border:1px solid var(--line);
@@ -216,7 +240,7 @@
   </div>
 
   <!-- ─── Layer 3: cited, not run ──────────────────────────────────────────── -->
-  <h2>3. Too big for a browser</h2>
+  <h3>Too big for a browser</h3>
 
   <div class="cited">
     <strong>100 million rows.</strong> The survey reports <code>sorted()</code> at
@@ -231,6 +255,82 @@
   </div>
 
   <!-- ─── The part a benchmark hides ───────────────────────────────────────── -->
+
+  <!-- ─── Part 3: hand the reader the questions, not the answer ──────────────
+       The point of the whole page is that a good choice depends on conditions.
+       So the last step is not another verdict — it is the reader describing
+       their own conditions and taking those to their own agent. Same BYOAI
+       chip pattern the Dispatch uses. Nothing leaves the browser. ────────── -->
+  <h2>3. Now go build something</h2>
+
+  <p>None of the above is your situation. You have a real one: a particular
+  language, a particular shape of data, a particular thing that must not break.</p>
+
+  <p>Describe it below. The prompt assembles as you pick, and you take it to
+  whichever assistant you already use. It asks for the conditions rather than a
+  verdict, which is the habit worth keeping.</p>
+
+  <div class="byoai">
+    <div class="byoai-grp" data-group="lang" data-mode="single">
+      <div class="byoai-grp-label">Language</div>
+      <div class="byoai-chips">
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="Python">Python</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="JavaScript">JavaScript</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="Rust">Rust</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="Go">Go</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="SQL">SQL</button>
+      </div>
+    </div>
+
+    <div class="byoai-grp" data-group="arrival" data-mode="single">
+      <div class="byoai-grp-label">How the data reaches you</div>
+      <div class="byoai-chips">
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="all of it at once">all at once</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="a few items at a time, continuously">a stream</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="in volumes larger than memory">bigger than memory</button>
+      </div>
+    </div>
+
+    <div class="byoai-grp" data-group="need" data-mode="single">
+      <div class="byoai-grp-label">What you need out</div>
+      <div class="byoai-chips">
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="everything in order">everything, in order</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="only the top handful">only the top few</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="the ordering itself, to apply to another array">the ordering, to reuse</button>
+      </div>
+    </div>
+
+    <div class="byoai-grp" data-group="content" data-mode="multi">
+      <div class="byoai-grp-label">What is in it</div>
+      <div class="byoai-chips">
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="integers within a small known range">bounded integers</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="floating-point numbers">floats</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="text">text</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="records with several fields">multi-field records</button>
+      </div>
+    </div>
+
+    <div class="byoai-grp" data-group="must" data-mode="multi">
+      <div class="byoai-grp-label">What must not break</div>
+      <div class="byoai-chips">
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="equal items must keep the order they arrived in">ties keep arrival order</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="it must be correct after every single insert">correct at every moment</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="memory is tight">memory is tight</button>
+        <button type="button" class="byoai-chip" aria-pressed="false" data-val="it runs on every request, so latency matters">latency matters</button>
+      </div>
+    </div>
+
+    <textarea class="byoai-out" id="byoai-out" readonly aria-label="Assembled prompt" rows="10"></textarea>
+    <div class="byoai-actions">
+      <button type="button" class="byoai-btn" data-act="copy">Copy prompt</button>
+      <a class="byoai-btn alt" data-act="chatgpt" target="_blank" rel="noopener">Open in ChatGPT</a>
+      <a class="byoai-btn alt" data-act="claude" target="_blank" rel="noopener">Open in Claude</a>
+    </div>
+    <p class="byoai-note">Assembled in this tab. Nothing is sent anywhere, and the
+    page keeps no record of what you picked. The prompt asks your assistant for the
+    conditions under which each option wins, and to say plainly when it is guessing.</p>
+  </div>
+
   <h2>What each library is for</h2>
 
   <p>Speed is the least interesting axis, and the one every listicle stops at. These
@@ -808,6 +908,78 @@ $("go-again").addEventListener("click",startGame);
 $("clear-scores").addEventListener("click",()=>{
   try{localStorage.removeItem(KEY);}catch(e){} lastRank=0; renderScores();
 });
+
+/* ══ Part 3 — BYOAI prompt builder ════════════════════════════════════════
+   Same chip pattern the Dispatch uses. The page has spent two sections showing
+   that the right answer depends on conditions, so it ends by having the reader
+   state THEIR conditions rather than by handing out one more verdict.
+
+   The prompt deliberately asks for the conditions under which each candidate
+   wins, and for what would change the answer — the habit the survey is trying
+   to install. Everything happens in this tab; nothing is sent or stored. */
+(function(){
+  const box=document.querySelector(".byoai"); if(!box) return;
+  const out=box.querySelector(".byoai-out");
+  const state={};
+
+  box.querySelectorAll(".byoai-chip").forEach(chip=>{
+    chip.addEventListener("click",()=>{
+      const grp=chip.closest(".byoai-grp");
+      const key=grp.dataset.group, single=grp.dataset.mode==="single";
+      const on=chip.getAttribute("aria-pressed")==="true";
+      if(single){
+        grp.querySelectorAll(".byoai-chip").forEach(c=>c.setAttribute("aria-pressed","false"));
+        chip.setAttribute("aria-pressed",on?"false":"true");
+        state[key]=on?null:chip.dataset.val;
+      }else{
+        chip.setAttribute("aria-pressed",on?"false":"true");
+        state[key]=state[key]||[];
+        state[key]=on?state[key].filter(v=>v!==chip.dataset.val)
+                     :state[key].concat(chip.dataset.val);
+      }
+      render();
+    });
+  });
+
+  function render(){
+    const L=[];
+    const lang=state.lang, arr=state.arrival, need=state.need;
+    const content=(state.content||[]), must=(state.must||[]);
+
+    L.push("I have a sorting problem in "+(lang||"the language I am working in")+".");
+    L.push("");
+    if(arr)  L.push("The data reaches me "+arr+".");
+    if(need) L.push("I need "+need+".");
+    if(content.length) L.push("It contains "+list(content)+".");
+    if(must.length)    L.push("Constraints: "+list(must)+".");
+    L.push("");
+    L.push("Recommend an approach. For each candidate you consider, tell me:");
+    L.push("  - which library or data structure, and why it fits THESE conditions");
+    L.push("  - what I give up by choosing it");
+    L.push("  - what would have to change about my situation for a different one to win");
+    L.push("");
+    L.push("Do not just give me the fastest option. Give me the conditions under which");
+    L.push("each one wins, and say plainly when you are unsure rather than guessing.");
+    L.push("");
+    L.push("Reference: https://research.modelcitizendeveloper.com/survey/1-001/");
+    out.value=L.join("\n");
+    const enc=encodeURIComponent(out.value);
+    const a=box.querySelector('[data-act="chatgpt"]'), c=box.querySelector('[data-act="claude"]');
+    if(a) a.href="https://chatgpt.com/?q="+enc;
+    if(c) c.href="https://claude.ai/new?q="+enc;
+  }
+  const list=a=>a.length<2?a[0]:a.slice(0,-1).join(", ")+" and "+a[a.length-1];
+
+  box.querySelector('[data-act="copy"]').addEventListener("click",e=>{
+    out.select();
+    navigator.clipboard.writeText(out.value).then(()=>{
+      const b=e.target, t=b.textContent; b.textContent="Copied";
+      setTimeout(()=>{b.textContent=t;},1400);
+    }).catch(()=>{ try{document.execCommand("copy");}catch(_){} });
+  });
+
+  render();
+})();
 </script>
 </body>
 </html>
