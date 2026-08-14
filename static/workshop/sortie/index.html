@@ -107,17 +107,23 @@
 
   <p class="kicker">Workshop · floor model</p>
   <h1>Sortie</h1>
-  <p class="dek">Everyone knows to just use <code>sorted()</code>. Here is where that
-  costs you — measured in your browser, not quoted at you.</p>
+  <p class="dek">Sorting is solved. Choosing how to sort is not.</p>
 
-  <p>Sorting is the most settled problem in computing, which is exactly why the
-  received wisdom goes unexamined. <code>sorted()</code> is an excellent default and
-  it is the right answer most of the time. The interesting question is not which
-  library is fastest — it is <strong>when the default stops being right, and what the
-  alternative actually gives you</strong>.</p>
+  <p>Sorting looks like the most settled problem in computing. Python has
+  <code>sorted()</code>, it works, and most of the time that is the end of it.
+  Underneath that one call sits a library choice, and the choice comes with
+  conditions attached.</p>
 
-  <p>This page runs the comparisons live. Nothing below is a number I typed in;
-  anything cited from research rather than measured here is labelled as such.</p>
+  <p>This page runs Python in your browser so you can watch those conditions
+  decide the outcome. Every figure below is measured on your machine while you
+  wait. Where a number came from research instead, it says so.</p>
+
+  <p>Sorting is worth the tour even if you never think about it, because the
+  questions it asks come back at every scale. How much do you keep. How much do
+  you throw away. What happens when work arrives faster than you can deal with
+  it. Those are sorting questions at ten thousand items and infrastructure
+  questions at ten million, and learning to read them in a small case is how you
+  start recognising them in a large one.</p>
 
   <div class="modes" role="group" aria-label="Mode">
     <button id="m-learn" aria-pressed="true">Learn</button>
@@ -133,9 +139,8 @@
   <section id="play" hidden class="arcade">
     <div class="hud">
       <div>Score<b id="hud-score">0</b></div>
-      <div>Streak<b id="hud-streak">0</b></div>
-      <div>Round<b id="hud-round">0/8</b></div>
-      <div>Time<b id="hud-time">—</b></div>
+      <div>Survived<b id="hud-streak">0</b></div>
+      <div>Round<b id="hud-round">1</b></div>
     </div>
 
     <div id="stage">
@@ -163,17 +168,17 @@
   <div id="learn">
 
   <!-- ─── Layer 1: instant, plain JS, algorithmic ──────────────────────────── -->
-  <h2>1. The mistake that scales</h2>
+  <h2>1. Re-sorting on every insert</h2>
 
-  <p>You are keeping a leaderboard. A score arrives, you add it, you want the list in
-  order. The obvious code re-sorts the list every time a score comes in.</p>
+  <p>A leaderboard has to stay in order while scores arrive one at a time. The
+  obvious code appends the new score and sorts the list again.</p>
 
-  <p>The alternative is to never sort at all: find where the new score belongs and
-  insert it there, keeping the list ordered the whole way through.</p>
+  <p>The alternative never sorts. It finds where the score belongs and inserts it
+  there, so the list is ordered the whole way through.</p>
 
-  <p>Both are correct. One does <code>O(n² log n)</code> work and the other does
-  <code>O(n log n)</code>, so the gap does not stay small — it <em>widens with your
-  data</em>, which is why this survives code review and fails in production.</p>
+  <p>Both are correct. One does <code>O(n² log n)</code> work and the other
+  <code>O(n log n)</code>, so the gap widens as the data grows. That is why this
+  passes code review on a small test and fails in production.</p>
 
   <div class="panel">
     <button id="run-js">Run the comparison</button>
@@ -192,15 +197,13 @@
   <strong>1000×</strong> at 1,000 inserts.</p>
 
   <!-- ─── Layer 2: Pyodide, lazy ───────────────────────────────────────────── -->
-  <h2>2. The actual Python libraries</h2>
+  <h2>2. Running the real libraries</h2>
 
-  <p>The survey is about Python libraries, so quoting JavaScript numbers at you would
-  be a sleight of hand. This runs <strong>real CPython</strong> in your browser —
-  genuine <code>sorted()</code>, <code>numpy</code> and <code>sortedcontainers</code>,
-  compiled to WebAssembly.</p>
+  <p>The survey covers Python libraries, so the demo above is only an analogy. This
+  runs real CPython in your browser: actual <code>sorted()</code>,
+  <code>numpy</code> and <code>sortedcontainers</code>, compiled to WebAssembly.</p>
 
-  <p>It is a 10–20 MB download the first time, which is why it does not start until
-  you ask.</p>
+  <p>It downloads 10–20 MB the first time, so it waits until you ask for it.</p>
 
   <div class="panel">
     <button id="run-py">Run the real libraries</button>
@@ -213,7 +216,7 @@
   </div>
 
   <!-- ─── Layer 3: cited, not run ──────────────────────────────────────────── -->
-  <h2>3. The case this tab cannot run</h2>
+  <h2>3. Too big for a browser</h2>
 
   <div class="cited">
     <strong>100 million rows.</strong> The survey reports <code>sorted()</code> at
@@ -228,7 +231,7 @@
   </div>
 
   <!-- ─── The part a benchmark hides ───────────────────────────────────────── -->
-  <h2>What each one actually gives you</h2>
+  <h2>What each library is for</h2>
 
   <p>Speed is the least interesting axis, and the one every listicle stops at. These
   libraries are not competing implementations of the same idea — they do different
@@ -245,12 +248,18 @@
     </tbody>
   </table>
 
-  <h2>The point</h2>
+  <h2>Same questions, larger scale</h2>
 
-  <p>Nothing here says stop using <code>sorted()</code>. It says the default has
-  conditions attached, and knowing them is the difference between a choice and a
-  habit. That is what a survey is for: not a winner, but the conditions under which
-  each option wins.</p>
+  <p>None of this says stop using <code>sorted()</code>. It says the default comes
+  with conditions, and knowing them turns a habit into a choice.</p>
+
+  <p>There is a second reason to read widely that matters more than picking well.
+  You cannot consider an architecture you do not know exists. Reading the whole
+  category is how an option becomes available to you at all.</p>
+
+  <p>A survey gives you the conditions under which each option wins, rather than a
+  winner. That is the difference between shopping at the hardware store and being
+  able to work there.</p>
 
   <p><a href="https://research.modelcitizendeveloper.com/survey/1-001/">Read Survey 1.001 — Advanced Sorting Libraries →</a></p>
 
@@ -494,105 +503,164 @@ document.getElementById("run-py").addEventListener("click", async () => {
    "incorrect, the answer was X" teaches nothing and watching your own choice
    grind is the whole lesson.                                              */
 
-const ROUNDS = [
-  {
-    q: "Scores arrive one at a time and the leaderboard must be correct after every single one.",
-    shape: "40,000 inserts · order required continuously",
-    picks: [
-      {k:"resort",  label:"Append, then sort() each time", why:"the obvious code"},
-      {k:"sorted",  label:"Collect all, sort() once at the end", why:"one sort, at the end"},
-      {k:"bisect",  label:"Binary-search the position, insert there", why:"never sorts at all"},
-    ],
-    best:"bisect", partial:["sorted"],
-    lesson:"SortedContainers is not a faster sort — it never sorts. Insert costs O(log n) and the collection is ordered at all times. Sorting once at the end is fine ONLY if you can wait until the end; here you cannot.",
-    run:(n=6000)=>{
-      const d=makeScores(n,7); const out={};
-      out["Append, then sort() each time"]=time(naiveLeaderboard,d);
-      out["Binary-search and insert"]=time(sortedInsertLeaderboard,d);
-      return out;
-    }
+/* Round GENERATORS, not fixed rounds. Each deal randomises the parameters, and
+   the parameters decide the answer — bounded integers want a counting sort,
+   unbounded ones do not; a stream you must keep ordered wants a different
+   structure from one where only the top ten survive. So "round 3 is counting
+   sort" is not learnable. You have to read the shape, which is the exact
+   discrimination Survey 1.001 teaches.
+
+   No clock. A timer scored reading speed and fluency, which is neither the
+   decision nor the machine, and it punished the deliberation that IS the
+   learning. Variation comes from the deal instead, and the run ends at the
+   first wrong answer — an arcade score is how far you got. */
+
+const PICK = {
+  resort:  {label:"Append, then sort again each time", why:"the obvious code"},
+  once:    {label:"Collect everything, sort once at the end", why:"one sort, at the end"},
+  bisect:  {label:"Insert each item into its sorted position", why:"never sorts"},
+  heap:    {label:"Keep a bounded heap of the best N", why:"discards as it goes"},
+  cmp:     {label:"A general comparison sort", why:"works on anything, O(n log n)"},
+  count:   {label:"Counting sort", why:"needs a small known range"},
+  stable:  {label:"A stable sort", why:"equal items keep arrival order"},
+  fastest: {label:"Whatever sort is fastest", why:"order of equal items may change"},
+  argsort: {label:"Sort the indices, not the values", why:"gives you the ordering"},
+  values:  {label:"Sort the values and match them back", why:"fine if values are unique"},
+  memory:  {label:"Sort it in memory", why:"needs it all to fit"},
+  outcore: {label:"An out-of-core sort", why:"streams through disk"},
+};
+
+const pick = rnd => a => a[Math.floor(rnd()*a.length)];
+
+const GENERATORS = [
+  /* 1. What has to be true, and when — three different answers. */
+  (R)=>{
+    const mode = pick(R)(["always","top","end"]);
+    const n = pick(R)([20000,40000,80000]);
+    const k = pick(R)([10,25,100]);
+    if(mode==="always") return {
+      q:`${n.toLocaleString()} scores arrive one at a time, and the list has to be correct after every single one.`,
+      shape:"order required continuously",
+      options:["resort","once","bisect"], best:"bisect", partial:[],
+      lesson:"Sorting once at the end is cheapest, but only if you can wait until the end. Here you cannot, so the structure that never sorts wins: insert costs O(log n) and the list is ordered throughout.",
+      run:()=>({["Append, then sort again"]:time(naiveLeaderboard,makeScores(6000,R()*1e6|0)),
+                ["Insert into position"]:time(sortedInsertLeaderboard,makeScores(6000,R()*1e6|0))})};
+    if(mode==="top") return {
+      q:`${n.toLocaleString()} scores arrive one at a time. You only ever need the top ${k}, and you cannot hold them all.`,
+      shape:`unbounded in · ${k} kept · memory-constrained`,
+      options:["once","bisect","heap"], best:"heap", partial:[],
+      lesson:`Both alternatives keep everything. Sorting needs memory you do not have, and maintaining full order stores items you will never look at. A bounded heap holds ${k} and forgets the rest — the same structure as the high-score table on this page.`,
+      run:()=>{const d=makeScores(300000,R()*1e6|0);
+        return {["Buffer all, sort, take top"]:time(a=>a.slice().sort((x,y)=>y-x).slice(0,k),d),
+                [`Bounded heap of ${k}`]:time(a=>topNBounded(a,k),d)};}};
+    return {
+      q:`${n.toLocaleString()} scores arrive one at a time. Nothing reads the list until the last one has landed.`,
+      shape:"order required once, at the end",
+      options:["resort","once","bisect"], best:"once", partial:["bisect"],
+      lesson:"When nothing reads the list until the end, one sort at the end is the cheapest correct answer. Maintaining order throughout is not wrong, it is just work nobody asked for.",
+      run:()=>({["Append, then sort again"]:time(naiveLeaderboard,makeScores(6000,R()*1e6|0)),
+                ["Collect, sort once"]:time(a=>a.slice().sort((x,y)=>x-y),makeScores(6000,R()*1e6|0))})};
   },
-  {
-    q: "A stream of ten million events goes by. You need only the ten largest, and you cannot hold the stream in memory.",
-    shape: "unbounded in · 10 kept · memory-constrained",
-    picks: [
-      {k:"sortall", label:"Buffer everything, sort, take 10", why:"simple, needs the whole stream"},
-      {k:"heap",    label:"Keep a bounded 10-element heap", why:"discards as it goes"},
-      {k:"bisect",  label:"Maintain the full list sorted", why:"ordered throughout"},
-    ],
-    best:"heap", partial:[],
-    lesson:"This is the case where BOTH of the others are wrong. Sorting needs memory you do not have; maintaining full order keeps millions of items you will never look at. A bounded heap stores ten and forgets the rest — which is exactly what the high-score table on this page does.",
-    run:(n=400000)=>{
-      const d=makeScores(n,11); const out={};
-      out["Buffer all, sort, take 10"]=time(a=>a.slice().sort((x,y)=>y-x).slice(0,10),d);
-      out["Bounded 10-element heap"]=time(topNBounded,d);
-      return out;
+
+  /* 2. Range decides it. Same question, opposite answer. */
+  (R)=>{
+    const bounded = R()<0.5;
+    const n = pick(R)([500000,1000000,2000000]);
+    if(bounded){ const hi=pick(R)([100,256,1000]);
+      return {
+        q:`${n.toLocaleString()} integers, and every value is known to fall between 0 and ${hi}.`,
+        shape:`bounded range · ${hi+1} possible values`,
+        options:["cmp","count","bisect"], best:"count", partial:["cmp"],
+        lesson:`Comparison sorts cannot beat O(n log n) — that is a proven floor. Counting sort ducks under it by never comparing: tally each value, then walk the tally. Available only because the range is small and known.`,
+        run:()=>{const d=makeBounded(500000,hi+1,R()*1e6|0);
+          return {["Comparison sort"]:time(a=>Int32Array.from(a).sort(),d),
+                  ["Counting sort"]:time(a=>countingSort(a,hi+1),d)};}};
     }
+    return {
+      q:`${n.toLocaleString()} floating-point measurements, from anywhere in the range of a sensor.`,
+      shape:"unbounded range · arbitrary precision",
+      options:["cmp","count","heap"], best:"cmp", partial:[],
+      lesson:"Counting sort needs a small known range of discrete values, and this has neither. The general comparison sort is the right answer here — the trick from the bounded case simply does not apply, which is the thing worth noticing.",
+      run:null,
+      demo:()=>({["Counting sort needs"]:"one slot per possible value — unbounded floats have no such thing",
+                 ["Comparison sort needs"]:"only a way to compare two items"})};
   },
-  {
-    q: "Two million integers, and every value is known to be between 0 and 255.",
-    shape: "2,000,000 items · bounded small range",
-    picks: [
-      {k:"cmp",   label:"A comparison sort", why:"O(n log n), works on anything"},
-      {k:"count", label:"Counting sort", why:"exploits the bounded range"},
-      {k:"bisect",label:"Insert each into a sorted list", why:"ordered throughout"},
-    ],
-    best:"count", partial:["cmp"],
-    lesson:"Comparison sorts cannot beat O(n log n) — that is a proven floor. Counting sort ducks under it by never comparing: it tallies each value and walks the tally. Only available when the range is small and known, which is precisely the condition a bare 'just use sorted()' throws away.",
-    run:(n=600000)=>{
-      const d=makeBounded(n,256,13); const out={};
-      out["Comparison sort"]=time(a=>Int32Array.from(a).sort(),d);
-      out["Counting sort"]=time(countingSort,d);
-      return out;
-    }
+
+  /* 3. Do ties carry meaning? */
+  (R)=>{
+    const tiesMatter = R()<0.5;
+    const n = pick(R)([400,2000,10000]);
+    if(tiesMatter) return {
+      q:`${n.toLocaleString()} records sorted by department. Within a department they must stay in the order they arrived.`,
+      shape:"ties carry meaning",
+      options:["stable","fastest","count"], best:"stable", partial:[],
+      lesson:"Nothing here is slow enough for speed to be the axis; correctness is. A stable sort keeps equal elements in their original relative order and an unstable one may not. Python's sorted() is stable. No timing chart would ever show you this.",
+      run:null,
+      demo:()=>({["Stable"]:"a b c d e  → arrival order kept inside each group",
+                 ["Unstable"]:"c a e d b  → ties reordered, silently"})};
+    return {
+      q:`${n.toLocaleString()} records sorted by score. Records with identical scores can appear in any order.`,
+      shape:"ties carry no meaning",
+      options:["stable","fastest","bisect"], best:"fastest", partial:["stable"],
+      lesson:"When ties mean nothing, stability is a constraint you are paying for and not using. Choosing a stable sort here is harmless, but the point is that the requirement — not the habit — should pick the tool.",
+      run:null,
+      demo:()=>({["Ties meaningful"]:"stability is a correctness requirement",
+                 ["Ties meaningless"]:"stability is an unused guarantee"})};
   },
-  {
-    q: "Five hundred records, sorted by department. Records within a department must stay in the order they arrived.",
-    shape: "500 records · secondary order must survive",
-    picks: [
-      {k:"stable",  label:"A stable sort", why:"preserves input order for ties"},
-      {k:"unstable",label:"The fastest available sort", why:"speed first"},
-      {k:"count",   label:"Counting sort", why:"few distinct departments"},
-    ],
-    best:"stable", partial:[],
-    lesson:"At 500 records nothing here is slow, so speed is not the axis — CORRECTNESS is. A stable sort keeps equal elements in their original relative order; an unstable one is free to scramble them. Python's sorted() is stable and always has been. This is a property, not a benchmark, and no timing chart would ever show it.",
-    run:null,
-    demo:()=>{
-      const rows=[["a","Eng"],["b","Ops"],["c","Eng"],["d","Ops"],["e","Eng"]];
-      const stable=rows.slice().sort((x,y)=>x[1]<y[1]?-1:x[1]>y[1]?1:0).map(r=>r[0]).join(" ");
-      const unstable=["c","a","e","d","b"].join(" ");
-      return {"Stable sort":stable+"   ← arrival order kept within each group",
-              "Unstable sort":unstable+"   ← ties reordered, silently"};
-    }
+
+  /* 4. What do you need back — the data, or the ordering? */
+  (R)=>{
+    const wantOrder = R()<0.5;
+    if(wantOrder) return {
+      q:"You have two parallel arrays. You need to reorder the second one by the ranking of the first.",
+      shape:"you need the ordering itself",
+      options:["argsort","values","bisect"], best:"argsort", partial:[],
+      lesson:"argsort returns indices instead of data, so one array's ordering can be applied to another. Sorting values and matching them back breaks as soon as two values are equal, and it breaks quietly.",
+      run:null,
+      demo:()=>{const v=[30,10,20],names=["thirty","ten","twenty"];
+        const idx=v.map((_,i)=>i).sort((a,b)=>v[a]-v[b]);
+        return {["argsort → indices"]:"["+idx.join(", ")+"]",
+                ["applied to the other array"]:idx.map(i=>names[i]).join(", ")};}};
+    return {
+      q:"You have one array of numbers and you need it in order. Nothing else depends on where the items came from.",
+      shape:"you need the sorted values",
+      options:["argsort","values","heap"], best:"values", partial:["argsort"],
+      lesson:"argsort is the right tool when you need the ordering to apply elsewhere. Here nothing else depends on the original positions, so the indirection buys nothing and costs a lookup.",
+      run:null,
+      demo:()=>({["Need the values"]:"sort them",
+                 ["Need the ordering"]:"sort the indices"})};
   },
-  {
-    q: "You need to know the ORDER the items would go in — to reorder a second, parallel array by the same ranking.",
-    shape: "the permutation, not the data",
-    picks: [
-      {k:"sortcopy",label:"Sort a copy and match values back", why:"works, if values are unique"},
-      {k:"argsort", label:"argsort — return the index permutation", why:"gives the ordering itself"},
-      {k:"bisect",  label:"Insert into a sorted list", why:"ordered throughout"},
-    ],
-    best:"argsort", partial:[],
-    lesson:"argsort returns indices rather than data, so you can apply one array's ordering to another. Matching values back breaks the moment two values are equal — and it breaks quietly, which is the worst way. Again a capability question, not a speed one.",
-    run:null,
-    demo:()=>{
-      const v=[30,10,20], names=["thirty","ten","twenty"];
-      const idx=v.map((_,i)=>i).sort((a,b)=>v[a]-v[b]);
-      return {"argsort → indices":"["+idx.join(", ")+"]",
-              "applied to the other array":idx.map(i=>names[i]).join(", ")};
-    }
+
+  /* 5. Does it fit? */
+  (R)=>{
+    const fits = R()<0.5;
+    if(fits) return {
+      q:"Four million rows, on a machine with plenty of spare memory.",
+      shape:"fits comfortably in RAM",
+      options:["memory","outcore","heap"], best:"memory", partial:[],
+      lesson:"An out-of-core sort earns its complexity only when the data does not fit. Reaching for it here pays disk costs to solve a problem you do not have.",
+      run:null,
+      demo:()=>({["In memory"]:"one pass, no disk",
+                 ["Out-of-core"]:"chunk, spill, merge — all unnecessary here"})};
+    return {
+      q:"Four hundred million rows, on a laptop with 16 GB of memory.",
+      shape:"larger than memory",
+      options:["memory","outcore","cmp"], best:"outcore", partial:[],
+      lesson:"This is where an in-memory sort stops being slow and starts being impossible. An out-of-core sort chunks the data, sorts each chunk, spills to disk and merges. polars does this; sorted() cannot.",
+      run:null,
+      demo:()=>({["In-memory sort"]:"needs ~400M rows resident — this fails, it does not merely crawl",
+                 ["Out-of-core sort"]:"chunk → sort → spill → merge"})};
   },
 ];
 
-/* --- helpers the rounds measure against ------------------------------- */
+/* --- helpers -------------------------------------------------------- */
 function makeBounded(n,range,seed){const o=new Array(n);let s=seed>>>0;
   for(let i=0;i<n;i++){s=(1664525*s+1013904223)>>>0;o[i]=s%range;}return o;}
-function countingSort(a){const c=new Int32Array(256);
+function countingSort(a,range=256){const c=new Int32Array(range);
   for(let i=0;i<a.length;i++)c[a[i]]++;const out=new Int32Array(a.length);let k=0;
-  for(let v=0;v<256;v++)for(let j=0;j<c[v];j++)out[k++]=v;return out;}
-/* Bounded top-N: a min-heap of fixed size. The same structure the high-score
-   table uses — an unbounded stream in, ten rows kept, the rest discarded. */
+  for(let v=0;v<range;v++)for(let j=0;j<c[v];j++)out[k++]=v;return out;}
+/* Bounded top-N: a fixed-size min-heap. The structure the high-score table
+   uses, and the answer to one of the rounds above. */
 function topNBounded(a,N=10){const h=[];
   const up=i=>{while(i>0){const p=(i-1)>>1;if(h[p]<=h[i])break;[h[p],h[i]]=[h[i],h[p]];i=p;}};
   const down=i=>{for(;;){const l=2*i+1,r=l+1;let m=i;
@@ -603,117 +671,89 @@ function topNBounded(a,N=10){const h=[];
     else if(v>h[0]){h[0]=v;down(0);}}
   return h;}
 
-/* --- game state ------------------------------------------------------- */
-const ROUND_MS=20000, BASE=100;
-let deck=[], idx=0, score=0, streak=0, tStart=0, tick=null, locked=false;
-
+/* --- game state ----------------------------------------------------- */
+let round=null, survived=0, score=0, locked=false;
 const $=id=>document.getElementById(id);
-const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
-/* Deterministic per-session RNG seeded from the clock: rounds are dealt in a
-   different order each play (Ivan's "random draws"), but a single game is
-   reproducible while it runs. */
 let _s=(Date.now()^0x9e3779b9)>>>0;
 function rnd(){_s^=_s<<13;_s>>>=0;_s^=_s>>17;_s^=_s<<5;_s>>>=0;return _s/4294967296;}
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
 
 function startGame(){
-  deck=shuffle(ROUNDS); idx=0; score=0; streak=0;
+  survived=0; score=0;
   $("gameover").hidden=true; $("stage").hidden=false;
   paint(); nextRound();
 }
 function paint(){
   $("hud-score").textContent=score;
-  $("hud-streak").textContent=streak+(streak>=2?"×"+mult():"");
-  $("hud-round").textContent=Math.min(idx+1,deck.length)+"/"+deck.length;
+  $("hud-streak").textContent=survived;
+  $("hud-round").textContent=survived+1;
 }
-const mult=()=>1+Math.min(streak,4)*0.5;
-
 function nextRound(){
-  if(idx>=deck.length){return endGame();}
-  const r=deck[idx]; locked=false;
-  $("q-round").textContent=r.q;
-  $("q-shape").textContent=r.shape;
+  locked=false;
+  const gen=GENERATORS[Math.floor(rnd()*GENERATORS.length)];
+  round=gen(rnd);
+  $("q-round").textContent=round.q;
+  $("q-shape").textContent=round.shape;
   $("q-verdict").innerHTML="";
   const box=$("q-picks"); box.innerHTML="";
-  for(const p of shuffle(r.picks)){
+  for(const k of shuffle(round.options)){
+    const p=PICK[k];
     const b=document.createElement("button");
     b.innerHTML=p.label+'<span class="why">'+p.why+'</span>';
-    b.addEventListener("click",()=>answer(p.k,b));
+    b.dataset.k=k;
+    b.addEventListener("click",()=>answer(k,b));
     box.appendChild(b);
   }
-  paint(); startTimer();
-}
-function startTimer(){
-  tStart=performance.now(); clearInterval(tick);
-  tick=setInterval(()=>{
-    const left=Math.max(0,ROUND_MS-(performance.now()-tStart));
-    const el=$("hud-time"); el.textContent=(left/1000).toFixed(1)+"s";
-    el.className=left<5000?"warn":"";
-    if(left<=0){clearInterval(tick); if(!locked) answer(null,null);}
-  },100);
+  paint();
 }
 
 function answer(key,btn){
-  if(locked) return; locked=true; clearInterval(tick);
-  const r=deck[idx];
-  const elapsed=performance.now()-tStart;
-  const correct=key===r.best;
-  const partial=!correct&&key&&r.partial.includes(key);
+  if(locked) return; locked=true;
+  const correct = key===round.best;
+  const partial = !correct && round.partial.includes(key);
 
-  let gained=0;
-  if(correct){
-    /* Speed bonus is a fraction of the base, so a fast wrong answer never
-       beats a slow right one. */
-    const speed=Math.max(0,1-elapsed/ROUND_MS);
-    gained=Math.round(BASE*mult()*(1+0.5*speed));
-    streak++;
-  } else {
-    if(partial) gained=Math.round(BASE*0.25);
-    streak=0;
+  /* Escalating value per round survived, so a long run is worth more than a
+     lucky start. A defensible-but-suboptimal pick keeps you alive at reduced
+     value; only a genuinely wrong pick ends the run. */
+  if(correct||partial){
+    survived++;
+    score += (partial?50:100)*survived;
   }
-  score+=gained;
 
   for(const b of $("q-picks").children){
     b.disabled=true;
-    const lab=b.textContent;
-    const p=r.picks.find(x=>lab.startsWith(x.label));
-    if(p&&p.k===r.best) b.classList.add("right");
-    else if(p&&btn===b) b.classList.add("wrong");
+    if(b.dataset.k===round.best) b.classList.add("right");
+    else if(b===btn) b.classList.add("wrong");
   }
 
   const v=$("q-verdict");
-  const head=key===null
-    ? '<span class="tag no">OUT OF TIME</span> '
-    : correct ? '<span class="tag ok">CORRECT</span> +'+gained+' '
-    : partial ? '<span class="tag no">WORKS, BUT NOT BEST</span> +'+gained+' '
-              : '<span class="tag no">NO</span> ';
-  v.innerHTML=head+"<br>"+r.lesson;
+  v.innerHTML = (correct ? '<span class="tag ok">CORRECT</span> '
+              : partial ? '<span class="tag ok">WORKS, NOT BEST</span> '
+                        : '<span class="tag no">RUN OVER</span> ')
+              + "<br>" + round.lesson;
   paint();
 
-  /* Show the consequence rather than assert it. */
-  const out=r.run?r.run():(r.demo?r.demo():null);
+  /* Show the consequence rather than assert it — including for a wrong pick,
+     which is the entire teaching moment. */
+  const out = round.run ? round.run() : (round.demo ? round.demo() : null);
   if(out){
-    const isTime=!!r.run;
+    const isTime=!!round.run;
     let html='<table class="scores" style="margin-top:12px">';
-    for(const k in out){
-      const val=isTime?fmt(out[k]):out[k];
-      html+='<tr><td colspan="2" style="color:var(--dim)">'+k+'</td><td>'+val+'</td></tr>';
-    }
-    html+="</table>";
-    v.innerHTML+=html;
+    for(const k in out) html+='<tr><td colspan="2" style="color:var(--dim)">'+k+
+                              '</td><td>'+(isTime?fmt(out[k]):out[k])+'</td></tr>';
+    v.innerHTML += html+"</table>";
   }
 
   const go=document.createElement("button");
-  go.textContent=idx>=deck.length-1?"See final score":"Next round";
-  go.addEventListener("click",()=>{idx++;nextRound();});
+  go.textContent = (correct||partial) ? "Next round" : "See final score";
+  go.addEventListener("click",()=>{ (correct||partial) ? nextRound() : endGame(); });
   v.appendChild(document.createElement("br")); v.appendChild(go);
 }
 
 function endGame(){
-  clearInterval(tick);
   $("stage").hidden=true; $("gameover").hidden=false;
-  $("hud-time").textContent="—";
   const rank=recordScore(score);
-  $("go-line").textContent="Final score "+score;
+  $("go-line").textContent="Survived "+survived+" · score "+score;
   $("go-sub").textContent=rank>0
     ? "Rank "+rank+" on this machine."
     : "Not a top-ten score on this machine.";
@@ -758,7 +798,7 @@ function setMode(play){
   $("m-play").setAttribute("aria-pressed",play?"true":"false");
   $("m-learn").setAttribute("aria-pressed",play?"false":"true");
   $("mode-hint").textContent=play
-    ? "Five rounds, dealt in a random order. You are scored on the choice, not on how fast your computer is."
+    ? "Rounds are dealt at random and the parameters change what the right answer is. You are scored on the choice. One wrong call ends the run."
     : "Read the findings, run them yourself. Then switch to Play and see whether they stuck.";
   if(play&&!deck.length){warmUp();startGame();renderScores();}
 }
