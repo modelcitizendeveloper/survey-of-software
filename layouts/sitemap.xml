@@ -10,4 +10,14 @@
   </url>
     {{- end }}
   {{- end }}
+  {{- /* Standalone Workshop apps live in static/ so they ship untouched by the
+         theme, which means Hugo does not know about them and cannot sitemap
+         them automatically. They are indexable (the noindex cascade only
+         targets /survey/**), so without this they would be crawlable only via
+         inbound links. List them here by hand; there will not be many. */ -}}
+  {{- range slice "/workshop/sortie/" }}
+  <url>
+    <loc>{{ . | absURL }}</loc>
+  </url>
+  {{- end }}
 </urlset>
