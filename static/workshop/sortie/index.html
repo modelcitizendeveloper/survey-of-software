@@ -79,6 +79,39 @@
   .byoai-btn.alt{background:transparent;color:var(--accent)}
   .byoai-note{font-size:.78rem;color:var(--faint);margin-top:10px;line-height:1.5}
 
+  /* ── MCD apex header ────────────────────────────────────────────────────────
+     Copied from the header the rest of modelcitizendeveloper.com carries, dark
+     variant. Inlined rather than linked: this file is served from GitHub Pages on
+     a different host than the app that owns the stylesheet, and a render-blocking
+     cross-origin CSS request is a worse trade than ~1KB of duplication.
+
+     Only the dark variant is here. Sortie's own background is #0b1220, which is
+     exactly .mcd-header-dark's, so the header sits flush against the page. */
+  .mcd-header{background:#0b1220;border-bottom:1px solid #1e293b;position:sticky;top:0;z-index:1000}
+  .mcd-header-container{max-width:1200px;margin:0 auto;padding:1rem 1.5rem;display:flex;
+                        justify-content:space-between;align-items:center;gap:1rem}
+  .mcd-logo{font-size:1.25rem;font-weight:700;color:#f1f5f9;text-decoration:none;
+            letter-spacing:-.01em;transition:color .2s}
+  .mcd-logo:hover{color:#5eead4}
+  .mcd-nav{display:flex;gap:2rem;align-items:center}
+  .mcd-nav-link{font-size:1rem;font-weight:500;color:#94a3b8;text-decoration:none;
+                padding:.5rem 1rem;border-radius:6px;transition:all .2s}
+  /* Active keeps the same font-weight as its siblings on purpose — bolding it
+     changes its width, and with the nav right-anchored every link shifts a few
+     pixels depending which page you are on, so the banner appears to move as you
+     navigate. Background and colour carry the state without touching layout. */
+  .mcd-nav-link:hover,.mcd-nav-link.active{background:#12233d;color:#5eead4}
+  .mcd-nav-rule{width:1px;align-self:stretch;background:#1e293b;margin:0 -.5rem}
+  .mcd-nav-away{border:1px solid #1e293b;border-radius:999px}
+  .mcd-nav-away:hover{border-color:#2c4a6e;background:#12233d;color:#5eead4}
+  .mcd-nav-arrow{font-size:.8em;opacity:.65;margin-left:.1rem}
+  @media (max-width:760px){
+    .mcd-header-container{flex-direction:column;gap:1rem;padding:1rem}
+    .mcd-nav{gap:1rem;flex-wrap:wrap;justify-content:center}
+    .mcd-nav-link{padding:.4rem .8rem;font-size:.9rem}
+    .mcd-nav-rule{display:none}
+  }
+
   /* ── Newsletter capture ──────────────────────────────────────────────────
      Sortie lives in static/ so Hugo copies it untouched, which is what keeps it
      outside the book theme — and also why it never got the site's capture
@@ -140,6 +173,20 @@
 </style>
 </head>
 <body>
+<header class="mcd-header">
+  <div class="mcd-header-container">
+    <a href="https://app.modelcitizendeveloper.com" class="mcd-logo">Model Citizen Developer</a>
+    <nav class="mcd-nav">
+      <a href="https://workshop.modelcitizendeveloper.com/talks" class="mcd-nav-link">Talks</a>
+      <a href="https://fieldnotes.modelcitizendeveloper.com" class="mcd-nav-link">Field Notes</a>
+      <a href="https://workshop.modelcitizendeveloper.com" class="mcd-nav-link active">Workshop</a>
+      <span class="mcd-nav-rule" aria-hidden="true"></span>
+      <a href="https://research.modelcitizendeveloper.com" class="mcd-nav-link mcd-nav-away">Survey of Software <span class="mcd-nav-arrow" aria-hidden="true">&#8599;</span></a>
+    </nav>
+  </div>
+</header>
+
+
 <div class="wrap">
 
   <div class="site">
