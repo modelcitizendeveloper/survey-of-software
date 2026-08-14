@@ -79,6 +79,25 @@
   .byoai-btn.alt{background:transparent;color:var(--accent)}
   .byoai-note{font-size:.78rem;color:var(--faint);margin-top:10px;line-height:1.5}
 
+  /* ── Newsletter capture ──────────────────────────────────────────────────
+     Sortie lives in static/ so Hugo copies it untouched, which is what keeps it
+     outside the book theme — and also why it never got the site's capture
+     partial. It was the page a post would point at, with nowhere to subscribe. */
+  .sub{border-top:1px solid var(--line);margin:44px 0 0;padding:22px 0 0}
+  .sub p{margin:0 0 12px;font-size:.95rem;color:var(--text)}
+  .sub form{display:flex;flex-wrap:wrap;gap:8px}
+  .sub input{flex:1 1 16rem;min-width:0;padding:10px 13px;font:inherit;font-size:.95rem;
+             color:var(--text);background:var(--ground);border:1px solid var(--field);
+             border-radius:5px}
+  .sub input::placeholder{color:var(--faint)}
+  .sub input:focus{outline:2px solid var(--accent);outline-offset:1px;border-color:var(--accent)}
+  .sub button{flex:0 0 auto;padding:10px 20px;font:inherit;font-size:.95rem;font-weight:600;
+              color:var(--on-accent);background:var(--accent);border:1px solid var(--accent);
+              border-radius:5px;cursor:pointer}
+  .sub button:hover{filter:brightness(.92)}
+  .sub .fine{margin-top:10px;font-size:.8rem;color:var(--faint)}
+  @media (max-width:560px){.sub input,.sub button{flex:1 1 100%}}
+
   /* ── Mode switch ── */
   .modes{display:flex;gap:8px;margin:0 0 8px}
   .modes button{background:transparent;color:var(--dim);border:1px solid var(--line);
@@ -364,6 +383,28 @@
   <p><a href="https://research.modelcitizendeveloper.com/survey/1-001/">Read Survey 1.001 — Advanced Sorting Libraries →</a></p>
 
   </div><!-- /#learn -->
+
+  <!-- Capture. Same Buttondown endpoint and the same tag convention as the rest
+       of the research site: `method` selects the newsletter, `research-site` is
+       the entry door the welcome automation filters on, and placement-sortie
+       records that this page earned it. Native POST, no JS. -->
+  <section class="sub">
+    <p><strong>Field Notes</strong> — the surveys stay neutral; the Reports built
+    from them argue a case, and a new one is at the center of each edition.</p>
+    <form action="https://buttondown.com/api/emails/embed-subscribe/model-citizen-developer"
+          method="post" target="popupwindow"
+          onsubmit="window.open('https://buttondown.com/model-citizen-developer','popupwindow')">
+      <input type="email" name="email" placeholder="you@example.com"
+             aria-label="Email address" autocomplete="email" required>
+      <input type="hidden" name="tag" value="method">
+      <input type="hidden" name="tag" value="research-site">
+      <input type="hidden" name="tag" value="placement-sortie">
+      <input type="hidden" name="metadata__source" value="/workshop/sortie/">
+      <input type="hidden" name="embed" value="1">
+      <button type="submit">Subscribe</button>
+    </form>
+    <p class="fine">No tracking pixels. Unsubscribe in one click.</p>
+  </section>
 
   <footer>
     <p>Built from <a href="https://research.modelcitizendeveloper.com/survey/1-001/">Survey of Software 1.001</a>.
