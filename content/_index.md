@@ -23,6 +23,21 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ---
 
+<!-- POPULAR:START -->
+
+## Popular research
+
+- [1.008 Time Series Search Libraries](/survey/1-008)
+- [1.022 Optimization](/survey/1-022)
+- [1.104.2 Code Formatting Libraries](/survey/1-104-2)
+- [1.110 Frontend Frameworks](/survey/1-110)
+- [1.110.5 Static Site Generators](/survey/1-110-5)
+- [1.112 CSS Frameworks](/survey/1-112)
+- [1.144.2 Tone Analysis for CJK Languages](/survey/1-144-2)
+- [1.212 AI Coding Agent Harnesses](/survey/1-212)
+
+<!-- POPULAR:END -->
+
 ## 1.001-009: Sorting & Searching Algorithms
 
 **Completed: 9/9**
@@ -66,10 +81,10 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.023** Symbolic Math Libraries](/survey/1-023) - SymPy vs SageMath
 - ✅ [**1.024** Random Number Generation Libraries](/survey/1-024) - PCG, Mersenne Twister
 - ✅ [**1.025** Prime Factorization & Primality Testing Libraries](/survey/1-025) - Factorization, primality testing
-- **1.026** Combinatorics - Permutations, combinations, partitions
+- ✅ [**1.026** Combinatorics](/survey/1-026) - Permutations, combinations, partitions
 - ✅ [**1.027** Numerical Integration Libraries](/survey/1-027) - Quadrature methods
-- **1.028** FFT Libraries - FFTW, pyFFTW, scipy.fft
-- **1.029** Matrix Decomposition - SVD, eigenvalue, QR
+- ✅ [**1.028** FFT Libraries](/survey/1-028) - FFTW, pyFFTW, scipy.fft
+- ✅ [**1.029** Matrix Decomposition](/survey/1-029) - SVD, eigenvalue, QR
 
 ---
 
@@ -138,12 +153,12 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.061** Hashing](/survey/1-061) - hashlib, xxhash, blake3
 - ✅ [**1.062** Password Hashing - argon2-cffi vs bcrypt (covered in 1.060)](/survey/1-062)
 - ✅ [**1.063** JWT Libraries](/survey/1-063) - PyJWT, python-jose, Authlib
-- **1.064** Threshold Signature / Secret Sharing - FROST, Shamir's Secret Sharing, threshold ECDSA
-- **1.065** P2P / Mesh Networking - libp2p, ZeroMQ, nanomsg, NAT traversal, relay discovery
-- **1.066** Onion Routing / Anonymous Transport - Tor stem API, I2P SAM bridge, Nym mixnet
-- **1.067** WebSocket Libraries - websockets, aiohttp WS, ws, Socket.IO, µWebSockets
-- **1.068** API Proxy / MITM Frameworks - mitmproxy, Envoy, Traefik, transparent interception
-- **1.069** Mobile Secure Storage / Keychain - iOS Keychain, Android Keystore, react-native-keychain
+- ✅ [**1.064** Threshold Signature / Secret Sharing](/survey/1-064) - FROST, Shamir's Secret Sharing, threshold ECDSA
+- ✅ [**1.065** P2P / Mesh Networking](/survey/1-065) - libp2p, ZeroMQ, nanomsg, NAT traversal, relay discovery
+- ✅ [**1.066** Onion Routing / Anonymous Transport](/survey/1-066) - Tor stem API, I2P SAM bridge, Nym mixnet
+- ✅ [**1.067** WebSocket Libraries](/survey/1-067) - websockets, aiohttp WS, ws, Socket.IO, µWebSockets
+- ✅ [**1.068** API Proxy / MITM Frameworks](/survey/1-068) - mitmproxy, Envoy, Traefik, transparent interception
+- ✅ [**1.069** Mobile Secure Storage / Keychain](/survey/1-069) - iOS Keychain, Android Keystore, react-native-keychain
 
 ---
 
@@ -170,13 +185,13 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 - ✅ [**1.080** Image Processing](/survey/1-080) - OpenCV, scikit-image, Pillow
   - ✅ [**1.080.1** QR Code Generation](/survey/1-080-1) - qrcode, segno, pyqrcode
-- **1.081** Convex Hull - Graham scan, Jarvis march
-- **1.082** Voronoi & Delaunay - scipy.spatial, triangle
-- **1.083** Point Cloud Processing - Open3D, PCL bindings
-- **1.084** Mesh Processing - Trimesh, PyMesh
-- **1.085** Collision Detection - Shapely, SAT algorithms
+- ✅ [**1.081** Convex Hull](/survey/1-081) - Graham scan, Jarvis march
+- ✅ [**1.082** Voronoi & Delaunay](/survey/1-082) - scipy.spatial, triangle
+- ✅ [**1.083** Point Cloud Processing](/survey/1-083) - Open3D, PCL bindings
+- ✅ [**1.084** Mesh Processing](/survey/1-084) - Trimesh, PyMesh
+- ✅ [**1.085** Collision Detection](/survey/1-085) - Shapely, SAT algorithms
 - **1.086** Path Planning - RRT, PRM, A* for robotics
-- **1.087** Geographic Libraries - GeoPy, geopandas, Folium
+- ✅ [**1.087** Geographic Libraries](/survey/1-087) - GeoPy, geopandas, Folium
 - **1.088** Coordinate Transformation - pyproj, utm
 - **1.089** Spatial Indexing - H3, S2, Geohash
 
@@ -193,7 +208,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
   - **1.091.3** OCR - Tesseract, EasyOCR, PaddleOCR
   - **1.091.4** Scene Detection / Video Segmentation - PySceneDetect, TransNetV2
 - **1.092** Signal Processing - scipy.signal vs librosa
-  - **1.092.1** Audio Processing - librosa, pydub, audioread
+  - ✅ [**1.092.1** Audio Processing](/survey/1-092-1) - librosa, pydub, audioread
 - **1.093** Quantum Computing - Qiskit vs Cirq vs Pennylane
 - ✅ [**1.094** Constraint Solving](/survey/1-094) - Z3, OR-Tools, PySMT
 - **1.095** Game Theory & Auctions - Nashpy, game theory solvers
@@ -217,7 +232,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
   - ✅ [**1.104.2** Code Formatting](/survey/1-104-2) - Code formatting and linting libraries for Python and JavaScript/TypeScript. Black, ruff, autopep8, Prettier, ESLint.
 - **1.105** Translation & i18n - gettext, Babel, i18next
 - ✅ [**1.106** Speech Recognition & TTS](/survey/1-106) - Whisper, Coqui, Piper
-  - **1.106.1** Speaker Diarization - pyannote, NeMo, who's talking
+  - ✅ [**1.106.1** Speaker Diarization](/survey/1-106-1) - pyannote, NeMo, who's talking
 - **1.107** OCR Libraries - Tesseract, EasyOCR
 - **1.108** Spell Checking - SymSpell, LanguageTool
 - **1.109** Content Extraction - BeautifulSoup, Scrapy, newspaper3k
@@ -243,8 +258,8 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.117** Animation](/survey/1-117) - Framer Motion, GSAP, React Spring, Lottie
 - ✅ [**1.118** Testing - Jest, Vitest, Playwright, Cypress](/survey/1-118)
 - ✅ [**1.119** Mobile Frameworks](/survey/1-119) - React Native, Flutter, .NET MAUI, Ionic
-  - **1.119.1** NFC Libraries - iOS CoreNFC, Android NDEF, react-native-nfc-manager, Web NFC
-  - **1.119.2** Push Notification Libraries - ntfy, Gotify, UnifiedPush, expo-notifications, Web Push/VAPID
+  - ✅ [**1.119.1** NFC Libraries](/survey/1-119-1) - iOS CoreNFC, Android NDEF, react-native-nfc-manager, Web NFC
+  - ✅ [**1.119.2** Push Notification Libraries](/survey/1-119-2) - ntfy, Gotify, UnifiedPush, expo-notifications, Web Push/VAPID
 
 ---
 
