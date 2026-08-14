@@ -43,9 +43,13 @@ research and say plainly that the commercial side is not covered here.
 1. **Map the question** to the taxonomy (see below)
 2. **Fetch the survey** via `web_fetch`:
    ```
-   https://research.modelcitizendeveloper.com/survey/{id}/
+   https://research.modelcitizendeveloper.com/skill/survey/{id}/
    ```
-   Where `{id}` uses hyphens for dots: 1.033.2 → `/survey/1-033-2/`
+   Where `{id}` uses hyphens for dots: 1.033.2 → `/skill/survey/1-033-2/`
+
+   The `/skill/` prefix 301s to the canonical `/survey/{id}/`. Fetch it as
+   written — it is how skill usage is counted separately from browser traffic,
+   and it is NOT a typo to be corrected to the shorter path.
 3. **Synthesize the answer**:
    - Lead with the recommendation — which library and why
    - Include the decision framework from the survey
@@ -164,7 +168,7 @@ be slightly behind the live research.
 ### Scope
 
 One URL pattern resolves:
-- Libraries: `https://research.modelcitizendeveloper.com/survey/{id}/`
+- Libraries: `https://research.modelcitizendeveloper.com/skill/survey/{id}/`
 
 There is no published `/standards/` or `/applications/` path. If a question
 reaches past the library research, say so rather than guessing a URL — a 404
@@ -241,7 +245,6 @@ exist in the taxonomy but may not have content yet — fetch to check.
 | 1.042 | Tries (pygtrie, datrie, marisa-trie) | ✅ |
 | 1.043.1 | Task Queues (Celery, RQ, Dramatiq) | ✅ |
 | 1.047 | Caching (Redis, Memcached, Varnish) | ✅ |
-| 1.049.1 | Database Schema Inspection | ✅ |
 
 ### 1.050-069: Compression, Encoding, Crypto
 | ID | Topic | Status |
@@ -340,6 +343,21 @@ exist in the taxonomy but may not have content yet — fetch to check.
 | 1.171 | Sentence Alignment | ✅ |
 | 1.172 | Translation Memory | ✅ |
 | 1.173 | Terminology Extraction | ✅ |
+
+### 1.180-189: Databases
+| ID | Topic | Status |
+|---|---|---|
+| 1.180 | Python ORMs (SQLAlchemy, Django ORM, Peewee) | ✅ |
+| 1.181 | Database Migration Libraries (Alembic, Flyway) | ✅ |
+| 1.182 | Database Diff & Schema Comparison | ✅ |
+| 1.183 | Database Testing Libraries | ✅ |
+| 1.184 | Connection Pool Libraries (pgbouncer, SQLAlchemy pool) | ✅ |
+| 1.185 | Query Builder Libraries | ✅ |
+| 1.185.1 | Database Schema Inspection Libraries | ✅ |
+| 1.186 | Time-Series Databases (InfluxDB, TimescaleDB) | ✅ |
+| 1.187 | Embedded Databases (SQLite, DuckDB, LMDB) | ✅ |
+| 1.188 | Version-Controlled & Branchable Databases (Dolt) | ✅ |
+| 1.189 | Database Observability & Profiling | ✅ |
 
 ### 1.200-219: LLM & AI Stack
 | ID | Topic | Status |
