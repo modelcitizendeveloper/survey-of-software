@@ -55,6 +55,42 @@
   footer{margin-top:56px;padding-top:18px;border-top:1px solid var(--line);
          font-size:.88rem;color:var(--faint)}
   footer a{margin-right:16px}
+  /* ── Mode switch ── */
+  .modes{display:flex;gap:8px;margin:0 0 8px}
+  .modes button{background:transparent;color:var(--dim);border:1px solid var(--line);
+                font-weight:600;padding:7px 16px}
+  .modes button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);
+                border-color:var(--accent)}
+
+  /* ── Arcade: mode 2. Deliberately the only place on the site that looks like
+        this. The cabinet aesthetic is not styling — the high-score table IS the
+        data structure being taught (keep ten, discard the stream), so it earns
+        the reference rather than decorating with it. ── */
+  .arcade{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace}
+  .hud{display:flex;gap:18px;flex-wrap:wrap;align-items:baseline;
+       border-bottom:1px solid var(--line);padding-bottom:10px;margin-bottom:16px}
+  .hud div{font-size:.8rem;color:var(--dim);text-transform:uppercase;letter-spacing:.08em}
+  .hud b{display:block;font-size:1.5rem;color:var(--accent);letter-spacing:.02em}
+  .hud b.warn{color:var(--warn)}
+  .round{font-size:1.05rem;color:var(--bright);margin:0 0 4px;line-height:1.5}
+  .shape{color:var(--dim);font-size:.92rem;margin:0 0 14px}
+  .picks{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:8px}
+  .picks button{background:var(--ground);color:var(--text);border:1px solid var(--field);
+                text-align:left;font-weight:500;padding:11px 13px;font-family:inherit}
+  .picks button:hover:not(:disabled){border-color:var(--accent);color:var(--bright)}
+  .picks button .why{display:block;font-size:.8rem;color:var(--faint);margin-top:3px;
+                     font-weight:400;white-space:normal}
+  .picks button.right{border-color:var(--accent);background:rgba(94,234,212,.09)}
+  .picks button.wrong{border-color:var(--warn);background:rgba(245,158,66,.08)}
+  .verdict{margin-top:14px;font-size:.95rem;line-height:1.6}
+  .verdict .tag{font-weight:700;letter-spacing:.04em}
+  .verdict .ok{color:var(--accent)} .verdict .no{color:var(--warn)}
+  .scores{width:100%;margin-top:8px}
+  .scores td{padding:4px 6px;border:0;font-size:.92rem}
+  .scores td:first-child{color:var(--faint);width:2.4em}
+  .scores td:nth-child(2){color:var(--bright);letter-spacing:.18em}
+  .scores td:last-child{text-align:right;color:var(--accent)}
+  .scores tr.you td{color:#fff}
   @media (max-width:620px){h1{font-size:1.6rem}.wrap{padding-top:24px}
     table{font-size:.86rem}th,td{padding:6px 4px}}
   @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
@@ -82,6 +118,49 @@
 
   <p>This page runs the comparisons live. Nothing below is a number I typed in;
   anything cited from research rather than measured here is labelled as such.</p>
+
+  <div class="modes" role="group" aria-label="Mode">
+    <button id="m-learn" aria-pressed="true">Learn</button>
+    <button id="m-play" aria-pressed="false">Play</button>
+  </div>
+  <p class="note" id="mode-hint">Read the findings, run them yourself. Then switch to
+  Play and see whether they stuck.</p>
+
+  <!-- ─── Mode 2: the game. Scored on the DECISION, never the clock — the score
+       must be identical on every machine, and ranking wall-clock would mean the
+       fastest laptop wins in an app whose whole finding is that the algorithm
+       dominates. The run happens only to SHOW the consequence. ──────────── -->
+  <section id="play" hidden class="arcade">
+    <div class="hud">
+      <div>Score<b id="hud-score">0</b></div>
+      <div>Streak<b id="hud-streak">0</b></div>
+      <div>Round<b id="hud-round">0/8</b></div>
+      <div>Time<b id="hud-time">—</b></div>
+    </div>
+
+    <div id="stage">
+      <p class="round" id="q-round"></p>
+      <p class="shape" id="q-shape"></p>
+      <div class="picks" id="q-picks"></div>
+      <div class="verdict" id="q-verdict"></div>
+    </div>
+
+    <div id="gameover" hidden>
+      <p class="round" id="go-line"></p>
+      <p class="shape" id="go-sub"></p>
+      <button id="go-again">Play again</button>
+    </div>
+
+    <h2>High scores</h2>
+    <p class="note">Ten rows, kept in this browser. An arcade cabinet had a few bytes
+    of NVRAM and stored exactly this — not the plays, just the table. That is the same
+    shape as round 2 below: an unbounded stream in, a bounded top-N kept. No server,
+    nothing about you leaves this tab.</p>
+    <table class="scores"><tbody id="hiscores"></tbody></table>
+    <p class="note"><button id="clear-scores" class="secondary">Clear table</button></p>
+  </section>
+
+  <div id="learn">
 
   <!-- ─── Layer 1: instant, plain JS, algorithmic ──────────────────────────── -->
   <h2>1. The mistake that scales</h2>
@@ -174,6 +253,8 @@
   each option wins.</p>
 
   <p><a href="https://research.modelcitizendeveloper.com/survey/1-001/">Read Survey 1.001 — Advanced Sorting Libraries →</a></p>
+
+  </div><!-- /#learn -->
 
   <footer>
     <p>Built from <a href="https://research.modelcitizendeveloper.com/survey/1-001/">Survey of Software 1.001</a>.
@@ -400,6 +481,292 @@ document.getElementById("run-py").addEventListener("click", async () => {
   } finally {
     btn.disabled = false;
   }
+});
+
+/* ══ Mode 2 — "see if you've been paying attention" ═══════════════════════
+   Scored on the DECISION, never on the clock. Points are deterministic and
+   identical on every machine; the chosen strategy is executed only to SHOW
+   what it costs. Ranking measured time would mean the fastest laptop wins,
+   in an app whose entire finding is that the algorithm decides it.
+
+   Every round below is a real result from Survey 1.001, and every consequence
+   is measured live rather than asserted — including the losing pick, because
+   "incorrect, the answer was X" teaches nothing and watching your own choice
+   grind is the whole lesson.                                              */
+
+const ROUNDS = [
+  {
+    q: "Scores arrive one at a time and the leaderboard must be correct after every single one.",
+    shape: "40,000 inserts · order required continuously",
+    picks: [
+      {k:"resort",  label:"Append, then sort() each time", why:"the obvious code"},
+      {k:"sorted",  label:"Collect all, sort() once at the end", why:"one sort, at the end"},
+      {k:"bisect",  label:"Binary-search the position, insert there", why:"never sorts at all"},
+    ],
+    best:"bisect", partial:["sorted"],
+    lesson:"SortedContainers is not a faster sort — it never sorts. Insert costs O(log n) and the collection is ordered at all times. Sorting once at the end is fine ONLY if you can wait until the end; here you cannot.",
+    run:(n=6000)=>{
+      const d=makeScores(n,7); const out={};
+      out["Append, then sort() each time"]=time(naiveLeaderboard,d);
+      out["Binary-search and insert"]=time(sortedInsertLeaderboard,d);
+      return out;
+    }
+  },
+  {
+    q: "A stream of ten million events goes by. You need only the ten largest, and you cannot hold the stream in memory.",
+    shape: "unbounded in · 10 kept · memory-constrained",
+    picks: [
+      {k:"sortall", label:"Buffer everything, sort, take 10", why:"simple, needs the whole stream"},
+      {k:"heap",    label:"Keep a bounded 10-element heap", why:"discards as it goes"},
+      {k:"bisect",  label:"Maintain the full list sorted", why:"ordered throughout"},
+    ],
+    best:"heap", partial:[],
+    lesson:"This is the case where BOTH of the others are wrong. Sorting needs memory you do not have; maintaining full order keeps millions of items you will never look at. A bounded heap stores ten and forgets the rest — which is exactly what the high-score table on this page does.",
+    run:(n=400000)=>{
+      const d=makeScores(n,11); const out={};
+      out["Buffer all, sort, take 10"]=time(a=>a.slice().sort((x,y)=>y-x).slice(0,10),d);
+      out["Bounded 10-element heap"]=time(topNBounded,d);
+      return out;
+    }
+  },
+  {
+    q: "Two million integers, and every value is known to be between 0 and 255.",
+    shape: "2,000,000 items · bounded small range",
+    picks: [
+      {k:"cmp",   label:"A comparison sort", why:"O(n log n), works on anything"},
+      {k:"count", label:"Counting sort", why:"exploits the bounded range"},
+      {k:"bisect",label:"Insert each into a sorted list", why:"ordered throughout"},
+    ],
+    best:"count", partial:["cmp"],
+    lesson:"Comparison sorts cannot beat O(n log n) — that is a proven floor. Counting sort ducks under it by never comparing: it tallies each value and walks the tally. Only available when the range is small and known, which is precisely the condition a bare 'just use sorted()' throws away.",
+    run:(n=600000)=>{
+      const d=makeBounded(n,256,13); const out={};
+      out["Comparison sort"]=time(a=>Int32Array.from(a).sort(),d);
+      out["Counting sort"]=time(countingSort,d);
+      return out;
+    }
+  },
+  {
+    q: "Five hundred records, sorted by department. Records within a department must stay in the order they arrived.",
+    shape: "500 records · secondary order must survive",
+    picks: [
+      {k:"stable",  label:"A stable sort", why:"preserves input order for ties"},
+      {k:"unstable",label:"The fastest available sort", why:"speed first"},
+      {k:"count",   label:"Counting sort", why:"few distinct departments"},
+    ],
+    best:"stable", partial:[],
+    lesson:"At 500 records nothing here is slow, so speed is not the axis — CORRECTNESS is. A stable sort keeps equal elements in their original relative order; an unstable one is free to scramble them. Python's sorted() is stable and always has been. This is a property, not a benchmark, and no timing chart would ever show it.",
+    run:null,
+    demo:()=>{
+      const rows=[["a","Eng"],["b","Ops"],["c","Eng"],["d","Ops"],["e","Eng"]];
+      const stable=rows.slice().sort((x,y)=>x[1]<y[1]?-1:x[1]>y[1]?1:0).map(r=>r[0]).join(" ");
+      const unstable=["c","a","e","d","b"].join(" ");
+      return {"Stable sort":stable+"   ← arrival order kept within each group",
+              "Unstable sort":unstable+"   ← ties reordered, silently"};
+    }
+  },
+  {
+    q: "You need to know the ORDER the items would go in — to reorder a second, parallel array by the same ranking.",
+    shape: "the permutation, not the data",
+    picks: [
+      {k:"sortcopy",label:"Sort a copy and match values back", why:"works, if values are unique"},
+      {k:"argsort", label:"argsort — return the index permutation", why:"gives the ordering itself"},
+      {k:"bisect",  label:"Insert into a sorted list", why:"ordered throughout"},
+    ],
+    best:"argsort", partial:[],
+    lesson:"argsort returns indices rather than data, so you can apply one array's ordering to another. Matching values back breaks the moment two values are equal — and it breaks quietly, which is the worst way. Again a capability question, not a speed one.",
+    run:null,
+    demo:()=>{
+      const v=[30,10,20], names=["thirty","ten","twenty"];
+      const idx=v.map((_,i)=>i).sort((a,b)=>v[a]-v[b]);
+      return {"argsort → indices":"["+idx.join(", ")+"]",
+              "applied to the other array":idx.map(i=>names[i]).join(", ")};
+    }
+  },
+];
+
+/* --- helpers the rounds measure against ------------------------------- */
+function makeBounded(n,range,seed){const o=new Array(n);let s=seed>>>0;
+  for(let i=0;i<n;i++){s=(1664525*s+1013904223)>>>0;o[i]=s%range;}return o;}
+function countingSort(a){const c=new Int32Array(256);
+  for(let i=0;i<a.length;i++)c[a[i]]++;const out=new Int32Array(a.length);let k=0;
+  for(let v=0;v<256;v++)for(let j=0;j<c[v];j++)out[k++]=v;return out;}
+/* Bounded top-N: a min-heap of fixed size. The same structure the high-score
+   table uses — an unbounded stream in, ten rows kept, the rest discarded. */
+function topNBounded(a,N=10){const h=[];
+  const up=i=>{while(i>0){const p=(i-1)>>1;if(h[p]<=h[i])break;[h[p],h[i]]=[h[i],h[p]];i=p;}};
+  const down=i=>{for(;;){const l=2*i+1,r=l+1;let m=i;
+    if(l<h.length&&h[l]<h[m])m=l; if(r<h.length&&h[r]<h[m])m=r; if(m===i)break;
+    [h[m],h[i]]=[h[i],h[m]];i=m;}};
+  for(let i=0;i<a.length;i++){const v=a[i];
+    if(h.length<N){h.push(v);up(h.length-1);}
+    else if(v>h[0]){h[0]=v;down(0);}}
+  return h;}
+
+/* --- game state ------------------------------------------------------- */
+const ROUND_MS=20000, BASE=100;
+let deck=[], idx=0, score=0, streak=0, tStart=0, tick=null, locked=false;
+
+const $=id=>document.getElementById(id);
+const shuffle=a=>{a=a.slice();for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;};
+/* Deterministic per-session RNG seeded from the clock: rounds are dealt in a
+   different order each play (Ivan's "random draws"), but a single game is
+   reproducible while it runs. */
+let _s=(Date.now()^0x9e3779b9)>>>0;
+function rnd(){_s^=_s<<13;_s>>>=0;_s^=_s>>17;_s^=_s<<5;_s>>>=0;return _s/4294967296;}
+
+function startGame(){
+  deck=shuffle(ROUNDS); idx=0; score=0; streak=0;
+  $("gameover").hidden=true; $("stage").hidden=false;
+  paint(); nextRound();
+}
+function paint(){
+  $("hud-score").textContent=score;
+  $("hud-streak").textContent=streak+(streak>=2?"×"+mult():"");
+  $("hud-round").textContent=Math.min(idx+1,deck.length)+"/"+deck.length;
+}
+const mult=()=>1+Math.min(streak,4)*0.5;
+
+function nextRound(){
+  if(idx>=deck.length){return endGame();}
+  const r=deck[idx]; locked=false;
+  $("q-round").textContent=r.q;
+  $("q-shape").textContent=r.shape;
+  $("q-verdict").innerHTML="";
+  const box=$("q-picks"); box.innerHTML="";
+  for(const p of shuffle(r.picks)){
+    const b=document.createElement("button");
+    b.innerHTML=p.label+'<span class="why">'+p.why+'</span>';
+    b.addEventListener("click",()=>answer(p.k,b));
+    box.appendChild(b);
+  }
+  paint(); startTimer();
+}
+function startTimer(){
+  tStart=performance.now(); clearInterval(tick);
+  tick=setInterval(()=>{
+    const left=Math.max(0,ROUND_MS-(performance.now()-tStart));
+    const el=$("hud-time"); el.textContent=(left/1000).toFixed(1)+"s";
+    el.className=left<5000?"warn":"";
+    if(left<=0){clearInterval(tick); if(!locked) answer(null,null);}
+  },100);
+}
+
+function answer(key,btn){
+  if(locked) return; locked=true; clearInterval(tick);
+  const r=deck[idx];
+  const elapsed=performance.now()-tStart;
+  const correct=key===r.best;
+  const partial=!correct&&key&&r.partial.includes(key);
+
+  let gained=0;
+  if(correct){
+    /* Speed bonus is a fraction of the base, so a fast wrong answer never
+       beats a slow right one. */
+    const speed=Math.max(0,1-elapsed/ROUND_MS);
+    gained=Math.round(BASE*mult()*(1+0.5*speed));
+    streak++;
+  } else {
+    if(partial) gained=Math.round(BASE*0.25);
+    streak=0;
+  }
+  score+=gained;
+
+  for(const b of $("q-picks").children){
+    b.disabled=true;
+    const lab=b.textContent;
+    const p=r.picks.find(x=>lab.startsWith(x.label));
+    if(p&&p.k===r.best) b.classList.add("right");
+    else if(p&&btn===b) b.classList.add("wrong");
+  }
+
+  const v=$("q-verdict");
+  const head=key===null
+    ? '<span class="tag no">OUT OF TIME</span> '
+    : correct ? '<span class="tag ok">CORRECT</span> +'+gained+' '
+    : partial ? '<span class="tag no">WORKS, BUT NOT BEST</span> +'+gained+' '
+              : '<span class="tag no">NO</span> ';
+  v.innerHTML=head+"<br>"+r.lesson;
+  paint();
+
+  /* Show the consequence rather than assert it. */
+  const out=r.run?r.run():(r.demo?r.demo():null);
+  if(out){
+    const isTime=!!r.run;
+    let html='<table class="scores" style="margin-top:12px">';
+    for(const k in out){
+      const val=isTime?fmt(out[k]):out[k];
+      html+='<tr><td colspan="2" style="color:var(--dim)">'+k+'</td><td>'+val+'</td></tr>';
+    }
+    html+="</table>";
+    v.innerHTML+=html;
+  }
+
+  const go=document.createElement("button");
+  go.textContent=idx>=deck.length-1?"See final score":"Next round";
+  go.addEventListener("click",()=>{idx++;nextRound();});
+  v.appendChild(document.createElement("br")); v.appendChild(go);
+}
+
+function endGame(){
+  clearInterval(tick);
+  $("stage").hidden=true; $("gameover").hidden=false;
+  $("hud-time").textContent="—";
+  const rank=recordScore(score);
+  $("go-line").textContent="Final score "+score;
+  $("go-sub").textContent=rank>0
+    ? "Rank "+rank+" on this machine."
+    : "Not a top-ten score on this machine.";
+  renderScores();
+}
+
+/* --- the table: bounded top-N, kept in the cabinet -------------------- */
+const KEY="sortie.hiscores.v1", KEEP=10;
+function loadScores(){try{return JSON.parse(localStorage.getItem(KEY))||[];}catch(e){return [];}}
+function saveScores(x){try{localStorage.setItem(KEY,JSON.stringify(x));}catch(e){}}
+let lastRank=0;
+function recordScore(sc){
+  const rows=loadScores();
+  rows.push({s:sc,t:Date.now()});
+  rows.sort((a,b)=>b.s-a.s);
+  /* Discard everything past the tenth row — the stream is not kept. */
+  const kept=rows.slice(0,KEEP);
+  saveScores(kept);
+  const at=kept.findIndex(r=>r.s===sc);
+  lastRank=at>=0?at+1:0;   // 0 = did not make the table
+  return lastRank;
+}
+function renderScores(){
+  const rows=loadScores(), body=$("hiscores");
+  body.innerHTML="";
+  if(!rows.length){
+    body.innerHTML='<tr><td colspan="3" style="color:var(--faint)">No scores yet.</td></tr>';
+    return;
+  }
+  rows.forEach((r,i)=>{
+    const tr=document.createElement("tr");
+    if(i+1===lastRank) tr.className="you";
+    const d=new Date(r.t);
+    tr.innerHTML='<td>'+(i+1)+'</td><td>'+d.toISOString().slice(0,10)+'</td><td>'+r.s+'</td>';
+    body.appendChild(tr);
+  });
+}
+
+/* --- mode switch ------------------------------------------------------ */
+function setMode(play){
+  $("play").hidden=!play; $("learn").hidden=play;
+  $("m-play").setAttribute("aria-pressed",play?"true":"false");
+  $("m-learn").setAttribute("aria-pressed",play?"false":"true");
+  $("mode-hint").textContent=play
+    ? "Five rounds, dealt in a random order. You are scored on the choice, not on how fast your computer is."
+    : "Read the findings, run them yourself. Then switch to Play and see whether they stuck.";
+  if(play&&!deck.length){warmUp();startGame();renderScores();}
+}
+$("m-play").addEventListener("click",()=>setMode(true));
+$("m-learn").addEventListener("click",()=>setMode(false));
+$("go-again").addEventListener("click",startGame);
+$("clear-scores").addEventListener("click",()=>{
+  try{localStorage.removeItem(KEY);}catch(e){} lastRank=0; renderScores();
 });
 </script>
 </body>
