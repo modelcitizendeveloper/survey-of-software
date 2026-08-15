@@ -1074,14 +1074,22 @@ $("clear-scores").addEventListener("click",()=>{
     // ALGORITHMIC finding transfers and readers do not all write Python — but
     // the library names do not transfer, and a prompt that stays silent invites
     // the assistant to invent coverage. So it says so.
+    // /ask/ 301s to the canonical /survey/ path. It exists so a fetch made by a
+    // reader's own assistant is distinguishable from browser traffic and from the
+    // installed Skill (/skill/), which is automatic rather than chosen. Note the
+    // signal is one-directional: a fetch proves the prompt was used, but an
+    // assistant answering without browsing leaves no trace, so zero proves
+    // nothing. Named /ask/ rather than /byoai/ because this URL is reader-visible
+    // — it travels inside the copied prompt.
+    const REF = "https://research.modelcitizendeveloper.com/ask/survey/1-001/";
     if(lang && lang !== "Python"){
-      L.push("Reference: https://research.modelcitizendeveloper.com/survey/1-001/");
+      L.push("Reference: " + REF);
       L.push("That survey covers PYTHON libraries. Its structural findings transfer");
       L.push("(re-sorting on every insert, bounded vs unbounded retention, when a");
       L.push("non-comparison sort applies) but its library names do not. Use it for");
       L.push("the shape of the problem and name the real options in " + lang + ".");
     } else {
-      L.push("Reference: https://research.modelcitizendeveloper.com/survey/1-001/");
+      L.push("Reference: " + REF);
     }
     out.value=L.join("\n");
     const enc=encodeURIComponent(out.value);
