@@ -1052,11 +1052,37 @@ $("clear-scores").addEventListener("click",()=>{
     L.push("  - which library or data structure, and why it fits THESE conditions");
     L.push("  - what I give up by choosing it");
     L.push("  - what would have to change about my situation for a different one to win");
+    L.push("  - any failure mode I should guard against at ingest");
+    L.push("");
+    L.push("Benchmark the live candidates where you can, rather than extrapolating");
+    L.push("from published figures, and say which numbers you measured and which you");
+    L.push("took from a source.");
+    L.push("");
+    // The observed failure this fixes: a run benchmarked correctly, stated the
+    // rule "take the bisect list if k is fixed and small and you read
+    // constantly", then recommended the heap anyway — against its own table.
+    // Not a wrong answer, but the bolded pick did not follow from the conditions
+    // it had just established, and a reader skimming gets the weaker one.
+    L.push("Then commit to ONE recommendation, and make sure it is the one your own");
+    L.push("measurements support under these conditions. If two are within noise of");
+    L.push("each other, say so plainly instead of picking one and justifying it.");
     L.push("");
     L.push("Do not just give me the fastest option. Give me the conditions under which");
     L.push("each one wins, and say plainly when you are unsure rather than guessing.");
     L.push("");
-    L.push("Reference: https://research.modelcitizendeveloper.com/survey/1-001/");
+    // The survey is Python-only. The chips offer five languages because the
+    // ALGORITHMIC finding transfers and readers do not all write Python — but
+    // the library names do not transfer, and a prompt that stays silent invites
+    // the assistant to invent coverage. So it says so.
+    if(lang && lang !== "Python"){
+      L.push("Reference: https://research.modelcitizendeveloper.com/survey/1-001/");
+      L.push("That survey covers PYTHON libraries. Its structural findings transfer");
+      L.push("(re-sorting on every insert, bounded vs unbounded retention, when a");
+      L.push("non-comparison sort applies) but its library names do not. Use it for");
+      L.push("the shape of the problem and name the real options in " + lang + ".");
+    } else {
+      L.push("Reference: https://research.modelcitizendeveloper.com/survey/1-001/");
+    }
     out.value=L.join("\n");
     const enc=encodeURIComponent(out.value);
     const a=box.querySelector('[data-act="chatgpt"]'), c=box.querySelector('[data-act="claude"]');
