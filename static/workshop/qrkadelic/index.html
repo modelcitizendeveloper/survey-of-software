@@ -98,7 +98,7 @@ push the look before your phone stops reading it.</p>
 
 <div class="panel">
   <p class="note" style="margin:0 0 10px"><strong>The rule of this page:</strong> every figure
-  below is measured on your machine while you wait, using the real Python libraries running in
+  below is measured on your machine while you wait, by the Python libraries themselves running in
   this tab. Where a number came from research instead, it says so in orange.</p>
   <label for="payload">Your payload — a URL, some text, anything</label>
   <input type="text" id="payload" value="https://modelcitizendeveloper.com" spellcheck="false">
@@ -189,8 +189,8 @@ useless until you need the identical encoder in Java, Rust and TypeScript too.</
 <div class="panel research">
   <p class="kicker">From research, not measured in this tab</p>
   <p style="margin:0 0 8px"><strong>zxing-cpp ships compiled binaries, so it cannot run in this
-  page.</strong> Saying so is the honest option; simulating it would defeat the point of the
-  whole workshop.</p>
+  page.</strong> Saying so beats simulating it, which would defeat the point of the whole
+  workshop.</p>
   <p class="note" style="margin:0">From the survey, measured on one machine (CPython 3.12.3,
   1,000 iterations, matrix construction only): <strong>0.189 ms per code</strong> — roughly 17×
   faster than any pure-Python option here. It is also the only library in the category that
@@ -199,7 +199,7 @@ useless until you need the identical encoder in Java, Rust and TypeScript too.</
 </div>
 
 <!-- ── Panel 6 ─────────────────────────────────────────────────────── -->
-<h2>PyQRCode — the honest empty space</h2>
+<h2>PyQRCode — the empty space</h2>
 <div class="panel empty">
   <p style="margin:0 0 8px">Every other library on this page has somewhere it wins. This one
   doesn't, and that is the useful finding.</p>
@@ -260,7 +260,7 @@ let ec = "M", style = "plain", occ = 0;
 const status = document.getElementById("status");
 const $ = id => document.getElementById(id);
 
-/* jsQR decodes the canvas so the slider verdict is live and honest. */
+/* jsQR decodes the canvas, so the slider verdict is measured rather than predicted. */
 function decodes(canvas){
   const ctx = canvas.getContext("2d", { willReadFrequently:true });
   const d = ctx.getImageData(0,0,canvas.width,canvas.height);
@@ -398,11 +398,32 @@ $("go").onclick = async () => {
     pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/" });
     status.textContent = "Loading Pillow…";
     await pyodide.loadPackage(["Pillow", "micropip"]);
-    status.textContent = "Installing qrcode, segno, qrcodegen, pyStrich — the real libraries…";
+    status.textContent = "Installing qrcode, segno, qrcodegen, pyStrich…";
+    // pyStrich pins pillow>=12.2 on Python 3.11+; Pyodide ships 10.2.0, so micropip
+    // refuses the whole transaction. Tested against pillow 10.2 directly: pyStrich runs
+    // fine, the pin is conservative. So install it without dependency resolution, and
+    // bring typing_extensions in by hand since deps=False skips that too.
+    // Each package is installed separately: one library that will not load should cost
+    // its own panel, not the page.
     await pyodide.runPythonAsync(`
-import micropip
-await micropip.install(["qrcode", "segno", "qrcodegen", "pystrich"])
+import micropip, json
+loaded, failed = [], {}
+for pkg in ["qrcode", "segno", "qrcodegen", "typing_extensions"]:
+    try:
+        await micropip.install(pkg); loaded.append(pkg)
+    except Exception as e:
+        failed[pkg] = str(e)[:120]
+try:
+    await micropip.install("pystrich", deps=False); loaded.append("pystrich")
+except Exception as e:
+    failed["pystrich"] = str(e)[:120]
+_boot = json.dumps({"loaded": loaded, "failed": failed})
 `);
+    const boot = JSON.parse(pyodide.globals.get("_boot"));
+    if (boot.failed.qrcode || boot.failed.segno || boot.failed.qrcodegen) {
+      throw new Error("core libraries unavailable: " + JSON.stringify(boot.failed));
+    }
+    window.__missing = Object.keys(boot.failed);
     await pyodide.runPythonAsync(PY);
     ready = true;
     status.textContent = "Running — real Python, in this tab. Nothing leaves your machine.";
@@ -522,6 +543,14 @@ async function panel2(){
 
 /* Panel 3 — other symbologies */
 async function panel3(){
+  if ((window.__missing||[]).includes("pystrich")) {
+    $("p3").innerHTML = `<p class="kicker" style="color:var(--warn)">Could not load in this browser</p>` +
+      `<p style="margin:0">pyStrich did not install here, so this panel has nothing measured to show.` +
+      ` From the survey: it ships Data Matrix, PDF417, Aztec, Code 128, Code 39, EAN-13 and ITF in` +
+      ` pure Python, plus DXF output for engraving. <a href="/survey/1-080-1/">The survey has the workings.</a></p>`;
+    $("p3").parentElement.classList.add("research");
+    return;
+  }
   const s = call("symbologies", payload());
   $("p3").innerHTML = Object.entries(s).map(([k,v]) =>
     v.startsWith("err:")
