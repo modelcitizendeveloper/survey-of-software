@@ -160,12 +160,24 @@ in-page; the reader's phone is the second instrument.</p>
   <div class="eng"><div id="p1eng" class="mono" style="margin-top:12px"></div></div>
 </div>
 
-<p class="plain"><strong>The surprise:</strong> turning the protection all the way up doesn't
-help. Try Q, then H — the code gets bigger instead of tougher.</p>
-<p class="eng"><strong>Q→H buys nothing here.</strong> Both force version 4; the additional ECC
-codewords are consumed by the larger symbol, so contiguous-area tolerance is unchanged. The
-widely-repeated "30% of a QR code can be damaged" is <em>codeword</em> recovery capacity, not
-area occlusion — measured on this payload it is L 2%, M 4%, Q 11%, H 11%.</p>
+<p class="plain"><strong>The surprise:</strong> most of the benefit arrives at Q. Going from
+M to Q buys you a lot of room; going on to H buys almost none — the code mostly just gets
+bigger.</p>
+<p class="eng">Measured on this payload with the penguin at this aspect and pad, as the widest
+occluder that still decodes — <strong>L 13.5%, M 18.5%, Q 28.0%, H 29.5% of symbol width</strong>
+(2.5%, 4.7%, 10.7%, 11.9% by area). Same units as the slider.</p>
+<p class="eng"><strong>M→Q is the jump; Q→H is nearly flat.</strong> Both Q and H force version 4,
+so the extra ECC codewords are largely consumed by the larger symbol — with a centred square
+occluder the two are <em>identical</em> at 11% of area; with the penguin's shape and pad, H buys
+about 1.5 points of width over Q. Either way, the widely-repeated "30% of a QR code can be
+damaged" is <em>codeword</em> recovery capacity and not area you may paint over.</p>
+<p class="eng"><strong>These ceilings are not a decoder artefact.</strong> Swept across all four
+zxing-cpp binarizers — LocalAverage, GlobalHistogram, FixedThreshold, BoolCast — the limits are
+identical, because covered modules are destroyed data rather than data that is merely hard to
+read. <strong>Confirmed on hardware: at every error-correction level, a Pixel gave up at the
+same cutoff this page did.</strong> That is the sharp contrast with colour, where the same
+phone read a bright tie-dye at EC=L that this page had called unreadable — colour failures
+are a statement about the scanner, occlusion failures are a statement about the code.</p>
 
 <!-- ── Panel 2 ─────────────────────────────────────────────────────── -->
 <h2>segno — when it has to print, and stay small</h2>
@@ -574,11 +586,23 @@ async function panel1(){
     v.textContent = ok
       ? (got.how === "directly" ? "Scans" : "Scans, with effort")
       : "This page's decoder gave up";
+    // Two different kinds of failure, and conflating them misleads.
+    //
+    // COLOUR is decoder-dependent: a bright tie-dye at EC=L failed the binarizer used
+    // here and read instantly on a Pixel. Cite that only when a colour style is on.
+    //
+    // OCCLUSION is not: swept across all four zxing-cpp binarizers, the ceilings are
+    // identical (L 2.5%, M 4.5%, Q 11%, H 11%) — a white hole destroys codewords, and
+    // no amount of thresholding recovers data that is gone. Untested on a phone, so
+    // the invitation stands; but there is no binarizer story to hide behind.
+    const styled = (style === "tiedye" || style === "bright");
     $("p1note").textContent = ok
       ? (got.how === "directly"
           ? "Point your phone at it too — that is the reading that counts."
           : "It needed a global threshold to read. A phone camera may manage it easily; try yours.")
-      : "That is a statement about this page's decoder, not a verdict on the code. Phone scanners are markedly better than library decoders — a bright tie-dye at EC=L failed here and read instantly on a Pixel. Try yours before believing this box.";
+      : styled
+        ? "A statement about this page's decoder, not a verdict on the code. A bright tie-dye at EC=L failed here and read instantly on a Pixel — colour failures depend heavily on the scanner. Try yours before believing this box."
+        : "The penguin is now covering more than the error correction can rebuild. Unlike colour, this does not depend on the decoder — all four binarizers tested give the same ceiling, because the covered codewords are simply gone. A Pixel gave up at the same cutoff as this page at every error-correction level — so unlike a colour failure, a better scanner will not rescue this one.";
     $("p1eng").textContent =
       `library : qrcode 8.2\nEC      : ${r.ec}\nversion : ${r.version}  (${r.modules} modules)\n` +
       `penguin: ${occ}% of symbol width, centred, on a white pad\n` +
