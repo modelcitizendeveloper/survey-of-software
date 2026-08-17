@@ -289,12 +289,37 @@ let ec = "M", style = "plain", occ = 0;
 const status = document.getElementById("status");
 const $ = id => document.getElementById(id);
 
-/* jsQR decodes the canvas, so the slider verdict is measured rather than predicted. */
+/* Decode the canvas — but try as hard as a phone does before saying anything.
+ *
+ * Ivan's Pixel read a bright tie-dye code at EC=L that this page had called broken.
+ * He was right and the page was wrong: re-tested, the same image decodes fine under
+ * zxing-cpp's GlobalHistogram binarizer and fails only under its LocalAverage default.
+ * The code was readable all along; one binarizer was not.
+ *
+ * So a single decode attempt is not evidence that a code is unreadable — it is evidence
+ * about the decoder. We try the raw pixels, both inversions, and a global threshold
+ * (the cheap equivalent of GlobalHistogram), and we still only claim what THIS page
+ * managed. The phone is the authority.
+ */
 function decodes(canvas){
   const ctx = canvas.getContext("2d", { willReadFrequently:true });
   const d = ctx.getImageData(0,0,canvas.width,canvas.height);
-  const r = jsQR(d.data, d.width, d.height);
-  return r ? r.data : null;
+  let r = jsQR(d.data, d.width, d.height, { inversionAttempts: "attemptBoth" });
+  if (r) return { text: r.data, how: "directly" };
+
+  // global threshold at the mean luminance, then retry
+  const px = d.data, n = px.length;
+  let sum = 0;
+  for (let i = 0; i < n; i += 4) sum += (px[i]*299 + px[i+1]*587 + px[i+2]*114) / 1000;
+  const mean = sum / (n/4);
+  const copy = new Uint8ClampedArray(px);
+  for (let i = 0; i < n; i += 4) {
+    const l = (px[i]*299 + px[i+1]*587 + px[i+2]*114) / 1000;
+    const v = l < mean ? 0 : 255;
+    copy[i] = copy[i+1] = copy[i+2] = v; copy[i+3] = 255;
+  }
+  r = jsQR(copy, d.width, d.height, { inversionAttempts: "attemptBoth" });
+  return r ? { text: r.data, how: "after a global threshold" } : null;
 }
 
 const PY = String.raw`
@@ -546,15 +571,19 @@ async function panel1(){
     const ok = got !== null;
     const v = $("v1");
     v.className = "verdict " + (ok ? "ok" : "no");
-    v.textContent = ok ? "Still scans" : "Broken — nothing can read it";
+    v.textContent = ok
+      ? (got.how === "directly" ? "Scans" : "Scans, with effort")
+      : "This page's decoder gave up";
     $("p1note").textContent = ok
-      ? "Point your phone at it. If your phone disagrees with this page, your phone is the one that matters."
-      : "Back the slider off, or raise the error-correction level.";
+      ? (got.how === "directly"
+          ? "Point your phone at it too — that is the reading that counts."
+          : "It needed a global threshold to read. A phone camera may manage it easily; try yours.")
+      : "That is a statement about this page's decoder, not a verdict on the code. Phone scanners are markedly better than library decoders — a bright tie-dye at EC=L failed here and read instantly on a Pixel. Try yours before believing this box.";
     $("p1eng").textContent =
       `library : qrcode 8.2\nEC      : ${r.ec}\nversion : ${r.version}  (${r.modules} modules)\n` +
       `penguin: ${occ}% of symbol width, centred, on a white pad\n` +
       `mean luminance: ${r.lum}/255\n` +
-      `in-page decode (jsQR): ${ok ? "PASS — " + got.slice(0,60) : "FAIL"}`;
+      `in-page decode (jsQR): ${ok ? "PASS " + got.how + " — " + got.text.slice(0,52) : "FAIL — decoder-dependent, not conclusive"}`;
     p1busy = false;
     if (p1queued) { p1queued = false; panel1(); }
   };
