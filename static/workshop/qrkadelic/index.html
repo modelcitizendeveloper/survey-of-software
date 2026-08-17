@@ -81,6 +81,10 @@
 
 <p class="kicker">Workshop · floor model for <a href="/survey/1-080-1/">Survey of Software 1.080.1</a></p>
 <h1>qrkadelic</h1>
+<img src="penguin.png" alt="A hand-drawn penguin with a working QR code in its belly, on a background of QR-like dots"
+     width="900" height="549" style="max-width:100%;height:auto;margin:4px 0 18px">
+<p class="note" style="margin:-8px 0 20px">Scan the penguin — it points back at this page, so you
+can carry it to your phone and use the camera you actually own as the second instrument.</p>
 <p class="dek">Six Python QR libraries all choose the <em>same</em> code, and every one reads
 back the same. So the interesting question isn't which encodes better — it's how far you can
 push the look before your phone stops reading it.</p>
@@ -107,12 +111,12 @@ push the look before your phone stops reading it.</p>
 </div>
 
 <!-- ── Panel 0 ─────────────────────────────────────────────────────── -->
-<h2>Nobody wins here</h2>
-<p class="plain">Four different programs, written by people who have never spoken to each other,
-encode your payload. Watch what comes out.</p>
-<p class="eng">Encoder parity check: <code>qrcode</code>, <code>segno</code>,
-<code>qrcodegen</code> and <code>pyStrich</code>, same payload, same error-correction level,
-compared module by module.</p>
+<h2>Your payload, four ways</h2>
+<p class="plain">Four separate libraries — written by different people, in different decades —
+encode whatever you typed above. Here is what each one produced. Look at them before reading on.</p>
+<p class="eng">Encoder parity: <code>qrcode</code>, <code>segno</code> and <code>qrcodegen</code>
+encode the same payload at the same error-correction level. Rendered side by side, then compared
+module by module.</p>
 <div class="panel"><div id="p0">Waiting for start.</div></div>
 
 <!-- ── Panel 1 ─────────────────────────────────────────────────────── -->
@@ -290,6 +294,25 @@ def _tiedye(size, dark=True):
         d.ellipse([size//2-r+w, size//2-r-w, size//2+r+w, size//2+r-w], fill=c)
     return img.filter(ImageFilter.GaussianBlur(9))
 
+def render_each(payload, px=150):
+    """One PNG per library, so the comparison is visible before it is asserted."""
+    out = {}
+    q = qrcode.QRCode(error_correction=EC["M"], box_size=6, border=2)
+    q.add_data(payload); q.make(fit=True)
+    b = io.BytesIO(); q.make_image(fill_color="black", back_color="white").convert("RGB").resize((px,px), Image.NEAREST).save(b, format="PNG")
+    out["qrcode"] = base64.b64encode(b.getvalue()).decode()
+    b = io.BytesIO(); segno.make_qr(payload, error="m").save(b, kind="png", scale=6, border=2)
+    out["segno"] = base64.b64encode(b.getvalue()).decode()
+    g = qrcodegen.QrCode.encode_text(payload, qrcodegen.QrCode.Ecc.MEDIUM)
+    n = g.get_size(); bd = 2; side = n + bd*2
+    im = Image.new("1", (side, side), 1)
+    for y in range(n):
+        for x in range(n):
+            if g.get_module(x, y): im.putpixel((x+bd, y+bd), 0)
+    b = io.BytesIO(); im.resize((px,px), Image.NEAREST).convert("RGB").save(b, format="PNG")
+    out["qrcodegen"] = base64.b64encode(b.getvalue()).decode()
+    return json.dumps(out)
+
 def parity(payload):
     """All four encoders, same payload, same EC. Are the matrices identical?"""
     q = qrcode.QRCode(error_correction=EC["M"]); q.add_data(payload); q.make(fit=True)
@@ -444,14 +467,21 @@ async function runAll(){
 /* Panel 0 — encoder parity */
 async function panel0(){
   const r = call("parity", payload());
+  const imgs = call("render_each", payload());
+  const strip = Object.entries(imgs).map(([k,v]) =>
+    `<figure style="margin:0;text-align:center;flex:0 0 auto">
+       <img class="qr" width="150" height="150" alt="${k}'s QR code" src="data:image/png;base64,${v}">
+       <figcaption class="note" style="margin:4px 0 0"><code>${k}</code></figcaption>
+     </figure>`).join("");
   const tick = b => b ? '<span style="color:var(--good)">yes</span>' : '<span style="color:var(--warn)">no</span>';
   $("p0").innerHTML =
+    `<div style="display:flex;gap:16px;flex-wrap:wrap;justify-content:center;margin-bottom:14px">${strip}</div>` +
     `<p style="margin:0 0 10px"><span class="verdict ${r.sizes_agree?'ok':'no'}">` +
-    (r.sizes_agree ? `All three chose version ${r.version} — ${r.size}×${r.size}` : "They disagree on size") +
+    (r.sizes_agree ? `Same code, three times over — version ${r.version}, ${r.size}×${r.size}` : "They disagree on size") +
     `</span></p>` +
-    `<p class="plain" style="margin:0 0 10px">Every one picked the same size code, at the same
-     protection level, and every one reads back as your exact payload. That is the part that
-     decides whether your code works — and there is no "better" to choose between.</p>` +
+    `<p class="plain" style="margin:0 0 10px">They picked the same size, the same protection
+     level, and all three scan as your exact payload. Nothing in that list is a reason to prefer
+     one library over another — which is why the rest of this page is about everything else.</p>` +
     `<table class="eng"><thead><tr><th>comparison</th><th>module-for-module</th></tr></thead><tbody>
        <tr><td>version &amp; size agree</td><td>${tick(r.sizes_agree)}</td></tr>
        <tr><td><code>qrcode</code> = <code>qrcodegen</code></td><td>${tick(r.qrcode_eq_qrcodegen)}</td></tr>
