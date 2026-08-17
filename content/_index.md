@@ -364,7 +364,8 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.173** Terminology Extraction](/survey/1-173) - KeyBERT, PyATE, YAKE, spaCy
 - **1.174** Computer-Assisted Translation - CAT tool comparison
 - **1.175** Literary Translation Tools - Context-aware translation
-- **1.175-1.179** _Available for future use_
+- ✅ [**1.176** TMX File Format Libraries](/survey/1-176) - translate-toolkit, hypomnema, polib
+- **1.177-1.179** _Available for future use_
 
 ---
 
