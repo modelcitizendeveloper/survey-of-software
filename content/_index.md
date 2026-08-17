@@ -73,7 +73,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.020-029: Mathematical & Statistical Algorithms
 
-**Completed: 7/10**
+**Completed: 10/10**
 
 - ✅ [**1.020.1** Linear Programming](/survey/1-020-1) - CVXPY, OR-Tools, PuLP optimization
 - ✅ [**1.021** Statistical Testing Libraries](/survey/1-021) - Hypothesis testing, A/B testing
@@ -147,7 +147,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.060-069: Cryptography, Networking & Security
 
-**Completed: 4/10**
+**Completed: 10/10**
 
 - ✅ [**1.060** Cryptographic Libraries](/survey/1-060) - cryptography vs PyNaCl
 - ✅ [**1.061** Hashing](/survey/1-061) - hashlib, xxhash, blake3
@@ -181,7 +181,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.080-089: Geometric & Spatial Algorithms
 
-**Completed: 2/11**
+**Completed: 8/11**
 
 - ✅ [**1.080** Image Processing](/survey/1-080) - OpenCV, scikit-image, Pillow
   - ✅ [**1.080.1** QR Code Generation](/survey/1-080-1) - qrcode, segno, pyqrcode
@@ -199,7 +199,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.090-099: Specialized Algorithm Domains
 
-**Completed: 3/15**
+**Completed: 4/15**
 
 - **1.090** Bioinformatics - Sequence alignment, BLAST, BioPython
 - **1.091** Computer Vision (category)
@@ -221,7 +221,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.100-109: Text & Document Processing
 
-**Completed: 7/13**
+**Completed: 8/13**
 
 - ✅ [**1.100** Text Processing](/survey/1-100) - Regex, string manipulation, NLP utilities
 - ✅ [**1.101** PDF Processing - ReportLab, WeasyPrint, PyPDF2](/survey/1-101)
@@ -241,7 +241,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.110-119: User Interface & Frontend
 
-**Completed: 12/17**
+**Completed: 15/18**
 
 - ✅ [**1.110** Frontend Frameworks](/survey/1-110) - React, Vue, Svelte, Angular
   - **1.110.1** React Meta-Frameworks - Next.js, Remix, Gatsby
@@ -249,6 +249,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
   - **1.110.3** Svelte Meta-Frameworks - SvelteKit
   - ✅ [**1.110.4** Browser Python Execution](/survey/1-110-4)
   - ✅ [**1.110.5** Static Site Generators](/survey/1-110-5) - Hugo, Docusaurus, MkDocs, Jekyll
+  - ✅ [**1.110.6** Code & Markdown Presentation Frameworks](/survey/1-110-6) - Marp, Slidev, reveal.js, Quarto, Spectacle
 - ✅ [**1.111** State Management - Redux, Zustand, Jotai, Pinia](/survey/1-111)
 - ✅ [**1.112** CSS Frameworks - Tailwind, Bootstrap, Material UI](/survey/1-112)
 - ✅ [**1.113** UI Component Libraries - shadcn/ui, Radix, Headless UI](/survey/1-113)
@@ -341,7 +342,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.160-169: Character-Based Writing Systems (CJK)
 
-**Completed: 7/8**
+**Completed: 7/7**
 
 - ✅ [**1.160** Character Databases](/survey/1-160) - Unihan, CHISE, IDS, CJKVI
 - ✅ [**1.161** Radical & Component Analysis](/survey/1-161) - Character decomposition, semantic components
@@ -356,7 +357,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.170-179: Translation & Alignment
 
-**Completed: 4/7**
+**Completed: 5/7**
 
 - ✅ [**1.170** Machine Translation APIs](/survey/1-170) - DeepL, Google Translate, Azure Translator, Amazon Translate
 - ✅ [**1.171** Sentence Alignment](/survey/1-171) - Hunalign, Bleualign, vecalign
@@ -389,7 +390,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.190-199: Knowledge & Content Engineering
 
-**Completed: 0/5**
+**Completed: 0/4**
 
 - **1.190** Knowledge Graph Construction - Building concept maps from extracted text
 - **1.191** Corpus Analysis & Text Mining - Large document collection analysis
@@ -401,7 +402,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.200-219: LLM & AI Stack
 
-**Completed: 11/12**
+**Completed: 14/15**
 
 - ✅ [**1.200** LLM Orchestration](/survey/1-200) - LangChain, LlamaIndex, RAG
 - ✅ [**1.201** LLM Agent Frameworks - AutoGen, CrewAI, MetaGPT](/survey/1-201)
@@ -415,6 +416,9 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.209** Local LLM Serving - Ollama, vLLM, llama.cpp](/survey/1-209)
 - ✅ [**1.210** Multilingual & CJK LLMs](/survey/1-210) - BLOOM, XLM-RoBERTa, mBERT, ERNIE
 - ✅ [**1.211** CJK Embedding Models](/survey/1-211) - M3E, text2vec-chinese, LaBSE, multilingual-e5
+- ✅ [**1.212** AI Coding Agent Harnesses](/survey/1-212) - Claude Code, Codex CLI, OpenCode, Aider, Pi, Goose
+- ✅ [**1.215** LLM Provider Proxies & Routers](/survey/1-215) - LiteLLM, OpenRouter, Portkey, Bifrost, Cloudflare AI Gateway
+- ✅ [**1.216** Agentic Browser Automation](/survey/1-216) - browser-use, Stagehand, Skyvern, Chrome DevTools MCP, Playwright MCP, Browserbase, Steel
 
 ---
 
@@ -452,7 +456,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.300-309: Civic & Government Data
 
-**Completed: 6/7**
+**Completed: 6/6**
 
 - ✅ [**1.300** Public Finance Modeling](/survey/1-300) - Revenue forecasting, budget planning, fiscal analysis
 - ✅ [**1.301** Government Data Access](/survey/1-301) - Open data APIs, FOIA tools, data.gov integration
@@ -466,9 +470,9 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## Research Status
 
-**Total Defined**: 257 research slots
-**Completed**: 142 pieces (55%)
-**Remaining**: 115 pieces
+**Total Defined**: 258 research slots
+**Completed**: 166 pieces (64%)
+**Remaining**: 92 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
@@ -477,7 +481,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 **Want to understand our approach?** [Read the Vision →](/vision)
 
-**Want to replicate this research?** [See the Methodology →](/survey/methodology)
+**Want to replicate this research?** [See the Methodology →](/survey/method)
 
 ---
 
