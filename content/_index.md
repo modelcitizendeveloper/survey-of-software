@@ -164,9 +164,10 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.070-079: Machine Learning Algorithms
 
-**Completed: 4/10**
+**Completed: 5/11**
 
-- **1.070** Clustering - scikit-learn vs hdbscan vs fastcluster
+- ✅ [**1.070** Machine Learning Libraries (General-Purpose)](/survey/1-070) - scikit-learn, statsmodels, PyCaret, imbalanced-learn, mlxtend
+  - **1.070.1** Clustering - scikit-learn vs hdbscan vs fastcluster
 - ✅ [**1.071** Dimensionality Reduction](/survey/1-071) - UMAP, t-SNE, PCA
 - **1.072** Anomaly Detection - Isolation Forest, LOF, autoencoders
 - ✅ [**1.073** Time Series Forecasting](/survey/1-073) - Prophet, Darts, statsmodels
@@ -181,7 +182,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.080-089: Geometric & Spatial Algorithms
 
-**Completed: 8/11**
+**Completed: 9/11**
 
 - ✅ [**1.080** Image Processing](/survey/1-080) - OpenCV, scikit-image, Pillow
   - ✅ [**1.080.1** QR Code Generation](/survey/1-080-1) - qrcode, segno, pyqrcode
@@ -192,7 +193,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.085** Collision Detection](/survey/1-085) - Shapely, SAT algorithms
 - **1.086** Path Planning - RRT, PRM, A* for robotics
 - ✅ [**1.087** Geographic Libraries](/survey/1-087) - GeoPy, geopandas, Folium
-- **1.088** Coordinate Transformation - pyproj, utm
+- ✅ [**1.088** Raster Geospatial Libraries](/survey/1-088) - GDAL, rasterio, xarray, rioxarray
 - **1.089** Spatial Indexing - H3, S2, Geohash
 
 ---
@@ -454,6 +455,14 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ---
 
+## 1.240-249: Infrastructure & Platform Engineering
+
+**Completed: 1/1**
+
+- ✅ [**1.240** Container Networking & Service Mesh](/survey/1-240) - Cilium, Calico, Istio, Linkerd, Envoy, Flannel, Consul Connect
+
+---
+
 ## 1.300-309: Civic & Government Data
 
 **Completed: 6/6**
@@ -470,9 +479,9 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## Research Status
 
-**Total Defined**: 258 research slots
-**Completed**: 166 pieces (64%)
-**Remaining**: 92 pieces
+**Total Defined**: 259 research slots
+**Completed**: 168 pieces (65%)
+**Remaining**: 91 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
