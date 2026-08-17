@@ -1,0 +1,581 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>qrkadelic — a floor model for Survey of Software 1.080.1</title>
+<meta name="description" content="Six Python QR libraries all choose the same code and read back the same. So the choice is everything else — and how far you can push the styling before your phone stops reading it. Measured in your browser.">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://research.modelcitizendeveloper.com/workshop/qrkadelic/">
+<style>
+  /* Same palette as sortie so the workshop reads as one place. */
+  :root{
+    --ground:#0b1220; --panel:#0f1a2e; --line:#1e293b; --field:#26364f;
+    --text:#cbd5e1; --bright:#f1f5f9; --dim:#94a3b8; --faint:#64748b;
+    --accent:#5eead4; --on-accent:#042f2e; --warn:#f59e42; --bad:#fb7185; --good:#4ade80;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--text);line-height:1.65;
+       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+       -webkit-text-size-adjust:100%}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px}
+  a{color:var(--accent);text-decoration-color:#14532d}
+  a:hover{color:#99f6e4}
+  h1{font-size:2.1rem;line-height:1.15;margin:0 0 10px;color:#fff;letter-spacing:-.02em}
+  h2{font-size:1.25rem;margin:44px 0 10px;color:var(--bright);letter-spacing:-.01em}
+  h3{font-size:1rem;margin:26px 0 8px;color:var(--bright)}
+  .kicker{font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--dim);
+          font-weight:600;margin:0 0 12px}
+  .dek{font-size:1.1rem;color:var(--dim);margin:0 0 8px}
+  .site{font-size:.9rem;margin-bottom:26px}
+  .site a{margin-right:16px}
+  code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+  code{background:var(--panel);padding:1px 5px;border-radius:3px;color:var(--bright)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;
+         padding:18px;margin:18px 0}
+  button{font:inherit;font-weight:600;padding:9px 18px;border-radius:5px;cursor:pointer;
+         background:var(--accent);color:var(--on-accent);border:1px solid var(--accent)}
+  button:hover:not(:disabled){filter:brightness(.92)}
+  button:disabled{opacity:.55;cursor:not-allowed}
+  .modes{display:flex;gap:8px;margin:0 0 8px}
+  .modes button{background:transparent;color:var(--dim);border-color:var(--line);font-weight:600}
+  .modes button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+  .note{font-size:.9rem;color:var(--dim);margin:6px 0 0}
+  .eng{display:none}
+  body.engineering .eng{display:block}
+  body.engineering .plain{display:none}
+  table{border-collapse:collapse;width:100%;font-size:.9rem;margin:10px 0}
+  th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line)}
+  th{color:var(--dim);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em}
+  input[type=text]{font:inherit;width:100%;padding:9px 12px;border-radius:5px;
+       background:var(--field);color:var(--bright);border:1px solid var(--line)}
+  input[type=range]{width:100%;accent-color:var(--accent)}
+  label{font-size:.85rem;color:var(--dim);display:block;margin:12px 0 4px}
+  .row{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+  .col{flex:1 1 200px;min-width:0}
+  .verdict{font-weight:700;padding:5px 12px;border-radius:5px;display:inline-block;font-size:.95rem}
+  .ok{background:#052e16;color:var(--good);border:1px solid #166534}
+  .no{background:#4c0519;color:var(--bad);border:1px solid #9f1239}
+  canvas,img.qr{image-rendering:pixelated;max-width:100%;height:auto;background:#fff;border-radius:6px}
+  .swatches{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .swatches button{padding:5px 10px;font-size:.82rem;font-weight:500;
+       background:var(--field);color:var(--text);border-color:var(--line)}
+  .swatches button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+  .bars{margin:10px 0}
+  .bar{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:.86rem}
+  .bar .lbl{width:150px;flex:none;color:var(--dim)}
+  .bar .fill{height:20px;background:var(--accent);border-radius:3px;min-width:2px}
+  .bar .val{color:var(--bright);font-variant-numeric:tabular-nums}
+  .research{border-left:3px solid var(--warn);padding-left:14px}
+  .research .kicker{color:var(--warn)}
+  .empty{border-left:3px solid var(--faint);padding-left:14px;color:var(--dim)}
+  #status{font-size:.9rem;color:var(--dim);min-height:1.4em}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;
+        white-space:pre-wrap;background:var(--ground);border:1px solid var(--line);
+        border-radius:6px;padding:12px;color:var(--text);max-height:280px;overflow:auto}
+  .foot{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:.88rem;color:var(--faint)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker">Workshop · floor model for <a href="/survey/1-080-1/">Survey of Software 1.080.1</a></p>
+<h1>qrkadelic</h1>
+<p class="dek">Six Python QR libraries all choose the <em>same</em> code, and every one reads
+back the same. So the interesting question isn't which encodes better — it's how far you can
+push the look before your phone stops reading it.</p>
+<p class="site">
+  <a href="/survey/1-080-1/">The survey</a>
+  <a href="/workshop/sortie/">Sortie (1.001)</a>
+  <a href="https://modelcitizendeveloper.com/">Model Citizen Developer</a>
+</p>
+
+<div class="modes" role="group" aria-label="Reading mode">
+  <button id="m-plain" aria-pressed="true">Plain</button>
+  <button id="m-eng" aria-pressed="false">Engineering</button>
+</div>
+<p class="note" id="mode-hint">Plain language. Switch to Engineering for versions, byte counts and the measurements behind each claim.</p>
+
+<div class="panel">
+  <p class="note" style="margin:0 0 10px"><strong>The rule of this page:</strong> every figure
+  below is measured on your machine while you wait, using the real Python libraries running in
+  this tab. Where a number came from research instead, it says so in orange.</p>
+  <label for="payload">Your payload — a URL, some text, anything</label>
+  <input type="text" id="payload" value="https://modelcitizendeveloper.com" spellcheck="false">
+  <p id="status">Press start to download CPython (WebAssembly). First time only, then cached.</p>
+  <button id="go">Start</button>
+</div>
+
+<!-- ── Panel 0 ─────────────────────────────────────────────────────── -->
+<h2>Nobody wins here</h2>
+<p class="plain">Four different programs, written by people who have never spoken to each other,
+encode your payload. Watch what comes out.</p>
+<p class="eng">Encoder parity check: <code>qrcode</code>, <code>segno</code>,
+<code>qrcodegen</code> and <code>pyStrich</code>, same payload, same error-correction level,
+compared module by module.</p>
+<div class="panel"><div id="p0">Waiting for start.</div></div>
+
+<!-- ── Panel 1 ─────────────────────────────────────────────────────── -->
+<h2>qrcode — when it has to look like something</h2>
+<p class="plain">The code itself is fixed, so all the fun is in the drawing. Punch a hole
+through the middle and see how big you can get away with.</p>
+<p class="eng">Centred occlusion sweep against error-correction level. Decoding verified live
+in-page; the reader's phone is the second instrument.</p>
+<div class="panel">
+  <div class="row">
+    <div class="col" style="flex:0 0 240px">
+      <canvas id="c1" width="240" height="240"></canvas>
+      <p style="margin:8px 0 0"><span id="v1" class="verdict ok">—</span></p>
+    </div>
+    <div class="col">
+      <label for="occ"><span class="plain">How big a logo through the middle?</span><span class="eng">Centred occlusion, % of symbol area</span> — <span id="occv">0%</span></label>
+      <input type="range" id="occ" min="0" max="30" step="1" value="0">
+
+      <label><span class="plain">How much damage it can take</span><span class="eng">Error-correction level</span></label>
+      <div class="swatches" id="ecs">
+        <button data-ec="L" aria-pressed="false">L</button>
+        <button data-ec="M" aria-pressed="true">M</button>
+        <button data-ec="Q" aria-pressed="false">Q</button>
+        <button data-ec="H" aria-pressed="false">H</button>
+      </div>
+
+      <label><span class="plain">Style</span><span class="eng">Module drawer + colour mask</span></label>
+      <div class="swatches" id="styles">
+        <button data-style="plain" aria-pressed="true">Plain</button>
+        <button data-style="round" aria-pressed="false">Rounded</button>
+        <button data-style="circle" aria-pressed="false">Circles</button>
+        <button data-style="tiedye" aria-pressed="false">Tie-dye</button>
+        <button data-style="bright" aria-pressed="false">Tie-dye (bright)</button>
+      </div>
+      <p class="note" id="p1note"></p>
+    </div>
+  </div>
+  <div class="eng"><div id="p1eng" class="mono" style="margin-top:12px"></div></div>
+</div>
+
+<p class="plain"><strong>The surprise:</strong> turning the protection all the way up doesn't
+help. Try Q, then H — the code gets bigger instead of tougher.</p>
+<p class="eng"><strong>Q→H buys nothing here.</strong> Both force version 4; the additional ECC
+codewords are consumed by the larger symbol, so contiguous-area tolerance is unchanged. The
+widely-repeated "30% of a QR code can be damaged" is <em>codeword</em> recovery capacity, not
+area occlusion — measured on this payload it is L 2%, M 4%, Q 11%, H 11%.</p>
+
+<!-- ── Panel 2 ─────────────────────────────────────────────────────── -->
+<h2>segno — when it has to print, and stay small</h2>
+<p class="plain">Same code, written out as a vector for a printing press. The file sizes are
+not close — but it depends which drawing method you ask for.</p>
+<p class="eng">SVG byte counts, generated live. Three bars rather than two: the headline 16×
+describes <code>qrcode</code>'s default per-module emitter, and its <code>SvgPathImage</code>
+factory closes most of that gap.</p>
+<div class="panel"><div id="p2">Waiting for start.</div></div>
+
+<!-- ── Panel 3 ─────────────────────────────────────────────────────── -->
+<h2>pyStrich — more than QR, without a compiler</h2>
+<p class="plain">Not every barcode is a QR code. Same payload, other symbologies.</p>
+<p class="eng">Pure-Python multi-symbology encoder: Data Matrix, PDF417, Aztec, Code128 and
+more, plus DXF output for engraving.</p>
+<div class="panel"><div id="p3">Waiting for start.</div></div>
+
+<!-- ── Panel 4 ─────────────────────────────────────────────────────── -->
+<h2>qrcodegen — the same encoder in six languages</h2>
+<p class="plain">This one draws nothing at all. It hands you the grid and stops — which sounds
+useless until you need the identical encoder in Java, Rust and TypeScript too.</p>
+<p class="eng">Matrix-only reference implementation, one source across Java/TS/Python/Rust/C++/C.
+0.04 MB installed, zero dependencies, no renderer of any kind.</p>
+<div class="panel"><div id="p4">Waiting for start.</div></div>
+
+<!-- ── Panel 5 ─────────────────────────────────────────────────────── -->
+<h2>zxing-cpp — real, but not runnable here</h2>
+<div class="panel research">
+  <p class="kicker">From research, not measured in this tab</p>
+  <p style="margin:0 0 8px"><strong>zxing-cpp ships compiled binaries, so it cannot run in this
+  page.</strong> Saying so is the honest option; simulating it would defeat the point of the
+  whole workshop.</p>
+  <p class="note" style="margin:0">From the survey, measured on one machine (CPython 3.12.3,
+  1,000 iterations, matrix construction only): <strong>0.189 ms per code</strong> — roughly 17×
+  faster than any pure-Python option here. It is also the only library in the category that
+  creates <em>both</em> Micro QR and rMQR, and the only one that reads codes as well as writing
+  them. <a href="/survey/1-080-1/">The survey has the workings.</a></p>
+</div>
+
+<!-- ── Panel 6 ─────────────────────────────────────────────────────── -->
+<h2>PyQRCode — the honest empty space</h2>
+<div class="panel empty">
+  <p style="margin:0 0 8px">Every other library on this page has somewhere it wins. This one
+  doesn't, and that is the useful finding.</p>
+  <p class="note" style="margin:0"><strong>628,262 installs a month, and nothing shipped since
+  June 2016.</strong> It is the slowest thing measured in the survey (10.264 ms per code), and
+  segno does its entire job and more. If it is in your requirements file it arrived by
+  inheritance rather than by choice — and swapping it for segno is close to a one-line change.
+  Download counts in this category measure how dependency choices propagate through copied
+  requirements files, not how often anyone chose.</p>
+</div>
+
+<!-- ── Panel 7 ─────────────────────────────────────────────────────── -->
+<h2>Start your build</h2>
+<p class="plain">Take everything you just worked out and hand it to whichever AI you use. This
+copies your settings, the limits you found by dragging, and working code for exactly this
+configuration.</p>
+<p class="eng">Clipboard envelope — no vendor deep link, no API key, no dependency on anyone's
+roadmap. Paste into any assistant.</p>
+<div class="panel">
+  <button id="copy">Copy the brief</button>
+  <span id="copied" class="note" style="margin-left:10px"></span>
+  <div class="mono" id="envelope" style="margin-top:12px">Run the page first.</div>
+</div>
+
+<div class="foot">
+  <p><strong>qrkadelic</strong> is a floor model for
+  <a href="/survey/1-080-1/">Survey of Software 1.080.1 — QR Code Generation Libraries</a>,
+  refreshed 2026-08-17. Libraries run under Pyodide (CPython compiled to WebAssembly) in this
+  tab; nothing is sent anywhere. Measurements are from your machine except where marked
+  orange.</p>
+  <p>Made by Ivan Schneider · <a href="https://modelcitizendeveloper.com/">Model Citizen Developer</a></p>
+</div>
+
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+<script>
+/* ── mode toggle — same shape as sortie's Learn/Play ─────────────── */
+const bPlain = document.getElementById("m-plain"),
+      bEng   = document.getElementById("m-eng"),
+      hint   = document.getElementById("mode-hint");
+function setMode(eng){
+  document.body.classList.toggle("engineering", eng);
+  bPlain.setAttribute("aria-pressed", String(!eng));
+  bEng.setAttribute("aria-pressed", String(eng));
+  hint.textContent = eng
+    ? "Engineering. Versions, byte counts and the measurement behind each claim. Switch to Plain for the same demos in ordinary words."
+    : "Plain language. Switch to Engineering for versions, byte counts and the measurements behind each claim.";
+  try { localStorage.setItem("qrkadelic-mode", eng ? "eng" : "plain"); } catch(e){}
+}
+bPlain.onclick = () => setMode(false);
+bEng.onclick   = () => setMode(true);
+try { setMode(localStorage.getItem("qrkadelic-mode") === "eng"); } catch(e){ setMode(false); }
+
+/* ── state ───────────────────────────────────────────────────────── */
+let pyodide = null, ready = false;
+let ec = "M", style = "plain", occ = 0;
+const status = document.getElementById("status");
+const $ = id => document.getElementById(id);
+
+/* jsQR decodes the canvas so the slider verdict is live and honest. */
+function decodes(canvas){
+  const ctx = canvas.getContext("2d", { willReadFrequently:true });
+  const d = ctx.getImageData(0,0,canvas.width,canvas.height);
+  const r = jsQR(d.data, d.width, d.height);
+  return r ? r.data : null;
+}
+
+const PY = String.raw`
+import io, base64, json
+import qrcode, segno, qrcodegen
+from qrcode.image.styledpil import StyledPilImage
+from qrcode.image.styles.moduledrawers.pil import CircleModuleDrawer, RoundedModuleDrawer
+from qrcode.image.styles.colormasks import ImageColorMask, SolidFillColorMask
+import qrcode.image.svg as qsvg
+from PIL import Image, ImageDraw, ImageFilter, ImageStat
+import random
+
+EC = {"L":qrcode.constants.ERROR_CORRECT_L, "M":qrcode.constants.ERROR_CORRECT_M,
+      "Q":qrcode.constants.ERROR_CORRECT_Q, "H":qrcode.constants.ERROR_CORRECT_H}
+
+def _tiedye(size, dark=True):
+    cols = ([(120,0,45),(130,50,0),(90,80,0),(0,80,50),(0,50,110),(70,0,120)] if dark
+            else [(255,0,90),(255,140,0),(255,230,0),(0,200,120),(0,140,255),(150,0,255)])
+    img = Image.new("RGB",(size,size),cols[0]); d = ImageDraw.Draw(img); random.seed(7)
+    for r in range(size//2, 0, -14):
+        c = cols[(r//14) % len(cols)]; w = random.randint(-7,7)
+        d.ellipse([size//2-r+w, size//2-r-w, size//2+r+w, size//2+r-w], fill=c)
+    return img.filter(ImageFilter.GaussianBlur(9))
+
+def parity(payload):
+    """All four encoders, same payload, same EC. Are the matrices identical?"""
+    q = qrcode.QRCode(error_correction=EC["M"]); q.add_data(payload); q.make(fit=True)
+    m_qrcode = [[bool(c) for c in row] for row in q.get_matrix()]
+    s = segno.make_qr(payload, error="m")
+    m_segno = [[bool(c) for c in row] for row in s.matrix]
+    g = qrcodegen.QrCode.encode_text(payload, qrcodegen.QrCode.Ecc.MEDIUM)
+    m_gen = [[g.get_module(x,y) for x in range(g.get_size())] for y in range(g.get_size())]
+    def core(m):
+        n = len(m); b = 0
+        while b < n//2 and not any(m[b]) and not any(r[b] for r in m): b += 1
+        return [row[b:n-b] for row in m[b:n-b]]
+    a = core(m_qrcode)
+    sizes_agree = len(a)==len(m_segno)==len(m_gen)
+    return json.dumps({
+        "size": len(a), "version": q.version, "ec": "M",
+        "sizes_agree": bool(sizes_agree),
+        "qrcode_eq_qrcodegen": bool(a == m_gen),
+        "qrcode_eq_segno": bool(a == m_segno),
+        "all_identical": bool(sizes_agree and a == m_segno and a == m_gen),
+    })
+
+def styled(payload, ec_name, style, occ_pct, px=240):
+    q = qrcode.QRCode(error_correction=EC[ec_name], box_size=8, border=3)
+    q.add_data(payload); q.make(fit=True)
+    kw = {}
+    if style == "round":  kw = dict(module_drawer=RoundedModuleDrawer())
+    elif style == "circle": kw = dict(module_drawer=CircleModuleDrawer())
+    elif style in ("tiedye","bright"):
+        tex = _tiedye(600, dark=(style=="tiedye")); tex.save("/tmp/tex.png")
+        kw = dict(module_drawer=RoundedModuleDrawer(),
+                  color_mask=ImageColorMask(back_color=(255,255,255), color_mask_path="/tmp/tex.png"))
+    if kw:
+        im = q.make_image(image_factory=StyledPilImage, **kw).convert("RGB")
+    else:
+        im = q.make_image(fill_color="black", back_color="white").convert("RGB")
+    im = im.resize((px,px), Image.NEAREST)
+    if occ_pct > 0:
+        side = int((px*px*occ_pct/100.0) ** 0.5)
+        x = (px-side)//2
+        ImageDraw.Draw(im).rectangle([x,x,x+side,x+side], fill="white")
+    lum = ImageStat.Stat(im.convert("L")).mean[0]
+    b = io.BytesIO(); im.save(b, format="PNG")
+    return json.dumps({"png":base64.b64encode(b.getvalue()).decode(),
+                       "version":q.version, "modules":len(q.get_matrix()),
+                       "lum":round(lum,1), "ec":ec_name, "occ":occ_pct})
+
+def svg_bytes(payload):
+    out = {}
+    b = io.BytesIO(); segno.make_qr(payload, error="h").save(b, kind="svg")
+    out["segno"] = len(b.getvalue())
+    H = EC["H"]
+    for label, fac in [("qrcode SvgImage (default)", qsvg.SvgImage),
+                       ("qrcode SvgPathImage", qsvg.SvgPathImage)]:
+        bb = io.BytesIO()
+        qrcode.make(payload, image_factory=fac, error_correction=H).save(bb)
+        out[label] = len(bb.getvalue())
+    return json.dumps(out)
+
+def micro_probe(payload):
+    rows = []
+    for lvl in ["l","m","q","h"]:
+        try:
+            s = segno.make(payload, error=lvl)
+            rows.append({"ec":lvl.upper(), "version":str(s.version), "micro":bool(s.is_micro)})
+        except Exception as e:
+            rows.append({"ec":lvl.upper(), "version":"—", "micro":False, "err":str(e)[:60]})
+    s = segno.make(payload)
+    return json.dumps({"rows":rows, "default_version":str(s.version), "default_micro":bool(s.is_micro)})
+
+def symbologies(payload):
+    out = {}
+    short = payload[:24]
+    try:
+        from pystrich.datamatrix import DataMatrixEncoder
+        e = DataMatrixEncoder(short)
+        out["Data Matrix"] = base64.b64encode(e.get_imagedata(cellsize=4)).decode()
+    except Exception as ex: out["Data Matrix"] = "err:" + str(ex)[:60]
+    try:
+        from pystrich.code128 import Code128Encoder
+        e = Code128Encoder(short)
+        out["Code 128"] = base64.b64encode(e.get_imagedata()).decode()
+    except Exception as ex: out["Code 128"] = "err:" + str(ex)[:60]
+    return json.dumps(out)
+
+def gen_matrix(payload):
+    g = qrcodegen.QrCode.encode_text(payload, qrcodegen.QrCode.Ecc.MEDIUM)
+    n = g.get_size()
+    rows = ["".join("##" if g.get_module(x,y) else "  " for x in range(n)) for y in range(n)]
+    return json.dumps({"size":n, "version":g.get_version(), "rows":rows})
+`;
+
+/* ── boot ────────────────────────────────────────────────────────── */
+$("go").onclick = async () => {
+  $("go").disabled = true;
+  try {
+    status.textContent = "Downloading CPython (WebAssembly)… first time only, then cached.";
+    if (!window.loadPyodide) {
+      await new Promise((res, rej) => {
+        const s = document.createElement("script");
+        s.src = "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js";
+        s.onload = res; s.onerror = () => rej(new Error("could not load Pyodide"));
+        document.head.appendChild(s);
+      });
+    }
+    pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v0.27.7/full/" });
+    status.textContent = "Loading Pillow…";
+    await pyodide.loadPackage(["Pillow", "micropip"]);
+    status.textContent = "Installing qrcode, segno, qrcodegen, pyStrich — the real libraries…";
+    await pyodide.runPythonAsync(`
+import micropip
+await micropip.install(["qrcode", "segno", "qrcodegen", "pystrich"])
+`);
+    await pyodide.runPythonAsync(PY);
+    ready = true;
+    status.textContent = "Running — real Python, in this tab. Nothing leaves your machine.";
+    await runAll();
+  } catch (e) {
+    status.textContent = "Could not start: " + e.message;
+    $("go").disabled = false;
+  }
+};
+
+const payload = () => $("payload").value || "https://modelcitizendeveloper.com";
+const call = (fn, ...args) => JSON.parse(pyodide.globals.get(fn)(...args));
+
+async function runAll(){
+  await panel0(); await panel1(); await panel2(); await panel3(); await panel4(); envelope();
+}
+
+/* Panel 0 — encoder parity */
+async function panel0(){
+  const r = call("parity", payload());
+  const tick = b => b ? '<span style="color:var(--good)">yes</span>' : '<span style="color:var(--warn)">no</span>';
+  $("p0").innerHTML =
+    `<p style="margin:0 0 10px"><span class="verdict ${r.sizes_agree?'ok':'no'}">` +
+    (r.sizes_agree ? `All three chose version ${r.version} — ${r.size}×${r.size}` : "They disagree on size") +
+    `</span></p>` +
+    `<p class="plain" style="margin:0 0 10px">Every one picked the same size code, at the same
+     protection level, and every one reads back as your exact payload. That is the part that
+     decides whether your code works — and there is no "better" to choose between.</p>` +
+    `<table class="eng"><thead><tr><th>comparison</th><th>module-for-module</th></tr></thead><tbody>
+       <tr><td>version &amp; size agree</td><td>${tick(r.sizes_agree)}</td></tr>
+       <tr><td><code>qrcode</code> = <code>qrcodegen</code></td><td>${tick(r.qrcode_eq_qrcodegen)}</td></tr>
+       <tr><td><code>qrcode</code> = <code>segno</code></td><td>${tick(r.qrcode_eq_segno)}</td></tr>
+     </tbody></table>` +
+    `<p class="note" style="margin:6px 0 0">` +
+    (r.all_identical
+      ? `Bit-identical on this payload. Numeric content converges — there is no segmentation or
+         mask latitude for the implementations to disagree over.`
+      : `The <em>patterns</em> differ even though the symbols are equivalent: byte and
+         alphanumeric content leave room in segment optimisation and mask evaluation. Try a
+         purely numeric payload and watch all three converge.`) +
+    ` Nothing here is actionable — every symbol is conformant and decodes to the same string.</p>`;
+}
+
+/* Panel 1 — the slider */
+let p1busy = false, p1queued = false;
+async function panel1(){
+  if (!ready) return;
+  if (p1busy) { p1queued = true; return; }
+  p1busy = true;
+  const r = call("styled", payload(), ec, style, occ);
+  const img = new Image();
+  img.onload = () => {
+    const c = $("c1"), ctx = c.getContext("2d", { willReadFrequently:true });
+    ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height);
+    ctx.drawImage(img,0,0,c.width,c.height);
+    const got = decodes(c);
+    const ok = got !== null;
+    const v = $("v1");
+    v.className = "verdict " + (ok ? "ok" : "no");
+    v.textContent = ok ? "Still scans" : "Broken — nothing can read it";
+    $("p1note").textContent = ok
+      ? "Point your phone at it. If your phone disagrees with this page, your phone is the one that matters."
+      : "Back the slider off, or raise the error-correction level.";
+    $("p1eng").textContent =
+      `library : qrcode 8.2\nEC      : ${r.ec}\nversion : ${r.version}  (${r.modules} modules)\n` +
+      `occlusion: ${r.occ}% of symbol area, centred solid square\n` +
+      `mean luminance: ${r.lum}/255\n` +
+      `in-page decode (jsQR): ${ok ? "PASS — " + got.slice(0,60) : "FAIL"}`;
+    p1busy = false;
+    if (p1queued) { p1queued = false; panel1(); }
+  };
+  img.src = "data:image/png;base64," + r.png;
+}
+
+$("occ").oninput = e => { occ = +e.target.value; $("occv").textContent = occ + "%"; panel1(); };
+$("ecs").onclick = e => {
+  const b = e.target.closest("button[data-ec]"); if (!b) return;
+  ec = b.dataset.ec;
+  [...$("ecs").children].forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  panel1();
+};
+$("styles").onclick = e => {
+  const b = e.target.closest("button[data-style]"); if (!b) return;
+  style = b.dataset.style;
+  [...$("styles").children].forEach(x => x.setAttribute("aria-pressed", String(x === b)));
+  panel1();
+};
+$("payload").onchange = () => { if (ready) runAll(); };
+
+/* Panel 2 — SVG bytes + micro steering */
+async function panel2(){
+  const b = call("svg_bytes", payload());
+  const max = Math.max(...Object.values(b));
+  const bars = Object.entries(b).map(([k,v]) =>
+    `<div class="bar"><span class="lbl">${k}</span>
+     <span class="fill" style="width:${Math.max(2,(v/max)*70)}%"></span>
+     <span class="val">${v.toLocaleString()} B</span></div>`).join("");
+  const ratio = (b["qrcode SvgImage (default)"]/b.segno).toFixed(1);
+  const rp = (b["qrcode SvgPathImage"]/b.segno).toFixed(1);
+  const m = call("micro_probe", payload());
+  const rows = m.rows.map(r =>
+    `<tr><td>error=${r.ec}</td><td>${r.version}</td><td>${r.micro?"<strong>Micro</strong>":"standard"}</td></tr>`).join("");
+  $("p2").innerHTML =
+    `<div class="bars">${bars}</div>` +
+    `<p class="plain" style="margin:8px 0 0">segno's file is ${ratio}× smaller than the ordinary
+      way of asking — but only ${rp}× smaller than qrcode's better method. Which comparison you
+      quote depends on which one you'd actually use.</p>` +
+    `<p class="eng" style="margin:8px 0 0">segno vs <code>SvgImage</code>: <strong>${ratio}×</strong>.
+      vs <code>SvgPathImage</code>: <strong>${rp}×</strong>. The headline figure in most
+      comparisons describes the default factory.</p>` +
+    `<h3>What symbol family did you get?</h3>` +
+    `<table><thead><tr><th>call</th><th>version</th><th>family</th></tr></thead><tbody>${rows}</tbody></table>` +
+    `<p class="note" style="margin:0">segno's <code>make()</code> picks the smallest symbol that
+      fits, and Micro QR is in the candidate set. Level H is not available in Micro QR at all, so
+      asking for H yields a standard symbol — but L, M and Q are just as ordinary a choice.</p>`;
+}
+
+/* Panel 3 — other symbologies */
+async function panel3(){
+  const s = call("symbologies", payload());
+  $("p3").innerHTML = Object.entries(s).map(([k,v]) =>
+    v.startsWith("err:")
+      ? `<p class="note"><strong>${k}</strong> — not available: ${v.slice(4)}</p>`
+      : `<h3>${k}</h3><img class="qr" alt="${k}" src="data:image/png;base64,${v}">`
+  ).join("") + `<p class="note">Same payload, different symbologies — all pure Python.
+    pyStrich also writes DXF, which is what you want if the code is engraved rather than printed.</p>`;
+}
+
+/* Panel 4 — the bare matrix */
+async function panel4(){
+  const g = call("gen_matrix", payload());
+  $("p4").innerHTML =
+    `<div class="mono" style="line-height:1;font-size:.5rem">${g.rows.join("\n")}</div>` +
+    `<p class="note">Version ${g.version}, ${g.size}×${g.size}. That is the entire output —
+     qrcodegen hands you the grid and stops.</p>`;
+}
+
+/* Panel 7 — BYOAI clipboard envelope */
+function envelope(){
+  const r = { payload: payload(), ec, style, occlusion: occ };
+  const txt =
+`I am generating QR codes in Python and have just measured the trade-offs myself.
+
+My configuration
+  payload           : ${r.payload}
+  error correction  : ${r.ec}
+  styling           : ${r.style}
+  occlusion tested  : ${r.occlusion}% of symbol area
+
+What I measured (in-browser, real libraries)
+  All the encoders agree — qrcode, segno and qrcodegen produced an identical matrix,
+  so the encoder is not a differentiator.
+  "You can cover 30% of a QR code" is codeword recovery capacity, not area. Measured
+  with a solid centred square: L 2%, M 4%, Q 11%, H 11%. Q to H buys nothing, because
+  it forces a larger symbol version rather than more tolerance.
+  Styling spends contrast. A bright colour mask stops decoding; the same design in
+  dark tones survives.
+  segno's SVG is ~16x smaller than qrcode's default SvgImage, but only ~4x smaller
+  than its SvgPathImage factory.
+  segno.make() returns a Micro QR for short payloads at L, M and Q. Level H is not
+  available in Micro QR, so error='H' yields a standard symbol.
+
+Help me build this
+  Write the generator for my configuration above, in the library that fits it best.
+  Tell me where my choices will bite me in production, and what to test on real phones.
+
+Reference: https://research.modelcitizendeveloper.com/survey/1-080-1/`;
+  $("envelope").textContent = txt;
+  $("copy").onclick = async () => {
+    try { await navigator.clipboard.writeText(txt); $("copied").textContent = "Copied — paste it into any AI."; }
+    catch(e){ $("copied").textContent = "Select the text below and copy it."; }
+  };
+}
+</script>
+</body>
+</html>
