@@ -81,18 +81,19 @@
 
 <p class="kicker">Workshop · floor model for <a href="/survey/1-080-1/">Survey of Software 1.080.1</a></p>
 <h1>qrkadelic</h1>
-<img src="penguin.png" alt="A hand-drawn penguin with a working QR code in its belly, on a background of QR-like dots"
-     width="900" height="549" style="max-width:100%;height:auto;margin:4px 0 18px">
-<p class="note" style="margin:-8px 0 20px">Scan the penguin — it points back at this page, so you
-can carry it to your phone and use the camera you actually own as the second instrument.</p>
-<p class="dek">Six Python QR libraries all choose the <em>same</em> code, and every one reads
-back the same. So the interesting question isn't which encodes better — it's how far you can
-push the look before your phone stops reading it.</p>
-<p class="site">
-  <a href="/survey/1-080-1/">The survey</a>
-  <a href="/workshop/sortie/">Sortie (1.001)</a>
-  <a href="https://modelcitizendeveloper.com/">Model Citizen Developer</a>
-</p>
+<div class="row" style="align-items:center;gap:24px;margin:4px 0 20px">
+  <img src="qr-penguin.png" alt="A QR code with the Model Citizen Developer penguin in the middle"
+       width="640" height="640" style="flex:0 0 240px;width:240px;height:auto;border-radius:8px">
+  <div class="col">
+    <p class="dek" style="margin:0 0 10px">Six Python QR libraries all choose the <em>same</em>
+    code, and every one reads back the same. So the interesting question isn't which encodes
+    better — it's how far you can push the look before your phone stops reading it.</p>
+    <p class="note" style="margin:0">Scan the penguin. It points back at this page, so you can
+    carry it to your phone and use the camera you actually own as the second opinion. The
+    penguin is sitting on about a quarter of the code's width — drag the slider below and find
+    out how much further it goes.</p>
+  </div>
+</div>
 
 <div class="modes" role="group" aria-label="Reading mode">
   <button id="m-plain" aria-pressed="true">Plain</button>
@@ -130,10 +131,12 @@ in-page; the reader's phone is the second instrument.</p>
     <div class="col" style="flex:0 0 240px">
       <canvas id="c1" width="240" height="240"></canvas>
       <p style="margin:8px 0 0"><span id="v1" class="verdict ok">—</span></p>
+      <p style="margin:8px 0 0"><button class="copyimg" data-src="c1">Copy image</button>
+         <span class="note" id="c1msg" style="margin-left:8px"></span></p>
     </div>
     <div class="col">
-      <label for="occ"><span class="plain">How big a logo through the middle?</span><span class="eng">Centred occlusion, % of symbol area</span> — <span id="occv">0%</span></label>
-      <input type="range" id="occ" min="0" max="30" step="1" value="0">
+      <label for="occ"><span class="plain">How big a penguin through the middle?</span><span class="eng">Centred penguin occlusion, % of symbol width</span> — <span id="occv">0%</span></label>
+      <input type="range" id="occ" min="0" max="45" step="1" value="0">
 
       <label><span class="plain">How much damage it can take</span><span class="eng">Error-correction level</span></label>
       <div class="swatches" id="ecs">
@@ -259,6 +262,28 @@ bEng.onclick   = () => setMode(true);
 try { setMode(localStorage.getItem("qrkadelic-mode") === "eng"); } catch(e){ setMode(false); }
 
 /* ── state ───────────────────────────────────────────────────────── */
+const penguin = new Image();
+penguin.src = "penguin-logo.png";
+
+/* Copy any canvas or image to the clipboard, so a code you liked leaves with you. */
+document.addEventListener("click", async (e) => {
+  const b = e.target.closest("button.copyimg"); if (!b) return;
+  const el = document.getElementById(b.dataset.src);
+  const msg = document.getElementById(b.dataset.src + "msg");
+  try {
+    const blob = el.tagName === "CANVAS"
+      ? await new Promise(r => el.toBlob(r, "image/png"))
+      : await (await fetch(el.src)).blob();
+    await navigator.clipboard.write([new ClipboardItem({ "image/png": blob })]);
+    msg.textContent = "Copied — paste it anywhere.";
+  } catch (err) {
+    const url = el.tagName === "CANVAS" ? el.toDataURL("image/png") : el.src;
+    const a = document.createElement("a");
+    a.href = url; a.download = "qrkadelic.png"; a.click();
+    msg.textContent = "Downloaded instead — this browser blocks image copy.";
+  }
+  setTimeout(() => { msg.textContent = ""; }, 4000);
+});
 let pyodide = null, ready = false;
 let ec = "M", style = "plain", occ = 0;
 const status = document.getElementById("status");
@@ -350,10 +375,6 @@ def styled(payload, ec_name, style, occ_pct, px=240):
     else:
         im = q.make_image(fill_color="black", back_color="white").convert("RGB")
     im = im.resize((px,px), Image.NEAREST)
-    if occ_pct > 0:
-        side = int((px*px*occ_pct/100.0) ** 0.5)
-        x = (px-side)//2
-        ImageDraw.Draw(im).rectangle([x,x,x+side,x+side], fill="white")
     lum = ImageStat.Stat(im.convert("L")).mean[0]
     b = io.BytesIO(); im.save(b, format="PNG")
     return json.dumps({"png":base64.b64encode(b.getvalue()).decode(),
@@ -470,8 +491,10 @@ async function panel0(){
   const imgs = call("render_each", payload());
   const strip = Object.entries(imgs).map(([k,v]) =>
     `<figure style="margin:0;text-align:center;flex:0 0 auto">
-       <img class="qr" width="150" height="150" alt="${k}'s QR code" src="data:image/png;base64,${v}">
-       <figcaption class="note" style="margin:4px 0 0"><code>${k}</code></figcaption>
+       <img class="qr" id="qr-${k}" width="150" height="150" alt="${k}'s QR code" src="data:image/png;base64,${v}">
+       <figcaption class="note" style="margin:4px 0 0"><code>${k}</code><br>
+         <button class="copyimg" data-src="qr-${k}" style="margin-top:4px;padding:3px 9px;font-size:.78rem;font-weight:500;background:var(--field);color:var(--text);border-color:var(--line)">Copy image</button>
+         <span class="note" id="qr-${k}msg"></span></figcaption>
      </figure>`).join("");
   const tick = b => b ? '<span style="color:var(--good)">yes</span>' : '<span style="color:var(--warn)">no</span>';
   $("p0").innerHTML =
@@ -509,6 +532,16 @@ async function panel1(){
     const c = $("c1"), ctx = c.getContext("2d", { willReadFrequently:true });
     ctx.fillStyle = "#fff"; ctx.fillRect(0,0,c.width,c.height);
     ctx.drawImage(img,0,0,c.width,c.height);
+    // The occluder is the penguin itself, composited here rather than in Python so the
+    // slider responds per tick instead of per round-trip. White pad first, as any real
+    // logo placement would: the scanner needs a boundary, not a collage.
+    if (occ > 0 && penguin.complete && penguin.naturalWidth) {
+      const side = c.width * occ / 100;
+      const h = side * penguin.naturalHeight / penguin.naturalWidth;
+      const x = (c.width - side)/2, y = (c.height - h)/2, pad = side*0.10;
+      ctx.fillStyle = "#fff"; ctx.fillRect(x-pad, y-pad, side+pad*2, h+pad*2);
+      ctx.drawImage(penguin, x, y, side, h);
+    }
     const got = decodes(c);
     const ok = got !== null;
     const v = $("v1");
@@ -519,7 +552,7 @@ async function panel1(){
       : "Back the slider off, or raise the error-correction level.";
     $("p1eng").textContent =
       `library : qrcode 8.2\nEC      : ${r.ec}\nversion : ${r.version}  (${r.modules} modules)\n` +
-      `occlusion: ${r.occ}% of symbol area, centred solid square\n` +
+      `penguin: ${occ}% of symbol width, centred, on a white pad\n` +
       `mean luminance: ${r.lum}/255\n` +
       `in-page decode (jsQR): ${ok ? "PASS — " + got.slice(0,60) : "FAIL"}`;
     p1busy = false;
