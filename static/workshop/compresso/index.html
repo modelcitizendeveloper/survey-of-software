@@ -284,94 +284,9 @@ const SWEEP = [
   ["compression.zstd", [3]],
 ];
 
-/* ── the Python side ─────────────────────────────────────────────── */
-const PY = W.PY_TIMING + String.raw`
-import json, zlib, gzip, bz2, lzma, hashlib, random, sys
-import zstandard, brotli, lz4.frame
-from compression import zstd as stdzstd
+/* ── the Python side lives in core.py (+ /workshop/_lib/workshop.py): fetched, not embedded ── */
+let core = null;
 
-SAMPLES = {}
-CAP = 1024*1024
-
-def json_logs(target=512*1024, seed=7):
-    """API access log, one JSON object per line. Deterministic, so the same bytes are measured
-    here and on the machine the survey figures came from."""
-    r = random.Random(seed)
-    routes = ["/api/v1/users", "/api/v1/orders", "/api/v1/orders/{id}", "/api/v1/cart",
-              "/api/v1/products", "/api/v1/products/{id}/reviews", "/health", "/api/v1/auth/token"]
-    methods = ["GET"]*6 + ["POST"]*2 + ["PUT", "DELETE"]
-    agents = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36",
-              "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1",
-              "python-requests/2.32.3", "curl/8.5.0", "okhttp/4.12.0"]
-    out = []; size = 0; t = 1_723_900_000
-    while size < target:
-        t += r.randint(0, 3)
-        rec = {"ts": t, "level": r.choice(["INFO"]*8 + ["WARN", "ERROR"]),
-               "req_id": "%032x" % r.getrandbits(128),
-               "user": {"id": r.randint(1000, 99999), "plan": r.choice(["free","free","pro","team"])},
-               "http": {"method": r.choice(methods), "path": r.choice(routes).replace("{id}", str(r.randint(1, 50000))),
-                        "status": r.choice([200]*7 + [201, 304, 404, 500]), "bytes": r.randint(120, 48000),
-                        "latency_ms": round(r.lognormvariate(3.2, 0.7), 1)},
-               "ua": r.choice(agents), "region": r.choice(["us-west-2","us-east-1","eu-central-1"]),
-               "tags": r.sample(["cache-hit","cache-miss","retry","slow","auth","cdn"], r.randint(0, 3))}
-        line = json.dumps(rec, separators=(",", ":")) + "\n"
-        out.append(line); size += len(line)
-    return "".join(out).encode()
-
-def set_sample(name, data):
-    b = bytes(data)[:CAP]
-    SAMPLES[name] = b
-    return json.dumps({"name": name, "bytes": len(b), "sha256": hashlib.sha256(b).hexdigest()[:16]})
-
-def init_samples():
-    SAMPLES["json"] = json_logs()
-    return json.dumps({k: len(v) for k, v in SAMPLES.items()})
-
-_zd = zstandard.ZstdDecompressor()
-CODECS = {
-    "zstandard":        (lambda d, L: zstandard.ZstdCompressor(level=L).compress(d), _zd.decompress),
-    "compression.zstd": (lambda d, L: stdzstd.compress(d, level=L), stdzstd.decompress),
-    "brotli":           (lambda d, Q: brotli.compress(d, quality=Q), brotli.decompress),
-    "lz4":              (lambda d, L: lz4.frame.compress(d, compression_level=L), lz4.frame.decompress),
-    "zlib":             (lambda d, L: zlib.compress(d, L), zlib.decompress),
-    "bz2":              (lambda d, L: bz2.compress(d, L), bz2.decompress),
-    "lzma":             (lambda d, L: lzma.compress(d, preset=L), lzma.decompress),
-}
-
-def measure(codec, level, sample, budget_ms=100):
-    data = SAMPLES[sample]; c, d = CODECS[codec]; level = int(level)
-    out = c(data, level)
-    ok = d(out) == data
-    tc, rc = _best(lambda x: c(x, level), data, budget_ms/1000)
-    td, rd = _best(d, out, budget_ms/1000)
-    n = len(data)
-    return json.dumps({"codec": codec, "level": level, "sample": sample, "in": n, "out": len(out),
-                       "ratio": round(n/max(1,len(out)), 3), "comp_MBs": round(n/tc/1e6, 1),
-                       "decomp_MBs": round(n/td/1e6, 1), "comp_ms": round(tc*1000, 2),
-                       "decomp_ms": round(td*1000, 2), "reps": [rc, rd], "roundtrip_ok": bool(ok)})
-
-def stdlib_same(sample, level=3):
-    data = SAMPLES[sample]
-    a = zstandard.ZstdCompressor(level=level).compress(data); b = stdzstd.compress(data, level=level)
-    return json.dumps({"identical": a == b, "bytes": len(a), "lib": ".".join(map(str, zstandard.ZSTD_VERSION)),
-                       "stdlib": stdzstd.zstd_version, "python": sys.version.split()[0]})
-
-def tiny(text):
-    s = text.encode()
-    return json.dumps({"in": len(s),
-        "zstandard (level 3)": len(zstandard.ZstdCompressor(level=3).compress(s)),
-        "brotli (quality 11)": len(brotli.compress(s)),
-        "lz4 (frame)": len(lz4.frame.compress(s)),
-        "zlib (level 6)": len(zlib.compress(s)),
-        "gzip (level 6)": len(gzip.compress(s)),
-        "bz2 (level 9)": len(bz2.compress(s)),
-        "lzma (preset 6)": len(lzma.compress(s))})
-
-def versions():
-    return json.dumps({"python": sys.version.split()[0], "zstandard": zstandard.__version__,
-                       "libzstd": ".".join(map(str, zstandard.ZSTD_VERSION)), "brotli": brotli.__version__,
-                       "lz4": lz4.__version__, "zlib": zlib.ZLIB_VERSION, "stdlib_zstd": stdzstd.zstd_version})
-`;
 
 /* ── boot ────────────────────────────────────────────────────────── */
 $("go").onclick = async () => {
@@ -379,7 +294,8 @@ $("go").onclick = async () => {
   try {
     pyodide = await W.boot({ version: "314.0.5", packages: ["zstandard", "brotli", "lz4"], status,
                              statusText: { download: "Downloading CPython 3.14 (WebAssembly)… first time only, then cached." } });
-    await pyodide.runPythonAsync(PY);
+    status.textContent = "Fetching core.py…";
+    core = await W.loadModules(pyodide, { workshop: "/workshop/_lib/workshop.py", core: "core.py" });
     versions = call("versions");
     status.textContent = "Generating the JSON sample, fetching the novel…";
     const s = call("init_samples"); sizes.json = s.json;
@@ -398,7 +314,7 @@ $("go").onclick = async () => {
   }
 };
 
-const call = (fn, ...args) => W.call(pyodide, fn, ...args);
+const call = (fn, ...args) => W.call(core, fn, ...args);
 const yieldUI = W.yieldUI, fmt = W.fmtRate, kb = W.kb, guarded = W.guarded;
 const sampleLabel = () => sample === "file" ? (fileName || "your file") : sample === "text" ? "the novel" : sample === "json" ? "the JSON logs" : "the PNG";
 

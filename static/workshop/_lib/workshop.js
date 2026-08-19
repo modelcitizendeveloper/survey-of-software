@@ -53,7 +53,11 @@
     if (packages.length) { say(statusText.packages || ("Loading " + packages.join(", ") + "…")); await py.loadPackage(packages); }
     return py;
   }
-  const call = (py, fn, ...args) => JSON.parse(py.globals.get(fn)(...args));
+  /* call(pyodideOrModule, fn, ...args): fn may be a global (legacy) or a module attribute */
+  const call = (py, fn, ...args) => {
+    const f = (py && py.globals) ? py.globals.get(fn) : py[fn];
+    return JSON.parse(f(...args));
+  };
   const yieldUI = () => new Promise(r => setTimeout(r, 0));
 
   /* Serialise re-entrant async panel updates: a slider firing mid-measurement
@@ -66,35 +70,21 @@
     busy[key] = false;
   }
 
-  /* ── timing, the Python half ──────────────────────────────────────────
-     Browsers clamp the clock (100 µs in Chromium without cross-origin isolation).
-     A call that finishes in microseconds reads as zero; best-of in batches large
-     enough to register. Pages paste this into their own Python source. */
-  const PY_TIMING = String.raw`
-import time as _time
-def _best(fn, arg, budget_s, min_reps=3):
-    """Best-of timing under a wall-clock budget. Browser clocks clamp (100 us in Chromium
-    without cross-origin isolation), so calls are timed in batches calibrated to take at
-    least 5 ms - fifty clamp ticks - before a reading is trusted. Slow calls get one rep."""
-    t0 = _time.perf_counter(); fn(arg); first = _time.perf_counter() - t0
-    if first > budget_s: return first, 1
-    k = 1
-    while True:
-        t0 = _time.perf_counter()
-        for _ in range(k): fn(arg)
-        dt = _time.perf_counter() - t0
-        if dt >= 0.005 or k >= 200_000: break
-        k *= 4
-    b = dt / k; reps = 1; total = dt
-    while reps < min_reps or total < budget_s:
-        t0 = _time.perf_counter()
-        for _ in range(k): fn(arg)
-        dt = _time.perf_counter() - t0
-        if dt > 0: b = min(b, dt / k)
-        reps += 1; total += dt
-        if reps >= 40: break
-    return max(b, 1e-9), reps
-`;
+  /* ── the Python half ──────────────────────────────────────────────────
+     Pages do not embed Python. They fetch /workshop/_lib/workshop.py (timing, shared
+     samples) and their own core.py, write both into Pyodide's filesystem and import
+     them — the same files the marimo notebook and the native bench import. One copy.
+       const core = await W.loadModules(py, { workshop: "/workshop/_lib/workshop.py", core: "core.py" });
+       W.call(core, "measure", ...)  // calls a function on the module, parses its JSON */
+  async function loadModules(py, mods){
+    let last = null;
+    for (const [name, url] of Object.entries(mods)) {
+      const src = await (await fetch(url, { cache: "no-cache" })).text();
+      py.FS.writeFile(`/home/pyodide/${name}.py`, src);
+      last = py.pyimport(name);
+    }
+    return last;
+  }
 
   /* ── formatting and bars ──────────────────────────────────────────── */
   const fmtRate = (n, unit = "B/s") => n >= 1e3 ? (n/1e3).toFixed(1).replace(/\.0$/,"") + " G" + unit : n.toFixed(n < 10 ? 1 : 0) + " M" + unit;
@@ -134,5 +124,5 @@ def _best(fn, arg, budget_s, min_reps=3):
     });
   }
 
-  window.Workshop = { $, mode, boot, call, yieldUI, guarded, PY_TIMING, fmtRate, fmtMs, kb, bars, copyText, copyImages };
+  window.Workshop = { $, mode, boot, loadModules, call, yieldUI, guarded, fmtRate, fmtMs, kb, bars, copyText, copyImages };
 })();

@@ -136,7 +136,7 @@ samples, the same timing, the same schema inference, as cells:
 <a href="https://marimo.app/?src=https://research.modelcitizendeveloper.com/workshop/jsonic-rituals/jsonic.py&amp;mode=edit">open it in marimo</a>
 (runs in your browser, nothing installed), or run it on your machine:</p>
 <div class="panel"><div class="mono" id="labcmd">uvx marimo edit https://research.modelcitizendeveloper.com/workshop/jsonic-rituals/jsonic.py</div>
-<p class="note" style="margin:8px 0 0"><a href="/workshop/jsonic-rituals/jsonic.py">jsonic.py</a> — one file, the page's Python verbatim, with marimo's UI instead of this page's.</p></div>
+<p class="note" style="margin:8px 0 0"><a href="/workshop/jsonic-rituals/jsonic.py">jsonic.py</a> imports <a href="/workshop/jsonic-rituals/core.py">core.py</a> — the measurement this page runs, one file, no copies — with marimo's UI instead of this page's.</p></div>
 <p class="eng">This floor model was first built <em>as</em> that notebook and exported with
 <code>marimo export html-wasm</code>. The export worked — paste, file, register switch, clipboard (through a
 sandboxed iframe; marimo strips inline handlers) — and measured 9.8 s to first number against this page's
@@ -165,156 +165,11 @@ W.copyImages("jsonic-rituals.png");
 const status = $("status");
 let pyodide = null, ready = false, versions = {};
 let sample = "logs", ownLabel = null, lastRows = null, lastSchema = null;
-const call = (fn, ...args) => W.call(pyodide, fn, ...args);
+const call = (fn, ...args) => W.call(core, fn, ...args);
 
-/* ── the Python side: the same code as the lab notebook ─────────────── */
-const PY = W.PY_TIMING + String.raw`
-import json, random, sys, re
-from typing import Any
-import orjson, msgspec, msgspec.json, ujson, simplejson
+/* ── the Python side lives in core.py (+ /workshop/_lib/workshop.py): fetched, not embedded ── */
+let core = null;
 
-def json_logs(target=512*1024, seed=7):
-    """compresso's generator, unchanged — the 512 KB of API logs from survey 1.050."""
-    r = random.Random(seed)
-    routes = ["/api/v1/users", "/api/v1/orders", "/api/v1/orders/{id}", "/api/v1/cart",
-              "/api/v1/products", "/api/v1/products/{id}/reviews", "/health", "/api/v1/auth/token"]
-    methods = ["GET"]*6 + ["POST"]*2 + ["PUT", "DELETE"]
-    agents = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36",
-              "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1",
-              "python-requests/2.32.3", "curl/8.5.0", "okhttp/4.12.0"]
-    out = []; size = 0; t = 1_723_900_000
-    while size < target:
-        t += r.randint(0, 3)
-        rec = {"ts": t, "level": r.choice(["INFO"]*8 + ["WARN", "ERROR"]),
-               "req_id": "%032x" % r.getrandbits(128),
-               "user": {"id": r.randint(1000, 99999), "plan": r.choice(["free","free","pro","team"])},
-               "http": {"method": r.choice(methods), "path": r.choice(routes).replace("{id}", str(r.randint(1, 50000))),
-                        "status": r.choice([200]*7 + [201, 304, 404, 500]), "bytes": r.randint(120, 48000),
-                        "latency_ms": round(r.lognormvariate(3.2, 0.7), 1)},
-               "ua": r.choice(agents), "region": r.choice(["us-west-2","us-east-1","eu-central-1"]),
-               "tags": r.sample(["cache-hit","cache-miss","retry","slow","auth","cdn"], r.randint(0, 3))}
-        line = json.dumps(rec, separators=(",", ":")) + "\n"
-        out.append(line); size += len(line)
-    return "".join(out)
-
-def nested_obj(seed=11, depth=6, fan=4):
-    r = random.Random(seed)
-    words = ["alpha","beta","gamma","delta","cache","ttl","region","replicas","enabled","endpoint","timeout","retries","backoff","weight","tags","owner","tier","mode","limit","burst"]
-    def node(d):
-        if d == 0:
-            k = r.random()
-            return (r.choice([True, False]) if k < .25 else r.randint(0, 5000) if k < .5
-                    else r.choice(words) + "-" + str(r.randint(1, 99)) if k < .8
-                    else [r.choice(words) for _ in range(r.randint(1, 4))])
-        return {r.choice(words) + str(i): node(d-1) for i in range(fan)}
-    return {"service": "checkout", "version": "2026.08", "env": node(depth)}
-
-def numbers_obj(n=20000, seed=5):
-    r = random.Random(seed); t = 1_723_900_000.0; out = []
-    for _ in range(n):
-        t += r.random() * 2
-        out.append({"t": round(t, 3), "v": round(r.gauss(50, 12), 4), "q": r.randint(0, 3), "ok": r.random() > .02})
-    return {"series": "sensor-7", "points": out}
-
-_logs = [json.loads(l) for l in json_logs().splitlines()]
-SAMPLES = {"logs": _logs, "nested": nested_obj(), "numbers": numbers_obj(), "small": _logs[0]}
-
-def set_own(text):
-    try:
-        SAMPLES["own"] = json.loads(text[:1024*1024])
-        return json.dumps({"ok": True, "bytes": len(json.dumps(SAMPLES["own"], separators=(",", ":")).encode())})
-    except Exception as e:
-        return json.dumps({"ok": False, "err": str(e)[:120]})
-
-# ── infer a msgspec.Struct from the reader's own JSON ───────────────────
-_counter = [0]
-def _ident(k):
-    s = re.sub(r"\W", "_", k)
-    return ("f_" + s) if (not s or s[0].isdigit() or s in {"from","class","import","def","return","None","True","False"}) else s
-def infer_type(v, name="Item"):
-    if isinstance(v, bool): return bool
-    if isinstance(v, int): return int
-    if isinstance(v, float): return float
-    if isinstance(v, str): return str
-    if v is None: return Any
-    if isinstance(v, list):
-        return list[infer_type(v[0], name + "Item")] if v else list[Any]
-    if isinstance(v, dict):
-        if not v: return dict[str, Any]
-        _counter[0] += 1
-        fields, renamed = [], {}
-        for k, val in v.items():
-            ident = _ident(k)
-            if ident != k: renamed[ident] = k
-            fields.append((ident, infer_type(val, name + "_" + ident.capitalize())))
-        try: return msgspec.defstruct(f"{name}{_counter[0]}", fields, rename=renamed or None)
-        except Exception: return dict[str, Any]
-    return Any
-def struct_source(tp):
-    out = []
-    def tname(t):
-        if isinstance(t, type) and issubclass(t, msgspec.Struct): return t.__name__
-        if t is Any: return "Any"
-        if hasattr(t, "__origin__"): return f"{t.__origin__.__name__}[{', '.join(tname(a) for a in t.__args__)}]"
-        return getattr(t, "__name__", str(t))
-    def walk(t):
-        if isinstance(t, type) and issubclass(t, msgspec.Struct):
-            for f in msgspec.structs.fields(t): walk(f.type)
-            src = "\n".join([f"class {t.__name__}(msgspec.Struct):"] + [f"    {f.name}: {tname(f.type)}" for f in msgspec.structs.fields(t)])
-            if src not in out: out.append(src)
-        elif hasattr(t, "__args__"):
-            for a in t.__args__: walk(a)
-    walk(tp)
-    return "\n\n".join(out)
-
-def measure(sample, budget_ms=120):
-    obj = SAMPLES[sample]
-    text = json.dumps(obj, separators=(",", ":")); data = text.encode()
-    codecs = {
-        "json (stdlib)": (json.dumps, json.loads, text, obj),
-        "orjson":        (orjson.dumps, orjson.loads, data, obj),
-        "msgspec":       (msgspec.json.encode, msgspec.json.decode, data, obj),
-        "ujson":         (ujson.dumps, ujson.loads, text, obj),
-        "simplejson":    (simplejson.dumps, simplejson.loads, text, obj),
-    }
-    schema = None; schema_err = None; schema_name = None; bad = None
-    try:
-        _counter[0] = 0
-        Schema = infer_type(obj, "Payload")
-        dec = msgspec.json.Decoder(Schema); enc = msgspec.json.Encoder()
-        typed = dec.decode(data)
-        codecs["msgspec typed (inferred Struct)"] = (enc.encode, dec.decode, data, typed)
-        schema = struct_source(Schema); schema_name = getattr(Schema, "__name__", "Payload")
-        # show validation: corrupt one leaf and decode again
-        try:
-            s2 = text
-            m = re.search(r'"(\w+)":(\d+)', text)
-            if m:
-                s2 = text[:m.start(2)] + '"' + m.group(2) + '"' + text[m.end(2):]
-                dec.decode(s2.encode()); bad = "decoded anyway"
-        except msgspec.ValidationError as e:
-            bad = str(e)[:160]
-    except Exception as e:
-        schema_err = str(e)[:140]
-    rows = []
-    for lib, (d, l, inp, src) in codecs.items():
-        td, _ = _best(d, src, budget_ms/1000); tl, _ = _best(l, inp, budget_ms/1000)
-        ok = True
-        if "typed" not in lib:
-            try: ok = (l(inp) == obj)
-            except Exception: ok = False
-        rows.append({"lib": lib, "dumps_ms": td*1000, "loads_ms": tl*1000,
-                     "dumps_MBs": len(data)/td/1e6, "loads_MBs": len(data)/tl/1e6, "roundtrip": ok})
-    base = rows[0]
-    for r in rows:
-        r["dumps_x"] = base["dumps_ms"]/r["dumps_ms"]; r["loads_x"] = base["loads_ms"]/r["loads_ms"]
-    return json.dumps({"bytes": len(data), "rows": rows, "schema": schema, "schema_name": schema_name,
-                       "schema_err": schema_err, "validation": bad})
-
-def versions():
-    return json.dumps({"python": sys.version.split()[0], "orjson": orjson.__version__, "msgspec": msgspec.__version__,
-                       "ujson": ujson.__version__, "simplejson": simplejson.__version__})
-`;
 
 /* ── boot ────────────────────────────────────────────────────────── */
 $("go").onclick = async () => {
@@ -322,9 +177,9 @@ $("go").onclick = async () => {
   try {
     pyodide = await W.boot({ version: "314.0.5", packages: ["orjson", "msgspec", "ujson", "simplejson"], status,
                              statusText: { download: "Downloading CPython 3.14 (WebAssembly)… first time only, then cached." } });
-    status.textContent = "Generating the samples…";
+    status.textContent = "Fetching core.py and generating the samples…";
     await W.yieldUI();
-    await pyodide.runPythonAsync(PY);
+    core = await W.loadModules(pyodide, { workshop: "/workshop/_lib/workshop.py", core: "core.py" });
     versions = call("versions");
     ready = true;
     status.textContent = `Running — real Python ${versions.python}, in this tab. Nothing leaves your machine.`;
