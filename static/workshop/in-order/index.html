@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>in order — a floor model for Survey of Software 1.040</title>
+<meta name="description" content="Keep a hundred thousand things sorted, one insert at a time: pure-Python sortedcontainers against the standard library's C, measured in your browser. Then the question the race is really asking — did you need them sorted all the time?">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://research.modelcitizendeveloper.com/workshop/in-order/">
+<link rel="stylesheet" href="/workshop/_lib/workshop.css">
+<style>
+  .bar .lbl{width:260px}
+  .race .bar{margin:8px 0}
+  .race .fill{transition:width .4s ease-out}
+  .big{font-size:1.6rem;font-weight:700;color:var(--bright);line-height:1.2}
+  .four{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media (max-width:700px){.four{grid-template-columns:1fr 1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker">Workshop · floor model for <a href="/survey/1-040/">Survey of Software 1.040</a></p>
+<h1>in order</h1>
+<p class="dek">Pure Python beats the standard library's C at keeping things sorted — by ten times at a
+hundred thousand items, by forty at a million. The race below starts when you say so. The question it
+is really asking is whether you needed them sorted <em>all the time</em>.</p>
+<p class="note" style="margin:0 0 20px">Everything runs in this tab. Pick a size, start the race, and
+watch the bars arrive in the order the structures finish.</p>
+
+<div class="modes" role="group" aria-label="Reading mode">
+  <button id="m-plain" aria-pressed="true">Plain</button>
+  <button id="m-eng" aria-pressed="false">Engineering</button>
+</div>
+<p class="note" id="mode-hint">Plain language. Switch to Engineering for versions, byte counts and the measurements behind each claim.</p>
+
+<!-- ── The whole answer, first ─────────────────────────────────────── -->
+<h2>The whole answer, first</h2>
+<p class="plain">Four things people mean by "I need this sorted", and each has a different right answer.
+The numbers are for a hundred thousand random keys, measured for the survey on one machine; the race
+below re-measures them on yours.</p>
+<p class="eng">100,000 random 40-bit integers, inserted one at a time, CPython 3.14.7, aarch64, single
+thread. Full sweep 1K–1M and the operations in S2 §0 of the survey.</p>
+<div class="panel">
+  <div class="four">
+    <div><p class="kicker" style="margin:0 0 4px">sorted at every moment</p><p class="big">61 ms</p><p class="note" style="margin:0"><strong>sortedcontainers</strong> SortedList — pure Python. The stdlib's C, <code>bisect.insort</code>, takes 553 ms.</p></div>
+    <div><p class="kicker" style="margin:0 0 4px">sorted at the end</p><p class="big">24 ms</p><p class="note" style="margin:0"><strong>list.append, then .sort()</strong> — 2.5× faster than keeping order as you go.</p></div>
+    <div><p class="kicker" style="margin:0 0 4px">smallest-first only</p><p class="big">6 ms</p><p class="note" style="margin:0"><strong>heapq</strong> — 10× faster than a sorted list, if the minimum is all you ever take.</p></div>
+    <div><p class="kicker" style="margin:0 0 4px">never sorted</p><p class="big">10 ms</p><p class="note" style="margin:0"><strong>dict</strong> — and membership is 10× faster than any sorted structure.</p></div>
+  </div>
+  <p class="note" style="margin:12px 0 0"><strong>Use sortedcontainers</strong> when you need order between inserts — ranges, neighbours,
+  rank, "what is just above this". Everything else has a cheaper stdlib answer, and the famous "pure Python beats C" is true of
+  exactly that first case. One more thing the build found: the C extension it famously beat no longer ships for any current
+  Python; what it still beats by ten times is the standard library's own C.</p>
+</div>
+
+<div class="panel">
+  <p class="note" style="margin:0 0 10px"><strong>The rule of this page:</strong> every figure below is measured on your machine while
+  you wait, by the Python libraries themselves running in this tab. Where a number came from research instead, it says so in orange.</p>
+  <label>How many keys</label>
+  <div class="swatches" id="sizes">
+    <button data-n="1000" aria-pressed="false">1,000</button>
+    <button data-n="10000" aria-pressed="false">10,000</button>
+    <button data-n="100000" aria-pressed="true">100,000</button>
+    <button data-n="200000" aria-pressed="false">200,000 <span class="note" style="display:inline">(slow lane: ~5 s)</span></button>
+  </div>
+  <p id="status" style="margin-top:12px">Press start to download CPython 3.14 (WebAssembly). First time only, then cached.</p>
+  <button id="go">Start</button>
+</div>
+
+<!-- ── Panel 1: the race ───────────────────────────────────────────── -->
+<h2>The race</h2>
+<p class="plain">Insert every key one at a time and keep the collection in order after each one. Each
+bar appears when its structure finishes; the length is the time it took.</p>
+<p class="eng">Per-structure wall time for N single-key inserts (<code>SortedList.add</code>,
+<code>bisect.insort</code>, <code>list.append</code>+<code>sort</code>, <code>heapq.heappush</code>,
+<code>dict.__setitem__</code>), best-of under a budget for the fast ones, single run for the slow.
+Multiples are against <code>bisect.insort</code> — the standard library's C answer to the same job.</p>
+<div class="panel race">
+  <button id="race" disabled>Start the race</button> <span id="racenote" class="note" style="margin-left:10px"></span>
+  <div class="bars" id="racebars" style="margin-top:12px"></div>
+  <p id="raceverdict" style="margin:12px 0 0"></p>
+</div>
+<p class="plain"><strong>The surprise is the order.</strong> The pure-Python library finishes before the
+standard library's C — and the gap widens with size, because a flat list must shift everything above
+each insert (that cost grows with the list), while SortedList keeps a list of short lists and shifts only
+one of them. Below a few thousand keys the flat list wins; above, it loses by more every decade.</p>
+<p class="eng">SortedList is a list of lists with a load factor near 1,000 and a positional index over the
+sublist lengths; <code>add</code> is a bisect into the right sublist and an <code>insert</code> that moves at
+most ~1,000 pointers. <code>bisect.insort</code> on a flat list is one <code>memmove</code> of, on average,
+half the list per insert — O(n) per insert, O(n²) for the race, and the memmove is fast enough that it wins
+until about 5,000 keys. The survey's 2025 figure compared against bintrees' "C" red-black tree; measured
+today (bintrees 2.2.0 on Python 3.14) that tree is pure Python — the compiled wheels only ever shipped for
+3.6–3.9 — and it finishes in 506 ms natively, 8× behind SortedList.</p>
+
+<!-- ── Panel 2: did you need it sorted? ───────────────────────────── -->
+<h2>Did you need it sorted?</h2>
+<p class="plain">Three things people do with a sorted collection, timed at the size you chose. Two of
+them have a standard-library answer that does not keep anything sorted at all.</p>
+<p class="eng">10,000 membership probes; one range query; 10,000 pop-the-minimum operations — each
+against the cheapest alternative that gives the same answer.</p>
+<div class="panel">
+  <div id="ops">Run the race first.</div>
+</div>
+
+<!-- ── Panel 3: functional ─────────────────────────────────────────── -->
+<h2>cytoolz — the same functions, compiled</h2>
+<p class="plain">One pipeline — group records by region, count users, sum bytes per user — written
+three ways: with toolz, with cytoolz, and with the standard library by hand.</p>
+<p class="eng"><code>groupby</code> + <code>frequencies(pluck(...))</code> + <code>reduceby</code> over
+100,000 dicts; the by-hand version is <code>defaultdict</code> and <code>Counter</code>.</p>
+<div class="panel"><div id="func">Run the race first.</div></div>
+
+<!-- ── Panel 4: persistent ─────────────────────────────────────────── -->
+<h2>pyrsistent — what immutability costs, and what it buys</h2>
+<p class="plain">A persistent vector gives you a new value on every change without copying the old one.
+That is slow for building, and the whole point for updating.</p>
+<p class="eng">1,000 single-element <code>set</code>s on a 100,000-element vector, each yielding a new
+version, against copying a tuple each time; and 100,000 <code>append</code>s against
+<code>list.append</code>. Note the implementation line — on Python 3.14 the C extension is absent.</p>
+<div class="panel"><div id="pers">Run the race first.</div></div>
+
+<!-- ── Panel 5: research ───────────────────────────────────────────── -->
+<h2>What could not be measured here</h2>
+<div class="panel research">
+  <p class="kicker">From research, not measured in this tab</p>
+  <p style="margin:0 0 10px"><strong>polars against pandas</strong> — both ship in Pyodide but the wheels are
+  too heavy for a page that should load in seconds, so: native, one machine, 8 threads, 2M rows, polars 1.43 against
+  pandas 3.0.5. Group-by with three aggregates <strong>4.0×</strong>; filter + sum <strong>9.3×</strong>; sort
+  <strong>2.6×</strong>. The survey's "5–100×" is from an older pandas; the range is real and the top of it is gone.</p>
+  <p style="margin:0 0 10px"><strong>bintrees</strong> — development stopped in 2017, its README says "use sortedcontainers",
+  and its compiled trees only ever shipped for Python 3.6–3.9 on Mac and Windows. On any current interpreter
+  <code>FastRBTree</code> <em>is</em> the pure-Python <code>RBTree</code>: 506 ms for the 100K race natively, 8× behind
+  SortedList. 20K downloads a month, all of them inherited.</p>
+  <p style="margin:0"><strong>more-itertools</strong> — 348M downloads a month, no performance claim to test, and
+  none made: it is vocabulary (<code>chunked</code>, <code>windowed</code>, <code>partition</code>, <code>unique_everseen</code>)
+  that the standard library's <code>itertools</code> recipes section describes and does not ship. The least exotic thing
+  in the survey and the most installed.</p>
+</div>
+
+<!-- ── Panel 6: envelope ───────────────────────────────────────────── -->
+<h2>Start your build</h2>
+<p class="plain">Take what you just measured and hand it to whichever AI you use — the size you ran, the
+order the structures finished, and a brief for what to do next.</p>
+<p class="eng">Clipboard envelope — no vendor deep link, no API key, no dependency on anyone's roadmap.</p>
+<div class="panel">
+  <button id="copy">Copy the brief</button>
+  <span id="copied" class="note" style="margin-left:10px"></span>
+  <div class="mono" id="envelope" style="margin-top:12px">Run the race first.</div>
+</div>
+
+<h2>Open the lab</h2>
+<p class="plain">The measurement is one file, <a href="/workshop/in-order/core.py">core.py</a>, fetched by
+this page and imported by the survey's bench. <code>uvx marimo edit</code> a notebook that imports it, or read it —
+it is short.</p>
+
+<div class="foot">
+  <p><strong>in order</strong> is a floor model for
+  <a href="/survey/1-040/">Survey of Software 1.040 — Advanced Collections Libraries</a>, verified 2026-08-19. Libraries
+  run under Pyodide (CPython 3.14 compiled to WebAssembly) in this tab; nothing is sent anywhere. Timings here are
+  WebAssembly timings — roughly half native speed, same shape. Measurements are from your machine except where marked
+  orange.</p>
+  <p>Made by Ivan Schneider · <a href="https://modelcitizendeveloper.com/">Model Citizen Developer</a></p>
+</div>
+
+</div>
+
+<script src="/workshop/_lib/workshop.js"></script>
+<script>
+const W = Workshop, $ = W.$;
+W.mode("in-order");
+const status = $("status");
+let pyodide = null, core = null, ready = false, versions = {};
+let N = 100000, lastRace = null, lastOps = null, lastFunc = null, lastPers = null;
+const call = (fn, ...args) => W.call(core, fn, ...args);
+const fmtMs = W.fmtMs;
+
+$("go").onclick = async () => {
+  $("go").disabled = true;
+  try {
+    pyodide = await W.boot({ version: "314.0.5", packages: ["sortedcontainers", "toolz", "cytoolz", "pyrsistent"], status,
+                             statusText: { download: "Downloading CPython 3.14 (WebAssembly)… first time only, then cached." } });
+    status.textContent = "Fetching core.py…";
+    core = await W.loadModules(pyodide, { workshop: "/workshop/_lib/workshop.py", core: "core.py" });
+    versions = call("versions");
+    ready = true; $("race").disabled = false;
+    status.textContent = `Running — real Python ${versions.python}, sortedcontainers ${versions.sortedcontainers}, in this tab. Nothing leaves your machine.`;
+    await runRace();
+  } catch (e) { status.textContent = "Could not start: " + e.message; $("go").disabled = false; }
+};
+$("sizes").onclick = e => { const b = e.target.closest("button[data-n]"); if (!b) return; N = +b.dataset.n;
+  [...$("sizes").children].forEach(x => x.setAttribute("aria-pressed", String(x === b))); if (ready) runRace(); };
+$("race").onclick = () => { if (ready) runRace(); };
+
+/* The race: one structure at a time, bar appears when it finishes, so the ORDER is visible. */
+const ORDER = ["sortedlist", "insort", "appendsort", "heapq", "dict"];
+const LABEL = { sortedlist: "SortedList (sortedcontainers, pure Python)", insort: "list + bisect.insort (stdlib, C)",
+                appendsort: "list.append, then .sort() once", heapq: "heapq (stdlib, C) — min only", dict: "dict — no order at all" };
+async function runRace(){
+  await W.guarded("race", async () => {
+    $("race").disabled = true; $("racebars").innerHTML = ""; $("raceverdict").textContent = ""; $("ops").textContent = "…";
+    $("racenote").textContent = `Inserting ${N.toLocaleString()} keys, one structure at a time…`;
+    await W.yieldUI();
+    // run the whole race in Python (one call per structure would re-generate keys; instead call race() once
+    // but it returns all at once — so for the visible order we time structures individually here)
+    const res = {}; const finished = [];
+    for (const key of ORDER) {
+      $("racenote").textContent = `${LABEL[key]}…`; await W.yieldUI();
+      const r = JSON.parse(core.race_one(N, key, 150));
+      res[key] = r; finished.push(key);
+      const mx = Math.max(...Object.values(res).map(x => x.ms));
+      W.bars($("racebars"), finished.map(k => ({ label: LABEL[k], value: res[k].ms, max: mx, display: fmtMs(res[k].ms), color: k === "sortedlist" ? "var(--accent)" : k === "insort" ? "var(--warn)" : "var(--dim)", log: false })));
+    }
+    lastRace = { n: N, res };
+    const byTime = [...ORDER].sort((a, b) => res[a].ms - res[b].ms);
+    const sl = res.sortedlist.ms, ins = res.insort.ms, ap = res.appendsort.ms, hp = res.heapq.ms, dc = res.dict.ms;
+    $("racenote").textContent = `Done — ${N.toLocaleString()} keys. Order of finishing: ${byTime.map(k => k === "sortedlist" ? "SortedList" : k === "insort" ? "insort" : k === "appendsort" ? "append+sort" : k).join(" → ")}.`;
+    $("raceverdict").innerHTML = sl < ins
+      ? `<strong>Pure Python beat the standard library's C by ${(ins/sl).toFixed(1)}×</strong> at ${N.toLocaleString()} keys (${fmtMs(sl)} against ${fmtMs(ins)}). ` +
+        `And if you only needed the order at the end, <code>append</code> + <code>sort</code> did it in ${fmtMs(ap)} — ${(sl/ap).toFixed(1)}× faster than keeping it sorted as you went; <code>heapq</code> in ${fmtMs(hp)}; a dict with no order in ${fmtMs(dc)}.`
+      : `<strong>At ${N.toLocaleString()} keys the flat list still wins</strong> (${fmtMs(ins)} against SortedList's ${fmtMs(sl)}) — the memmove is cheap while the list is short. Try 10,000 and 100,000 and watch it turn over.`;
+    // table in engineering
+    $("raceverdict").innerHTML += `<div class="eng"><table><thead><tr><th>structure</th><th>time</th><th>× vs insort</th></tr></thead><tbody>` +
+      ORDER.map(k => `<tr><td>${LABEL[k]}</td><td>${fmtMs(res[k].ms)}</td><td>${(ins/res[k].ms).toFixed(2)}×</td></tr>`).join("") + `</tbody></table></div>`;
+    $("race").disabled = false;
+    await opsPanel(); await funcPanel(); await persPanel(); envelope();
+  });
+}
+
+async function opsPanel(){
+  $("ops").innerHTML = `<p class="note" style="margin:0">Measuring the operations at ${N.toLocaleString()}…</p>`; await W.yieldUI();
+  const o = call("ops", N, 10000, 120); lastOps = o;
+  const block = (title, data, winner, note) => {
+    const mx = Math.max(...Object.values(data));
+    return `<h3 style="margin:10px 0 4px">${title}</h3><div class="bars">` +
+      Object.entries(data).map(([k, v]) => `<div class="bar"><span class="lbl">${k}</span><span class="fill" style="width:${Math.max(1, v/mx*70).toFixed(1)}%;background:${k === winner ? "var(--good)" : "var(--dim)"}"></span><span class="val">${fmtMs(v)}</span></div>`).join("") +
+      `</div><p class="note" style="margin:4px 0 0">${note}</p>`;
+  };
+  const m = o.membership, r = o.range, p = o.popmin;
+  $("ops").innerHTML =
+    block(`${o.probes.toLocaleString()} membership tests`, m, "set", `A <code>set</code> answers "is it there" ${(m["SortedList"]/m["set"]).toFixed(0)}× faster than any sorted structure. If membership is the question, sorted was never the requirement.`) +
+    block(`one range query (everything between two keys)`, r, Object.entries(r).sort((a,b)=>a[1]-b[1])[0][0], `Both are fast; this is the operation a sorted structure exists for — and the one a <code>set</code> or <code>dict</code> cannot do at all. SortedList's <code>irange</code> does it without you writing the two bisects.`) +
+    block(`${o.k.toLocaleString()} pop-the-minimum`, p, "heapq.heappop", `If the smallest is all you ever take, <code>heapq</code> is ${(p["SortedList.pop(0)"]/p["heapq.heappop"]).toFixed(1)}× faster than SortedList and ${(p["list.pop(0)"]/p["heapq.heappop"]).toFixed(0)}× faster than popping the front of a list — which moves the whole list every time.`);
+}
+
+async function funcPanel(){
+  $("func").innerHTML = `<p class="note" style="margin:0">Running the pipeline three ways…</p>`; await W.yieldUI();
+  const f = call("functional", 100000, 150); lastFunc = f;
+  const d = { "toolz": f.toolz, "cytoolz": f.cytoolz, "standard library, by hand": f["stdlib by hand"] }; const mx = Math.max(...Object.values(d));
+  $("func").innerHTML = `<div class="bars">` + Object.entries(d).map(([k, v]) => `<div class="bar"><span class="lbl">${k}</span><span class="fill" style="width:${Math.max(1, v/mx*70).toFixed(1)}%;background:${k === "cytoolz" ? "var(--accent)" : "var(--dim)"}"></span><span class="val">${fmtMs(v)}</span></div>`).join("") + `</div>` +
+    `<p class="note" style="margin:6px 0 0">cytoolz is ${(f.toolz/f.cytoolz).toFixed(1)}× toolz here, and ${(f["stdlib by hand"]/f.cytoolz).toFixed(1)}× the hand-written version — which is itself ${(f.toolz/f["stdlib by hand"]).toFixed(1)}× faster than toolz. The survey's "2–5×" was measured natively at 1.7×; the honest pitch for cytoolz is that the functional style stops costing you anything.</p>`;
+}
+
+async function persPanel(){
+  $("pers").innerHTML = `<p class="note" style="margin:0">Measuring persistent updates…</p>`; await W.yieldUI();
+  const p = call("persistent", 100000, 1000, 150); lastPers = p;
+  const a = { "pvector.set, 1,000 updates": p["pvector.set x k"], "copy a tuple, 1,000 updates": p["copy a tuple x k"] };
+  const b = { "pvector.append × 100,000": p["pvector.append x n"], "list.append × 100,000": p["list.append x n"] };
+  const bars = (d, win) => { const mx = Math.max(...Object.values(d)); return `<div class="bars">` + Object.entries(d).map(([k, v]) => `<div class="bar"><span class="lbl">${k}</span><span class="fill" style="width:${Math.max(1, v/mx*70).toFixed(1)}%;background:${k.startsWith(win) ? "var(--accent)" : "var(--dim)"}"></span><span class="val">${fmtMs(v)}</span></div>`).join("") + `</div>`; };
+  $("pers").innerHTML = bars(a, "pvector.set") + bars(b, "list.append") +
+    `<p class="note" style="margin:6px 0 0">Updating without copying: ${(p["copy a tuple x k"]/p["pvector.set x k"]).toFixed(0)}× faster than the copy you would otherwise make. Building from scratch: ${(p["pvector.append x n"]/p["list.append x n"]).toFixed(0)}× slower than a list. That is the trade, and it is the right one exactly when the old versions must stay valid — shared state, undo, snapshots.</p>` +
+    `<p class="eng" style="margin:6px 0 0">Implementation in this tab: <strong>${p.impl}</strong>. The same is true natively on CPython 3.14 — <code>pvectorc</code> is not built for it — so the survey's "C extension, 2–20× faster" describes an option that is currently unavailable on a current interpreter.</p>`;
+}
+
+function envelope(){
+  const r = lastRace ? lastRace.res : null;
+  const txt =
+`I am choosing a collections library in Python and have just measured the trade-offs myself,
+in the browser, on my own machine.
+
+The race (${lastRace ? lastRace.n.toLocaleString() : "?"} random keys, inserted one at a time, kept in order)
+${r ? ORDER.map(k => `  ${LABEL[k].padEnd(44)}: ${fmtMs(r[k].ms)}`).join("\n") : "  (not run)"}
+${lastOps ? `
+At that size: membership set ${fmtMs(lastOps.membership.set)} vs SortedList ${fmtMs(lastOps.membership.SortedList)};
+pop-min heapq ${fmtMs(lastOps.popmin["heapq.heappop"])} vs SortedList ${fmtMs(lastOps.popmin["SortedList.pop(0)"])}.` : ""}
+${lastFunc ? `cytoolz ${fmtMs(lastFunc.cytoolz)} vs toolz ${fmtMs(lastFunc.toolz)} vs stdlib by hand ${fmtMs(lastFunc["stdlib by hand"])} on one pipeline.` : ""}
+${lastPers ? `pyrsistent: 1,000 persistent updates ${fmtMs(lastPers["pvector.set x k"])} vs copying ${fmtMs(lastPers["copy a tuple x k"])}; impl ${lastPers.impl}.` : ""}
+
+What the survey established
+  sortedcontainers (pure Python) beats bisect.insort (stdlib C) ~9x at 100K keys and ~40x at 1M;
+  the C extension it famously beat (bintrees) no longer ships for any current Python.
+  If you only need order at the end, append+sort is ~2.5x faster than a SortedList; if you only
+  need the minimum, heapq is ~10x faster; if you never need order, dict.
+  cytoolz is ~1.7x toolz. pyrsistent is pure Python on 3.14. polars is 2.6-9x pandas 3.0.
+
+Help me build this
+  Tell me which of the four cases my workload is (sorted always / at the end / min-only / never)
+  and write the code for it. If it is "sorted always", use sortedcontainers and show me irange.
+
+Reference: https://research.modelcitizendeveloper.com/survey/1-040/`;
+  $("envelope").textContent = txt;
+  W.copyText($("copy"), $("copied"), () => txt);
+}
+</script>
+</body>
+</html>
