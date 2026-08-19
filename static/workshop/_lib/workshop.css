@@ -69,3 +69,4 @@ img.qr{image-rendering:pixelated;max-width:100%;height:auto;background:#fff;bord
 .drop{border:1px dashed var(--faint);border-radius:6px;padding:12px;text-align:center;color:var(--dim);font-size:.9rem;margin-top:8px}
 .drop.over{border-color:var(--accent);color:var(--accent)}
 .foot{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:.88rem;color:var(--faint)}
+

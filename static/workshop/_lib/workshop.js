@@ -124,5 +124,53 @@
     });
   }
 
-  window.Workshop = { $, mode, boot, loadModules, call, yieldUI, guarded, fmtRate, fmtMs, kb, bars, copyText, copyImages };
+  /* ── newsletter capture ───────────────────────────────────────────────
+     The same Field Notes form as the survey pages (native POST to Buttondown,
+     tags method / research-site / placement-workshop, metadata__source = the
+     page path), injected automatically above .foot. One copy for the whole
+     workshop. Opt out per page with <body data-no-newsletter>; or place a
+     <div id="newsletter"></div> to choose the spot. */
+  function newsletter(){
+    if (document.body.dataset.noNewsletter !== undefined) return;
+    if (document.querySelector(".newsletter-cta")) return;
+    // styles ride with the injector (not workshop.css) so pages that predate the
+    // lib (sortie, qrkadelic) need only this script; the tokens are the shared palette
+    if (!document.getElementById("newsletter-cta-css")) {
+      const st = document.createElement("style"); st.id = "newsletter-cta-css";
+      st.textContent = `
+.newsletter-cta{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:44px 0 0}
+.newsletter-cta__pitch{margin:0 0 12px;color:var(--text)}
+.newsletter-cta__pitch strong{color:var(--bright)}
+.newsletter-cta__form{display:flex;gap:8px;flex-wrap:wrap}
+.newsletter-cta__input{font:inherit;flex:1 1 220px;padding:9px 12px;border-radius:6px;background:var(--field);color:var(--bright);border:1px solid var(--line)}
+.newsletter-cta__form button{font:inherit;cursor:pointer;background:var(--accent);color:var(--on-accent);border:1px solid var(--accent);border-radius:6px;padding:8px 16px;font-weight:700}
+.newsletter-cta__fineprint{font-size:.82rem;color:var(--faint);margin:10px 0 0}`;
+      document.head.appendChild(st);
+    }
+    const user = "model-citizen-developer";
+    const el = document.createElement("aside");
+    el.className = "newsletter-cta";
+    el.innerHTML =
+      `<p class="newsletter-cta__pitch"><strong>Field Notes — what happens after the measurement.</strong> ` +
+      `The surveys behind these pages stay neutral by design. The Reports built from them argue a case, ` +
+      `and a new one is at the center of each edition.</p>` +
+      `<form class="newsletter-cta__form" action="https://buttondown.com/api/emails/embed-subscribe/${user}" method="post" ` +
+      `target="popupwindow" onsubmit="window.open('https://buttondown.com/${user}','popupwindow')">` +
+      `<input class="newsletter-cta__input" type="email" name="email" placeholder="you@example.com" aria-label="Email address" autocomplete="email" required>` +
+      `<input type="hidden" name="tag" value="method">` +
+      `<input type="hidden" name="tag" value="research-site">` +
+      `<input type="hidden" name="tag" value="placement-workshop">` +
+      `<input type="hidden" name="metadata__source" value="${location.pathname}">` +
+      `<input type="hidden" name="embed" value="1">` +
+      `<button type="submit">Subscribe</button></form>` +
+      `<p class="newsletter-cta__fineprint">No tracking pixels. Unsubscribe in one click.</p>`;
+    const slot = document.getElementById("newsletter"), foot = document.querySelector(".foot");
+    if (slot) slot.appendChild(el);
+    else if (foot) foot.parentNode.insertBefore(el, foot);
+    else document.body.appendChild(el);
+  }
+  if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", newsletter);
+  else newsletter();
+
+  window.Workshop = { $, mode, boot, loadModules, call, yieldUI, guarded, fmtRate, fmtMs, kb, bars, copyText, copyImages, newsletter };
 })();
