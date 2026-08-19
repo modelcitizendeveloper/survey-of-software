@@ -1,0 +1,52 @@
+{
+ "title": "The Workshop — Survey of Software floor models",
+ "url": "https://research.modelcitizendeveloper.com/workshop/",
+ "description": "Free working pages that measure a Survey of Software finding on your own data, in your own browser. The real Python libraries run in the tab; nothing is uploaded.",
+ "models": [
+  {
+   "name": "you want this sorted how?",
+   "url": "https://research.modelcitizendeveloper.com/workshop/sorted-how/",
+   "finding": "Keep 100,000 keys in order, one insert at a time: pure-Python sortedcontainers beats the standard library's C by ten times — and if you only needed the order at the end, or just the minimum, the standard library beats it back. A race you start, with bars arriving in finishing order.",
+   "survey_code": "1.040",
+   "survey_title": "Advanced Collections",
+   "survey_url": "https://research.modelcitizendeveloper.com/survey/1-040/",
+   "libraries": "sortedcontainers, heapq, bisect, pyrsistent, cytoolz"
+  },
+  {
+   "name": "JSONic rituals",
+   "url": "https://research.modelcitizendeveloper.com/workshop/jsonic-rituals/",
+   "finding": "The famous \"orjson is 6× faster\" is a writing number — reading is about 2×, and the fastest reader is the one that validates. Paste your own JSON: both rituals are timed on it, and the page infers a msgspec.Struct from your data and shows what validation catches.",
+   "survey_code": "1.056",
+   "survey_title": "JSON Libraries",
+   "survey_url": "https://research.modelcitizendeveloper.com/survey/1-056/",
+   "libraries": "orjson, msgspec, ujson, simplejson, stdlib json"
+  },
+  {
+   "name": "compresso",
+   "url": "https://research.modelcitizendeveloper.com/workshop/compresso/",
+   "finding": "One answer for the whole speed-versus-size range except the two far ends — and the read-back speed does not move whichever level wrote the file. Drop your own file on the full curve: every codec, every setting, each library's default ringed.",
+   "survey_code": "1.050",
+   "survey_title": "Compression Libraries",
+   "survey_url": "https://research.modelcitizendeveloper.com/survey/1-050/",
+   "libraries": "zstandard (stdlib since 3.14), brotli, lz4, zlib"
+  },
+  {
+   "name": "qrkadelic",
+   "url": "https://research.modelcitizendeveloper.com/workshop/qrkadelic/",
+   "finding": "\"You can cover 30% of a QR code\" is off by roughly three times. Grow a logo through the middle of your own code until it breaks, then point your phone at the screen — the camera you own is the second instrument.",
+   "survey_code": "1.080.1",
+   "survey_title": "QR Code Generation",
+   "survey_url": "https://research.modelcitizendeveloper.com/survey/1-080-1/",
+   "libraries": "qrcode, segno, qrcodegen, pyStrich"
+  },
+  {
+   "name": "sortie",
+   "url": "https://research.modelcitizendeveloper.com/workshop/sortie/",
+   "finding": "When is re-sorting on every insert the wrong answer? Measured live — the page where \"every figure is measured on your machine while you wait\" became the rule the rest of the workshop keeps.",
+   "survey_code": "1.001",
+   "survey_title": "Sorting Libraries",
+   "survey_url": "https://research.modelcitizendeveloper.com/survey/1-001/",
+   "libraries": "the built-in sort, numpy, sortedcontainers"
+  }
+ ]
+}
