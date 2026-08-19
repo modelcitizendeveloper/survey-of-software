@@ -1,4 +1,4 @@
-"""core.py — the measurement behind the 1.040 Collections floor model (working name: in order).
+"""core.py — the measurement behind the 1.040 Collections floor model (you want this sorted how?).
 
 One copy, three readers: the page fetches it into Pyodide, a notebook can import it, the native
 bench (01-discovery/bench/) imports it. Timing comes from /workshop/_lib/workshop.py. Every
