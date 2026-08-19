@@ -132,7 +132,7 @@
      <div id="newsletter"></div> to choose the spot. */
   function newsletter(){
     if (document.body.dataset.noNewsletter !== undefined) return;
-    if (document.querySelector(".newsletter-cta")) return;
+    if (document.querySelector('.newsletter-cta, form[action*="embed-subscribe"]')) return;
     // styles ride with the injector (not workshop.css) so pages that predate the
     // lib (sortie, qrkadelic) need only this script; the tokens are the shared palette
     if (!document.getElementById("newsletter-cta-css")) {
