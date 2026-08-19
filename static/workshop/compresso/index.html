@@ -220,8 +220,8 @@ champion depends on the data; the speed of getting there depends on the setting.
 
 <!-- ── Panel 3 ─────────────────────────────────────────────────────── -->
 <h2>lz4 — the speed, at exactly one setting</h2>
-<p class="plain">Level 0 is the point of LZ4. Drag right and it becomes a slower, weaker
-zstandard.</p>
+<p class="plain">Level 0 is the point of LZ4 (1 and 2 are the same thing). Drag to 3 and beyond and it
+becomes a slower, weaker zstandard.</p>
 <p class="eng">Level sweep 0–16 (<code>lz4.frame</code>; 3+ is the HC encoder). The comparison
 line finds the zstandard level from the sweep that is at least as small <em>and</em> at least
 as fast — when one exists, this LZ4 setting is dominated.</p>
@@ -686,7 +686,17 @@ async function guarded(key, fn){
 // nearest zstd point in the sweep at or above a ratio; and the fastest zstd point that dominates (>= ratio and >= speed)
 const zPoints = () => (sweeps[sample] || []).filter(p => p.codec === "zstandard");
 function zstdAtRatio(ratio){ const c = zPoints().filter(p => p.ratio >= ratio * 0.995).sort((a,b) => a.level - b.level); return c[0] || null; }
-function zstdDominating(r){ const c = zPoints().filter(p => p.ratio >= r.ratio && p.comp_MBs >= r.comp_MBs).sort((a,b) => b.comp_MBs - a.comp_MBs); return c[0] || null; }
+// Dominated = some zstandard level is at least as small AND clearly faster. "Clearly" matters:
+// the zstandard point was measured once during the sweep and the lz4 reading moves with
+// WebAssembly warmth (it reads slower right after the HC levels), so a bare >= flipped the
+// verdict with the direction of the slider. Within ±15% it is a tie, and says so.
+function zstdVs(r){
+  const smaller = zPoints().filter(p => p.ratio >= r.ratio).sort((a,b) => b.comp_MBs - a.comp_MBs);
+  const best = smaller[0]; if (!best) return { verdict: "own", z: null };
+  if (best.comp_MBs >= r.comp_MBs * 1.15) return { verdict: "dominated", z: best };
+  if (best.comp_MBs >= r.comp_MBs * 0.87) return { verdict: "tie", z: best };
+  return { verdict: "own", z: best };
+}
 
 /* ── Panel 1: zstandard ──────────────────────────────────────────── */
 async function zstdPanel(){
@@ -734,15 +744,18 @@ async function lz4Panel(){
   await guarded("l", async () => {
     const L = +$("ll").value; touched.lz4 = L;
     $("llv").textContent = L; $("ldef").style.display = L === 0 ? "inline" : "none";
-    const r = call("measure", "lz4", L, sample, 100); last.lz4 = r;
+    const r = call("measure", "lz4", L, sample, 200); last.lz4 = r;   // fast codec, cheap to time well
     let extra = "";
     if (sweeps[sample]) {
-      const d = zstdDominating(r);
-      extra = d ? `<p class="note" style="margin:8px 0 0"><span class="verdict no">Dominated</span> zstandard ${d.level} is both smaller (${d.ratio.toFixed(2)}×) and faster to compress (${fmt(d.comp_MBs)}) than lz4 at ${L}. Reading is still lz4's — ${fmt(r.decomp_MBs)} against ${fmt(d.decomp_MBs)} — and that is the only reason left.</p>`
-                : `<p class="note" style="margin:8px 0 0"><span class="verdict ok">Its own point</span> nothing in the zstandard sweep is both smaller and faster than lz4 at ${L}. This is the setting the library exists for.</p>`;
+      const { verdict, z } = zstdVs(r);
+      extra = verdict === "dominated"
+        ? `<p class="note" style="margin:8px 0 0"><span class="verdict no">Dominated</span> zstandard ${z.level} is both smaller (${z.ratio.toFixed(2)}×) and faster to compress (${fmt(z.comp_MBs)}) than lz4 at ${L}. Reading is still lz4's — ${fmt(r.decomp_MBs)} against ${fmt(z.decomp_MBs)} — and that is the only reason left.</p>`
+        : verdict === "tie"
+        ? `<p class="note" style="margin:8px 0 0"><span class="verdict meh">Too close to call here</span> zstandard ${z.level} is smaller (${z.ratio.toFixed(2)}×) and compresses at ${fmt(z.comp_MBs)} against lz4's ${fmt(r.comp_MBs)} — within the noise of two measurements in this tab. Drag again and the number will move; what will not move is the read speed, ${fmt(r.decomp_MBs)} against ${fmt(z.decomp_MBs)}.</p>`
+        : `<p class="note" style="margin:8px 0 0"><span class="verdict ok">Its own point</span> nothing in the zstandard sweep is both smaller and faster than lz4 at ${L}. This is the setting the library exists for.</p>`;
     }
     bars($("lbars"), r, extra);
-    $("lnote").textContent = L === 0 ? "" : L < 3 ? "Levels 1–2 are the fast encoder with an acceleration factor; the real change is at 3." : "Level 3 and up is the HC (high-compression) encoder: a slower search for a better ratio — the trade zstandard makes better at every point.";
+    $("lnote").textContent = L === 0 ? "" : L < 3 ? "Levels 0, 1 and 2 are one setting in lz4.frame — the fast encoder, same bytes out, same speed. The change is at 3." : "Level 3 and up is the HC (high-compression) encoder: a slower search for a better ratio — the trade zstandard makes better at every point.";
   });
 }
 $("ll").oninput = () => { if (ready) lz4Panel(); else { $("llv").textContent = $("ll").value; } };
