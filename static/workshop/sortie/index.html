@@ -440,8 +440,9 @@
 
   <!-- Capture. Same Buttondown endpoint and the same tag convention as the rest
        of the research site: `method` selects the newsletter, `research-site` is
-       the entry door the welcome automation filters on, and placement-sortie
-       records that this page earned it. Native POST, no JS. -->
+       the entry door the welcome automation filters on, and placement-workshop
+       rolls up with the lib-injected capture on the other floor models (the page
+       itself is in metadata__source). Native POST, no JS. -->
   <section class="sub">
     <p><strong>Field Notes</strong> — the surveys stay neutral; the Reports built
     from them argue a case, and a new one is at the center of each edition.</p>
@@ -452,7 +453,7 @@
              aria-label="Email address" autocomplete="email" required>
       <input type="hidden" name="tag" value="method">
       <input type="hidden" name="tag" value="research-site">
-      <input type="hidden" name="tag" value="placement-sortie">
+      <input type="hidden" name="tag" value="placement-workshop">
       <input type="hidden" name="metadata__source" value="/workshop/sortie/">
       <input type="hidden" name="embed" value="1">
       <button type="submit">Subscribe</button>
