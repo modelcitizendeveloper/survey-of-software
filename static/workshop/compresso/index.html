@@ -85,9 +85,9 @@
 
 <p class="kicker">Workshop · floor model for <a href="/survey/1-050/">Survey of Software 1.050</a></p>
 <h1>compresso</h1>
-<p class="dek">Three compression codecs, one curve. Zstandard is the default — and since Python 3.14
-it is in the standard library. The interesting question is where on the curve you are standing,
-and what it costs to move.</p>
+<p class="dek">One answer for the whole range, except the two far ends. Zstandard — in Python's
+standard library since 3.14 — covers everything between "as small as brotli can go" and "as fast
+as lz4 can go". This page measures that on your own file.</p>
 <p class="note" style="margin:0 0 20px">Drop your own file below. It never leaves this tab: the
 codecs run here, in your browser, and the numbers are about <em>your</em> data.</p>
 
@@ -96,6 +96,44 @@ codecs run here, in your browser, and the numbers are about <em>your</em> data.<
   <button id="m-eng" aria-pressed="false">Engineering</button>
 </div>
 <p class="note" id="mode-hint">Plain language. Switch to Engineering for versions, byte counts and the measurements behind each claim.</p>
+
+<!-- ── The whole answer, first ─────────────────────────────────────── -->
+<h2>The whole answer, first</h2>
+<p class="plain">Every setting of every codec on one line — slowest-and-smallest on the left,
+fastest-and-biggest on the right. One library covers the whole middle. You leave it only at
+the two ends.</p>
+<p class="eng">Pareto view collapsed to one axis. Zstandard's levels 1–22 span the range and
+dominate every other library's settings on ratio, speed, or both — except brotli 11 (beyond
+zstandard's reach on ratio, more so on small web text) and lz4 0 (beyond it on speed). The
+chart below is the measured version of this picture, on your data.</p>
+<div class="panel" style="color:var(--text)">
+<figure style="margin:0 0 6px">
+<svg viewBox="0 0 720 150" role="img" width="100%" height="150" aria-label="One answer across the whole range, except the two far ends">
+  <title>Zstandard covers the whole middle; brotli owns the far size end, lz4 the far speed end</title>
+  <text x="0" y="16" font-size="12" fill="currentColor" opacity=".75">smallest, slowest</text>
+  <text x="720" y="16" font-size="12" fill="currentColor" opacity=".75" text-anchor="end">fastest, biggest</text>
+  <line x1="0" y1="24" x2="720" y2="24" stroke="currentColor" stroke-opacity=".35" stroke-width="1"/>
+  <polygon points="712,20 720,24 712,28" fill="currentColor" fill-opacity=".5"/>
+  <polygon points="8,20 0,24 8,28" fill="currentColor" fill-opacity=".5"/>
+  <rect x="0" y="38" width="72" height="44" rx="6" fill="#a855f7"/>
+  <rect x="78" y="38" width="564" height="44" rx="6" fill="#14b8a6"/>
+  <rect x="648" y="38" width="72" height="44" rx="6" fill="#f59e0b"/>
+  <text x="36" y="65" font-size="13" font-weight="700" fill="#1e1033" text-anchor="middle">brotli</text>
+  <text x="360" y="65" font-size="15" font-weight="700" fill="#042f2e" text-anchor="middle">zstandard — every setting in here</text>
+  <text x="684" y="65" font-size="13" font-weight="700" fill="#3b2300" text-anchor="middle">lz4</text>
+  <text x="0" y="104" font-size="11.5" fill="currentColor">quality 11, web text:</text>
+  <text x="0" y="119" font-size="11.5" fill="currentColor">the last 3–16%</text>
+  <text x="360" y="104" font-size="11.5" fill="currentColor" text-anchor="middle">level 1 (fast) … 3 (default) … 19 (archive)</text>
+  <text x="360" y="119" font-size="11.5" fill="currentColor" text-anchor="middle">whichever level wrote it, it reads back at the same ~1 GB/s</text>
+  <text x="720" y="104" font-size="11.5" fill="currentColor" text-anchor="end">level 0 only:</text>
+  <text x="720" y="119" font-size="11.5" fill="currentColor" text-anchor="end">3× faster reads</text>
+  <text x="360" y="142" font-size="11.5" fill="currentColor" opacity=".7" text-anchor="middle">gzip, zlib-ng, snappy, lz4 levels 1–16, brotli 0–10: all somewhere a zstandard level already beats</text>
+</svg>
+</figure>
+<p class="note" style="margin:8px 0 0"><strong>Use zstandard.</strong> Leave it for brotli only at quality
+11 on web text you will serve many times, and for lz4 only at level 0 when read speed is the budget.
+Choose the level by who pays: a higher level costs the writer once and the reader nothing.</p>
+</div>
 
 <div class="panel">
   <p class="note" style="margin:0 0 10px"><strong>The rule of this page:</strong> every figure
@@ -115,7 +153,7 @@ codecs run here, in your browser, and the numbers are about <em>your</em> data.<
 </div>
 
 <!-- ── Panel 0 ─────────────────────────────────────────────────────── -->
-<h2>The curve</h2>
+<h2>The curve — measured on your data</h2>
 <p class="plain">Every codec, at every setting it offers, on the data you chose. Up means
 smaller; right means faster. The rings mark each library's <em>default</em> — and where the
 defaults sit is most of the story.</p>
