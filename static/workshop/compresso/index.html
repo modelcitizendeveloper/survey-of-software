@@ -7,76 +7,10 @@
 <meta name="description" content="Zstandard, Brotli and LZ4 measured on your own file, in your browser. The ratio-versus-speed curve is the finding: decompression does not care what level you used, and the slow codec is only slow at its default.">
 <meta name="color-scheme" content="dark">
 <link rel="canonical" href="https://research.modelcitizendeveloper.com/workshop/compresso/">
+<link rel="stylesheet" href="/workshop/_lib/workshop.css">
 <style>
-  /* Same palette as sortie and qrkadelic so the workshop reads as one place. */
-  :root{
-    --ground:#0b1220; --panel:#0f1a2e; --line:#1e293b; --field:#26364f;
-    --text:#cbd5e1; --bright:#f1f5f9; --dim:#94a3b8; --faint:#64748b;
-    --accent:#5eead4; --on-accent:#042f2e; --warn:#f59e42; --bad:#fb7185; --good:#4ade80;
-    --zstd:#5eead4; --brotli:#c084fc; --lz4:#fbbf24; --zlib:#94a3b8; --bz2:#f472b6; --lzma:#60a5fa;
-  }
-  *,*::before,*::after{box-sizing:border-box}
-  body{margin:0;background:var(--ground);color:var(--text);line-height:1.65;
-       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
-       -webkit-text-size-adjust:100%}
-  .wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px}
-  a{color:var(--accent);text-decoration-color:#14532d}
-  a:hover{color:#99f6e4}
-  h1{font-size:2.1rem;line-height:1.15;margin:0 0 10px;color:#fff;letter-spacing:-.02em}
-  h2{font-size:1.25rem;margin:44px 0 10px;color:var(--bright);letter-spacing:-.01em}
-  h3{font-size:1rem;margin:26px 0 8px;color:var(--bright)}
-  .kicker{font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--dim);
-          font-weight:600;margin:0 0 12px}
-  .dek{font-size:1.1rem;color:var(--dim);margin:0 0 8px}
-  code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
-  code{background:var(--panel);padding:1px 5px;border-radius:3px;color:var(--bright)}
-  .panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:14px 0}
-  button{font:inherit;cursor:pointer;background:var(--accent);color:var(--on-accent);border:1px solid var(--accent);
-         border-radius:6px;padding:8px 16px;font-weight:700}
-  button:disabled{opacity:.5;cursor:default}
-  .modes{display:flex;gap:8px;margin:0 0 8px}
-  .modes button{background:transparent;color:var(--dim);border-color:var(--line);font-weight:600}
-  .modes button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
-  .note{font-size:.9rem;color:var(--dim);margin:6px 0 0}
-  .eng{display:none}
-  body.engineering .eng{display:block}
-  body.engineering .plain{display:none}
-  span.eng{display:none} body.engineering span.eng{display:inline}
-  table{border-collapse:collapse;width:100%;font-size:.9rem;margin:10px 0}
-  th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
-  th{color:var(--dim);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em}
-  input[type=text]{font:inherit;width:100%;padding:9px 12px;border-radius:5px;
-       background:var(--field);color:var(--bright);border:1px solid var(--line)}
-  input[type=range]{width:100%;accent-color:var(--accent)}
-  label{font-size:.85rem;color:var(--dim);display:block;margin:12px 0 4px}
-  .row{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
-  .col{flex:1 1 200px;min-width:0}
-  .verdict{font-weight:700;padding:5px 12px;border-radius:5px;display:inline-block;font-size:.95rem}
-  .ok{background:#052e16;color:var(--good);border:1px solid #166534}
-  .no{background:#4c0519;color:var(--bad);border:1px solid #9f1239}
-  .meh{background:#1f2937;color:var(--dim);border:1px solid var(--line)}
-  .swatches{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
-  .swatches button{padding:5px 10px;font-size:.82rem;font-weight:500;
-       background:var(--field);color:var(--text);border-color:var(--line)}
-  .swatches button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
-  .bars{margin:10px 0}
-  .bar{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:.86rem}
-  .bar .lbl{width:150px;flex:none;color:var(--dim)}
-  .bar .fill{height:20px;background:var(--accent);border-radius:3px;min-width:2px;transition:width .15s}
-  .bar .val{color:var(--bright);font-variant-numeric:tabular-nums;white-space:nowrap}
-  .research{border-left:3px solid var(--warn);padding-left:14px}
-  .research .kicker{color:var(--warn)}
-  .empty{border-left:3px solid var(--faint);padding-left:14px;color:var(--dim)}
-  #status{font-size:.9rem;color:var(--dim);min-height:1.4em}
-  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;
-        white-space:pre-wrap;background:var(--ground);border:1px solid var(--line);
-        border-radius:6px;padding:12px;color:var(--text);max-height:280px;overflow:auto}
-  canvas{max-width:100%;height:auto;display:block;background:var(--ground);border:1px solid var(--line);border-radius:6px}
-  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.82rem;color:var(--dim);margin:8px 0 0}
-  .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
-  .drop{border:1px dashed var(--faint);border-radius:6px;padding:12px;text-align:center;color:var(--dim);font-size:.9rem;margin-top:8px}
-  .drop.over{border-color:var(--accent);color:var(--accent)}
-  .foot{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:.88rem;color:var(--faint)}
+  /* page-specific: codec colours and the schematic */
+  :root{ --zstd:#5eead4; --brotli:#c084fc; --lz4:#fbbf24; --zlib:#94a3b8; --bz2:#f472b6; --lzma:#60a5fa; }
   .big{font-size:1.6rem;font-weight:700;color:var(--bright);line-height:1.2}
 </style>
 </head>
@@ -321,26 +255,12 @@ roadmap. Paste into any assistant.</p>
 
 </div>
 
+<script src="/workshop/_lib/workshop.js"></script>
 <script>
-/* ── mode toggle — same shape as sortie's Learn/Play ─────────────── */
-const bPlain = document.getElementById("m-plain"),
-      bEng   = document.getElementById("m-eng"),
-      hint   = document.getElementById("mode-hint");
-function setMode(eng){
-  document.body.classList.toggle("engineering", eng);
-  bPlain.setAttribute("aria-pressed", String(!eng));
-  bEng.setAttribute("aria-pressed", String(eng));
-  hint.textContent = eng
-    ? "Engineering. Versions, byte counts and the measurement behind each claim. Switch to Plain for the same demos in ordinary words."
-    : "Plain language. Switch to Engineering for versions, byte counts and the measurements behind each claim.";
-  try { localStorage.setItem("compresso-mode", eng ? "eng" : "plain"); } catch(e){}
-}
-bPlain.onclick = () => setMode(false);
-bEng.onclick   = () => setMode(true);
-try { setMode(localStorage.getItem("compresso-mode") === "eng"); } catch(e){ setMode(false); }
+const W = Workshop, $ = W.$;
+W.mode("compresso");
 
 /* ── state ───────────────────────────────────────────────────────── */
-const $ = id => document.getElementById(id);
 const status = $("status");
 let pyodide = null, ready = false, versions = {};
 let sample = "text";                       // text | json | png | file
@@ -365,8 +285,8 @@ const SWEEP = [
 ];
 
 /* ── the Python side ─────────────────────────────────────────────── */
-const PY = String.raw`
-import time, json, zlib, gzip, bz2, lzma, hashlib, random, sys
+const PY = W.PY_TIMING + String.raw`
+import json, zlib, gzip, bz2, lzma, hashlib, random, sys
 import zstandard, brotli, lz4.frame
 from compression import zstd as stdzstd
 
@@ -418,27 +338,6 @@ CODECS = {
     "lzma":             (lambda d, L: lzma.compress(d, preset=L), lzma.decompress),
 }
 
-def _best(fn, arg, budget_s, min_reps=3):
-    """Best-of timing under a wall-clock budget. Slow settings get one measured rep.
-    Browsers clamp the clock (100 us in Chromium without isolation), so calls that
-    finish in microseconds — a codec storing an incompressible block raw — are timed
-    in batches large enough to register."""
-    t0 = time.perf_counter(); fn(arg); first = time.perf_counter() - t0
-    if first > budget_s: return first, 1
-    k = 1
-    if first < 0.002:
-        k = 64 if first <= 0 else min(512, int(0.002 / first) + 1)
-    b = first if first > 0 else float("inf"); reps = 1; total = first
-    while reps < min_reps or total < budget_s:
-        t0 = time.perf_counter()
-        for _ in range(k): fn(arg)
-        dt = (time.perf_counter() - t0) / k
-        if dt > 0: b = min(b, dt)
-        reps += 1; total += dt * k
-        if reps >= 40: break
-    if b == float("inf"): b = 1e-6
-    return b, reps
-
 def measure(codec, level, sample, budget_ms=100):
     data = SAMPLES[sample]; c, d = CODECS[codec]; level = int(level)
     out = c(data, level)
@@ -478,18 +377,8 @@ def versions():
 $("go").onclick = async () => {
   $("go").disabled = true;
   try {
-    status.textContent = "Downloading CPython 3.14 (WebAssembly)… first time only, then cached.";
-    if (!window.loadPyodide) {
-      await new Promise((res, rej) => {
-        const s = document.createElement("script");
-        s.src = "https://cdn.jsdelivr.net/pyodide/v314.0.5/full/pyodide.js";
-        s.onload = res; s.onerror = () => rej(new Error("could not load Pyodide"));
-        document.head.appendChild(s);
-      });
-    }
-    pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v314.0.5/full/" });
-    status.textContent = "Loading zstandard, brotli, lz4…";
-    await pyodide.loadPackage(["zstandard", "brotli", "lz4"]);
+    pyodide = await W.boot({ version: "314.0.5", packages: ["zstandard", "brotli", "lz4"], status,
+                             statusText: { download: "Downloading CPython 3.14 (WebAssembly)… first time only, then cached." } });
     await pyodide.runPythonAsync(PY);
     versions = call("versions");
     status.textContent = "Generating the JSON sample, fetching the novel…";
@@ -509,10 +398,8 @@ $("go").onclick = async () => {
   }
 };
 
-const call = (fn, ...args) => JSON.parse(pyodide.globals.get(fn)(...args));
-const yieldUI = () => new Promise(r => setTimeout(r, 0));
-const fmt = n => n >= 1000 ? (n/1000).toFixed(1).replace(/\.0$/,"") + " GB/s" : n.toFixed(n < 10 ? 1 : 0) + " MB/s";
-const kb = n => n >= 1048576 ? (n/1048576).toFixed(2) + " MB" : (n/1024).toFixed(0) + " KB";
+const call = (fn, ...args) => W.call(pyodide, fn, ...args);
+const yieldUI = W.yieldUI, fmt = W.fmtRate, kb = W.kb, guarded = W.guarded;
 const sampleLabel = () => sample === "file" ? (fileName || "your file") : sample === "text" ? "the novel" : sample === "json" ? "the JSON logs" : "the PNG";
 
 /* ── the reader's own file ───────────────────────────────────────── */
@@ -676,13 +563,6 @@ function bars(el, r, extra){
     (r.ratio < 1.01 ? `<p class="note" style="margin:6px 0 0">Stored raw — the codec found nothing to do, so these speeds are the cost of a copy, not a decode.</p>` : "") +
     (extra || "");
 }
-const busy = {};
-async function guarded(key, fn){
-  if (busy[key]) { busy[key] = "again"; return; }
-  busy[key] = true;
-  do { if (busy[key] === "again") busy[key] = true; await yieldUI(); await fn(); } while (busy[key] === "again");
-  busy[key] = false;
-}
 // nearest zstd point in the sweep at or above a ratio; and the fastest zstd point that dominates (>= ratio and >= speed)
 const zPoints = () => (sweeps[sample] || []).filter(p => p.codec === "zstandard");
 function zstdAtRatio(ratio){ const c = zPoints().filter(p => p.ratio >= ratio * 0.995).sort((a,b) => a.level - b.level); return c[0] || null; }
@@ -818,10 +698,7 @@ Help me build this
 
 Reference: https://research.modelcitizendeveloper.com/survey/1-050/`;
   $("envelope").textContent = txt;
-  $("copy").onclick = async () => {
-    try { await navigator.clipboard.writeText(txt); $("copied").textContent = "Copied — paste it into any AI."; }
-    catch(e){ $("copied").textContent = "Select the text below and copy it."; }
-  };
+  W.copyText($("copy"), $("copied"), () => txt);
 }
 </script>
 </body>

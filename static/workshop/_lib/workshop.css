@@ -1,0 +1,71 @@
+/* workshop.css — the shared look of the Survey of Software workshop.
+   Palette and components first written for sortie, copied into qrkadelic and
+   compresso; extracted 2026-08-19 so the fourth page does not copy them again.
+   Pages add their own page-specific rules after this file. */
+:root{
+  --ground:#0b1220; --panel:#0f1a2e; --line:#1e293b; --field:#26364f;
+  --text:#cbd5e1; --bright:#f1f5f9; --dim:#94a3b8; --faint:#64748b;
+  --accent:#5eead4; --on-accent:#042f2e; --warn:#f59e42; --bad:#fb7185; --good:#4ade80;
+}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--ground);color:var(--text);line-height:1.65;
+     font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+     -webkit-text-size-adjust:100%}
+.wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px}
+a{color:var(--accent);text-decoration-color:#14532d}
+a:hover{color:#99f6e4}
+h1{font-size:2.1rem;line-height:1.15;margin:0 0 10px;color:#fff;letter-spacing:-.02em}
+h2{font-size:1.25rem;margin:44px 0 10px;color:var(--bright);letter-spacing:-.01em}
+h3{font-size:1rem;margin:26px 0 8px;color:var(--bright)}
+.kicker{font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--dim);font-weight:600;margin:0 0 12px}
+.dek{font-size:1.1rem;color:var(--dim);margin:0 0 8px}
+code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+code{background:var(--panel);padding:1px 5px;border-radius:3px;color:var(--bright)}
+.panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:14px 0}
+button{font:inherit;cursor:pointer;background:var(--accent);color:var(--on-accent);border:1px solid var(--accent);
+       border-radius:6px;padding:8px 16px;font-weight:700}
+button:disabled{opacity:.5;cursor:default}
+/* Plain / Engineering register toggle */
+.modes{display:flex;gap:8px;margin:0 0 8px}
+.modes button{background:transparent;color:var(--dim);border-color:var(--line);font-weight:600}
+.modes button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+.note{font-size:.9rem;color:var(--dim);margin:6px 0 0}
+.eng{display:none}
+body.engineering .eng{display:block}
+body.engineering .plain{display:none}
+span.eng{display:none} body.engineering span.eng{display:inline}
+table{border-collapse:collapse;width:100%;font-size:.9rem;margin:10px 0}
+th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+th{color:var(--dim);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em}
+input[type=text],textarea{font:inherit;width:100%;padding:9px 12px;border-radius:5px;
+     background:var(--field);color:var(--bright);border:1px solid var(--line)}
+textarea{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.85rem;min-height:120px;resize:vertical}
+input[type=range]{width:100%;accent-color:var(--accent)}
+label{font-size:.85rem;color:var(--dim);display:block;margin:12px 0 4px}
+.row{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+.col{flex:1 1 200px;min-width:0}
+.verdict{font-weight:700;padding:5px 12px;border-radius:5px;display:inline-block;font-size:.95rem}
+.ok{background:#052e16;color:var(--good);border:1px solid #166534}
+.no{background:#4c0519;color:var(--bad);border:1px solid #9f1239}
+.meh{background:#1f2937;color:var(--dim);border:1px solid var(--line)}
+.swatches{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.swatches button{padding:5px 10px;font-size:.82rem;font-weight:500;background:var(--field);color:var(--text);border-color:var(--line)}
+.swatches button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+.bars{margin:10px 0}
+.bar{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:.86rem}
+.bar .lbl{width:150px;flex:none;color:var(--dim)}
+.bar .fill{height:20px;background:var(--accent);border-radius:3px;min-width:2px;transition:width .15s}
+.bar .val{color:var(--bright);font-variant-numeric:tabular-nums;white-space:nowrap}
+.research{border-left:3px solid var(--warn);padding-left:14px}
+.research .kicker{color:var(--warn)}
+.empty{border-left:3px solid var(--faint);padding-left:14px;color:var(--dim)}
+#status{font-size:.9rem;color:var(--dim);min-height:1.4em}
+.mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;white-space:pre-wrap;
+      background:var(--ground);border:1px solid var(--line);border-radius:6px;padding:12px;color:var(--text);max-height:280px;overflow:auto}
+canvas{max-width:100%;height:auto;display:block;background:var(--ground);border:1px solid var(--line);border-radius:6px}
+img.qr{image-rendering:pixelated;max-width:100%;height:auto;background:#fff;border-radius:6px}
+.legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.82rem;color:var(--dim);margin:8px 0 0}
+.legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+.drop{border:1px dashed var(--faint);border-radius:6px;padding:12px;text-align:center;color:var(--dim);font-size:.9rem;margin-top:8px}
+.drop.over{border-color:var(--accent);color:var(--accent)}
+.foot{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:.88rem;color:var(--faint)}
