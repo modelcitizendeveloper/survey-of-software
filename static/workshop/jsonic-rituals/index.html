@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>JSONic rituals — a floor model for Survey of Software 1.056</title>
+<meta name="description" content="orjson, msgspec, ujson and the standard library measured on your own JSON, in your browser. The famous 6× is a serialising number; parsing is about 2× — and the fastest parser is the one that also checks the shape.">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://research.modelcitizendeveloper.com/workshop/jsonic-rituals/">
+<link rel="stylesheet" href="/workshop/_lib/workshop.css">
+<style>
+  .bar .lbl{width:210px}
+  .schema{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.8rem;white-space:pre;background:var(--ground);border:1px solid var(--line);border-radius:6px;padding:12px;color:var(--text);overflow:auto}
+  .two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+  @media (max-width:640px){.two{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker">Workshop · floor model for <a href="/survey/1-056/">Survey of Software 1.056</a></p>
+<h1>JSONic rituals</h1>
+<p class="dek">The 6× is a serialising number. orjson <em>writes</em> JSON five to ten times faster than
+the standard library — and reads it back about twice as fast. The fastest <em>reader</em> on this page
+is the one that also checks the shape of what it read.</p>
+<p class="note" style="margin:0 0 20px">Paste your own JSON below. It never leaves this tab: the libraries
+run here, in your browser, and the numbers are about <em>your</em> data.</p>
+
+<div class="modes" role="group" aria-label="Reading mode">
+  <button id="m-plain" aria-pressed="true">Plain</button>
+  <button id="m-eng" aria-pressed="false">Engineering</button>
+</div>
+<p class="note" id="mode-hint">Plain language. Switch to Engineering for versions, byte counts and the measurements behind each claim.</p>
+
+<!-- ── The whole answer, first ─────────────────────────────────────── -->
+<h2>The whole answer, first</h2>
+<p class="plain">Two rituals: <strong>dumps</strong> turns your objects into JSON; <strong>loads</strong> turns
+JSON back into objects. The fast libraries are very fast at the first and only somewhat fast at the second
+— and the second is the one most programs do more of.</p>
+<p class="eng">Serialisation is where orjson and msgspec separate from the standard library (5–10× on
+realistic documents); parsing is 1.5–2.5×. A typed decoder — msgspec with a Struct — is the fastest parser
+measured and validates on the way in; the schema is the price and the point.</p>
+<div class="panel">
+  <div class="two">
+    <div><p class="kicker" style="margin:0 0 6px">dumps — object → JSON</p>
+      <p style="margin:0"><span class="big">5–10×</span><br><span class="note">orjson or msgspec over the standard library</span></p></div>
+    <div><p class="kicker" style="margin:0 0 6px">loads — JSON → object</p>
+      <p style="margin:0"><span class="big">1.5–2.5×</span><br><span class="note">orjson or msgspec; a typed msgspec decoder at the top</span></p></div>
+  </div>
+  <p class="note" style="margin:12px 0 0"><strong>Use orjson</strong> if serialising dominates and you can take
+  bytes back. <strong>Use msgspec</strong> if your data has a shape — it reads fastest, validates free, and its
+  Structs hold half the memory of dicts. <strong>Keep the standard library</strong> if neither is measurably on your
+  path; ujson buys ~1.2× now, and python-rapidjson buys less than nothing.</p>
+</div>
+
+<div class="panel">
+  <p class="note" style="margin:0 0 10px"><strong>The rule of this page:</strong> every figure below is
+  measured on your machine while you wait, by the Python libraries themselves running in this tab. Where a
+  number came from research instead, it says so in orange.</p>
+  <label>What to measure</label>
+  <div class="swatches" id="samples">
+    <button data-sample="logs" aria-pressed="true">API logs — 512 KB, the JSON from survey 1.050</button>
+    <button data-sample="nested" aria-pressed="false">Nested config — 98 KB</button>
+    <button data-sample="numbers" aria-pressed="false">Numeric series — 976 KB</button>
+    <button data-sample="small" aria-pressed="false">One record — 366 B</button>
+    <button data-sample="own" aria-pressed="false" id="ownbtn" disabled>Your own JSON</button>
+  </div>
+  <label for="own">Your own JSON — paste it, then click outside the box <span class="note" style="display:inline">(or <label style="display:inline;margin:0;color:var(--accent);cursor:pointer">choose a file<input type="file" id="fileinput" style="display:none" accept=".json,application/json,text/plain"></label>, first 1 MB)</span></label>
+  <textarea id="own" spellcheck="false" placeholder='{"orders":[{"id":1,"sku":"A-1","qty":2,"price":9.5}],"page":1,"ok":true}'></textarea>
+  <p id="owninfo" class="note"></p>
+  <p id="status" style="margin-top:12px">Press start to download CPython 3.14 (WebAssembly). First time only, then cached.</p>
+  <button id="go">Start</button>
+</div>
+
+<!-- ── Panel 1: the two rituals ────────────────────────────────────── -->
+<h2>Your data, both rituals</h2>
+<p class="plain">Each library, writing your JSON and reading it back. Bars are multiples of the standard
+library; longer is faster.</p>
+<p class="eng">Best-of timing under a budget; batches calibrated to ≥5 ms because browser clocks clamp at
+100 µs. Multiples are against <code>json</code> from the 3.14 standard library in this same tab. Round trip
+verified for every untyped decoder.</p>
+<div class="panel">
+  <p class="note" id="measuring" style="margin:0 0 8px">Waiting for start.</p>
+  <h3 style="margin-top:6px">dumps — object → JSON</h3>
+  <div class="bars" id="dbars"></div>
+  <h3>loads — JSON → object</h3>
+  <div class="bars" id="lbars"></div>
+  <p id="verdict" style="margin:12px 0 0"></p>
+  <div class="eng"><div id="engtable"></div></div>
+</div>
+
+<!-- ── Panel 2: the schema ─────────────────────────────────────────── -->
+<h2>msgspec — why parse into dicts at all</h2>
+<p class="plain">The fastest row above needed a shape to aim at. This page guessed one from your JSON —
+here it is, and here is what it costs when the data does not fit.</p>
+<p class="eng">A <code>msgspec.Struct</code> inferred from the first object: primitives by type, nested
+objects as nested Structs, lists by their first element. Good enough to measure; you would write the real
+one. Validation is the point: the typed decoder rejects a wrong shape at parse time with a path, and holds
+about half the memory of the equivalent dicts.</p>
+<div class="panel">
+  <div id="schema">Waiting for start.</div>
+</div>
+
+<!-- ── Panel 3: research ───────────────────────────────────────────── -->
+<h2>What could not be measured here</h2>
+<div class="panel research">
+  <p class="kicker">From research, not measured in this tab</p>
+  <p style="margin:0 0 10px"><strong>python-rapidjson</strong> is not in Pyodide. Native, one machine (CPython
+  3.14.7, aarch64): slower than the standard library on every sample — loads at 0.80× stdlib on the logs, 0.83×
+  on the nested config, 0.83× on the numbers — confirming the survey's caution and sharpening it from
+  "sometimes" to "every time measured". 4.7M downloads a month.</p>
+  <p style="margin:0 0 10px"><strong>Memory.</strong> Resident memory after <code>loads</code> of a 19 MB numeric
+  document: stdlib 106 MB, orjson 104 MB, msgspec 100 MB — the dicts are the dicts, whichever library built them.
+  msgspec <strong>Structs</strong>: 47 MB (2.2× less), 40 MB with <code>gc=False</code>. pydantic models: 436 MB.
+  orjson adds a transient ~75 MB peak while parsing. The survey's "6–9× less memory" is 2.2–2.6× resident, typed
+  against untyped.</p>
+  <p style="margin:0"><strong>Across interpreters</strong> (3.11, 3.12 and 3.14, same machine): orjson reads
+  1.6–2.1× stdlib and writes 5–13×; ujson 1.1–1.7× reading, 1.2–2.7× writing. None of it is a Python 3.14 effect.
+  <a href="/survey/1-056/">The survey has the workings.</a></p>
+</div>
+
+<!-- ── Panel 4: envelope ───────────────────────────────────────────── -->
+<h2>Start your build</h2>
+<p class="plain">Take what you just measured and hand it to whichever AI you use — your sample, your numbers,
+the schema this page guessed, and a brief for what to do next.</p>
+<p class="eng">Clipboard envelope — no vendor deep link, no API key, no dependency on anyone's roadmap.</p>
+<div class="panel">
+  <button id="copy">Copy the brief</button>
+  <span id="copied" class="note" style="margin-left:10px"></span>
+  <div class="mono" id="envelope" style="margin-top:12px">Run the page first.</div>
+</div>
+
+<h2>Open the lab</h2>
+<p class="plain">This page is the result. The method is a notebook you can open and change — the same
+samples, the same timing, the same schema inference, as cells:
+<a href="https://marimo.app/?src=https://research.modelcitizendeveloper.com/workshop/jsonic-rituals/jsonic.py&amp;mode=edit">open it in marimo</a>
+(runs in your browser, nothing installed), or run it on your machine:</p>
+<div class="panel"><div class="mono" id="labcmd">uvx marimo edit https://research.modelcitizendeveloper.com/workshop/jsonic-rituals/jsonic.py</div>
+<p class="note" style="margin:8px 0 0"><a href="/workshop/jsonic-rituals/jsonic.py">jsonic.py</a> — one file, the page's Python verbatim, with marimo's UI instead of this page's.</p></div>
+<p class="eng">This floor model was first built <em>as</em> that notebook and exported with
+<code>marimo export html-wasm</code>. The export worked — paste, file, register switch, clipboard (through a
+sandboxed iframe; marimo strips inline handlers) — and measured 9.8 s to first number against this page's
+2.6 s, 22 MB against 8 MB, on the same machine with a cold cache. Its kernel is Python running inside Pyodide,
+so the gap is structural, and a 29 MB hashed asset bundle per marimo version is not something to commit to a
+Pages site. So: the notebook is the lab, the page is the floor model, and the lab is opened where marimo hosts
+it. The verdict and the criteria are in the Report.</p>
+
+<div class="foot">
+  <p><strong>JSONic rituals</strong> is a floor model for
+  <a href="/survey/1-056/">Survey of Software 1.056 — JSON Libraries</a>, verified 2026-08-19. Libraries run
+  under Pyodide (CPython 3.14 compiled to WebAssembly) in this tab; nothing is sent anywhere. Throughput here is
+  WebAssembly throughput — roughly half of native, same shape. Measurements are from your machine except where
+  marked orange.</p>
+  <p>Made by Ivan Schneider · <a href="https://modelcitizendeveloper.com/">Model Citizen Developer</a></p>
+</div>
+
+</div>
+
+<script src="/workshop/_lib/workshop.js"></script>
+<script>
+const W = Workshop, $ = W.$;
+W.mode("jsonic-rituals");
+W.copyImages("jsonic-rituals.png");
+
+const status = $("status");
+let pyodide = null, ready = false, versions = {};
+let sample = "logs", ownLabel = null, lastRows = null, lastSchema = null;
+const call = (fn, ...args) => W.call(pyodide, fn, ...args);
+
+/* ── the Python side: the same code as the lab notebook ─────────────── */
+const PY = W.PY_TIMING + String.raw`
+import json, random, sys, re
+from typing import Any
+import orjson, msgspec, msgspec.json, ujson, simplejson
+
+def json_logs(target=512*1024, seed=7):
+    """compresso's generator, unchanged — the 512 KB of API logs from survey 1.050."""
+    r = random.Random(seed)
+    routes = ["/api/v1/users", "/api/v1/orders", "/api/v1/orders/{id}", "/api/v1/cart",
+              "/api/v1/products", "/api/v1/products/{id}/reviews", "/health", "/api/v1/auth/token"]
+    methods = ["GET"]*6 + ["POST"]*2 + ["PUT", "DELETE"]
+    agents = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36",
+              "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1",
+              "python-requests/2.32.3", "curl/8.5.0", "okhttp/4.12.0"]
+    out = []; size = 0; t = 1_723_900_000
+    while size < target:
+        t += r.randint(0, 3)
+        rec = {"ts": t, "level": r.choice(["INFO"]*8 + ["WARN", "ERROR"]),
+               "req_id": "%032x" % r.getrandbits(128),
+               "user": {"id": r.randint(1000, 99999), "plan": r.choice(["free","free","pro","team"])},
+               "http": {"method": r.choice(methods), "path": r.choice(routes).replace("{id}", str(r.randint(1, 50000))),
+                        "status": r.choice([200]*7 + [201, 304, 404, 500]), "bytes": r.randint(120, 48000),
+                        "latency_ms": round(r.lognormvariate(3.2, 0.7), 1)},
+               "ua": r.choice(agents), "region": r.choice(["us-west-2","us-east-1","eu-central-1"]),
+               "tags": r.sample(["cache-hit","cache-miss","retry","slow","auth","cdn"], r.randint(0, 3))}
+        line = json.dumps(rec, separators=(",", ":")) + "\n"
+        out.append(line); size += len(line)
+    return "".join(out)
+
+def nested_obj(seed=11, depth=6, fan=4):
+    r = random.Random(seed)
+    words = ["alpha","beta","gamma","delta","cache","ttl","region","replicas","enabled","endpoint","timeout","retries","backoff","weight","tags","owner","tier","mode","limit","burst"]
+    def node(d):
+        if d == 0:
+            k = r.random()
+            return (r.choice([True, False]) if k < .25 else r.randint(0, 5000) if k < .5
+                    else r.choice(words) + "-" + str(r.randint(1, 99)) if k < .8
+                    else [r.choice(words) for _ in range(r.randint(1, 4))])
+        return {r.choice(words) + str(i): node(d-1) for i in range(fan)}
+    return {"service": "checkout", "version": "2026.08", "env": node(depth)}
+
+def numbers_obj(n=20000, seed=5):
+    r = random.Random(seed); t = 1_723_900_000.0; out = []
+    for _ in range(n):
+        t += r.random() * 2
+        out.append({"t": round(t, 3), "v": round(r.gauss(50, 12), 4), "q": r.randint(0, 3), "ok": r.random() > .02})
+    return {"series": "sensor-7", "points": out}
+
+_logs = [json.loads(l) for l in json_logs().splitlines()]
+SAMPLES = {"logs": _logs, "nested": nested_obj(), "numbers": numbers_obj(), "small": _logs[0]}
+
+def set_own(text):
+    try:
+        SAMPLES["own"] = json.loads(text[:1024*1024])
+        return json.dumps({"ok": True, "bytes": len(json.dumps(SAMPLES["own"], separators=(",", ":")).encode())})
+    except Exception as e:
+        return json.dumps({"ok": False, "err": str(e)[:120]})
+
+# ── infer a msgspec.Struct from the reader's own JSON ───────────────────
+_counter = [0]
+def _ident(k):
+    s = re.sub(r"\W", "_", k)
+    return ("f_" + s) if (not s or s[0].isdigit() or s in {"from","class","import","def","return","None","True","False"}) else s
+def infer_type(v, name="Item"):
+    if isinstance(v, bool): return bool
+    if isinstance(v, int): return int
+    if isinstance(v, float): return float
+    if isinstance(v, str): return str
+    if v is None: return Any
+    if isinstance(v, list):
+        return list[infer_type(v[0], name + "Item")] if v else list[Any]
+    if isinstance(v, dict):
+        if not v: return dict[str, Any]
+        _counter[0] += 1
+        fields, renamed = [], {}
+        for k, val in v.items():
+            ident = _ident(k)
+            if ident != k: renamed[ident] = k
+            fields.append((ident, infer_type(val, name + "_" + ident.capitalize())))
+        try: return msgspec.defstruct(f"{name}{_counter[0]}", fields, rename=renamed or None)
+        except Exception: return dict[str, Any]
+    return Any
+def struct_source(tp):
+    out = []
+    def tname(t):
+        if isinstance(t, type) and issubclass(t, msgspec.Struct): return t.__name__
+        if t is Any: return "Any"
+        if hasattr(t, "__origin__"): return f"{t.__origin__.__name__}[{', '.join(tname(a) for a in t.__args__)}]"
+        return getattr(t, "__name__", str(t))
+    def walk(t):
+        if isinstance(t, type) and issubclass(t, msgspec.Struct):
+            for f in msgspec.structs.fields(t): walk(f.type)
+            src = "\n".join([f"class {t.__name__}(msgspec.Struct):"] + [f"    {f.name}: {tname(f.type)}" for f in msgspec.structs.fields(t)])
+            if src not in out: out.append(src)
+        elif hasattr(t, "__args__"):
+            for a in t.__args__: walk(a)
+    walk(tp)
+    return "\n\n".join(out)
+
+def measure(sample, budget_ms=120):
+    obj = SAMPLES[sample]
+    text = json.dumps(obj, separators=(",", ":")); data = text.encode()
+    codecs = {
+        "json (stdlib)": (json.dumps, json.loads, text, obj),
+        "orjson":        (orjson.dumps, orjson.loads, data, obj),
+        "msgspec":       (msgspec.json.encode, msgspec.json.decode, data, obj),
+        "ujson":         (ujson.dumps, ujson.loads, text, obj),
+        "simplejson":    (simplejson.dumps, simplejson.loads, text, obj),
+    }
+    schema = None; schema_err = None; schema_name = None; bad = None
+    try:
+        _counter[0] = 0
+        Schema = infer_type(obj, "Payload")
+        dec = msgspec.json.Decoder(Schema); enc = msgspec.json.Encoder()
+        typed = dec.decode(data)
+        codecs["msgspec typed (inferred Struct)"] = (enc.encode, dec.decode, data, typed)
+        schema = struct_source(Schema); schema_name = getattr(Schema, "__name__", "Payload")
+        # show validation: corrupt one leaf and decode again
+        try:
+            s2 = text
+            m = re.search(r'"(\w+)":(\d+)', text)
+            if m:
+                s2 = text[:m.start(2)] + '"' + m.group(2) + '"' + text[m.end(2):]
+                dec.decode(s2.encode()); bad = "decoded anyway"
+        except msgspec.ValidationError as e:
+            bad = str(e)[:160]
+    except Exception as e:
+        schema_err = str(e)[:140]
+    rows = []
+    for lib, (d, l, inp, src) in codecs.items():
+        td, _ = _best(d, src, budget_ms/1000); tl, _ = _best(l, inp, budget_ms/1000)
+        ok = True
+        if "typed" not in lib:
+            try: ok = (l(inp) == obj)
+            except Exception: ok = False
+        rows.append({"lib": lib, "dumps_ms": td*1000, "loads_ms": tl*1000,
+                     "dumps_MBs": len(data)/td/1e6, "loads_MBs": len(data)/tl/1e6, "roundtrip": ok})
+    base = rows[0]
+    for r in rows:
+        r["dumps_x"] = base["dumps_ms"]/r["dumps_ms"]; r["loads_x"] = base["loads_ms"]/r["loads_ms"]
+    return json.dumps({"bytes": len(data), "rows": rows, "schema": schema, "schema_name": schema_name,
+                       "schema_err": schema_err, "validation": bad})
+
+def versions():
+    return json.dumps({"python": sys.version.split()[0], "orjson": orjson.__version__, "msgspec": msgspec.__version__,
+                       "ujson": ujson.__version__, "simplejson": simplejson.__version__})
+`;
+
+/* ── boot ────────────────────────────────────────────────────────── */
+$("go").onclick = async () => {
+  $("go").disabled = true;
+  try {
+    pyodide = await W.boot({ version: "314.0.5", packages: ["orjson", "msgspec", "ujson", "simplejson"], status,
+                             statusText: { download: "Downloading CPython 3.14 (WebAssembly)… first time only, then cached." } });
+    status.textContent = "Generating the samples…";
+    await W.yieldUI();
+    await pyodide.runPythonAsync(PY);
+    versions = call("versions");
+    ready = true;
+    status.textContent = `Running — real Python ${versions.python}, in this tab. Nothing leaves your machine.`;
+    if (window.__pendingOwn) { takeOwn(window.__pendingOwn, window.__pendingLabel); window.__pendingOwn = null; }
+    await runAll();
+  } catch (e) {
+    status.textContent = "Could not start: " + e.message;
+    $("go").disabled = false;
+  }
+};
+
+/* ── the reader's own JSON ───────────────────────────────────────── */
+function takeOwn(text, label){
+  if (!text || !text.trim()) return;
+  if (!ready) { window.__pendingOwn = text; window.__pendingLabel = label; $("owninfo").textContent = `${label} ready — press Start.`; return; }
+  const r = call("set_own", text);
+  if (!r.ok) { $("owninfo").textContent = `That is not JSON this page can read (${r.err}).`; return; }
+  ownLabel = label;
+  $("owninfo").textContent = `${label}: ${r.bytes.toLocaleString()} bytes as compact JSON.`;
+  $("ownbtn").disabled = false;
+  selectSample("own");
+}
+// a file fills the box with a preview; that preview must not be re-read as a paste on blur
+$("own").addEventListener("input", () => { $("own").dataset.fromFile = ""; });
+$("own").addEventListener("change", () => { if (!$("own").dataset.fromFile) takeOwn($("own").value, "your paste"); });
+$("fileinput").onchange = async e => {
+  const f = e.target.files[0]; if (!f) return;
+  const text = (await f.text()).slice(0, 1024*1024);
+  $("own").value = text.length > 4000 ? text.slice(0, 4000) + "\n… (preview — the whole file is measured)" : text;
+  $("own").dataset.fromFile = "1";
+  takeOwn(text, f.name);
+};
+function selectSample(s){
+  sample = s;
+  [...$("samples").children].forEach(x => x.setAttribute("aria-pressed", String(x.dataset.sample === s)));
+  if (ready) runAll();
+}
+$("samples").onclick = e => { const b = e.target.closest("button[data-sample]"); if (!b || b.disabled) return; selectSample(b.dataset.sample); };
+
+const sampleLabel = () => ({logs:"the API logs", nested:"the nested config", numbers:"the numeric series", small:"one record", own: ownLabel || "your JSON"})[sample];
+const fmtMs = W.fmtMs;
+
+async function runAll(){
+  await W.guarded("m", async () => {
+    $("measuring").textContent = `Measuring ${sampleLabel()}…`;
+    await W.yieldUI();
+    const r = call("measure", sample, 120); lastRows = r.rows; lastSchema = r;
+    $("measuring").textContent = `${sampleLabel()} — ${r.bytes.toLocaleString()} bytes as compact JSON, measured just now.`;
+    const mx = Math.max(...r.rows.map(x => Math.max(x.dumps_x, x.loads_x)));
+    const eng = document.body.classList.contains("engineering");
+    W.bars($("dbars"), r.rows.map(x => ({ label: x.lib, value: x.dumps_x, max: mx,
+      display: `${x.dumps_x.toFixed(1)}× stdlib · ${fmtMs(x.dumps_ms)}`, color: "var(--accent)" })));
+    W.bars($("lbars"), r.rows.map(x => ({ label: x.lib, value: x.loads_x, max: mx,
+      display: `${x.loads_x.toFixed(1)}× stdlib · ${fmtMs(x.loads_ms)}` + (x.roundtrip ? "" : " · round trip differs"), color: "var(--good)" })));
+    const o = r.rows.find(x => x.lib === "orjson"), t = r.rows.find(x => x.lib.startsWith("msgspec typed"));
+    $("verdict").innerHTML =
+      `<strong>On ${sampleLabel()}, orjson writes ${o.dumps_x.toFixed(1)}× faster than the standard library and reads ${o.loads_x.toFixed(1)}× faster.</strong> ` +
+      `The famous multiple is the first number; most people quote it for the second.` +
+      (t ? ` The fastest reader here is msgspec with an inferred schema — ${t.loads_x.toFixed(1)}× stdlib, ${(t.loads_x/o.loads_x).toFixed(2)}× orjson — and it validated the shape on the way in.` : "");
+    $("engtable").innerHTML = `<table><thead><tr><th>library</th><th>dumps</th><th>MB/s</th><th>loads</th><th>MB/s</th></tr></thead><tbody>` +
+      r.rows.map(x => `<tr><td>${x.lib}</td><td>${fmtMs(x.dumps_ms)}</td><td>${x.dumps_MBs.toFixed(0)}</td><td>${fmtMs(x.loads_ms)}</td><td>${x.loads_MBs.toFixed(0)}</td></tr>`).join("") +
+      `</tbody></table><p class="note">Python ${versions.python}, orjson ${versions.orjson}, msgspec ${versions.msgspec}, ujson ${versions.ujson}, simplejson ${versions.simplejson}, in this tab.</p>`;
+    schemaPanel(r); envelope();
+  });
+}
+
+function schemaPanel(r){
+  if (!r.schema) {
+    $("schema").innerHTML = `<p class="note" style="margin:0">Could not infer a schema for this payload (${r.schema_err || "irregular shape"}). Mixed-type lists and top-level scalars need a hand-written Struct — which is the ordinary case for a real API, and takes a minute.</p>`;
+    return;
+  }
+  const esc = s => s.replace(/&/g,"&amp;").replace(/</g,"&lt;");
+  $("schema").innerHTML =
+    `<div class="schema">import msgspec\n\n${esc(r.schema)}\n\ndecoder = msgspec.json.Decoder(${esc(r.schema_name)})\npayload = decoder.decode(raw_bytes)   # validated on the way in</div>` +
+    (r.validation ? `<p class="note" style="margin:10px 0 0"><strong>Validation, shown:</strong> this page changed one number in your JSON to a string and decoded it again. ` +
+       (r.validation === "decoded anyway" ? `It decoded anyway — the first numeric field was inside a list or a string, so the guess did not cover it.` :
+        `msgspec refused: <code>${esc(r.validation)}</code>. That is the error you would otherwise meet three function calls later, as a KeyError or a TypeError.`) + `</p>` : "") +
+    `<p class="plain" style="margin:10px 0 0">A guessed schema is not the one you would ship — but even a guessed one is faster than none, and it rejects what does not fit. Write the real one and you have the fastest parser on this page, a type checker's view of your data, and half the memory.</p>`;
+}
+
+function envelope(){
+  const rows = lastRows || [];
+  const txt =
+`I am choosing a JSON library in Python and have just measured the trade-offs myself,
+in the browser, on my own data.
+
+My data
+  sample   : ${sampleLabel()}${lastSchema ? " (" + lastSchema.bytes.toLocaleString() + " bytes as compact JSON)" : ""}
+  Python   : ${versions.python || "?"} (Pyodide / WebAssembly — throughput about half of native, same shape)
+
+What I measured on it (real libraries, in-tab, multiples of the standard library)
+${rows.map(r => `  ${r.lib.padEnd(32)}: dumps ${r.dumps_x.toFixed(1)}x, loads ${r.loads_x.toFixed(1)}x`).join("\n")}
+${lastSchema && lastSchema.schema ? `
+The schema this page inferred from my data (a starting point, not the real one)
+${lastSchema.schema.split("\n").map(l => "  " + l).join("\n")}
+` : ""}
+What the survey established
+  The widely quoted "orjson is 6x faster" is a serialising (dumps) number; parsing is ~2x.
+  msgspec with a schema is the fastest parser and validates on the way in; Structs hold
+  ~2.2x less memory than dicts. pydantic models are slower than the stdlib and hold 4x more.
+  ujson is 1.1-1.7x the stdlib today. python-rapidjson is slower than the stdlib.
+
+Help me build this
+  Recommend a library for my workload and write the encode/decode code. If my data has a
+  stable shape, write the msgspec Struct for it, starting from the inferred one above.
+  Tell me whether serialising or parsing dominates my case — the answer depends on it.
+
+Reference: https://research.modelcitizendeveloper.com/survey/1-056/`;
+  $("envelope").textContent = txt;
+  W.copyText($("copy"), $("copied"), () => txt);
+}
+document.getElementById("m-eng").addEventListener("click", () => { if (ready) runAll(); });
+document.getElementById("m-plain").addEventListener("click", () => { if (ready) runAll(); });
+</script>
+</body>
+</html>

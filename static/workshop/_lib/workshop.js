@@ -73,23 +73,27 @@
   const PY_TIMING = String.raw`
 import time as _time
 def _best(fn, arg, budget_s, min_reps=3):
-    """Best-of timing under a wall-clock budget. Slow calls get one measured rep;
-    microsecond calls are timed in batches because browser clocks clamp."""
+    """Best-of timing under a wall-clock budget. Browser clocks clamp (100 us in Chromium
+    without cross-origin isolation), so calls are timed in batches calibrated to take at
+    least 5 ms - fifty clamp ticks - before a reading is trusted. Slow calls get one rep."""
     t0 = _time.perf_counter(); fn(arg); first = _time.perf_counter() - t0
     if first > budget_s: return first, 1
     k = 1
-    if first < 0.002:
-        k = 64 if first <= 0 else min(512, int(0.002 / first) + 1)
-    b = first if first > 0 else float("inf"); reps = 1; total = first
+    while True:
+        t0 = _time.perf_counter()
+        for _ in range(k): fn(arg)
+        dt = _time.perf_counter() - t0
+        if dt >= 0.005 or k >= 200_000: break
+        k *= 4
+    b = dt / k; reps = 1; total = dt
     while reps < min_reps or total < budget_s:
         t0 = _time.perf_counter()
         for _ in range(k): fn(arg)
-        dt = (_time.perf_counter() - t0) / k
-        if dt > 0: b = min(b, dt)
-        reps += 1; total += dt * k
+        dt = _time.perf_counter() - t0
+        if dt > 0: b = min(b, dt / k)
+        reps += 1; total += dt
         if reps >= 40: break
-    if b == float("inf"): b = 1e-6
-    return b, reps
+    return max(b, 1e-9), reps
 `;
 
   /* ── formatting and bars ──────────────────────────────────────────── */
