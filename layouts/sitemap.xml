@@ -15,7 +15,7 @@
          them automatically. They are indexable (the noindex cascade only
          targets /survey/**), so without this they would be crawlable only via
          inbound links. List them here by hand; there will not be many. */ -}}
-  {{- range slice "/workshop/sortie/" }}
+  {{- range slice "/workshop/sortie/" "/workshop/qrkadelic/" "/workshop/compresso/" "/workshop/jsonic-rituals/" "/workshop/sorted-how/" }}
   <url>
     <loc>{{ . | absURL }}</loc>
   </url>
