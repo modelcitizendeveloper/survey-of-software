@@ -13,7 +13,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 > **Systematic coverage of general-purpose software libraries.**
 > Measured research on algorithms, data structures, ML, and infrastructure—so you can build with confidence instead of guessing.
 
-**[What is this? →](/about)** | **[The Vision →](/vision)** | **[Method →](/survey/method)**
+**[What is this? →](/about)** | **[The Vision →](/vision)** | **[Method →](/survey/method)** | **[Workshop →](/workshop/)**
 
 **[Claude Skill →](/skill/)** Let Claude consult this research library directly in conversations. Ask about library selection, and Claude fetches surveys, synthesizes recommendations, or runs live research on uncovered topics.
 
