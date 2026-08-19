@@ -1,0 +1,777 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>compresso — a floor model for Survey of Software 1.050</title>
+<meta name="description" content="Zstandard, Brotli and LZ4 measured on your own file, in your browser. The ratio-versus-speed curve is the finding: decompression does not care what level you used, and the slow codec is only slow at its default.">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://research.modelcitizendeveloper.com/workshop/compresso/">
+<style>
+  /* Same palette as sortie and qrkadelic so the workshop reads as one place. */
+  :root{
+    --ground:#0b1220; --panel:#0f1a2e; --line:#1e293b; --field:#26364f;
+    --text:#cbd5e1; --bright:#f1f5f9; --dim:#94a3b8; --faint:#64748b;
+    --accent:#5eead4; --on-accent:#042f2e; --warn:#f59e42; --bad:#fb7185; --good:#4ade80;
+    --zstd:#5eead4; --brotli:#c084fc; --lz4:#fbbf24; --zlib:#94a3b8; --bz2:#f472b6; --lzma:#60a5fa;
+  }
+  *,*::before,*::after{box-sizing:border-box}
+  body{margin:0;background:var(--ground);color:var(--text);line-height:1.65;
+       font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',Roboto,Helvetica,Arial,sans-serif;
+       -webkit-text-size-adjust:100%}
+  .wrap{max-width:760px;margin:0 auto;padding:32px 20px 80px}
+  a{color:var(--accent);text-decoration-color:#14532d}
+  a:hover{color:#99f6e4}
+  h1{font-size:2.1rem;line-height:1.15;margin:0 0 10px;color:#fff;letter-spacing:-.02em}
+  h2{font-size:1.25rem;margin:44px 0 10px;color:var(--bright);letter-spacing:-.01em}
+  h3{font-size:1rem;margin:26px 0 8px;color:var(--bright)}
+  .kicker{font-size:.78rem;text-transform:uppercase;letter-spacing:.09em;color:var(--dim);
+          font-weight:600;margin:0 0 12px}
+  .dek{font-size:1.1rem;color:var(--dim);margin:0 0 8px}
+  code,kbd{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.92em}
+  code{background:var(--panel);padding:1px 5px;border-radius:3px;color:var(--bright)}
+  .panel{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:18px 20px;margin:14px 0}
+  button{font:inherit;cursor:pointer;background:var(--accent);color:var(--on-accent);border:1px solid var(--accent);
+         border-radius:6px;padding:8px 16px;font-weight:700}
+  button:disabled{opacity:.5;cursor:default}
+  .modes{display:flex;gap:8px;margin:0 0 8px}
+  .modes button{background:transparent;color:var(--dim);border-color:var(--line);font-weight:600}
+  .modes button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent);border-color:var(--accent)}
+  .note{font-size:.9rem;color:var(--dim);margin:6px 0 0}
+  .eng{display:none}
+  body.engineering .eng{display:block}
+  body.engineering .plain{display:none}
+  span.eng{display:none} body.engineering span.eng{display:inline}
+  table{border-collapse:collapse;width:100%;font-size:.9rem;margin:10px 0}
+  th,td{text-align:left;padding:6px 10px;border-bottom:1px solid var(--line);font-variant-numeric:tabular-nums}
+  th{color:var(--dim);font-weight:600;font-size:.8rem;text-transform:uppercase;letter-spacing:.05em}
+  input[type=text]{font:inherit;width:100%;padding:9px 12px;border-radius:5px;
+       background:var(--field);color:var(--bright);border:1px solid var(--line)}
+  input[type=range]{width:100%;accent-color:var(--accent)}
+  label{font-size:.85rem;color:var(--dim);display:block;margin:12px 0 4px}
+  .row{display:flex;gap:18px;flex-wrap:wrap;align-items:flex-start}
+  .col{flex:1 1 200px;min-width:0}
+  .verdict{font-weight:700;padding:5px 12px;border-radius:5px;display:inline-block;font-size:.95rem}
+  .ok{background:#052e16;color:var(--good);border:1px solid #166534}
+  .no{background:#4c0519;color:var(--bad);border:1px solid #9f1239}
+  .meh{background:#1f2937;color:var(--dim);border:1px solid var(--line)}
+  .swatches{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .swatches button{padding:5px 10px;font-size:.82rem;font-weight:500;
+       background:var(--field);color:var(--text);border-color:var(--line)}
+  .swatches button[aria-pressed="true"]{background:var(--accent);color:var(--on-accent)}
+  .bars{margin:10px 0}
+  .bar{display:flex;align-items:center;gap:10px;margin:5px 0;font-size:.86rem}
+  .bar .lbl{width:150px;flex:none;color:var(--dim)}
+  .bar .fill{height:20px;background:var(--accent);border-radius:3px;min-width:2px;transition:width .15s}
+  .bar .val{color:var(--bright);font-variant-numeric:tabular-nums;white-space:nowrap}
+  .research{border-left:3px solid var(--warn);padding-left:14px}
+  .research .kicker{color:var(--warn)}
+  .empty{border-left:3px solid var(--faint);padding-left:14px;color:var(--dim)}
+  #status{font-size:.9rem;color:var(--dim);min-height:1.4em}
+  .mono{font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace;font-size:.82rem;
+        white-space:pre-wrap;background:var(--ground);border:1px solid var(--line);
+        border-radius:6px;padding:12px;color:var(--text);max-height:280px;overflow:auto}
+  canvas{max-width:100%;height:auto;display:block;background:var(--ground);border:1px solid var(--line);border-radius:6px}
+  .legend{display:flex;gap:14px;flex-wrap:wrap;font-size:.82rem;color:var(--dim);margin:8px 0 0}
+  .legend i{display:inline-block;width:10px;height:10px;border-radius:50%;margin-right:5px;vertical-align:-1px}
+  .drop{border:1px dashed var(--faint);border-radius:6px;padding:12px;text-align:center;color:var(--dim);font-size:.9rem;margin-top:8px}
+  .drop.over{border-color:var(--accent);color:var(--accent)}
+  .foot{margin-top:56px;padding-top:20px;border-top:1px solid var(--line);font-size:.88rem;color:var(--faint)}
+  .big{font-size:1.6rem;font-weight:700;color:var(--bright);line-height:1.2}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker">Workshop · floor model for <a href="/survey/1-050/">Survey of Software 1.050</a></p>
+<h1>compresso</h1>
+<p class="dek">Three compression codecs, one curve. Zstandard is the default — and since Python 3.14
+it is in the standard library. The interesting question is where on the curve you are standing,
+and what it costs to move.</p>
+<p class="note" style="margin:0 0 20px">Drop your own file below. It never leaves this tab: the
+codecs run here, in your browser, and the numbers are about <em>your</em> data.</p>
+
+<div class="modes" role="group" aria-label="Reading mode">
+  <button id="m-plain" aria-pressed="true">Plain</button>
+  <button id="m-eng" aria-pressed="false">Engineering</button>
+</div>
+<p class="note" id="mode-hint">Plain language. Switch to Engineering for versions, byte counts and the measurements behind each claim.</p>
+
+<div class="panel">
+  <p class="note" style="margin:0 0 10px"><strong>The rule of this page:</strong> every figure
+  below is measured on your machine while you wait, by the Python libraries themselves running in
+  this tab. Where a number came from research instead, it says so in orange.</p>
+  <label>What to compress</label>
+  <div class="swatches" id="samples">
+    <button data-sample="text" aria-pressed="true">English text — a novel, 738 KB</button>
+    <button data-sample="json" aria-pressed="false">JSON logs — 512 KB</button>
+    <button data-sample="png" aria-pressed="false">A PNG — 97 KB, already compressed</button>
+    <button data-sample="file" aria-pressed="false" id="filebtn" disabled>Your own file</button>
+  </div>
+  <div class="drop" id="drop">Drop a file here, or <label style="display:inline;margin:0;color:var(--accent);cursor:pointer">choose one<input type="file" id="fileinput" style="display:none"></label>.
+    Read locally, capped at the first 1 MB, never uploaded.</div>
+  <p id="status" style="margin-top:12px">Press start to download CPython 3.14 (WebAssembly). First time only, then cached.</p>
+  <button id="go">Start</button>
+</div>
+
+<!-- ── Panel 0 ─────────────────────────────────────────────────────── -->
+<h2>The curve</h2>
+<p class="plain">Every codec, at every setting it offers, on the data you chose. Up means
+smaller; right means faster. The rings mark each library's <em>default</em> — and where the
+defaults sit is most of the story.</p>
+<p class="eng">Compression ratio (in/out) against compression throughput (log scale), full level
+sweep per codec, measured in this tab under Pyodide. Rings mark defaults: zstandard 3, brotli 11,
+lz4 0, zlib 6. Table below has every point plus decompression throughput.</p>
+<div class="panel">
+  <canvas id="chart" width="720" height="400"></canvas>
+  <div class="legend" id="legend"></div>
+  <p class="note" id="sweepnote">Waiting for start.</p>
+  <div id="takeaways"></div>
+  <div class="eng"><div id="sweeptable"></div></div>
+</div>
+
+<!-- ── Panel 1 ─────────────────────────────────────────────────────── -->
+<h2>zstandard — the default, and now the standard library</h2>
+<p class="plain">Drag the level. Watch which bar moves and which one doesn't.</p>
+<p class="eng">Level sweep 1–22 on the full sample; ratio, compression and decompression
+throughput. Round-trip verified each run. Below: <code>compression.zstd</code> from the 3.14
+standard library, byte-compared against the <code>zstandard</code> package.</p>
+<div class="panel">
+  <label for="zl">Level — <span id="zlv">3</span> <span class="note" id="zdef" style="display:inline">(the default)</span></label>
+  <input type="range" id="zl" min="1" max="22" step="1" value="3">
+  <div class="bars" id="zbars">Waiting for start.</div>
+  <p class="note" id="znote"></p>
+  <div id="zstd-std" style="margin-top:14px"></div>
+</div>
+<p class="plain"><strong>The surprise:</strong> the read-back speed barely changes whichever level
+you wrote at. You pay for compression once, at write time; every read afterwards costs the same.
+For anything written once and read many times, "as hard as you can afford" is the right level —
+the reader never notices.</p>
+<p class="eng"><strong>Decompression throughput is level-invariant</strong> for zstandard, brotli
+and lz4 alike — the format is what the decoder walks, and a harder search at encode time
+produces the same kind of format. Only bz2 and xz make the reader pay. The other thing the
+slider shows: the ratio curve is flat and the speed curve is a cliff. On the novel, level 1 →
+19 is about a third smaller for roughly a hundred times the compression time.</p>
+
+<!-- ── Panel 2 ─────────────────────────────────────────────────────── -->
+<h2>brotli — the ratio, at a price the default hides</h2>
+<p class="plain">The slider starts where <code>brotli.compress()</code> starts if you don't say
+otherwise: quality 11, the slowest setting it has. Drag it left and watch the speed bar.</p>
+<p class="eng">Quality sweep 0–11. Default is 11 (zstandard's default is 3 — the two libraries
+pick their defaults from opposite ends of the curve). The comparison line finds the zstandard
+level that reaches the same ratio, from the sweep above, and reports its speed.</p>
+<div class="panel">
+  <label for="bq">Quality — <span id="bqv">11</span> <span class="note" id="bdef" style="display:inline">(the default)</span></label>
+  <input type="range" id="bq" min="0" max="11" step="1" value="11">
+  <div class="bars" id="bbars">Waiting for start.</div>
+  <p class="note" id="bnote"></p>
+</div>
+<p class="plain"><strong>The reputation is a default.</strong> "Brotli is slow" is true of quality
+11. On the novel, quality 5 or 6 reaches the same size as zstandard's level 6 at a comparable
+speed. What 11 buys over the best zstandard can do is a few percent on a big file — and rather
+more on a small one: brotli ships a built-in dictionary of web text, and the shorter the input the
+more that dictionary is worth. Drop a README or a web page on it and watch the comparison line.</p>
+<p class="eng"><strong>The crown is real, and it grows as the file shrinks.</strong> Native, one
+machine: on the 738 KB novel brotli 11 gives 3.47× against zstandard 19's 3.37× — 3% smaller for
+5× the time. On the first 32 KB of the same novel, 3.11× against 2.69× — 16% smaller. On a 40 KB
+markdown file brotli 5 (53 MB/s) matches zstandard 15 (11 MB/s). That is the static dictionary
+plus context modelling paying off where there is too little input to learn from; zstandard's
+answer at that size is a trained dictionary, which the survey covers. And <code>bz2</code> from
+the standard library beat both on the whole novel at 3.96×, reading back at 42 MB/s. The ratio
+champion depends on the data; the speed of getting there depends on the setting.</p>
+
+<!-- ── Panel 3 ─────────────────────────────────────────────────────── -->
+<h2>lz4 — the speed, at exactly one setting</h2>
+<p class="plain">Level 0 is the point of LZ4. Drag right and it becomes a slower, weaker
+zstandard.</p>
+<p class="eng">Level sweep 0–16 (<code>lz4.frame</code>; 3+ is the HC encoder). The comparison
+line finds the zstandard level from the sweep that is at least as small <em>and</em> at least
+as fast — when one exists, this LZ4 setting is dominated.</p>
+<div class="panel">
+  <label for="ll">Level — <span id="llv">0</span> <span class="note" id="ldef" style="display:inline">(the default)</span></label>
+  <input type="range" id="ll" min="0" max="16" step="1" value="0">
+  <div class="bars" id="lbars">Waiting for start.</div>
+  <p class="note" id="lnote"></p>
+</div>
+<p class="plain"><strong>Where LZ4 wins</strong> is reading: several times faster than anything
+else on this page. Where it does not is anywhere you turned the level up.</p>
+<p class="eng">The survey had this library down for a "10% reduction" — measured, its default
+gives 1.65× on the novel and 3.6× on the JSON logs. It also had it as unrunnable in Pyodide;
+that was true of the 0.27 line and is not true of the current release, which is why this panel
+is teal rather than orange.</p>
+
+<!-- ── Panel 4 ─────────────────────────────────────────────────────── -->
+<h2>zlib-ng and isal — the drop-in, measured</h2>
+<p class="plain">If your code already speaks gzip and cannot change formats, these two swap in
+underneath it. Not runnable in this tab; measured on one machine instead.</p>
+<p class="eng">Neither ships in Pyodide. Live below: stdlib <code>zlib</code> at its default, for
+a baseline you can see. Orange: native figures for the same sample on the machine the survey was
+verified on.</p>
+<div class="panel">
+  <div class="bars" id="zlibbars">Waiting for start.</div>
+</div>
+<div class="panel research">
+  <p class="kicker">From research, not measured in this tab</p>
+  <p style="margin:0 0 8px">Native CPython 3.14.7, one machine (aarch64, single thread), same
+  novel and JSON as above:</p>
+  <table>
+    <thead><tr><th>vs stdlib zlib</th><th>level</th><th>compress</th><th>decompress</th><th>output</th></tr></thead>
+    <tbody>
+      <tr><td>zlib-ng 1.0.0</td><td>6 (default)</td><td><strong>2.8×</strong> faster (text), 1.6× (JSON)</td><td>1.8–1.9× faster</td><td>within 2% of zlib's size either way — <em>compatible, not identical bytes</em></td></tr>
+      <tr><td>zlib-ng</td><td>1</td><td>1.9× faster</td><td>1.5×</td><td><strong>27–31% larger</strong> than zlib level 1 — a different, faster strategy</td></tr>
+      <tr><td>zlib-ng</td><td>9</td><td>1.5–1.7× faster</td><td>1.8–1.9×</td><td>same size (text), 5% larger (JSON)</td></tr>
+      <tr><td>isal 1.8.0</td><td>0–3 (its whole range)</td><td>1.7–4.7× faster than zlib 1–6</td><td><strong>1.0–1.2×</strong> — little or no gain on this ARM machine</td><td>its top level lands 14–24% larger than zlib's default</td></tr>
+    </tbody>
+  </table>
+  <p class="note" style="margin:0">The survey said "identical output at 2–3× the speed". Half
+  right: the format is identical and the default level lands in that range, but the bytes
+  differ, level 1 trades a quarter of the ratio away, and isal's decompression advantage did not
+  show up on this machine at all. Both do exactly one job — keeping call sites unchanged — and do
+  it. <a href="/survey/1-050/">The survey has the workings.</a></p>
+</div>
+
+<!-- ── Panel 5 ─────────────────────────────────────────────────────── -->
+<h2>snappy — inherited, not chosen</h2>
+<div class="panel research">
+  <p class="kicker">From research, not measured in this tab</p>
+  <p style="margin:0 0 8px"><code>python-snappy</code> is not in Pyodide either. Native, same
+  machine: it compresses at LZ4's speed and LZ4's ratio (1.67× on the novel, 418 MB/s) and reads
+  back <strong>three times slower</strong> than LZ4 (1.1 GB/s against 3.4). Nothing on the curve
+  is uniquely its own.</p>
+  <p class="note" style="margin:0">It is chosen for you by Parquet, Kafka, Hadoop and Cassandra,
+  which is a fine reason. One correction to the survey: since 0.7 it is a thin layer over
+  <code>cramjam</code> and needs no system library — <code>pip install python-snappy</code> is
+  the whole install now.</p>
+</div>
+
+<!-- ── Panel 6 ─────────────────────────────────────────────────────── -->
+<h2>Small things — when compressing makes it bigger</h2>
+<p class="plain">Type a short message — an API response, a cache key, a token. Some of these
+codecs will hand you back more bytes than you gave them.</p>
+<p class="eng">Container overhead on tiny payloads. Measured on a two-byte input: brotli adds
+4 bytes, zstandard 9, gzip 20, lz4 23, bz2 35, xz 58. Below roughly a hundred bytes the wrapper is
+the story.</p>
+<div class="panel">
+  <label for="tinytxt">Your short payload</label>
+  <input type="text" id="tinytxt" value='{"status":"ok","id":12345,"plan":"pro"}' spellcheck="false">
+  <div class="bars" id="tinybars" style="margin-top:12px">Waiting for start.</div>
+  <p class="note" id="tinynote"></p>
+</div>
+
+<!-- ── Panel 7 ─────────────────────────────────────────────────────── -->
+<h2>Start your build</h2>
+<p class="plain">Take what you just measured and hand it to whichever AI you use. This copies
+your sample, the settings you tried, the numbers they produced, and a brief for what to do next.</p>
+<p class="eng">Clipboard envelope — no vendor deep link, no API key, no dependency on anyone's
+roadmap. Paste into any assistant.</p>
+<div class="panel">
+  <button id="copy">Copy the brief</button>
+  <span id="copied" class="note" style="margin-left:10px"></span>
+  <div class="mono" id="envelope" style="margin-top:12px">Run the page first.</div>
+</div>
+
+<div class="foot">
+  <p><strong>compresso</strong> is a floor model for
+  <a href="/survey/1-050/">Survey of Software 1.050 — Compression Libraries</a>,
+  verified 2026-08-18. Libraries run under Pyodide (CPython 3.14 compiled to WebAssembly) in this
+  tab; nothing is sent anywhere. Throughput here is WebAssembly throughput — roughly half of
+  native on the machine this was checked against, with the same shape. Measurements are from your
+  machine except where marked orange. The novel is Jane Austen's <em>Pride and Prejudice</em>,
+  public domain.</p>
+  <p>Made by Ivan Schneider · <a href="https://modelcitizendeveloper.com/">Model Citizen Developer</a></p>
+</div>
+
+</div>
+
+<script>
+/* ── mode toggle — same shape as sortie's Learn/Play ─────────────── */
+const bPlain = document.getElementById("m-plain"),
+      bEng   = document.getElementById("m-eng"),
+      hint   = document.getElementById("mode-hint");
+function setMode(eng){
+  document.body.classList.toggle("engineering", eng);
+  bPlain.setAttribute("aria-pressed", String(!eng));
+  bEng.setAttribute("aria-pressed", String(eng));
+  hint.textContent = eng
+    ? "Engineering. Versions, byte counts and the measurement behind each claim. Switch to Plain for the same demos in ordinary words."
+    : "Plain language. Switch to Engineering for versions, byte counts and the measurements behind each claim.";
+  try { localStorage.setItem("compresso-mode", eng ? "eng" : "plain"); } catch(e){}
+}
+bPlain.onclick = () => setMode(false);
+bEng.onclick   = () => setMode(true);
+try { setMode(localStorage.getItem("compresso-mode") === "eng"); } catch(e){ setMode(false); }
+
+/* ── state ───────────────────────────────────────────────────────── */
+const $ = id => document.getElementById(id);
+const status = $("status");
+let pyodide = null, ready = false, versions = {};
+let sample = "text";                       // text | json | png | file
+let sizes = {};                            // sample -> bytes
+let fileName = null;
+const sweeps = {};                         // sample -> [{codec, level, ratio, comp_MBs, decomp_MBs, out}]
+let sweepRunning = false, sweepAbort = false;
+const touched = { zstandard: 3, brotli: 11, lz4: 0 };
+const last = {};                           // codec -> last measurement shown
+
+const COLOR = { zstandard:"#5eead4", "compression.zstd":"#5eead4", brotli:"#c084fc", lz4:"#fbbf24",
+                zlib:"#94a3b8", bz2:"#f472b6", lzma:"#60a5fa" };
+const DEFAULTS = { zstandard:3, brotli:11, lz4:0, zlib:6, bz2:9, lzma:6, "compression.zstd":3 };
+const SWEEP = [
+  ["zstandard", [1,3,6,9,12,15,19]],
+  ["brotli",    [0,1,2,4,5,6,8,9,10,11]],
+  ["lz4",       [0,3,6,9,12,16]],
+  ["zlib",      [1,6,9]],
+  ["bz2",       [9]],
+  ["lzma",      [6]],
+  ["compression.zstd", [3]],
+];
+
+/* ── the Python side ─────────────────────────────────────────────── */
+const PY = String.raw`
+import time, json, zlib, gzip, bz2, lzma, hashlib, random, sys
+import zstandard, brotli, lz4.frame
+from compression import zstd as stdzstd
+
+SAMPLES = {}
+CAP = 1024*1024
+
+def json_logs(target=512*1024, seed=7):
+    """API access log, one JSON object per line. Deterministic, so the same bytes are measured
+    here and on the machine the survey figures came from."""
+    r = random.Random(seed)
+    routes = ["/api/v1/users", "/api/v1/orders", "/api/v1/orders/{id}", "/api/v1/cart",
+              "/api/v1/products", "/api/v1/products/{id}/reviews", "/health", "/api/v1/auth/token"]
+    methods = ["GET"]*6 + ["POST"]*2 + ["PUT", "DELETE"]
+    agents = ["Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 Chrome/126.0 Safari/537.36",
+              "Mozilla/5.0 (iPhone; CPU iPhone OS 17_5 like Mac OS X) AppleWebKit/605.1.15 Mobile/15E148 Safari/604.1",
+              "python-requests/2.32.3", "curl/8.5.0", "okhttp/4.12.0"]
+    out = []; size = 0; t = 1_723_900_000
+    while size < target:
+        t += r.randint(0, 3)
+        rec = {"ts": t, "level": r.choice(["INFO"]*8 + ["WARN", "ERROR"]),
+               "req_id": "%032x" % r.getrandbits(128),
+               "user": {"id": r.randint(1000, 99999), "plan": r.choice(["free","free","pro","team"])},
+               "http": {"method": r.choice(methods), "path": r.choice(routes).replace("{id}", str(r.randint(1, 50000))),
+                        "status": r.choice([200]*7 + [201, 304, 404, 500]), "bytes": r.randint(120, 48000),
+                        "latency_ms": round(r.lognormvariate(3.2, 0.7), 1)},
+               "ua": r.choice(agents), "region": r.choice(["us-west-2","us-east-1","eu-central-1"]),
+               "tags": r.sample(["cache-hit","cache-miss","retry","slow","auth","cdn"], r.randint(0, 3))}
+        line = json.dumps(rec, separators=(",", ":")) + "\n"
+        out.append(line); size += len(line)
+    return "".join(out).encode()
+
+def set_sample(name, data):
+    b = bytes(data)[:CAP]
+    SAMPLES[name] = b
+    return json.dumps({"name": name, "bytes": len(b), "sha256": hashlib.sha256(b).hexdigest()[:16]})
+
+def init_samples():
+    SAMPLES["json"] = json_logs()
+    return json.dumps({k: len(v) for k, v in SAMPLES.items()})
+
+_zd = zstandard.ZstdDecompressor()
+CODECS = {
+    "zstandard":        (lambda d, L: zstandard.ZstdCompressor(level=L).compress(d), _zd.decompress),
+    "compression.zstd": (lambda d, L: stdzstd.compress(d, level=L), stdzstd.decompress),
+    "brotli":           (lambda d, Q: brotli.compress(d, quality=Q), brotli.decompress),
+    "lz4":              (lambda d, L: lz4.frame.compress(d, compression_level=L), lz4.frame.decompress),
+    "zlib":             (lambda d, L: zlib.compress(d, L), zlib.decompress),
+    "bz2":              (lambda d, L: bz2.compress(d, L), bz2.decompress),
+    "lzma":             (lambda d, L: lzma.compress(d, preset=L), lzma.decompress),
+}
+
+def _best(fn, arg, budget_s, min_reps=3):
+    """Best-of timing under a wall-clock budget. Slow settings get one measured rep.
+    Browsers clamp the clock (100 us in Chromium without isolation), so calls that
+    finish in microseconds — a codec storing an incompressible block raw — are timed
+    in batches large enough to register."""
+    t0 = time.perf_counter(); fn(arg); first = time.perf_counter() - t0
+    if first > budget_s: return first, 1
+    k = 1
+    if first < 0.002:
+        k = 64 if first <= 0 else min(512, int(0.002 / first) + 1)
+    b = first if first > 0 else float("inf"); reps = 1; total = first
+    while reps < min_reps or total < budget_s:
+        t0 = time.perf_counter()
+        for _ in range(k): fn(arg)
+        dt = (time.perf_counter() - t0) / k
+        if dt > 0: b = min(b, dt)
+        reps += 1; total += dt * k
+        if reps >= 40: break
+    if b == float("inf"): b = 1e-6
+    return b, reps
+
+def measure(codec, level, sample, budget_ms=100):
+    data = SAMPLES[sample]; c, d = CODECS[codec]; level = int(level)
+    out = c(data, level)
+    ok = d(out) == data
+    tc, rc = _best(lambda x: c(x, level), data, budget_ms/1000)
+    td, rd = _best(d, out, budget_ms/1000)
+    n = len(data)
+    return json.dumps({"codec": codec, "level": level, "sample": sample, "in": n, "out": len(out),
+                       "ratio": round(n/max(1,len(out)), 3), "comp_MBs": round(n/tc/1e6, 1),
+                       "decomp_MBs": round(n/td/1e6, 1), "comp_ms": round(tc*1000, 2),
+                       "decomp_ms": round(td*1000, 2), "reps": [rc, rd], "roundtrip_ok": bool(ok)})
+
+def stdlib_same(sample, level=3):
+    data = SAMPLES[sample]
+    a = zstandard.ZstdCompressor(level=level).compress(data); b = stdzstd.compress(data, level=level)
+    return json.dumps({"identical": a == b, "bytes": len(a), "lib": ".".join(map(str, zstandard.ZSTD_VERSION)),
+                       "stdlib": stdzstd.zstd_version, "python": sys.version.split()[0]})
+
+def tiny(text):
+    s = text.encode()
+    return json.dumps({"in": len(s),
+        "zstandard (level 3)": len(zstandard.ZstdCompressor(level=3).compress(s)),
+        "brotli (quality 11)": len(brotli.compress(s)),
+        "lz4 (frame)": len(lz4.frame.compress(s)),
+        "zlib (level 6)": len(zlib.compress(s)),
+        "gzip (level 6)": len(gzip.compress(s)),
+        "bz2 (level 9)": len(bz2.compress(s)),
+        "lzma (preset 6)": len(lzma.compress(s))})
+
+def versions():
+    return json.dumps({"python": sys.version.split()[0], "zstandard": zstandard.__version__,
+                       "libzstd": ".".join(map(str, zstandard.ZSTD_VERSION)), "brotli": brotli.__version__,
+                       "lz4": lz4.__version__, "zlib": zlib.ZLIB_VERSION, "stdlib_zstd": stdzstd.zstd_version})
+`;
+
+/* ── boot ────────────────────────────────────────────────────────── */
+$("go").onclick = async () => {
+  $("go").disabled = true;
+  try {
+    status.textContent = "Downloading CPython 3.14 (WebAssembly)… first time only, then cached.";
+    if (!window.loadPyodide) {
+      await new Promise((res, rej) => {
+        const s = document.createElement("script");
+        s.src = "https://cdn.jsdelivr.net/pyodide/v314.0.5/full/pyodide.js";
+        s.onload = res; s.onerror = () => rej(new Error("could not load Pyodide"));
+        document.head.appendChild(s);
+      });
+    }
+    pyodide = await loadPyodide({ indexURL: "https://cdn.jsdelivr.net/pyodide/v314.0.5/full/" });
+    status.textContent = "Loading zstandard, brotli, lz4…";
+    await pyodide.loadPackage(["zstandard", "brotli", "lz4"]);
+    await pyodide.runPythonAsync(PY);
+    versions = call("versions");
+    status.textContent = "Generating the JSON sample, fetching the novel…";
+    const s = call("init_samples"); sizes.json = s.json;
+    const [txt, png] = await Promise.all([
+      fetch("pride-and-prejudice.txt").then(r => r.arrayBuffer()),
+      fetch("penguin-logo.png").then(r => r.arrayBuffer()),
+    ]);
+    sizes.text = call("set_sample", "text", pyodide.toPy(new Uint8Array(txt))).bytes;
+    sizes.png  = call("set_sample", "png",  pyodide.toPy(new Uint8Array(png))).bytes;
+    ready = true;
+    status.textContent = `Running — real Python ${versions.python}, in this tab. Nothing leaves your machine.`;
+    await runAll();
+  } catch (e) {
+    status.textContent = "Could not start: " + e.message;
+    $("go").disabled = false;
+  }
+};
+
+const call = (fn, ...args) => JSON.parse(pyodide.globals.get(fn)(...args));
+const yieldUI = () => new Promise(r => setTimeout(r, 0));
+const fmt = n => n >= 1000 ? (n/1000).toFixed(1).replace(/\.0$/,"") + " GB/s" : n.toFixed(n < 10 ? 1 : 0) + " MB/s";
+const kb = n => n >= 1048576 ? (n/1048576).toFixed(2) + " MB" : (n/1024).toFixed(0) + " KB";
+const sampleLabel = () => sample === "file" ? (fileName || "your file") : sample === "text" ? "the novel" : sample === "json" ? "the JSON logs" : "the PNG";
+
+/* ── the reader's own file ───────────────────────────────────────── */
+async function takeFile(f){
+  if (!f) return;
+  const buf = await f.arrayBuffer();
+  fileName = f.name;
+  if (!ready) { window.__pendingFile = new Uint8Array(buf); $("drop").textContent = `${f.name} ready — press Start.`; return; }
+  const r = call("set_sample", "file", pyodide.toPy(new Uint8Array(buf)));
+  sizes.file = r.bytes;
+  $("filebtn").disabled = false; $("filebtn").textContent = `Your file — ${f.name}`;
+  $("drop").textContent = `${f.name}: ${kb(r.bytes)}${buf.byteLength > r.bytes ? " (first 1 MB of " + kb(buf.byteLength) + ")" : ""}, sha256 ${r.sha256}…`;
+  delete sweeps.file;
+  selectSample("file");
+}
+$("fileinput").onchange = e => takeFile(e.target.files[0]);
+const drop = $("drop");
+drop.ondragover = e => { e.preventDefault(); drop.classList.add("over"); };
+drop.ondragleave = () => drop.classList.remove("over");
+drop.ondrop = e => { e.preventDefault(); drop.classList.remove("over"); takeFile(e.dataTransfer.files[0]); };
+
+function selectSample(s){
+  sample = s;
+  [...$("samples").children].forEach(x => x.setAttribute("aria-pressed", String(x.dataset.sample === s)));
+  if (ready) runAll();
+}
+$("samples").onclick = e => { const b = e.target.closest("button[data-sample]"); if (!b || b.disabled) return; selectSample(b.dataset.sample); };
+
+async function runAll(){
+  if (!ready) return;
+  if (window.__pendingFile) { const p = window.__pendingFile; window.__pendingFile = null;
+    const r = call("set_sample", "file", pyodide.toPy(p)); sizes.file = r.bytes;
+    $("filebtn").disabled = false; $("filebtn").textContent = `Your file — ${fileName}`; sample = "file";
+    [...$("samples").children].forEach(x => x.setAttribute("aria-pressed", String(x.dataset.sample === "file"))); }
+  await zstdPanel(); await brotliPanel(); await lz4Panel(); await zlibPanel(); tinyPanel(); envelope();
+  await sweep();          // last: it takes several seconds and everything above is already live
+}
+
+/* ── Panel 0: the sweep and the chart ────────────────────────────── */
+async function sweep(){
+  const s = sample;
+  if (sweeps[s]) { drawChart(); takeaways(); return; }
+  if (sweepRunning) { sweepAbort = true; while (sweepRunning) await yieldUI(); }
+  sweepRunning = true; sweepAbort = false;
+  const pts = []; sweeps[s] = pts;
+  const total = SWEEP.reduce((a, [, ls]) => a + ls.length, 0); let done = 0;
+  for (const [codec, levels] of SWEEP) {
+    for (const L of levels) {
+      if (sweepAbort || sample !== s) { delete sweeps[s]; sweepRunning = false; return; }
+      $("sweepnote").textContent = `Measuring ${codec} at ${L} on ${sampleLabel()}… ${done}/${total}. The slow settings are slow here too — that is the point.`;
+      await yieldUI();
+      pts.push(call("measure", codec, L, s, 80));
+      done++; drawChart();
+    }
+  }
+  sweepRunning = false;
+  $("sweepnote").textContent = `${total} settings measured on ${sampleLabel()} (${kb(sizes[s])}), in this tab, just now.`;
+  takeaways();
+  // the comparison lines in the brotli/lz4 panels use the sweep; refresh them
+  await brotliPanel(); await lz4Panel(); envelope();
+}
+
+function drawChart(){
+  const c = $("chart"), ctx = c.getContext("2d"), W = c.width, H = c.height;
+  const pts = sweeps[sample] || [];
+  ctx.fillStyle = "#0b1220"; ctx.fillRect(0, 0, W, H);
+  const padL = 56, padR = 20, padT = 16, padB = 44;
+  const xs = pts.map(p => p.comp_MBs).filter(v => v > 0);
+  let xmin = 0.2, xmax = 5000;
+  if (xs.length) { xmin = Math.max(0.05, Math.min(...xs) / 1.6); xmax = Math.max(...xs) * 1.6; }
+  const ys = pts.map(p => p.ratio); let ymax = ys.length ? Math.max(1.5, Math.max(...ys) * 1.08) : 4;
+  const ymin = Math.min(0.95, ...ys, 1);
+  const X = v => padL + (Math.log10(v) - Math.log10(xmin)) / (Math.log10(xmax) - Math.log10(xmin)) * (W - padL - padR);
+  const Y = v => H - padB - (v - ymin) / (ymax - ymin) * (H - padT - padB);
+  ctx.strokeStyle = "#1e293b"; ctx.fillStyle = "#64748b"; ctx.font = "11px system-ui, sans-serif"; ctx.lineWidth = 1;
+  for (const t of [0.1, 1, 10, 100, 1000, 10000]) {
+    if (t < xmin || t > xmax) continue;
+    ctx.beginPath(); ctx.moveTo(X(t), padT); ctx.lineTo(X(t), H - padB); ctx.stroke();
+    ctx.textAlign = "center"; ctx.fillText(t >= 1000 ? (t/1000) + " GB/s" : t + " MB/s", X(t), H - padB + 16);
+  }
+  const step = ymax - ymin > 6 ? 2 : ymax - ymin > 3 ? 1 : 0.5;
+  for (let t = Math.ceil(ymin / step) * step; t <= ymax; t += step) {
+    ctx.beginPath(); ctx.moveTo(padL, Y(t)); ctx.lineTo(W - padR, Y(t)); ctx.stroke();
+    ctx.textAlign = "right"; ctx.fillText(t.toFixed(step < 1 ? 1 : 0) + "×", padL - 6, Y(t) + 4);
+  }
+  ctx.textAlign = "center"; ctx.fillStyle = "#94a3b8";
+  ctx.fillText("compression speed → (log)", (padL + W - padR) / 2, H - 8);
+  ctx.save(); ctx.translate(14, (padT + H - padB) / 2); ctx.rotate(-Math.PI/2); ctx.fillText("smaller ↑  (ratio)", 0, 0); ctx.restore();
+  // lines per codec, in level order
+  for (const [codec] of SWEEP) {
+    const ps = pts.filter(p => p.codec === codec).filter(p => p.comp_MBs > 0);
+    if (!ps.length) continue;
+    ctx.strokeStyle = COLOR[codec]; ctx.lineWidth = codec === "compression.zstd" ? 0 : 1.5; ctx.globalAlpha = .7;
+    if (ps.length > 1) { ctx.beginPath(); ps.forEach((p, i) => i ? ctx.lineTo(X(p.comp_MBs), Y(p.ratio)) : ctx.moveTo(X(p.comp_MBs), Y(p.ratio))); ctx.stroke(); }
+    ctx.globalAlpha = 1;
+    for (const p of ps) {
+      const x = X(p.comp_MBs), y = Y(p.ratio);
+      ctx.fillStyle = COLOR[codec];
+      if (codec === "compression.zstd") { ctx.strokeStyle = "#fff"; ctx.lineWidth = 1.5; ctx.beginPath(); ctx.arc(x, y, 6, 0, 7); ctx.stroke(); }
+      else { ctx.beginPath(); ctx.arc(x, y, 3.2, 0, 7); ctx.fill(); }
+      if (p.level === DEFAULTS[codec] && codec !== "compression.zstd") { ctx.strokeStyle = COLOR[codec]; ctx.lineWidth = 2; ctx.beginPath(); ctx.arc(x, y, 8, 0, 7); ctx.stroke(); }
+    }
+    const lastP = ps[ps.length - 1], firstP = ps[0];
+    ctx.fillStyle = COLOR[codec]; ctx.textAlign = "left"; ctx.font = "bold 11px system-ui, sans-serif";
+    const lbl = codec === "compression.zstd" ? "stdlib" : codec;
+    // lz4 and zstandard are labelled at their fast end (right); the rest at their slow end (left)
+    const right = codec === "lz4" || codec === "zstandard" || codec === "compression.zstd";
+    const anchor = right ? firstP : lastP;
+    ctx.textAlign = right ? "left" : "right";
+    ctx.fillText(lbl, X(anchor.comp_MBs) + (right ? 10 : -10), Y(anchor.ratio) + (right ? -8 : 4));
+    ctx.font = "11px system-ui, sans-serif";
+  }
+  $("legend").innerHTML = SWEEP.map(([c]) => `<span><i style="background:${COLOR[c]}${c==="compression.zstd"?";background:transparent;border:1.5px solid #fff":""}"></i>${c === "compression.zstd" ? "compression.zstd (stdlib, level 3)" : c}</span>`).join("") +
+    `<span><i style="background:transparent;border:2px solid var(--dim)"></i>ring = the library's default</span>`;
+  // engineering table
+  if (pts.length) {
+    $("sweeptable").innerHTML = `<table><thead><tr><th>codec</th><th>level</th><th>ratio</th><th>compress</th><th>decompress</th><th>bytes out</th></tr></thead><tbody>` +
+      pts.map(p => `<tr><td>${p.codec}</td><td>${p.level}${p.level === DEFAULTS[p.codec] ? " (default)" : ""}</td><td>${p.ratio.toFixed(2)}×</td><td>${fmt(p.comp_MBs)}</td><td>${fmt(p.decomp_MBs)}</td><td>${p.out.toLocaleString()}</td></tr>`).join("") +
+      `</tbody></table>`;
+  }
+}
+
+function takeaways(){
+  const pts = sweeps[sample]; if (!pts || !pts.length) return;
+  const by = c => pts.filter(p => p.codec === c);
+  const z = by("zstandard"), b = by("brotli"), l = by("lz4"), zl = by("zlib"), bz = by("bz2")[0];
+  const rng = a => { const d = a.map(p => p.decomp_MBs); return [Math.min(...d), Math.max(...d)]; };
+  const [zlo, zhi] = rng(z), [blo, bhi] = rng(b), [llo, lhi] = rng(l);
+  const z1 = z[0], zTop = z[z.length - 1], b0 = b[0], b11 = b[b.length - 1], l0 = l[0];
+  const flat = Math.max(...pts.map(p=>p.ratio)) < 1.15;   // nothing gets it 15% smaller: already compressed
+  let html;
+  if (flat) {
+    html = `<p class="plain" style="margin:12px 0 0"><strong>${sampleLabel()} is already compressed.</strong> Nothing here gets it meaningfully smaller
+      (best ${Math.max(...pts.map(p=>p.ratio)).toFixed(2)}×), and the difference between codecs is how quickly they notice: zstandard at level 3 gave up in
+      ${z.find(p=>p.level===3)?.comp_ms ?? "?"} ms, brotli at quality 11 kept trying for ${b11.comp_ms} ms to find almost nothing. Compressing a compressed file is a cost with no return —
+      check the ratio once and stop.</p>`;
+  } else {
+    html = `<p class="plain" style="margin:12px 0 0"><strong>Reading back costs the same whichever level wrote it.</strong>
+      zstandard reads ${sampleLabel()} at ${fmt(zlo)}–${fmt(zhi)} across levels 1–19, brotli at ${fmt(blo)}–${fmt(bhi)} across 0–11, lz4 at ${fmt(llo)}–${fmt(lhi)}.
+      Only the writer pays for a higher setting.</p>
+      <p class="plain" style="margin:8px 0 0"><strong>The size curve is flat; the speed curve is a cliff.</strong> zstandard 1 → ${zTop.level}:
+      ${((zTop.ratio/z1.ratio-1)*100).toFixed(0)}% smaller for ${(z1.comp_MBs/zTop.comp_MBs).toFixed(0)}× the time. brotli 0 → 11:
+      ${((b11.ratio/b0.ratio-1)*100).toFixed(0)}% smaller for ${(b0.comp_MBs/b11.comp_MBs).toFixed(0)}× the time.</p>
+      <p class="plain" style="margin:8px 0 0"><strong>The defaults are the story.</strong> brotli's ring is at the top left — its default is its slowest setting.
+      lz4's is at the far right. zstandard's sits in the middle of its own curve${zl.length ? `, above and to the right of zlib's` : ""}.
+      ${bz ? `And the standard library's bz2 reaches ${bz.ratio.toFixed(2)}× — ${bz.ratio > b11.ratio ? "more than brotli 11" : "close behind brotli 11"} — but reads back at ${fmt(bz.decomp_MBs)}, which is why nobody uses it for anything read twice.` : ""}</p>`;
+  }
+  $("takeaways").innerHTML = html;
+}
+
+/* ── shared bars ─────────────────────────────────────────────────── */
+function bars(el, r, extra){
+  const maxRatio = Math.max(4, ...(sweeps[sample] || []).map(p => p.ratio), r.ratio);
+  const maxSpeed = Math.max(1000, ...(sweeps[sample] || []).map(p => Math.max(p.comp_MBs, p.decomp_MBs)), r.comp_MBs, r.decomp_MBs);
+  const w = (v, m) => Math.max(1, Math.min(70, v / m * 70)).toFixed(1) + "%";
+  const lw = (v, m) => Math.max(1, Math.min(70, Math.log10(1 + v) / Math.log10(1 + m) * 70)).toFixed(1) + "%";
+  el.innerHTML =
+    `<div class="bar"><span class="lbl">size</span><span class="fill" style="width:${w(r.ratio, maxRatio)}"></span><span class="val">${r.ratio.toFixed(2)}× smaller — ${r.out.toLocaleString()} B from ${r.in.toLocaleString()}</span></div>` +
+    `<div class="bar"><span class="lbl">compress</span><span class="fill" style="width:${lw(r.comp_MBs, maxSpeed)}"></span><span class="val">${fmt(r.comp_MBs)} · ${r.comp_ms} ms</span></div>` +
+    `<div class="bar"><span class="lbl">decompress</span><span class="fill" style="width:${lw(r.decomp_MBs, maxSpeed)};background:var(--good)"></span><span class="val">${fmt(r.decomp_MBs)} · ${r.decomp_ms} ms</span></div>` +
+    (r.ratio < 1.01 ? `<p class="note" style="margin:6px 0 0">Stored raw — the codec found nothing to do, so these speeds are the cost of a copy, not a decode.</p>` : "") +
+    (extra || "");
+}
+const busy = {};
+async function guarded(key, fn){
+  if (busy[key]) { busy[key] = "again"; return; }
+  busy[key] = true;
+  do { if (busy[key] === "again") busy[key] = true; await yieldUI(); await fn(); } while (busy[key] === "again");
+  busy[key] = false;
+}
+// nearest zstd point in the sweep at or above a ratio; and the fastest zstd point that dominates (>= ratio and >= speed)
+const zPoints = () => (sweeps[sample] || []).filter(p => p.codec === "zstandard");
+function zstdAtRatio(ratio){ const c = zPoints().filter(p => p.ratio >= ratio * 0.995).sort((a,b) => a.level - b.level); return c[0] || null; }
+function zstdDominating(r){ const c = zPoints().filter(p => p.ratio >= r.ratio && p.comp_MBs >= r.comp_MBs).sort((a,b) => b.comp_MBs - a.comp_MBs); return c[0] || null; }
+
+/* ── Panel 1: zstandard ──────────────────────────────────────────── */
+async function zstdPanel(){
+  await guarded("z", async () => {
+    const L = +$("zl").value; touched.zstandard = L;
+    $("zlv").textContent = L; $("zdef").style.display = L === 3 ? "inline" : "none";
+    const r = call("measure", "zstandard", L, sample, 100); last.zstandard = r;
+    bars($("zbars"), r);
+    $("znote").textContent = r.roundtrip_ok ? `Round trip verified. ${L >= 19 ? "Levels 19–22 are the \"ultra\" range: same format, much more search — and the read-back bar has not moved." : L === 3 ? "Level 3 is what you get when you say nothing. It is a good place to be." : ""}` : "Round trip FAILED — this should never happen.";
+    if (!$("zstd-std").dataset.done || $("zstd-std").dataset.sample !== sample) {
+      const s = call("stdlib_same", sample, 3);
+      $("zstd-std").dataset.done = "1"; $("zstd-std").dataset.sample = sample;
+      $("zstd-std").innerHTML =
+        `<span class="verdict ${s.identical ? "ok" : "no"}">${s.identical ? "Standard library output is byte-identical" : "Standard library output differs"}</span>` +
+        `<p class="plain" style="margin:8px 0 0">This tab is running Python ${s.python}. <code>from compression import zstd</code> is in the box —
+         no install — and it produced exactly the same ${s.bytes.toLocaleString()} bytes as the <code>zstandard</code> package. PEP 784 is finished business.</p>` +
+        `<p class="eng" style="margin:8px 0 0"><code>compression.zstd</code> (libzstd ${s.stdlib}) vs <code>zstandard</code> ${versions.zstandard} (libzstd ${s.lib}), level 3:
+         identical bytes. PEP 784 is Final, shipped in 3.14; <code>backports.zstd</code> gives 3.9–3.13 the same API. The package keeps its
+         reasons — dictionaries, streaming APIs, multithreading, older interpreters — but the default codec no longer costs a dependency.</p>`;
+    }
+  });
+}
+$("zl").oninput = () => { if (ready) zstdPanel(); else { $("zlv").textContent = $("zl").value; } };
+
+/* ── Panel 2: brotli ─────────────────────────────────────────────── */
+async function brotliPanel(){
+  await guarded("b", async () => {
+    const Q = +$("bq").value; touched.brotli = Q;
+    $("bqv").textContent = Q; $("bdef").style.display = Q === 11 ? "inline" : "none";
+    const r = call("measure", "brotli", Q, sample, 100); last.brotli = r;
+    const z = zstdAtRatio(r.ratio);
+    let extra = "";
+    if (z) extra = `<p class="note" style="margin:8px 0 0">For the same size, zstandard needs level ${z.level} — and compresses at ${fmt(z.comp_MBs)} against brotli's ${fmt(r.comp_MBs)}${z.comp_MBs > r.comp_MBs ? `, ${(z.comp_MBs/r.comp_MBs).toFixed(1)}× faster` : `, ${(r.comp_MBs/z.comp_MBs).toFixed(1)}× slower`}.</p>`;
+    else if (sweeps[sample]) extra = `<p class="note" style="margin:8px 0 0">No zstandard level in the sweep reaches this size on ${sampleLabel()}. This is the region brotli owns — brotli ${Q} at ${fmt(r.comp_MBs)}, against zstandard 19's ${zPoints().length ? zPoints()[zPoints().length-1].ratio.toFixed(2) + "× at " + fmt(zPoints()[zPoints().length-1].comp_MBs) : "…"}.</p>`;
+    bars($("bbars"), r, extra);
+    $("bnote").textContent = Q >= 10 ? "Qualities 10 and 11 are a different encoder inside brotli — the whole-file search that makes the ratio, and the reputation."
+                           : Q <= 1 ? "Quality 0–1 is brotli's fast lane; it is competitive with zstandard's low levels."
+                           : "";
+  });
+}
+$("bq").oninput = () => { if (ready) brotliPanel(); else { $("bqv").textContent = $("bq").value; } };
+
+/* ── Panel 3: lz4 ────────────────────────────────────────────────── */
+async function lz4Panel(){
+  await guarded("l", async () => {
+    const L = +$("ll").value; touched.lz4 = L;
+    $("llv").textContent = L; $("ldef").style.display = L === 0 ? "inline" : "none";
+    const r = call("measure", "lz4", L, sample, 100); last.lz4 = r;
+    let extra = "";
+    if (sweeps[sample]) {
+      const d = zstdDominating(r);
+      extra = d ? `<p class="note" style="margin:8px 0 0"><span class="verdict no">Dominated</span> zstandard ${d.level} is both smaller (${d.ratio.toFixed(2)}×) and faster to compress (${fmt(d.comp_MBs)}) than lz4 at ${L}. Reading is still lz4's — ${fmt(r.decomp_MBs)} against ${fmt(d.decomp_MBs)} — and that is the only reason left.</p>`
+                : `<p class="note" style="margin:8px 0 0"><span class="verdict ok">Its own point</span> nothing in the zstandard sweep is both smaller and faster than lz4 at ${L}. This is the setting the library exists for.</p>`;
+    }
+    bars($("lbars"), r, extra);
+    $("lnote").textContent = L === 0 ? "" : L < 3 ? "Levels 1–2 are the fast encoder with an acceleration factor; the real change is at 3." : "Level 3 and up is the HC (high-compression) encoder: a slower search for a better ratio — the trade zstandard makes better at every point.";
+  });
+}
+$("ll").oninput = () => { if (ready) lz4Panel(); else { $("llv").textContent = $("ll").value; } };
+
+/* ── Panel 4: zlib live baseline ─────────────────────────────────── */
+async function zlibPanel(){
+  const r = call("measure", "zlib", 6, sample, 100); last.zlib = r;
+  bars($("zlibbars"), r, `<p class="note" style="margin:8px 0 0">Standard-library <code>zlib</code>, level 6, live. Everything in the orange table is a multiple of a number like this one.</p>`);
+}
+
+/* ── Panel 6: tiny payloads ──────────────────────────────────────── */
+function tinyPanel(){
+  const t = call("tiny", $("tinytxt").value || " ");
+  const n = t.in; const entries = Object.entries(t).filter(([k]) => k !== "in");
+  const max = Math.max(n, ...entries.map(([,v]) => v));
+  $("tinybars").innerHTML =
+    `<div class="bar"><span class="lbl">as typed</span><span class="fill" style="width:${(n/max*70).toFixed(1)}%;background:var(--dim)"></span><span class="val">${n} B</span></div>` +
+    entries.map(([k, v]) => `<div class="bar"><span class="lbl">${k}</span><span class="fill" style="width:${(v/max*70).toFixed(1)}%;background:${v > n ? "var(--bad)" : v < n ? "var(--good)" : "var(--dim)"}"></span><span class="val">${v} B ${v > n ? "— bigger" : v < n ? "— " + ((1 - v/n)*100).toFixed(0) + "% smaller" : "— same"}</span></div>`).join("");
+  const bigger = entries.filter(([,v]) => v > n).map(([k]) => k.split(" ")[0]);
+  $("tinynote").textContent = bigger.length
+    ? `${bigger.join(", ")} made ${n} bytes bigger — the container costs more than the content saves. If your payloads look like this, compress at the transport (a whole HTTP response, a batch) rather than one message at a time.`
+    : `Every codec got this one smaller. Shorten it and watch gzip and lz4 cross the line first.`;
+}
+$("tinytxt").oninput = () => { if (ready) tinyPanel(); };
+
+/* ── Panel 7: BYOAI clipboard envelope ───────────────────────────── */
+function envelope(){
+  const z = last.zstandard, b = last.brotli, l = last.lz4, zl = last.zlib;
+  const line = (name, r) => r ? `  ${name.padEnd(22)}: ${r.ratio.toFixed(2)}x smaller, compress ${fmt(r.comp_MBs)}, decompress ${fmt(r.decomp_MBs)}` : "";
+  const pts = sweeps[sample] || [];
+  const zs = pts.filter(p => p.codec === "zstandard"), bs = pts.filter(p => p.codec === "brotli");
+  const flat = zs.length ? `  zstandard 1 -> ${zs[zs.length-1].level}: ${((zs[zs.length-1].ratio/zs[0].ratio-1)*100).toFixed(0)}% smaller for ${(zs[0].comp_MBs/zs[zs.length-1].comp_MBs).toFixed(0)}x the compression time; decompression ${fmt(Math.min(...zs.map(p=>p.decomp_MBs)))}-${fmt(Math.max(...zs.map(p=>p.decomp_MBs)))} at every level` : "  (sweep still running)";
+  const bro = bs.length ? `  brotli 0 -> 11: ${((bs[bs.length-1].ratio/bs[0].ratio-1)*100).toFixed(0)}% smaller for ${(bs[0].comp_MBs/bs[bs.length-1].comp_MBs).toFixed(0)}x the time; brotli.compress() defaults to quality 11` : "";
+  const txt =
+`I am choosing a compression codec in Python and have just measured the trade-offs myself,
+in the browser, on my own data.
+
+My data
+  sample                : ${sampleLabel()}${sizes[sample] ? " (" + kb(sizes[sample]) + ")" : ""}
+  Python                : ${versions.python || "?"} (Pyodide / WebAssembly — throughput about half of native, same shape)
+
+What I measured on it (real libraries, in-tab)
+${line("zstandard level " + touched.zstandard, z)}
+${line("brotli quality " + touched.brotli, b)}
+${line("lz4 level " + touched.lz4, l)}
+${line("zlib level 6 (stdlib)", zl)}
+${flat}
+${bro}
+  compression.zstd (Python 3.14 stdlib, PEP 784) produced byte-identical output to the zstandard package.
+
+What the survey established (native, one machine)
+  zlib-ng: format-compatible drop-in for zlib/gzip, 2.8x faster to compress at the default level,
+  1.9x to decompress; not byte-identical; level 1 trades ratio for speed.
+  python-snappy now depends only on cramjam (no system library); LZ4-class speed, 3x slower reads.
+
+Help me build this
+  Recommend a codec and level for my workload, in the library that fits it best, and write the
+  compress/decompress code. Tell me whether my data is written once and read many times (then
+  spend on the level) or the reverse. Tell me where the choice will bite in production.
+
+Reference: https://research.modelcitizendeveloper.com/survey/1-050/`;
+  $("envelope").textContent = txt;
+  $("copy").onclick = async () => {
+    try { await navigator.clipboard.writeText(txt); $("copied").textContent = "Copied — paste it into any AI."; }
+    catch(e){ $("copied").textContent = "Select the text below and copy it."; }
+  };
+}
+</script>
+</body>
+</html>
