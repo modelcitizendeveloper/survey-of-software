@@ -165,9 +165,9 @@ number you can now read off.</p>
   <p style="margin:10px 0 10px"><strong>Redis or Valkey</strong> — the same wire protocol, the same client, and since 2024 two
   licences: Redis 8 is RSALv2, SSPLv1 or AGPLv3; Valkey (the Linux Foundation's fork of Redis 7.2) is BSD-3-Clause. Valkey
   reads Redis 7.2 data files and not 7.4+ ones, so the door is one-way. The survey's S2 §0 has the dates and versions.</p>
-  <p style="margin:0 0 10px"><strong>pymemcache</strong> — memcached does one thing and the survey's 2025 text said it
-  did it twice as fast. Measured against the same loopback, the difference between a memcached round trip and a Valkey
-  round trip is in the table above; the speed you feel is the network's, not the server's.</p>
+  <p style="margin:0 0 10px"><strong>pymemcache</strong> — memcached does one thing. Measured against the same loopback, the
+  difference between a memcached round trip and a Valkey round trip is in the table above; the speed you feel is the
+  network's, not the server's.</p>
   <p style="margin:0"><strong>dogpile.cache</strong> — a front end over any of the above (memory, file, Redis, memcached)
   with the one thing none of them give you: a lock so that one miss recomputes and the others wait, instead of a stampede.
   Not timed; its cost is the backend's plus a Python call.</p>
