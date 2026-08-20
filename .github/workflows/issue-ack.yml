@@ -1,0 +1,23 @@
+# Acknowledge every new issue within a minute, so a reader who took the time to
+# file a correction hears back even when nobody is watching the inbox. The first
+# issue on this repo (#1, a correct licence fix) waited two months for a reply.
+# The substance is still verified by a person against primary sources.
+name: issue-ack
+on:
+  issues:
+    types: [opened]
+permissions:
+  issues: write
+jobs:
+  ack:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/github-script@v7
+        with:
+          script: |
+            const n = context.issue.number;
+            await github.rest.issues.addLabels({ ...context.repo, issue_number: n, labels: ['triage'] });
+            await github.rest.issues.createComment({ ...context.repo, issue_number: n, body:
+`Thanks — this is logged. Every survey on the site is verified against primary sources (registries, repositories, vendor pages) before it changes, so a correction here is checked the same way and then published; the page footer shows the date it was last verified.
+
+You will get a reply on this thread either way — with the change and a link, or with what the sources showed if they disagree. Surveys also refresh on a schedule, so a fix that lands here is carried into the next sweep automatically.` });
