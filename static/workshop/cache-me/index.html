@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>cache me if you can — a floor model for Survey of Software 1.047</title>
+<meta name="description" content="What a cache hit costs on each tier, which eviction policy earns the hit rate on your access pattern, and the hit rate below which the cache makes things slower — cachetools, diskcache and the standard library's lru_cache, measured in your browser.">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://research.modelcitizendeveloper.com/workshop/cache-me/">
+<link rel="stylesheet" href="/workshop/_lib/workshop.css?v=20260820b">
+<style>
+  .bar .lbl{width:280px}
+  .big{font-size:1.6rem;font-weight:700;color:var(--bright);line-height:1.2}
+  .four{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media (max-width:700px){.four{grid-template-columns:1fr 1fr}}
+  .opt{display:inline-block;width:2px;height:18px;background:var(--warn);vertical-align:middle;margin-left:-1px}
+  .pay td:first-child{white-space:nowrap}
+  .slider{display:flex;gap:12px;align-items:center;flex-wrap:wrap}
+  .slider input[type=range]{flex:1 1 240px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker"><a href="/workshop/">Workshop</a> · floor model for <a href="/survey/1-047/">Survey of Software 1.047</a></p>
+<h1>cache me if you can</h1>
+<p class="dek">A cache hit in the standard library costs the same as a dict lookup. The cache most people
+install costs twenty times that — and neither number decides anything, because a cache is paid for by
+its <em>misses</em>. Below: what a hit and a miss cost on each tier, which eviction policy earns the hit
+rate on the access pattern you actually have, and the hit rate under which the cache makes your code
+slower. Measured in this tab.</p>
+<p class="note" style="margin:0 0 20px">Everything runs here. Press start, then change the access pattern,
+the cache size, and the cost of the function you are wrapping.</p>
+
+<div class="modes" role="group" aria-label="Reading mode">
+  <button id="m-plain" aria-pressed="true">Plain</button>
+  <button id="m-eng" aria-pressed="false">Engineering</button>
+</div>
+<p class="note" id="mode-hint">Plain language. Switch to Engineering for versions, byte counts and the measurements behind each claim.</p>
+
+<!-- ── The whole answer, first ─────────────────────────────────────── -->
+<h2>The whole answer, first</h2>
+<p class="plain">Three tiers of cache, one question each. The numbers were measured for the survey on one
+machine; the panels below re-measure them on yours.</p>
+<p class="eng">CPython 3.14.7, aarch64, single thread, best-of under a budget; one hit on the cheapest
+possible wrapped function, so the overhead is the whole number. The method and the full tables are in
+S2 §0 of the survey; the bench imports this page's <code>core.py</code>.</p>
+<div class="panel">
+  <div class="four">
+    <div><p class="kicker" style="margin:0 0 4px">in the process</p><p class="big">0.03 µs</p><p class="note" style="margin:0">a hit on <strong><code>functools.lru_cache</code></strong> — the same as a dict lookup. <strong>cachetools</strong> LRU: 0.5 µs; its TTLCache: 1.2 µs. Twenty to forty times more, and still nothing next to anything worth caching.</p></div>
+    <div><p class="kicker" style="margin:0 0 4px">on the machine</p><p class="big">4.5 µs</p><p class="note" style="margin:0">a hit on <strong>diskcache</strong> — SQLite, survives a restart, no server. A <em>miss</em> writes: <strong>200–450 µs</strong> per <code>set</code> on disk, 18 µs inside one transaction.</p></div>
+    <div><p class="kicker" style="margin:0 0 4px">on the network</p><p class="big" id="tile-net">106 µs</p><p class="note" style="margin:0">a <code>redis-py</code> round trip to <strong>Valkey or Redis</strong> with the network taken out (unix socket, median; 45 µs at best). This machine's TCP loopback makes it 320 µs; a real network adds its own. Hit and miss cost the same trip; a pipeline makes it 7 µs a key.</p></div>
+    <div><p class="kicker" style="margin:0 0 4px">the policy</p><p class="big">0%</p><p class="note" style="margin:0">what <strong>LRU</strong> — everyone's default — scores on a loop over more keys than fit, at any cache size up to half. On a stable hot set it is within a point of LFU; when the hot set moves it beats LFU by sixteen.</p></div>
+  </div>
+  <p class="note" style="margin:12px 0 0"><strong>The tier decides before the library.</strong> Inside one process, the standard
+  library's <code>lru_cache</code> is the fastest cache in Python and the only one you need until you want a time-to-live, a size
+  in bytes, or to evict by hand — then <strong>cachetools</strong>, for a microsecond. On one machine across restarts,
+  <strong>diskcache</strong> — but batch the writes. Across machines, <strong>redis-py</strong> against Valkey or Redis, which are
+  the same server with different licences. And before any of it: the hit rate is a property of your access pattern, not of the
+  library, and the second panel lets you find out what yours is.</p>
+</div>
+
+<div class="panel">
+  <p class="note" style="margin:0 0 10px"><strong>The rule of this page:</strong> every figure below is measured on your machine while
+  you wait, by the Python libraries themselves running in this tab. Where a number came from research instead, it says so in orange.</p>
+  <p id="status" style="margin-top:12px">Press start to download CPython 3.14 (WebAssembly). First time only, then cached.</p>
+  <button id="go">Start</button>
+</div>
+
+<!-- ── Panel 1: what a hit costs ───────────────────────────────────── -->
+<h2>What a hit costs — and what a miss costs</h2>
+<p class="plain">Each cache wraps the cheapest function there is, <code>k + 1</code>, so the bar is the cache's
+own overhead. Left: a hit. Right: storing a new value, which is what every miss has to do on top of
+running the function.</p>
+<p class="eng">1,000 keys, warmed, then 1,000 calls per batch, best-of under a budget (the browser clock
+clamps to 100 µs, so batches are calibrated to ≥ 5 ms first). Log scale. <code>diskcache</code> is SQLite
+on this tab's in-memory filesystem — its <em>read</em> cost is representative, its <em>write</em> cost is
+not, because nothing here is fsynced; the disk figure is in orange.</p>
+<div class="panel">
+  <div class="row">
+    <div class="col"><h3 style="margin:0 0 6px">a hit</h3><div class="bars" id="hitbars">Run the page first.</div></div>
+    <div class="col"><h3 style="margin:0 0 6px">a store</h3><div class="bars" id="storebars"></div></div>
+  </div>
+  <p id="hitverdict" style="margin:12px 0 0"></p>
+  <div class="eng" id="membytes"></div>
+</div>
+<p class="plain"><strong>Why the standard library wins by twenty times:</strong> <code>lru_cache</code> is C — a
+hash lookup and a pointer move. cachetools is Python — a decorator, a key built from your arguments, a
+method call into a cache class, and for TTLCache a clock read and an expiry sweep. That is what you buy:
+a time-to-live, a size measured however you like, caches you can inspect and clear, five eviction
+policies. It costs a microsecond. A database query costs a thousand of those; an HTTP call ten thousand.
+If the function you are wrapping costs less than about ten microseconds, the answer is not to
+cache it.</p>
+
+<!-- ── Panel 2: which policy ───────────────────────────────────────── -->
+<h2>Which policy earns the hit rate</h2>
+<p class="plain">The same requests replayed through each of cachetools' eviction policies, plus the
+standard library's <code>lru_cache</code> and the best any policy could possibly do if it could see the
+future. Pick the shape of your traffic and how much of it fits.</p>
+<p class="eng">30,000 requests over 10,000 keys, deterministic (seed 7), so the numbers are identical here
+and in the survey's native run. Each policy is cachetools' own class — <code>LRUCache</code>, <code>LFUCache</code>,
+<code>FIFOCache</code>, <code>RRCache</code> — replayed with <code>__getitem__</code> so the order is updated on a hit.
+The ceiling is Belady's offline MIN. "Hot set" is Zipf with s = 1 over a shuffled key space.</p>
+<div class="panel">
+  <label>The shape of the traffic</label>
+  <div class="swatches" id="patterns">
+    <button data-p="hot" aria-pressed="true">a hot set</button>
+    <button data-p="shift" aria-pressed="false">a hot set that moves</button>
+    <button data-p="hot+scan" aria-pressed="false">a hot set plus a scan</button>
+    <button data-p="uniform" aria-pressed="false">no favourites</button>
+    <button data-p="loop" aria-pressed="false">a loop over everything</button>
+  </div>
+  <label style="margin-top:10px">How much of it fits in the cache</label>
+  <div class="swatches" id="sizes">
+    <button data-s="1" aria-pressed="false">1%</button>
+    <button data-s="5" aria-pressed="false">5%</button>
+    <button data-s="10" aria-pressed="true">10%</button>
+    <button data-s="25" aria-pressed="false">25%</button>
+    <button data-s="50" aria-pressed="false">50%</button>
+  </div>
+  <p class="note" id="polnote" style="margin-top:12px"></p>
+  <div class="bars" id="polbars" style="margin-top:8px">Run the page first.</div>
+  <p id="polverdict" style="margin:12px 0 0"></p>
+  <div class="eng" id="belady"></div>
+</div>
+<p class="plain"><strong>What the patterns say.</strong> On a stable hot set, every sensible policy lands within a
+few points of each other and a cache holding one key in a hundred already catches two requests in five.
+When the favourites move, LRU follows them and LFU does not — it keeps counting yesterday's hits. On a
+loop that does not fit, LRU and FIFO evict each key exactly one step before it is needed again, every
+time, at every size up to half; the only policies that score are the ones that refuse to follow the
+loop. With no favourites at all, the hit rate is the cache size and no policy can change it. <strong>Measure
+your pattern before choosing a policy — and if you cannot, LRU is the default for the right reason: it is
+the one that recovers.</strong></p>
+
+<!-- ── Panel 3: does it pay ────────────────────────────────────────── -->
+<h2>Does it pay?</h2>
+<p class="plain">Take the hit rate from the pattern and size you chose above, the hit and store costs
+measured on this machine, and the cost of the function you want to wrap. The table says what you would
+actually save — and the hit rate under which each tier makes your code slower.</p>
+<p class="eng">mean time with cache = h·hit + (1 − h)·(fn + store); pays when h &gt; store ÷ (fn + store − hit).
+The network rows use the survey's figures (orange): a unix socket is the tier's best case — no network — and this machine's TCP loopback its second-best.</p>
+<div class="panel">
+  <div class="slider">
+    <label style="margin:0">The function you are caching costs</label>
+    <input type="range" id="fncost" min="0" max="600" value="200" aria-label="function cost, log scale">
+    <span class="big" id="fnlabel" style="font-size:1.2rem">100 µs</span>
+  </div>
+  <p class="note" style="margin:6px 0 12px">1 µs is a dict lookup; 100 µs a local database hit; 10 ms a query that does work; 1 s a model or a remote API.</p>
+  <div id="pay">Run the page first.</div>
+</div>
+<p class="plain"><strong>The miss is the price.</strong> A hit on diskcache costs a few microseconds; the
+write that follows a miss costs hundreds on a real disk. So for a function that takes 100 µs, diskcache
+needs more than eighty hits in a hundred just to break even — and for one that takes 10 ms, four in a
+hundred. Caching pays for slow functions and punishes fast ones, and the line between them is a
+number you can now read off.</p>
+
+<!-- ── Panel 4: research ───────────────────────────────────────────── -->
+<h2>What could not be measured here</h2>
+<div class="panel research">
+  <p class="kicker">From research, not measured in this tab</p>
+  <p style="margin:0 0 10px" id="net-text"><strong>The network tier</strong> — a server is not a thing a browser tab can
+  start. Measured natively for the survey on 2026-08-20: one Python client against Valkey 9.1.1, Redis 8.10.1 and memcached
+  1.6.38, one <code>GET</code> at a time, then 100 in a pipeline — over a unix socket (no network at all) and over TCP loopback.</p>
+  <div id="net-table"></div>
+  <p style="margin:10px 0 10px"><strong>Redis or Valkey</strong> — the same wire protocol, the same client, and since 2024 two
+  licences: Redis 8 is RSALv2, SSPLv1 or AGPLv3; Valkey (the Linux Foundation's fork of Redis 7.2) is BSD-3-Clause. Valkey
+  reads Redis 7.2 data files and not 7.4+ ones, so the door is one-way. The survey's S2 §0 has the dates and versions.</p>
+  <p style="margin:0 0 10px"><strong>pymemcache</strong> — memcached does one thing and the survey's 2025 text said it
+  did it twice as fast. Measured against the same loopback, the difference between a memcached round trip and a Valkey
+  round trip is in the table above; the speed you feel is the network's, not the server's.</p>
+  <p style="margin:0"><strong>dogpile.cache</strong> — a front end over any of the above (memory, file, Redis, memcached)
+  with the one thing none of them give you: a lock so that one miss recomputes and the others wait, instead of a stampede.
+  Not timed; its cost is the backend's plus a Python call.</p>
+</div>
+
+<!-- ── Panel 5: envelope ───────────────────────────────────────────── -->
+<h2>Start your build</h2>
+<p class="plain">Take what you just measured and hand it to whichever AI you use — the costs on your
+machine, the pattern and hit rate you chose, and a brief for what to do next.</p>
+<p class="eng">Clipboard envelope — no vendor deep link, no API key, no dependency on anyone's roadmap.</p>
+<div class="panel">
+  <button id="copy">Copy the brief</button>
+  <span id="copied" class="note" style="margin-left:10px"></span>
+  <div class="mono" id="envelope" style="margin-top:12px">Run the page first.</div>
+</div>
+
+<h2>Open the lab</h2>
+<p class="plain">The measurement is one file, <a href="/workshop/cache-me/core.py">core.py</a>, fetched by
+this page and imported by the survey's bench. <code>uvx marimo edit</code> a notebook that imports it, or read it —
+it is short.</p>
+
+<div class="foot">
+  <p><strong>cache me if you can</strong> is a floor model for
+  <a href="/survey/1-047/">Survey of Software 1.047 — Caching Libraries</a>, verified 2026-08-20. Libraries
+  run under Pyodide (CPython 3.14 compiled to WebAssembly) in this tab; nothing is sent anywhere. Timings here are
+  WebAssembly timings — roughly a third of native speed, same shape. Measurements are from your machine except where marked
+  orange.</p>
+  <p>Made by Ivan Schneider · <a href="https://modelcitizendeveloper.com/">Model Citizen Developer</a></p>
+</div>
+
+</div>
+
+<script src="/workshop/_lib/workshop.js?v=20260820b"></script>
+<script>
+const W = Workshop, $ = W.$;
+W.mode("cache-me");
+const status = $("status");
+let pyodide = null, core = null, ready = false, versions = {};
+let pattern = "hot", sizePct = 10, hits = null, pol = null, lastPay = null;
+const call = (fn, ...args) => W.call(core, fn, ...args);
+const fmtUs = us => us >= 1e6 ? (us/1e6).toFixed(2) + " s" : us >= 1000 ? (us/1000).toFixed(us >= 10000 ? 0 : 1) + " ms" : us >= 10 ? us.toFixed(0) + " µs" : us >= 1 ? us.toFixed(1) + " µs" : us.toFixed(2) + " µs";
+const pct = x => (x * 100).toFixed(x * 100 >= 10 || x === 0 ? 0 : 1) + "%";
+
+/* ── from research (orange): the network tier, loopback, native — filled from the bench ── */
+const NET = {
+  /* µs per op, per-operation percentiles, native, 2026-08-20 — from 01-discovery/bench/results.json.
+     "unix" = the client's own cost with the network taken out; "tcp" = plus this machine's loopback
+     stack (WSL2: raw PING floor 112 µs min / 234 µs p50 over TCP against 11 / 67 over unix). */
+  "raw PING floor → Valkey (unix)":           { min: 11.5,  p50: 69.5,  set: null,  pipe: null },
+  "raw PING floor → Valkey (tcp)":            { min: 111.9, p50: 234.3, set: null,  pipe: null },
+  "redis-py 8.1.0 → Valkey 9.1.1 (unix)":     { min: 45.2,  p50: 106.3, set: 113.3, pipe: 7.1 },
+  "redis-py 8.1.0 → Redis 8.10.1 (unix)":     { min: 42.5,  p50: 109.5, set: 119.4, pipe: 7.0 },
+  "valkey-py 6.1.1 → Valkey 9.1.1 (unix)":    { min: 35.7,  p50: 80.0,  set: 88.7,  pipe: 6.1 },
+  "pymemcache 4.0.0 → memcached 1.6.38 (unix)": { min: 14.3, p50: 71.1, set: 67.9,  pipe: 2.9 },
+  "redis-py 8.1.0 → Valkey 9.1.1 (tcp)":      { min: 176.8, p50: 319.5, set: 365.4, pipe: 10.3 },
+  "redis-py 8.1.0 → Redis 8.10.1 (tcp)":      { min: 176.2, p50: 320.3, set: 326.1, pipe: 9.6 },
+  "valkey-py 6.1.1 → Valkey 9.1.1 (tcp)":     { min: 145.7, p50: 315.2, set: 288.9, pipe: 8.9 },
+  "valkey-glide 2.5.1 (asyncio) → Valkey 9.1.1 (tcp)": { min: 249.1, p50: 550.1, set: 486.4, pipe: 27.1 },
+  "pymemcache 4.0.0 → memcached 1.6.38 (tcp)": { min: 137.3, p50: 271.0, set: 272.3, pipe: 5.1 },
+};
+const NET_PAY = NET["redis-py 8.1.0 → Valkey 9.1.1 (unix)"];   /* the tier's best case for "does it pay" */
+const DISK_STORE_US = 300;   /* diskcache.set on a real disk, native, mid-range of 200–450 measured */
+
+$("go").onclick = async () => {
+  $("go").disabled = true;
+  try {
+    pyodide = await W.boot({ version: "314.0.5", packages: ["cachetools", "diskcache"], status,
+                             statusText: { download: "Downloading CPython 3.14 (WebAssembly)… first time only, then cached." } });
+    status.textContent = "Fetching core.py…";
+    core = await W.loadModules(pyodide, { workshop: "/workshop/_lib/workshop.py", core: "core.py" });
+    versions = call("versions");
+    ready = true;
+    status.textContent = `Running — real Python ${versions.python}, cachetools ${versions.cachetools}, diskcache ${versions.diskcache}, in this tab. Nothing leaves your machine.`;
+    await hitPanel(); await polPanel(); payPanel(); netTable(); envelope();
+  } catch (e) { status.textContent = "Could not start: " + e.message; $("go").disabled = false; }
+};
+$("patterns").onclick = e => { const b = e.target.closest("button[data-p]"); if (!b) return; pattern = b.dataset.p;
+  [...$("patterns").children].forEach(x => x.setAttribute("aria-pressed", String(x === b))); if (ready) polPanel().then(() => { payPanel(); envelope(); }); };
+$("sizes").onclick = e => { const b = e.target.closest("button[data-s]"); if (!b) return; sizePct = +b.dataset.s;
+  [...$("sizes").children].forEach(x => x.setAttribute("aria-pressed", String(x === b))); if (ready) polPanel().then(() => { payPanel(); envelope(); }); };
+const fnCost = () => Math.pow(10, $("fncost").value / 100);           /* 1 µs … 1 s, log */
+$("fncost").oninput = () => { $("fnlabel").textContent = fmtUs(fnCost()); if (ready) { payPanel(); envelope(); } };
+
+/* ── Panel 1 ── */
+const HIT_ORDER = ["the function itself (k + 1)", "dict lookup", "functools.lru_cache (stdlib, C)", "cachetools LRUCache", "cachetools LFUCache", "cachetools TTLCache", "diskcache.get", "diskcache.memoize (SQLite)"];
+const STORE_ORDER = ["dict", "functools.lru_cache", "cachetools LRUCache", "cachetools LFUCache", "cachetools TTLCache", "diskcache.set, 200 in one transaction", "diskcache.set"];
+async function hitPanel(){
+  await W.guarded("hit", async () => {
+    $("hitbars").innerHTML = `<p class="note" style="margin:0">Measuring…</p>`; await W.yieldUI();
+    hits = call("hit_cost", 80);
+    const h = hits.per_hit_us, s = hits.per_store_us;
+    const mxh = Math.max(...HIT_ORDER.map(k => h[k])), mxs = Math.max(...STORE_ORDER.map(k => s[k]), DISK_STORE_US);
+    const color = k => k.includes("lru_cache") ? "var(--good)" : k.includes("cachetools") ? "var(--accent)" : k.includes("diskcache") ? "var(--warn)" : "var(--dim)";
+    W.bars($("hitbars"), HIT_ORDER.map(k => ({ label: k, value: h[k], max: mxh, display: fmtUs(h[k]), color: color(k), log: true })));
+    W.bars($("storebars"), STORE_ORDER.map(k => ({ label: k, value: s[k], max: mxs, display: fmtUs(s[k]), color: color(k), log: true }))
+      .concat([{ label: "diskcache.set — on a real disk (research)", value: DISK_STORE_US, max: mxs, display: "200–450 µs", color: "var(--research, #e8a33d)", log: true }]));
+    const lru = h["functools.lru_cache (stdlib, C)"], ct = h["cachetools LRUCache"], ttl = h["cachetools TTLCache"], dg = h["diskcache.get"], ds = s["diskcache.set"], dtx = s["diskcache.set, 200 in one transaction"];
+    $("hitverdict").innerHTML =
+      `<strong>On this machine a cachetools LRU hit costs ${(ct/lru).toFixed(0)}× the standard library's, and a TTLCache hit ${(ttl/lru).toFixed(0)}×</strong> — ` +
+      `${fmtUs(ct)} and ${fmtUs(ttl)} against ${fmtUs(lru)}. A diskcache hit is ${fmtUs(dg)}, ${(dg/lru).toFixed(0)}× the standard library and still faster than any network. ` +
+      `Storing into diskcache: ${fmtUs(ds)} here (in-memory filesystem), ${fmtUs(dtx)} per key inside one transaction — on a real disk the single write is hundreds of microseconds, which is why a miss, not a hit, is what a disk cache charges for.`;
+    try {
+      const m = call("memory", 10000).bytes_per_entry;
+      $("membytes").innerHTML = `<table style="margin-top:10px"><thead><tr><th>structure (10,000 int → int entries)</th><th>bytes per entry</th><th>× dict</th></tr></thead><tbody>` +
+        Object.entries(m).map(([k, v]) => `<tr><td>${k}</td><td>${v.toFixed(0)} B</td><td>${(v/m["dict"]).toFixed(1)}×</td></tr>`).join("") + `</tbody></table>` +
+        `<p class="note" style="margin:6px 0 0">tracemalloc on a fresh structure in this tab (32-bit WebAssembly pointers; natively the bytes roughly double and the ratios hold). TTLCache keeps a timer link per entry — about twice the memory of LRUCache for the same keys.</p>`;
+    } catch (e) { $("membytes").textContent = ""; }
+  });
+}
+
+/* ── Panel 2 ── */
+const POL_ORDER = ["LRU", "functools.lru_cache", "LFU", "FIFO", "random (RR)", "optimal (offline)"];
+const PAT_TEXT = {
+  "hot":      (r, p) => `On a stable hot set every policy is close — LRU ${pct(r.LRU.hit_rate)}, LFU ${pct(r.LFU.hit_rate)}, the worst of them ${pct(Math.min(r.FIFO.hit_rate, r["random (RR)"].hit_rate))} — and the ceiling is ${pct(r["optimal (offline)"].hit_rate)}. A cache holding ${p.cache_pct}% of the keys catches ${pct(r.LRU.hit_rate)} of the requests; the first few percent of cache do most of the work.`,
+  "shift":    (r, p) => `When the favourites move, <strong>LRU ${pct(r.LRU.hit_rate)} against LFU ${pct(r.LFU.hit_rate)}</strong>. LFU keeps counting the old hot set's history and is slow to let go; LRU forgets in one cache-length. This is the case that makes LRU the default — it recovers.`,
+  "hot+scan": (r, p) => `A scan through everything, one request in four, drags LRU down to ${pct(r.LRU.hit_rate)} — it dutifully caches each scanned key once — while LFU holds ${pct(r.LFU.hit_rate)}, because a key seen once never outranks a key seen often. Scan resistance is what the newer policies (W-TinyLFU, ARC) are for; cachetools does not ship one.`,
+  "uniform":  (r, p) => `No favourites, no policy: every policy scores ${pct(r.LRU.hit_rate)} — which is the cache size, ${p.cache_pct}%. The ${pct(r["optimal (offline)"].hit_rate)} ceiling is what knowing the future would buy, and nothing knows the future. If your traffic looks like this, a bigger cache is the only lever.`,
+  "loop":     (r, p) => `<strong>LRU scores ${pct(r.LRU.hit_rate)}. So does FIFO.</strong> Each key is evicted exactly one step before it comes round again, on every pass, at ${p.cache_pct}% of the keys — and it stays at zero up to half. LFU gets ${pct(r.LFU.hit_rate)}, the optimum, by accident: ties keep a fixed subset. This is every batch job that reads a table bigger than its cache, and the fix is not a better policy but a cache at least as big as the loop, or none at all.`,
+};
+async function polPanel(){
+  await W.guarded("pol", async () => {
+    $("polnote").textContent = `Replaying 30,000 requests through five policies…`; $("polverdict").textContent = ""; await W.yieldUI();
+    pol = call("policies", pattern, sizePct, 10000, 30000);
+    const r = pol.results;
+    const color = k => k === "LRU" || k.includes("lru_cache") ? "var(--accent)" : k.startsWith("optimal") ? "var(--warn)" : k === "LFU" ? "var(--good)" : "var(--dim)";
+    W.bars($("polbars"), POL_ORDER.map(k => ({ label: k === "optimal (offline)" ? "the ceiling — if it could see the future" : k === "functools.lru_cache" ? "functools.lru_cache (stdlib; is LRU)" : "cachetools " + k, value: r[k].hit_rate, max: 1, display: pct(r[k].hit_rate), color: color(k), log: false })));
+    $("polnote").textContent = `${pol.description}. ${pol.n.toLocaleString()} requests over ${pol.universe.toLocaleString()} keys (${pol.distinct_requested.toLocaleString()} distinct), cache of ${pol.cache_size.toLocaleString()}.`;
+    $("polverdict").innerHTML = PAT_TEXT[pattern](r, pol) +
+      `<div class="eng"><table><thead><tr><th>policy</th><th>hit rate</th><th>replay time</th></tr></thead><tbody>` +
+      POL_ORDER.map(k => `<tr><td>${k}</td><td>${pct(r[k].hit_rate)}</td><td>${r[k].ms == null ? "—" : W.fmtMs(r[k].ms)}</td></tr>`).join("") + `</tbody></table></div>`;
+    try {
+      const b = call("belady_anomaly");
+      $("belady").innerHTML = `<p class="note" style="margin:10px 0 0"><strong>Belady's anomaly, live:</strong> the sequence ${b.sequence.join(" ")} through cachetools' own classes — ` +
+        `FIFO misses <strong>${b.misses.FIFO["3"]}</strong> times with 3 slots and <strong>${b.misses.FIFO["4"]}</strong> with 4. A bigger FIFO cache, more misses. LRU: ${b.misses.LRU["3"]} → ${b.misses.LRU["4"]}, as a stack policy must. One more reason the default is LRU.</p>`;
+    } catch (e) { $("belady").textContent = ""; }
+  });
+}
+
+/* ── Panel 3 ── */
+function payPanel(){
+  if (!hits || !pol) return;
+  const fn = fnCost(), h = pol.results.LRU.hit_rate;
+  const tiers = [
+    { name: "in the process — functools.lru_cache", hit: hits.per_hit_us["functools.lru_cache (stdlib, C)"], store: hits.per_store_us["functools.lru_cache"], src: "measured" },
+    { name: "in the process — cachetools TTLCache", hit: hits.per_hit_us["cachetools TTLCache"], store: hits.per_store_us["cachetools TTLCache"], src: "measured" },
+    { name: "on the machine — diskcache (disk write)", hit: hits.per_hit_us["diskcache.get"], store: DISK_STORE_US, src: "hit measured; store from research" },
+    { name: "on the machine — diskcache, writes batched", hit: hits.per_hit_us["diskcache.get"], store: hits.per_store_us["diskcache.set, 200 in one transaction"], src: "measured" },
+  ];
+  tiers.push({ name: "on the network — redis-py → Valkey, no network (unix socket)", hit: NET_PAY.p50, store: NET_PAY.set, src: "research" });
+  tiers.push({ name: "on the network — redis-py → Valkey, this machine's TCP loopback", hit: NET["redis-py 8.1.0 → Valkey 9.1.1 (tcp)"].p50, store: NET["redis-py 8.1.0 → Valkey 9.1.1 (tcp)"].set, src: "research" });
+  const rows = tiers.map(t => ({ t, p: call("payoff", fn, h, t.hit, t.store) }));
+  lastPay = rows;
+  $("pay").innerHTML = `<p class="note" style="margin:0 0 8px">With the <strong>${pattern === "hot" ? "hot set" : pattern === "shift" ? "moving hot set" : pattern === "hot+scan" ? "hot set plus scan" : pattern === "uniform" ? "no-favourites" : "loop"}</strong> pattern at ${sizePct}% — LRU hit rate <strong>${pct(h)}</strong> — and a function that costs <strong>${fmtUs(fn)}</strong>:</p>` +
+    `<table class="pay"><thead><tr><th>tier</th><th>mean per call, with cache</th><th>speed-up</th><th>breaks even at hit rate</th></tr></thead><tbody>` +
+    rows.map(({ t, p }) => `<tr><td>${t.name}${t.src !== "measured" ? ` <span class="note" style="display:inline;color:var(--research, #e8a33d)">(${t.src})</span>` : ""}</td><td>${fmtUs(p.with_us)}</td><td>${Math.abs(p.speedup - 1) < 0.005 ? `<span class="meh">≈ 1× — no change</span>` : p.speedup >= 1 ? `<span class="ok">${p.speedup.toFixed(1)}×</span>` : `<span class="no">${p.speedup.toFixed(2)}× — slower</span>`}</td><td>${p.breakeven_hit_rate == null ? "never pays" : pct(p.breakeven_hit_rate)}</td></tr>`).join("") +
+    `</tbody></table>` +
+    `<p class="note" style="margin:8px 0 0">Without a cache: ${fmtUs(fn)} per call. "Breaks even" is the hit rate at which the cache stops costing more than it saves, for a function of this cost.</p>`;
+}
+
+/* ── Panel 4: network table from the bench ── */
+function netTable(){
+  const rows = Object.entries(NET);
+  $("net-table").innerHTML = `<table><thead><tr><th>client → server</th><th>GET, min</th><th>GET, median</th><th>SET, median</th><th>GET, 100 pipelined</th></tr></thead><tbody>` +
+    rows.map(([k, v]) => `<tr><td>${k}</td><td>${fmtUs(v.min)}</td><td>${fmtUs(v.p50)}</td><td>${v.set ? fmtUs(v.set) : "—"}</td><td>${v.pipe ? fmtUs(v.pipe) + " per key" : "—"}</td></tr>`).join("") + `</tbody></table>` +
+    `<p class="note" style="margin:6px 0 0">Per-operation percentiles over 3,000 calls, one Python client, CPython 3.14.7, servers built from source on the same machine. The floor rows are a raw <code>PING</code> on a bare socket: what the machine charges before any client code runs. Valkey and Redis are the same number behind the same client. The memcached client sits closest to the floor; at the median the difference is gone. A pipeline is the one thing that changes the tier's cost by an order of magnitude.</p>`;
+  $("tile-net").textContent = fmtUs(NET_PAY.p50);
+}
+
+function envelope(){
+  const h = hits ? hits.per_hit_us : null, s = hits ? hits.per_store_us : null;
+  const txt =
+`I am adding a cache to a Python program and have just measured the trade-offs myself,
+in the browser, on my own machine.
+
+What a hit costs here (one call on the cheapest possible function)
+${h ? HIT_ORDER.map(k => `  ${k.padEnd(36)}: ${fmtUs(h[k])}`).join("\n") : "  (not run)"}
+What a store costs here
+${s ? STORE_ORDER.map(k => `  ${k.padEnd(36)}: ${fmtUs(s[k])}`).join("\n") : "  (not run)"}
+${pol ? `
+Hit rate by policy — ${pol.description}, cache = ${pol.cache_pct}% of ${pol.universe.toLocaleString()} keys
+${POL_ORDER.map(k => `  ${k.padEnd(24)}: ${pct(pol.results[k].hit_rate)}`).join("\n")}` : ""}
+${lastPay ? `
+For a function costing ${fmtUs(fnCost())} at that LRU hit rate
+${lastPay.map(({ t, p }) => `  ${t.name.padEnd(46)}: ${fmtUs(p.with_us)} per call, ${p.speedup.toFixed(2)}x, breaks even at ${p.breakeven_hit_rate == null ? "never" : pct(p.breakeven_hit_rate)}`).join("\n")}` : ""}
+
+What the survey established
+  The tier decides before the library. In-process: functools.lru_cache is a dict lookup (0.03 us);
+  cachetools costs 0.5-1.2 us and buys TTL, byte sizes, inspection and five policies. On one machine
+  across restarts: diskcache, 4.5 us per hit and 200-450 us per write on disk (18 us batched in one
+  transaction). Across machines: redis-py, against Valkey (BSD) or Redis (RSALv2/SSPLv1/AGPLv3) -
+  same protocol, same client, one-way data files past Redis 7.2.
+  The hit rate is the access pattern's, not the library's: LRU scores 0% on a loop bigger than the
+  cache, LFU loses 16 points when the hot set moves, and nothing beats cache size when there are no
+  favourites.
+
+Help me build this
+  Ask me which tier I am on (one process / one machine / many machines), what my access pattern
+  looks like, and what the function costs. Then pick the smallest tier that pays, write the code,
+  and tell me what hit rate to alarm on.
+
+Reference: https://research.modelcitizendeveloper.com/survey/1-047/`;
+  $("envelope").textContent = txt;
+  W.copyText($("copy"), $("copied"), () => txt);
+}
+</script>
+</body>
+</html>

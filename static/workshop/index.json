@@ -4,6 +4,15 @@
  "description": "Free working pages that measure a Survey of Software finding on your own data, in your own browser. The real Python libraries run in the tab; nothing is uploaded.",
  "models": [
   {
+   "name": "cache me if you can",
+   "url": "https://research.modelcitizendeveloper.com/workshop/cache-me/",
+   "finding": "A cache is paid for by its misses. The standard library's lru_cache answers a hit in 0.03 µs; cachetools in 0.5; diskcache in 4 — and then charges 350 µs for the write after a miss, so a 100 µs function needs 82% hits to break even. Pick your traffic's shape: LRU scores 0% on a loop, at any size up to half.",
+   "survey_code": "1.047",
+   "survey_title": "Caching Libraries",
+   "survey_url": "https://research.modelcitizendeveloper.com/survey/1-047/",
+   "libraries": "functools.lru_cache, cachetools, diskcache, redis-py → Valkey / Redis, pymemcache"
+  },
+  {
    "name": "you want this sorted how?",
    "url": "https://research.modelcitizendeveloper.com/workshop/sorted-how/",
    "finding": "Keep 100,000 keys in order, one insert at a time: pure-Python sortedcontainers beats the standard library's C by ten times — and if you only needed the order at the end, or just the minimum, the standard library beats it back. A race you start, with bars arriving in finishing order.",

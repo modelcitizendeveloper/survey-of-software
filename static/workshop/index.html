@@ -35,6 +35,15 @@ the survey corrected. The page is the instrument; the survey has the workings.</
 
 <div class="cards">
 
+<a class="card" href="/workshop/cache-me/">
+  <h2>cache me if you can</h2>
+  <p class="finding">A cache is paid for by its misses. The standard library's <code>lru_cache</code> answers
+  a hit in 0.03 µs; cachetools in 0.5; diskcache in 4 — and then charges 350 µs for the write after a
+  miss, so a 100 µs function needs 82% hits to break even. Pick your traffic's shape: LRU scores 0% on
+  a loop, at any size up to half.</p>
+  <p class="meta"><b>Survey 1.047 — Caching Libraries</b> · functools.lru_cache, cachetools, diskcache, redis-py → Valkey / Redis, pymemcache</p>
+</a>
+
 <a class="card" href="/workshop/sorted-how/">
   <h2>you want this sorted how?</h2>
   <p class="finding">Keep 100,000 keys in order, one insert at a time: pure-Python
