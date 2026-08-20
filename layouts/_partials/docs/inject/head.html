@@ -1,4 +1,2 @@
 {{- if .Params.noindex }}<meta name="robots" content="noindex, follow">{{ end -}}
 {{- /* noindex set via the /survey/** cascade in hugo.toml; trunk pages override noindex:false */ -}}
-{{- /* Factum Erit app switcher stylesheet (see _partials/docs/brand.html). Async via media swap: no cross-host request in the render path. */ -}}
-<link rel="stylesheet" href="https://mcp.factumerit.app/ds/v1/components/app-switcher.css" media="print" onload="this.media='all'">
