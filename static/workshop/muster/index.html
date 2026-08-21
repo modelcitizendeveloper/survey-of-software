@@ -844,6 +844,7 @@ let stashOk = false;
    next to the button, rather than leaving the reader to guess. */
 function armApprove(why){
   if (window.__slow) { clearTimeout(window.__slow); window.__slow = null; }
+  $("btn-approve").textContent = "Approve and continue";
   if (!pendingResume) return;
   if (photos.length) {
     $("btn-approve").disabled = false;
@@ -863,12 +864,14 @@ async function restoreForResume(){
      reader who just pressed Ctrl-R is looking at the lanes, and for the ~2 s this takes
      the page would otherwise show empty thumbnails and a dark button, which reads as
      "the reload lost it" right up until it doesn't. */
-  $("pausenote").innerHTML = '<strong>Restoring…</strong> restarting Python and putting your photos ' +
-    'back. A couple of seconds — then “Approve and continue” lights up.';
+  $("btn-approve").textContent = "Restoring…";
   $("btn-approve").disabled = true;
+  $("pausenote").innerHTML = '<strong>Putting the run back.</strong> Restarting Python and ' +
+    'restoring your photos — a couple of seconds. The button below says when it is ready; ' +
+    'you do not need to reload anything in section 1.';
   const slow = setTimeout(() => {
     if ($("btn-approve").disabled) $("pausenote").innerHTML +=
-      ' <em>(Taking longer than expected — if it does not finish, load the photos again in panel 1.)</em>';
+      ' <em>(Taking longer than expected — if it does not finish, load the photos again in section 1.)</em>';
   }, 8000);
   status.textContent = "Picking up where you left off — restarting Python…";
   window.__slow = slow;
