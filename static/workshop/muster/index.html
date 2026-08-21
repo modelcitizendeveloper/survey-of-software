@@ -219,16 +219,17 @@ table, and a rule that your run state is data rather than objects.</p>
 </div>
 
 <!-- ── Panel 5: the boundary test ──────────────────────────────────── -->
-<h2>5. Who decides the next step</h2>
-<p class="plain">One question separates this survey from its neighbour, and it is the cheapest way to
-find out which one answers your question. For each flow below: does <em>your code</em> decide what
-happens next, or does <em>the model</em>?</p>
+<h2>5. Who decides the next step — a quiz</h2>
+<p class="plain"><strong>Six flows, two buttons each. Pick one and the page tells you straight away
+whether you were right</strong> — and which survey answers that kind of question. One question
+separates this survey from its neighbour, and it is the cheapest way to find out which one you
+should be reading: does <em>your code</em> decide what happens next, or does <em>the model</em>?</p>
 <p class="eng">The boundary test is the survey's organizing claim. Your code decides → 1.200, this
 page. The model decides → <a href="/survey/1-201/">1.201, agent frameworks</a>. Without the test the
 two surveys collide, and the previous pass of 1.200 ended by recommending a multi-agent system,
 which is 1.201's territory.</p>
 <div class="panel sorter" id="sorter"></div>
-<p class="note" id="sorterscore"></p>
+<p class="note" id="sorterscore">Nothing answered yet — pick a button on any row above.</p>
 
 <!-- ── Panel 6: the handoff ────────────────────────────────────────── -->
 <h2>6. The vision call, without a key</h2>
@@ -456,7 +457,10 @@ async function handle(m) {
     if (job.durable) await put(key, state);
     await handle({ ...job, type: "run", resumeState: state });
   }
-  else if (m.type === "stash") { await put("photos", m.payload); postMessage({ type: "stashed" }); }
+  else if (m.type === "stash") {
+    try { await put("photos", m.payload); postMessage({ type: "stashed", ok: true }); }
+    catch (err) { postMessage({ type: "stashed", ok: false, err: err.name + ": " + err.message }); }
+  }
   else if (m.type === "unstash") { postMessage({ type: "unstashed", payload: await get("photos") }); }
   else if (m.type === "clear") { const db = await idb();
     const tx = db.transaction(STORE, "readwrite"); tx.objectStore(STORE).clear();
@@ -568,14 +572,10 @@ async function processAll(note){
   });
   $("p1note").textContent = note;
   renderP1();
-  if (!pendingResume) stashPhotos(note);
+  if (!pendingResume) await stashPhotos(note);
   status.textContent = "Done. Panel 2 is ready.";
   for (const id of ["btn-run", "btn-pause", "btn-copy", "btn-parse", "btn-reset"]) $(id).disabled = false;
-  if (pendingResume) {                       // a held run is waiting; it can be approved now
-    $("btn-approve").disabled = false;
-    $("pausenote").textContent = "A run from before the reload is still held at photo " +
-      (pendingResume.i + 1) + ". Press “Approve and continue”.";
-  }
+  armApprove(photos.length ? "The photos are loaded, so it can carry on." : null);
 }
 
 /* ── panel 1 rendering, and the finding it produces ─────────────────── */
@@ -739,8 +739,14 @@ function onLane(L, d){
     s.done = true; if (laneState.A?.done && laneState.B?.done) running = false;
   }
   else if (d.type === "cantsave") {
+    /* This is the panel-4 demonstration arriving in panel 2, which is where the lane
+       lives. Unlabeled it reads as a page fault, so say whose fault it is. */
     $("lane" + L).classList.add("dead");
-    $("msg" + L).textContent = "cannot checkpoint — " + d.err;
+    $("msg" + L).innerHTML =
+      `<strong style="color:var(--warn)">expected — this is section 4's demonstration.</strong><br>` +
+      `cannot checkpoint — ${d.err}<br>` +
+      `<span class="note">Untick the box in section 4 and run again to see it save.</span>`;
+    $("re" + L).innerHTML = `<strong style="color:var(--warn)">run stopped here on purpose</strong>`;
     $("unserout").textContent =
       "Lane B tried to write its checkpoint and the browser refused:\n\n  " + d.err +
       "\n\nThat is a real DataCloneError from structuredClone, not a message this page made up.\n" +
@@ -799,8 +805,9 @@ $("btn-reset").onclick = async () => {
                                $("track"+L).innerHTML=""; $("money"+L).textContent="$0.00";
                                $("msg"+L).textContent="idle"; $("lane"+L).classList.remove("dead");
                                $("re"+L).textContent="re-spent"; }
-  if (p1) p1.postMessage({ type: "clear" });     // the worker owns the connection
-  indexedDB.deleteDatabase("muster");
+  /* Clear THROUGH the worker: it holds the open connection, and deleteDatabase() from
+     here would fire onblocked and never complete while that connection is alive. */
+  if (p1) p1.postMessage({ type: "clear" }); else indexedDB.deleteDatabase("muster");
   pendingResume = null;
   $("runnote").textContent = "Cleared — lane B's checkpoints and the stashed photos with them.";
   $("btn-deploy").disabled = true; $("btn-approve").disabled = true;
@@ -821,14 +828,50 @@ $("btn-approve").onclick = async () => {
    had already had. Ten seconds is too much to charge for a demonstration, so the bytes and
    their measurements ride in IndexedDB next to the checkpoint they belong to. Capped: past
    the limit the page falls back to asking, rather than filling someone's disk quietly. */
-const STASH_CAP = 48 * 1024 * 1024;
+/* A backstop, not a policy. IndexedDB's real limit is a share of free disk — typically
+   hundreds of megabytes at least — so an invented 48 MB ceiling turned a folder of two
+   dozen phone photos into a dead button for no reason. Let the browser be the authority
+   and report a refusal, rather than pre-empting one that was never going to happen. */
+const STASH_CAP = 512 * 1024 * 1024;
+let stashOk = false;
 
 /* One Ctrl-R, one Approve. Boot Python (about two seconds from cache, and the lanes need
    it anyway) and put back the photos and their measurements rather than making the reader
    rebuild them. Nothing is re-measured: these are the same numbers from the same files,
    taken on this machine minutes ago. */
+/* The single place that decides whether Approve can be pressed, so no path can leave it
+   dark by omission. If the photos are back it lights; if they are not it says what to do,
+   next to the button, rather than leaving the reader to guess. */
+function armApprove(why){
+  if (window.__slow) { clearTimeout(window.__slow); window.__slow = null; }
+  if (!pendingResume) return;
+  if (photos.length) {
+    $("btn-approve").disabled = false;
+    $("pausenote").innerHTML = `<strong>Press “Approve and continue”.</strong> ` +
+      (why ? why : `Nothing else needs doing — the photos and their measurements came back with the page.`);
+  } else {
+    $("btn-approve").disabled = true;
+    $("pausenote").innerHTML =
+      `<strong>The held run is still on disk, waiting at photo ${pendingResume.i + 1}.</strong> ` +
+      `Its photos are not — ${why || "this browser did not keep them across the reload"}. ` +
+      `Load them again in panel 1 and this button lights up.`;
+  }
+}
+
 async function restoreForResume(){
+  /* Say this in panel 3, next to the button, not only in panel 1's status line — the
+     reader who just pressed Ctrl-R is looking at the lanes, and for the ~2 s this takes
+     the page would otherwise show empty thumbnails and a dark button, which reads as
+     "the reload lost it" right up until it doesn't. */
+  $("pausenote").innerHTML = '<strong>Restoring…</strong> restarting Python and putting your photos ' +
+    'back. A couple of seconds — then “Approve and continue” lights up.';
+  $("btn-approve").disabled = true;
+  const slow = setTimeout(() => {
+    if ($("btn-approve").disabled) $("pausenote").innerHTML +=
+      ' <em>(Taking longer than expected — if it does not finish, load the photos again in panel 1.)</em>';
+  }, 8000);
   status.textContent = "Picking up where you left off — restarting Python…";
+  window.__slow = slow;
   await startPython();
   const payload = await new Promise(res => {
     laneMsg.P = m => { if (m.type === "unstashed") res(m.payload); };
@@ -836,6 +879,7 @@ async function restoreForResume(){
   });
   if (!payload || !payload.bufs || !payload.bufs.length) {
     status.textContent = "Python is running. Load the photos again in panel 1 to continue the held run.";
+    armApprove(null);
     return;
   }
   photos = payload.names.map((name, i) => ({ name, buf: payload.bufs[i] }));
@@ -849,21 +893,29 @@ async function restoreForResume(){
   $("p1note").textContent = payload.note + " Restored from this browser after the reload — same files, same measurements.";
   renderP1();
   for (const id of ["btn-run", "btn-pause", "btn-copy", "btn-parse", "btn-reset"]) $(id).disabled = false;
-  $("btn-approve").disabled = false;
   status.textContent = "Ready. The held run is waiting on panel 3.";
-  $("pausenote").innerHTML = `<strong>Press “Approve and continue”.</strong> Nothing else needs doing — ` +
-    `the photos and their measurements came back with the page.`;
+  armApprove(null);
 }
 
-function stashPhotos(note){
+async function stashPhotos(note){
+  stashOk = false;
   const bytes = photos.reduce((a, p) => a + p.buf.byteLength, 0);
-  if (!p1 || bytes > STASH_CAP) return;
-  p1.postMessage({ type: "stash", payload: {
-    note, bytes,
-    names: photos.map(p => p.name),
-    bufs:  photos.map(p => p.buf.slice(0)),
-    rows:  rows.map(r => r && ({ ...r, thumb: r.thumb ? r.thumb.slice(0) : null })),
-  }});
+  if (!p1) return;
+  if (bytes > STASH_CAP) { stashNote(`${(bytes/1048576).toFixed(0)} MB is more than this page will keep`); return; }
+  const res = await new Promise(r => {
+    laneMsg.P = m => { if (m.type === "stashed") r(m); };
+    p1.postMessage({ type: "stash", payload: {
+      note, bytes,
+      names: photos.map(p => p.name),
+      bufs:  photos.map(p => p.buf.slice(0)),
+      rows:  rows.map(r => r && ({ ...r, thumb: r.thumb ? r.thumb.slice(0) : null })),
+    }});
+  });
+  stashOk = !!res.ok;
+  if (!res.ok) stashNote(res.err || "this browser refused to store them");
+}
+function stashNote(why){
+  $("p1note").textContent += ` (Kept only for this visit — ${why}, so a reload will ask you to re-add them.)`;
 }
 
 /* Panel 2 before the reader touches anything, after a reload that found a held run.
@@ -919,8 +971,11 @@ async function resumeFromDisk(){
 $("cb-unser").onchange = e => {
   poison = e.target.checked;
   $("unserout").textContent = poison
-    ? "Armed. Run the lanes again (panel 2) and lane B will try to checkpoint a state object with a function in it."
+    ? "Armed. Run the lanes again (section 2) and lane B will try to checkpoint a state object with a function in it. It will fail, on purpose, and section 2 will say so."
     : "Untick: the checkpoint saves. Tick: it does not.";
+  $("runnote").innerHTML = poison
+    ? '<strong style="color:var(--warn)">Section 4 is armed:</strong> lane B is expected to fail to checkpoint on the next run.'
+    : "";
 };
 
 /* On load, say whether a checkpoint from a previous visit survived. This is the
@@ -947,7 +1002,7 @@ $("cb-unser").onchange = e => {
         pendingResume = { i: v.i, spent: v.spent || 0, n: v.n || 0,
                           jobId: Number(String(key).split(":")[1]) || 1 };
         paintSurvivor(pendingResume);
-        restoreForResume();
+        restoreForResume().catch(err => armApprove("restore failed — " + (err && err.message || err)));
         $("resumenote").innerHTML =
           `<strong>A run from before the reload is still waiting at photo ${v.i + 1}.</strong> ` +
           `Lane A's copy went with the document. Lane B's is still here, because it was never in a ` +
@@ -982,6 +1037,7 @@ $("sorter").innerHTML = FLOWS.map((f, i) =>
   `<div class="q"><span class="txt">${f[0]}</span>
     <button data-i="${i}" data-a="code">my code decides</button>
     <button data-i="${i}" data-a="model">the model decides</button>
+    <span class="note" style="flex:none">← pick one</span>
     <span class="note" id="why${i}" style="flex-basis:100%;margin:0"></span></div>`).join("");
 $("sorter").onclick = e => {
   const b = e.target.closest("button[data-i]"); if (!b) return;
@@ -989,12 +1045,13 @@ $("sorter").onclick = e => {
   if ($("why" + i).textContent) return;
   const right = b.dataset.a === f[1];
   b.className = right ? "right" : "wrong";
+  const hint = b.parentElement.querySelector("span.note:not([id])"); if (hint) hint.remove();
   $("why" + i).innerHTML = (right ? "✓ " : "✗ ") + f[2] +
     (f[1] === "code" ? " <strong>→ 1.200</strong>" : ' <strong>→ <a href="/survey/1-201/">1.201</a></strong>');
   sorted++; correct += right ? 1 : 0;
   $("sorterscore").textContent = sorted < FLOWS.length
-    ? `${correct} of ${sorted}.`
-    : `${correct} of ${FLOWS.length}. The test costs one sentence and it decides which survey answers your question — ` +
+    ? `${correct} right out of ${sorted} answered · ${FLOWS.length - sorted} to go.`
+    : `Finished: ${correct} right out of ${FLOWS.length}. The test costs one sentence and it decides which survey answers your question — ` +
       `which is why the survey leads with it rather than burying it in a scope note.`;
 };
 
