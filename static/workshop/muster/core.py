@@ -6,11 +6,11 @@ it, the native bench imports it. Nothing here is pasted into index.html.
 The subject is a photo-ingestion pipeline: read a folder of photos, pull the GPS and the
 capture time out of the EXIF, make thumbnails, shrink a copy for a vision model, and get
 back a tag and a caption for each one — then plot the lot on a map. Three of its four
-steps are working code from a real implementation of that pipeline, vendored here with
-its docstrings intact, because the point of this page is that the work is real. The
-fourth step — the vision model call — is the one that costs money, and it is the only
-thing standing in: this file projects its price from published rates and never makes a
-network call.
+three of those run locally and are working code from a real implementation, vendored here
+with their docstrings intact, because the point of this page is that the work is real. The
+fourth — the vision call itself — is the one that costs money, and it is the only thing
+standing in: this file projects its price from published rates and never makes a network
+call.
 
 Provenance, all read on 2026-08-21:
   * extract_gps / extract_datetime / encode_for_vision / make_thumbnail
@@ -49,7 +49,7 @@ except Exception:  # pragma: no cover - absent in a plain CPython bench
     HEIF = False
 
 
-# ── steps 1-3: the pipeline's code, running for real on the reader's own files ──
+# ── the three local jobs: the pipeline's code, on the reader's own files ────────
 
 def _as_bytes(data):
     """Coerce whatever the caller had into real bytes.
@@ -157,7 +157,7 @@ def make_thumbnail(data: bytes, *, size=(400, 400)):
     return buf.getvalue()
 
 
-# ── step 4: what it would cost. No network, ever. ───────────────────────────────
+# ── the vision call: what it would cost. No network, ever. ─────────────────────
 
 def count_image_tokens(width: int, height: int) -> int:
     """Visual tokens consumed by an image: one token per 28x28 pixel patch."""
@@ -218,7 +218,7 @@ PROMPT_TOKENS = 210   # the classification rubric this page builds, counted as t
 
 
 def vision_cost(width: int, height: int, model: str):
-    """What one photo of these dimensions costs at step 4 — projected, never called.
+    """What the vision call costs for a photo of these dimensions — projected, never made.
 
     Returns the tier's resize, the visual-token count, and the dollar figure. The
     dimensions are measured from the reader's file; everything else is published.
@@ -235,10 +235,10 @@ def vision_cost(width: int, height: int, model: str):
     }
 
 
-# ── the whole of steps 1-3 for one photo, measured ──────────────────────────────
+# ── all three local jobs for one photo, measured ────────────────────────────────
 
 def process_photo(name: str, data: bytes) -> str:
-    """Run pipeline steps 1-3 on one photo and price step 4 both ways.
+    """Run the three local jobs on one photo and price the vision call both ways.
 
     Every field here except the prices is measured from the bytes handed in.
     """
@@ -267,7 +267,7 @@ def process_photo(name: str, data: bytes) -> str:
         "gps": list(gps) if gps else None,
         "taken": extract_datetime(data),
         "ms": {"gps": (t1 - t0) * 1e3, "thumb": (t2 - t1) * 1e3, "encode": (t3 - t2) * 1e3},
-        # step 4, priced both ways: as shot, and after step 3 did its job
+        # the vision call, priced both ways: as shot, and after encoding did its job
         "cost": {
             m: {"raw": vision_cost(w, h, m), "encoded": vision_cost(*enc_size, m)}
             for m in PRICING
@@ -278,8 +278,8 @@ def process_photo(name: str, data: bytes) -> str:
 def build_feature_collection(records) -> str:
     """The pipeline's final step: GeoJSON, WGS84 by RFC 7946, no reprojection anywhere.
 
-    `records` is a list of dicts carrying at least name/gps, plus whatever step 4
-    returned for that photo (absent until the reader brings an analysis back).
+    `records` is a list of dicts carrying at least name/gps, plus whatever the vision
+    call returned for that photo (absent until the reader brings an analysis back).
     """
     feats = []
     for r in records:
