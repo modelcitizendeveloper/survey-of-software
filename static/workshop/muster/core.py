@@ -3,24 +3,27 @@
 One copy, three readers: the page fetches it into Pyodide, the marimo notebook imports
 it, the native bench imports it. Nothing here is pasted into index.html.
 
-Three of the four pipeline steps are the Neighborhood Starter Kit's OWN code, vendored
-verbatim below with its docstrings intact, because the point of this page is that the
-work is real. The fourth step — the vision model call — is the one that costs money, and
-it is the only thing standing in: this file projects its price from published rates and
-never makes a network call.
+The subject is a photo-ingestion pipeline: read a folder of photos, pull the GPS and the
+capture time out of the EXIF, make thumbnails, shrink a copy for a vision model, and get
+back a tag and a caption for each one — then plot the lot on a map. Three of its four
+steps are working code from a real implementation of that pipeline, vendored here with
+its docstrings intact, because the point of this page is that the work is real. The
+fourth step — the vision model call — is the one that costs money, and it is the only
+thing standing in: this file projects its price from published rates and never makes a
+network call.
 
 Provenance, all read on 2026-08-21:
   * extract_gps / extract_datetime / encode_for_vision / make_thumbnail
-    — neighborhood-starter-kit, src/nkit/capture/images.py @ 16515e3. Adapted only in
-      how bytes arrive (Pyodide has no camera roll): the Path argument became bytes.
-      The EXIF walk, the DMS->decimal conversion and the 1568 px default are unchanged.
+    — the pipeline's own image layer. Adapted only in how bytes arrive (Pyodide has no
+      camera roll): the Path argument became bytes. The EXIF walk, the DMS->decimal
+      conversion and the 1568 px default are unchanged.
   * count_image_tokens / resized_size
     — Anthropic's own reference implementation, docs.claude.com "Coordinates and
       bounding boxes" -> How Claude resizes and pads images. Copied, not reimplemented:
       the docs warn that scaling to the edge length by hand gets it wrong.
   * PRICING
-    — neighborhood-starter-kit, docs/lifecycle/04-cost-metering.md, "Price table (per
-      the 3.200 refresh, 2026-06)". Prices move; this file says so wherever it prints one.
+    — the pipeline's published cost table, and the vendors' own rates.
+      Prices move; this file says so wherever it prints one.
 """
 from __future__ import annotations
 
@@ -34,9 +37,9 @@ from PIL.ExifTags import IFD
 
 __version__ = "2026-08-21"
 
-# HEIC is what a phone actually hands you. NSK lists .heic in IMAGE_EXTS but ships no
-# plugin, so on the kit itself an iPhone photo returns None; Pyodide has the wheel, so
-# the page registers it when present and says which happened.
+# HEIC is what a phone actually hands you. The upstream pipeline accepts a .heic
+# extension but ships no HEIF plugin, so there an iPhone photo reads as None; Pyodide
+# has the wheel, so the page registers it when present and says which happened.
 try:
     import pillow_heif
 
@@ -46,7 +49,7 @@ except Exception:  # pragma: no cover - absent in a plain CPython bench
     HEIF = False
 
 
-# ── steps 1-3: NSK's code, running for real on the reader's own files ────────────
+# ── steps 1-3: the pipeline's code, running for real on the reader's own files ──
 
 def _as_bytes(data):
     """Coerce whatever the caller had into real bytes.
@@ -128,9 +131,9 @@ def extract_datetime(data: bytes):
 def encode_for_vision(data: bytes, *, max_edge: int = 1568):
     """Return JPEG bytes (+ size) downscaled so the long edge is <= max_edge.
 
-    NSK's docstring: "Claude downsizes large images server-side anyway; doing it here
-    keeps token cost predictable and normalizes orientation/format." Panel 1 measures
-    whether that is true, and on which models.
+    The original docstring: "Claude downsizes large images server-side anyway; doing it
+    here keeps token cost predictable and normalizes orientation/format." Panel 1
+    measures whether that is true, and on which models.
     """
     with Image.open(io.BytesIO(_as_bytes(data))) as im:
         im = ImageOps.exif_transpose(im)  # honor camera orientation
@@ -144,7 +147,7 @@ def encode_for_vision(data: bytes, *, max_edge: int = 1568):
 
 
 def make_thumbnail(data: bytes, *, size=(400, 400)):
-    """Return JPEG thumbnail bytes. NSK writes these to disk; the page shows them."""
+    """Return JPEG thumbnail bytes. Upstream these go to disk; the page shows them."""
     with Image.open(io.BytesIO(_as_bytes(data))) as im:
         im = ImageOps.exif_transpose(im)
         im = im.convert("RGB")
@@ -198,9 +201,9 @@ TIERS = {
     "standard": {"max_edge": 1568, "max_tokens": 1568, "label": "standard (every other model)"},
 }
 
-# NSK's own table, 04-cost-metering.md. (input $/Mtok, output $/Mtok, tier).
-# Gemini rates are Google's and are carried across from NSK unverified here; the
-# Anthropic rows were re-checked against the published price list on 2026-08-21.
+# The pipeline's own cost table. (input $/Mtok, output $/Mtok, tier).
+# The Gemini rates are Google's and are carried across unverified here; the Anthropic
+# rows were re-checked against the published price list on 2026-08-21.
 PRICING = {
     "claude-opus-4-8":   (5.00, 25.00, "high"),
     "claude-sonnet-4-6": (3.00, 15.00, "standard"),
@@ -208,9 +211,9 @@ PRICING = {
     "gemini-3-flash":      (0.50, 3.00, "standard"),
     "gemini-3.1-flash-lite": (0.25, 1.50, "standard"),
 }
-PRICE_NOTE = ("estimate at published rates (NSK 3.200 refresh 2026-06; Anthropic rows "
-              "re-checked 2026-08-21); verify before invoicing.")
-OUTPUT_TOKENS = 120   # NSK's own per-photo assumption for a PhotoAnalysis object
+PRICE_NOTE = ("estimate at published rates (Anthropic rows re-checked 2026-08-21); "
+              "verify before invoicing.")
+OUTPUT_TOKENS = 120   # the pipeline's own per-photo assumption for one analysis object
 PROMPT_TOKENS = 210   # the classification rubric this page builds, counted as text
 
 
@@ -235,7 +238,7 @@ def vision_cost(width: int, height: int, model: str):
 # ── the whole of steps 1-3 for one photo, measured ──────────────────────────────
 
 def process_photo(name: str, data: bytes) -> str:
-    """Run NSK's pipeline steps 1-3 on one photo and price step 4 both ways.
+    """Run pipeline steps 1-3 on one photo and price step 4 both ways.
 
     Every field here except the prices is measured from the bytes handed in.
     """
@@ -273,7 +276,7 @@ def process_photo(name: str, data: bytes) -> str:
 
 
 def build_feature_collection(records) -> str:
-    """NSK's final step: GeoJSON, WGS84 by RFC 7946, no reprojection anywhere.
+    """The pipeline's final step: GeoJSON, WGS84 by RFC 7946, no reprojection anywhere.
 
     `records` is a list of dicts carrying at least name/gps, plus whatever step 4
     returned for that photo (absent until the reader brings an analysis back).
@@ -298,10 +301,10 @@ def build_feature_collection(records) -> str:
 # says so in words rather than raising. Tolerant at exactly one seam: if this ever
 # starts drowning in malformed pastes, swap this function and nothing else changes.
 
-ENVELOPE_KEY = "nsk_photo_analysis"
+ENVELOPE_KEY = "photo_analysis"
 ENVELOPE_VERSION = 1
 
-# PhotoAnalysis, src/nkit/model/analysis.py — the enums the paste is checked against.
+# PhotoAnalysis — the enums the paste is checked against, from the pipeline's contract.
 KINDS = ["concern", "asset"]
 SEVERITIES = ["low", "medium", "high", "unknown"]
 DISPOSITIONS = ["map", "review", "decline"]
@@ -337,7 +340,7 @@ def _candidates(text: str):
 
 
 def parse_envelope(text: str) -> str:
-    """Validate a pasted analysis against NSK's PhotoAnalysis contract.
+    """Validate a pasted analysis against the pipeline's PhotoAnalysis contract.
 
     Returns {ok, rows, errors}. No LLM call happens here, which is the property
     that makes the paste-back lane cheap enough to be the default.
@@ -389,7 +392,7 @@ def versions() -> str:
 def sample_photos(n: int = 12, seed: int = 7):
     """Generate n JPEGs carrying real EXIF — GPS IFD and a capture time.
 
-    Not photographs of anything: coloured noise at phone-camera dimensions. They
+    Not photographs of anything: colored noise at phone-camera dimensions. They
     exist so the pipeline has genuine bytes and a genuine EXIF walk to do when the
     reader has not dropped a folder in. Everything measured from them is measured;
     it is only the subject matter that is synthetic, and the page says so.
@@ -400,7 +403,7 @@ def sample_photos(n: int = 12, seed: int = 7):
 
     rnd = random.Random(seed)
     out = []
-    # a few blocks around one neighbourhood, so the GeoJSON plots as a walk
+    # a few blocks of one street grid, so the GeoJSON plots as a walk
     lat0, lon0 = 45.5202, -122.6742
     for i in range(n):
         w, h = (4032, 3024) if i % 3 else (3024, 4032)   # some portrait, as a phone does

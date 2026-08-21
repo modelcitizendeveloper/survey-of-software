@@ -6,7 +6,7 @@
   {
    "name": "muster",
    "url": "https://research.modelcitizendeveloper.com/workshop/muster/",
-   "finding": "Kill a running job with a button labelled Deploy and watch one lane pay for the same work twice. Runs the Neighborhood Starter Kit's real photo pipeline on your own photos \u2014 and prices the vision call it never makes, where shrinking the image first saves 43% on one model tier and nothing at all on the other.",
+   "finding": "Kill a running job with a button labeled Deploy and watch one lane pay for the same work twice. Runs a real photo-ingestion pipeline on your own photos \u2014 EXIF, thumbnail, downscale, then a tag and a caption per shot \u2014 and prices the vision call it never makes, where shrinking the image first saves 43% on one model tier and nothing at all on the other.",
    "survey_code": "1.200",
    "survey_title": "LLM Orchestration Frameworks",
    "survey_url": "https://research.modelcitizendeveloper.com/survey/1-200/",
