@@ -181,8 +181,9 @@ supposed to destroy. On restart each lane reports only what it can actually reco
 <h2>3. The human pause</h2>
 <p class="plain">Now put an approval step in the middle: at photo 7, both lanes stop and wait for a
 person. Lane A has to hold a live process open for however long that takes. Lane B wrote a
-checkpoint and stopped existing. <strong>Reload the page while they are waiting</strong> — Ctrl-R, or Cmd-R on a Mac.
-That single keystroke settles the argument better than any paragraph.</p>
+checkpoint and stopped existing. <strong>Reload the page while they are waiting</strong> — Ctrl-R, or
+Cmd-R on a Mac. The page comes back in about two seconds with your photos still there and one lane
+still holding its place; that single keystroke settles the argument better than any paragraph.</p>
 <p class="eng">Approval is the same mechanism as the crash: Lane A's pending state lives only in the
 worker, so a reload takes it — the workers are torn down with the document; Lane B's pending
 state is a row in IndexedDB keyed by job id, which survives a reload, a browser restart and a
@@ -416,7 +417,7 @@ async function handle(m) {
   else if (m.type === "run") {
     cancelled = false;
     const key = "job:" + m.jobId;
-    let state = { i: 0, spent: 0, done: [] };
+    let state = { i: 0, spent: 0, done: [], n: m.photos.length };
     let recovered = 0;
     if (m.resumeState) {                    // continuing after an approval
       state = m.resumeState;
@@ -437,6 +438,7 @@ async function handle(m) {
       const p = m.photos[i];
       core.process_photo(p.name, new Uint8Array(p.buf));   // the three local jobs, for real
       state.i = i + 1;
+      state.n = m.photos.length;
       state.spent += m.usdPerPhoto;
       state.done.push(p.name);
       if (m.durable) {
@@ -454,6 +456,8 @@ async function handle(m) {
     if (job.durable) await put(key, state);
     await handle({ ...job, type: "run", resumeState: state });
   }
+  else if (m.type === "stash") { await put("photos", m.payload); postMessage({ type: "stashed" }); }
+  else if (m.type === "unstash") { postMessage({ type: "unstashed", payload: await get("photos") }); }
   else if (m.type === "clear") { const db = await idb();
     const tx = db.transaction(STORE, "readwrite"); tx.objectStore(STORE).clear();
     postMessage({ type: "cleared" }); }
@@ -504,7 +508,10 @@ const ask = (w, msg, until) => new Promise(res => {
 let p1 = null, ready = false;
 const laneMsg = {};
 
-$("btn-start").onclick = async () => {
+$("btn-start").onclick = () => startPython();
+
+async function startPython(){
+  if (ready) return;
   $("btn-start").disabled = true;
   status.textContent = "Downloading CPython 3.14 (WebAssembly)… first time only, then cached.";
   p1 = spawn("P", d => {
@@ -516,7 +523,7 @@ $("btn-start").onclick = async () => {
   status.innerHTML = "Python is running in this tab. <span class='eng'>Pillow " +
     (window.VERS.pillow || "?") + (window.VERS.pillow_heif ? ", pillow-heif registered (HEIC works)" : "") + ".</span>";
   for (const id of ["btn-sample", "btn-pick"]) $(id).disabled = false;
-};
+}
 
 $("btn-sample").onclick = async () => {
   status.textContent = "Generating 12 sample photos with real EXIF…";
@@ -561,6 +568,7 @@ async function processAll(note){
   });
   $("p1note").textContent = note;
   renderP1();
+  if (!pendingResume) stashPhotos(note);
   status.textContent = "Done. Panel 2 is ready.";
   for (const id of ["btn-run", "btn-pause", "btn-copy", "btn-parse", "btn-reset"]) $(id).disabled = false;
   if (pendingResume) {                       // a held run is waiting; it can be approved now
@@ -791,8 +799,10 @@ $("btn-reset").onclick = async () => {
                                $("track"+L).innerHTML=""; $("money"+L).textContent="$0.00";
                                $("msg"+L).textContent="idle"; $("lane"+L).classList.remove("dead");
                                $("re"+L).textContent="re-spent"; }
+  if (p1) p1.postMessage({ type: "clear" });     // the worker owns the connection
   indexedDB.deleteDatabase("muster");
-  $("runnote").textContent = "Cleared, including lane B's checkpoints.";
+  pendingResume = null;
+  $("runnote").textContent = "Cleared — lane B's checkpoints and the stashed photos with them.";
   $("btn-deploy").disabled = true; $("btn-approve").disabled = true;
   $("pausenote").textContent = ""; $("resumenote").textContent = "";
 };
@@ -805,6 +815,80 @@ $("btn-approve").onclick = async () => {
   if (live) { for (const L of ["A","B"]) if (lanes[L]) lanes[L].postMessage({ type: "approve" }); return; }
   await resumeFromDisk();          // the hold outlived the tab
 };
+
+/* Keeping the photos across a reload. Measured 2026-08-21: a reload cost 10.5 s and two
+   clicks, of which Pyodide was 2 s and the other 8.5 s was rebuilding photos the browser
+   had already had. Ten seconds is too much to charge for a demonstration, so the bytes and
+   their measurements ride in IndexedDB next to the checkpoint they belong to. Capped: past
+   the limit the page falls back to asking, rather than filling someone's disk quietly. */
+const STASH_CAP = 48 * 1024 * 1024;
+
+/* One Ctrl-R, one Approve. Boot Python (about two seconds from cache, and the lanes need
+   it anyway) and put back the photos and their measurements rather than making the reader
+   rebuild them. Nothing is re-measured: these are the same numbers from the same files,
+   taken on this machine minutes ago. */
+async function restoreForResume(){
+  status.textContent = "Picking up where you left off — restarting Python…";
+  await startPython();
+  const payload = await new Promise(res => {
+    laneMsg.P = m => { if (m.type === "unstashed") res(m.payload); };
+    p1.postMessage({ type: "unstash" });
+  });
+  if (!payload || !payload.bufs || !payload.bufs.length) {
+    status.textContent = "Python is running. Load the photos again in panel 1 to continue the held run.";
+    return;
+  }
+  photos = payload.names.map((name, i) => ({ name, buf: payload.bufs[i] }));
+  rows = payload.rows || [];
+  $("p1out").style.display = ""; $("thumbs").innerHTML = "";
+  for (const r of rows) if (r && r.ok && r.thumb) {
+    const img = document.createElement("img");
+    img.src = URL.createObjectURL(new Blob([r.thumb], { type: "image/jpeg" }));
+    img.alt = r.name; img.title = r.name; $("thumbs").appendChild(img);
+  }
+  $("p1note").textContent = payload.note + " Restored from this browser after the reload — same files, same measurements.";
+  renderP1();
+  for (const id of ["btn-run", "btn-pause", "btn-copy", "btn-parse", "btn-reset"]) $(id).disabled = false;
+  $("btn-approve").disabled = false;
+  status.textContent = "Ready. The held run is waiting on panel 3.";
+  $("pausenote").innerHTML = `<strong>Press “Approve and continue”.</strong> Nothing else needs doing — ` +
+    `the photos and their measurements came back with the page.`;
+}
+
+function stashPhotos(note){
+  const bytes = photos.reduce((a, p) => a + p.buf.byteLength, 0);
+  if (!p1 || bytes > STASH_CAP) return;
+  p1.postMessage({ type: "stash", payload: {
+    note, bytes,
+    names: photos.map(p => p.name),
+    bufs:  photos.map(p => p.buf.slice(0)),
+    rows:  rows.map(r => r && ({ ...r, thumb: r.thumb ? r.thumb.slice(0) : null })),
+  }});
+}
+
+/* Panel 2 before the reader touches anything, after a reload that found a held run.
+   Lane B shows what is on disk; lane A shows the nothing it has. Leaving both lanes
+   blank at $0.00 reads as "the reload lost everything", which is exactly backwards. */
+function paintSurvivor(r){
+  if (!r.n) return;
+  /* BOTH lanes really spent this money before the reload — they ran the same photos.
+     Showing lane A at $0.00 would say it spent nothing, which is the same mistake the
+     first version of the kill panel made. What differs is not the spend, it is what
+     either lane has left to show for it: lane B's track, and lane A's empty one. */
+  for (const L of ["A", "B"]) {
+    cells($("track" + L), r.n);
+    $("money" + L).textContent = usd(r.spent);
+    $("money" + L).classList.remove("waste");
+  }
+  for (let i = 0; i < r.i; i++) mark("B", i, "done");
+  mark("B", r.i, "hold");
+  $("reB").textContent = "all of it still counts";
+  $("reA").innerHTML = `<strong style="color:var(--bad)">all of it, again</strong>`;
+  $("msgB").innerHTML = `<strong>recovered from disk</strong> — ${r.i} photos done, held at photo ${r.i + 1}`;
+  $("msgA").innerHTML = `<strong>nothing recovered</strong> — the same ${usd(r.spent)} went out, and its ` +
+                        `state went with the process. Continue and it is spent a second time.`;
+  $("laneA").classList.add("dead");
+}
 
 /* The payoff of panel 3. Nothing of lane A survived the tab closing, so it starts at
    photo 1 and everything before the hold is money paid twice. Lane B's checkpoint is
@@ -819,6 +903,7 @@ async function resumeFromDisk(){
                      holding: false, done: false, from: 0 };
     cells($("track" + L), photos.length);
     $("lane" + L).classList.remove("dead");
+    $("re" + L).textContent = "nothing paid for twice";
     show(L, pendingResume.spent, 0);
     const copies = photos.map(p => ({ name: p.name, buf: p.buf.slice(0) }));
     lanes[L].postMessage({ type: "run", jobId, photos: copies, durable: L === "B",
@@ -859,12 +944,16 @@ $("cb-unser").onchange = e => {
       const any  = rows.filter(r => r.v && r.v.i > 0);
       if (held.length) {
         const { v, key } = held[0];
-        pendingResume = { i: v.i, spent: v.spent || 0, jobId: Number(String(key).split(":")[1]) || 1 };
+        pendingResume = { i: v.i, spent: v.spent || 0, n: v.n || 0,
+                          jobId: Number(String(key).split(":")[1]) || 1 };
+        paintSurvivor(pendingResume);
+        restoreForResume();
         $("resumenote").innerHTML =
           `<strong>A run from before the reload is still waiting at photo ${v.i + 1}.</strong> ` +
           `Lane A's copy went with the document. Lane B's is still here, because it was never in a ` +
-          `process to begin with. <strong>Load the photos again in panel 1, then press “Approve and ` +
-          `continue”</strong> — lane B carries on from photo ${v.i + 1}, and lane A starts over.`;
+          `process to begin with. The page is putting your photos back now; when it has, press ` +
+          `<strong>“Approve and continue”</strong> and lane B carries on from photo ${v.i + 1} ` +
+          `while lane A starts over.`;
         if (photos.length) { $("btn-approve").disabled = false; }
       } else if (any.length) $("resumenote").innerHTML =
         `A checkpoint from before the reload survived in this browser: ${any[0].v.i} photos done. ` +
