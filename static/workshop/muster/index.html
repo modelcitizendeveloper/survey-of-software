@@ -1,0 +1,892 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>muster — a floor model for Survey of Software 1.200</title>
+<meta name="description" content="Run a real four-step photo pipeline on your own photos, then kill it mid-run. What resumes and what re-spends the money is the whole LLM-orchestration decision — plus the downscale-before-vision saving, measured on your files.">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://research.modelcitizendeveloper.com/workshop/muster/">
+<link rel="stylesheet" href="/workshop/_lib/workshop.css?v=20260821">
+<style>
+  .lanes{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+  @media (max-width:640px){.lanes{grid-template-columns:1fr}}
+  .lane{background:var(--ground);border:1px solid var(--line);border-radius:6px;padding:12px 14px}
+  .lane h3{margin:0 0 2px;font-size:.95rem}
+  .lane .sub{font-size:.8rem;color:var(--faint);margin:0 0 10px}
+  .lane.dead{border-color:#9f1239}
+  .money{font-size:1.5rem;font-weight:700;color:var(--bright);font-variant-numeric:tabular-nums;line-height:1.1}
+  .money.waste{color:var(--bad)}
+  .track{display:flex;gap:2px;flex-wrap:wrap;margin:10px 0 6px}
+  .cell{width:14px;height:14px;border-radius:2px;background:var(--field);border:1px solid var(--line)}
+  .cell.done{background:var(--good);border-color:var(--good)}
+  .cell.redone{background:var(--bad);border-color:var(--bad)}
+  .cell.now{background:var(--accent);border-color:var(--accent)}
+  .cell.hold{background:var(--warn);border-color:var(--warn)}
+  .big{font-size:1.6rem;font-weight:700;color:var(--bright);line-height:1.2}
+  .four{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  @media (max-width:700px){.four{grid-template-columns:1fr 1fr}}
+  .deploy{background:var(--bad);color:#fff;border-color:var(--bad);font-size:1rem;padding:10px 22px}
+  .thumbs{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 0}
+  .thumbs img{width:78px;height:78px;object-fit:cover;border-radius:4px;border:1px solid var(--line)}
+  .sorter div.q{display:flex;gap:8px;align-items:center;flex-wrap:wrap;padding:8px 0;border-bottom:1px solid var(--line)}
+  .sorter .txt{flex:1 1 260px;font-size:.9rem}
+  .sorter button{font-size:.78rem;padding:5px 10px;font-weight:600;background:var(--field);color:var(--text);border-color:var(--line)}
+  .sorter button.right{background:#052e16;color:var(--good);border-color:#166534}
+  .sorter button.wrong{background:#4c0519;color:var(--bad);border-color:#9f1239}
+  .tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.06em;font-weight:700;padding:2px 7px;border-radius:3px;background:var(--field);color:var(--dim)}
+  .tag.real{background:#052e16;color:var(--good)}
+  .tag.proj{background:#3b2a14;color:var(--warn)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker"><a href="/workshop/">Workshop</a> · floor model for <a href="/survey/1-200/">Survey of Software 1.200</a></p>
+<h1>muster</h1>
+<p class="dek">Orchestration is solved. Knowing whether you need it is not. This page runs a real
+four-step photo pipeline — EXIF, thumbnail, downscale, then a priced vision call — on photos from
+your own machine, and lets you kill it half way through. What happens next is the whole decision,
+and it takes about fifteen seconds to find out.</p>
+<p class="note" style="margin:0 0 20px">Steps 1–3 are the Neighborhood Starter Kit's own Python,
+running here in this tab. Step 4 is the one that costs money, so it is priced and never called.
+Nothing is uploaded and no key is asked for.</p>
+
+<div class="modes" role="group" aria-label="Reading mode">
+  <button id="m-plain" aria-pressed="true">Plain</button>
+  <button id="m-eng" aria-pressed="false">Engineering</button>
+</div>
+<p class="note" id="mode-hint">Plain language. Switch to Engineering for versions, token counts and the measurement behind each claim.</p>
+
+<!-- ── The whole answer, first ─────────────────────────────────────── -->
+<h2>The whole answer, first</h2>
+<p class="plain">Four numbers. The first two are the decision this survey is about; the second two
+are what the pipeline itself teaches once it is running on your files.</p>
+<p class="eng">CPython 3.14 under Pyodide, Pillow 12.2. Panels 2–4 measure worker lifetime and
+IndexedDB durability in this tab; panel 1 measures your photos' dimensions and bytes and prices
+step 4 from published rates. Everything orange came from research rather than from your machine.</p>
+<div class="panel">
+  <div class="four">
+    <div><p class="kicker" style="margin:0 0 4px">lost to one deploy</p><p class="big" id="tile-lost">$4.73</p><p class="note" style="margin:0">what an in-memory run re-spends when the process dies at photo 190 of 300. The checkpointed lane re-spends <strong>one photo</strong>. Press <strong>Deploy</strong> in panel 2 and watch the counter move.</p></div>
+    <div><p class="kicker" style="margin:0 0 4px">to retrofit it</p><p class="big">rewrite</p><p class="note" style="margin:0">resumption is not a feature you bolt on. It is a property of holding run state somewhere other than your call stack, so deciding it late means deciding it twice. Every other difference in this category you can swap in a fortnight.</p></div>
+    <div><p class="kicker" style="margin:0 0 4px">downscale saves</p><p class="big" id="tile-save">43%</p><p class="note" style="margin:0">on a <strong>high-resolution-tier</strong> model — and <strong>nothing at all</strong> on a standard-tier one, where the server downscales anyway. Same code, same photo. Panel 1 runs it on yours.</p></div>
+    <div><p class="kicker" style="margin:0 0 4px">frameworks benchmarked</p><p class="big">0</p><p class="note" style="margin:0">this page does not race LangGraph against Haystack and could not do so in a browser without faking it. It demonstrates the <em>property</em> they differ on, which is the part that decides.</p></div>
+  </div>
+  <p class="note" style="margin:12px 0 0"><strong>Ask what happens when the process dies.</strong> If the
+  answer is "we retry the whole job and that's fine", most of this category is solving a problem you do not
+  have — a provider SDK and a validation library will serve. If a lost run costs money or trust, the field
+  narrows to two options and the rest of the comparison stops mattering. The
+  <a href="/survey/1-200/">survey</a> works the full decision; this page makes you feel the half of it that
+  people skip.</p>
+</div>
+<p id="status" class="note">Press start below to download CPython 3.14 (WebAssembly). First time only, then cached.</p>
+
+<!-- ── Panel 1: the pipeline, on your photos ───────────────────────── -->
+<h2>1. Your photos, through the pipeline</h2>
+<p class="plain">Drop in some photos — from your phone, from a folder, anything. Three of the four
+steps run here for real: read the GPS out of the EXIF, make a thumbnail, and shrink the copy that
+would be sent to a vision model. The fourth step is the model call, and it is the only one that
+costs anything, so the page prices it instead of making it.</p>
+<p class="eng">The three local steps are <code>extract_gps</code>, <code>make_thumbnail</code> and
+<code>encode_for_vision</code> from <code>src/nkit/capture/images.py</code>, vendored into
+<a href="core.py"><code>core.py</code></a> with their docstrings, changed only in that bytes arrive
+instead of a <code>Path</code>. Step 4 is priced with Anthropic's published resize rule —
+<code>⌈w/28⌉ × ⌈h/28⌉</code> visual tokens, capped per tier — and the Neighborhood Starter Kit's
+own price table.</p>
+
+<div class="panel">
+  <button id="btn-start">Start — load Python</button>
+  <button id="btn-sample" disabled>Use 12 sample photos</button>
+  <div class="drop" id="drop">…or drop your own photos here (they never leave the tab)
+    <input type="file" id="file" accept="image/*" multiple style="display:none">
+    <div style="margin-top:8px"><button id="btn-pick" disabled>Choose files</button></div>
+  </div>
+  <div id="p1out" style="display:none">
+    <div class="thumbs" id="thumbs"></div>
+    <table id="p1tab"></table>
+    <p class="note" id="p1note"></p>
+  </div>
+</div>
+
+<div class="panel research" id="p1cost" style="display:none">
+  <p class="kicker">Step 4 — projected, not measured</p>
+  <p style="margin:0 0 8px" id="p1costlede"></p>
+  <table id="p1costtab"></table>
+  <p class="note" style="margin:8px 0 0">The dimensions and byte counts above are measured from your
+  files. The token counts follow from Anthropic's published patch rule; the dollar rates are the
+  Neighborhood Starter Kit's table (3.200 refresh, 2026-06), with the Anthropic rows re-checked on
+  2026-08-21. <strong>Prices move — verify before invoicing.</strong></p>
+</div>
+
+<div class="panel" id="p1finding" style="display:none">
+  <p class="kicker">what that says about step 3</p>
+  <p style="margin:0" id="p1findingtext"></p>
+</div>
+
+<!-- ── Panel 2: the kill ───────────────────────────────────────────── -->
+<h2>2. The kill</h2>
+<p class="plain">Two lanes now run the same job over the same photos. They differ in one thing:
+where the run keeps its state. Lane A keeps it in the process. Lane B writes a checkpoint to the
+browser's database after each photo. Start them, wait a few seconds, then press <strong>Deploy</strong>.
+The button really does kill both — it is not an animation.</p>
+<p class="eng">Each lane is a <code>Worker</code> with its own Pyodide instance. <em>Deploy</em> calls
+<code>worker.terminate()</code> on both: no unwind, no <code>finally</code>, the WebAssembly heap
+goes with it. Lane B's checkpoint is an <code>IndexedDB</code> write made <em>from inside the
+worker</em> after each photo, so the main thread is not quietly holding the state that the kill is
+supposed to destroy. On restart each lane reports only what it can actually recover.</p>
+
+<div class="panel">
+  <div class="row" style="align-items:center">
+    <button id="btn-run" disabled>Run both lanes</button>
+    <button id="btn-deploy" class="deploy" disabled>Deploy 🚀</button>
+    <button id="btn-reset" disabled>Reset</button>
+    <span class="note" id="runnote" style="margin:0"></span>
+  </div>
+  <div class="lanes" style="margin-top:14px">
+    <div class="lane" id="laneA">
+      <h3>Lane A — state in the process</h3>
+      <p class="sub">a plain script, or a framework that holds the run in memory</p>
+      <div class="track" id="trackA"></div>
+      <p class="note" style="margin:0 0 2px">spent · <span id="reA">re-spent</span></p>
+      <p class="money" id="moneyA">$0.00</p>
+      <p class="note" id="msgA" style="margin:4px 0 0">idle</p>
+    </div>
+    <div class="lane" id="laneB">
+      <h3>Lane B — state outside the process</h3>
+      <p class="sub">a durable runtime: LangGraph's checkpointer, Temporal, Inngest</p>
+      <div class="track" id="trackB"></div>
+      <p class="note" style="margin:0 0 2px">spent · <span id="reB">re-spent</span></p>
+      <p class="money" id="moneyB">$0.00</p>
+      <p class="note" id="msgB" style="margin:4px 0 0">idle</p>
+    </div>
+  </div>
+  <p class="note" style="margin:12px 0 0"><strong>The counter that matters is money re-spent, not
+  time.</strong> Time you lose once and forget. A re-spend appears on an invoice, and it is the number
+  the person who signs it will ask about.</p>
+</div>
+
+<!-- ── Panel 3: the human pause ────────────────────────────────────── -->
+<h2>3. The human pause</h2>
+<p class="plain">Now put an approval step in the middle: at photo 7, both lanes stop and wait for a
+person. Lane A has to hold a live process open for however long that takes. Lane B wrote a
+checkpoint and stopped existing. <strong>Close this tab while they are waiting, then come back.</strong>
+That single interaction settles the argument better than any paragraph.</p>
+<p class="eng">Approval is the same mechanism as the crash: Lane A's pending state lives only in the
+worker, so a closed tab takes it; Lane B's pending state is a row in IndexedDB keyed by job id,
+which survives the browser being shut. This is what "human-in-the-loop" costs architecturally, and
+it is why it appears in the same sentence as durability in every framework that offers it.</p>
+<div class="panel">
+  <div class="row" style="align-items:center">
+    <button id="btn-pause" disabled>Run with an approval at photo 7</button>
+    <button id="btn-approve" disabled>Approve and continue</button>
+    <span class="note" id="pausenote" style="margin:0"></span>
+  </div>
+  <p class="note" id="resumenote" style="margin:10px 0 0"></p>
+</div>
+
+<!-- ── Panel 4: what durability costs ──────────────────────────────── -->
+<h2>4. What durability costs</h2>
+<p class="plain">The demonstrations that stop here are selling you something. Keeping state outside
+the process has a price: every value in it has to be storable, which rules out the things programmers
+reach for most naturally — an open file, a socket, a callback, a class instance with a method on it.
+Tick the box and watch Lane B fail to save.</p>
+<p class="eng">The checkpoint is a <code>structuredClone</code> into IndexedDB. Adding a function to
+the state object raises a real <code>DataCloneError</code> from the browser, not a simulated one. In
+production the equivalent is a serializer rejecting your state, a schema migration on the checkpoint
+table, and a rule that your run state is data rather than objects.</p>
+<div class="panel">
+  <label style="display:flex;gap:8px;align-items:center;margin:0">
+    <input type="checkbox" id="cb-unser" style="width:auto;accent-color:var(--accent)">
+    <span>Put something non-serialisable in the run state (an open handle, a callback)</span>
+  </label>
+  <div class="mono" id="unserout" style="margin-top:10px">Untick: the checkpoint saves. Tick: it does not.</div>
+</div>
+
+<!-- ── Panel 5: the boundary test ──────────────────────────────────── -->
+<h2>5. Who decides the next step</h2>
+<p class="plain">One question separates this survey from its neighbour, and it is the cheapest way to
+find out which one answers your question. For each flow below: does <em>your code</em> decide what
+happens next, or does <em>the model</em>?</p>
+<p class="eng">The boundary test is the survey's organising claim. Your code decides → 1.200, this
+page. The model decides → <a href="/survey/1-201/">1.201, agent frameworks</a>. Without the test the
+two surveys collide, and the previous pass of 1.200 ended by recommending a multi-agent system,
+which is 1.201's territory.</p>
+<div class="panel sorter" id="sorter"></div>
+<p class="note" id="sorterscore"></p>
+
+<!-- ── Panel 6: the handoff ────────────────────────────────────────── -->
+<h2>6. Step 4, without a key</h2>
+<p class="plain">If you want the fourth step for real, do it yourself: take the prompt below to the
+assistant you already pay for, drag in the shrunken copies the page made in panel 1, and paste the
+answer back. No key exists anywhere in this — not collected, not asked for, not accepted — and the
+photos go from your machine to your assistant without passing through anything of ours.</p>
+<p class="eng">The outbound leg is a prompt by vendor prefill URL; the return leg is a clipboard
+envelope, <code>nsk_photo_analysis</code> version 1, validated against the
+<code>PhotoAnalysis</code> contract in <code>src/nkit/model/analysis.py</code>. Parsing it involves
+no model call, which is what makes the pattern cheap enough to be the default rather than a
+fallback. Per survey <a href="/survey/2-078/">2.078</a> the clipboard envelope is the only mechanism
+that closes both legs with zero setup, and the only one with no specification at any level.</p>
+
+<div class="panel">
+  <p class="note" style="margin:0 0 6px">The prompt, built from the photos you loaded:</p>
+  <div class="mono" id="prompt" style="max-height:200px"></div>
+  <div class="row" style="margin-top:10px;align-items:center">
+    <button id="btn-copy" disabled>Copy prompt</button>
+    <a id="lnk-claude" class="note" href="#" target="_blank" rel="noopener">Open in Claude</a>
+    <a id="lnk-gpt" class="note" href="#" target="_blank" rel="noopener">Open in ChatGPT</a>
+    <span class="note" id="copymsg" style="margin:0"></span>
+  </div>
+  <label for="paste">Paste what it gives back:</label>
+  <textarea id="paste" placeholder='{"nsk_photo_analysis": {"version": 1, "photos": [ … ]}}'></textarea>
+  <button id="btn-parse" disabled>Validate and merge</button>
+  <div class="mono" id="parseout" style="margin-top:10px;display:none"></div>
+</div>
+
+<!-- ── what each option is for ─────────────────────────────────────── -->
+<h2>What each option is for</h2>
+<table>
+<tr><th>Shape</th><th>What it is for</th><th>The catch</th></tr>
+<tr><td><strong>Durable workflow graph</strong><br><span class="note">LangGraph</span></td>
+    <td>A run must survive a restart, or pause for a human.</td>
+    <td>The largest exit cost here, because it does the most.</td></tr>
+<tr><td><strong>General durable engine</strong><br><span class="note">Temporal, Inngest</span></td>
+    <td>The same property, for a business process that happens to contain model calls.</td>
+    <td>More infrastructure; keeps the AI dependency shallow, which is often the point.</td></tr>
+<tr><td><strong>Declarative pipeline</strong><br><span class="note">Haystack 3.0</span></td>
+    <td>A document pipeline you can read as a diagram, on-premise or in a VPC.</td>
+    <td>Not durable. Best migration story in the category.</td></tr>
+<tr><td><strong>Typed thin layer</strong><br><span class="note">PydanticAI</span></td>
+    <td>Ordinary code that needs validated structured output.</td>
+    <td>Does not orchestrate. That is the feature.</td></tr>
+<tr><td><strong>Build-time compiler</strong><br><span class="note">DSPy + GEPA</span></td>
+    <td>The bottleneck is answer quality, not plumbing.</td>
+    <td>Needs a metric that scores "better" automatically. Composes with any of the above, or none.</td></tr>
+<tr><td><strong>Nothing</strong><br><span class="note">provider SDK + MCP</span></td>
+    <td>A lost run costs nothing, or costs less than the framework does.</td>
+    <td>None, until the day the answer to panel 2 changes.</td></tr>
+</table>
+<p class="note">Versions, verdicts and the six personas — three of which should adopt nothing — are in
+the <a href="/survey/1-200/">survey</a>. This page deliberately names no winner: the whole finding is
+that the winner depends on an answer only you have.</p>
+
+<!-- ── zoom out ────────────────────────────────────────────────────── -->
+<h2>Why read the whole category</h2>
+<p>Nothing on this page is about artificial intelligence. A job made of steps, each one costing money,
+running on a machine that can stop between any two of them — that is payment capture, batch billing,
+video encoding, a payroll run, and the shipping label that got bought twice because someone refreshed.
+Every one of those industries worked out its answer decades ago and gave it a name: a transaction, a
+saga, a durable execution. LLM pipelines are the version where each step is expensive enough, and
+slow enough, that a beginner notices the problem in week one instead of year three.</p>
+<p>Which is the useful thing about a young category. The mistakes are still visible. In a mature one
+they have been absorbed into a framework's defaults and nobody remembers what they were for — and
+that is the case for reading a survey of a whole field rather than a comparison of the two products
+someone happened to blog about.</p>
+
+<div class="foot">
+  <p><strong>muster</strong> is a floor model for
+  <a href="/survey/1-200/">Survey of Software 1.200 — LLM Orchestration Frameworks</a>, built 2026-08-21.
+  Steps 1–3 are the <a href="https://github.com/modelcitizendeveloper/neighborhood-starter-kit">Neighborhood Starter Kit</a>'s
+  own Python, running under Pyodide (CPython 3.14 compiled to WebAssembly) in this tab; nothing is
+  uploaded and no API key is collected. Step 4 is priced, never called — figures marked orange came
+  from published rates rather than from your machine. This page benchmarks no framework.</p>
+  <p>Made by Ivan Schneider · <a href="https://modelcitizendeveloper.com/">Model Citizen Developer</a></p>
+</div>
+
+</div>
+
+<!-- The lane worker. Kept as a script tag rather than a separate file so the page
+     stays one document, and read out as text to build a Blob worker. Each lane gets
+     its own instance of this, with its own Pyodide, so terminate() is a real kill. -->
+<script type="text/js-worker" id="lane-worker">
+/* A MODULE worker, deliberately. Pyodide 314 refuses a classic worker outright
+   ("Classic web workers are not supported"), and a blob-URL classic worker cannot
+   importScripts() from the CDN at all — its origin is opaque, so the script load is
+   blocked even though the page itself fetches the same URL with CORS 200. A module
+   worker sidesteps both: `import` is a CORS fetch and the blob inherits nothing it
+   needs to. Measured in Chromium 2026-08-21; the other floor models load Pyodide on
+   the main thread and never meet this. */
+/* The import happens INSIDE the handler, not at the top. A module worker with a
+   top-level await does not receive messages posted before its evaluation settles —
+   they are dropped silently, with no error and no unhandledrejection. Registering
+   onmessage synchronously below is what makes the first init message arrive. */
+let loadPyodide = null;
+
+let py = null, core = null, lane = "A", holding = null, cancelled = false;
+const DB = "muster", STORE = "checkpoints";
+
+/* IndexedDB, from inside the worker. Lane B's state has to live somewhere the kill
+   cannot reach; if the main thread held it, terminate() would prove nothing. */
+function idb(){ return new Promise((res, rej) => {
+  const r = indexedDB.open(DB, 1);
+  r.onupgradeneeded = () => r.result.createObjectStore(STORE);
+  r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error);
+}); }
+async function put(key, val){
+  const db = await idb();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(STORE, "readwrite");
+    tx.objectStore(STORE).put(val, key);       // structuredClone happens here
+    tx.oncomplete = () => res(true); tx.onerror = () => rej(tx.error);
+  });
+}
+async function get(key){
+  const db = await idb();
+  return new Promise((res, rej) => {
+    const tx = db.transaction(STORE, "readonly");
+    const q = tx.objectStore(STORE).get(key);
+    q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error);
+  });
+}
+
+/* Every branch runs inside this guard. An exception in an async worker handler
+   raises no 'error' event and no unhandledrejection the page can see — it simply
+   stops, and the page waits for a message that will never come. Say so instead. */
+self.onmessage = (e) => handle(e.data).catch(err =>
+  postMessage({ type: "failed", stage: e.data && e.data.type,
+                err: String((err && (err.message || err)) || err).slice(0, 400) }));
+
+async function handle(m) {
+  if (m.type === "init") {
+    lane = m.lane;
+    ({ loadPyodide } = await import(m.base + "pyodide.mjs"));
+    py = await loadPyodide({ indexURL: m.base });
+    await py.loadPackage(["pillow", "pillow-heif"]);   // HEIC is what a phone hands you
+    for (const [name, url] of Object.entries(m.mods)) {
+      const src = await (await fetch(url, { cache: "no-cache" })).text();
+      py.FS.writeFile("/home/pyodide/" + name + ".py", src);
+      core = py.pyimport(name);
+    }
+    postMessage({ type: "ready", versions: JSON.parse(core.versions()) });
+  }
+  else if (m.type === "samples") {
+    /* Copy every payload out of the WebAssembly heap before it leaves this worker.
+       A Uint8Array that Pyodide hands back can be a VIEW onto the heap, so its
+       .buffer is the whole of Python's memory: transfer that and the interpreter
+       is detached mid-sentence, with no error anywhere. `new Uint8Array(view)`
+       copies. Learned the hard way, 2026-08-21. */
+    const proxy = core.sample_photos(m.n);
+    const rows = proxy.toJs({ create_proxies: false });
+    proxy.destroy();
+    const photos = rows.map(([name, b]) => ({ name, buf: new Uint8Array(b).buffer }));
+    postMessage({ type: "samples", photos }, photos.map(x => x.buf));
+  }
+  else if (m.type === "process") {          // panel 1: one pass, no lanes, no kill
+    for (let i = 0; i < m.photos.length; i++) {
+      const p = m.photos[i];
+      const r = JSON.parse(core.process_photo(p.name, new Uint8Array(p.buf)));
+      const tp = core.make_thumbnail(new Uint8Array(p.buf));
+      r.thumb = new Uint8Array(tp.toJs({ create_proxies: false })).buffer;  // copy, see above
+      tp.destroy();
+      postMessage({ type: "photo", i, r }, [r.thumb]);
+    }
+    postMessage({ type: "processed" });
+  }
+  else if (m.type === "parse") {
+    postMessage({ type: "parsed", json: core.parse_envelope(m.text) });
+  }
+  else if (m.type === "geo") {
+    postMessage({ type: "geo", json: core.build_feature_collection(py.toPy(m.records)) });
+  }
+  else if (m.type === "run") {
+    cancelled = false;
+    const key = "job:" + m.jobId;
+    let state = { i: 0, spent: 0, done: [] };
+    let recovered = 0;
+    if (m.resumeState) {                    // continuing after an approval
+      state = m.resumeState;
+    } else if (m.durable) {                 // only lane B looks for a checkpoint
+      const saved = await get(key);
+      if (saved && saved.i > 0) { state = saved; recovered = saved.i; }
+    }
+    postMessage({ type: "started", from: state.i, recovered, spent: state.spent });
+
+    for (let i = state.i; i < m.photos.length; i++) {
+      if (cancelled) return;
+      if (m.approveAt === i && !state.approved) {
+        holding = { key, state, m };
+        if (m.durable) await put(key, { ...state, holding: true });
+        postMessage({ type: "holding", i, durable: m.durable });
+        return;                             // the run stops existing here
+      }
+      const p = m.photos[i];
+      core.process_photo(p.name, new Uint8Array(p.buf));   // steps 1-3, for real
+      state.i = i + 1;
+      state.spent += m.usdPerPhoto;
+      state.done.push(p.name);
+      if (m.durable) {
+        try { await put(key, m.poison ? { ...state, handle: () => {} } : state); }
+        catch (err) { postMessage({ type: "cantsave", err: err.name + ": " + err.message }); return; }
+      }
+      postMessage({ type: "progress", i, spent: state.spent, durable: m.durable });
+    }
+    if (m.durable) await put(key, { ...state, finished: true });
+    postMessage({ type: "finished", spent: state.spent });
+  }
+  else if (m.type === "approve" && holding) {
+    const { key, state, m: job } = holding; holding = null;
+    state.approved = true;
+    if (job.durable) await put(key, state);
+    await handle({ ...job, type: "run", resumeState: state });
+  }
+  else if (m.type === "clear") { const db = await idb();
+    const tx = db.transaction(STORE, "readwrite"); tx.objectStore(STORE).clear();
+    postMessage({ type: "cleared" }); }
+}
+</script>
+
+<script src="/workshop/_lib/workshop.js?v=20260821"></script>
+<script>
+const W = Workshop, $ = W.$;
+W.mode("muster", {
+  plain: "Plain language. Switch to Engineering for versions, token counts and the measurement behind each claim.",
+  eng:   "Engineering. Versions, token counts and the measurement behind each claim. Switch to Plain for the same demos in ordinary words."
+});
+
+const PYODIDE = "314.0.5";
+const BASE = "https://cdn.jsdelivr.net/pyodide/v" + PYODIDE + "/full/";
+const MODS = { workshop: "/workshop/_lib/workshop.py", core: "core.py" };
+const status = $("status");
+const usd = n => "$" + n.toFixed(n < 10 ? 2 : 2);
+
+let photos = [];        // [{name, buf}] — the reader's files, or generated samples
+let perPhoto = 0;       // projected step-4 dollars for one photo, from panel 1
+let rows = [];          // process_photo results
+let lanes = {};         // A / B worker handles
+let jobId = 1, running = false, poison = false;
+
+/* ── workers ─────────────────────────────────────────────────────────── */
+const workerSrc = document.getElementById("lane-worker").textContent;
+const workerURL = URL.createObjectURL(new Blob([workerSrc], { type: "text/javascript" }));
+
+function spawn(lane, onmsg){
+  const w = new Worker(workerURL, { type: "module" });
+  w.onmessage = e => onmsg(e.data);
+  w.postMessage({ type: "init", lane, base: BASE,
+                  mods: { workshop: new URL(MODS.workshop, location).href,
+                          core: new URL(MODS.core, location).href } });
+  return w;
+}
+const ask = (w, msg, until) => new Promise(res => {
+  const prev = w.onmessage;
+  w.onmessage = e => { prev(e); if (e.data.type === until) { w.onmessage = prev; res(e.data); } };
+  if (msg) w.postMessage(msg);
+});
+
+/* ── panel 1 ─────────────────────────────────────────────────────────── */
+let p1 = null, ready = false;
+const laneMsg = {};
+
+$("btn-start").onclick = async () => {
+  $("btn-start").disabled = true;
+  status.textContent = "Downloading CPython 3.14 (WebAssembly)… first time only, then cached.";
+  p1 = spawn("P", d => {
+    if (d.type === "failed") { status.textContent = "Python failed at " + d.stage + ": " + d.err; return; }
+    (laneMsg.P || (()=>{}))(d);
+  });
+  await new Promise(res => { laneMsg.P = d => { if (d.type === "ready") { window.VERS = d.versions; res(); } }; });
+  ready = true;
+  status.innerHTML = "Python is running in this tab. <span class='eng'>Pillow " +
+    (window.VERS.pillow || "?") + (window.VERS.pillow_heif ? ", pillow-heif registered (HEIC works)" : "") + ".</span>";
+  for (const id of ["btn-sample", "btn-pick"]) $(id).disabled = false;
+};
+
+$("btn-sample").onclick = async () => {
+  status.textContent = "Generating 12 sample photos with real EXIF…";
+  const d = await new Promise(res => { laneMsg.P = m => { if (m.type === "samples") res(m); };
+                                       p1.postMessage({ type: "samples", n: 12 }); });
+  photos = d.photos;
+  await processAll("12 generated photos — coloured noise at phone dimensions, with genuine EXIF GPS and timestamps. Everything measured below is measured; only the subject matter is synthetic.");
+};
+
+$("btn-pick").onclick = () => $("file").click();
+$("file").onchange = e => loadFiles([...e.target.files]);
+const drop = $("drop");
+drop.ondragover = e => { e.preventDefault(); drop.classList.add("over"); };
+drop.ondragleave = () => drop.classList.remove("over");
+drop.ondrop = e => { e.preventDefault(); drop.classList.remove("over");
+                     if (ready) loadFiles([...e.dataTransfer.files].filter(f => /^image\//.test(f.type) || /\.hei[cf]$/i.test(f.name))); };
+
+async function loadFiles(files){
+  if (!ready || !files.length) return;
+  files = files.slice(0, 24);
+  photos = await Promise.all(files.map(async f => ({ name: f.name, buf: await f.arrayBuffer() })));
+  await processAll(files.length + " of your own photos. They are read in this tab and never sent anywhere.");
+}
+
+async function processAll(note){
+  status.textContent = "Running steps 1–3 on " + photos.length + " photos…";
+  rows = [];
+  $("thumbs").innerHTML = ""; $("p1out").style.display = "";
+  const copies = photos.map(p => ({ name: p.name, buf: p.buf.slice(0) }));
+  await new Promise(res => {
+    laneMsg.P = m => {
+      if (m.type === "photo") {
+        rows[m.i] = m.r;
+        if (m.r.ok && m.r.thumb) {
+          const img = document.createElement("img");
+          img.src = URL.createObjectURL(new Blob([m.r.thumb], { type: "image/jpeg" }));
+          img.alt = m.r.name; img.title = m.r.name; $("thumbs").appendChild(img);
+        }
+      } else if (m.type === "processed") res();
+    };
+    p1.postMessage({ type: "process", photos: copies }, copies.map(c => c.buf));
+  });
+  $("p1note").textContent = note;
+  renderP1();
+  status.textContent = "Done. Panel 2 is ready.";
+  for (const id of ["btn-run", "btn-pause", "btn-copy", "btn-parse", "btn-reset"]) $(id).disabled = false;
+}
+
+/* ── panel 1 rendering, and the finding it produces ─────────────────── */
+const MODELS = [["claude-opus-4-8","Claude Opus 4.8"],["claude-sonnet-4-6","Claude Sonnet 4.6"],
+                ["claude-haiku-4-5","Claude Haiku 4.5"],["gemini-3-flash","Gemini 3 Flash"],
+                ["gemini-3.1-flash-lite","Gemini 3.1 Flash-Lite"]];
+
+function renderP1(){
+  const ok = rows.filter(r => r && r.ok);
+  if (!ok.length) { $("p1note").textContent = "None of those could be opened as images."; return; }
+  const withGps = ok.filter(r => r.gps).length;
+  const mb  = ok.reduce((a,r) => a + r.orig_bytes, 0) / 1048576;
+  const emb = ok.reduce((a,r) => a + r.encoded_bytes, 0) / 1048576;
+  const ms  = ok.reduce((a,r) => a + r.ms.gps + r.ms.thumb + r.ms.encode, 0) / ok.length;
+
+  $("p1tab").innerHTML =
+    "<tr><th>step</th><th>what it did</th><th>result</th></tr>" +
+    `<tr><td>1 · extract_gps</td><td>walked the EXIF GPS IFD, DMS → decimal WGS84</td>
+        <td><strong>${withGps}</strong> of ${ok.length} photos carry coordinates</td></tr>` +
+    `<tr><td>2 · make_thumbnail</td><td>orientation-corrected 400 px JPEGs</td>
+        <td><strong>${ok.length}</strong> made, shown above</td></tr>` +
+    `<tr><td>3 · encode_for_vision</td><td>downscaled the long edge to ≤ 1568 px</td>
+        <td><strong>${mb.toFixed(1)} MB → ${emb.toFixed(1)} MB</strong> to send</td></tr>` +
+    `<tr><td colspan="2" class="note">local work, this machine, per photo</td>
+        <td><strong>${ms.toFixed(0)} ms</strong> <span class="eng">(WebAssembly; native is roughly three times quicker)</span></td></tr>`;
+
+  // step 4, both ways, summed over the reader's actual photos
+  const tot = {};
+  for (const [id] of MODELS) {
+    tot[id] = { raw: 0, enc: 0, rawTok: 0, encTok: 0, tier: ok[0].cost[id].raw.tier };
+    for (const r of ok) {
+      tot[id].raw += r.cost[id].raw.usd;      tot[id].enc += r.cost[id].encoded.usd;
+      tot[id].rawTok += r.cost[id].raw.visual_tokens;
+      tot[id].encTok += r.cost[id].encoded.visual_tokens;
+    }
+  }
+  const per = n => n / ok.length * 1000;      // dollars per 1,000 photos
+  $("p1costlede").innerHTML =
+    `If step 4 ran on these ${ok.length} photos, this is what it would cost — priced twice: as the ` +
+    `camera shot them, and after step 3 shrank them. Scaled to a <strong>1,000-photo batch</strong>, ` +
+    `which is the size the Neighborhood Starter Kit's own cost table uses.`;
+  $("p1costtab").innerHTML =
+    "<tr><th>engine</th><th>tier</th><th>as shot</th><th>after step 3</th><th>saved</th></tr>" +
+    MODELS.map(([id, label]) => {
+      const t = tot[id], save = 1 - t.enc / t.raw;
+      const badge = save > 0.02 ? `<span class="verdict ok">${(save*100).toFixed(0)}%</span>`
+                                : `<span class="verdict meh">nothing</span>`;
+      return `<tr><td>${label}</td><td class="note">${t.tier}</td>
+        <td>${usd(per(t.raw))} <span class="note">/1k</span></td>
+        <td>${usd(per(t.enc))} <span class="note">/1k</span></td><td>${badge}</td></tr>`;
+    }).join("");
+
+  const hi = tot["claude-opus-4-8"], lo = tot["claude-haiku-4-5"];
+  const hiSave = (1 - hi.enc / hi.raw) * 100;
+  $("tile-save").textContent = hiSave.toFixed(0) + "%";
+  $("p1cost").style.display = ""; $("p1finding").style.display = "";
+  $("p1findingtext").innerHTML =
+    `<strong>Step 3 exists to cut the bill, and on most models it cuts nothing.</strong> ` +
+    `The kit's own comment says the server "downsizes large images anyway" — which is exactly right, and ` +
+    `it is why the standard-tier rows above save <em>zero</em>: those models resize your ${ok[0].orig[0]}×${ok[0].orig[1]} ` +
+    `photo to ${lo.rawTok/ok.length|0} visual tokens whether or not you shrink it first. ` +
+    `What changed is that Claude 4.7 and later read images on a <strong>high-resolution tier</strong> — up to 2576 px ` +
+    `and 4784 visual tokens — so on Opus 4.8 the same photo costs ${(hi.rawTok/ok.length)|0} tokens as shot and ` +
+    `${(hi.encTok/ok.length)|0} after step 3. That is where the ${hiSave.toFixed(0)}% comes from. ` +
+    `<span class="eng">Which also means a per-photo estimate of ~1.5k input tokens — the standard-tier figure — ` +
+    `under-prices a high-resolution-tier engine by about ${((hi.encTok/ok.length)/1500).toFixed(1)}×. ` +
+    `The rule is <code>⌈w/28⌉ × ⌈h/28⌉</code> and the resize is a binary search, not a scale-to-edge; ` +
+    `<code>core.py</code> uses Anthropic's own reference implementation rather than a re-derivation.</span> ` +
+    `<br><br>The general lesson is the one panel 2 is about: <strong>a cost lever is only a lever if you know ` +
+    `which side of an interface it acts on.</strong> Nothing about the code changed here — only the model behind it did.`;
+
+  perPhoto = hi.enc / ok.length;              // lane runs spend the encoded Opus rate
+  $("tile-lost").textContent = usd(perPhoto * 190);
+  buildPrompt();
+}
+
+/* ── panels 2 & 3: the lanes ─────────────────────────────────────────── */
+const laneState = { A: null, B: null };
+
+function cells(track, n){
+  track.innerHTML = ""; 
+  for (let i = 0; i < n; i++) { const d = document.createElement("div"); d.className = "cell"; track.appendChild(d); }
+}
+function mark(lane, i, cls){
+  const c = $("track" + lane).children[i]; if (c) c.className = "cell " + cls;
+}
+/* `total` is money that left the account, counted once per photo actually processed —
+   including the ones a restarted lane had already paid for. `redone` is the part of
+   that which bought nothing. Reading the worker's own counter instead would reset to
+   zero on restart and quietly hide the whole point of the panel. */
+function show(lane, total, redone){
+  $("money" + lane).textContent = usd(total);
+  $("money" + lane).classList.toggle("waste", redone > 0);
+  $("re" + lane).innerHTML = redone > 0
+    ? `<strong style="color:var(--bad)">${usd(redone)} of it bought nothing</strong>`
+    : "nothing paid for twice";
+}
+
+async function ensureLanes(){
+  for (const L of ["A", "B"]) {
+    if (lanes[L]) continue;
+    status.textContent = "Starting lane " + L + "…";
+    lanes[L] = spawn(L, d => onLane(L, d));
+    await new Promise(res => { laneMsg[L] = d => { if (d.type === "ready") res(); }; });
+  }
+  status.textContent = "Both lanes are live, each with its own Python.";
+}
+
+function onLane(L, d){
+  if (laneMsg[L]) laneMsg[L](d);
+  if (d.type === "failed") { $("msg" + L) && ($("msg" + L).textContent = "worker failed at " + d.stage + ": " + d.err);
+                             status.textContent = "Lane " + L + " failed: " + d.err; return; }
+  const s = laneState[L]; if (!s) return;
+  if (d.type === "started") {
+    s.from = d.from;
+    for (let i = 0; i < d.from; i++) mark(L, i, "done");
+    $("msg" + L) && ($("msg" + L).textContent = d.recovered
+      ? `resumed at photo ${d.recovered + 1} — the checkpoint was still there`
+      : (s.killedAt === null ? "running from photo 1"
+                             : "restarted from photo 1 — nothing survived the kill"));
+    show(L, s.total, s.redone);
+  }
+  else if (d.type === "progress") {
+    const redo = s.killedAt !== null && d.i < s.killedAt;
+    if (redo) s.redone += perPhoto;
+    s.total += perPhoto;                      // every processed photo is billed
+    mark(L, d.i, redo ? "redone" : "done");
+    show(L, s.total, s.redone);
+  }
+  else if (d.type === "holding") {
+    mark(L, d.i, "hold");
+    $("msg" + L).textContent = d.durable
+      ? "checkpointed and stopped. This lane is not running; it is a row in a database."
+      : "holding an open process, waiting for a person.";
+    s.holding = true; $("btn-approve").disabled = false;
+    $("pausenote").textContent = "Both lanes are waiting at photo 7. Close this tab now, then reopen the page and press “Run with an approval” again.";
+  }
+  else if (d.type === "finished") {
+    $("msg" + L).textContent = "finished · " + usd(s.total) + " spent" +
+      (s.redone ? ", of which " + usd(s.redone) + " bought nothing" : ", none of it wasted");
+    s.done = true; if (laneState.A?.done && laneState.B?.done) running = false;
+  }
+  else if (d.type === "cantsave") {
+    $("lane" + L).classList.add("dead");
+    $("msg" + L).textContent = "cannot checkpoint — " + d.err;
+    $("unserout").textContent =
+      "Lane B tried to write its checkpoint and the browser refused:\n\n  " + d.err +
+      "\n\nThat is a real DataCloneError from structuredClone, not a message this page made up.\n" +
+      "In production the same shape of failure is a serializer rejecting your run state.\n" +
+      "The rule it enforces: run state is data, not objects.";
+  }
+}
+
+async function startRun({ approveAt = -1 } = {}){
+  if (!photos.length) return;
+  await ensureLanes();
+  jobId++;
+  running = true;
+  for (const L of ["A", "B"]) {
+    laneState[L] = { total: 0, redone: 0, killedAt: null, holding: false, done: false, from: 0 };
+    cells($("track" + L), photos.length);
+    $("lane" + L).classList.remove("dead");
+    $("msg" + L).textContent = "starting…";
+    show(L, 0, 0);
+    const copies = photos.map(p => ({ name: p.name, buf: p.buf.slice(0) }));
+    lanes[L].postMessage({ type: "run", jobId, photos: copies, durable: L === "B",
+                           usdPerPhoto: perPhoto, approveAt, poison: L === "B" && poison },
+                         copies.map(c => c.buf));
+  }
+  $("btn-deploy").disabled = false;
+}
+
+$("btn-run").onclick = () => { $("runnote").textContent = "Press Deploy while the bars are filling."; startRun(); };
+
+$("btn-deploy").onclick = async () => {
+  $("btn-deploy").disabled = true;
+  for (const L of ["A", "B"]) {
+    const s = laneState[L]; if (!s) continue;
+    s.killedAt = [...$("track" + L).children].filter(c => c.classList.contains("done")).length;
+    lanes[L].terminate(); lanes[L] = null;          // the real kill
+    $("lane" + L).classList.add("dead");
+    $("msg" + L).textContent = `killed at photo ${s.killedAt + 1} — worker.terminate(), no unwind`;
+  }
+  $("runnote").innerHTML = "<strong>Both processes are gone.</strong> Restarting them…";
+  await new Promise(r => setTimeout(r, 900));
+  await ensureLanes();
+  for (const L of ["A", "B"]) {
+    const s = laneState[L];
+    $("lane" + L).classList.remove("dead");
+    const copies = photos.map(p => ({ name: p.name, buf: p.buf.slice(0) }));
+    lanes[L].postMessage({ type: "run", jobId, photos: copies, durable: L === "B",
+                           usdPerPhoto: perPhoto, approveAt: -1, poison: false },
+                         copies.map(c => c.buf));
+  }
+  $("runnote").innerHTML = "Lane A starts again at photo 1 and pays for the same work twice — the red cells. " +
+    "Lane B reads its checkpoint back and carries on. <strong>The gap between the two counters is the whole survey.</strong>";
+};
+
+$("btn-reset").onclick = async () => {
+  for (const L of ["A","B"]) { if (lanes[L]) { lanes[L].terminate(); lanes[L] = null; } laneState[L] = null;
+                               $("track"+L).innerHTML=""; $("money"+L).textContent="$0.00";
+                               $("msg"+L).textContent="idle"; $("lane"+L).classList.remove("dead");
+                               $("re"+L).textContent="re-spent"; }
+  indexedDB.deleteDatabase("muster");
+  $("runnote").textContent = "Cleared, including lane B's checkpoints.";
+  $("btn-deploy").disabled = true; $("btn-approve").disabled = true;
+  $("pausenote").textContent = ""; $("resumenote").textContent = "";
+};
+
+$("btn-pause").onclick = () => { $("runnote").textContent = ""; startRun({ approveAt: 6 }); };
+$("btn-approve").onclick = () => {
+  $("btn-approve").disabled = true;
+  $("pausenote").textContent = "";
+  for (const L of ["A","B"]) if (lanes[L]) lanes[L].postMessage({ type: "approve" });
+};
+
+$("cb-unser").onchange = e => {
+  poison = e.target.checked;
+  $("unserout").textContent = poison
+    ? "Armed. Run the lanes again (panel 2) and lane B will try to checkpoint a state object with a function in it."
+    : "Untick: the checkpoint saves. Tick: it does not.";
+};
+
+/* On load, say whether a checkpoint from a previous visit survived. This is the
+   panel-3 payoff and it has to run before anything else touches the database. */
+(async () => {
+  const r = indexedDB.open("muster", 1);
+  r.onupgradeneeded = () => r.result.createObjectStore("checkpoints");
+  r.onsuccess = () => {
+    const db = r.result;
+    if (!db.objectStoreNames.contains("checkpoints")) return;
+    const q = db.transaction("checkpoints", "readonly").objectStore("checkpoints").getAll();
+    q.onsuccess = () => {
+      const held = (q.result || []).filter(v => v && v.holding);
+      const any  = (q.result || []).filter(v => v && v.i > 0);
+      if (held.length) $("resumenote").innerHTML =
+        `<strong>A run from a previous visit is still waiting at photo ${held[0].i + 1}.</strong> ` +
+        `Lane A's copy died with the tab. Lane B's is still here, because it was never in a process to begin with.`;
+      else if (any.length) $("resumenote").innerHTML =
+        `A checkpoint from a previous visit survived in this browser: ${any[0].i} photos done. ` +
+        `Nothing of lane A's did.`;
+    };
+  };
+})();
+
+/* ── panel 5: the boundary sorter ────────────────────────────────────── */
+const FLOWS = [
+  ["Read a folder of photos, pull the GPS out of each, then classify every one with a vision model.", "code",
+   "You wrote the loop. The model answers a question at step 4 and has no say in what happens at step 5 — that is 1.200, and it is this page's own pipeline."],
+  ["Give an assistant a browser and a goal — “find out whether this council meeting is still on” — and let it work.", "model",
+   "The model chooses the next click. Nothing in your code knows how many steps there will be. That is 1.201, and 1.216 for the browser half."],
+  ["For each invoice: extract the fields, validate the total, and if it fails validation, route it to a human.", "code",
+   "A branch you wrote, on a condition you defined. The model fills in fields; it does not decide the routing."],
+  ["Hand the model a set of tools and let it decide which to call, in what order, until it says it is finished.", "model",
+   "This is the definition of the agent loop. The stopping condition belongs to the model."],
+  ["Run the same prompt against 500 examples, score each one, and keep the prompt that scores best.", "code",
+   "An optimiser loop you control — DSPy's territory. The model is the thing being measured, not the thing steering."],
+  ["Retry the summarisation at a bigger context window if the first attempt was truncated.", "code",
+   "A conditional you wrote. Fallback is not delegation: your code read the stop reason and chose."],
+];
+let sorted = 0, correct = 0;
+$("sorter").innerHTML = FLOWS.map((f, i) =>
+  `<div class="q"><span class="txt">${f[0]}</span>
+    <button data-i="${i}" data-a="code">my code decides</button>
+    <button data-i="${i}" data-a="model">the model decides</button>
+    <span class="note" id="why${i}" style="flex-basis:100%;margin:0"></span></div>`).join("");
+$("sorter").onclick = e => {
+  const b = e.target.closest("button[data-i]"); if (!b) return;
+  const i = +b.dataset.i, f = FLOWS[i];
+  if ($("why" + i).textContent) return;
+  const right = b.dataset.a === f[1];
+  b.className = right ? "right" : "wrong";
+  $("why" + i).innerHTML = (right ? "✓ " : "✗ ") + f[2] +
+    (f[1] === "code" ? " <strong>→ 1.200</strong>" : ' <strong>→ <a href="/survey/1-201/">1.201</a></strong>');
+  sorted++; correct += right ? 1 : 0;
+  $("sorterscore").textContent = sorted < FLOWS.length
+    ? `${correct} of ${sorted}.`
+    : `${correct} of ${FLOWS.length}. The test costs one sentence and it decides which survey answers your question — ` +
+      `which is why the survey leads with it rather than burying it in a scope note.`;
+};
+
+/* ── panel 6: the handoff ────────────────────────────────────────────── */
+function buildPrompt(){
+  const ok = rows.filter(r => r && r.ok);
+  const names = ok.map(r => r.name);
+  const p =
+`I am going to attach ${names.length} photo${names.length === 1 ? "" : "s"} of a neighbourhood.
+For each one, judge what it shows and return a single JSON object in this exact envelope:
+
+{"nsk_photo_analysis": {"version": 1, "photos": [ one object per photo ]}}
+
+Each photo object must have exactly these keys:
+  photo            the file name, from the list below
+  kind             "concern" (a problem) or "asset" (something people like)
+  category         concern: pavement, lighting, graffiti, dumping, sidewalk,
+                   vegetation, vehicle, signage, other
+                   asset: art, greenspace, gathering, wellkept, amenity, other_like
+  severity         "low" | "medium" | "high" for concerns, "unknown" for assets
+  summary          one plain sentence about the PLACE and its condition.
+                   Never describe or identify a person.
+  area_type        e.g. "residential street", "park", "alley", "intersection"
+  identifiability  "none" | "incidental" | "identifiable_subject".
+                   If unsure between the last two, choose identifiable_subject.
+  vulnerable       true if anyone shown appears unhoused, in distress, or a minor.
+                   If unsure, true. false when no person appears.
+  disposition      "map" | "review" | "decline". Never classify a PERSON as a
+                   concern: if a real condition is present, classify the condition;
+                   otherwise decline.
+  issues           list of visible problems (concerns), else []
+  highlights       list of what is good (assets), else []
+  appreciation     "noted" | "loved" for assets, else null
+
+Return the JSON and nothing else.
+
+Photos: ${names.join(", ")}`;
+  $("prompt").textContent = p;
+  const enc = encodeURIComponent(p);
+  $("lnk-claude").href = "https://claude.ai/new?q=" + enc;
+  $("lnk-gpt").href = "https://chatgpt.com/?q=" + enc;
+  W.copyText($("btn-copy"), $("copymsg"), () => p,
+             "Copied. Paste it into your assistant and drag in the shrunken photos from panel 1.");
+}
+
+$("btn-parse").onclick = async () => {
+  const text = $("paste").value;
+  const out = $("parseout"); out.style.display = "";
+  const res = JSON.parse(await new Promise(r => {
+    laneMsg.P = m => { if (m.type === "parsed") r(m.json); };
+    // parse on the panel-1 worker, where core.py already is
+    p1.postMessage({ type: "parse", text });
+  }));
+  if (!res.ok && !res.rows.length) {
+    out.textContent = "Not accepted:\n\n  " + res.errors.join("\n  ") +
+      "\n\nNo model call happened here — this is a schema check against NSK's PhotoAnalysis contract.";
+    return;
+  }
+  const byName = {}; for (const r of res.rows) byName[r.photo] = r;
+  const recs = rows.filter(r => r && r.ok).map(r => ({ name: r.name, gps: r.gps, taken: r.taken, ...(byName[r.name] || {}) }));
+  const geo = await new Promise(r => {
+    laneMsg.P = m => { if (m.type === "geo") r(m.json); };
+    p1.postMessage({ type: "geo", records: recs });
+  });
+  const mapped = JSON.parse(geo).features.length;
+  const classified = recs.filter(r => r.kind).length;
+  out.textContent =
+    (res.errors.length ? "Accepted with " + res.errors.length + " complaint(s):\n  " + res.errors.join("\n  ") + "\n\n" : "") +
+    `Validated ${res.rows.length} analysis object(s) against PhotoAnalysis. ` +
+    `${mapped} of your photos have coordinates and become GeoJSON features — WGS84, RFC 7946, ` +
+    `no reprojection anywhere — of which ${classified} now carry an analysis. ` +
+    `The rest are on the map unclassified, which is what a half-finished run looks like.\n\n` + geo.slice(0, 1400) +
+    (geo.length > 1400 ? "\n… truncated for display" : "");
+};
+</script>
+</body>
+</html>
