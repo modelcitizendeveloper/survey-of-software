@@ -330,6 +330,12 @@ let loadPyodide = null;
 
 let py = null, core = null, lane = "A", holding = null, cancelled = false;
 const DB = "muster", STORE = "checkpoints";
+/* Section 4 of this page tells the reader that durability costs a state store,
+   serializable state, and CHECKPOINT VERSIONING. The page then shipped without the
+   third and was promptly bitten by it: a checkpoint written by an earlier version of
+   this file was picked up by a later one, which could not read it and quietly showed
+   two empty lanes. Every write is stamped; anything else is another version's. */
+const SCHEMA = 2;
 
 /* IndexedDB, from inside the worker. Lane B's state has to live somewhere the kill
    cannot reach; if the main thread held it, terminate() would prove nothing. */
@@ -418,13 +424,15 @@ async function handle(m) {
   else if (m.type === "run") {
     cancelled = false;
     const key = "job:" + m.jobId;
-    let state = { i: 0, spent: 0, done: [], n: m.photos.length };
+    let state = { schema: SCHEMA, i: 0, spent: 0, done: [], n: m.photos.length };
     let recovered = 0;
     if (m.resumeState) {                    // continuing after an approval
       state = m.resumeState;
     } else if (m.durable) {                 // only lane B looks for a checkpoint
       const saved = await get(key);
-      if (saved && saved.i > 0) { state = saved; recovered = saved.i; delete state.holding; }
+      if (saved && saved.schema === SCHEMA && saved.i > 0) {
+        state = saved; recovered = saved.i; delete state.holding;
+      }
     }
     postMessage({ type: "started", from: state.i, recovered, spent: state.spent });
 
@@ -432,13 +440,14 @@ async function handle(m) {
       if (cancelled) return;
       if (m.approveAt === i && !state.approved) {
         holding = { key, state, m };
-        if (m.durable) await put(key, { ...state, holding: true });
+        if (m.durable) await put(key, { ...state, schema: SCHEMA, holding: true });
         postMessage({ type: "holding", i, durable: m.durable });
         return;                             // the run stops existing here
       }
       const p = m.photos[i];
       core.process_photo(p.name, new Uint8Array(p.buf));   // the three local jobs, for real
       state.i = i + 1;
+      state.schema = SCHEMA;
       state.n = m.photos.length;
       state.spent += m.usdPerPhoto;
       state.done.push(p.name);
@@ -462,6 +471,12 @@ async function handle(m) {
     catch (err) { postMessage({ type: "stashed", ok: false, err: err.name + ": " + err.message }); }
   }
   else if (m.type === "unstash") { postMessage({ type: "unstashed", payload: await get("photos") }); }
+  else if (m.type === "forget") {
+    const db = await idb();
+    await new Promise(r => { const tx = db.transaction(STORE, "readwrite");
+      for (const k of m.keys) tx.objectStore(STORE).delete(k); tx.oncomplete = r; });
+    postMessage({ type: "forgot", keys: m.keys });
+  }
   else if (m.type === "clear") { const db = await idb();
     const tx = db.transaction(STORE, "readwrite"); tx.objectStore(STORE).clear();
     postMessage({ type: "cleared" }); }
@@ -477,6 +492,7 @@ W.mode("muster", {
 });
 
 const PYODIDE = "314.0.5";
+const PAGE_SCHEMA = 2;        // must match SCHEMA in the lane worker above
 const BASE = "https://cdn.jsdelivr.net/pyodide/v" + PYODIDE + "/full/";
 const MODS = { workshop: "/workshop/_lib/workshop.py", core: "core.py" };
 const status = $("status");
@@ -925,7 +941,8 @@ function stashNote(why){
    Lane B shows what is on disk; lane A shows the nothing it has. Leaving both lanes
    blank at $0.00 reads as "the reload lost everything", which is exactly backwards. */
 function paintSurvivor(r){
-  if (!r.n) return;
+  if (!r.n) { $("runnote").textContent =
+    "A held run was found but not the length of its job, so the lanes below cannot be redrawn."; return; }
   /* BOTH lanes really spent this money before the reload — they ran the same photos.
      Showing lane A at $0.00 would say it spent nothing, which is the same mistake the
      first version of the kill panel made. What differs is not the spend, it is what
@@ -998,8 +1015,23 @@ $("cb-unser").onchange = e => {
     cur.onsuccess = (ev) => {
       const c = ev.target.result;
       if (c) { rows.push({ v: c.value, key: c.key }); c.continue(); return; }
-      const held = rows.filter(r => r.v && r.v.holding);
-      const any  = rows.filter(r => r.v && r.v.i > 0);
+      const jobs  = rows.filter(r => String(r.key).startsWith("job:"));
+      const mine  = jobs.filter(r => r.v && r.v.schema === PAGE_SCHEMA);
+      const stale = jobs.filter(r => !r.v || r.v.schema !== PAGE_SCHEMA).map(r => r.key);
+      /* Written by an older version of this page. Unreadable here, and leaving them in
+         place means the cursor hands one back the next time too — so drop them, and say
+         so rather than pretending the visit was clean. Deleted on THIS connection: the
+         worker does not exist until the reader presses Start, and posting to a worker
+         that is null is how they survived the first attempt at this fix. */
+      if (stale.length) {
+        const wtx = db.transaction("checkpoints", "readwrite");
+        for (const k of stale) wtx.objectStore("checkpoints").delete(k);
+      }
+      // newest first: job ids climb, and the run the reader just left is the last one
+      const byNewest = a => a.slice().sort((x, y) =>
+        (Number(String(y.key).split(":")[1]) || 0) - (Number(String(x.key).split(":")[1]) || 0));
+      const held = byNewest(mine.filter(r => r.v.holding));
+      const any  = byNewest(mine.filter(r => r.v.i > 0));
       if (held.length) {
         const { v, key } = held[0];
         pendingResume = { i: v.i, spent: v.spent || 0, n: v.n || 0,
@@ -1016,6 +1048,12 @@ $("cb-unser").onchange = e => {
       } else if (any.length) $("resumenote").innerHTML =
         `A checkpoint from before the reload survived in this browser: ${any[0].v.i} photos done. ` +
         `Nothing of lane A's did.`;
+      else if (stale.length) $("resumenote").innerHTML =
+        `${stale.length} checkpoint${stale.length === 1 ? "" : "s"} from an older version of this ` +
+        `page ${stale.length === 1 ? "was" : "were"} in this browser, written to a shape this ` +
+        `version cannot read. Discarded. Run section 3 again for a clean one — and note that ` +
+        `<em>checkpoint versioning</em> is the third cost section 4 names, which this page had to ` +
+        `learn the same way you would.`;
     };
   };
 })();
