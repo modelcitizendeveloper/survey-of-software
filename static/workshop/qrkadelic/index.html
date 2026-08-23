@@ -155,6 +155,7 @@ in-page; the reader's phone is the second instrument.</p>
         <button data-style="bright" aria-pressed="false">Tie-dye (bright)</button>
       </div>
       <p class="note" id="p1note"></p>
+      <p class="note" id="p1size" style="border-left:3px solid var(--warn);padding-left:10px"></p>
     </div>
   </div>
   <div class="eng"><div id="p1eng" class="mono" style="margin-top:12px"></div></div>
@@ -163,6 +164,25 @@ in-page; the reader's phone is the second instrument.</p>
 <p class="plain"><strong>The surprise:</strong> most of the benefit arrives at Q. Going from
 M to Q buys you a lot of room; going on to H buys almost none — the code mostly just gets
 bigger.</p>
+<p class="plain"><strong>But only if something is actually covering the code.</strong> Every
+number on this page measures how much can sit <em>on top of</em> a symbol. If nothing does — no
+logo, no penguin, just a plain code on a page — the trade runs the other way. Higher error
+correction is paid for in extra squares, and squares are what a camera runs out of first.
+<strong>Cover the code: pick Q. Leave it alone: pick M, and spend what you saved on printing it
+bigger.</strong></p>
+<p class="eng"><strong>THE CEILINGS GOVERN OCCLUSION AND NOTHING ELSE.</strong> They answer
+"how much can sit on top of this symbol." They do not answer "can a camera resolve this symbol,"
+and for a clean code the two constraints pull in opposite directions: error correction buys
+damage tolerance by spending modules, and module count is the binding constraint on a distant,
+tilted or dim capture. Choosing Q for a symbol nothing occludes buys recovery that will never be
+used and pays for it in density.</p>
+<p class="eng research" style="padding:10px 0 10px 14px;margin:10px 0"><span class="kicker">From
+the field, not measured in this tab</span> — this is not hypothetical. These figures were carried
+into a live tool with no logo on its code, Q was chosen citing them, and a Pixel read the page as
+text rather than finding a symbol. On that tool's payload — a whole trail packed into a URL,
+far longer than the one above — <strong>Q gave 125 modules across and M gave 105</strong>. Under a simulated camera — rendered at real display size, then downscaled, blurred,
+tilted and noised — Q at 150px failed below 400 sensor pixels while M at 340px read at 300. Right
+numbers, wrong question.</p>
 <p class="eng">Measured on this payload with the penguin at this aspect and pad, as the widest
 occluder that still decodes — <strong>L 13.5%, M 18.5%, Q 28.0%, H 29.5% of symbol width</strong>
 (2.5%, 4.7%, 10.7%, 11.9% by area). Same units as the slider.</p>
@@ -603,8 +623,23 @@ async function panel1(){
       : styled
         ? "A statement about this page's decoder, not a verdict on the code. A bright tie-dye at EC=L failed here and read instantly on a Pixel — colour failures depend heavily on the scanner. Try yours before believing this box."
         : "The penguin is now covering more than the error correction can rebuild. Unlike colour, this does not depend on the decoder — all four binarizers tested give the same ceiling, because the covered codewords are simply gone. A Pixel gave up at the same cutoff as this page at every error-correction level — so unlike a colour failure, a better scanner will not rescue this one.";
+    // THE OTHER CONSTRAINT. Everything above this line is about occlusion; none of it
+    // says whether a camera can resolve a module at all. Module count is measured here;
+    // the 3-CSS-pixel floor is a field figure, so the block is marked as sourced.
+    // Shipping a 125-module symbol at 150px (1.2px/module) is what motivated this.
+    const dpr = window.devicePixelRatio || 1;
+    const minCss = Math.ceil(r.modules * 3 / 10) * 10;
+    $("p1size").innerHTML =
+      `<strong>${r.modules} modules across, so show it at ${minCss}px or wider.</strong> ` +
+      `Three screen pixels per module is the floor for a phone camera at arm's length; ` +
+      `below that a scanner stops finding the symbol and starts reading the page as text. ` +
+      `At ${minCss}px on this screen that is ${(minCss * dpr / r.modules).toFixed(1)} device ` +
+      `pixels per module. Error correction is paid for in modules — but in steps, not smoothly. ` +
+      `Change the level above and watch this number: where it jumps is where you started buying ` +
+      `damage tolerance with scan distance.`;
     $("p1eng").textContent =
       `library : qrcode 8.2\nEC      : ${r.ec}\nversion : ${r.version}  (${r.modules} modules)\n` +
+      `min display : ${minCss}px CSS (3 px/module floor, from field measurement)\n` +
       `penguin: ${occ}% of symbol width, centred, on a white pad\n` +
       `mean luminance: ${r.lum}/255\n` +
       `in-page decode (jsQR): ${ok ? "PASS " + got.how + " — " + got.text.slice(0,52) : "FAIL — decoder-dependent, not conclusive"}`;
