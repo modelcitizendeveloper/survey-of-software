@@ -14,10 +14,21 @@ jobs:
     steps:
       - uses: actions/github-script@v7
         with:
+          # The body is an array joined with newlines rather than a template
+          # literal. A multi-line backtick string has to start its continuation
+          # lines at column 0 to avoid indenting the comment text — and column 0
+          # ends this block scalar, which is what broke the workflow on the
+          # first version of this file. Every line here stays indented.
           script: |
             const n = context.issue.number;
-            await github.rest.issues.addLabels({ ...context.repo, issue_number: n, labels: ['triage'] });
-            await github.rest.issues.createComment({ ...context.repo, issue_number: n, body:
-`Thanks — this is logged. Every survey on the site is verified against primary sources (registries, repositories, vendor pages) before it changes, so a correction here is checked the same way and then published; the page footer shows the date it was last verified.
-
-You will get a reply on this thread either way — with the change and a link, or with what the sources showed if they disagree. Surveys also refresh on a schedule, so a fix that lands here is carried into the next sweep automatically.` });
+            await github.rest.issues.addLabels({
+              ...context.repo, issue_number: n, labels: ['triage']
+            });
+            const body = [
+              'Thanks — this is logged. Every survey on the site is verified against primary sources (registries, repositories, vendor pages) before it changes, so a correction here is checked the same way and then published; the page footer shows the date it was last verified.',
+              '',
+              'You will get a reply on this thread either way — with the change and a link, or with what the sources showed if they disagree. Surveys also refresh on a schedule, so a fix that lands here is carried into the next sweep automatically.'
+            ].join('\n');
+            await github.rest.issues.createComment({
+              ...context.repo, issue_number: n, body
+            });
