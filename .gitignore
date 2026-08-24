@@ -57,7 +57,24 @@ library-metadata*.json
 CLAUDE.md
 
 # Internal-only survey content (never publish to public site)
-# 2.xxx = protocol/standard surveys (move too quickly, not ready for public)
-# 3.xxx = commercial SaaS comparisons (vendor exposure risk)
+#
+# 3.xxx = commercial SaaS comparisons. Held for a reason that does not expire:
+# publishing them makes us the arbiter of commercial software, which is not a
+# role we want. This line stays.
+#
+# 2.xxx = protocol and standards surveys. Opened 2026-08-24 by allowlist. A
+# standard is a public artifact being described, not a vendor being ranked, so
+# the 3.xxx reasoning does not carry over — and 1.200 already points readers at
+# "2.074 MCP Protocol" with nothing to reach. Denied by default and named one at
+# a time, so the nine unfinished 2.xxx stubs and anything held cannot ride along:
+# the series has 14 directories and only 4 completed surveys.
+#
+# NOTE: this file is the real enforcement, not publish_to_public.sh's
+# --include='1-*.md' glob. A survey whose metadata.yaml claims a hold is not
+# actually held unless publication: matches HELD_PUBLICATION_VALUES in
+# convert_research.py — 2.078 carried a prose "INTERNAL ONLY" sentence that
+# enforced nothing, and was kept off the site by this line alone.
 content/survey/2-*.md
+!content/survey/2-074.md
+!content/survey/2-083.md
 content/survey/3-*.md

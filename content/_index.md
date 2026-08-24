@@ -477,6 +477,16 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ---
 
+## 2.070-089: Protocols & Standards
+
+The 1.xxx series compares libraries you choose between. These describe standards you
+build against — a different question, so they are a different series. Published one at
+a time as each is completed.
+
+- ✅ [**2.074** MCP Protocol](/survey/2-074) - Model Context Protocol: the tool edge most AI frameworks now standardize on
+- ✅ [**2.083** AI Agent Gateways](/survey/2-083) - MCP federation and A2A routing: Agent Gateway, IBM ContextForge, Kong, Envoy
+
+
 ## Research Status
 
 **Total Defined**: 259 research slots
