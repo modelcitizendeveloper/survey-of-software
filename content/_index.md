@@ -488,8 +488,8 @@ a time as each is completed.
 ## Research Status
 
 **Total Defined**: 259 research slots
-**Completed**: 168 pieces (65%)
-**Remaining**: 91 pieces
+**Completed**: 166 pieces (64%)
+**Remaining**: 93 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
