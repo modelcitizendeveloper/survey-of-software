@@ -465,15 +465,13 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.300-309: Civic & Government Data
 
-**Completed: 6/6**
+**Completed: 4/4**
 
 - ✅ [**1.300** Public Finance Modeling](/survey/1-300) - Revenue forecasting, budget planning, fiscal analysis
 - ✅ [**1.301** Government Data Access](/survey/1-301) - Open data APIs, FOIA tools, data.gov integration
 - ✅ [**1.302** Budget Document Parsing](/survey/1-302) - PDF extraction, financial statement analysis
-- ✅ [**1.303** Civic Entity Resolution](/survey/1-303) - Agency matching, jurisdiction mapping
 - ✅ [**1.304** Procurement & Contracts](/survey/1-304) - Vendor analysis, contract tracking
-- ✅ [**1.305** Fiscal Health Metrics](/survey/1-305) - Financial indicators, municipal credit analysis
-- **1.306-1.309** _Available for future use_
+- **1.303**, **1.305-1.309** _Available for future use_
 
 ---
 

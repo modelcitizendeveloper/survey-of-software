@@ -387,9 +387,7 @@ exist in the taxonomy but may not have content yet — fetch to check.
 | 1.300 | Public Finance Modeling | ✅ |
 | 1.301 | Government Data Access | ✅ |
 | 1.302 | Budget Document Parsing | ✅ |
-| 1.303 | Civic Entity Resolution | ✅ |
 | 1.304 | Procurement & Contracts | ✅ |
-| 1.305 | Fiscal Health Metrics | ✅ |
 
 ---
 
@@ -421,7 +419,7 @@ When the user's question doesn't obviously map to a survey ID:
 - **"vector database", "embedding", "Pinecone"** → 1.203
 - **"fine-tune", "LoRA", "Unsloth"** → 1.208
 - **"Ollama", "vLLM", "local LLM"** → 1.209
-- **"government data", "civic tech", "budget"** → 1.300-1.305
+- **"government data", "civic tech", "budget"** → 1.300-1.304
 - **"build vs buy", "self-hosted alternative"** → answer from 1.xxx and note that the commercial-product side is not published
 
 ---

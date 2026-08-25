@@ -1000,17 +1000,9 @@ sections:
         title: Budget Document Parsing
         subtitle: "PDF extraction, financial statement analysis"
         published: true
-      - code: "1.303"
-        title: Civic Entity Resolution
-        subtitle: "Agency matching, jurisdiction mapping"
-        published: true
       - code: "1.304"
         title: "Procurement & Contracts"
         subtitle: "Vendor analysis, contract tracking"
         published: true
-      - code: "1.305"
-        title: Fiscal Health Metrics
-        subtitle: "Financial indicators, municipal credit analysis"
-        published: true
-      - code: "1.306-1.309"
+      - code: "1.303, 1.305-1.309"
         future: true
