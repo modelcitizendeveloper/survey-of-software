@@ -13,7 +13,7 @@ This page is that record.
 
 | Published surveys | Re-verified in 30 days | in 90 days | Most recent check |
 |---|---|---|---|
-| 236 | 30 | 49 | 2026-08-26 |
+| 169 | 30 | 42 | 2026-08-26 |
 
 *Re-verified* means a claim was checked against a primary source — a package registry, a repository, a vendor's own documentation — not that the file was edited. Bulk edits touch every page at once and would make the whole library look freshly checked, which is exactly the kind of number this table exists to avoid.
 
@@ -23,47 +23,9 @@ Entries below say what is true now. They are deliberately not an errata list: a 
 
 *30 surveys re-verified.*
 
-**[1.182 Database Diff & Schema Comparison](/survey/1-182/)**
+**[1.003 Full-text Search Libraries](/survey/1-003/)**
 
-- migra is officially deprecated — its README names 3.0.1663481299 (September 2022) the final release, and points to djrobstep/results as the successor
-
-**[1.075 Deep Learning Frameworks](/survey/1-075/)**
-
-- MXNet serves ~575k downloads/month and does not import
-- TorchServe is archived — its README states there will be no planned updates, bug fixes, new features or security patches
-- The strongest compatibility guarantee in the category belongs to none of the frameworks
-- paperswithcode.com is gone, so every framework adoption share sourced from it is unsupportable
-
-**[1.091.2 Face Detection & Recognition Libraries](/survey/1-091-2/)**
-
-- InsightFace's AUTO-DOWNLOADED models are non-commercial, while the package is MIT
-- dlib's 68-point landmark model cannot be used commercially, though dlib itself is Boost
-- The one permissive detection+recognition pair is YuNet (MIT weights) + SFace (Apache-2.0), both in OpenCV core
-
-**[1.115 Form & Validation Libraries](/survey/1-115/)**
-
-- Formik is slow-moving rather than abandoned: 2.4.8 and 2.4.9 shipped in November 2025, including a React 19 ref fix, against 19 million npm downloads a month
-
-**[1.205 LLM Evaluation & Testing Frameworks](/survey/1-205/)**
-
-- Ragas has 216 open PRs and zero merged since 2026-03-01, with a dated cause
-- DeepEval and Ragas are the same four columns under different names
-
-**[1.122 Monte Carlo Simulation Libraries](/survey/1-122/)**
-
-- chaospy's predicted collapse has not happened. It has had no commits since 2025-08-29 — close to a full year — yet 4.3.21 installs and runs on Python 3.14 with NumPy 2.5.
-- SciPy absorbed quasi-Monte Carlo, but that did not end the standalone design-of-experiments packages. sobol_seq is retired; pyDOE was revived under new maintainers and is now the more active of the two.
-- PyMC is built for inference rather than forward simulation — its own README describes it as focused on MCMC and variational inference — but it does ship forward sampling in pymc.draw and pymc.sample_prior_predictive, so calling it unusable for forward Monte Carlo overstates the case.
-- SALib has no NumFOCUS backing, despite being the default answer for sensitivity analysis in Python.
-- OpenTURNS has the widest copula coverage in this set by a wide margin — more than twenty families — but it is not the only option: chaospy ships Clayton, Gumbel, Joe, Student and Nataf copulas. scipy.stats has none.
-
-**[1.148 Morphological Analysis Libraries](/survey/1-148/)**
-
-- Swapping the model package inside one library changes WHICH FEATURE KEYS ARE EMITTED, not the values
-
-**[1.304 Procurement & Contracts](/survey/1-304/)**
-
-- Open-source procurement tooling exists and is specific: OCDS Cardinal ships 11 named red flags cited to corruption-risk literature, FollowTheMoney models Contract, ContractAward and CallForTenders directly, and OCDS 1.1.5 is itself the cross-jurisdiction standard with 134 datasets
+- lunr.py ranks with BM25, not TF-IDF
 
 **[1.022 Python Optimization Libraries](/survey/1-022/)**
 
@@ -78,6 +40,13 @@ Entries below say what is true now. They are deliberately not an errata list: a 
 - The OWASP Password Storage Cheat Sheet contradicts itself on bcrypt, and which sentence a reader lands on decides whether they migrate. Its bcrypt section is restrictive; its summary is not.
 - bcrypt is actively maintained and still ~3x argon2-cffi's downloads
 
+**[1.075 Deep Learning Frameworks](/survey/1-075/)**
+
+- MXNet serves ~575k downloads/month and does not import
+- TorchServe is archived — its README states there will be no planned updates, bug fixes, new features or security patches
+- The strongest compatibility guarantee in the category belongs to none of the frameworks
+- paperswithcode.com is gone, so every framework adoption share sourced from it is unsupportable
+
 **[1.088 Raster Geospatial Libraries](/survey/1-088/)**
 
 - The official GDAL package on PyPI is still source-only: 3.13.3 (2026-08-18) ships a single sdist and no wheel, as every 3.x release has. What makes `pip install` work for most people is that rasterio's wheels vendor a whole GDAL — now 3.12.4.
@@ -86,13 +55,44 @@ Entries below say what is true now. They are deliberately not an errata list: a 
 - xarray-spatial's revival held: 22 releases reached PyPI in 2026, through 0.10.17 (2026-07-17), with commits continuing to 2026-08-18. But 782 of the 800 commits it has taken since January are by one person, and 1.0.0 has still not shipped.
 - rasterio returns plain NumPy arrays and has never had native Dask support; its own concurrency documentation points readers to Dask as an outside tool for images that do not fit in memory.
 
-**[1.003 Full-text Search Libraries](/survey/1-003/)**
+**[1.091.2 Face Detection & Recognition Libraries](/survey/1-091-2/)**
 
-- lunr.py ranks with BM25, not TF-IDF
+- InsightFace's AUTO-DOWNLOADED models are non-commercial, while the package is MIT
+- dlib's 68-point landmark model cannot be used commercially, though dlib itself is Boost
+- The one permissive detection+recognition pair is YuNet (MIT weights) + SFace (Apache-2.0), both in OpenCV core
+
+**[1.115 Form & Validation Libraries](/survey/1-115/)**
+
+- Formik is slow-moving rather than abandoned: 2.4.8 and 2.4.9 shipped in November 2025, including a React 19 ref fix, against 19 million npm downloads a month
+
+**[1.122 Monte Carlo Simulation Libraries](/survey/1-122/)**
+
+- chaospy's predicted collapse has not happened. It has had no commits since 2025-08-29 — close to a full year — yet 4.3.21 installs and runs on Python 3.14 with NumPy 2.5.
+- SciPy absorbed quasi-Monte Carlo, but that did not end the standalone design-of-experiments packages. sobol_seq is retired; pyDOE was revived under new maintainers and is now the more active of the two.
+- PyMC is built for inference rather than forward simulation — its own README describes it as focused on MCMC and variational inference — but it does ship forward sampling in pymc.draw and pymc.sample_prior_predictive, so calling it unusable for forward Monte Carlo overstates the case.
+- SALib has no NumFOCUS backing, despite being the default answer for sensitivity analysis in Python.
+- OpenTURNS has the widest copula coverage in this set by a wide margin — more than twenty families — but it is not the only option: chaospy ships Clayton, Gumbel, Joe, Student and Nataf copulas. scipy.stats has none.
 
 **[1.130 Open Source CRM Platforms (Self-Hosted + Managed)](/survey/1-130/)**
 
 - EspoCRM installs on ordinary PHP shared hosting — upload the archive, create a MySQL, MariaDB or PostgreSQL database, run a browser wizard — while its own documentation still tells you to prefer a VPS or dedicated server in production.
 - Odoo.sh is not priced per user at all. It bills by worker, storage and staging environment, and its hosting price excludes the Odoo Enterprise license. The optionality sits in Odoo's Custom plan, whose single license covers Odoo Online, Odoo.sh and on-premise.
 - All four platforms sell managed hosting, so "self-hosted CRM" names a choice here rather than a requirement.
+
+**[1.148 Morphological Analysis Libraries](/survey/1-148/)**
+
+- Swapping the model package inside one library changes WHICH FEATURE KEYS ARE EMITTED, not the values
+
+**[1.182 Database Diff & Schema Comparison](/survey/1-182/)**
+
+- migra is officially deprecated — its README names 3.0.1663481299 (September 2022) the final release, and points to djrobstep/results as the successor
+
+**[1.205 LLM Evaluation & Testing Frameworks](/survey/1-205/)**
+
+- Ragas has 216 open PRs and zero merged since 2026-03-01, with a dated cause
+- DeepEval and Ragas are the same four columns under different names
+
+**[1.304 Procurement & Contracts](/survey/1-304/)**
+
+- Open-source procurement tooling exists and is specific: OCDS Cardinal ships 11 named red flags cited to corruption-risk literature, FollowTheMoney models Contract, ContractAward and CallForTenders directly, and OCDS 1.1.5 is itself the cross-jurisdiction standard with 134 datasets
 
