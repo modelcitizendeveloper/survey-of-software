@@ -5,6 +5,8 @@ date: 2026-08-26
 weight: 5
 ---
 
+# What Changed
+
 The [about page](/about) says this library is a living map rather than a textbook, and puts numbers on how fast it decays — 70-80% accurate at publication, 50-70% a year later. That claim is only worth anything if somebody is actually tending the map.
 
 This page is that record.
