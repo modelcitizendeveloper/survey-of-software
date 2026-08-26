@@ -13,7 +13,7 @@ This page is that record.
 
 | Published surveys | Re-verified in 30 days | in 90 days | Most recent check |
 |---|---|---|---|
-| 169 | 30 | 42 | 2026-08-26 |
+| 169 | 28 | 40 | 2026-08-26 |
 
 *Re-verified* means a claim was checked against a primary source — a package registry, a repository, a vendor's own documentation — not that the file was edited. Bulk edits touch every page at once and would make the whole library look freshly checked, which is exactly the kind of number this table exists to avoid.
 
@@ -21,11 +21,17 @@ Entries below say what is true now. They are deliberately not an errata list: a 
 
 ## August 2026
 
-*30 surveys re-verified.*
+*28 surveys re-verified.*
 
 **[1.003 Full-text Search Libraries](/survey/1-003/)**
 
 - lunr.py ranks with BM25, not TF-IDF
+
+**[1.010 Graph Analysis Libraries](/survey/1-010/)**
+
+- The performance gap between NetworkX and igraph is 6x-11x end to end — real, and an order of magnitude smaller than the 40x-250x figures that circulate for this category.
+- NetworkX's PageRank is not pure Python — it hands off to SciPy sparse matrices — so the algorithm most often used to demonstrate NetworkX's slowness is the one where it comes closest to the compiled libraries.
+- igraph reached 1.0.0 in October 2025 — its first stable major release after fifteen years at 0.x.
 
 **[1.022 Python Optimization Libraries](/survey/1-022/)**
 

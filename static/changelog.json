@@ -3,6 +3,7 @@
   "published_surveys": 169,
   "touched_30d": [
     "1-003",
+    "1-010",
     "1-022",
     "1-040",
     "1-047",
@@ -18,9 +19,6 @@
     "1-115",
     "1-122",
     "1-130",
-    "1-140",
-    "1-141",
-    "1-142",
     "1-148",
     "1-182",
     "1-200",
@@ -35,6 +33,7 @@
   ],
   "touched_90d": [
     "1-003",
+    "1-010",
     "1-022",
     "1-040",
     "1-047",
@@ -58,9 +57,6 @@
     "1-122",
     "1-130",
     "1-131",
-    "1-140",
-    "1-141",
-    "1-142",
     "1-148",
     "1-182",
     "1-200",
@@ -148,6 +144,24 @@
       "title": "Form & Validation Libraries",
       "category": "Library/Package Discovery",
       "finding": "Formik is slow-moving rather than abandoned: 2.4.8 and 2.4.9 shipped in November 2025, including a React 19 ref fix, against 19 million npm downloads a month",
+      "impact": "high",
+      "checked": "2026-08-26"
+    },
+    {
+      "stem": "1-010",
+      "code": "1.010",
+      "title": "Graph Analysis Libraries",
+      "category": "1.010-019 Graph & Network Algorithms",
+      "finding": "The performance gap between NetworkX and igraph is 6x-11x end to end \u2014 real, and an order of magnitude smaller than the 40x-250x figures that circulate for this category.",
+      "impact": "high",
+      "checked": "2026-08-26"
+    },
+    {
+      "stem": "1-010",
+      "code": "1.010",
+      "title": "Graph Analysis Libraries",
+      "category": "1.010-019 Graph & Network Algorithms",
+      "finding": "NetworkX's PageRank is not pure Python \u2014 it hands off to SciPy sparse matrices \u2014 so the algorithm most often used to demonstrate NetworkX's slowness is the one where it comes closest to the compiled libraries.",
       "impact": "high",
       "checked": "2026-08-26"
     },
@@ -256,6 +270,15 @@
       "title": "Full-text Search Libraries",
       "category": "Sorting & Searching Algorithms",
       "finding": "lunr.py ranks with BM25, not TF-IDF",
+      "impact": "medium",
+      "checked": "2026-08-26"
+    },
+    {
+      "stem": "1-010",
+      "code": "1.010",
+      "title": "Graph Analysis Libraries",
+      "category": "1.010-019 Graph & Network Algorithms",
+      "finding": "igraph reached 1.0.0 in October 2025 \u2014 its first stable major release after fifteen years at 0.x.",
       "impact": "medium",
       "checked": "2026-08-26"
     },
