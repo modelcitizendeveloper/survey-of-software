@@ -1,0 +1,12 @@
+{
+  "_comment": "Pinned, immutable, and public. A benchmark corpus that cannot be fetched again identically is not a method anyone can replicate. Every entry is an exact version; PyPI and npm never republish a version under the same name.",
+  "python": [
+    {"package": "requests", "version": "2.32.5"},
+    {"package": "jinja2",   "version": "3.1.6"},
+    {"package": "click",    "version": "8.1.8"}
+  ],
+  "javascript": [
+    {"package": "express", "version": "4.21.2", "dir": "lib"},
+    {"package": "axios",   "version": "1.7.9",  "dir": "lib"}
+  ]
+}
