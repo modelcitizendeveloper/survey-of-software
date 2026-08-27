@@ -6,47 +6,118 @@ instead is publish the method completely enough that someone else gets the same 
 
 **Replicate:** `./run.sh` (container) or `./run-host.sh` (same pins, no daemon needed).
 
-## Four cells, because two would have misled
+**Published at** <https://github.com/modelcitizendeveloper/survey-of-software/tree/main/harness/1-104-2-code-formatting> — survey 1.104.2 cites this page 71 times, so it has to be
+somewhere a reader can reach. A measurement nobody can get to is not evidence.
 
-| comparison | host 1× | container 1× | host 12× | container 12× | 1.104.2 says |
-|---|---|---|---|---|---|
-| ruff vs **black** | 16.5× | 20.5× | 21.0× | **32.3×** | 30-100× / 30× / 100× |
-| ruff vs **yapf** | 150.3× | 321.2× | **1171.7×** | 1120.2× | 100× |
-| ruff vs autopep8 | 94.7× | 157.6× | 515.0× | 495.2× | — |
-| biome vs **prettier** | 14.5× | 11.7× | 27.8× | **31.4×** | 25× |
-| dprint vs **prettier** | 7.2× | 6.8× | 11.5× | **14.3×** | 10-35× |
+## Read this before comparing these numbers to anyone else's
+
+**The first four cells were measured on aarch64, under WSL2, on a laptop.** Running the same
+harness on a standard x86 instance did not merely add a column — it showed that the headline
+ratio **depends on which architecture you are on**, by roughly a factor of two.
+
+These are Rust binaries measured against CPython, compiled differently for the two targets, so
+there was never any reason to expect one number to stand for both. Reporting a single figure
+was the error; neither measurement was. See `docs/map/17-the-evidence-ladder.md`.
+
+The x86 cells were produced by `run-droplet.sh` — create, run, collect, destroy — on a
+**DigitalOcean `s5-8vcpu-16gb-30gb` in `atl1`, 8 vCPU, AMD EPYC 9555P**. Eight vCPU to match
+the 8-core ARM box, so architecture is the only variable that moved. It costs about twenty
+cents an hour and the run takes under half of one.
+
+## Six cells, because four would have misled
+
+| comparison | aarch64 container x1 | aarch64 container x12 | aarch64 host x1 | aarch64 host x12 | x86_64 container x1 | x86_64 container x12 |
+|---|---|---|---|---|---|---|
+| ruff vs **black** | 20.5× | 32.3× | 16.5× | 21.0× | 20.0× | 16.1× |
+| ruff vs **autopep8** | 157.6× | 495.2× | 94.7× | 515.0× | 219.5× | 616.6× |
+| ruff vs **yapf** | 321.2× | 1120.2× | 150.3× | 1171.7× | 352.1× | 1052.7× |
+| biome vs **prettier** | 11.7× | 31.4× | 14.5× | 27.8× | 9.8× | 21.9× |
+| dprint vs **prettier** | 6.8× | 14.3× | 7.2× | 11.5× | 5.1× | 10.1× |
+
+  aarch64 container x1         1.2 MB  8 cores  unreported (ARM /proc/cpuinfo has no `
+  aarch64 container x12       14.4 MB  8 cores  unreported (ARM /proc/cpuinfo has no `
+  aarch64 host x1              1.2 MB  8 cores  aarch64
+  aarch64 host x12            14.4 MB  8 cores  aarch64
+  x86_64 container x1          1.2 MB  8 cores  AMD EPYC 9555P 64-Core Processor, digitalocean s5-8vcpu-16gb-30gb
+  x86_64 container x12        14.4 MB  8 cores  AMD EPYC 9555P 64-Core Processor, digitalocean s5-8vcpu-16gb-30gb
 
 1× is 1 MB / 59 Python files; 12× replicates the same corpus to 12 MB / 900 files.
 
-**The second axis was not planned and it changed the answer.** An earlier version of this
-harness ran on the host only, where ruff-vs-black measured 19.4× and 21.0× — apparently
-*stable* across a twelvefold size change, and comfortably short of the claimed 30×. That
-looked like a clean refutation. Adding the container cells shows the ratio climbing to
-32.3×, which reaches the bottom of the survey's stated range.
+### What the x86 run changed: the ratio is architecture-dependent
 
-So the verdict recorded against those claims was **corrected from `wrong` to
-`unverifiable`**. The ratio is a function of workload *and* environment, the survey states
-neither, and a claim that cannot be pinned down is not a claim that has been disproved.
+**Ruff's lead over Black is roughly twice as large on ARM as on x86**, once the corpus is big
+enough to show it. Same container, same pinned tools, same corpus, eight cores on both:
+
+| ruff vs black, container | 1 MB | 12 MB | direction |
+|---|---|---|---|
+| aarch64 | 20.5× | **32.3×** | grows |
+| x86_64 | 20.0× | **16.1×** | shrinks |
+
+They start in the same place and go opposite ways.
+
+#### This is not the laptop being noisy
+
+It is the obvious objection, and the ARM box invites it — it is a WSL2 laptop and its Black
+runs at 12 MB spanned 2.223 s to 3.599 s, a 62% spread across nine repetitions of identical
+work. The x86 droplet's spanned 2%.
+
+But the noise cancels, because **both tools are timed on the same machine in the same run** —
+it is an apples-to-apples ratio, and a machine that is 20% slow is 20% slow for Ruff and for
+Black alike. The test is whether the ratio moves when you compute it from the fastest runs,
+the median runs, or the slowest runs. If noise drove it, those three would disagree:
+
+| ruff vs black, 12 MB | min/min | med/med | max/max |
+|---|---|---|---|
+| aarch64 container | 29.3× | 32.3× | 25.6× |
+| x86_64 container | 16.6× | 16.1× | 15.6× |
+
+**The two ranges do not overlap on any estimator.** 25.6-32.3× against 15.6-16.6×. The gap
+is a property of the platform, not of the machine's mood.
+
+At 1 MB the two architectures are indistinguishable (aarch64 17.1-26.1×, x86_64 18.7-21.4×,
+overlapping). The divergence needs a corpus large enough for it to show.
+
+#### What is still open
+
+Our ARM cells come from a laptop under WSL2, so what is measured is *this ARM machine*, not
+ARM in general — the ratio is sound but a clean ARM server would pin it down. DigitalOcean
+offers no ARM instances at all, so that cell could not be filled here. **A Graviton or Ampere
+run is the outstanding work**, and until it exists the phrasing is "on the ARM machine we
+tested", not "on ARM".
+
+Two other findings hold on both architectures: ruff-vs-yapf climbs with corpus size
+(150-1172× on aarch64, 352-1053× on x86_64) and biome-vs-prettier roughly doubles
+(11.7-31.4× and 9.8-21.9×).
 
 ## What each claim comes to
 
-**`30-100×` and `30×` (ruff vs black) — unverifiable.** Spans 16.5× to 32.3× across the four
-cells. Touches the bottom of the range at one corner and nowhere else.
+**`30-100×` and `30×` (ruff vs black) — unverifiable, and now for a stated reason.** The
+measured range is 16.1× to 32.3×, and *which end you get depends on your architecture*. On
+the ARM machine at 12 MB it reaches 32.3×, clearing the claimed 30×. On x86 it never exceeds
+20.0×. A claim that names neither a workload nor a platform cannot be settled by a
+measurement that fixes both.
 
-**`100× faster than Black` — wrong.** Outside every cell. The highest measurement anywhere
-is 32.3×, and unlike the range claims this one cannot be rescued by a larger workload within
-what was tested — it is off by more than threefold at its most favourable point.
+**`100× faster than Black` — wrong.** Outside every cell on both architectures. The highest
+measurement anywhere is 32.3×.
 
-**`100×` (ruff vs yapf) — wrong, by understating.** Measured 150.3× to 1171.7×. The claim is
-below the minimum in every cell.
+**`100×` (ruff vs yapf) — wrong, by understating.** 150× to 1172× on aarch64 and 352× to
+1053× on x86_64. The claim is below the minimum in every cell on both architectures.
 
-**`25×` (biome vs prettier) and `10-35×` (dprint vs prettier) — unverifiable.** Both are
-size-dependent: 11.7×→31.4× and 6.8×→14.3×. Each is wrong at 1 MB and roughly right at
-12 MB, and neither claim says which.
+**`25×` (biome vs prettier) and `10-35×` (dprint vs prettier) — unverifiable.** Size-dependent
+on both architectures: biome 11.7×→31.4× on aarch64 and 9.8×→21.9× on x86_64. Each is wrong
+on a small codebase and roughly right on a large one, and neither claim says which. This is
+the defect the house rule targets — *a ratio with no workload is not publishable*.
 
-This is the house rule from `ADDING-RESEARCH.md` earning its keep on its first outing: *a
-ratio with no workload is not publishable.* Four of the five comparisons here turn on a
-workload the survey never states.
+**Astral's own `10-100×`** (vendor: astral-sh/ruff README) covers linters and formatters
+together. For formatting against Black, the measured 16-32× sits inside that range at the
+bottom on both architectures. The linter half is untested here.
+
+### The general lesson
+
+A benchmark that runs on one architecture does not know it is measuring one architecture. This
+one reported a ratio *growing* with codebase size for three days, and the growth was real on
+the machine that produced it and absent on the machine most readers have. Neither number was
+wrong. The single-platform *summary* was.
 
 ## Method
 
@@ -73,7 +144,8 @@ Everything below changes the answer, so all of it is stated rather than assumed.
 
 | | |
 |---|---|
-| CPU | aarch64, 8 cores |
+| Architecture | **aarch64** for cells 1-4, **x86_64** for cells 5-6 — see above |
+| CPU | 8 cores |
 | Memory | 11.7 GB |
 | Container | `python:3.12.11-slim-bookworm`, Node 22, Docker 29.0.0 |
 | Host | Ubuntu 24.04 under WSL2, Python 3.12.3 |

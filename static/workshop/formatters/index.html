@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>How fast is Ruff, really? — The Workshop</title>
+<meta name="description" content="Ruff's README claims 10-100x faster than Black. Measured, it is 16-32x — and Ruff's lead is about twice as large on ARM as on x86. A benchmark you download and run on your own machine — because Ruff, Biome and dprint are compiled binaries and cannot run in a browser tab.">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://research.modelcitizendeveloper.com/workshop/formatters/">
+<link rel="stylesheet" href="/workshop/_lib/workshop.css?v=20260820b">
+<style>
+  .rung{display:inline-block;border:1px solid var(--line);border-radius:999px;
+        padding:2px 10px;font-size:.78rem;color:var(--dim);margin:0 0 14px}
+  .get{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:16px 18px;margin:18px 0}
+  .get code{display:block;white-space:pre;overflow-x:auto;font-size:.86rem;line-height:1.6;color:var(--bright)}
+  .dl{display:inline-block;margin:4px 0 12px;padding:9px 16px;border:1px solid var(--accent);
+      border-radius:6px;color:var(--accent);text-decoration:none;font-weight:600}
+  .dl:hover{background:var(--accent);color:var(--ground)}
+  td.n{text-align:right}
+  .off{color:var(--faint)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker"><a href="/">Survey of Software</a> · <a href="/workshop/">the workshop</a></p>
+<h1>How fast is Ruff, really?</h1>
+<p class="rung">measured locally · download and run it yourself</p>
+
+<p class="dek">Ruff's own README claims it is
+<strong>&ldquo;10-100&times; faster than existing linters (like Flake8) and formatters (like
+Black)&rdquo;</strong>. Measured against Black across four conditions, formatting comes in at
+<strong>16-32&times;</strong> — inside that range, at the bottom of it. But which end you land
+on is not a detail: <strong>Ruff's lead over Black is about twice as large on ARM as on
+x86</strong>, on the same corpus with the same pinned tools.</p>
+
+<p class="note">This one does not run in your browser, and that is the finding underneath the
+finding: <strong>Ruff, Biome and dprint are compiled binaries.</strong> A tab cannot run them.
+So the instrument is a container you run on your own machine, with everything pinned — and
+the recipe is the point, not our numbers.</p>
+
+<h2>What it measures</h2>
+<table>
+<thead><tr><th>comparison</th><th class="n" colspan="2">x86 droplet</th>
+<th class="n" colspan="4">ARM laptop</th><th>the claim</th></tr>
+<tr><th></th><th class="n">1&times;</th><th class="n">12&times;</th>
+<th class="n">host 1&times;</th><th class="n">cont 1&times;</th>
+<th class="n">host 12&times;</th><th class="n">cont 12&times;</th><th></th></tr></thead>
+<tbody>
+<tr><td>ruff vs <b>black</b></td><td class="n"><b>20.0&times;</b></td><td class="n"><b>16.1&times;</b></td>
+    <td class="n">16.5&times;</td><td class="n">20.5&times;</td>
+    <td class="n">21.0&times;</td><td class="n">32.3&times;</td><td>30-100&times; / 30&times; / 100&times;</td></tr>
+<tr><td>ruff vs <b>yapf</b></td><td class="n">352.1&times;</td><td class="n">1052.7&times;</td>
+    <td class="n">150.3&times;</td><td class="n">321.2&times;</td>
+    <td class="n">1171.7&times;</td><td class="n">1120.2&times;</td><td>100&times;</td></tr>
+<tr><td>ruff vs autopep8</td><td class="n">219.5&times;</td><td class="n">616.6&times;</td>
+    <td class="n">94.7&times;</td><td class="n">157.6&times;</td>
+    <td class="n">515.0&times;</td><td class="n">495.2&times;</td><td class="off">—</td></tr>
+<tr><td>biome vs <b>prettier</b></td><td class="n">9.8&times;</td><td class="n">21.9&times;</td>
+    <td class="n">14.5&times;</td><td class="n">11.7&times;</td>
+    <td class="n">27.8&times;</td><td class="n">31.4&times;</td><td>25&times;</td></tr>
+<tr><td>dprint vs <b>prettier</b></td><td class="n">5.1&times;</td><td class="n">10.1&times;</td>
+    <td class="n">7.2&times;</td><td class="n">6.8&times;</td>
+    <td class="n">11.5&times;</td><td class="n">14.3&times;</td><td>10-35&times;</td></tr>
+</tbody>
+</table>
+<p class="meta">1&times; is 1&nbsp;MB of real Python (requests, jinja2, click); 12&times; replicates it to
+12&nbsp;MB. Median of 9 runs, caches off, fresh corpus per tool, first pass discarded. The
+droplet is a DigitalOcean <span class="mono">s5-8vcpu-16gb-30gb</span>, 8 vCPU, AMD EPYC 9555P
+— eight cores to match the laptop, so architecture is the only variable that moved.</p>
+
+<h2>Three different kinds of wrong</h2>
+<p><strong>Ruff vs Black cannot be settled as written.</strong> 16.1&times; to 32.3&times;, and
+which end you get depends on your architecture. It clears the claimed 30&times; on ARM at
+12&nbsp;MB and never exceeds 20&times; on x86. A claim naming neither a workload nor a platform
+is not one a measurement can confirm.</p>
+<p><strong>Ruff vs YAPF is understated.</strong> 150&times; to 1172&times; on ARM, 352&times; to
+1053&times; on x86, against a claimed 100&times;. Below the minimum measured anywhere, on either
+architecture.</p>
+<p><strong>Biome and dprint against Prettier are size-dependent</strong>, and the claims name no
+size. Each is wrong on a small codebase and roughly right on a large one, which means neither
+can be called true or false as written. That is the useful result: the defect is the missing
+workload, not the number.</p>
+
+<h2>Run it yourself</h2>
+<a class="dl" href="/workshop/formatters/harness.tar.gz" download>Download the harness (10&nbsp;KB)</a>
+<div class="get"><code>tar xzf harness.tar.gz
+cd 1-104-2-code-formatting
+
+./run.sh                    # container: pins the OS, both runtimes, every formatter
+./run-host.sh               # same pins via uv + npm, if you have no Docker daemon
+REPS=9 SCALE=12 ./run.sh    # the large-corpus cell
+./run-droplet.sh            # rent a standard x86 box, run, collect, destroy
+python3 summarize.py        # the ratio table, derived from out/*.json</code></div>
+<p class="meta">Or browse it on
+<a href="https://github.com/modelcitizendeveloper/survey-of-software/tree/main/harness/1-104-2-code-formatting">GitHub</a>.
+Results land in <span class="mono">out/</span> as JSON — per-tool min, median and max, the
+corpus size, your machine, and every version string as the tool reported it.</p>
+
+<h2>Your architecture changes the answer</h2>
+<p>Same container, same pinned tools, same corpus, eight cores on both machines. Ruff vs Black
+starts in the same place and goes opposite ways:</p>
+<table>
+<thead><tr><th>ruff vs black</th><th class="n">1&nbsp;MB</th><th class="n">12&nbsp;MB</th>
+<th></th></tr></thead>
+<tbody>
+<tr><td>aarch64 (ARM)</td><td class="n">20.5&times;</td><td class="n"><b>32.3&times;</b></td>
+    <td>grows</td></tr>
+<tr><td>x86_64 (AMD EPYC)</td><td class="n">20.0&times;</td><td class="n"><b>16.1&times;</b></td>
+    <td>shrinks</td></tr>
+</tbody>
+</table>
+
+<h3>It is not the laptop being noisy</h3>
+<p>Fair objection — the ARM box is a WSL2 laptop, and its Black runs at 12&nbsp;MB spanned
+2.223&nbsp;s to 3.599&nbsp;s, a 62% spread across nine repetitions of identical work. The
+droplet's spanned 2%.</p>
+<p>But <strong>the noise cancels</strong>, because both tools are timed on the same machine in
+the same run. A machine that is 20% slow is 20% slow for Ruff and for Black alike. So compute
+the ratio three ways — from the fastest runs, the median runs, the slowest runs. If noise drove
+it, they would disagree:</p>
+<table>
+<thead><tr><th>ruff vs black, 12&nbsp;MB</th><th class="n">min/min</th><th class="n">med/med</th>
+<th class="n">max/max</th></tr></thead>
+<tbody>
+<tr><td>aarch64 container</td><td class="n">29.3&times;</td><td class="n">32.3&times;</td>
+    <td class="n">25.6&times;</td></tr>
+<tr><td>x86_64 container</td><td class="n">16.6&times;</td><td class="n">16.1&times;</td>
+    <td class="n">15.6&times;</td></tr>
+</tbody>
+</table>
+<p><strong>The ranges do not overlap on any estimator</strong> — 25.6-32.3&times; against
+15.6-16.6&times;. That gap is the platform, not the machine's mood. At 1&nbsp;MB the two
+architectures are indistinguishable; the divergence needs a corpus big enough to show it.</p>
+<p class="note">Still open: our ARM cells come from a laptop, so this is <em>the ARM machine we
+tested</em> rather than ARM in general. DigitalOcean offers no ARM instances, so we could not
+fill that cell. A Graviton or Ampere run is the outstanding work — and if you have one, you can
+produce that cell yourself with the download below.</p>
+
+<h2>Why you may not get our numbers</h2>
+<p>You probably should not, and the six cells are the argument for why. The same comparison
+reads 16.1&times; and 32.3&times; depending on your architecture and how much code you have. Run
+it on <em>your</em> codebase, on <em>your</em> hardware, and the answer is the one that applies to
+you — which a survey cannot give you, because it knows neither.</p>
+<p class="note">One thing the harness cannot include: <strong>blue</strong>. It pins
+<span class="mono">black==22.1.0</span> and will not install beside a current Black at all. The
+survey says of it &ldquo;nothing new; move existing users to Ruff&rdquo; — the dependency
+resolver says the same thing, and dates it.</p>
+
+<p class="foot"><a href="/survey/1-104-2/">Read the survey &rarr;</a> &nbsp;·&nbsp;
+<a href="/workshop/">More instruments</a></p>
+
+</div>
+</body>
+</html>

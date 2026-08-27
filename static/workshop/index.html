@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>The Workshop — Survey of Software floor models</title>
-<meta name="description" content="Free working pages that measure a Survey of Software finding on your own data, in your own browser. The real Python libraries run in the tab; nothing is uploaded. Each one exists because building it verified — and corrected — the survey it demonstrates.">
+<meta name="description" content="Free working instruments that measure a Survey of Software finding on your own data — most in your browser, some as a container you download and run. The real Python libraries run in the tab; nothing is uploaded. Each one exists because building it verified — and corrected — the survey it demonstrates.">
 <meta name="color-scheme" content="dark">
 <link rel="canonical" href="https://research.modelcitizendeveloper.com/workshop/">
 <link rel="stylesheet" href="/workshop/_lib/workshop.css?v=20260820b">
@@ -25,15 +25,30 @@
 
 <p class="kicker"><a href="/">Survey of Software</a> · the workshop</p>
 <h1>The Workshop</h1>
-<p class="dek">Free working pages that measure a survey's finding on <em>your</em> data, in
-<em>your</em> browser. The real Python libraries run in the tab — nothing is uploaded — and
-every figure is measured while you wait, or marked in orange when it came from research
+<p class="dek">Free working instruments that measure a survey's finding on <em>your</em> data.
+Most run in <em>your</em> browser — the real Python libraries run in the tab, nothing is uploaded,
+and every figure is measured while you wait or marked in orange when it came from research
 instead.</p>
+<p class="dek">Some cannot. A compiled tool — Ruff, Biome, a Rust binary — will never run in a
+tab. Those ship as a
+<strong>container you download and run</strong>, pinned end to end, with the recipe published
+so the numbers are checkable rather than trusted.</p>
 <p class="note" style="margin:0 0 8px">Each of these exists because building it <strong>verified</strong> the
 survey it demonstrates: every claim became code that had to run, and what the code contradicted,
 the survey corrected. The page is the instrument; the survey has the workings.</p>
 
 <div class="cards">
+
+<a class="card" href="/workshop/formatters/">
+  <h2>how fast is Ruff, really?</h2>
+  <p class="finding">Ruff's README claims <strong>10-100&times; faster than Black</strong>.
+  Measured, it is <strong>16-32&times;</strong> — and which end you get is not a detail:
+  <strong>Ruff's lead is about twice as large on ARM as on x86</strong> once the codebase is big
+  enough to show it. Biome's &ldquo;25&times; over Prettier&rdquo; is wrong on a small codebase and
+  right on a large one, so that claim's defect is the workload it never states.</p>
+  <p class="meta"><b>Runs on your machine</b> · ruff, black, autopep8, yapf, prettier, biome, dprint
+  · <b>survey</b> 1.104.2 Code Formatting Libraries</p>
+</a>
 
 <a class="card" href="/workshop/muster/">
   <h2>muster</h2>

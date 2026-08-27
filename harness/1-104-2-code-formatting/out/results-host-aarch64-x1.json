@@ -1,0 +1,128 @@
+{
+  "corpus": {
+    "files": {
+      "python": 59,
+      "js": 65
+    },
+    "bytes": {
+      "python": 1056450,
+      "js": 203613
+    },
+    "spec": {
+      "_comment": "Pinned, immutable, and public. A benchmark corpus that cannot be fetched again identically is not a method anyone can replicate. Every entry is an exact version; PyPI and npm never republish a version under the same name.",
+      "python": [
+        {
+          "package": "requests",
+          "version": "2.32.5"
+        },
+        {
+          "package": "jinja2",
+          "version": "3.1.6"
+        },
+        {
+          "package": "click",
+          "version": "8.1.8"
+        }
+      ],
+      "javascript": [
+        {
+          "package": "express",
+          "version": "4.21.2",
+          "dir": "lib"
+        },
+        {
+          "package": "axios",
+          "version": "1.7.9",
+          "dir": "lib"
+        }
+      ]
+    },
+    "scale": 1
+  },
+  "machine": {
+    "cpu": "aarch64",
+    "cores": 8,
+    "memory": "12226648 kB",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-aarch64-with-glibc2.39",
+    "python": "3.12.3",
+    "in_container": false,
+    "arch": "aarch64"
+  },
+  "versions": {
+    "ruff": "ruff 0.16.5",
+    "black": "black, 26.5.1 (compiled: no)",
+    "autopep8": "autopep8 2.3.2 (pycodestyle: 2.14.0)",
+    "yapf": "yapf 0.43.0",
+    "prettier": "3.4.2",
+    "biome": "Version: 1.9.4",
+    "dprint": "dprint 0.47.6"
+  },
+  "ran_via": "host",
+  "reps": 9,
+  "results": [
+    {
+      "tool": "ruff",
+      "language": "python",
+      "reps": 9,
+      "median_s": 0.0456,
+      "min_s": 0.0348,
+      "max_s": 0.0694,
+      "failures": 0
+    },
+    {
+      "tool": "black",
+      "language": "python",
+      "reps": 9,
+      "median_s": 0.7503,
+      "min_s": 0.4627,
+      "max_s": 0.9592,
+      "failures": 0
+    },
+    {
+      "tool": "autopep8",
+      "language": "python",
+      "reps": 9,
+      "median_s": 4.3192,
+      "min_s": 3.7483,
+      "max_s": 6.0734,
+      "failures": 0
+    },
+    {
+      "tool": "yapf",
+      "language": "python",
+      "reps": 9,
+      "median_s": 6.8557,
+      "min_s": 6.1944,
+      "max_s": 7.3028,
+      "failures": 0
+    },
+    {
+      "tool": "prettier",
+      "language": "js",
+      "reps": 9,
+      "median_s": 0.674,
+      "min_s": 0.6418,
+      "max_s": 0.6961,
+      "failures": 0
+    },
+    {
+      "tool": "biome",
+      "language": "js",
+      "reps": 9,
+      "median_s": 0.0465,
+      "min_s": 0.0422,
+      "max_s": 0.0678,
+      "failures": 0
+    },
+    {
+      "tool": "dprint",
+      "language": "js",
+      "reps": 9,
+      "median_s": 0.0942,
+      "min_s": 0.0834,
+      "max_s": 0.1082,
+      "failures": 0
+    }
+  ],
+  "method": "fresh corpus per tool; caches disabled; first pass discarded so the timed runs are steady-state; median of N wall-clock seconds"
+}

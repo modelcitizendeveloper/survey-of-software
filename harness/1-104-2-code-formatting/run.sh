@@ -17,7 +17,10 @@ if docker info >/dev/null 2>&1; then
     # `docker run` does NOT inherit the host environment. Without these, REPS and SCALE
     # were silently ignored and every container run used the defaults — a "12x" run that
     # was actually 1x, which would then have been compared against a real 12x host run.
-    docker run --rm -e REPS -e SCALE -v "$PWD/out:/out" sos-fmt-bench:1.104.2 "$@"
+    # `--user` matters: without it the container writes results into the mounted volume as
+    # ROOT, and the next host run cannot overwrite its own output directory.
+    docker run --rm -e REPS -e SCALE --user "$(id -u):$(id -g)" \
+        -v "$PWD/out:/out" sos-fmt-bench:1.104.2 "$@"
 else
     echo "→ host path (docker daemon unavailable); same pins, uv + npx" >&2
     ./run-host.sh "$@"

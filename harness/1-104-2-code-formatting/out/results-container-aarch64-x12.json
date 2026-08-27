@@ -40,12 +40,13 @@
     "scale": 12
   },
   "machine": {
-    "cpu": "",
+    "cpu": "unreported (ARM /proc/cpuinfo has no `model name`)",
     "cores": 8,
     "memory": "12226648 kB",
     "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-aarch64-with-glibc2.36",
     "python": "3.12.11",
-    "in_container": true
+    "in_container": true,
+    "arch": "aarch64"
   },
   "versions": {
     "ruff": "ruff 0.16.5",

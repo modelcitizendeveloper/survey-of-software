@@ -1,12 +1,12 @@
 {
   "corpus": {
     "files": {
-      "python": 59,
-      "js": 65
+      "python": 900,
+      "js": 780
     },
     "bytes": {
-      "python": 1056450,
-      "js": 203613
+      "python": 12677400,
+      "js": 2441892
     },
     "spec": {
       "_comment": "Pinned, immutable, and public. A benchmark corpus that cannot be fetched again identically is not a method anyone can replicate. Every entry is an exact version; PyPI and npm never republish a version under the same name.",
@@ -37,89 +37,96 @@
         }
       ]
     },
-    "scale": 1
+    "scale": 12
   },
   "machine": {
-    "cpu": "aarch64",
+    "arch": "x86_64",
+    "cpu": "AMD EPYC 9555P 64-Core Processor",
     "cores": 8,
-    "memory": "12226648 kB",
-    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-aarch64-with-glibc2.39",
-    "python": "3.12.3",
-    "in_container": false
+    "memory": "16375624 kB",
+    "platform": "Linux-6.8.0-124-generic-x86_64-with-glibc2.36",
+    "python": "3.12.11",
+    "in_container": true,
+    "instance": {
+      "provider": "digitalocean",
+      "size": "s5-8vcpu-16gb-30gb",
+      "region": "atl1",
+      "image": "ubuntu-24-04-x64"
+    }
   },
   "versions": {
     "ruff": "ruff 0.16.5",
-    "black": "black, 26.5.1 (compiled: no)",
+    "black": "black, 26.5.1 (compiled: yes)",
     "autopep8": "autopep8 2.3.2 (pycodestyle: 2.14.0)",
     "yapf": "yapf 0.43.0",
     "prettier": "3.4.2",
     "biome": "Version: 1.9.4",
     "dprint": "dprint 0.47.6"
   },
-  "ran_via": "host",
+  "ran_via": "container",
   "reps": 9,
   "results": [
     {
       "tool": "ruff",
       "language": "python",
       "reps": 9,
-      "median_s": 0.0456,
-      "min_s": 0.0348,
-      "max_s": 0.0694,
+      "median_s": 0.0566,
+      "min_s": 0.0543,
+      "max_s": 0.0591,
       "failures": 0
     },
     {
       "tool": "black",
       "language": "python",
       "reps": 9,
-      "median_s": 0.7503,
-      "min_s": 0.4627,
-      "max_s": 0.9592,
+      "median_s": 0.911,
+      "min_s": 0.9012,
+      "max_s": 0.9234,
       "failures": 0
     },
     {
       "tool": "autopep8",
       "language": "python",
       "reps": 9,
-      "median_s": 4.3192,
-      "min_s": 3.7483,
-      "max_s": 6.0734,
+      "median_s": 34.901,
+      "min_s": 34.7791,
+      "max_s": 35.0059,
       "failures": 0
     },
     {
       "tool": "yapf",
       "language": "python",
       "reps": 9,
-      "median_s": 6.8557,
-      "min_s": 6.1944,
-      "max_s": 7.3028,
+      "median_s": 59.5806,
+      "min_s": 58.7187,
+      "max_s": 59.9641,
       "failures": 0
     },
     {
       "tool": "prettier",
       "language": "js",
       "reps": 9,
-      "median_s": 0.674,
-      "min_s": 0.6418,
-      "max_s": 0.6961,
+      "median_s": 2.2194,
+      "min_s": 2.1482,
+      "max_s": 2.2402,
       "failures": 0
     },
     {
       "tool": "biome",
       "language": "js",
       "reps": 9,
-      "median_s": 0.0465,
-      "min_s": 0.0422,
-      "max_s": 0.0678,
+      "median_s": 0.1015,
+      "min_s": 0.0998,
+      "max_s": 0.1059,
       "failures": 0
     },
     {
       "tool": "dprint",
       "language": "js",
       "reps": 9,
-      "median_s": 0.0942,
-      "min_s": 0.0834,
-      "max_s": 0.1082,
+      "median_s": 0.22,
+      "min_s": 0.2155,
+      "max_s": 0.2274,
       "failures": 0
     }
   ],

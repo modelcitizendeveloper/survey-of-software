@@ -178,12 +178,20 @@ def time_tool(name: str, lang: str, argv, reps: int) -> dict:
 
 
 def machine() -> dict:
+    """ARCHITECTURE IS NOT A FOOTNOTE HERE. These are Rust binaries measured against CPython,
+    and both sides of that comparison are compiled differently on aarch64 and x86_64. A ratio
+    from one architecture is not directly comparable with a ratio from the other, so the arch
+    is recorded explicitly and lands in the results filename rather than being buried in a
+    platform string.
+
+    `model name` only exists in /proc/cpuinfo on x86; ARM uses `Processor` or nothing at all,
+    which is why the first version recorded an empty CPU on the machine it ran on."""
     cpu = ""
     try:
         for line in Path("/proc/cpuinfo").read_text().splitlines():
-            if line.startswith("model name"):
-                cpu = line.split(":", 1)[1].strip()
-                break
+            for key in ("model name", "Model name", "Processor", "CPU implementer", "Hardware"):
+                if line.startswith(key):
+                    cpu = cpu or line.split(":", 1)[1].strip()
     except Exception:
         pass
     mem = ""
@@ -194,7 +202,8 @@ def machine() -> dict:
                 break
     except Exception:
         pass
-    return {"cpu": cpu or platform.processor(), "cores": os.cpu_count(),
+    return {"arch": platform.machine(),
+            "cpu": cpu or platform.processor() or "unreported", "cores": os.cpu_count(),
             "memory": mem, "platform": platform.platform(),
             "python": platform.python_version(),
             "in_container": Path("/.dockerenv").exists()}
@@ -232,8 +241,10 @@ def main() -> int:
     # so a container run silently overwrote the host numbers it was meant to be compared
     # against.
     via = os.environ.get("BENCH_ENV", "container")
+    # Architecture in the filename, so an x86 droplet run and an ARM laptop run can sit
+    # side by side instead of overwriting each other.
     dest = (Path(os.environ.get("OUT_DIR", "/out"))
-            / f"results-{via}-x{corpus['scale']}.json")
+            / f"results-{via}-{platform.machine()}-x{corpus['scale']}.json")
     dest.parent.mkdir(parents=True, exist_ok=True)
     dest.write_text(json.dumps(out, indent=2))
     print(json.dumps(out["results"], indent=2))
