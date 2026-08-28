@@ -7,7 +7,7 @@
    "name": "layer cake",
    "url": "https://research.modelcitizendeveloper.com/workshop/layer-cake/",
    "kind": "browser",
-   "finding": "FastAPI is Starlette plus a layer, and that layer costs 24.8 us per request \u2014 3.9x the framework it sits on. Almost everyone assumes the cost is the validation. It is 4% of it: pydantic decodes AND validates in 0.993 us while json.loads decodes and validates nothing in 1.579, because pydantic replaces the parser rather than sitting on top of it. Race them in your own tab, then paste your own JSON and watch checking beat not-checking.",
+   "finding": "FastAPI is Starlette plus a layer, and that layer costs 24.8 us per request \u2014 3.9x the framework it sits on. The usual explanation for the cost is the validation; it is 4% of it. pydantic decodes AND validates in 0.993 us while json.loads decodes and validates nothing in 1.579, because pydantic replaces the parser rather than sitting on top of it. Race them in your own tab, then paste your own JSON and watch checking beat not-checking.",
    "survey_code": "1.241",
    "survey_title": "Python Web Frameworks",
    "survey_url": "https://research.modelcitizendeveloper.com/survey/1-241/",

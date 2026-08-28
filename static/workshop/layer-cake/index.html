@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>layer cake — a floor model for Survey of Software 1.241</title>
-<meta name="description" content="FastAPI is Starlette plus a layer. Race them in your own browser to price the layer — then measure the thing everyone assumes the layer mostly is, and find it costs less than not doing it at all.">
+<meta name="description" content="FastAPI is Starlette plus a layer. Race them in your own browser to price the layer — then measure the validation inside it, and find it costs less than not validating at all.">
 <meta name="color-scheme" content="dark">
 <link rel="canonical" href="https://research.modelcitizendeveloper.com/workshop/layer-cake/">
 <link rel="stylesheet" href="/workshop/_lib/workshop.css?v=20260820b">
@@ -28,9 +28,9 @@
 <p class="kicker"><a href="/workshop/">Workshop</a> · floor model for <a href="/survey/1-241/">Survey of Software 1.241</a></p>
 <h1>layer cake</h1>
 <p class="dek">FastAPI is Starlette with a layer on top — the same library underneath, doing the same
-routing. That layer costs about four times the framework it sits on. Almost everyone assumes the cost
-is the validation. Race them both in this tab, then measure the validation, and watch that explanation
-fall over.</p>
+routing. That layer costs about four times the framework it sits on. The usual explanation for the
+cost is the validation. Race them both in this tab, then measure the validation on its own, and watch
+that explanation fall over.</p>
 <p class="note" style="margin:0 0 20px">Everything runs here, in your browser, on your machine. No
 server is involved — which is the point, and is explained below.</p>
 
@@ -90,13 +90,14 @@ survey</em> — that needs a socket and a load generator, and it is deferred.</p
 is stepped by hand. It completes on the first step: a handler that returns a dict never suspends. If one
 ever awaited real I/O, this page would raise rather than quietly report a wrong number.</p>
 
-<h2>The part everyone gets backwards</h2>
-<p class="plain">The story goes: reading the message is the work, and checking it is extra work on top.
-So validation must be a tax, and a hot path should skip it.</p>
-<p class="plain">Measure it and the story collapses. Checking the message <em>and</em> reading it is
-faster than reading it without checking — because the checking library reads it in one careful pass in
-compiled code, while the standard library builds an entire throwaway object first. Validation does not
-sit on top of the parser. It <strong>replaces</strong> it.</p>
+<h2>Where the cost is not</h2>
+<p class="plain">If reading the message is the work, then checking it is extra work on top — so
+validation is a tax, and a hot path should skip it. That is the reasoning, and measuring it takes it
+apart.</p>
+<p class="plain">Checking the message <em>and</em> reading it is faster than reading it without
+checking. The checking library reads it in one pass in compiled code; the standard library builds an
+entire throwaway object first. Validation does not sit on top of the parser. It
+<strong>replaces</strong> it.</p>
 <p class="eng">Both are compiled. <code>pydantic.BaseModel.model_validate_json</code> parses in Rust and
 constructs the validated object in a single pass, never materializing the intermediate dict that
 <code>json.loads</code> spends its time on. The direction of this result is structural; the exact ratio
@@ -111,7 +112,7 @@ depends on your machine, which is why you are about to measure it on yours.</p>
 
 <h2>And what the checking is actually for</h2>
 <p class="plain">Speed is the least interesting thing about it. The reason to describe the shape you
-expect is that anything not matching gets refused before your code runs — with a message saying which
+expect is that anything not matching is refused before your code runs — with a message saying which
 field and why.</p>
 <div class="panel">
   <p><button id="cgo">Send it something wrong</button> <span id="cstatus" class="note"></span></p>
@@ -224,7 +225,8 @@ What the survey established (aarch64, CPython 3.12.3, no socket, no server)
 
   Separately: a plain \`def\` handler in FastAPI goes to a thread pool that holds 40.
   Forty concurrent def handlers finish in one batch; the 41st doubles the group's
-  latency. That is a limit on concurrency, not throughput.
+  latency. A limit on concurrency, not throughput — 40 in flight is 40 requests per
+  second if each takes a second.
 
   NOT measured, here or in the survey: throughput under concurrent load. That needs
   a socket and a load generator, and the published numbers that claim it are usually

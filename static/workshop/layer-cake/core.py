@@ -4,8 +4,8 @@ One copy, two readers: the page fetches it into Pyodide, and the survey's native
 (01-discovery/S2-comprehensive/bench/) measures the same thing the same way. Timing comes
 from /workshop/_lib/workshop.py. Every function the page calls returns JSON.
 
-FastAPI is Starlette plus a layer. This measures the layer, and then measures the thing
-everyone assumes the layer mostly is — validation — to show that it is not.
+FastAPI is Starlette plus a layer. This measures the layer, and then measures the validation
+inside it, which turns out to be a small fraction of the cost.
 
 WHY THERE IS NO EVENT LOOP HERE. Driving an ASGI app normally means loop.run_until_complete,
 and a browser tab has no loop you are allowed to run: Pyodide's loop is the page's. But a
@@ -129,9 +129,9 @@ def _pydantic_model():
 def validation(payload_json=None):
     """Decode-and-validate against decode-only, on the same bytes.
 
-    The comparison people assume is parse-then-check. That is not what happens: pydantic v2
-    parses in compiled code in ONE pass and never builds the intermediate dict that the
-    standard library spends its time on.
+    Parse-then-check is not the sequence that runs: pydantic v2 parses in compiled code in
+    ONE pass and never builds the intermediate dict that the standard library spends its
+    time on.
     """
     raw = (payload_json or json.dumps(_SAMPLE)).encode()
     try:
