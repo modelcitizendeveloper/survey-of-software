@@ -457,10 +457,11 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.240-249: Infrastructure & Platform Engineering
 
-**Completed: 2/2**
+**Completed: 3/3**
 
 - ✅ [**1.240** Container Networking & Service Mesh](/survey/1-240) - Cilium, Calico, Istio, Linkerd, Envoy, Flannel, Consul Connect
 - ✅ [**1.241** Python Web Frameworks](/survey/1-241)
+- ✅ [**1.242** ASGI & WSGI Application Servers](/survey/1-242)
 
 ---
 
@@ -488,8 +489,8 @@ a time as each is completed.
 
 ## Research Status
 
-**Total Defined**: 262 research slots
-**Completed**: 170 pieces (65%)
+**Total Defined**: 263 research slots
+**Completed**: 171 pieces (65%)
 **Remaining**: 92 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
