@@ -457,15 +457,16 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.240-249: Infrastructure & Platform Engineering
 
-**Completed: 1/1**
+**Completed: 2/2**
 
 - ✅ [**1.240** Container Networking & Service Mesh](/survey/1-240) - Cilium, Calico, Istio, Linkerd, Envoy, Flannel, Consul Connect
+- ✅ [**1.241** Python Web Frameworks](/survey/1-241)
 
 ---
 
 ## 1.300-309: Civic & Government Data
 
-**Completed: 4/4**
+**Completed: 4/5**
 
 - ✅ [**1.300** Public Finance Modeling](/survey/1-300) - Revenue forecasting, budget planning, fiscal analysis
 - ✅ [**1.301** Government Data Access](/survey/1-301) - Open data APIs, FOIA tools, data.gov integration
@@ -487,9 +488,9 @@ a time as each is completed.
 
 ## Research Status
 
-**Total Defined**: 259 research slots
-**Completed**: 166 pieces (64%)
-**Remaining**: 93 pieces
+**Total Defined**: 262 research slots
+**Completed**: 170 pieces (65%)
+**Remaining**: 92 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
