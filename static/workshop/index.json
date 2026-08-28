@@ -1,14 +1,24 @@
 {
- "title": "The Workshop — Survey of Software floor models",
+ "title": "The Workshop \u2014 Survey of Software floor models",
  "url": "https://research.modelcitizendeveloper.com/workshop/",
- "description": "Free working instruments that measure a Survey of Software finding on your own data. Most run in your browser — the real Python libraries run in the tab, nothing is uploaded. Some are compiled tools that never could, and ship as a pinned container you download and run.",
+ "description": "Free working instruments that measure a Survey of Software finding on your own data. Most run in your browser \u2014 the real Python libraries run in the tab, nothing is uploaded. Some are compiled tools that never could, and ship as a pinned container you download and run.",
  "models": [
+  {
+   "name": "layer cake",
+   "url": "https://research.modelcitizendeveloper.com/workshop/layer-cake/",
+   "kind": "browser",
+   "finding": "FastAPI is Starlette plus a layer, and that layer costs 24.8 us per request \u2014 3.9x the framework it sits on. Almost everyone assumes the cost is the validation. It is 4% of it: pydantic decodes AND validates in 0.993 us while json.loads decodes and validates nothing in 1.579, because pydantic replaces the parser rather than sitting on top of it. Race them in your own tab, then paste your own JSON and watch checking beat not-checking.",
+   "survey_code": "1.241",
+   "survey_title": "Python Web Frameworks",
+   "survey_url": "https://research.modelcitizendeveloper.com/survey/1-241/",
+   "libraries": "fastapi, starlette, pydantic"
+  },
   {
    "name": "how fast is Ruff, really?",
    "url": "https://research.modelcitizendeveloper.com/workshop/formatters/",
    "kind": "local",
    "download": "https://research.modelcitizendeveloper.com/workshop/formatters/harness.tar.gz",
-   "finding": "Astral's README claims Ruff is 10-100x faster than existing linters and formatters. Measured for formatting against Black it is 16-32x — and which end you get depends on your ARCHITECTURE. On aarch64 the ratio grows with codebase size, 20.5x at 1 MB to 32.3x at 12 MB; on x86_64 it shrinks, 20.0x to 16.1x. The ranges do not overlap on any estimator (min, median or max), so it is a platform effect rather than measurement noise. Ruff vs YAPF goes the other way: 150-1172x against a claimed 100x. And Biome's 25x over Prettier is wrong on a small codebase and right on a large one, so that claim's defect is the workload it never states. A compiled tool cannot run in a browser tab, so this is a pinned container you download and run.",
+   "finding": "Astral's README claims Ruff is 10-100x faster than existing linters and formatters. Measured for formatting against Black it is 16-32x \u2014 and which end you get depends on your ARCHITECTURE. On aarch64 the ratio grows with codebase size, 20.5x at 1 MB to 32.3x at 12 MB; on x86_64 it shrinks, 20.0x to 16.1x. The ranges do not overlap on any estimator (min, median or max), so it is a platform effect rather than measurement noise. Ruff vs YAPF goes the other way: 150-1172x against a claimed 100x. And Biome's 25x over Prettier is wrong on a small codebase and right on a large one, so that claim's defect is the workload it never states. A compiled tool cannot run in a browser tab, so this is a pinned container you download and run.",
    "survey_code": "1.104.2",
    "survey_title": "Code Formatting Libraries",
    "survey_url": "https://research.modelcitizendeveloper.com/survey/1-104-2/",
@@ -17,7 +27,7 @@
   {
    "name": "muster",
    "url": "https://research.modelcitizendeveloper.com/workshop/muster/",
-   "finding": "Kill a running job with a button labeled Deploy and watch one lane pay for the same work twice. Runs a real photo-ingestion pipeline on your own photos — EXIF, thumbnail, downscale, then a tag and a caption per shot — and prices the vision call it never makes, where shrinking the image first saves 43% on one model tier and nothing at all on the other.",
+   "finding": "Kill a running job with a button labeled Deploy and watch one lane pay for the same work twice. Runs a real photo-ingestion pipeline on your own photos \u2014 EXIF, thumbnail, downscale, then a tag and a caption per shot \u2014 and prices the vision call it never makes, where shrinking the image first saves 43% on one model tier and nothing at all on the other.",
    "survey_code": "1.200",
    "survey_title": "LLM Orchestration Frameworks",
    "survey_url": "https://research.modelcitizendeveloper.com/survey/1-200/",
@@ -27,17 +37,17 @@
   {
    "name": "cache me if you can",
    "url": "https://research.modelcitizendeveloper.com/workshop/cache-me/",
-   "finding": "A cache is paid for by its misses. The standard library's lru_cache answers a hit in 0.03 µs; cachetools in 0.5; diskcache in 4 — and then charges 350 µs for the write after a miss, so a 100 µs function needs 82% hits to break even. Pick your traffic's shape: LRU scores 0% on a loop, at any size up to half.",
+   "finding": "A cache is paid for by its misses. The standard library's lru_cache answers a hit in 0.03 \u00b5s; cachetools in 0.5; diskcache in 4 \u2014 and then charges 350 \u00b5s for the write after a miss, so a 100 \u00b5s function needs 82% hits to break even. Pick your traffic's shape: LRU scores 0% on a loop, at any size up to half.",
    "survey_code": "1.047",
    "survey_title": "Caching Libraries",
    "survey_url": "https://research.modelcitizendeveloper.com/survey/1-047/",
-   "libraries": "functools.lru_cache, cachetools, diskcache, redis-py → Valkey / Redis, pymemcache",
+   "libraries": "functools.lru_cache, cachetools, diskcache, redis-py \u2192 Valkey / Redis, pymemcache",
    "kind": "browser"
   },
   {
    "name": "you want this sorted how?",
    "url": "https://research.modelcitizendeveloper.com/workshop/sorted-how/",
-   "finding": "Keep 100,000 keys in order, one insert at a time: pure-Python sortedcontainers beats the standard library's C by ten times — and if you only needed the order at the end, or just the minimum, the standard library beats it back. A race you start, with bars arriving in finishing order.",
+   "finding": "Keep 100,000 keys in order, one insert at a time: pure-Python sortedcontainers beats the standard library's C by ten times \u2014 and if you only needed the order at the end, or just the minimum, the standard library beats it back. A race you start, with bars arriving in finishing order.",
    "survey_code": "1.040",
    "survey_title": "Advanced Collections",
    "survey_url": "https://research.modelcitizendeveloper.com/survey/1-040/",
@@ -47,7 +57,7 @@
   {
    "name": "JSONic rituals",
    "url": "https://research.modelcitizendeveloper.com/workshop/jsonic-rituals/",
-   "finding": "The famous \"orjson is 6× faster\" is a writing number — reading is about 2×, and the fastest reader is the one that validates. Paste your own JSON: both rituals are timed on it, and the page infers a msgspec.Struct from your data and shows what validation catches.",
+   "finding": "The famous \"orjson is 6\u00d7 faster\" is a writing number \u2014 reading is about 2\u00d7, and the fastest reader is the one that validates. Paste your own JSON: both rituals are timed on it, and the page infers a msgspec.Struct from your data and shows what validation catches.",
    "survey_code": "1.056",
    "survey_title": "JSON Libraries",
    "survey_url": "https://research.modelcitizendeveloper.com/survey/1-056/",
@@ -57,7 +67,7 @@
   {
    "name": "compresso",
    "url": "https://research.modelcitizendeveloper.com/workshop/compresso/",
-   "finding": "One answer for the whole speed-versus-size range except the two far ends — and the read-back speed does not move whichever level wrote the file. Drop your own file on the full curve: every codec, every setting, each library's default ringed.",
+   "finding": "One answer for the whole speed-versus-size range except the two far ends \u2014 and the read-back speed does not move whichever level wrote the file. Drop your own file on the full curve: every codec, every setting, each library's default ringed.",
    "survey_code": "1.050",
    "survey_title": "Compression Libraries",
    "survey_url": "https://research.modelcitizendeveloper.com/survey/1-050/",
@@ -67,7 +77,7 @@
   {
    "name": "qrkadelic",
    "url": "https://research.modelcitizendeveloper.com/workshop/qrkadelic/",
-   "finding": "\"You can cover 30% of a QR code\" is off by roughly three times. Grow a logo through the middle of your own code until it breaks, then point your phone at the screen — the camera you own is the second instrument.",
+   "finding": "\"You can cover 30% of a QR code\" is off by roughly three times. Grow a logo through the middle of your own code until it breaks, then point your phone at the screen \u2014 the camera you own is the second instrument.",
    "survey_code": "1.080.1",
    "survey_title": "QR Code Generation",
    "survey_url": "https://research.modelcitizendeveloper.com/survey/1-080-1/",
@@ -77,7 +87,7 @@
   {
    "name": "sortie",
    "url": "https://research.modelcitizendeveloper.com/workshop/sortie/",
-   "finding": "Sorting is solved. Choosing how to sort is not — the real sorting libraries raced on your machine, and which one wins depends on your data's shape and size.",
+   "finding": "Sorting is solved. Choosing how to sort is not \u2014 the real sorting libraries raced on your machine, and which one wins depends on your data's shape and size.",
    "survey_code": "1.001",
    "survey_title": "Sorting Libraries",
    "survey_url": "https://research.modelcitizendeveloper.com/survey/1-001/",

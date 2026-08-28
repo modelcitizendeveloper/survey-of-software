@@ -60,6 +60,16 @@ the survey corrected. The page is the instrument; the survey has the workings.</
   <p class="meta"><b>Survey 1.200 — LLM Orchestration Frameworks</b> · Pillow, pillow-heif, IndexedDB, Web Workers</p>
 </a>
 
+<a class="card" href="/workshop/layer-cake/">
+  <h2>layer cake</h2>
+  <p class="finding">FastAPI <em>is</em> Starlette plus a layer, and the layer costs <strong>3.9&times;</strong>
+  the framework it sits on. Almost everyone assumes that cost is the validation. It is <strong>4%</strong>
+  of it — and checking a message is <em>faster</em> than reading it without checking, because
+  <code>pydantic</code> replaces the parser instead of sitting on top of it. Race them in your tab, then
+  paste your own JSON.</p>
+  <p class="meta"><b>Survey 1.241 — Python Web Frameworks</b> &middot; fastapi, starlette, pydantic</p>
+</a>
+
 <a class="card" href="/workshop/cache-me/">
   <h2>cache me if you can</h2>
   <p class="finding">A cache is paid for by its misses. The standard library's <code>lru_cache</code> answers

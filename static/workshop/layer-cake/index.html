@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>layer cake — a floor model for Survey of Software 1.241</title>
+<meta name="description" content="FastAPI is Starlette plus a layer. Race them in your own browser to price the layer — then measure the thing everyone assumes the layer mostly is, and find it costs less than not doing it at all.">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://research.modelcitizendeveloper.com/workshop/layer-cake/">
+<link rel="stylesheet" href="/workshop/_lib/workshop.css?v=20260820b">
+<style>
+  .bar .lbl{width:230px}
+  .race .bar{margin:9px 0}
+  .race .fill{transition:width .45s ease-out}
+  .big{font-size:1.6rem;font-weight:700;color:var(--bright);line-height:1.2}
+  .three{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}
+  @media (max-width:700px){.three{grid-template-columns:1fr}.bar .lbl{width:150px}}
+  textarea{width:100%;min-height:92px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;
+    font-size:.85rem;background:#0d1117;color:#c9d1d9;border:1px solid #30363d;border-radius:6px;padding:9px}
+  .verdict{font-size:1.05rem;font-weight:600;color:var(--bright);margin:10px 0 0}
+  .caught td{padding:3px 12px 3px 0;font-size:.9rem}
+  .caught code{color:#ff9e64}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker"><a href="/workshop/">Workshop</a> · floor model for <a href="/survey/1-241/">Survey of Software 1.241</a></p>
+<h1>layer cake</h1>
+<p class="dek">FastAPI is Starlette with a layer on top — the same library underneath, doing the same
+routing. That layer costs about four times the framework it sits on. Almost everyone assumes the cost
+is the validation. Race them both in this tab, then measure the validation, and watch that explanation
+fall over.</p>
+<p class="note" style="margin:0 0 20px">Everything runs here, in your browser, on your machine. No
+server is involved — which is the point, and is explained below.</p>
+
+<div class="modes" role="group" aria-label="Reading mode">
+  <button id="m-plain" aria-pressed="true">Plain</button>
+  <button id="m-eng" aria-pressed="false">Engineering</button>
+</div>
+<p class="note" id="mode-hint">Plain language. Switch to Engineering for versions, byte counts and the measurements behind each claim.</p>
+
+<h2>The whole answer, first</h2>
+<p class="plain">Three numbers. The first is what the extra layer costs you. The second is what people
+think it is spent on. The third is what it is actually spent on.</p>
+<p class="eng">Measured for the survey on one machine: aarch64, CPython 3.12.3, seven rounds of 2,000
+requests, minimum of per-round means, no socket and no server. The race below re-measures the first two
+on yours.</p>
+<div class="panel">
+  <div class="three">
+    <div><p class="kicker" style="margin:0 0 4px">the layer costs</p><p class="big">24.8 µs</p>
+      <p class="note" style="margin:0"><strong>per request.</strong> FastAPI 33.35 µs against Starlette's
+      8.55 — and FastAPI <em>is</em> Starlette plus that layer.</p></div>
+    <div><p class="kicker" style="margin:0 0 4px">validation costs</p><p class="big">1.0 µs</p>
+      <p class="note" style="margin:0"><strong>4% of it.</strong> Not the explanation. Reading the same
+      message <em>without</em> checking it takes longer — 1.58 µs.</p></div>
+    <div><p class="kicker" style="margin:0 0 4px">so the layer is</p><p class="big">the other 96%</p>
+      <p class="note" style="margin:0">Dependency injection, response-model handling, and FastAPI's own
+      routing sitting on top of Starlette's.</p></div>
+  </div>
+  <p class="note" style="margin:12px 0 0"><strong>What to do about it: usually nothing.</strong> Against a
+  5 ms database query, 24.8 µs is half of one percent and invisible. It matters when the handler answers
+  from memory, and then the fix is not a faster validator — that is the smallest part. This page exists
+  because the wrong fix is the popular one.</p>
+</div>
+
+<div class="panel">
+  <p class="note" style="margin:0 0 10px"><strong>The rule of this page:</strong> every figure below is
+  measured on your machine while you wait, by the frameworks themselves running in this tab. Where a
+  number came from the survey's own bench instead, it says so in orange.</p>
+  <p><button id="go">Race them</button> <span id="status" class="note"></span></p>
+  <div class="race" id="race"></div>
+  <p class="verdict" id="verdict"></p>
+  <p class="note eng" id="env"></p>
+</div>
+
+<h2>Why there is no server on this page</h2>
+<p class="plain">A web framework normally sits behind a program that owns the network connection. That
+program is a separate choice, and mixing the two is how almost every published comparison of these
+frameworks goes wrong: "FastAPI is faster than Flask" is usually FastAPI-plus-one-server against
+Flask-plus-a-different-one. Two things changed, one number reported.</p>
+<p class="plain">So this page removes the server entirely and hands the request straight to the
+framework. What you are timing is routing, reading the number out of the address, running the handler,
+and turning the answer back into text — the framework, and nothing underneath it.</p>
+<p class="eng">The ASGI callable is driven directly with a scope dict. No socket, no uvicorn, no load
+generator, so no server variable to hold constant. This is exactly survey 1.241's scope; the server is
+survey 1.242's. It also means <em>throughput under concurrency is not measured here or in the
+survey</em> — that needs a socket and a load generator, and it is deferred.</p>
+<p class="eng note">A browser tab has no event loop you are allowed to block, so the request coroutine
+is stepped by hand. It completes on the first step: a handler that returns a dict never suspends. If one
+ever awaited real I/O, this page would raise rather than quietly report a wrong number.</p>
+
+<h2>The part everyone gets backwards</h2>
+<p class="plain">The story goes: reading the message is the work, and checking it is extra work on top.
+So validation must be a tax, and a hot path should skip it.</p>
+<p class="plain">Measure it and the story collapses. Checking the message <em>and</em> reading it is
+faster than reading it without checking — because the checking library reads it in one careful pass in
+compiled code, while the standard library builds an entire throwaway object first. Validation does not
+sit on top of the parser. It <strong>replaces</strong> it.</p>
+<p class="eng">Both are compiled. <code>pydantic.BaseModel.model_validate_json</code> parses in Rust and
+constructs the validated object in a single pass, never materializing the intermediate dict that
+<code>json.loads</code> spends its time on. The direction of this result is structural; the exact ratio
+depends on your machine, which is why you are about to measure it on yours.</p>
+<div class="panel">
+  <p><label for="payload">Paste your own JSON object — a real API response is ideal</label></p>
+  <textarea id="payload" spellcheck="false">{"id": 42, "name": "item", "tags": ["a","b","c"], "price": 9.99, "active": true}</textarea>
+  <p style="margin:10px 0 0"><button id="vgo">Measure both on this</button> <span id="vstatus" class="note"></span></p>
+  <div class="race" id="vrace"></div>
+  <p class="verdict" id="vverdict"></p>
+</div>
+
+<h2>And what the checking is actually for</h2>
+<p class="plain">Speed is the least interesting thing about it. The reason to describe the shape you
+expect is that anything not matching gets refused before your code runs — with a message saying which
+field and why.</p>
+<div class="panel">
+  <p><button id="cgo">Send it something wrong</button> <span id="cstatus" class="note"></span></p>
+  <div id="caught"></div>
+</div>
+
+<h2>Take this to an AI</h2>
+<div class="panel">
+  <p class="note" style="margin:0 0 8px">Everything this page measured on your machine, plus what the
+  survey established, in a block you can paste into any assistant.</p>
+  <pre id="envelope" style="white-space:pre-wrap;font-size:.82rem"></pre>
+  <p><button id="copy">Copy</button> <span id="copied" class="note"></span></p>
+</div>
+
+<div id="newsletter"></div>
+<p class="foot">Floor model for <a href="/survey/1-241/">Survey of Software 1.241 — Python Web
+Frameworks</a>. The survey's own measurements, the recipe and the raw numbers are in its
+<code>S2-comprehensive/bench/</code>. Everything on this page ran in your browser.</p>
+
+</div>
+<script src="/workshop/_lib/workshop.js"></script>
+<script>
+const W = Workshop, $ = id => document.getElementById(id);
+W.mode("layer-cake");
+let core = null, lastRace = null, lastVal = null, ver = null;
+
+const fmtUs = us => us >= 1000 ? (us/1000).toFixed(2) + " ms" : us >= 10 ? us.toFixed(1) + " µs" : us.toFixed(2) + " µs";
+
+async function ensure(status) {
+  if (core) return core;
+  const py = await W.boot({ version: "314.0.5", packages: ["fastapi", "starlette", "pydantic"], status,
+    statusText: { download: "Downloading CPython (WebAssembly)… first time only, then cached.",
+                  packages: "Loading FastAPI, Starlette and Pydantic…" } });
+  core = await W.loadModules(py, { workshop: "/workshop/_lib/workshop.py", core: "core.py" });
+  ver = W.call(core, "versions");
+  $("env").textContent = `Measured here: Python ${ver.python}, fastapi ${ver.fastapi}, starlette ${ver.starlette}, pydantic ${ver.pydantic}, in WebAssembly.`;
+  return core;
+}
+
+$("go").onclick = () => W.guarded("race", async () => {
+  const st = $("status");
+  try {
+    const c = await ensure(st);
+    st.textContent = "Racing…";
+    lastRace = W.call(c, "race");
+    const max = Math.max(lastRace.fastapi.us, lastRace.starlette.us);
+    W.bars($("race"), [
+      { label: "Starlette — the library underneath", value: lastRace.starlette.us, max, display: fmtUs(lastRace.starlette.us) },
+      { label: "FastAPI — Starlette plus the layer", value: lastRace.fastapi.us, max, display: fmtUs(lastRace.fastapi.us) },
+    ]);
+    const m = lastRace._summary.multiple, L = lastRace._summary.layer_us;
+    $("verdict").textContent = `The layer costs ${fmtUs(L)} per request — ${m.toFixed(1)}× the framework it sits on. Both answered 200 with the same ${lastRace.fastapi.bytes} bytes.`;
+    st.textContent = "";
+    envelope();
+  } catch (e) { st.textContent = "Could not run: " + e.message; }
+});
+
+$("vgo").onclick = () => W.guarded("val", async () => {
+  const st = $("vstatus");
+  try {
+    const c = await ensure(st);
+    st.textContent = "Measuring…";
+    lastVal = W.call(c, "validation", $("payload").value);
+    if (lastVal.error) { st.textContent = lastVal.error; $("vrace").innerHTML = ""; $("vverdict").textContent = ""; return; }
+    const rows = Object.entries(lastVal.rows);
+    const max = Math.max(...rows.map(([, v]) => v.us));
+    W.bars($("vrace"), rows.map(([k, v]) => ({ label: k, value: v.us, max, display: fmtUs(v.us) })));
+    $("vverdict").textContent = lastVal.pydantic_faster
+      ? `On your ${lastVal.bytes} bytes and ${lastVal.fields} fields: checking it AND reading it is ${lastVal.ratio.toFixed(2)}× faster than reading it without checking.`
+      : `On your ${lastVal.bytes} bytes, reading without checking came out ahead by ${(1/lastVal.ratio).toFixed(2)}× — worth knowing, and worth re-running, since short payloads are where the two are closest.`;
+    st.textContent = "";
+    envelope();
+  } catch (e) { st.textContent = "Could not run: " + e.message; }
+});
+
+$("cgo").onclick = () => W.guarded("caught", async () => {
+  const st = $("cstatus");
+  try {
+    const c = await ensure(st);
+    const r = W.call(c, "caught", $("payload").value);
+    $("caught").innerHTML = r.caught
+      ? `<p class="note" style="margin:0 0 8px">Sent <code>id: "forty-two"</code> and <code>price: "not a number"</code>. Refused, with ${r.n} problems named:</p>
+         <table class="caught"><tbody>${r.detail.map(d => `<tr><td><code>${d.field}</code></td><td>${d.problem}</td></tr>`).join("")}</tbody></table>
+         <p class="note" style="margin:8px 0 0">Your handler never ran. That is the whole point of it.</p>`
+      : `<p class="note">Nothing was caught — which would be a bug worth reporting.</p>`;
+    st.textContent = "";
+  } catch (e) { st.textContent = "Could not run: " + e.message; }
+});
+
+function envelope() {
+  const txt = `Survey of Software 1.241 — Python Web Frameworks
+Floor model "layer cake": https://research.modelcitizendeveloper.com/workshop/layer-cake/
+
+Measured in my browser${ver ? ` (Python ${ver.python}, fastapi ${ver.fastapi}, starlette ${ver.starlette}, pydantic ${ver.pydantic}, WebAssembly)` : ""}
+${lastRace ? `  Starlette          ${fmtUs(lastRace.starlette.us)} per request
+  FastAPI            ${fmtUs(lastRace.fastapi.us)} per request
+  the layer          ${fmtUs(lastRace._summary.layer_us)}  (${lastRace._summary.multiple.toFixed(1)}x)` : "  (race not run)"}
+${lastVal && !lastVal.error ? `  pydantic decode+validate  ${fmtUs(lastVal.rows["pydantic (decodes AND validates)"].us)}
+  json.loads decode only    ${fmtUs(lastVal.rows["json.loads (decodes only)"].us)}   on ${lastVal.bytes} bytes` : "  (validation not run)"}
+
+What the survey established (aarch64, CPython 3.12.3, no socket, no server)
+  FastAPI 33.35 us/request against Starlette's 8.55 — 3.9x, and FastAPI IS Starlette
+  plus a layer. That layer costs 24.8 us, and validation is 0.993 us of it — 4%.
+  The other 96% is dependency injection, response-model handling and FastAPI's own
+  routing above Starlette's. Tuning FastAPI with a faster validator optimises the
+  smallest component.
+
+  pydantic v2 decodes AND validates in 0.993 us; json.loads decodes and validates
+  nothing in 1.579. Validation is not a tax on parsing — it replaces the parser.
+
+  Separately: a plain \`def\` handler in FastAPI goes to a thread pool that holds 40.
+  Forty concurrent def handlers finish in one batch; the 41st doubles the group's
+  latency. That is a limit on concurrency, not throughput.
+
+  NOT measured, here or in the survey: throughput under concurrent load. That needs
+  a socket and a load generator, and the published numbers that claim it are usually
+  measuring the framework and the server together.
+
+Help me with this
+  Tell me whether my handler's own work dwarfs 25 us (a database query does; a cache
+  hit does not), and if it does, tell me to stop optimising the framework. If it does
+  not, tell me what the layer is buying me and whether I need it.
+
+Reference: https://research.modelcitizendeveloper.com/survey/1-241/`;
+  $("envelope").textContent = txt;
+  W.copyText($("copy"), $("copied"), () => txt);
+}
+envelope();
+W.newsletter();
+</script>
+</body>
+</html>
