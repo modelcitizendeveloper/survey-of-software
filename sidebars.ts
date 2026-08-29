@@ -138,6 +138,7 @@ const sidebars = {
     {type: "doc", id: "survey/1-241"},
     {type: "doc", id: "survey/1-242"},
     {type: "doc", id: "survey/1-250"},
+    {type: "doc", id: "survey/1-251"},
     {type: "doc", id: "survey/1-252"},
     {type: "doc", id: "survey/1-253"},
     {type: "doc", id: "survey/1-254"},

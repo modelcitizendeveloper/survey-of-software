@@ -1046,7 +1046,8 @@ sections:
         published: true
       - code: "1.251"
         title: Type Checkers
-        subtitle: Static type checking for Python and TypeScript
+        subtitle: "mypy, pyright, ty, TypeScript, Flow"
+        published: true
       - code: "1.252"
         title: Code Parsing & AST
         subtitle: libcst, ast, redbaron

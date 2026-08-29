@@ -113,7 +113,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.040-049: Data Structure Libraries
 
-**Completed: 4/9**
+**Completed: 4/11**
 
 - ✅ [**1.040** Collections](/survey/1-040) - sortedcontainers, blist, pyrsistent
 - **1.041** Probabilistic Structures - Bloom filters, count-min sketch
@@ -466,10 +466,10 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.250-259: Developer Tooling & Code Quality
 
-**Completed: 4/5**
+**Completed: 5/5**
 
 - ✅ [**1.250** Linters & Static Analysis](/survey/1-250) - Ruff, Pylint, Flake8, Bandit, Semgrep, ESLint, oxlint, Biome
-- **1.251** Type Checkers - Static type checking for Python and TypeScript
+- ✅ [**1.251** Type Checkers](/survey/1-251) - mypy, pyright, ty, TypeScript, Flow
 - ✅ [**1.252** Code Parsing & AST](/survey/1-252) - libcst, ast, redbaron
 - ✅ [**1.253** Code Formatting](/survey/1-253) - Ruff, Black, Prettier, Biome, dprint
 - ✅ [**1.254** Testing](/survey/1-254) - pytest, Jest, Vitest, Playwright, Cypress
@@ -479,7 +479,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.300-309: Civic & Government Data
 
-**Completed: 4/4**
+**Completed: 4/5**
 
 - ✅ [**1.300** Public Finance Modeling](/survey/1-300) - Revenue forecasting, budget planning, fiscal analysis
 - ✅ [**1.301** Government Data Access](/survey/1-301) - Open data APIs, FOIA tools, data.gov integration
@@ -502,9 +502,9 @@ a time as each is completed.
 
 ## Research Status
 
-**Total Defined**: 263 research slots
-**Completed**: 173 pieces (65%)
-**Remaining**: 90 pieces
+**Total Defined**: 266 research slots
+**Completed**: 174 pieces (65%)
+**Remaining**: 92 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
