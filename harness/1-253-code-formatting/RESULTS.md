@@ -1,4 +1,4 @@
-# 1.104.2 Code Formatting — measured
+# 1.253 Code Formatting — measured
 
 A **`measured-local`** rung (see `docs/map/17-the-evidence-ladder.md`). Ruff, Biome and
 dprint are compiled binaries, so none of this can run in a reader's browser. What it can do
@@ -6,7 +6,7 @@ instead is publish the method completely enough that someone else gets the same 
 
 **Replicate:** `./run.sh` (container) or `./run-host.sh` (same pins, no daemon needed).
 
-**Published at** <https://github.com/modelcitizendeveloper/survey-of-software/tree/main/harness/1-104-2-code-formatting> — survey 1.104.2 cites this page 71 times, so it has to be
+**Published at** <https://github.com/modelcitizendeveloper/survey-of-software/tree/main/harness/1-253-code-formatting> — survey 1.253 cites this page 71 times, so it has to be
 somewhere a reader can reach. A measurement nobody can get to is not evidence.
 
 ## Read this before comparing these numbers to anyone else's
@@ -163,7 +163,7 @@ prettier 3.4.2   @biomejs/biome 1.9.4                  dprint 0.47.6
 ## Blue is absent, and that is a finding
 
 `blue 0.9.1` pins `black==22.1.0` and cannot be installed beside a current Black at all —
-the resolver refuses. 1.104.2 says of it *"Nothing new; move existing users to Ruff with
+the resolver refuses. 1.253 says of it *"Nothing new; move existing users to Ruff with
 quote settings."* The dependency pin says the same thing more plainly, and dates it.
 
 ## Raw numbers

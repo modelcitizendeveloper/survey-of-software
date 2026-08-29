@@ -19,9 +19,9 @@
    "kind": "local",
    "download": "https://research.modelcitizendeveloper.com/workshop/formatters/harness.tar.gz",
    "finding": "Astral's README claims Ruff is 10-100x faster than existing linters and formatters. Measured for formatting against Black it is 16-32x \u2014 and which end you get depends on your ARCHITECTURE. On aarch64 the ratio grows with codebase size, 20.5x at 1 MB to 32.3x at 12 MB; on x86_64 it shrinks, 20.0x to 16.1x. The ranges do not overlap on any estimator (min, median or max), so it is a platform effect rather than measurement noise. Ruff vs YAPF goes the other way: 150-1172x against a claimed 100x. And Biome's 25x over Prettier is wrong on a small codebase and right on a large one, so that claim's defect is the workload it never states. A compiled tool cannot run in a browser tab, so this is a pinned container you download and run.",
-   "survey_code": "1.104.2",
+   "survey_code": "1.253",
    "survey_title": "Code Formatting Libraries",
-   "survey_url": "https://research.modelcitizendeveloper.com/survey/1-104-2/",
+   "survey_url": "https://research.modelcitizendeveloper.com/survey/1-253/",
    "libraries": "ruff, black, autopep8, yapf, prettier, @biomejs/biome, dprint"
   },
   {

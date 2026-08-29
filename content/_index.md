@@ -29,7 +29,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 - [1.008 Time Series Search Libraries](/survey/1-008)
 - [1.022 Optimization](/survey/1-022)
-- [1.104.2 Code Formatting Libraries](/survey/1-104-2)
+- [1.253 Code Formatting Libraries](/survey/1-253)
 - [1.110 Frontend Frameworks](/survey/1-110)
 - [1.110.5 Static Site Generators](/survey/1-110-5)
 - [1.112 CSS Frameworks](/survey/1-112)
@@ -223,15 +223,13 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.100-109: Text & Document Processing
 
-**Completed: 8/13**
+**Completed: 6/11**
 
 - ✅ [**1.100** Text Processing](/survey/1-100) - Regex, string manipulation, NLP utilities
 - ✅ [**1.101** PDF Processing - ReportLab, WeasyPrint, PyPDF2](/survey/1-101)
 - ✅ [**1.102** Document Parsing](/survey/1-102) - python-docx, openpyxl, pandas Excel
 - ✅ [**1.103** Markdown Processing](/survey/1-103) - Python-Markdown, Mistune, markdown-it-py, CommonMark
 - **1.104** Syntax Highlighting - Pygments, highlight.js
-  - ✅ [**1.104.1** Code Parsing & AST](/survey/1-104-1) - libcst, ast, redbaron
-  - ✅ [**1.104.2** Code Formatting](/survey/1-104-2) - Code formatting and linting libraries for Python and JavaScript/TypeScript. Black, ruff, autopep8, Prettier, ESLint.
 - **1.105** Translation & i18n - gettext, Babel, i18next
 - ✅ [**1.106** Speech Recognition & TTS](/survey/1-106) - Whisper, Coqui, Piper
   - ✅ [**1.106.1** Speaker Diarization](/survey/1-106-1) - pyannote, NeMo, who's talking
@@ -243,7 +241,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.110-119: User Interface & Frontend
 
-**Completed: 15/18**
+**Completed: 14/17**
 
 - ✅ [**1.110** Frontend Frameworks](/survey/1-110) - React, Vue, Svelte, Angular
   - **1.110.1** React Meta-Frameworks - Next.js, Remix, Gatsby
@@ -259,7 +257,6 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.115** Form & Validation - React Hook Form, Zod, Yup](/survey/1-115)
 - ✅ [**1.116** Data Visualization Libraries - D3.js, Chart.js, Recharts](/survey/1-116)
 - ✅ [**1.117** Animation](/survey/1-117) - Framer Motion, GSAP, React Spring, Lottie
-- ✅ [**1.118** Testing - Jest, Vitest, Playwright, Cypress](/survey/1-118)
 - ✅ [**1.119** Mobile Frameworks](/survey/1-119) - React Native, Flutter, .NET MAUI, Ionic
   - ✅ [**1.119.1** NFC Libraries](/survey/1-119-1) - iOS CoreNFC, Android NDEF, react-native-nfc-manager, Web NFC
   - ✅ [**1.119.2** Push Notification Libraries](/survey/1-119-2) - ntfy, Gotify, UnifiedPush, expo-notifications, Web Push/VAPID
@@ -463,6 +460,19 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.240** Container Networking & Service Mesh](/survey/1-240) - Cilium, Calico, Istio, Linkerd, Envoy, Flannel, Consul Connect
 - ✅ [**1.241** Python Web Frameworks](/survey/1-241)
 - ✅ [**1.242** ASGI & WSGI Application Servers](/survey/1-242)
+
+---
+
+## 1.250-259: Developer Tooling & Code Quality
+
+**Completed: 3/5**
+
+- **1.250** Linters & Static Analysis - Ruff, Pylint, Flake8, ESLint, semgrep
+- **1.251** Type Checkers - Static type checking for Python and TypeScript
+- ✅ [**1.252** Code Parsing & AST](/survey/1-252) - libcst, ast, redbaron
+- ✅ [**1.253** Code Formatting](/survey/1-253) - Ruff, Black, Prettier, Biome, dprint
+- ✅ [**1.254** Testing](/survey/1-254) - pytest, Jest, Vitest, Playwright, Cypress
+- **1.255-1.259** _Available for future use_
 
 ---
 

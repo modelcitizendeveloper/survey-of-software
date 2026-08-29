@@ -101,8 +101,18 @@ DROPLET_ID="$("${DO[@]}" compute droplet create "$NAME" \
 IP="$("${DO[@]}" compute droplet get "$DROPLET_ID" --format PublicIPv4 --no-header)"
 note "droplet $DROPLET_ID at $IP"
 
-SSH=(ssh -i "$SSH_KEY_FILE" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
-     -o ConnectTimeout=10 -o LogLevel=ERROR "root@$IP")
+# `-n` and the keepalives are not decoration. On the first real run the benchmark FINISHED,
+# wrote both result files, and the ssh session never returned — so the script sat wedged
+# holding an idle droplet that billed until a human noticed it flat on the CPU graph. The
+# remote `timeout` did its job; the hang was in ssh itself, waiting on a channel docker had
+# left open. `-n` detaches stdin, ServerAlive* makes a dead peer fatal instead of eternal,
+# and every call below is additionally wrapped in a LOCAL timeout.
+#
+# THE RULE THIS COST US: the teardown trap only fires when the script reaches an exit. A trap
+# cannot rescue a process that never returns, so every remote call needs its own local clock.
+SSH=(ssh -n -i "$SSH_KEY_FILE" -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null
+     -o ConnectTimeout=10 -o LogLevel=ERROR -o ServerAliveInterval=15 -o ServerAliveCountMax=4
+     "root@$IP")
 
 note "waiting for ssh"
 for i in $(seq 1 60); do
@@ -122,7 +132,7 @@ note "waiting for cloud-init to release the package lock"
 "${SSH[@]}" 'cloud-init status --wait >/dev/null 2>&1 || true' || true
 
 note "installing docker"
-"${SSH[@]}" 'set -e
+timeout 900 "${SSH[@]}" 'set -e
   export DEBIAN_FRONTEND=noninteractive
   for i in $(seq 1 10); do
     if apt-get update -qq && apt-get install -y -qq docker.io rsync; then break; fi
@@ -139,14 +149,14 @@ rsync -az --delete -e "ssh -i $SSH_KEY_FILE -o StrictHostKeyChecking=no -o UserK
   "$HERE/" "root@$IP:/root/harness/"
 
 note "building the container (this also proves the PUBLISHED harness builds on a clean machine)"
-"${SSH[@]}" 'cd /root/harness && docker build -q -t sos-fmt-bench:1.104.2 . >/dev/null' \
+timeout 1800 "${SSH[@]}" 'cd /root/harness && docker build -q -t sos-fmt-bench:1.253 . >/dev/null' \
   || die "container build failed on a clean machine — that is a real finding, not a blip"
 
 for s in $SCALES; do
   note "running scale x$s at $REPS reps"
-  "${SSH[@]}" "cd /root/harness && mkdir -p out && REPS=$REPS SCALE=$s timeout 3600 \
-      docker run --rm -e REPS -e SCALE -v /root/harness/out:/out sos-fmt-bench:1.104.2 >/dev/null" \
-    || echo "WARNING: scale x$s did not complete" >&2
+  timeout 4200 "${SSH[@]}" "cd /root/harness && mkdir -p out && REPS=$REPS SCALE=$s timeout 3600 \
+      docker run --rm -e REPS -e SCALE -v /root/harness/out:/out sos-fmt-bench:1.253 >/dev/null" \
+    || echo "WARNING: scale x$s did not complete or ssh hung after it did" >&2
 done
 
 note "collecting results"

@@ -454,15 +454,6 @@ sections:
       - code: "1.104"
         title: Syntax Highlighting
         subtitle: "Pygments, highlight.js"
-        children:
-          - code: "1.104.1"
-            title: "Code Parsing & AST"
-            subtitle: "libcst, ast, redbaron"
-            published: true
-          - code: "1.104.2"
-            title: Code Formatting
-            subtitle: "Code formatting and linting libraries for Python and JavaScript/TypeScript. Black, ruff, autopep8, Prettier, ESLint."
-            published: true
       - code: "1.105"
         title: "Translation & i18n"
         subtitle: "gettext, Babel, i18next"
@@ -540,10 +531,6 @@ sections:
       - code: "1.117"
         title: Animation
         subtitle: "Framer Motion, GSAP, React Spring, Lottie"
-        published: true
-      - code: "1.118"
-        title: Testing
-        subtitle: "Jest, Vitest, Playwright, Cypress"
         published: true
         subtitle_in_link: true
       - code: "1.119"
@@ -985,6 +972,55 @@ sections:
       - code: "1.239"
         title: Social Graph Analysis
         subtitle: "Follow relationships, communities"
+  # 1.240-249 was live in content/_index.md and MISSING here. Because
+  # update-survey-index.py regenerates _index.md wholly from this file, running it
+  # would have deleted this section from the site and orphaned three published
+  # surveys. Backfilled 2026-08-29 from content/_index.md and the Map.
+  - range: "1.240-249"
+    title: "Infrastructure & Platform Engineering"
+    entries:
+      - code: "1.240"
+        title: "Container Networking & Service Mesh"
+        subtitle: "Cilium, Calico, Istio, Linkerd, Envoy, Flannel, Consul Connect"
+        published: true
+      - code: "1.241"
+        title: Python Web Frameworks
+        published: true
+      - code: "1.242"
+        title: "ASGI & WSGI Application Servers"
+        published: true
+      - code: "1.243"
+        title: "Configuration & Secrets Loading"
+      - code: "1.244"
+        title: "Python CLI Frameworks & Terminal UI"
+      - code: "1.245-1.249"
+        future: true
+  # 1.250-259 opened 2026-08-29. Developer tooling had no range: code formatting and
+  # AST parsing sit under 1.104 "Syntax Highlighting" in Text & Document Processing,
+  # testing sits at 1.254 under User Interface & Frontend, and linters had no region
+  # anywhere in the Map. Only the two genuinely new slots are named; 1.252-1.259 are
+  # reserved for the migration of 1.252, 1.253 and 1.254, which flips them then.
+  - range: "1.250-259"
+    title: "Developer Tooling & Code Quality"
+    entries:
+      - code: "1.250"
+        title: "Linters & Static Analysis"
+      - code: "1.251"
+        title: Type Checkers
+      - code: "1.252"
+        title: "Code Parsing & AST"
+        subtitle: "libcst, ast, redbaron"
+        published: true
+      - code: "1.253"
+        title: Code Formatting
+        subtitle: "Ruff, Black, Prettier, Biome, dprint"
+        published: true
+      - code: "1.254"
+        title: Testing
+        subtitle: "pytest, Jest, Vitest, Playwright, Cypress"
+        published: true
+      - code: "1.255-1.259"
+        future: true
   - range: "1.300-309"
     title: "Civic & Government Data"
     entries:

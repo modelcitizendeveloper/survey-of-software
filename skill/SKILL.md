@@ -286,8 +286,8 @@ exist in the taxonomy but may not have content yet — fetch to check.
 | 1.101 | PDF Generation (ReportLab, WeasyPrint) | ✅ |
 | 1.102 | Document Parsing (python-docx, openpyxl) | ✅ |
 | 1.103 | Markdown Processing | ✅ |
-| 1.104.1 | Code Parsing & AST | ✅ |
-| 1.104.2 | Code Formatting (Black, Prettier) | ✅ |
+| 1.252 | Code Parsing & AST | ✅ |
+| 1.253 | Code Formatting (Black, Prettier) | ✅ |
 
 ### 1.110-119: Frontend & UI
 | ID | Topic | Status |
@@ -302,7 +302,7 @@ exist in the taxonomy but may not have content yet — fetch to check.
 | 1.115 | Form & Validation (React Hook Form, Zod) | ✅ |
 | 1.116 | Data Visualization (D3, Chart.js, Recharts) | ✅ |
 | 1.117 | Animation (Framer Motion, GSAP) | ✅ |
-| 1.118 | Testing (Jest, Vitest, Playwright) | ✅ |
+| 1.254 | Testing (Jest, Vitest, Playwright) | ✅ |
 | 1.119 | Mobile Frameworks (React Native, Flutter) | ✅ |
 
 ### 1.120-139: Simulation & Business Platforms
@@ -410,7 +410,7 @@ When the user's question doesn't obviously map to a survey ID:
 - **"React", "Vue", "Svelte", "frontend"** → 1.110
 - **"Tailwind", "Bootstrap", "CSS"** → 1.112
 - **"D3", "chart", "visualization"** → 1.116
-- **"test", "Jest", "Playwright", "Cypress"** → 1.118
+- **"test", "Jest", "Playwright", "Cypress"** → 1.254
 - **"React Native", "Flutter", "mobile"** → 1.119
 - **"simulation", "Monte Carlo", "SimPy"** → 1.120, 1.122
 - **"Anki", "spaced repetition", "flashcard"** → 1.141, 1.142

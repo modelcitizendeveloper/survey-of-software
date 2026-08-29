@@ -1,6 +1,6 @@
-# Harness — 1.104.2 Code Formatting Libraries
+# Harness — 1.253 Code Formatting Libraries
 
-Measures the formatter speed claims in survey 1.104.2 against a pinned corpus, and
+Measures the formatter speed claims in survey 1.253 against a pinned corpus, and
 publishes the method so the numbers can be checked by someone else.
 
 This is a **`measured-local`** rung on the evidence ladder
