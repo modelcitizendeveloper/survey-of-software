@@ -466,9 +466,9 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.250-259: Developer Tooling & Code Quality
 
-**Completed: 3/5**
+**Completed: 4/5**
 
-- **1.250** Linters & Static Analysis - Ruff, Pylint, Flake8, ESLint, semgrep
+- ✅ [**1.250** Linters & Static Analysis](/survey/1-250) - Ruff, Pylint, Flake8, Bandit, Semgrep, ESLint, oxlint, Biome
 - **1.251** Type Checkers - Static type checking for Python and TypeScript
 - ✅ [**1.252** Code Parsing & AST](/survey/1-252) - libcst, ast, redbaron
 - ✅ [**1.253** Code Formatting](/survey/1-253) - Ruff, Black, Prettier, Biome, dprint
@@ -503,8 +503,8 @@ a time as each is completed.
 ## Research Status
 
 **Total Defined**: 263 research slots
-**Completed**: 172 pieces (65%)
-**Remaining**: 91 pieces
+**Completed**: 173 pieces (65%)
+**Remaining**: 90 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 

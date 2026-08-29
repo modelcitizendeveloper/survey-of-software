@@ -1042,7 +1042,8 @@ sections:
     entries:
       - code: "1.250"
         title: Linters & Static Analysis
-        subtitle: Ruff, Pylint, Flake8, ESLint, semgrep
+        subtitle: "Ruff, Pylint, Flake8, Bandit, Semgrep, ESLint, oxlint, Biome"
+        published: true
       - code: "1.251"
         title: Type Checkers
         subtitle: Static type checking for Python and TypeScript

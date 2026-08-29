@@ -143,7 +143,8 @@ def version_of(argv: list[str]) -> str:
         return f"unavailable ({type(e).__name__})"
 
 
-def time_tool(name: str, lang: str, argv, reps: int) -> dict:
+def time_tool(name: str, lang: str, argv, reps: int, ok_codes=(0, 1),
+              extra_files=(), use_cwd=False) -> dict:
     src = CORPUS / ("python" if lang == "python" else "js")
     times, failures = [], 0
     work = WORK / f"run-{name}"
@@ -152,7 +153,17 @@ def time_tool(name: str, lang: str, argv, reps: int) -> dict:
         shutil.copytree(src, work)
         if lang == "js":
             shutil.copy(WORK / "dprint.json", work / "dprint.json")
-        cwd = work if name == "dprint" else None
+        # Config files a LINTER needs beside the source it lints. Empty for the
+        # formatters, so their timings are untouched: dropping an extra file into the
+        # tree a formatter is about to rewrite would change what it is measuring.
+        for extra in extra_files:
+            src_cfg = WORK / extra
+            if src_cfg.exists():
+                shutil.copy(src_cfg, work / extra)
+        # ESLint 10 resolves a flat config's `files` patterns relative to the CONFIG's
+        # location, so pointing it at a directory from elsewhere matches nothing and it
+        # exits 2 with "all of the files ... are ignored". It has to run from inside.
+        cwd = work if (use_cwd or name == "dprint") else None
         t0 = time.perf_counter()
         try:
             r = subprocess.run(argv(work), capture_output=True, text=True, cwd=cwd,
@@ -163,7 +174,10 @@ def time_tool(name: str, lang: str, argv, reps: int) -> dict:
             shutil.rmtree(work, ignore_errors=True)
             return {"tool": name, "language": lang, "error": "not installed on this path"}
         dt = time.perf_counter() - t0
-        if r.returncode not in (0, 1):     # 1 = "files were changed" for some tools
+        if r.returncode not in ok_codes:   # 1 = "files were changed" for a formatter,
+                                           # and "findings exist" for a linter. Pylint
+                                           # goes further and returns a BITMASK, so its
+                                           # caller widens this rather than the default.
             failures += 1
             if i == 0:
                 return {"tool": name, "language": lang, "error":

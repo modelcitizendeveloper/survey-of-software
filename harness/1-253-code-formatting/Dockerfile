@@ -28,6 +28,24 @@ RUN npm install -g --no-fund --no-audit \
         @biomejs/biome@1.9.4 \
         dprint@0.47.6
 
+# The LINTERS, added for 1.250. Same pinning discipline. Versions read from PyPI and the
+# npm registry on 2026-08-29, the day 1.250's S1 was written, so the survey's adoption
+# table and its benchmark describe the same releases.
+#
+# Pylint is here to be TIMED, not to be raced: nothing else in the category does
+# whole-program inference, so there is no matched rule set and therefore no honest ratio.
+RUN pip install --no-cache-dir \
+        flake8==7.3.0 \
+        pylint==4.0.8
+
+# oxlint and biome are Rust; eslint is JavaScript linting JavaScript. Biome appears twice
+# in this image at two majors — 1.9.4 is what 1.253 measured for FORMATTING and must not
+# move, so the linter is pinned separately as 2.5.11 and invoked from its own path.
+RUN npm install -g --no-fund --no-audit \
+        eslint@10.9.1 \
+        oxlint@1.80.0 \
+    && npm install -g --no-fund --no-audit --prefix /opt/biome2 @biomejs/biome@2.5.11
+
 WORKDIR /bench
-COPY bench.py corpus.json ./
+COPY bench.py bench_lint.py corpus.json eslint.config.mjs ./
 ENTRYPOINT ["python3", "bench.py"]

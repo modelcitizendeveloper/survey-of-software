@@ -1,0 +1,124 @@
+{
+  "kind": "lint",
+  "generated": "2026-08-29T22:06:31+0000",
+  "scale": 12,
+  "reps": 9,
+  "machine": {
+    "arch": "aarch64",
+    "cpu": "0x51",
+    "cores": 8,
+    "memory": "12226652 kB",
+    "platform": "Linux-6.6.87.2-microsoft-standard-WSL2-aarch64-with-glibc2.36",
+    "python": "3.12.11",
+    "in_container": true
+  },
+  "corpus": {
+    "files": {
+      "python": 900,
+      "js": 780
+    },
+    "bytes": {
+      "python": 12677400,
+      "js": 2443356
+    },
+    "spec": {
+      "_comment": "Pinned, immutable, and public. A benchmark corpus that cannot be fetched again identically is not a method anyone can replicate. Every entry is an exact version; PyPI and npm never republish a version under the same name.",
+      "python": [
+        {
+          "package": "requests",
+          "version": "2.32.5"
+        },
+        {
+          "package": "jinja2",
+          "version": "3.1.6"
+        },
+        {
+          "package": "click",
+          "version": "8.1.8"
+        }
+      ],
+      "javascript": [
+        {
+          "package": "express",
+          "version": "4.21.2",
+          "dir": "lib"
+        },
+        {
+          "package": "axios",
+          "version": "1.7.9",
+          "dir": "lib"
+        }
+      ]
+    },
+    "scale": 12
+  },
+  "results": [
+    {
+      "tool": "ruff-check",
+      "language": "python",
+      "reps": 9,
+      "median_s": 0.0864,
+      "min_s": 0.0781,
+      "max_s": 0.106,
+      "failures": 0,
+      "version": "ruff 0.16.5",
+      "rule_set": "E,W,F,C90 \u2014 matched to Flake8's default"
+    },
+    {
+      "tool": "flake8",
+      "language": "python",
+      "reps": 9,
+      "median_s": 2.6238,
+      "min_s": 2.4046,
+      "max_s": 2.7417,
+      "failures": 0,
+      "version": "7.3.0 (mccabe: 0.7.0, pycodestyle: 2.14.0, pyflakes: 3.4.0) ",
+      "rule_set": "default (pycodestyle E/W + pyflakes F + mccabe C90)"
+    },
+    {
+      "tool": "pylint",
+      "language": "python",
+      "reps": 9,
+      "median_s": 349.9464,
+      "min_s": 343.4908,
+      "max_s": 350.6502,
+      "failures": 0,
+      "version": "pylint 4.0.8",
+      "rule_set": "default; NOT matched to anything \u2014 timed alone, no ratio"
+    },
+    {
+      "tool": "eslint",
+      "language": "js",
+      "reps": 9,
+      "median_s": 0.1045,
+      "min_s": 0.0925,
+      "max_s": 0.117,
+      "failures": 0,
+      "version": "v10.9.1",
+      "rule_set": "eslint.config.mjs intersection set"
+    },
+    {
+      "tool": "oxlint",
+      "language": "js",
+      "reps": 9,
+      "median_s": 0.0991,
+      "min_s": 0.0793,
+      "max_s": 0.1405,
+      "failures": 0,
+      "version": "Version: 1.80.0",
+      "rule_set": "default correctness rules"
+    },
+    {
+      "tool": "biome-lint",
+      "language": "js",
+      "reps": 9,
+      "median_s": 0.3256,
+      "min_s": 0.2997,
+      "max_s": 0.3508,
+      "failures": 0,
+      "version": "Version: 2.5.11",
+      "rule_set": "recommended"
+    }
+  ],
+  "caveat": "Ratios are only meaningful between tools running a MATCHED rule set. ruff-check vs flake8 is matched. pylint is timed alone. The JS trio share an intersection config where each tool can read one; see rule_set on each row."
+}
