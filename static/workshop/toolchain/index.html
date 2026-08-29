@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Which five? — The Workshop</title>
+<meta name="description" content="Pick a formatter, linter, type checker, parser and test runner for your codebase. Driven by measured data from five Survey of Software surveys — and it will usually tell you the speed number you came for is not what decides it.">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://research.modelcitizendeveloper.com/workshop/toolchain/">
+<link rel="stylesheet" href="/workshop/_lib/workshop.css?v=20260820b">
+<style>
+  .rung{display:inline-block;border:1px solid var(--line);border-radius:999px;
+        padding:2px 10px;font-size:.78rem;color:var(--dim);margin:0 0 14px}
+  .ask{background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:14px 18px;margin:14px 0}
+  .ask h3{margin:0 0 8px;font-size:.82rem;letter-spacing:.04em;text-transform:uppercase;color:var(--dim);font-weight:600}
+  .opts{display:flex;flex-wrap:wrap;gap:8px}
+  .opt{padding:7px 13px;border:1px solid var(--line);border-radius:6px;background:var(--field);
+       color:var(--text);cursor:pointer;font-size:.9rem;font-family:inherit}
+  .opt:hover{border-color:var(--accent)}
+  .opt[aria-pressed="true"]{background:var(--accent);color:var(--ground);border-color:var(--accent);font-weight:600}
+  .slot{border:1px solid var(--line);border-radius:8px;margin:14px 0;overflow:hidden}
+  .slot > header{background:var(--panel);padding:10px 16px;display:flex;flex-wrap:wrap;
+                 gap:10px;align-items:baseline;border-bottom:1px solid var(--line)}
+  .slot h3{margin:0;font-size:1rem}
+  .code{color:var(--dim);font-size:.8rem}
+  .body{padding:14px 16px}
+  .pick{font-size:1.15rem;font-weight:700;color:var(--bright)}
+  .runner{color:var(--dim);margin-top:2px}
+  .why{margin:10px 0 0;line-height:1.6}
+  .tag{font-size:.72rem;padding:2px 8px;border-radius:999px;border:1px solid var(--line);
+       margin-left:auto;white-space:nowrap}
+  .tag.m{color:var(--good);border-color:var(--good)}
+  .tag.r{color:var(--warn);border-color:var(--warn)}
+  .tag.n{color:var(--faint)}
+  .flag{border-left:3px solid var(--warn);padding:10px 14px;margin:12px 0;background:var(--panel);line-height:1.6}
+  .flag.good{border-left-color:var(--good)}
+  td.n{text-align:right}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+<p class="kicker"><a href="/">Survey of Software</a> · <a href="/workshop/">the workshop</a></p>
+
+<h1>Which five?</h1>
+<p class="rung">a chooser · driven by measured data, not run on yours</p>
+
+<p class="dek">A Python or JavaScript project needs five tools that all read your source code:
+a <strong>formatter</strong>, a <strong>linter</strong>, a <strong>type checker</strong>, a
+<strong>parser</strong> and a <strong>test runner</strong>. Answer six questions and this
+picks a set, names the runner-up, and says why they differ.</p>
+
+<p class="note">It will probably tell you something you did not come for. Most people arrive
+asking which tool is fastest. On most codebases the speed difference is real, measured, and
+<em>too small to feel</em> — and something else decides. Change the answers below and watch
+which inputs move the recommendation and which do not. That is the actual lesson here.</p>
+
+<div id="asks"></div>
+
+<h2>Your five</h2>
+<div id="out"></div>
+
+<h2>Where these answers come from</h2>
+<p>Five surveys, and the tags above say which recommendations have a measured number behind
+them and which are argued from architecture:</p>
+<ul>
+  <li><a href="/survey/1-253/">1.253 Code Formatting</a> — <span class="tag m">measured</span> both architectures, two corpus sizes</li>
+  <li><a href="/survey/1-250/">1.250 Linters &amp; Static Analysis</a> — <span class="tag m">measured</span> for Python; the JavaScript trio is unsettled and says so</li>
+  <li><a href="/survey/1-251/">1.251 Type Checkers</a> — <span class="tag r">reasoned</span>, no timings published</li>
+  <li><a href="/survey/1-252/">1.252 Code Parsing &amp; AST</a> — <span class="tag n">not a choice</span> for most readers</li>
+  <li><a href="/survey/1-254/">1.254 Testing Libraries</a> — <span class="tag r">reasoned</span>, no benchmark</li>
+</ul>
+
+<p class="note">The benchmark behind the formatter and linter picks is a pinned container you
+can run yourself: <a href="/workshop/formatters/">How fast is it, really?</a></p>
+
+</div>
+<script src="/workshop/_lib/workshop.js?v=20260820b"></script>
+<script src="./chooser.js?v=20260829a"></script>
+</body>
+</html>
