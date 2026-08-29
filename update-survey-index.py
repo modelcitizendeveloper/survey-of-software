@@ -28,6 +28,7 @@ Usage:
 """
 
 import re
+import subprocess
 import sys
 from pathlib import Path
 
@@ -41,7 +42,6 @@ except ImportError:
 
 ROOT = Path(__file__).parent
 TAXONOMY_FILE = ROOT / 'data/survey-taxonomy.yaml'
-PACKAGES_DIR = ROOT / 'packages/research'
 CONTENT_DIR = ROOT / 'content/survey'
 OUTPUT_FILE = ROOT / 'content/_index.md'
 
@@ -53,35 +53,6 @@ SECTIONS_END = "<!-- SECTIONS:END -->"
 def code_to_slug(code):
     """Convert survey code to URL/filename slug: 1.033.1 → 1-033-1"""
     return str(code).replace('.', '-')
-
-
-def get_metadata_completed_codes():
-    """Return set of codes completed per packages/research/*/metadata.yaml."""
-    completed = set()
-    for meta_path in PACKAGES_DIR.glob('*/metadata.yaml'):
-        try:
-            text = meta_path.read_text(encoding='utf-8')
-            docs = list(yaml.safe_load_all(text))
-            data = next((d for d in docs if d), None)
-            if not data:
-                continue
-            status = data.get('status') or data.get('experiment_status', '')
-            code = data.get('code') or data.get('experiment_number')
-            if code and str(status).lower() in ('completed', 'complete'):
-                completed.add(str(code))
-        except Exception:
-            # Fall back to regex for malformed YAML
-            try:
-                text = meta_path.read_text(encoding='utf-8')
-                code_match = re.search(r'^code:\s*[\'"]?([0-9.]+)[\'"]?', text, re.M)
-                exp_match = re.search(r'^experiment_number:\s*[\'"]?([0-9.]+)[\'"]?', text, re.M)
-                status_match = re.search(r'^(?:status|experiment_status):\s*[\'"]?(completed?|complete)[\'"]?', text, re.M | re.I)
-                code_val = code_match or exp_match
-                if code_val and status_match:
-                    completed.add(code_val.group(1))
-            except Exception:
-                print(f'  Warning: could not parse {meta_path}', file=sys.stderr)
-    return completed
 
 
 def get_taxonomy_published_codes(taxonomy):
@@ -99,21 +70,37 @@ def get_taxonomy_published_codes(taxonomy):
     return published
 
 
-def get_completed_codes(taxonomy):
-    """Completed == content/survey/<slug>.md exists.
+def published_slugs():
+    """Page stems that are actually PUBLISHED — asked of git, not of the directory.
 
-    The site either carries the page or it does not, and that is the only signal that
+    content/survey/ holds far more than it publishes. On 2026-08-29: 239 files on disk,
+    175 tracked. The other 64 (11 2-xxx, 53 3-xxx) are held back by .gitignore, which is
+    where the publication policy is really enforced — 3.xxx never publishes and 2.xxx is
+    open by allowlist. Every untracked file answers 404.
+
+    Globbing the directory would mark those published and emit a link to a 404. It does
+    not today, because the taxonomy happens to name none of them, but that is a property
+    of the current data and not a guarantee. build_changelog.py hit this exact bug and
+    reported 236 published surveys against a real 169; this asks the same question it
+    settled on.
+    """
+    out = subprocess.run(['git', 'ls-files', 'content/survey/*.md'],
+                         cwd=ROOT, capture_output=True, text=True).stdout
+    return {line.rsplit('/', 1)[-1][:-3] for line in out.split() if line.endswith('.md')}
+
+
+def get_completed_codes(taxonomy):
+    """Completed == the survey's page is committed in this repo.
+
+    The site either serves the page or it does not, and that is the only signal that
     cannot drift from what a reader sees. `published: true` in the taxonomy is kept as a
     union member so a hand-set flag still counts, but it is no longer the authority: it
-    was false for 21 surveys that have live pages. The metadata.yaml scan is gone --
+    was false for 21 surveys with live pages. The metadata.yaml scan is gone --
     PACKAGES_DIR resolves inside the PUBLIC repo, which carries a dozen stub directories,
     not the corpus.
     """
-    from_pages = {p.stem.replace('-', '.') for p in CONTENT_DIR.glob('*.md')}
-    completed = set()
-    for entry_code in _all_codes(taxonomy):
-        if code_to_slug(entry_code) in {p.stem for p in CONTENT_DIR.glob('*.md')}:
-            completed.add(entry_code)
+    live = published_slugs()
+    completed = {c for c in _all_codes(taxonomy) if code_to_slug(c) in live}
     completed |= get_taxonomy_published_codes(taxonomy)
     return completed
 
@@ -134,50 +121,33 @@ def _all_codes(taxonomy):
 
 
 def report_untracked_pages(taxonomy):
-    """Pages the taxonomy does not name. They can never appear in the index.
+    """Published pages the taxonomy does not name — a real gap, and normally empty.
 
-    Not an error and not fixable here -- the generator cannot invent a slot or decide
-    which range it belongs in. It is reported so the drift is visible instead of silent;
-    on 2026-08-29 there were 75, including 1-067-1, 1-110-6, 1-176, 1-212, 1-215 and 1-216.
+    Only pages git tracks are considered. The unpublished ones in content/survey/ are
+    held back by .gitignore on purpose and must NOT be listed; counting them was the
+    error that made this look like a 67-page problem when the true gap is zero.
     """
     named = {code_to_slug(c) for c in _all_codes(taxonomy)}
-    stray = sorted(p.stem for p in CONTENT_DIR.glob('*.md') if p.stem not in named)
+    # _index, method and taxonomy-1.3xx-vision are section and meta pages, not surveys.
+    meta = {'_index', 'method', 'taxonomy-1.3xx-vision'}
+    stray = sorted(published_slugs() - named - meta)
     if stray:
-        print(f'  Note: {len(stray)} live page(s) have no taxonomy entry and cannot be '
-              f'listed: {", ".join(stray[:8])}{" ..." if len(stray) > 8 else ""}',
-              file=sys.stderr)
+        print(f'  WARNING: {len(stray)} PUBLISHED page(s) have no taxonomy entry and '
+              f'cannot be listed: {", ".join(stray)}', file=sys.stderr)
     return stray
 
 
 def get_entry_title_info(entry, completed_codes):
-    """Get title and subtitle for an entry, checking metadata.yaml for overrides."""
+    """Title and subtitle for an entry. The taxonomy is the only source.
+
+    There used to be a metadata.yaml override here. PACKAGES_DIR resolved inside the
+    PUBLIC repo, which holds 12 leftover stub directories rather than the corpus, and two
+    of them do not even parse -- one is the multi-document metadata.yaml trap. The lookup
+    swallowed those exceptions silently. Letting a stale stub rename a live index entry
+    is not a feature.
+    """
     code = normalize_code(entry.get('code', ''))
-    title = str(entry.get('title', code))
-    subtitle = entry.get('subtitle', '')
-
-    if code not in completed_codes:
-        return title, subtitle
-
-    # Check metadata.yaml for richer title data
-    code_prefix = code.rstrip('.')
-    for meta_path in PACKAGES_DIR.glob('*/metadata.yaml'):
-        try:
-            data = yaml.safe_load(meta_path.read_text(encoding='utf-8'))
-            if not data:
-                continue
-            meta_code = str(data.get('code') or data.get('experiment_number', ''))
-            if meta_code == code_prefix:
-                meta_title = data.get('title', '')
-                meta_subtitle = data.get('subtitle', '')
-                if meta_title:
-                    title = meta_title
-                if meta_subtitle and not subtitle:
-                    subtitle = meta_subtitle
-                break
-        except Exception:
-            pass
-
-    return title, subtitle
+    return str(entry.get('title', code)), entry.get('subtitle', '')
 
 
 def normalize_code(raw):
@@ -300,8 +270,10 @@ def main():
 
     taxonomy = yaml.safe_load(TAXONOMY_FILE.read_text(encoding='utf-8'))
     completed_codes = get_completed_codes(taxonomy)
+    live = published_slugs()
     print(f'Detected {len(completed_codes)} completed codes '
-          f'({len(list(CONTENT_DIR.glob("*.md")))} pages on disk)')
+          f'({len(live)} pages published, '
+          f'{len(list(CONTENT_DIR.glob("*.md"))) - len(live)} on disk but unpublished)')
     report_untracked_pages(taxonomy)
 
     existing = OUTPUT_FILE.read_text(encoding='utf-8')
