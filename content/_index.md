@@ -147,7 +147,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.060-069: Cryptography, Networking & Security
 
-**Completed: 10/10**
+**Completed: 11/11**
 
 - ✅ [**1.060** Cryptographic Libraries](/survey/1-060) - cryptography vs PyNaCl
 - ✅ [**1.061** Hashing](/survey/1-061) - hashlib, xxhash, blake3
@@ -157,6 +157,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.065** P2P / Mesh Networking](/survey/1-065) - libp2p, ZeroMQ, nanomsg, NAT traversal, relay discovery
 - ✅ [**1.066** Onion Routing / Anonymous Transport](/survey/1-066) - Tor stem API, I2P SAM bridge, Nym mixnet
 - ✅ [**1.067** WebSocket Libraries](/survey/1-067) - websockets, aiohttp WS, ws, Socket.IO, µWebSockets
+  - ✅ [**1.067.1** Python HTTP Clients](/survey/1-067-1)
 - ✅ [**1.068** API Proxy / MITM Frameworks](/survey/1-068) - mitmproxy, Envoy, Traefik, transparent interception
 - ✅ [**1.069** Mobile Secure Storage / Keychain](/survey/1-069) - iOS Keychain, Android Keystore, react-native-keychain
 
@@ -489,8 +490,8 @@ a time as each is completed.
 
 ## Research Status
 
-**Total Defined**: 263 research slots
-**Completed**: 171 pieces (65%)
+**Total Defined**: 264 research slots
+**Completed**: 172 pieces (65%)
 **Remaining**: 92 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
