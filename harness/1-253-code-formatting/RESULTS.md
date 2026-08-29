@@ -103,6 +103,14 @@ measurement anywhere is 32.3×.
 **`100×` (ruff vs yapf) — wrong, by understating.** 150× to 1172× on aarch64 and 352× to
 1053× on x86_64. The claim is below the minimum in every cell on both architectures.
 
+**`15×` (biome vs ESLint) — not ours to settle, and now settled elsewhere as UNSETTLED.**
+This is a linting claim and this harness compares formatters, so it was parked rather than
+tested. **1.250 took it up** and could not settle it either: its first measurement was
+invalid — ESLint exited with a fatal error and never linted anything — and the corrected
+run fell below that harness's nine-repetition threshold. The claim is unsupported by
+anything measured in either survey and is not shown to be false. See
+1.250's `performance-benchmarks.md`.
+
 **`25×` (biome vs prettier) and `10-35×` (dprint vs prettier) — unverifiable.** Size-dependent
 on both architectures: biome 11.7×→31.4× on aarch64 and 9.8×→21.9× on x86_64. Each is wrong
 on a small codebase and roughly right on a large one, and neither claim says which. This is
