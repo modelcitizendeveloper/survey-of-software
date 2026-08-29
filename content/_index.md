@@ -38,6 +38,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 <!-- POPULAR:END -->
 
+<!-- SECTIONS:START -->
 ## 1.001-009: Sorting & Searching Algorithms
 
 **Completed: 9/9**
@@ -112,7 +113,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.040-049: Data Structure Libraries
 
-**Completed: 4/11**
+**Completed: 4/9**
 
 - ✅ [**1.040** Collections](/survey/1-040) - sortedcontainers, blist, pyrsistent
 - **1.041** Probabilistic Structures - Bloom filters, count-min sketch
@@ -478,7 +479,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.300-309: Civic & Government Data
 
-**Completed: 4/5**
+**Completed: 4/4**
 
 - ✅ [**1.300** Public Finance Modeling](/survey/1-300) - Revenue forecasting, budget planning, fiscal analysis
 - ✅ [**1.301** Government Data Access](/survey/1-301) - Open data APIs, FOIA tools, data.gov integration
@@ -497,16 +498,18 @@ a time as each is completed.
 - ✅ [**2.074** MCP Protocol](/survey/2-074) - Model Context Protocol: the tool edge most AI frameworks now standardize on
 - ✅ [**2.083** AI Agent Gateways](/survey/2-083) - MCP federation and A2A routing: Agent Gateway, IBM ContextForge, Kong, Envoy
 
+---
 
 ## Research Status
 
-**Total Defined**: 264 research slots
+**Total Defined**: 263 research slots
 **Completed**: 172 pieces (65%)
-**Remaining**: 92 pieces
+**Remaining**: 91 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
 ---
+<!-- SECTIONS:END -->
 ---
 
 **Want to understand our approach?** [Read the Vision →](/vision)

@@ -1,10 +1,27 @@
 #!/usr/bin/env python3
 """
-Auto-generate content/_index.md from data/survey-taxonomy.yaml + metadata.yaml files.
+Regenerate the RANGE SECTIONS of content/_index.md from data/survey-taxonomy.yaml.
 
-Completion detection (in priority order):
-  1. published: true in data/survey-taxonomy.yaml (bootstrapped from original index)
-  2. packages/research/<code*>/metadata.yaml with status=completed or experiment_status=complete
+It rewrites only the text between <!-- SECTIONS:START --> and <!-- SECTIONS:END -->.
+Everything else in the file -- front matter, the nav strip, the newsletter copy, the
+POPULAR block, the footer -- is hand-maintained and passes through untouched. If the
+markers are missing the script REFUSES to write, rather than guessing.
+
+WHY IT WORKS THIS WAY (bead re-8la). It used to generate the whole file from a HEADER
+and FOOTER constant, and both had drifted from what the site actually served. Running it
+on 2026-08-29 would have deleted `newsletter_cta: true` (the subscriber capture on 179
+pages), the Workshop nav link, the Field Notes copy, and the entire POPULAR block, and
+would have rewritten the footer's /survey/method back to a /survey/methodology that does
+not exist. 73 deletions in all. A generator whose template is a copy of the output will
+drift from it; the fix is to stop keeping a copy.
+
+COMPLETION IS MEASURED, NOT DECLARED. A survey is complete here if content/survey/<slug>.md
+exists in this repo -- the site either carries the page or it does not. The old logic read
+`published: true` from the taxonomy and a status field from packages/research/*/metadata.yaml,
+and both undercounted: the taxonomy flag missed 21 surveys that have live pages, and
+PACKAGES_DIR points at public/packages/research, which holds 12 stub directories rather
+than the ~240 in the internal repo. Between them they scored 143 against 239 real pages,
+so ~96 published surveys would have lost their checkmark AND their link.
 
 Usage:
   uv run python update-survey-index.py [--dry-run]
@@ -28,42 +45,9 @@ PACKAGES_DIR = ROOT / 'packages/research'
 CONTENT_DIR = ROOT / 'content/survey'
 OUTPUT_FILE = ROOT / 'content/_index.md'
 
-HEADER = """---
-title: "Survey of Software"
-weight: 1
-bookFlatSection: false
-bookCollapseSection: false
-aliases: ["/survey/"]
-description: "Software library research across sorting, search, NLP, ML, frontend, LLMs — benchmarks, decision frameworks, production patterns."
----
+SECTIONS_START = "<!-- SECTIONS:START -->"
+SECTIONS_END = "<!-- SECTIONS:END -->"
 
-# Survey of Software
-
-> **Systematic coverage of general-purpose software libraries.**
-> Measured research on algorithms, data structures, ML, and infrastructure—so you can build with confidence instead of guessing.
-
-**[What is this? →](/about)** | **[The Vision →](/vision)** | **[Method →](/survey/method)**
-
-**[Claude Skill →](/skill/)** Let Claude consult this research library directly in conversations. Ask about library selection, and Claude fetches surveys, synthesizes recommendations, or runs live research on uncovered topics.
-
----
-
-**Newsletter:** New library research published as it's ready. Monthly digest of what's new — [subscribe to stay current →](https://modelcitizendeveloper.com/)
-
----
-"""
-
-FOOTER = """---
-
-**Want to understand our approach?** [Read the Vision →](/vision)
-
-**Want to replicate this research?** [See the Methodology →](/survey/methodology)
-
----
-
-© 2026 Ivan Schneider · [Model Citizen Developer](https://modelcitizendeveloper.com/)
-Licensed under [CC BY 4.0](/license/)
-"""
 
 
 def code_to_slug(code):
@@ -116,14 +100,53 @@ def get_taxonomy_published_codes(taxonomy):
 
 
 def get_completed_codes(taxonomy):
+    """Completed == content/survey/<slug>.md exists.
+
+    The site either carries the page or it does not, and that is the only signal that
+    cannot drift from what a reader sees. `published: true` in the taxonomy is kept as a
+    union member so a hand-set flag still counts, but it is no longer the authority: it
+    was false for 21 surveys that have live pages. The metadata.yaml scan is gone --
+    PACKAGES_DIR resolves inside the PUBLIC repo, which carries a dozen stub directories,
+    not the corpus.
     """
-    Return set of completed codes. Priority:
-    1. published: true in taxonomy.yaml (bootstrapped from original index)
-    2. packages/research/*/metadata.yaml with completed status
-    """
-    completed = get_taxonomy_published_codes(taxonomy)
-    completed |= get_metadata_completed_codes()
+    from_pages = {p.stem.replace('-', '.') for p in CONTENT_DIR.glob('*.md')}
+    completed = set()
+    for entry_code in _all_codes(taxonomy):
+        if code_to_slug(entry_code) in {p.stem for p in CONTENT_DIR.glob('*.md')}:
+            completed.add(entry_code)
+    completed |= get_taxonomy_published_codes(taxonomy)
     return completed
+
+
+def _all_codes(taxonomy):
+    """Every non-future code the taxonomy names, children included."""
+    out = set()
+
+    def walk(entries):
+        for e in entries:
+            if not e.get('future'):
+                out.add(normalize_code(e.get('code', '')))
+            walk(e.get('children', []))
+
+    for section in taxonomy['sections']:
+        walk(section.get('entries', []))
+    return out
+
+
+def report_untracked_pages(taxonomy):
+    """Pages the taxonomy does not name. They can never appear in the index.
+
+    Not an error and not fixable here -- the generator cannot invent a slot or decide
+    which range it belongs in. It is reported so the drift is visible instead of silent;
+    on 2026-08-29 there were 75, including 1-067-1, 1-110-6, 1-176, 1-212, 1-215 and 1-216.
+    """
+    named = {code_to_slug(c) for c in _all_codes(taxonomy)}
+    stray = sorted(p.stem for p in CONTENT_DIR.glob('*.md') if p.stem not in named)
+    if stray:
+        print(f'  Note: {len(stray)} live page(s) have no taxonomy entry and cannot be '
+              f'listed: {", ".join(stray[:8])}{" ..." if len(stray) > 8 else ""}',
+              file=sys.stderr)
+    return stray
 
 
 def get_entry_title_info(entry, completed_codes):
@@ -173,7 +196,9 @@ def format_entry(entry, completed_codes, indent=0):
     prefix = '  ' * (indent // 2)
 
     if entry.get('future'):
-        return f'{prefix}- **{code}** _Available for future use_'
+        # A future line may name several disjoint codes, e.g. 1.303 and 1.305-1.309.
+        codes = ', '.join(f'**{c.strip()}**' for c in str(code).split(','))
+        return f'{prefix}- {codes} _Available for future use_'
 
     title, subtitle = get_entry_title_info(entry, completed_codes)
     slug = entry.get('slug', code_to_slug(code))
@@ -199,8 +224,9 @@ def count_entries(section, completed_codes):
     total = 0
     for entry in section['entries']:
         if entry.get('future'):
-            # Future slots (single or range) each count as 1 placeholder
-            total += 1
+            # Reserved slots are not work. The index has always counted "7/7" for a
+            # range with seven surveys and a free block; counting the placeholder
+            # made every such range read as permanently one short.
             continue
         total += 1
         if normalize_code(entry.get('code', '')) in completed_codes:
@@ -212,10 +238,9 @@ def count_entries(section, completed_codes):
     return completed, total
 
 
-def generate_index(taxonomy, completed_codes):
-    """Generate the full content/_index.md text."""
-    lines = [HEADER.rstrip()]
-
+def generate_sections(taxonomy, completed_codes):
+    """The range sections plus the status summary. NOT the whole file."""
+    lines = []
     total_completed = 0
     total_defined = 0
 
@@ -224,35 +249,50 @@ def generate_index(taxonomy, completed_codes):
         total_completed += section_completed
         total_defined += section_total
 
-        lines.append(f'')
+        lines.append('')
         lines.append(f'## {section["range"]}: {section["title"]}')
-        lines.append(f'')
-        lines.append(f'**Completed: {section_completed}/{section_total}**')
-        lines.append(f'')
+        lines.append('')
+        # A section may carry hand-written prose instead of a tally -- 2.070-089 explains
+        # why the series exists at all, which a count cannot say.
+        if section.get('note'):
+            lines.append(section['note'].rstrip())
+        else:
+            lines.append(f'**Completed: {section_completed}/{section_total}**')
+        lines.append('')
 
         for entry in section['entries']:
             lines.append(format_entry(entry, completed_codes, indent=0))
             for child in entry.get('children', []):
                 lines.append(format_entry(child, completed_codes, indent=2))
 
-        lines.append(f'')
+        lines.append('')
         lines.append('---')
 
-    # Status summary
     remaining = total_defined - total_completed
-    lines.append(f'')
-    lines.append(f'## Research Status')
-    lines.append(f'')
-    lines.append(f'**Total Defined**: {total_defined} research slots')
-    lines.append(f'**Completed**: {total_completed} pieces ({int(100*total_completed/total_defined)}%)')
-    lines.append(f'**Remaining**: {remaining} pieces')
-    lines.append(f'')
-    lines.append(f'**Navigation**: Use the sidebar to browse completed research, or select a category above.')
-    lines.append(f'')
-    lines.append('---')
+    pct = int(100 * total_completed / total_defined) if total_defined else 0
+    lines += ['', '## Research Status', '',
+              f'**Total Defined**: {total_defined} research slots',
+              f'**Completed**: {total_completed} pieces ({pct}%)',
+              f'**Remaining**: {remaining} pieces', '',
+              '**Navigation**: Use the sidebar to browse completed research, '
+              'or select a category above.', '', '---']
+    return '\n'.join(lines).strip('\n')
 
-    lines.append(FOOTER.rstrip())
-    return '\n'.join(lines) + '\n'
+
+def splice(existing, sections):
+    """Replace only the marked region. Refuse if the markers are not both present.
+
+    Refusing is the point. The previous version rebuilt the file from a template, so a
+    template that had fallen behind silently deleted whatever the file had gained since.
+    """
+    if existing.count(SECTIONS_START) != 1 or existing.count(SECTIONS_END) != 1:
+        raise SystemExit(
+            f'REFUSING TO WRITE: {OUTPUT_FILE} must contain exactly one '
+            f'{SECTIONS_START} and one {SECTIONS_END}. Everything outside them is '
+            f'hand-maintained and this script will not regenerate it. See bead re-8la.')
+    head, rest = existing.split(SECTIONS_START, 1)
+    _, tail = rest.split(SECTIONS_END, 1)
+    return f'{head}{SECTIONS_START}\n{sections}\n{SECTIONS_END}{tail}'
 
 
 def main():
@@ -260,20 +300,27 @@ def main():
 
     taxonomy = yaml.safe_load(TAXONOMY_FILE.read_text(encoding='utf-8'))
     completed_codes = get_completed_codes(taxonomy)
+    print(f'Detected {len(completed_codes)} completed codes '
+          f'({len(list(CONTENT_DIR.glob("*.md")))} pages on disk)')
+    report_untracked_pages(taxonomy)
 
-    print(f'Detected {len(completed_codes)} completed codes')
+    existing = OUTPUT_FILE.read_text(encoding='utf-8')
+    updated = splice(existing, generate_sections(taxonomy, completed_codes))
 
-    index_content = generate_index(taxonomy, completed_codes)
+    if updated == existing:
+        print('✓ No change — index already matches the taxonomy')
+        return
 
     if dry_run:
-        print(index_content)
-    else:
-        OUTPUT_FILE.write_text(index_content, encoding='utf-8')
-        print(f'✓ Wrote {OUTPUT_FILE}')
+        import difflib
+        for line in difflib.unified_diff(existing.splitlines(), updated.splitlines(),
+                                         'current', 'generated', lineterm='', n=1):
+            print(line)
+        return
 
-        # Count ✅ entries written
-        check_count = index_content.count('✅')
-        print(f'  {check_count} completed entries marked')
+    OUTPUT_FILE.write_text(updated, encoding='utf-8')
+    print(f'✓ Wrote {OUTPUT_FILE}')
+    print(f'  {updated.count("✅")} completed entries marked')
 
 
 if __name__ == '__main__':
