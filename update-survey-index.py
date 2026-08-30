@@ -194,9 +194,17 @@ def count_entries(section, completed_codes):
     total = 0
     for entry in section['entries']:
         if entry.get('future'):
-            # Reserved slots are not work. The index has always counted "7/7" for a
-            # range with seven surveys and a free block; counting the placeholder
-            # made every such range read as permanently one short.
+            # Count a placeholder that names ONE code ("1.046") as a slot, because it is
+            # one; skip a RANGE placeholder ("1.253-1.259"), because counting it as 1 is
+            # as arbitrary as counting it as 7. This is sync_survey_index.recount's rule,
+            # adopted here after the two tools were found writing different totals into
+            # the same file — 263 against 266 — and flipping it back and forth on
+            # alternate runs. Whichever rule is right, they have to share it.
+            # One entry names both: "1.303, 1.305-1.309". Count the single codes in it
+            # and skip the ranges, which is what sync_survey_index's regex does when it
+            # matches that line's leading **1.303** and counts one.
+            total += sum(1 for part in str(entry.get('code', '')).split(',')
+                         if '-' not in part.strip())
             continue
         total += 1
         if normalize_code(entry.get('code', '')) in completed_codes:
