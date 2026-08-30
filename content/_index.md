@@ -402,7 +402,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.200-219: LLM & AI Stack
 
-**Completed: 14/15**
+**Completed: 15/16**
 
 - ✅ [**1.200** LLM Orchestration](/survey/1-200) - LangChain, LlamaIndex, RAG
 - ✅ [**1.201** LLM Agent Frameworks - AutoGen, CrewAI, MetaGPT](/survey/1-201)
@@ -419,6 +419,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.212** AI Coding Agent Harnesses](/survey/1-212) - Claude Code, Codex CLI, OpenCode, Aider, Pi, Goose
 - ✅ [**1.215** LLM Provider Proxies & Routers](/survey/1-215) - LiteLLM, OpenRouter, Portkey, Bifrost, Cloudflare AI Gateway
 - ✅ [**1.216** Agentic Browser Automation](/survey/1-216) - browser-use, Stagehand, Skyvern, Chrome DevTools MCP, Playwright MCP, Browserbase, Steel
+- ✅ [**1.217** MCP Server Implementation](/survey/1-217) - official mcp SDK, FastMCP, FastAPI-MCP, raw JSON-RPC
 
 ---
 
@@ -502,8 +503,8 @@ a time as each is completed.
 
 ## Research Status
 
-**Total Defined**: 266 research slots
-**Completed**: 174 pieces (65%)
+**Total Defined**: 267 research slots
+**Completed**: 175 pieces (65%)
 **Remaining**: 92 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.

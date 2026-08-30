@@ -954,6 +954,10 @@ sections:
         title: Agentic Browser Automation
         subtitle: browser-use, Stagehand, Skyvern, Chrome DevTools MCP, Playwright MCP, Browserbase, Steel
         published: true
+      - code: "1.217"
+        title: MCP Server Implementation
+        subtitle: "official mcp SDK, FastMCP, FastAPI-MCP, raw JSON-RPC"
+        published: true
   - range: "1.220-229"
     title: Calendar & Scheduling
     entries:
