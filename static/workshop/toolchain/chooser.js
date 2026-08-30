@@ -76,12 +76,12 @@
       pick = "Flake8"; runner = "Ruff check";
       why = "<strong>This is the input that changed the answer.</strong> Ruff's rules are compiled " +
         "into a Rust binary and there is no plugin interface — a house rule written as a Flake8 " +
-        "plugin has nowhere to go. Ruff is 17&ndash;30&times; faster and it cannot run your rule, " +
+        "plugin has nowhere to go. Ruff is 28&ndash;38&times; faster and it cannot run your rule, " +
         "so it is not the choice. Consider Semgrep alongside: its rules are patterns that look " +
         "like the code, so anyone on the team can write one.";
     } else {
       why = "One binary covering Flake8's rules, its popular plugins, isort and a port of Bandit. " +
-        "Measured at <strong>17.4&times; Flake8 at 1&nbsp;MB and 30.4&times; at 12&nbsp;MB</strong> " +
+        "Measured on an idle machine at <strong>28&times; Flake8 at 1&nbsp;MB and 37.9&times; at 12&nbsp;MB</strong> " +
         "on matched rule sets. Enable the <code>S</code> prefix on day one — it is Bandit's rules " +
         "and it is free if Ruff is installed.";
       if (s.size === "s") {
@@ -166,20 +166,20 @@
     if (s.size === "s") {
       out.push('<div class="flag good"><strong>At your size, speed is not a differentiator.</strong> ' +
         'On a 1&nbsp;MB codebase the measured gap between the fastest and slowest linter here is ' +
-        '<code>0.02s</code> against <code>0.32s</code>. That is a real 17&times; and it is 300 ' +
-        'milliseconds — you cannot feel it. Every speed answer above is honest and none of it ' +
+        '<code>0.014s</code> against <code>0.40s</code>. That is a real 28&times; and it is under ' +
+        'four tenths of a second — you cannot feel it. Every speed answer above is honest and none of it ' +
         'should decide anything. Choose on the extension question instead.</div>');
     }
     if (s.arch === "split") {
       out.push('<div class="flag"><strong>Your laptop and your CI disagree about which tool is fast.</strong> ' +
         'Ruff\'s lead over Black was measured at <strong>32.3&times; on ARM and 16.1&times; on x86</strong> ' +
-        '— same container, same corpus, same core count. You feel the ARM number on your machine ' +
+        '— same container, same corpus, same core count, both on idle machines. You feel the ARM number on your machine ' +
         'and pay the x86 one in CI. Benchmark on the architecture that hurts, not the one in front of you.</div>');
     }
     if ((s.grow === "mono" || s.size === "l") && s.lang !== "js") {
       out.push('<div class="flag"><strong>You are buying a curve, not a ratio.</strong> Twelve times ' +
-        'more code did not cost these tools twelve times more time — it cost Biome 4.1&times;, ' +
-        'Ruff 4.7&times;, Flake8 8.1&times; and <strong>Pylint 24.2&times;</strong>. Pylint is the ' +
+        'more code did not cost these tools twelve times more time — it cost Biome 3.8&times;, ' +
+        'Ruff 4.7&times;, Flake8 6.4&times; and <strong>Pylint 23.5&times;</strong> — a shape that reproduced on two architectures. Pylint is the ' +
         'only one here whose cost grows <em>faster</em> than your codebase does. Run it on a ' +
         'narrowed path or a slower job; do not put it in the inner loop of a codebase headed ' +
         'toward a monolith.</div>');

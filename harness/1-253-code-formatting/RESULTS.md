@@ -61,10 +61,35 @@ It is the obvious objection, and the ARM box invites it — it is a WSL2 laptop 
 runs at 12 MB spanned 2.223 s to 3.599 s, a 62% spread across nine repetitions of identical
 work. The x86 droplet's spanned 2%.
 
-But the noise cancels, because **both tools are timed on the same machine in the same run** —
-it is an apples-to-apples ratio, and a machine that is 20% slow is 20% slow for Ruff and for
-Black alike. The test is whether the ratio moves when you compute it from the fastest runs,
-the median runs, or the slowest runs. If noise drove it, those three would disagree:
+> **CORRECTION, 2026-08-29.** The paragraph that stood here claimed the noise cancels
+> "because both tools are timed on the same machine in the same run", and offered the
+> min/med/max table below as proof. **That defense was too strong, and the test cannot see
+> the failure it was offered against.**
+>
+> The harness times tools SEQUENTIALLY — all nine Ruff passes, then all nine Black passes.
+> Same machine and same run, but **not the same time window.** If the machine got busier
+> between one tool's window and the next, the ratio absorbs that difference directly. The
+> cancellation argument holds only if contention is stationary across the whole run, which
+> on a laptop somebody is using is exactly what it is not.
+>
+> And the min/med/max check measures variance WITHIN a window. If the machine was uniformly
+> busier during Black's nine passes, all three of Black's estimators shift together, the
+> ratio shifts with them, and the table below reports reassuring agreement. It is blind to
+> between-window drift.
+>
+> **The test that does work: a ratio is only as good as the spread on BOTH sides of it.**
+> Low spread on both ends means both windows were quiet, which is what licenses comparing
+> them. That rule is applied throughout `RESULTS-LINT.md`, and the fix — interleaving the
+> tools so they share time windows — is described there.
+>
+> The x86 droplet cells are unaffected: measured at 1-5% spread on a machine whose load
+> average sat at exactly 1.00 for the whole run. **Treat the ARM laptop cells as
+> provisional and the droplet as the reference.**
+
+The original argument, kept so the correction has something to correct: both tools are timed
+on the same machine in the same run, so a machine that is 20% slow is 20% slow for Ruff and
+for Black alike. The test offered was whether the ratio moves when computed from the fastest
+runs, the median runs, or the slowest runs:
 
 | ruff vs black, 12 MB | min/min | med/med | max/max |
 |---|---|---|---|

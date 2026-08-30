@@ -8,7 +8,7 @@
    "url": "https://research.modelcitizendeveloper.com/workshop/toolchain/",
    "kind": "chooser",
    "survey": "1.250-259",
-   "finding": "Most people choose a formatter, linter and type checker on speed. Measured, the speed gap is real and — on most codebases — too small to feel: 0.02s against 0.32s on a 1 MB tree. What actually decides it is whether your rules can be somebody else's rules, and whether the tool's cost grows faster than your codebase does. Pylint's does: 12x more code costs it 24.2x more time, where Biome's costs 4.1x."
+   "finding": "Most people choose a formatter, linter and type checker on speed. Measured on an idle machine, the speed gap is real and — on most codebases — too small to feel: 0.014s against 0.40s on a 1 MB tree. What actually decides it is whether your rules can be somebody else's rules, and whether the tool's cost grows faster than your codebase does. Pylint's does: 12x more code costs it 23.5x more time, a shape that reproduced on two architectures, where Biome's costs 3.8x."
   },
   {
    "name": "layer cake",

@@ -145,6 +145,14 @@ def version_of(argv: list[str]) -> str:
 
 def time_tool(name: str, lang: str, argv, reps: int, ok_codes=(0, 1),
               extra_files=(), use_cwd=False) -> dict:
+    """Time one tool for `reps` passes, back to back.
+
+    RETAINED FOR THE PUBLISHED CELLS, and superseded by `interleave` below. Timing every
+    pass of one tool before starting the next means two tools occupy DIFFERENT time
+    windows, so a machine that gets busier between them biases the ratio — and the
+    min/med/max estimator check cannot detect that, because it only sees variance inside
+    a window. See the correction at the top of RESULTS.md.
+    """
     src = CORPUS / ("python" if lang == "python" else "js")
     times, failures = [], 0
     work = WORK / f"run-{name}"
@@ -182,13 +190,55 @@ def time_tool(name: str, lang: str, argv, reps: int, ok_codes=(0, 1),
             if i == 0:
                 return {"tool": name, "language": lang, "error":
                         (r.stderr or r.stdout).strip()[:300] or f"exit {r.returncode}"}
-        if i:                              # discard the first, unformatted pass
+        # reps=0 means "one pass, keep it" — the mode interleave() drives, where the
+        # discard is handled by the caller so every tool loses its first pass alike.
+        if i or reps == 0:
             times.append(dt)
     shutil.rmtree(work, ignore_errors=True)
     return {"tool": name, "language": lang, "reps": len(times),
             "median_s": round(statistics.median(times), 4),
             "min_s": round(min(times), 4), "max_s": round(max(times), 4),
             "failures": failures}
+
+
+def interleave(specs: list[dict], reps: int) -> list[dict]:
+    """Round-robin the tools: A B C, A B C, ... rather than A*n, B*n, C*n.
+
+    THIS IS THE FIX for what the RESULTS.md correction describes. Sequential timing gives
+    each tool its own window, so load drift between windows lands entirely on the ratio.
+    Interleaving puts every tool in every window, so drift hits them all and the
+    cancellation argument that survey MADE is finally true rather than approximately true.
+
+    Costs nothing but ordering. Each spec is
+    {name, lang, argv, ok_codes, extra_files, use_cwd}, and the first pass of each tool is
+    still discarded, so the timed passes remain steady state.
+    """
+    times = {sp["name"]: [] for sp in specs}
+    errors: dict[str, str] = {}
+    for i in range(reps + 1):                      # +1: the discarded first pass
+        for sp in specs:
+            if sp["name"] in errors:
+                continue
+            r = time_tool(sp["name"], sp["lang"], sp["argv"], reps=0,
+                          ok_codes=sp.get("ok_codes", (0, 1)),
+                          extra_files=sp.get("extra_files", ()),
+                          use_cwd=sp.get("use_cwd", False))
+            if "error" in r:
+                errors[sp["name"]] = r["error"]
+            elif i:                                # discard pass 0 for every tool alike
+                times[sp["name"]].append(r["median_s"])
+    out = []
+    for sp in specs:
+        n = sp["name"]
+        if n in errors:
+            out.append({"tool": n, "language": sp["lang"], "error": errors[n]})
+            continue
+        t = times[n]
+        out.append({"tool": n, "language": sp["lang"], "reps": len(t),
+                    "median_s": round(statistics.median(t), 4),
+                    "min_s": round(min(t), 4), "max_s": round(max(t), 4),
+                    "failures": 0, "timing": "interleaved"})
+    return out
 
 
 def machine() -> dict:

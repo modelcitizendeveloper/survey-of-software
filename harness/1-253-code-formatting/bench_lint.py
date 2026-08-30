@@ -104,16 +104,21 @@ def main() -> int:
         "formatter": {"enabled": False},
     }), encoding="utf-8")
 
-    results = []
     only = {x for x in os.environ.get("ONLY", "").split(",") if x}
-    for name, lang, argv, vargv, ok in LINT_TOOLS:
-        if only and name not in only:
-            continue
-        print(f"  timing {name} ...", flush=True)
-        row = bench.time_tool(name, lang, argv, reps, ok_codes=ok,
-                              extra_files=("eslint.config.mjs", "biome.json"),
-                              use_cwd=(lang == "js"))
-        row["version"] = bench.version_of(vargv)
+    # INTERLEAVED. Every tool takes one pass, then every tool takes another, rather than
+    # all nine passes of one tool before the next begins. Sequential timing gave each tool
+    # its own time window, so a machine that got busier between windows biased the ratio —
+    # and the min/med/max estimator check could not detect it, because that only measures
+    # variance INSIDE a window. See the correction at the top of RESULTS.md.
+    specs = [{"name": n, "lang": l, "argv": a, "ok_codes": ok,
+              "extra_files": ("eslint.config.mjs", "biome.json"), "use_cwd": (l == "js")}
+             for n, l, a, _v, ok in LINT_TOOLS if not (only and n not in only)]
+    versions = {n: v for n, _l, _a, v, _ok in LINT_TOOLS}
+    print(f"  interleaving {len(specs)} tools x {reps} reps ...", flush=True)
+    results = []
+    for row in bench.interleave(specs, reps):
+        name = row["tool"]
+        row["version"] = bench.version_of(versions[name])
         row["rule_set"] = {
             "ruff-check": "E,W,F,C90 — matched to Flake8's default",
             "flake8": "default (pycodestyle E/W + pyflakes F + mccabe C90)",

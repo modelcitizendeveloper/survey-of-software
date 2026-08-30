@@ -154,8 +154,17 @@ timeout 1800 "${SSH[@]}" 'cd /root/harness && docker build -q -t sos-fmt-bench:1
 
 for s in $SCALES; do
   note "running scale x$s at $REPS reps"
-  timeout 4200 "${SSH[@]}" "cd /root/harness && mkdir -p out && REPS=$REPS SCALE=$s timeout 3600 \
-      docker run --rm -e REPS -e SCALE -v /root/harness/out:/out sos-fmt-bench:1.253 >/dev/null" \
+  # 4200/3600 sized the FORMATTER run alone. Three benchmarks now share the slot and
+  # pylint at x12 is ~350s per repetition, so ten repetitions is an hour by itself.
+  # EXPORT, not a command prefix. `REPS=x SCALE=y timeout ... docker run A && docker run B`
+  # binds the variables to A ONLY — so on the first run of three benchmarks, lint and tsc
+  # ran with SCALE unset, defaulted to 1, and the x12 pass silently overwrote the x1 files
+  # it should have sat beside. Each benchmark also gets its own timeout rather than sharing
+  # one that only wrapped the first.
+  timeout 10800 "${SSH[@]}" "cd /root/harness && mkdir -p out && export REPS=$REPS SCALE=$s && \
+      timeout 10200 docker run --rm -e REPS -e SCALE -v /root/harness/out:/out sos-fmt-bench:1.253 >/dev/null && \
+      timeout 10200 docker run --rm -e REPS -e SCALE -v /root/harness/out:/out --entrypoint python3 sos-fmt-bench:1.253 bench_lint.py >/dev/null && \
+      timeout 10200 docker run --rm -e REPS -e SCALE -v /root/harness/out:/out --entrypoint python3 sos-fmt-bench:1.253 bench_tsc.py >/dev/null" \
     || echo "WARNING: scale x$s did not complete or ssh hung after it did" >&2
 done
 
