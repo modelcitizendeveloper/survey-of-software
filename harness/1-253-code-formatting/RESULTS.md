@@ -43,9 +43,18 @@ cents an hour and the run takes under half of one.
 
 1× is 1 MB / 59 Python files; 12× replicates the same corpus to 12 MB / 900 files.
 
-### What the x86 run changed: the ratio is architecture-dependent
+### What the x86 run changed — and what the 2026-08-29 correction took back
 
-**Ruff's lead over Black is roughly twice as large on ARM as on x86**, once the corpus is big
+**This section's original claim was that Ruff's lead over Black is roughly twice as large on
+ARM as on x86. That is now withdrawn as a finding**, though not shown to be false. The ARM
+cells were measured on a laptop doing other work, and this harness times each tool in its own
+window, so a machine that got busier between two tools' windows biases the ratio between
+them. The x86 cells are the reference — re-run two days later on a fresh machine they
+reproduced within 2.7%. **A clean ARM run is the outstanding work**, and until it exists the
+architecture question is open rather than answered.
+
+The original argument, kept so the correction has something to correct: Ruff's lead over
+Black is roughly twice as large on ARM as on x86, once the corpus is big
 enough to show it. Same container, same pinned tools, same corpus, eight cores on both:
 
 | ruff vs black, container | 1 MB | 12 MB | direction |

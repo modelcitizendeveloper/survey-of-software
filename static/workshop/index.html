@@ -53,9 +53,9 @@ the survey corrected. The page is the instrument; the survey has the workings.</
 <a class="card" href="/workshop/formatters/">
   <h2>how fast is Ruff, really?</h2>
   <p class="finding">Ruff's README claims <strong>10-100&times; faster than Black</strong>.
-  Measured, it is <strong>16-32&times;</strong> — and which end you get is not a detail:
-  <strong>Ruff's lead is about twice as large on ARM as on x86</strong> once the codebase is big
-  enough to show it. Biome's &ldquo;25&times; over Prettier&rdquo; is wrong on a small codebase and
+  Measured on a clean x86 machine, it is <strong>16&times;</strong>. The ARM cells read higher
+  but came from a busy laptop, so <strong>whether the ratio depends on architecture is still
+  open</strong>. Biome's &ldquo;25&times; over Prettier&rdquo; is wrong on a small codebase and
   right on a large one, so that claim's defect is the workload it never states.</p>
   <p class="meta"><b>Runs on your machine</b> · ruff, black, autopep8, yapf, prettier, biome, dprint
   · <b>survey</b> 1.253 Code Formatting Libraries</p>

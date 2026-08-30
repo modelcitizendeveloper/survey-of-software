@@ -171,10 +171,13 @@
         'should decide anything. Choose on the extension question instead.</div>');
     }
     if (s.arch === "split") {
-      out.push('<div class="flag"><strong>Your laptop and your CI disagree about which tool is fast.</strong> ' +
-        'Ruff\'s lead over Black was measured at <strong>32.3&times; on ARM and 16.1&times; on x86</strong> ' +
-        '— same container, same corpus, same core count, both on idle machines. You feel the ARM number on your machine ' +
-        'and pay the x86 one in CI. Benchmark on the architecture that hurts, not the one in front of you.</div>');
+      out.push('<div class="flag"><strong>Your laptop and your CI may not agree about which tool is fast.</strong> ' +
+        'The formatter harness measured Ruff\'s lead over Black at 32.3&times; on an ARM laptop and ' +
+        '16.1&times; on an x86 droplet — but the ARM machine was doing other work, and the harness ' +
+        'timed the tools in separate windows, so that gap is <strong>not yet a finding about ' +
+        'architecture</strong>. A clean ARM run is outstanding. What is safe to say: benchmark on ' +
+        'the architecture your CI uses, not the one in front of you, because you cannot assume ' +
+        'they agree.</div>');
     }
     if ((s.grow === "mono" || s.size === "l") && s.lang !== "js") {
       out.push('<div class="flag"><strong>You are buying a curve, not a ratio.</strong> Twelve times ' +
