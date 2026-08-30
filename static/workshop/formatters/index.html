@@ -34,6 +34,28 @@ Black)&rdquo;</strong>. Measured against Black across four conditions, formattin
 on is not a detail: <strong>Ruff's lead over Black is about twice as large on ARM as on
 x86</strong>, on the same corpus with the same pinned tools.</p>
 
+<div class="flag" style="border-left:3px solid var(--warn);padding:12px 16px;margin:16px 0;background:var(--panel);line-height:1.6">
+<strong>Corrected 2026-08-29.</strong> The ARM cells below were measured on a laptop that was
+doing other work, and this harness times tools <em>sequentially</em> — nine passes of one,
+then nine of the next. Two tools therefore occupy different time windows, so a machine that
+gets busier between them biases the ratio. The min/med/max check we published as proof
+against that measures variance <em>inside</em> a window and cannot see it.
+<strong>The x86 droplet cells are the reference</strong>; re-run weeks apart on a fresh
+machine they reproduce within 2.7%. The rule that works: <strong>a ratio is only as good as
+the spread on both sides of it</strong>. The harness now interleaves tools so they share
+windows.
+</div>
+
+<p class="note"><strong>And a ratio is a snapshot, not the thing you are choosing.</strong>
+Twelve times more code did not cost these tools twelve times more time — it cost
+<code>ruff&nbsp;check</code> 4.7&times;, Flake8 6.4&times;, Biome 3.8&times; and
+<strong>Pylint 23.5&times;</strong>, a shape that reproduced on two architectures. Three of
+those are <em>sublinear</em>: fixed startup amortises and per-file work parallelises, so they
+get relatively cheaper as you grow. Pylint gets worse faster than your codebase does. The
+curve is what you are buying, and no published benchmark tells you which one — every vendor
+figure is a snapshot at one codebase size, usually theirs.
+<a href="/workshop/toolchain/">Which five? &rarr;</a> turns that into a choice.</p>
+
 <p class="note">This one does not run in your browser, and that is the finding underneath the
 finding: <strong>Ruff, Biome and dprint are compiled binaries.</strong> A tab cannot run them.
 So the instrument is a container you run on your own machine, with everything pinned — and
@@ -85,15 +107,21 @@ workload, not the number.</p>
 <h2>Run it yourself</h2>
 <a class="dl" href="/workshop/formatters/harness.tar.gz" download>Download the harness (10&nbsp;KB)</a>
 <div class="get"><code>tar xzf harness.tar.gz
-cd 1-104-2-code-formatting
+cd 1-253-code-formatting
 
 ./run.sh                    # container: pins the OS, both runtimes, every formatter
 ./run-host.sh               # same pins via uv + npm, if you have no Docker daemon
 REPS=9 SCALE=12 ./run.sh    # the large-corpus cell
 ./run-droplet.sh            # rent a standard x86 box, run, collect, destroy
+
+# the same container also carries the linter and type-checker benchmarks
+docker run --rm -e REPS=9 -e SCALE=12 -v "$PWD/out:/out" \
+  --entrypoint python3 sos-fmt-bench:1.253 bench_lint.py
+docker run --rm -e REPS=9 -e SCALE=12 -v "$PWD/out:/out" \
+  --entrypoint python3 sos-fmt-bench:1.253 bench_tsc.py
 python3 summarize.py        # the ratio table, derived from out/*.json</code></div>
 <p class="meta">Or browse it on
-<a href="https://github.com/modelcitizendeveloper/survey-of-software/tree/main/harness/1-104-2-code-formatting">GitHub</a>.
+<a href="https://github.com/modelcitizendeveloper/survey-of-software/tree/main/harness/1-253-code-formatting">GitHub</a>.
 Results land in <span class="mono">out/</span> as JSON — per-tool min, median and max, the
 corpus size, your machine, and every version string as the tool reported it.</p>
 
@@ -147,7 +175,7 @@ you — which a survey cannot give you, because it knows neither.</p>
 survey says of it &ldquo;nothing new; move existing users to Ruff&rdquo; — the dependency
 resolver says the same thing, and dates it.</p>
 
-<p class="foot"><a href="/survey/1-104-2/">Read the survey &rarr;</a> &nbsp;·&nbsp;
+<p class="foot"><a href="/survey/1-253/">Read the survey &rarr;</a> &nbsp;·&nbsp;
 <a href="/workshop/">More instruments</a></p>
 
 </div>
