@@ -242,7 +242,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.110-119: User Interface & Frontend
 
-**Completed: 14/17**
+**Completed: 16/19**
 
 - ✅ [**1.110** Frontend Frameworks](/survey/1-110) - React, Vue, Svelte, Angular
   - **1.110.1** React Meta-Frameworks - Next.js, Remix, Gatsby
@@ -251,9 +251,11 @@ description: "Software library research across sorting, search, NLP, ML, fronten
   - ✅ [**1.110.4** Browser Python Execution](/survey/1-110-4)
   - ✅ [**1.110.5** Static Site Generators](/survey/1-110-5) - Hugo, Docusaurus, MkDocs, Jekyll
   - ✅ [**1.110.6** Code & Markdown Presentation Frameworks](/survey/1-110-6) - Marp, Slidev, reveal.js, Quarto, Spectacle
+  - ✅ [**1.110.7** Static Site Content Editing (Git-Based CMS)](/survey/1-110-7)
 - ✅ [**1.111** State Management - Redux, Zustand, Jotai, Pinia](/survey/1-111)
 - ✅ [**1.112** CSS Frameworks - Tailwind, Bootstrap, Material UI](/survey/1-112)
 - ✅ [**1.113** UI Component Libraries - shadcn/ui, Radix, Headless UI](/survey/1-113)
+  - ✅ [**1.113.1** Data Grids](/survey/1-113-1)
 - ✅ [**1.114** Build Tools - Vite, Webpack, Turbopack, esbuild](/survey/1-114)
 - ✅ [**1.115** Form & Validation - React Hook Form, Zod, Yup](/survey/1-115)
 - ✅ [**1.116** Data Visualization Libraries - D3.js, Chart.js, Recharts](/survey/1-116)
@@ -390,12 +392,13 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.190-199: Knowledge & Content Engineering
 
-**Completed: 0/4**
+**Completed: 1/5**
 
 - **1.190** Knowledge Graph Construction - Building concept maps from extracted text
 - **1.191** Corpus Analysis & Text Mining - Large document collection analysis
 - **1.192** Book/Publishing Pipeline - Pandoc, Bookdown, manuscript-to-print
 - **1.193** Digital Asset Management - Organizing large timestamped media collections
+- ✅ [**1.194** Entity Resolution & Record Linkage](/survey/1-194)
 - **1.194-1.199** _Available for future use_
 
 ---
@@ -457,11 +460,12 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.240-249: Infrastructure & Platform Engineering
 
-**Completed: 3/3**
+**Completed: 4/4**
 
 - ✅ [**1.240** Container Networking & Service Mesh](/survey/1-240) - Cilium, Calico, Istio, Linkerd, Envoy, Flannel, Consul Connect
 - ✅ [**1.241** Python Web Frameworks](/survey/1-241)
 - ✅ [**1.242** ASGI & WSGI Application Servers](/survey/1-242)
+- ✅ [**1.245** Rule & Policy Evaluation Engines](/survey/1-245)
 
 ---
 
@@ -497,14 +501,16 @@ build against — a different question, so they are a different series. Publishe
 a time as each is completed.
 
 - ✅ [**2.074** MCP Protocol](/survey/2-074) - Model Context Protocol: the tool edge most AI frameworks now standardize on
+- ✅ [**2.074.1** MCP Authorization for Remote Servers](/survey/2-074-1) - How a remote MCP server becomes an OAuth 2.1 resource server, and what you run to issue the tokens
+- ✅ [**2.078** Client-Side AI Handoff (BYOAI Patterns)](/survey/2-078) - How a web page hands a task to the user's own AI — and gets the answer back
 - ✅ [**2.083** AI Agent Gateways](/survey/2-083) - MCP federation and A2A routing: Agent Gateway, IBM ContextForge, Kong, Envoy
 
 ---
 
 ## Research Status
 
-**Total Defined**: 267 research slots
-**Completed**: 175 pieces (65%)
+**Total Defined**: 272 research slots
+**Completed**: 180 pieces (66%)
 **Remaining**: 92 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
