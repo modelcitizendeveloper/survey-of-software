@@ -76,5 +76,7 @@ CLAUDE.md
 # enforced nothing, and was kept off the site by this line alone.
 content/survey/2-*.md
 !content/survey/2-074.md
+!content/survey/2-074-1.md
+!content/survey/2-078.md
 !content/survey/2-083.md
 content/survey/3-*.md
