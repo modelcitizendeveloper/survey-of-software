@@ -19,7 +19,7 @@ This research library answers those questions. Each piece covers a specific doma
 - **Production readiness** assessments
 - **Long-term viability** evaluations
 
-**Current coverage:** 111 of 199 research pieces complete (56%)
+**Current coverage:** 181 published surveys (as of 2026-09-08).
 
 ## How to Use This
 
