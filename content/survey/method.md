@@ -144,13 +144,33 @@ Every research document MUST include a `## Sources` section at the end, formatte
 
 ## Confidence Levels & Information Decay
 
-This research provides **strategic direction**, not Consumer Reports certainty:
+This research provides **strategic direction**, not Consumer Reports certainty. The
+figures below are the author's calibration judgment, not a measurement:
 
 **At publication:** 70-80% accuracy
 **After 12 months:** 50-70% accuracy
 **After 36 months:** <30% accuracy
 
 Library ecosystems evolve. Treat research as living documents that guide investigation, not gospel truth.
+
+---
+
+## The evidence ladder
+
+Every survey page opens with an **Evidence** line. It is derived from what exists in the
+repository, not declared by the author, and it answers one question: how hard would it be
+for a stranger to reach the same conclusion?
+
+| badge | what it means | how to check it |
+|---|---|---|
+| **Measured in your browser** | A [Workshop](/workshop/) model runs the survey's own code in your tab | Re-run it, on your own inputs |
+| **Measured, method published** | Probes were run on a stated machine and the harness is in the [public repository](https://github.com/modelcitizendeveloper/survey-of-software/tree/main/harness) | Clone it, pin the same versions, diff your numbers against the committed results |
+| **Measured, method not yet published** | The numbers came from probes on a stated machine; the harness is not public yet | Read the stated conditions; you cannot re-run it until the harness ships |
+| **Desk research** | Registries, documentation and published benchmarks, read and dated | Follow the sources; nothing on the page was independently measured |
+
+Each rung is strictly more reproducible by a stranger than the one below it. A desk-research
+survey is not wrong for being one; most categories start there. The badge exists so that a
+measured survey and a desk-research survey stop carrying identical authority on the page.
 
 ---
 
