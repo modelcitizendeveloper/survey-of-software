@@ -1,0 +1,11 @@
+# Pins for every measured claim in survey 1.194.
+# One venv per candidate; see install_matrix.py for how they were built.
+# Measured 2026-09-07 on aarch64 Linux (WSL2), CPython 3.12.3 / 3.13.15, uv 0.12.5.
+splink==4.0.17
+recordlinkage==0.16
+dedupe==3.0.3
+BTrees==6.4          # 6.5 (2026-08-20) removed byValue() and breaks dedupe at blocking
+duckdb==1.5.5
+pyjedai==0.3.6
+string-grouper==0.8.0
+datasketch==2.0.0

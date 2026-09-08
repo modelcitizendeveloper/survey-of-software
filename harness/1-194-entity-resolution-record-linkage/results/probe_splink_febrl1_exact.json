@@ -1,0 +1,145 @@
+{
+  "probe": "splink",
+  "version": "4.0.17",
+  "backend": "DuckDBAPI (in-process)",
+  "dataset": "febrl1",
+  "blocking_variant": "exact",
+  "capabilities": {
+    "blocks": true,
+    "scores": true,
+    "decides": true,
+    "clusters": true,
+    "canonicalises": false
+  },
+  "capability_note": "Trained with no labelled pairs. Clustering is the library's own step, run at each threshold; the naive connected-components partition over the same accepted pairs is reported beside it.",
+  "training_seconds": 1.346,
+  "predict_seconds": 0.09,
+  "blocking": {
+    "candidate_pairs": 1308,
+    "possible_pairs": 499500,
+    "reduction_ratio": 0.997381,
+    "blocking_recall": 0.972
+  },
+  "results": [
+    {
+      "threshold_match_probability": 0.5,
+      "cluster_seconds": 0.115,
+      "pairwise": {
+        "tp": 485,
+        "fp": 0,
+        "fn": 15,
+        "precision": 1.0,
+        "recall": 0.97,
+        "f1": 0.9848,
+        "predicted_pairs": 485,
+        "true_pairs": 500
+      },
+      "cluster_splink_own": {
+        "true_entities": 500,
+        "predicted_entities": 515,
+        "exact_entities_recovered": 485,
+        "exact_recovery_rate": 0.97,
+        "adjusted_rand_index": 0.9848,
+        "records_scored": 1000
+      },
+      "cluster_naive_connected_components": {
+        "true_entities": 500,
+        "predicted_entities": 515,
+        "exact_entities_recovered": 485,
+        "exact_recovery_rate": 0.97,
+        "adjusted_rand_index": 0.9848,
+        "records_scored": 1000
+      }
+    },
+    {
+      "threshold_match_probability": 0.9,
+      "cluster_seconds": 0.088,
+      "pairwise": {
+        "tp": 485,
+        "fp": 0,
+        "fn": 15,
+        "precision": 1.0,
+        "recall": 0.97,
+        "f1": 0.9848,
+        "predicted_pairs": 485,
+        "true_pairs": 500
+      },
+      "cluster_splink_own": {
+        "true_entities": 500,
+        "predicted_entities": 515,
+        "exact_entities_recovered": 485,
+        "exact_recovery_rate": 0.97,
+        "adjusted_rand_index": 0.9848,
+        "records_scored": 1000
+      },
+      "cluster_naive_connected_components": {
+        "true_entities": 500,
+        "predicted_entities": 515,
+        "exact_entities_recovered": 485,
+        "exact_recovery_rate": 0.97,
+        "adjusted_rand_index": 0.9848,
+        "records_scored": 1000
+      }
+    },
+    {
+      "threshold_match_probability": 0.95,
+      "cluster_seconds": 0.122,
+      "pairwise": {
+        "tp": 484,
+        "fp": 0,
+        "fn": 16,
+        "precision": 1.0,
+        "recall": 0.968,
+        "f1": 0.9837,
+        "predicted_pairs": 484,
+        "true_pairs": 500
+      },
+      "cluster_splink_own": {
+        "true_entities": 500,
+        "predicted_entities": 516,
+        "exact_entities_recovered": 484,
+        "exact_recovery_rate": 0.968,
+        "adjusted_rand_index": 0.9837,
+        "records_scored": 1000
+      },
+      "cluster_naive_connected_components": {
+        "true_entities": 500,
+        "predicted_entities": 516,
+        "exact_entities_recovered": 484,
+        "exact_recovery_rate": 0.968,
+        "adjusted_rand_index": 0.9837,
+        "records_scored": 1000
+      }
+    },
+    {
+      "threshold_match_probability": 0.99,
+      "cluster_seconds": 0.095,
+      "pairwise": {
+        "tp": 484,
+        "fp": 0,
+        "fn": 16,
+        "precision": 1.0,
+        "recall": 0.968,
+        "f1": 0.9837,
+        "predicted_pairs": 484,
+        "true_pairs": 500
+      },
+      "cluster_splink_own": {
+        "true_entities": 500,
+        "predicted_entities": 516,
+        "exact_entities_recovered": 484,
+        "exact_recovery_rate": 0.968,
+        "adjusted_rand_index": 0.9837,
+        "records_scored": 1000
+      },
+      "cluster_naive_connected_components": {
+        "true_entities": 500,
+        "predicted_entities": 516,
+        "exact_entities_recovered": 484,
+        "exact_recovery_rate": 0.968,
+        "adjusted_rand_index": 0.9837,
+        "records_scored": 1000
+      }
+    }
+  ]
+}

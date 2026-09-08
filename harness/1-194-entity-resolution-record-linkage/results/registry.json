@@ -1,0 +1,2658 @@
+{
+  "fetched_at": "2026-09-07T06:15:51.681201+00:00",
+  "authenticated_github": true,
+  "pypi": [
+    {
+      "package": "recordlinkage",
+      "source_url": "https://pypi.org/pypi/recordlinkage/json",
+      "version": "0.16",
+      "license": "BSD-3-Clause",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "requires_python": ">=3.8",
+      "requires_dist": [
+        "jellyfish (>=1)",
+        "numpy (>=1.13)",
+        "pandas (<3,>=1)",
+        "scipy (>=1)",
+        "scikit-learn (>=1)",
+        "joblib",
+        "networkx (>=2) ; extra == 'all'",
+        "bottleneck ; extra == 'all'",
+        "numexpr ; extra == 'all'",
+        "sphinx ; extra == 'docs'",
+        "nbsphinx ; extra == 'docs'",
+        "sphinx-rtd-theme ; extra == 'docs'",
+        "ipykernel ; extra == 'docs'",
+        "ruff ; extra == 'lint'",
+        "pytest ; extra == 'test'"
+      ],
+      "summary": "A record linkage toolkit for linking and deduplication",
+      "home_page": "",
+      "project_urls": {
+        "homepage": "https://recordlinkage.readthedocs.io/",
+        "repository": "https://github.com/J535D165/recordlinkage"
+      },
+      "latest_upload": "2023-07-20T13:01:59.172063Z",
+      "first_upload": "2016-06-04T13:46:35.227935Z",
+      "release_count": 23,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "dedupe",
+      "source_url": "https://pypi.org/pypi/dedupe/json",
+      "version": "3.0.3",
+      "license": "The MIT License (MIT)  Copyright (c) 2014 Forest Gregg, Derek Eder, DataMade and Contributors  Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files (the \"Software\"), to deal in the Software without restriction, including without limitation the rights to use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is furnished to do so, subject to the following conditions:  The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.  THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE. ",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.8",
+      "requires_dist": [
+        "scikit-learn",
+        "affinegap>=1.3",
+        "categorical-distance>=1.9",
+        "numpy>=1.20",
+        "doublemetaphone",
+        "highered>=0.2.0",
+        "simplecosine>=1.2",
+        "haversine>=0.4.1",
+        "BTrees>=4.1.4",
+        "zope.index",
+        "dedupe-Levenshtein-search"
+      ],
+      "summary": "A python library for accurate and scaleable data deduplication and entity-resolution",
+      "home_page": null,
+      "project_urls": {
+        "Changelog": "https://github.com/dedupeio/dedupe/blob/main/CHANGELOG.md",
+        "Documentation": "https://docs.dedupe.io/en/latest/",
+        "Examples": "https://github.com/dedupeio/dedupe-examples",
+        "Homepage": "https://github.com/dedupeio/dedupe",
+        "Issues": "https://github.com/dedupeio/dedupe/issues",
+        "MailingList": "https://groups.google.com/forum/#!forum/open-source-deduplication",
+        "Twitter": "https://twitter.com/DedupeIo"
+      },
+      "latest_upload": "2024-08-15T14:35:09.683349Z",
+      "first_upload": "2014-04-03T21:15:26.719927Z",
+      "release_count": 179,
+      "wheel_tags": [
+        "macosx_10_13_universal2",
+        "macosx_10_13_x86_64",
+        "macosx_10_15_x86_64",
+        "macosx_10_9_universal2",
+        "macosx_10_9_x86_64",
+        "macosx_11_0_arm64",
+        "manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686",
+        "manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64",
+        "musllinux_1_2_i686",
+        "musllinux_1_2_x86_64",
+        "win32",
+        "win_amd64"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "splink",
+      "source_url": "https://pypi.org/pypi/splink/json",
+      "version": "4.0.17",
+      "license": "MIT",
+      "license_classifiers": [],
+      "requires_python": "<4.0.0,>=3.10.0",
+      "requires_dist": [
+        "altair>=5.0.1",
+        "duckdb>=0.9.2",
+        "igraph>=0.11.2",
+        "jinja2>=3.0.3",
+        "numpy>=1.19.3",
+        "pandas>=1.3.5",
+        "sqlglot>=17.6.0",
+        "awswrangler; extra == \"athena\"",
+        "psycopg2-binary>=2.9.0; extra == \"postgres\"",
+        "sqlalchemy>=2.0.0; extra == \"postgres\"",
+        "pyspark>=3.5.0; extra == \"pyspark\"",
+        "pyspark>=3.5.0; extra == \"spark\""
+      ],
+      "summary": "Fast probabilistic data linkage at scale",
+      "home_page": null,
+      "project_urls": {
+        "Homepage": "https://github.com/moj-analytical-services/splink",
+        "Repository": "https://github.com/moj-analytical-services/splink"
+      },
+      "latest_upload": "2026-09-03T15:01:15.847601Z",
+      "first_upload": "2020-03-13T13:56:54.498801Z",
+      "release_count": 163,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "zingg",
+      "source_url": "https://pypi.org/pypi/zingg/json",
+      "version": "0.7.0",
+      "license": "https://github.com/zinggAI/zingg/blob/main/LICENSE",
+      "license_classifiers": [
+        "License :: OSI Approved :: GNU Affero General Public License v3"
+      ],
+      "requires_python": null,
+      "requires_dist": [
+        "py4j==0.10.9",
+        "pyspark>=3.1.2; extra == \"zingg\""
+      ],
+      "summary": "Zingg Entity Resolution, Data Mastering and Deduplication",
+      "home_page": "https://github.com/zinggAI/zingg",
+      "project_urls": {
+        "Homepage": "https://github.com/zinggAI/zingg"
+      },
+      "latest_upload": "2026-08-10T09:58:02.340518Z",
+      "first_upload": "2022-08-04T03:25:12.765601Z",
+      "release_count": 5,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "pyjedai",
+      "source_url": "https://pypi.org/pypi/pyjedai/json",
+      "version": "0.3.6",
+      "license": "Apache Software License 2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "matplotlib",
+        "networkx",
+        "nltk",
+        "numpy<3.0",
+        "pandas",
+        "scipy",
+        "seaborn",
+        "tqdm",
+        "transformers",
+        "sentence-transformers",
+        "faiss-cpu",
+        "valentine; python_version > \"3.7\"",
+        "ordered-set",
+        "shapely",
+        "ollama",
+        "py-stringcompare",
+        "ray",
+        "pip-tools; extra == \"dev\"",
+        "pytest; extra == \"dev\"",
+        "numpy<2.0,>=1.7; extra == \"with-gensim\"",
+        "gensim; extra == \"with-gensim\"",
+        "scipy==1.12; extra == \"with-gensim\""
+      ],
+      "summary": "An open-source library that builds powerful end-to-end Entity Resolution workflows.",
+      "home_page": null,
+      "project_urls": {
+        "Bug Tracker": "https://github.com/AI-team-UoA/pyJedAI/issues",
+        "Documentation": "http://pyjedai.rtfd.io",
+        "Homepage": "http://pyjedai.rtfd.io",
+        "Source code": "https://github.com/AI-team-UoA/pyJedAI/tree/main/pyjedai"
+      },
+      "latest_upload": "2025-11-03T10:02:19.691336Z",
+      "first_upload": "2022-09-21T13:36:22.169248Z",
+      "release_count": 33,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "string-grouper",
+      "source_url": "https://pypi.org/pypi/string-grouper/json",
+      "version": "0.8.0",
+      "license": "MIT",
+      "license_classifiers": [],
+      "requires_python": "<4.0,>=3.10",
+      "requires_dist": [
+        "loguru>0.7.0",
+        "numpy>=2.0",
+        "pandas<3.0,>=2.0",
+        "scikit-learn>=1.4.0",
+        "scipy>=1.15",
+        "sp-matmul-rs>=0.2.1",
+        "sparse-dot-topn>=1.1.0"
+      ],
+      "summary": "String grouper contains functions to do string matching using TF-IDF and the cossine similarity.",
+      "home_page": null,
+      "project_urls": null,
+      "latest_upload": "2026-07-26T19:48:29.328243Z",
+      "first_upload": "2020-01-02T16:02:04.408137Z",
+      "release_count": 13,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "polyfuzz",
+      "source_url": "https://pypi.org/pypi/polyfuzz/json",
+      "version": "0.4.3",
+      "license": "",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "numpy>=1.20.0",
+        "scipy>=1.3.1",
+        "pandas>=0.25.3",
+        "tqdm>=4.41.1",
+        "joblib>=0.14.0",
+        "matplotlib>=3.2.2",
+        "seaborn>=0.11.0",
+        "rapidfuzz>=0.13.1",
+        "scikit_learn>=0.22.2.post1",
+        "pytest>=5.4.3; extra == \"test\"",
+        "pytest-cov>=2.6.1; extra == \"test\"",
+        "mkdocs==1.1; extra == \"docs\"",
+        "mkdocs-material==4.6.3; extra == \"docs\"",
+        "mkdocstrings==0.8.0; extra == \"docs\"",
+        "mkdocs==1.1; extra == \"dev\"",
+        "mkdocs-material==4.6.3; extra == \"dev\"",
+        "mkdocstrings==0.8.0; extra == \"dev\"",
+        "pytest>=5.4.3; extra == \"dev\"",
+        "pytest-cov>=2.6.1; extra == \"dev\"",
+        "torch>=1.4.0; extra == \"dev\"",
+        "flair>=0.7; extra == \"dev\"",
+        "sparse_dot_topn>=0.2.9; extra == \"dev\"",
+        "sentence-transformers>=0.4.1; extra == \"dev\"",
+        "spacy>=3.0.1; extra == \"dev\"",
+        "tensorflow; extra == \"dev\"",
+        "tensorflow_hub; extra == \"dev\"",
+        "tensorflow_text; extra == \"dev\"",
+        "torch>=1.4.0; extra == \"flair\"",
+        "flair>=0.7; extra == \"flair\"",
+        "sparse_dot_topn>=0.2.9; extra == \"fast\"",
+        "sentence-transformers>=0.4.1; extra == \"sbert\"",
+        "tensorflow; extra == \"use\"",
+        "tensorflow_hub; extra == \"use\"",
+        "tensorflow_text; extra == \"use\"",
+        "gensim>=4.0.0; extra == \"gensim\""
+      ],
+      "summary": "PolyFuzz performs fuzzy string matching, grouping, and evaluation.",
+      "home_page": "https://github.com/MaartenGr/PolyFuzz",
+      "project_urls": {
+        "Documentation": "https://maartengr.github.io/polyfuzz/",
+        "Homepage": "https://github.com/MaartenGr/PolyFuzz",
+        "Issue Tracker": "https://github.com/MaartenGr/PolyFuzz/issues",
+        "Source Code": "https://github.com/MaartenGr/PolyFuzz/"
+      },
+      "latest_upload": "2025-05-06T11:53:33.000373Z",
+      "first_upload": "2020-11-24T15:31:39.543851Z",
+      "release_count": 13,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "fuzzymatcher",
+      "source_url": "https://pypi.org/pypi/fuzzymatcher/json",
+      "version": "0.0.6",
+      "license": "MIT",
+      "license_classifiers": [],
+      "requires_python": "",
+      "requires_dist": [
+        "pandas",
+        "metaphone",
+        "python-Levenshtein",
+        "rapidfuzz",
+        "python-dateutil"
+      ],
+      "summary": "Fuzzy match two pandas dataframes based on one or more common fields",
+      "home_page": "https://github.com/RobinL/fuzzymatcher",
+      "project_urls": {
+        "Download": "https://github.com/RobinL/fuzzymatcher/archive/v0.0.6.tar.gz",
+        "Homepage": "https://github.com/RobinL/fuzzymatcher"
+      },
+      "latest_upload": "2022-06-07T16:13:16.690856Z",
+      "first_upload": "2017-11-27T08:50:39.715532Z",
+      "release_count": 5,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "csvmatch",
+      "source_url": "https://pypi.org/pypi/csvmatch/json",
+      "version": "2.1.0",
+      "license": "",
+      "license_classifiers": [],
+      "requires_python": "==3.13.*",
+      "requires_dist": [
+        "textmatch==1.1.*",
+        "polars[pandas,pyarrow]==1.21.*",
+        "chardet==5.2.*",
+        "colorama==0.4.*",
+        "tqdm==4.67.*"
+      ],
+      "summary": "Find fuzzy matches between CSV files.",
+      "home_page": null,
+      "project_urls": {
+        "source": "https://github.com/maxharlow/csvmatch"
+      },
+      "latest_upload": "2025-02-02T18:21:25.551640Z",
+      "first_upload": "2015-12-08T16:51:17.327449Z",
+      "release_count": 27,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "rltk",
+      "source_url": "https://pypi.org/pypi/rltk/json",
+      "version": "2.0.0a20",
+      "license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": "",
+      "requires_dist": [
+        "Cython (>=0.28.0)",
+        "numpy (>=1.17.0)",
+        "pandas (>=1.2.0)",
+        "scipy (>=1.1.0)",
+        "matplotlib (>=2.0.0)",
+        "dask (>=0.19.2)",
+        "distributed (>=1.23)",
+        "pyrallel.lib"
+      ],
+      "summary": "Record Linkage ToolKit",
+      "home_page": "https://github.com/usc-isi-i2/rltk",
+      "project_urls": {
+        "Bug Tracker": "https://github.com/usc-isi-i2/rltk/issues",
+        "Documentation": "https://rltk.readthedocs.io",
+        "Homepage": "https://github.com/usc-isi-i2/rltk",
+        "Source Code": "https://github.com/usc-isi-i2/rltk"
+      },
+      "latest_upload": "2021-10-06T23:42:52.484885Z",
+      "first_upload": "2018-04-20T22:49:12.303249Z",
+      "release_count": 20,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "deepmatcher",
+      "source_url": "https://pypi.org/pypi/deepmatcher/json",
+      "version": "0.1.2.post2",
+      "license": "BSD",
+      "license_classifiers": [],
+      "requires_python": ">=3.5",
+      "requires_dist": null,
+      "summary": "A deep learning package for entity matching",
+      "home_page": "http://deepmatcher.ml",
+      "project_urls": {
+        "Homepage": "http://deepmatcher.ml"
+      },
+      "latest_upload": "2021-06-13T01:13:24.851676Z",
+      "first_upload": "2018-04-24T20:15:51.676448Z",
+      "release_count": 9,
+      "wheel_tags": [],
+      "has_sdist_only": true,
+      "yanked": false
+    },
+    {
+      "package": "py-entitymatching",
+      "source_url": "https://pypi.org/pypi/py-entitymatching/json",
+      "version": "0.4.2",
+      "license": "BSD",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "requires_python": "",
+      "requires_dist": [
+        "requests",
+        "ipython>=5.6",
+        "matplotlib>=2.2.4",
+        "PyPrind",
+        "py-stringsimjoin>=0.3.0",
+        "cloudpickle>=0.2.1",
+        "pyparsing>=2.1.4",
+        "scikit-learn>=0.22",
+        "scipy",
+        "numpy"
+      ],
+      "summary": "Python library for end to end Entity Matching.",
+      "home_page": "https://sites.google.com/site/anhaidgroup/projects/magellan/py_entitymatching",
+      "project_urls": {
+        "Homepage": "https://sites.google.com/site/anhaidgroup/projects/magellan/py_entitymatching"
+      },
+      "latest_upload": "2024-02-07T23:47:32.706812Z",
+      "first_upload": "2016-08-04T21:59:00.835600Z",
+      "release_count": 10,
+      "wheel_tags": [],
+      "has_sdist_only": true,
+      "yanked": false
+    },
+    {
+      "package": "entity-embed",
+      "source_url": "https://pypi.org/pypi/entity-embed/json",
+      "version": "0.0.6",
+      "license": "MIT license",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.6",
+      "requires_dist": [
+        "click (<8.0,==7.1.2)",
+        "more-itertools (<9.0,>=8.6.0)",
+        "n2 (<1.2,>=0.1.7)",
+        "numpy (>=1.19.0)",
+        "ordered-set (>=4.0.2)",
+        "pytorch-lightning (<1.3,>=1.1.6)",
+        "pytorch-metric-learning (<1.0,>=0.9.98)",
+        "regex (>=2020.11.13)",
+        "torch (<1.9,>=1.7.1)",
+        "torchtext (<0.10,>=0.8)",
+        "torchvision (>=0.8.2<0.10)",
+        "tqdm (>=4.53.0)"
+      ],
+      "summary": "Transform entities like companies, products, etc. into vectors to support scalable Record Linkage / Entity Resolution using Approximate Nearest Neighbors.",
+      "home_page": "https://github.com/vintasoftware/entity-embed",
+      "project_urls": {
+        "Homepage": "https://github.com/vintasoftware/entity-embed"
+      },
+      "latest_upload": "2021-07-16T17:07:28.138387Z",
+      "first_upload": "2021-04-02T00:25:42.720691Z",
+      "release_count": 6,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "datasketch",
+      "source_url": "https://pypi.org/pypi/datasketch/json",
+      "version": "2.0.0",
+      "license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "numpy>=1.11",
+        "scipy>=1.0.0",
+        "aiounittest; extra == \"aio\"",
+        "motor>3.6.0; extra == \"aio\"",
+        "fonttools>=4.60.2; extra == \"benchmark\"",
+        "matplotlib>=3.1.2; extra == \"benchmark\"",
+        "nltk>=3.4.5; python_version < \"3.10\" and extra == \"benchmark\"",
+        "nltk>=3.9.4; python_version >= \"3.10\" and extra == \"benchmark\"",
+        "pandas>=0.25.3; extra == \"benchmark\"",
+        "pillow>=12.2.0; python_version >= \"3.10\" and extra == \"benchmark\"",
+        "pyfarmhash>=0.2.2; extra == \"benchmark\"",
+        "pyhash>=0.9.3; extra == \"benchmark\"",
+        "scikit-learn>=0.21.3; extra == \"benchmark\"",
+        "scipy>=1.3.3; extra == \"benchmark\"",
+        "setsimilaritysearch>=0.1.7; extra == \"benchmark\"",
+        "pybloomfilter3>=0.7.2; extra == \"bloom\"",
+        "cassandra-driver>=3.20; extra == \"cassandra\"",
+        "aiounittest; extra == \"experimental-aio\"",
+        "motor>3.6.0; extra == \"experimental-aio\"",
+        "redis>=2.10.0; extra == \"redis\"",
+        "cassandra-driver>=3.20; extra == \"test\"",
+        "coverage; extra == \"test\"",
+        "mock>=2.0.0; extra == \"test\"",
+        "mockredispy; extra == \"test\"",
+        "nose-exclude>=0.5.0; extra == \"test\"",
+        "nose>=1.3.7; extra == \"test\"",
+        "pygments>=2.20.0; extra == \"test\"",
+        "pymongo>=3.9.0; extra == \"test\"",
+        "pytest-asyncio; extra == \"test\"",
+        "pytest-cov; extra == \"test\"",
+        "pytest-rerunfailures; extra == \"test\"",
+        "pytest; python_version < \"3.10\" and extra == \"test\"",
+        "pytest>=9.0.3; python_version >= \"3.10\" and extra == \"test\"",
+        "redis>=2.10.0; extra == \"test\""
+      ],
+      "summary": "Probabilistic data structures for processing and searching very large datasets",
+      "home_page": null,
+      "project_urls": {
+        "Bug Tracker": "https://github.com/ekzhu/datasketch/issues",
+        "Documentation": "https://ekzhu.github.io/datasketch",
+        "Homepage": "https://ekzhu.github.io/datasketch",
+        "Source": "https://github.com/ekzhu/datasketch"
+      },
+      "latest_upload": "2026-07-05T06:36:30.681260Z",
+      "first_upload": "2015-04-01T02:14:03.302096Z",
+      "release_count": 89,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "pandas-dedupe",
+      "source_url": "https://pypi.org/pypi/pandas-dedupe/json",
+      "version": "1.5.0",
+      "license": "MIT",
+      "license_classifiers": [],
+      "requires_python": "",
+      "requires_dist": [
+        "dedupe (>=2.0.0)",
+        "unidecode",
+        "pandas"
+      ],
+      "summary": "The Dedupe library made easy with Pandas.",
+      "home_page": "https://github.com/Lyonk71/pandas-dedupe",
+      "project_urls": {
+        "Homepage": "https://github.com/Lyonk71/pandas-dedupe"
+      },
+      "latest_upload": "2021-07-21T09:44:19.383900Z",
+      "first_upload": "2018-12-07T01:48:33.601363Z",
+      "release_count": 11,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "csvdedupe",
+      "source_url": "https://pypi.org/pypi/csvdedupe/json",
+      "version": "0.1.20",
+      "license": "MIT",
+      "license_classifiers": [],
+      "requires_python": "",
+      "requires_dist": [
+        "future (>=0.14)",
+        "dedupe (<2,>=1.6)"
+      ],
+      "summary": "Command line tools for deduplicating and merging csv files",
+      "home_page": "",
+      "project_urls": null,
+      "latest_upload": "2020-03-07T19:12:59.886193Z",
+      "first_upload": "2014-08-11T19:33:22.864828Z",
+      "release_count": 20,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "dedupe-variable-datetime",
+      "source_url": "https://pypi.org/pypi/dedupe-variable-datetime/json",
+      "version": "2.0.0",
+      "license": "The MIT License: http://www.opensource.org/licenses/mit-license.php",
+      "license_classifiers": [],
+      "requires_python": null,
+      "requires_dist": [
+        "dedupe>=3.0",
+        "datetime-distance"
+      ],
+      "summary": "DateTime variable type for dedupe",
+      "home_page": null,
+      "project_urls": {
+        "Homepage": "https://github.com/datamade/dedupe-variable-datetime"
+      },
+      "latest_upload": "2024-06-27T13:49:42.665085Z",
+      "first_upload": "2017-06-01T21:20:37.543415Z",
+      "release_count": 9,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "febrl",
+      "source_url": "https://pypi.org/pypi/febrl/json",
+      "_http_error": 404,
+      "_url": "https://pypi.org/pypi/febrl/json"
+    },
+    {
+      "package": "splink-graph",
+      "source_url": "https://pypi.org/pypi/splink-graph/json",
+      "version": "0.8.2",
+      "license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.8",
+      "requires_dist": [
+        "networkx (>=2.7.1,<2.8.0)",
+        "numpy (>=1.20)",
+        "scipy (>=1.8)",
+        "gensim (<4.1.0)",
+        "node2vec (==0.4.3)",
+        "graphframes (>=0.8.2)"
+      ],
+      "summary": "a small set of graph functions to be used from pySpark on top of networkx and graphframes",
+      "home_page": "https://github.com/moj-analytical-services/splink_graph",
+      "project_urls": {
+        "Homepage": "https://github.com/moj-analytical-services/splink_graph",
+        "Repository": "https://github.com/moj-analytical-services/splink_graph"
+      },
+      "latest_upload": "2023-02-20T00:52:34.951764Z",
+      "first_upload": "2021-05-11T10:39:03.494271Z",
+      "release_count": 41,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "senzing",
+      "source_url": "https://pypi.org/pypi/senzing/json",
+      "version": "4.1.2",
+      "license": "Apache-2.0",
+      "license_classifiers": [],
+      "requires_python": ">=3.10",
+      "requires_dist": null,
+      "summary": "Python SDK method definitions",
+      "home_page": null,
+      "project_urls": {
+        "bugtracker": "https://github.com/senzing-garage/sz-sdk-python/issues",
+        "changelog": "https://github.com/senzing-garage/sz-sdk-python/blob/main/CHANGELOG.md",
+        "source": "https://github.com/senzing-garage/sz-sdk-python"
+      },
+      "latest_upload": "2026-05-07T13:57:29.543362Z",
+      "first_upload": "2021-11-28T19:09:25.175983Z",
+      "release_count": 112,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "senzing-core",
+      "source_url": "https://pypi.org/pypi/senzing-core/json",
+      "version": "1.0.3",
+      "license": "Apache 2",
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "senzing>=4.0.0"
+      ],
+      "summary": "Senzing Python SDK",
+      "home_page": "https://github.com/senzing-garage/sz-sdk-python-core",
+      "project_urls": {
+        "Bug Tracker": "https://github.com/senzing-garage/sz-sdk-python-core/issues",
+        "Homepage": "https://github.com/senzing-garage/sz-sdk-python-core"
+      },
+      "latest_upload": "2025-10-02T20:52:12.825846Z",
+      "first_upload": "2024-12-03T20:08:45.984994Z",
+      "release_count": 25,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "duckdb",
+      "source_url": "https://pypi.org/pypi/duckdb/json",
+      "version": "1.5.5",
+      "license": "",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.10.0",
+      "requires_dist": [
+        "ipython; extra == \"all\"",
+        "fsspec; extra == \"all\"",
+        "numpy; extra == \"all\"",
+        "pandas; extra == \"all\"",
+        "pyarrow; extra == \"all\"",
+        "adbc-driver-manager; extra == \"all\""
+      ],
+      "summary": "DuckDB in-process database",
+      "home_page": null,
+      "project_urls": {
+        "Changelog": "https://github.com/duckdb/duckdb-python/releases",
+        "Documentation": "https://duckdb.org/docs/stable/clients/python/overview",
+        "Issues": "https://github.com/duckdb/duckdb-python/issues",
+        "Source": "https://github.com/duckdb/duckdb-python"
+      },
+      "latest_upload": "2026-09-02T17:05:57.409537Z",
+      "first_upload": "2019-05-08T11:11:29.054711Z",
+      "release_count": 131,
+      "wheel_tags": [
+        "macosx_10_13_universal2",
+        "macosx_10_13_x86_64",
+        "macosx_10_15_universal2",
+        "macosx_10_15_x86_64",
+        "macosx_10_9_universal2",
+        "macosx_10_9_x86_64",
+        "macosx_11_0_arm64",
+        "manylinux_2_26_aarch64.manylinux_2_28_aarch64",
+        "manylinux_2_26_x86_64.manylinux_2_28_x86_64",
+        "win_amd64",
+        "win_arm64"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "rapidfuzz",
+      "source_url": "https://pypi.org/pypi/rapidfuzz/json",
+      "version": "3.14.6",
+      "license": "MIT",
+      "license_classifiers": [],
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "numpy; extra == \"all\""
+      ],
+      "summary": "rapid fuzzy string matching",
+      "home_page": null,
+      "project_urls": {
+        "Changelog": "https://github.com/rapidfuzz/RapidFuzz/blob/main/CHANGELOG.rst",
+        "Documentation": "https://rapidfuzz.github.io/RapidFuzz/",
+        "Homepage": "https://github.com/rapidfuzz/RapidFuzz",
+        "Issues": "https://github.com/rapidfuzz/RapidFuzz/issues",
+        "Repository": "https://github.com/rapidfuzz/RapidFuzz.git"
+      },
+      "latest_upload": "2026-08-30T21:45:51.097122Z",
+      "first_upload": "2020-03-18T16:47:34.819286Z",
+      "release_count": 175,
+      "wheel_tags": [
+        "macosx_10_13_x86_64",
+        "macosx_10_15_x86_64",
+        "macosx_10_9_x86_64",
+        "macosx_11_0_arm64",
+        "manylinux_2_26_aarch64.manylinux_2_28_aarch64",
+        "manylinux_2_26_ppc64le.manylinux_2_28_ppc64le",
+        "manylinux_2_26_s390x.manylinux_2_28_s390x",
+        "manylinux_2_27_x86_64.manylinux_2_28_x86_64",
+        "manylinux_2_39_riscv64",
+        "musllinux_1_2_aarch64",
+        "musllinux_1_2_ppc64le",
+        "musllinux_1_2_riscv64",
+        "musllinux_1_2_s390x",
+        "musllinux_1_2_x86_64",
+        "win32",
+        "win_amd64",
+        "win_arm64"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "jellyfish",
+      "source_url": "https://pypi.org/pypi/jellyfish/json",
+      "version": "1.2.1",
+      "license": "",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.9",
+      "requires_dist": null,
+      "summary": null,
+      "home_page": null,
+      "project_urls": {
+        "documentation": "https://jellyfish.jpt.sh/",
+        "homepage": "https://jellyfish.jpt.sh/",
+        "repository": "https://codeberg.org/jpt/jellyfish/"
+      },
+      "latest_upload": "2025-10-11T19:36:37.219529Z",
+      "first_upload": "2010-09-16T20:54:01.106253Z",
+      "release_count": 47,
+      "wheel_tags": [
+        "macosx_10_12_x86_64",
+        "macosx_11_0_arm64",
+        "manylinux_2_17_aarch64.manylinux2014_aarch64",
+        "manylinux_2_17_armv7l.manylinux2014_armv7l",
+        "manylinux_2_17_x86_64.manylinux2014_x86_64",
+        "musllinux_1_1_aarch64",
+        "musllinux_1_1_i686",
+        "musllinux_1_1_x86_64",
+        "win32",
+        "win_amd64"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "sparse-dot-topn",
+      "source_url": "https://pypi.org/pypi/sparse-dot-topn/json",
+      "version": "1.2.0",
+      "license": "",
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "numpy>=1.18.0",
+        "scipy>=1.4.1",
+        "psutil",
+        "pytest>=4.0.2; extra == \"test\""
+      ],
+      "summary": "This package boosts a sparse matrix multiplication followed by selecting the top-n multiplication",
+      "home_page": null,
+      "project_urls": {
+        "Homepage": "https://github.com/ing-bank/sparse_dot_topn"
+      },
+      "latest_upload": "2025-12-16T09:16:17.140005Z",
+      "first_upload": "2018-11-14T20:01:53.205797Z",
+      "release_count": 25,
+      "wheel_tags": [
+        "macosx_12_0_arm64",
+        "macosx_12_0_x86_64",
+        "manylinux_2_24_x86_64.manylinux_2_28_x86_64",
+        "win_amd64"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "networkx",
+      "source_url": "https://pypi.org/pypi/networkx/json",
+      "version": "3.6.1",
+      "license": "BSD-3-Clause",
+      "license_classifiers": [],
+      "requires_python": "!=3.14.1,>=3.11",
+      "requires_dist": [
+        "asv; extra == \"benchmarking\"",
+        "virtualenv; extra == \"benchmarking\"",
+        "numpy>=1.25; extra == \"default\"",
+        "scipy>=1.11.2; extra == \"default\"",
+        "matplotlib>=3.8; extra == \"default\"",
+        "pandas>=2.0; extra == \"default\"",
+        "pre-commit>=4.1; extra == \"developer\"",
+        "mypy>=1.15; extra == \"developer\"",
+        "sphinx>=8.0; extra == \"doc\"",
+        "pydata-sphinx-theme>=0.16; extra == \"doc\"",
+        "sphinx-gallery>=0.18; extra == \"doc\"",
+        "numpydoc>=1.8.0; extra == \"doc\"",
+        "pillow>=10; extra == \"doc\"",
+        "texext>=0.6.7; extra == \"doc\"",
+        "myst-nb>=1.1; extra == \"doc\"",
+        "intersphinx-registry; extra == \"doc\"",
+        "osmnx>=2.0.0; extra == \"example\"",
+        "momepy>=0.7.2; extra == \"example\"",
+        "contextily>=1.6; extra == \"example\"",
+        "seaborn>=0.13; extra == \"example\"",
+        "cairocffi>=1.7; extra == \"example\"",
+        "igraph>=0.11; extra == \"example\"",
+        "scikit-learn>=1.5; extra == \"example\"",
+        "iplotx>=0.9.0; extra == \"example\"",
+        "lxml>=4.6; extra == \"extra\"",
+        "pygraphviz>=1.14; extra == \"extra\"",
+        "pydot>=3.0.1; extra == \"extra\"",
+        "sympy>=1.10; extra == \"extra\"",
+        "build>=0.10; extra == \"release\"",
+        "twine>=4.0; extra == \"release\"",
+        "wheel>=0.40; extra == \"release\"",
+        "changelist==0.5; extra == \"release\"",
+        "pytest>=7.2; extra == \"test\"",
+        "pytest-cov>=4.0; extra == \"test\"",
+        "pytest-xdist>=3.0; extra == \"test\"",
+        "pytest-mpl; extra == \"test-extras\"",
+        "pytest-randomly; extra == \"test-extras\""
+      ],
+      "summary": "Python package for creating and manipulating graphs and networks",
+      "home_page": null,
+      "project_urls": {
+        "Bug Tracker": "https://github.com/networkx/networkx/issues",
+        "Documentation": "https://networkx.org/documentation/stable/",
+        "Homepage": "https://networkx.org/",
+        "Source Code": "https://github.com/networkx/networkx"
+      },
+      "latest_upload": "2025-12-08T17:02:39.908840Z",
+      "first_upload": "2007-04-13T01:49:38Z",
+      "release_count": 96,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "scikit-learn",
+      "source_url": "https://pypi.org/pypi/scikit-learn/json",
+      "version": "1.9.0",
+      "license": "BSD-3-Clause",
+      "license_classifiers": [],
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "numpy>=1.24.1",
+        "scipy>=1.10.0",
+        "joblib>=1.4.0",
+        "narwhals>=2.0.1",
+        "threadpoolctl>=3.5.0",
+        "numpy>=1.24.1; extra == \"build\"",
+        "scipy>=1.10.0; extra == \"build\"",
+        "cython>=3.1.2; extra == \"build\"",
+        "meson-python>=0.17.1; extra == \"build\"",
+        "numpy>=1.24.1; extra == \"install\"",
+        "scipy>=1.10.0; extra == \"install\"",
+        "joblib>=1.4.0; extra == \"install\"",
+        "narwhals>=2.0.1; extra == \"install\"",
+        "threadpoolctl>=3.5.0; extra == \"install\"",
+        "matplotlib>=3.6.1; extra == \"benchmark\"",
+        "pandas>=1.5.0; extra == \"benchmark\"",
+        "memory_profiler>=0.57.0; extra == \"benchmark\"",
+        "matplotlib>=3.6.1; extra == \"docs\"",
+        "scikit-image>=0.22.0; extra == \"docs\"",
+        "pandas>=1.5.0; extra == \"docs\"",
+        "rich>=14.1.0; extra == \"docs\"",
+        "seaborn>=0.13.0; extra == \"docs\"",
+        "memory_profiler>=0.57.0; extra == \"docs\"",
+        "sphinx>=7.3.7; extra == \"docs\"",
+        "sphinx-copybutton>=0.5.2; extra == \"docs\"",
+        "sphinx-gallery>=0.17.1; extra == \"docs\"",
+        "numpydoc>=1.2.0; extra == \"docs\"",
+        "Pillow>=12.1.1; extra == \"docs\"",
+        "pooch>=1.8.0; extra == \"docs\"",
+        "sphinx-prompt>=1.4.0; extra == \"docs\"",
+        "sphinxext-opengraph>=0.9.1; extra == \"docs\"",
+        "plotly>=5.22.0; extra == \"docs\"",
+        "polars>=0.20.30; extra == \"docs\"",
+        "sphinx-design>=0.6.0; extra == \"docs\"",
+        "sphinxcontrib-sass>=0.3.4; extra == \"docs\"",
+        "pydata-sphinx-theme>=0.15.3; extra == \"docs\"",
+        "sphinx-remove-toctrees>=1.0.0.post1; extra == \"docs\"",
+        "towncrier>=24.8.0; extra == \"docs\"",
+        "matplotlib>=3.6.1; extra == \"examples\"",
+        "scikit-image>=0.22.0; extra == \"examples\"",
+        "pandas>=1.5.0; extra == \"examples\"",
+        "rich>=14.1.0; extra == \"examples\"",
+        "seaborn>=0.13.0; extra == \"examples\"",
+        "pooch>=1.8.0; extra == \"examples\"",
+        "plotly>=5.22.0; extra == \"examples\"",
+        "matplotlib>=3.6.1; extra == \"tests\"",
+        "pandas>=1.5.0; extra == \"tests\"",
+        "rich>=14.1.0; extra == \"tests\"",
+        "pytest>=7.1.2; extra == \"tests\"",
+        "pytest-cov>=2.9.0; extra == \"tests\"",
+        "ruff>=0.12.2; extra == \"tests\"",
+        "mypy>=1.15; extra == \"tests\"",
+        "pyamg>=5.0.0; extra == \"tests\"",
+        "polars>=0.20.30; extra == \"tests\"",
+        "pyarrow>=13.0.0; extra == \"tests\"",
+        "numpydoc>=1.2.0; extra == \"tests\"",
+        "pooch>=1.8.0; extra == \"tests\"",
+        "conda-lock==3.0.1; extra == \"maintenance\""
+      ],
+      "summary": "A set of python modules for machine learning and data mining",
+      "home_page": null,
+      "project_urls": {
+        "download": "https://pypi.org/project/scikit-learn/#files",
+        "homepage": "https://scikit-learn.org",
+        "release notes": "https://scikit-learn.org/stable/whats_new",
+        "source": "https://github.com/scikit-learn/scikit-learn",
+        "tracker": "https://github.com/scikit-learn/scikit-learn/issues"
+      },
+      "latest_upload": "2026-06-02T11:54:32.706174Z",
+      "first_upload": "2011-09-22T00:03:10.112867Z",
+      "release_count": 75,
+      "wheel_tags": [
+        "macosx_10_13_x86_64",
+        "macosx_10_15_x86_64",
+        "macosx_10_9_x86_64",
+        "macosx_12_0_arm64",
+        "manylinux_2_27_aarch64.manylinux_2_28_aarch64",
+        "manylinux_2_27_x86_64.manylinux_2_28_x86_64",
+        "win_amd64",
+        "win_arm64"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "hierarchical-cluster",
+      "source_url": "https://pypi.org/pypi/hierarchical-cluster/json",
+      "_http_error": 404,
+      "_url": "https://pypi.org/pypi/hierarchical-cluster/json"
+    },
+    {
+      "package": "recordlinkage-toolkit",
+      "source_url": "https://pypi.org/pypi/recordlinkage-toolkit/json",
+      "_http_error": 404,
+      "_url": "https://pypi.org/pypi/recordlinkage-toolkit/json"
+    },
+    {
+      "package": "reclin",
+      "source_url": "https://pypi.org/pypi/reclin/json",
+      "_http_error": 404,
+      "_url": "https://pypi.org/pypi/reclin/json"
+    },
+    {
+      "package": "anymatch",
+      "source_url": "https://pypi.org/pypi/anymatch/json",
+      "_http_error": 404,
+      "_url": "https://pypi.org/pypi/anymatch/json"
+    },
+    {
+      "package": "ditto-er",
+      "source_url": "https://pypi.org/pypi/ditto-er/json",
+      "_http_error": 404,
+      "_url": "https://pypi.org/pypi/ditto-er/json"
+    },
+    {
+      "package": "spark-matcher",
+      "source_url": "https://pypi.org/pypi/spark-matcher/json",
+      "version": "0.3.2",
+      "license": "",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.7",
+      "requires_dist": [
+        "pandas",
+        "numpy",
+        "scikit-learn",
+        "python-Levenshtein",
+        "thefuzz",
+        "modAL-python",
+        "pytest",
+        "multipledispatch",
+        "dill",
+        "graphframes",
+        "scipy",
+        "pandas ; extra == 'base'",
+        "numpy ; extra == 'base'",
+        "scikit-learn ; extra == 'base'",
+        "python-Levenshtein ; extra == 'base'",
+        "thefuzz ; extra == 'base'",
+        "modAL-python ; extra == 'base'",
+        "pytest ; extra == 'base'",
+        "multipledispatch ; extra == 'base'",
+        "dill ; extra == 'base'",
+        "graphframes ; extra == 'base'",
+        "scipy ; extra == 'base'",
+        "pandas ; extra == 'dev'",
+        "numpy ; extra == 'dev'",
+        "scikit-learn ; extra == 'dev'",
+        "python-Levenshtein ; extra == 'dev'",
+        "thefuzz ; extra == 'dev'",
+        "modAL-python ; extra == 'dev'",
+        "pytest ; extra == 'dev'",
+        "multipledispatch ; extra == 'dev'",
+        "dill ; extra == 'dev'",
+        "graphframes ; extra == 'dev'",
+        "scipy ; extra == 'dev'",
+        "sphinx ; extra == 'dev'",
+        "nbsphinx ; extra == 'dev'",
+        "sphinx-rtd-theme ; extra == 'dev'",
+        "pyspark ; extra == 'dev'",
+        "pyarrow ; extra == 'dev'",
+        "jupyterlab ; extra == 'dev'",
+        "pandas ; extra == 'doc'",
+        "numpy ; extra == 'doc'",
+        "scikit-learn ; extra == 'doc'",
+        "python-Levenshtein ; extra == 'doc'",
+        "thefuzz ; extra == 'doc'",
+        "modAL-python ; extra == 'doc'",
+        "pytest ; extra == 'doc'",
+        "multipledispatch ; extra == 'doc'",
+        "dill ; extra == 'doc'",
+        "graphframes ; extra == 'doc'",
+        "scipy ; extra == 'doc'",
+        "sphinx ; extra == 'doc'",
+        "nbsphinx ; extra == 'doc'",
+        "sphinx-rtd-theme ; extra == 'doc'"
+      ],
+      "summary": "Record matching and entity resolution at scale in Spark",
+      "home_page": "",
+      "project_urls": null,
+      "latest_upload": "2023-10-31T10:01:46.833638Z",
+      "first_upload": "2022-04-11T14:37:40.602680Z",
+      "release_count": 9,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "name-matching",
+      "source_url": "https://pypi.org/pypi/name-matching/json",
+      "version": "0.9.22",
+      "license": "",
+      "license_classifiers": [],
+      "requires_python": ">=3.7",
+      "requires_dist": [
+        "cleanco",
+        "scikit-learn",
+        "pandas>=2.2.3",
+        "numpy",
+        "tqdm",
+        "ipywidgets",
+        "matplotlib",
+        "pytest>=8.0; extra == \"dev\"",
+        "black>=24.0; extra == \"dev\"",
+        "isort>=5.12; extra == \"dev\"",
+        "flake8>=6.0; extra == \"dev\""
+      ],
+      "summary": "A package for the matching of company names",
+      "home_page": null,
+      "project_urls": {
+        "Documentation": "https://name-matching.readthedocs.io/en/latest/index.html",
+        "Source": "https://github.com/DeNederlandscheBank/name_matching"
+      },
+      "latest_upload": "2026-04-03T08:26:32.144752Z",
+      "first_upload": "2022-05-17T16:15:49.157494Z",
+      "release_count": 13,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "nomenklatura",
+      "source_url": "https://pypi.org/pypi/nomenklatura/json",
+      "version": "4.14.0",
+      "license": "Copyright (c) 2013-2022, Friedrich Lindenberg\n        Copyright (c) 2023-2025, OpenSanctions Datenbanken GmbH\n        \n        Permission is hereby granted, free of charge, to any person obtaining a\n        copy of this software and associated documentation files (the\n        \"Software\"), to deal in the Software without restriction, including\n        without limitation the rights to use, copy, modify, merge, publish,\n        distribute, sublicense, and/or sell copies of the Software, and to\n        permit persons to whom the Software is furnished to do so, subject to\n        the following conditions:\n        \n        The above copyright notice and this permission notice shall be included\n        in all copies or substantial portions of the Software.\n        \n        THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS\n        OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF\n        MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT.\n        IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY\n        CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT,\n        TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH THE\n        SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "click<9.0.0",
+        "duckdb<2.0.0,>=1.2.0",
+        "fingerprints<2.0.0,>=1.3.1",
+        "followthemoney<5.0.0,>=4.10.2",
+        "lxml<7.0.0,>4.0.0",
+        "pydantic<3.0.0,>2.0.0",
+        "rich<16.0.0,>=13.0.0",
+        "rigour<3.0.0,>=2.2.3",
+        "scikit-learn==1.9.0",
+        "shortuuid<2.0.0,>=1.0.11",
+        "sqlalchemy>=2.0.0",
+        "textual<9.0.0,>=3.0.0",
+        "build; extra == \"dev\"",
+        "bump2version; extra == \"dev\"",
+        "coverage>=4.1; extra == \"dev\"",
+        "flake8>=2.6.0; extra == \"dev\"",
+        "lxml-stubs; extra == \"dev\"",
+        "mypy; extra == \"dev\"",
+        "plyvel<2.0.0; extra == \"dev\"",
+        "prek; extra == \"dev\"",
+        "psycopg2-binary; extra == \"dev\"",
+        "pytest; extra == \"dev\"",
+        "pytest-asyncio; extra == \"dev\"",
+        "pytest-cov; extra == \"dev\"",
+        "requests-mock; extra == \"dev\"",
+        "twine; extra == \"dev\"",
+        "types-pyyaml; extra == \"dev\"",
+        "types-requests; extra == \"dev\"",
+        "types-setuptools; extra == \"dev\"",
+        "wheel>=0.29.0; extra == \"dev\"",
+        "mkdocs; extra == \"docs\"",
+        "mkdocs-material; extra == \"docs\"",
+        "mkdocstrings[python]; extra == \"docs\"",
+        "plyvel<2.0.0; extra == \"leveldb\""
+      ],
+      "summary": "Make record linkages in followthemoney data.",
+      "home_page": null,
+      "project_urls": {
+        "Documentation": "https://github.com/opensanctions/nomenklatura/",
+        "Issues": "https://github.com/opensanctions/nomenklatura/issues",
+        "Repository": "https://github.com/opensanctions/nomenklatura.git"
+      },
+      "latest_upload": "2026-08-23T18:25:46.605855Z",
+      "first_upload": "2021-09-12T15:14:00.562714Z",
+      "release_count": 226,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "followthemoney",
+      "source_url": "https://pypi.org/pypi/followthemoney/json",
+      "version": "4.11.0",
+      "license": "MIT License\n        \n        Copyright (c) 2017-2024 Journalism Development Network, Inc.\n        Copyright (c) 2025 OpenSanctions Datenbanken GmbH\n        \n        Permission is hereby granted, free of charge, to any person obtaining a copy\n        of this software and associated documentation files (the \"Software\"), to deal\n        in the Software without restriction, including without limitation the rights\n        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n        copies of the Software, and to permit persons to whom the Software is\n        furnished to do so, subject to the following conditions:\n        \n        The above copyright notice and this permission notice shall be included in all\n        copies or substantial portions of the Software.\n        \n        THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n        SOFTWARE.",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "babel<3.0.0,>=2.14.0",
+        "banal<1.2.0,>=1.0.0",
+        "click<9.0.0,>=8.0",
+        "networkx<3.7,>=2.5",
+        "normality<4.0.0,>=3.1.0",
+        "openpyxl<4.0.0,>=3.0.5",
+        "orjson<4.0,>=3.10.0",
+        "phonenumbers<10.0.0,>=8.12.22",
+        "prefixdate<1.0.0,>=0.5.0",
+        "pydantic<3.0.0,>=2.11.0",
+        "pyyaml<7.0.0,>=5.0.0",
+        "rdflib<7.7.0,>=6.2.0",
+        "requests<3.0.0,>=2.21.0",
+        "rich<16.0.0,>=13.0.0",
+        "rigour<3.0.0,>=2.4.0",
+        "sqlalchemy[mypy]<3.0.0,>=2.0.0",
+        "build; extra == \"dev\"",
+        "bump2version; extra == \"dev\"",
+        "coverage>=4.1; extra == \"dev\"",
+        "mypy; extra == \"dev\"",
+        "pip>=10.0.0; extra == \"dev\"",
+        "pytest; extra == \"dev\"",
+        "pytest-cov; extra == \"dev\"",
+        "recommonmark>=0.4.0; extra == \"dev\"",
+        "responses>=0.9.0; extra == \"dev\"",
+        "ruff>=0.16.0; extra == \"dev\"",
+        "transifex-client; extra == \"dev\"",
+        "twine; extra == \"dev\"",
+        "types-openpyxl; extra == \"dev\"",
+        "types-pyyaml; extra == \"dev\"",
+        "types-requests; extra == \"dev\"",
+        "types-setuptools; extra == \"dev\"",
+        "wheel>=0.29.0; extra == \"dev\"",
+        "mkdocs-gen-files; extra == \"docs\"",
+        "mkdocs-macros-plugin; extra == \"docs\"",
+        "mkdocs-material>=9.0.0; extra == \"docs\"",
+        "mkdocs>=1.4.0; extra == \"docs\"",
+        "mkdocstrings[python]; extra == \"docs\""
+      ],
+      "summary": "A data model for anti corruption data modeling and analysis.",
+      "home_page": null,
+      "project_urls": {
+        "Documentation": "https://followthemoney.tech/",
+        "Issues": "https://github.com/opensanctions/followthemoney/issues",
+        "Repository": "https://github.com/opensanctions/followthemoney.git"
+      },
+      "latest_upload": "2026-09-03T12:28:36.218207Z",
+      "first_upload": "2017-10-23T16:45:28.656635Z",
+      "release_count": 364,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "cleanco",
+      "source_url": "https://pypi.org/pypi/cleanco/json",
+      "version": "2.3",
+      "license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": null,
+      "requires_dist": null,
+      "summary": "Python library to process company names",
+      "home_page": "https://github.com/psolin/cleanco",
+      "project_urls": {
+        "Homepage": "https://github.com/psolin/cleanco"
+      },
+      "latest_upload": "2024-05-15T16:18:19.314624Z",
+      "first_upload": "2015-08-24T13:04:51.073726Z",
+      "release_count": 8,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "probablepeople",
+      "source_url": "https://pypi.org/pypi/probablepeople/json",
+      "version": "0.5.6",
+      "license": "MIT License",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "python-crfsuite>=0.7",
+        "probableparsing",
+        "doublemetaphone",
+        "pytest; extra == \"dev\"",
+        "black; extra == \"dev\"",
+        "isort; extra == \"dev\"",
+        "mypy; extra == \"dev\"",
+        "flake8; extra == \"dev\"",
+        "parserator; extra == \"dev\"",
+        "pre-commit; extra == \"dev\""
+      ],
+      "summary": "Parse romanized names & companies using advanced NLP methods",
+      "home_page": null,
+      "project_urls": {
+        "Homepage": "https://github.com/datamade/probablepeople"
+      },
+      "latest_upload": "2024-10-29T15:23:34.736093Z",
+      "first_upload": "2015-02-04T00:42:00.959101Z",
+      "release_count": 21,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "usaddress",
+      "source_url": "https://pypi.org/pypi/usaddress/json",
+      "version": "0.5.16",
+      "license": "MIT License",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "python-crfsuite>=0.7",
+        "probableparsing",
+        "pytest; extra == \"dev\"",
+        "black; extra == \"dev\"",
+        "isort; extra == \"dev\"",
+        "mypy; extra == \"dev\"",
+        "flake8; extra == \"dev\"",
+        "parserator; extra == \"dev\""
+      ],
+      "summary": "Parse US addresses using conditional random fields",
+      "home_page": null,
+      "project_urls": {
+        "Homepage": "https://github.com/datamade/usaddress"
+      },
+      "latest_upload": "2025-08-07T14:53:55.717952Z",
+      "first_upload": "2014-10-02T20:03:25.969178Z",
+      "release_count": 39,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "postal",
+      "source_url": "https://pypi.org/pypi/postal/json",
+      "version": "1.1.11",
+      "license": "MIT License",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": null,
+      "requires_dist": [
+        "six"
+      ],
+      "summary": "Python bindings to libpostal for fast international address parsing/normalization",
+      "home_page": "https://github.com/openvenues/pypostal",
+      "project_urls": {
+        "Download": "https://github.com/openvenues/pypostal/tarball/1.1.11",
+        "Homepage": "https://github.com/openvenues/pypostal"
+      },
+      "latest_upload": "2025-10-29T05:29:39.606216Z",
+      "first_upload": "2016-03-23T19:26:15.058153Z",
+      "release_count": 14,
+      "wheel_tags": [],
+      "has_sdist_only": true,
+      "yanked": false
+    },
+    {
+      "package": "pypostal",
+      "source_url": "https://pypi.org/pypi/pypostal/json",
+      "version": "1.1",
+      "license": "BSD",
+      "license_classifiers": [],
+      "requires_python": null,
+      "requires_dist": null,
+      "summary": "pyPostal is an Interface for sending real (paper-based) letters via API (Pixelletter)",
+      "home_page": "http://github.com/hudora/pyPostal/#readme",
+      "project_urls": {
+        "Download": "UNKNOWN",
+        "Homepage": "http://github.com/hudora/pyPostal/#readme"
+      },
+      "latest_upload": "2010-10-30T22:51:36.159162Z",
+      "first_upload": "2010-08-14T22:56:10.431404Z",
+      "release_count": 8,
+      "wheel_tags": [],
+      "has_sdist_only": true,
+      "yanked": false
+    },
+    {
+      "package": "dedupe-hcluster",
+      "source_url": "https://pypi.org/pypi/dedupe-hcluster/json",
+      "version": "0.3.9",
+      "license": "SciPy License (BSD Style)",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "requires_python": "",
+      "requires_dist": [
+        "numpy (>=1.10.4) ; python_version < \"3.6\"",
+        "numpy (>=1.12.1) ; python_version == \"3.6\"",
+        "numpy (>=1.15.0) ; python_version == \"3.7\"",
+        "numpy (>=1.17.3) ; python_version == \"3.8\"",
+        "numpy ; python_version > \"3.8\""
+      ],
+      "summary": "Hierarchical Clustering Algorithms (Information Theory)",
+      "home_page": "https://github.com/datamade/hcluster",
+      "project_urls": {
+        "Homepage": "https://github.com/datamade/hcluster"
+      },
+      "latest_upload": "2021-12-18T18:20:47.063164Z",
+      "first_upload": "2015-03-03T22:36:11.672607Z",
+      "release_count": 10,
+      "wheel_tags": [
+        "macosx_10_9_universal2",
+        "macosx_10_9_x86_64",
+        "macosx_11_0_arm64",
+        "manylinux_2_17_aarch64.manylinux2014_aarch64",
+        "manylinux_2_5_i686.manylinux1_i686.manylinux_2_12_i686.manylinux2010_i686",
+        "manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_12_x86_64.manylinux2010_x86_64",
+        "musllinux_1_1_i686",
+        "musllinux_1_1_x86_64",
+        "win32",
+        "win_amd64"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "textdistance",
+      "source_url": "https://pypi.org/pypi/textdistance/json",
+      "version": "4.6.3",
+      "license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.5",
+      "requires_dist": [
+        "rapidfuzz>=2.6.0; extra == \"dameraulevenshtein\"",
+        "jellyfish; extra == \"dameraulevenshtein\"",
+        "pyxDamerauLevenshtein; extra == \"dameraulevenshtein\"",
+        "Levenshtein; extra == \"hamming\"",
+        "rapidfuzz>=2.6.0; extra == \"hamming\"",
+        "jellyfish; extra == \"hamming\"",
+        "distance; extra == \"hamming\"",
+        "rapidfuzz>=2.6.0; extra == \"jaro\"",
+        "Levenshtein; extra == \"jaro\"",
+        "rapidfuzz>=2.6.0; extra == \"jarowinkler\"",
+        "jellyfish; extra == \"jarowinkler\"",
+        "rapidfuzz>=2.6.0; extra == \"levenshtein\"",
+        "Levenshtein; extra == \"levenshtein\"",
+        "jellyfish; extra == \"all\"",
+        "numpy; extra == \"all\"",
+        "Levenshtein; extra == \"all\"",
+        "pyxDamerauLevenshtein; extra == \"all\"",
+        "rapidfuzz>=2.6.0; extra == \"all\"",
+        "distance; extra == \"all\"",
+        "pylev; extra == \"all\"",
+        "py-stringmatching; extra == \"all\"",
+        "tabulate; extra == \"all\"",
+        "jellyfish; extra == \"benchmark\"",
+        "numpy; extra == \"benchmark\"",
+        "Levenshtein; extra == \"benchmark\"",
+        "pyxDamerauLevenshtein; extra == \"benchmark\"",
+        "rapidfuzz>=2.6.0; extra == \"benchmark\"",
+        "distance; extra == \"benchmark\"",
+        "pylev; extra == \"benchmark\"",
+        "py-stringmatching; extra == \"benchmark\"",
+        "tabulate; extra == \"benchmark\"",
+        "jellyfish; extra == \"benchmarks\"",
+        "numpy; extra == \"benchmarks\"",
+        "Levenshtein; extra == \"benchmarks\"",
+        "pyxDamerauLevenshtein; extra == \"benchmarks\"",
+        "rapidfuzz>=2.6.0; extra == \"benchmarks\"",
+        "distance; extra == \"benchmarks\"",
+        "pylev; extra == \"benchmarks\"",
+        "py-stringmatching; extra == \"benchmarks\"",
+        "tabulate; extra == \"benchmarks\"",
+        "jellyfish; extra == \"common\"",
+        "numpy; extra == \"common\"",
+        "Levenshtein; extra == \"common\"",
+        "pyxDamerauLevenshtein; extra == \"common\"",
+        "rapidfuzz>=2.6.0; extra == \"common\"",
+        "jellyfish; extra == \"extra\"",
+        "numpy; extra == \"extra\"",
+        "Levenshtein; extra == \"extra\"",
+        "pyxDamerauLevenshtein; extra == \"extra\"",
+        "rapidfuzz>=2.6.0; extra == \"extra\"",
+        "jellyfish; extra == \"extras\"",
+        "numpy; extra == \"extras\"",
+        "Levenshtein; extra == \"extras\"",
+        "pyxDamerauLevenshtein; extra == \"extras\"",
+        "rapidfuzz>=2.6.0; extra == \"extras\"",
+        "twine; extra == \"lint\"",
+        "mypy; extra == \"lint\"",
+        "isort; extra == \"lint\"",
+        "flake8; extra == \"lint\"",
+        "types-tabulate; extra == \"lint\"",
+        "flake8-blind-except; extra == \"lint\"",
+        "flake8-bugbear; extra == \"lint\"",
+        "flake8-commas; extra == \"lint\"",
+        "flake8-logging-format; extra == \"lint\"",
+        "flake8-mutable; extra == \"lint\"",
+        "flake8-pep3101; extra == \"lint\"",
+        "flake8-quotes; extra == \"lint\"",
+        "flake8-string-format; extra == \"lint\"",
+        "flake8-tidy-imports; extra == \"lint\"",
+        "pep8-naming; extra == \"lint\"",
+        "hypothesis; extra == \"test\"",
+        "isort; extra == \"test\"",
+        "numpy; extra == \"test\"",
+        "pytest; extra == \"test\""
+      ],
+      "summary": "Compute distance between the two texts.",
+      "home_page": "https://github.com/orsinium/textdistance",
+      "project_urls": {
+        "Download": "https://github.com/orsinium/textdistance/tarball/master",
+        "Homepage": "https://github.com/orsinium/textdistance"
+      },
+      "latest_upload": "2024-07-16T09:34:54.090073Z",
+      "first_upload": "2017-05-05T08:59:35.154312Z",
+      "release_count": 28,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    }
+  ],
+  "downloads": [
+    {
+      "package": "recordlinkage",
+      "source_url": "https://pypistats.org/api/packages/recordlinkage/recent",
+      "data": {
+        "last_day": 15204,
+        "last_month": 1151777,
+        "last_week": 216639
+      }
+    },
+    {
+      "package": "dedupe",
+      "source_url": "https://pypistats.org/api/packages/dedupe/recent",
+      "data": {
+        "last_day": 1042,
+        "last_month": 43063,
+        "last_week": 8335
+      }
+    },
+    {
+      "package": "splink",
+      "source_url": "https://pypistats.org/api/packages/splink/recent",
+      "data": {
+        "last_day": 18339,
+        "last_month": 945285,
+        "last_week": 200650
+      }
+    },
+    {
+      "package": "zingg",
+      "source_url": "https://pypistats.org/api/packages/zingg/recent",
+      "data": {
+        "last_day": 20,
+        "last_month": 1836,
+        "last_week": 356
+      }
+    },
+    {
+      "package": "pyjedai",
+      "source_url": "https://pypistats.org/api/packages/pyjedai/recent",
+      "data": {
+        "last_day": 1,
+        "last_month": 725,
+        "last_week": 38
+      }
+    },
+    {
+      "package": "string-grouper",
+      "source_url": "https://pypistats.org/api/packages/string-grouper/recent",
+      "data": {
+        "last_day": 1273,
+        "last_month": 47358,
+        "last_week": 10358
+      }
+    },
+    {
+      "package": "polyfuzz",
+      "source_url": "https://pypistats.org/api/packages/polyfuzz/recent",
+      "data": {
+        "last_day": 312,
+        "last_month": 36338,
+        "last_week": 5324
+      }
+    },
+    {
+      "package": "fuzzymatcher",
+      "source_url": "https://pypistats.org/api/packages/fuzzymatcher/recent",
+      "data": {
+        "last_day": 132,
+        "last_month": 8428,
+        "last_week": 1345
+      }
+    },
+    {
+      "package": "csvmatch",
+      "source_url": "https://pypistats.org/api/packages/csvmatch/recent",
+      "data": {
+        "last_day": 202,
+        "last_month": 5199,
+        "last_week": 1168
+      }
+    },
+    {
+      "package": "rltk",
+      "source_url": "https://pypistats.org/api/packages/rltk/recent",
+      "data": {
+        "last_day": 1,
+        "last_month": 140,
+        "last_week": 19
+      }
+    },
+    {
+      "package": "deepmatcher",
+      "source_url": "https://pypistats.org/api/packages/deepmatcher/recent",
+      "data": {
+        "last_day": 0,
+        "last_month": 47,
+        "last_week": 4
+      }
+    },
+    {
+      "package": "py-entitymatching",
+      "source_url": "https://pypistats.org/api/packages/py-entitymatching/recent",
+      "data": {
+        "last_day": 52,
+        "last_month": 1486,
+        "last_week": 265
+      }
+    },
+    {
+      "package": "entity-embed",
+      "source_url": "https://pypistats.org/api/packages/entity-embed/recent",
+      "data": {
+        "last_day": 0,
+        "last_month": 48,
+        "last_week": 20
+      }
+    },
+    {
+      "package": "datasketch",
+      "source_url": "https://pypistats.org/api/packages/datasketch/recent",
+      "data": {
+        "last_day": 108132,
+        "last_month": 5093566,
+        "last_week": 872150
+      }
+    },
+    {
+      "package": "pandas-dedupe",
+      "source_url": "https://pypistats.org/api/packages/pandas-dedupe/recent",
+      "data": {
+        "last_day": 75,
+        "last_month": 4414,
+        "last_week": 1065
+      }
+    },
+    {
+      "package": "csvdedupe",
+      "source_url": "https://pypistats.org/api/packages/csvdedupe/recent",
+      "data": {
+        "last_day": 9,
+        "last_month": 106,
+        "last_week": 45
+      }
+    },
+    {
+      "package": "dedupe-variable-datetime",
+      "source_url": "https://pypistats.org/api/packages/dedupe-variable-datetime/recent",
+      "data": {
+        "last_day": 1006,
+        "last_month": 45571,
+        "last_week": 7370
+      }
+    },
+    {
+      "package": "febrl",
+      "source_url": "https://pypistats.org/api/packages/febrl/recent",
+      "data": {
+        "_http_error": 404
+      }
+    },
+    {
+      "package": "splink-graph",
+      "source_url": "https://pypistats.org/api/packages/splink-graph/recent",
+      "data": {
+        "last_day": 0,
+        "last_month": 146,
+        "last_week": 8
+      }
+    },
+    {
+      "package": "senzing",
+      "source_url": "https://pypistats.org/api/packages/senzing/recent",
+      "data": {
+        "last_day": 75,
+        "last_month": 7554,
+        "last_week": 1424
+      }
+    },
+    {
+      "package": "senzing-core",
+      "source_url": "https://pypistats.org/api/packages/senzing-core/recent",
+      "data": {
+        "last_day": 59,
+        "last_month": 5303,
+        "last_week": 920
+      }
+    },
+    {
+      "package": "duckdb",
+      "source_url": "https://pypistats.org/api/packages/duckdb/recent",
+      "data": {
+        "last_day": 1121612,
+        "last_month": 60187499,
+        "last_week": 11804668
+      }
+    },
+    {
+      "package": "rapidfuzz",
+      "source_url": "https://pypistats.org/api/packages/rapidfuzz/recent",
+      "data": {
+        "last_day": 2398211,
+        "last_month": 143276794,
+        "last_week": 27668145
+      }
+    },
+    {
+      "package": "jellyfish",
+      "source_url": "https://pypistats.org/api/packages/jellyfish/recent",
+      "data": {
+        "last_day": 151319,
+        "last_month": 9329559,
+        "last_week": 1990940
+      }
+    },
+    {
+      "package": "sparse-dot-topn",
+      "source_url": "https://pypistats.org/api/packages/sparse-dot-topn/recent",
+      "data": {
+        "last_day": 5142,
+        "last_month": 225139,
+        "last_week": 48923
+      }
+    },
+    {
+      "package": "networkx",
+      "source_url": "https://pypistats.org/api/packages/networkx/recent",
+      "data": {
+        "last_day": 4793982,
+        "last_month": 226373963,
+        "last_week": 43812331
+      }
+    },
+    {
+      "package": "scikit-learn",
+      "source_url": "https://pypistats.org/api/packages/scikit-learn/recent",
+      "data": {
+        "last_day": 4787702,
+        "last_month": 214536644,
+        "last_week": 42840853
+      }
+    },
+    {
+      "package": "hierarchical-cluster",
+      "source_url": "https://pypistats.org/api/packages/hierarchical-cluster/recent",
+      "data": {
+        "_http_error": 404
+      }
+    },
+    {
+      "package": "recordlinkage-toolkit",
+      "source_url": "https://pypistats.org/api/packages/recordlinkage-toolkit/recent",
+      "data": {
+        "_http_error": 404
+      }
+    },
+    {
+      "package": "reclin",
+      "source_url": "https://pypistats.org/api/packages/reclin/recent",
+      "data": {
+        "_http_error": 404
+      }
+    },
+    {
+      "package": "anymatch",
+      "source_url": "https://pypistats.org/api/packages/anymatch/recent",
+      "data": {
+        "_http_error": 404
+      }
+    },
+    {
+      "package": "ditto-er",
+      "source_url": "https://pypistats.org/api/packages/ditto-er/recent",
+      "data": {
+        "_http_error": 404
+      }
+    },
+    {
+      "package": "spark-matcher",
+      "source_url": "https://pypistats.org/api/packages/spark-matcher/recent",
+      "data": {
+        "last_day": 9,
+        "last_month": 403,
+        "last_week": 84
+      }
+    },
+    {
+      "package": "name-matching",
+      "source_url": "https://pypistats.org/api/packages/name-matching/recent",
+      "data": {
+        "last_day": 932,
+        "last_month": 43039,
+        "last_week": 10023
+      }
+    },
+    {
+      "package": "nomenklatura",
+      "source_url": "https://pypistats.org/api/packages/nomenklatura/recent",
+      "data": {
+        "last_day": 394,
+        "last_month": 27588,
+        "last_week": 4220
+      }
+    },
+    {
+      "package": "followthemoney",
+      "source_url": "https://pypistats.org/api/packages/followthemoney/recent",
+      "data": {
+        "last_day": 767,
+        "last_month": 46598,
+        "last_week": 7102
+      }
+    },
+    {
+      "package": "cleanco",
+      "source_url": "https://pypistats.org/api/packages/cleanco/recent",
+      "data": {
+        "last_day": 62010,
+        "last_month": 3211125,
+        "last_week": 497841
+      }
+    },
+    {
+      "package": "probablepeople",
+      "source_url": "https://pypistats.org/api/packages/probablepeople/recent",
+      "data": {
+        "last_day": 3466,
+        "last_month": 141411,
+        "last_week": 29307
+      }
+    },
+    {
+      "package": "usaddress",
+      "source_url": "https://pypistats.org/api/packages/usaddress/recent",
+      "data": {
+        "last_day": 60087,
+        "last_month": 5331126,
+        "last_week": 1125778
+      }
+    },
+    {
+      "package": "postal",
+      "source_url": "https://pypistats.org/api/packages/postal/recent",
+      "data": {
+        "last_day": 1744,
+        "last_month": 76178,
+        "last_week": 17888
+      }
+    },
+    {
+      "package": "pypostal",
+      "source_url": "https://pypistats.org/api/packages/pypostal/recent",
+      "data": {
+        "last_day": 3,
+        "last_month": 125,
+        "last_week": 25
+      }
+    },
+    {
+      "package": "dedupe-hcluster",
+      "source_url": "https://pypistats.org/api/packages/dedupe-hcluster/recent",
+      "data": {
+        "last_day": 88,
+        "last_month": 7599,
+        "last_week": 1013
+      }
+    },
+    {
+      "package": "textdistance",
+      "source_url": "https://pypistats.org/api/packages/textdistance/recent",
+      "data": {
+        "last_day": 46958,
+        "last_month": 2153907,
+        "last_week": 490768
+      }
+    }
+  ],
+  "github": [
+    {
+      "repo": "J535D165/recordlinkage",
+      "source_url": "https://api.github.com/repos/J535D165/recordlinkage",
+      "stars": 1062,
+      "forks": 152,
+      "open_issues_and_prs": 64,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2015-10-18T09:00:02Z",
+      "pushed_at": "2024-02-21T18:15:38Z",
+      "updated_at": "2026-08-28T15:39:33Z",
+      "default_branch": "master",
+      "license": "BSD-3-Clause",
+      "description": "A powerful and modular toolkit for record linkage and duplicate detection in Python",
+      "homepage": "http://recordlinkage.readthedocs.io/",
+      "full_name": "J535D165/recordlinkage",
+      "open_prs": 3,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 61,
+      "has_commit_since_2025_09": false,
+      "latest_release": {
+        "tag": "v0.16",
+        "published_at": "2023-07-20T13:00:30Z"
+      }
+    },
+    {
+      "repo": "dedupeio/dedupe",
+      "source_url": "https://api.github.com/repos/dedupeio/dedupe",
+      "stars": 4510,
+      "forks": 577,
+      "open_issues_and_prs": 92,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2012-04-20T14:57:36Z",
+      "pushed_at": "2025-07-29T00:18:20Z",
+      "updated_at": "2026-09-04T06:58:40Z",
+      "default_branch": "main",
+      "license": "MIT",
+      "description": ":id: A python library for accurate and scalable fuzzy matching, record deduplication and entity-resolution.",
+      "homepage": "https://docs.dedupe.io",
+      "full_name": "dedupeio/dedupe",
+      "open_prs": 14,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 78,
+      "has_commit_since_2025_09": false,
+      "latest_release": null
+    },
+    {
+      "repo": "moj-analytical-services/splink",
+      "source_url": "https://api.github.com/repos/moj-analytical-services/splink",
+      "stars": 2386,
+      "forks": 262,
+      "open_issues_and_prs": 210,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2019-11-22T14:27:33Z",
+      "pushed_at": "2026-09-04T14:35:58Z",
+      "updated_at": "2026-09-07T04:36:21Z",
+      "default_branch": "master",
+      "license": "MIT",
+      "description": "Fast, accurate and scalable probabilistic data linkage with support for multiple SQL backends",
+      "homepage": "https://moj-analytical-services.github.io/splink/",
+      "full_name": "moj-analytical-services/splink",
+      "open_prs": 25,
+      "merged_prs_since_2026_03_01": 210,
+      "open_issues_only": 185,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "v4.0.17",
+        "published_at": "2026-09-03T12:53:35Z"
+      }
+    },
+    {
+      "repo": "zinggAI/zingg",
+      "source_url": "https://api.github.com/repos/zinggAI/zingg",
+      "stars": 1243,
+      "forks": 176,
+      "open_issues_and_prs": 91,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2021-08-25T10:15:44Z",
+      "pushed_at": "2026-09-04T15:47:48Z",
+      "updated_at": "2026-09-04T15:47:52Z",
+      "default_branch": "main",
+      "license": "AGPL-3.0",
+      "description": "Scalable master data management, identity resolution, entity resolution, and deduplication using ML",
+      "homepage": "",
+      "full_name": "zinggAI/zingg",
+      "open_prs": 9,
+      "merged_prs_since_2026_03_01": 56,
+      "open_issues_only": 82,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "v0.7.0",
+        "published_at": "2026-08-10T09:33:50Z"
+      }
+    },
+    {
+      "repo": "AI-team-UoA/pyJedAI",
+      "source_url": "https://api.github.com/repos/AI-team-UoA/pyJedAI",
+      "stars": 101,
+      "forks": 13,
+      "open_issues_and_prs": 1,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2022-07-04T10:05:27Z",
+      "pushed_at": "2026-03-22T06:52:36Z",
+      "updated_at": "2026-08-18T09:34:43Z",
+      "default_branch": "main",
+      "license": "Apache-2.0",
+      "description": "An open-source library that leverages Python\u2019s data science ecosystem to build powerful end-to-end Entity Resolution workflows. ",
+      "homepage": "https://pyjedai.readthedocs.io",
+      "full_name": "AI-team-UoA/pyJedAI",
+      "open_prs": 0,
+      "merged_prs_since_2026_03_01": 1,
+      "open_issues_only": 1,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "0.3.6",
+        "published_at": "2025-11-03T10:01:49Z"
+      }
+    },
+    {
+      "repo": "scify/JedAIToolkit",
+      "source_url": "https://api.github.com/repos/scify/JedAIToolkit",
+      "stars": 226,
+      "forks": 43,
+      "open_issues_and_prs": 15,
+      "archived": true,
+      "disabled": false,
+      "created_at": "2016-03-16T12:18:20Z",
+      "pushed_at": "2025-07-12T04:42:49Z",
+      "updated_at": "2026-08-30T16:55:05Z",
+      "default_branch": "master",
+      "license": "Apache-2.0",
+      "description": "An open source, high scalability toolkit in Java for Entity Resolution.",
+      "homepage": "http://jedai.scify.org",
+      "full_name": "scify/JedAIToolkit",
+      "open_prs": 0,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 15,
+      "has_commit_since_2025_09": false,
+      "latest_release": {
+        "tag": "v3.2.1",
+        "published_at": "2021-08-27T04:55:56Z"
+      }
+    },
+    {
+      "repo": "Bergvca/string_grouper",
+      "source_url": "https://api.github.com/repos/Bergvca/string_grouper",
+      "stars": 372,
+      "forks": 76,
+      "open_issues_and_prs": 15,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2020-01-02T13:57:49Z",
+      "pushed_at": "2026-07-26T19:47:52Z",
+      "updated_at": "2026-07-26T19:47:54Z",
+      "default_branch": "master",
+      "license": "MIT",
+      "description": "Super Fast String Matching in Python ",
+      "homepage": "https://bergvca.github.io/string_grouper/",
+      "full_name": "Bergvca/string_grouper",
+      "open_prs": 5,
+      "merged_prs_since_2026_03_01": 2,
+      "open_issues_only": 10,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "v0.7.1",
+        "published_at": "2025-02-26T12:57:41Z"
+      }
+    },
+    {
+      "repo": "MaartenGr/PolyFuzz",
+      "source_url": "https://api.github.com/repos/MaartenGr/PolyFuzz",
+      "stars": 802,
+      "forks": 72,
+      "open_issues_and_prs": 32,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2020-11-21T06:28:09Z",
+      "pushed_at": "2025-07-10T05:10:46Z",
+      "updated_at": "2026-09-01T02:31:40Z",
+      "default_branch": "master",
+      "license": "MIT",
+      "description": "Fuzzy string matching, grouping, and evaluation. ",
+      "homepage": "https://maartengr.github.io/PolyFuzz/",
+      "full_name": "MaartenGr/PolyFuzz",
+      "open_prs": 4,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 28,
+      "has_commit_since_2025_09": false,
+      "latest_release": {
+        "tag": "v0.4.3",
+        "published_at": "2025-05-06T11:58:23Z"
+      }
+    },
+    {
+      "repo": "RobinL/fuzzymatcher",
+      "source_url": "https://api.github.com/repos/RobinL/fuzzymatcher",
+      "stars": 286,
+      "forks": 60,
+      "open_issues_and_prs": 22,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2017-11-25T08:58:00Z",
+      "pushed_at": "2022-08-09T18:27:44Z",
+      "updated_at": "2026-09-01T23:51:51Z",
+      "default_branch": "master",
+      "license": "MIT",
+      "description": "Record linking package that fuzzy matches two Python pandas dataframes using sqlite3 fts4",
+      "homepage": "",
+      "full_name": "RobinL/fuzzymatcher",
+      "open_prs": 0,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 22,
+      "has_commit_since_2025_09": false,
+      "latest_release": {
+        "tag": "0.0.5",
+        "published_at": "2019-10-15T11:47:12Z"
+      }
+    },
+    {
+      "repo": "maxharlow/csvmatch",
+      "source_url": "https://api.github.com/repos/maxharlow/csvmatch",
+      "stars": 190,
+      "forks": 21,
+      "open_issues_and_prs": 1,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2015-12-08T16:39:38Z",
+      "pushed_at": "2025-03-26T21:37:56Z",
+      "updated_at": "2026-09-03T14:35:24Z",
+      "default_branch": "master",
+      "license": "NOASSERTION",
+      "description": "\ud83d\udd0e Finds fuzzy matches between CSV files",
+      "homepage": "",
+      "full_name": "maxharlow/csvmatch",
+      "open_prs": 0,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 1,
+      "has_commit_since_2025_09": false,
+      "latest_release": {
+        "tag": "v2.1",
+        "published_at": "2025-02-02T18:20:35Z"
+      }
+    },
+    {
+      "repo": "usc-isi-i2/rltk",
+      "source_url": "https://api.github.com/repos/usc-isi-i2/rltk",
+      "stars": 111,
+      "forks": 22,
+      "open_issues_and_prs": 7,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2017-02-15T22:20:47Z",
+      "pushed_at": "2023-08-14T21:48:59Z",
+      "updated_at": "2026-07-21T08:58:18Z",
+      "default_branch": "master",
+      "license": "MIT",
+      "description": "Record Linkage ToolKit (Find and link entities)",
+      "homepage": "",
+      "full_name": "usc-isi-i2/rltk",
+      "open_prs": 3,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 4,
+      "has_commit_since_2025_09": false,
+      "latest_release": null
+    },
+    {
+      "repo": "anhaidgroup/deepmatcher",
+      "source_url": "https://api.github.com/repos/anhaidgroup/deepmatcher",
+      "stars": 623,
+      "forks": 132,
+      "open_issues_and_prs": 75,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2017-12-01T19:01:11Z",
+      "pushed_at": "2024-06-18T11:46:06Z",
+      "updated_at": "2026-08-27T13:32:29Z",
+      "default_branch": "master",
+      "license": "BSD-3-Clause",
+      "description": "Python package for performing Entity and Text Matching using Deep Learning.",
+      "homepage": "",
+      "full_name": "anhaidgroup/deepmatcher",
+      "open_prs": 6,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 69,
+      "has_commit_since_2025_09": false,
+      "latest_release": null
+    },
+    {
+      "repo": "anhaidgroup/py_entitymatching",
+      "source_url": "https://api.github.com/repos/anhaidgroup/py_entitymatching",
+      "stars": 194,
+      "forks": 45,
+      "open_issues_and_prs": 50,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2016-05-25T13:58:52Z",
+      "pushed_at": "2024-05-29T16:10:37Z",
+      "updated_at": "2026-07-29T20:04:58Z",
+      "default_branch": "master",
+      "license": "BSD-3-Clause",
+      "description": null,
+      "homepage": null,
+      "full_name": "anhaidgroup/py_entitymatching",
+      "open_prs": 3,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 47,
+      "has_commit_since_2025_09": false,
+      "latest_release": {
+        "tag": "v0.4.2",
+        "published_at": "2024-02-07T23:44:30Z"
+      }
+    },
+    {
+      "repo": "vintasoftware/entity-embed",
+      "source_url": "https://api.github.com/repos/vintasoftware/entity-embed",
+      "stars": 162,
+      "forks": 16,
+      "open_issues_and_prs": 4,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2021-01-28T19:07:11Z",
+      "pushed_at": "2022-11-18T11:36:08Z",
+      "updated_at": "2026-09-01T13:16:32Z",
+      "default_branch": "main",
+      "license": "MIT",
+      "description": "PyTorch library for transforming entities like companies, products, etc. into vectors to support scalable Record Linkage / Entity Resolution using Approximate Nearest Neighbors.",
+      "homepage": "https://entity-embed.readthedocs.io/en/latest/",
+      "full_name": "vintasoftware/entity-embed",
+      "open_prs": 2,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 2,
+      "has_commit_since_2025_09": false,
+      "latest_release": {
+        "tag": "0.0.6",
+        "published_at": "2021-07-16T17:08:44Z"
+      }
+    },
+    {
+      "repo": "ekzhu/datasketch",
+      "source_url": "https://api.github.com/repos/ekzhu/datasketch",
+      "stars": 2962,
+      "forks": 318,
+      "open_issues_and_prs": 58,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2015-03-20T01:21:46Z",
+      "pushed_at": "2026-08-09T07:37:02Z",
+      "updated_at": "2026-08-31T04:43:44Z",
+      "default_branch": "master",
+      "license": "MIT",
+      "description": "MinHash, LSH, LSH Forest, Weighted MinHash, HyperLogLog, HyperLogLog++, LSH Ensemble and HNSW",
+      "homepage": "https://ekzhu.github.io/datasketch",
+      "full_name": "ekzhu/datasketch",
+      "open_prs": 8,
+      "merged_prs_since_2026_03_01": 21,
+      "open_issues_only": 50,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "v2.0.0",
+        "published_at": "2026-07-05T06:34:52Z"
+      }
+    },
+    {
+      "repo": "Senzing/senzing-sdk",
+      "source_url": "https://api.github.com/repos/Senzing/senzing-sdk",
+      "_http_error": 404,
+      "_url": "https://api.github.com/repos/Senzing/senzing-sdk"
+    },
+    {
+      "repo": "senzing-garage/sz-sdk-python",
+      "source_url": "https://api.github.com/repos/senzing-garage/sz-sdk-python",
+      "stars": 0,
+      "forks": 0,
+      "open_issues_and_prs": 6,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2023-12-14T19:38:15Z",
+      "pushed_at": "2026-09-07T01:54:58Z",
+      "updated_at": "2026-09-07T01:52:38Z",
+      "default_branch": "main",
+      "license": "Apache-2.0",
+      "description": null,
+      "homepage": "",
+      "full_name": "senzing-garage/sz-sdk-python",
+      "open_prs": 1,
+      "merged_prs_since_2026_03_01": 109,
+      "open_issues_only": 5,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "4.1.2",
+        "published_at": "2026-05-07T13:56:34Z"
+      }
+    },
+    {
+      "repo": "OpenRefine/OpenRefine",
+      "source_url": "https://api.github.com/repos/OpenRefine/OpenRefine",
+      "stars": 11986,
+      "forks": 2167,
+      "open_issues_and_prs": 730,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2012-10-15T02:22:48Z",
+      "pushed_at": "2026-09-05T04:08:04Z",
+      "updated_at": "2026-09-07T02:55:31Z",
+      "default_branch": "master",
+      "license": "BSD-3-Clause",
+      "description": "OpenRefine is a free, open source power tool for working with messy data and improving it",
+      "homepage": "https://openrefine.org/",
+      "full_name": "OpenRefine/OpenRefine",
+      "open_prs": 50,
+      "merged_prs_since_2026_03_01": 168,
+      "open_issues_only": 680,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "3.10.1",
+        "published_at": "2026-03-04T21:18:45Z"
+      }
+    },
+    {
+      "repo": "megagonlabs/ditto",
+      "source_url": "https://api.github.com/repos/megagonlabs/ditto",
+      "stars": 317,
+      "forks": 107,
+      "open_issues_and_prs": 26,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2020-07-13T22:08:15Z",
+      "pushed_at": "2024-04-17T05:53:30Z",
+      "updated_at": "2026-08-30T14:52:38Z",
+      "default_branch": "master",
+      "license": "Apache-2.0",
+      "description": "Code for the paper \"Deep Entity Matching with Pre-trained Language Models\"",
+      "homepage": null,
+      "full_name": "megagonlabs/ditto",
+      "open_prs": 4,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 22,
+      "has_commit_since_2025_09": false,
+      "latest_release": null
+    },
+    {
+      "repo": "ing-bank/spark-matcher",
+      "source_url": "https://api.github.com/repos/ing-bank/spark-matcher",
+      "stars": 36,
+      "forks": 8,
+      "open_issues_and_prs": 5,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2022-04-11T12:57:19Z",
+      "pushed_at": "2023-10-31T09:57:38Z",
+      "updated_at": "2025-12-08T05:42:23Z",
+      "default_branch": "main",
+      "license": "GPL-2.0",
+      "description": "Record matching and entity resolution at scale in Spark",
+      "homepage": "",
+      "full_name": "ing-bank/spark-matcher",
+      "open_prs": 3,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 2,
+      "has_commit_since_2025_09": false,
+      "latest_release": null
+    },
+    {
+      "repo": "opensanctions/nomenklatura",
+      "source_url": "https://api.github.com/repos/opensanctions/nomenklatura",
+      "stars": 265,
+      "forks": 48,
+      "open_issues_and_prs": 8,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2012-07-15T09:53:28Z",
+      "pushed_at": "2026-09-06T12:27:28Z",
+      "updated_at": "2026-09-05T23:22:41Z",
+      "default_branch": "main",
+      "license": "MIT",
+      "description": "Framework and command-line tools for integrating FollowTheMoney data streams from multiple sources",
+      "homepage": "http://nomenklatura.followthemoney.tech/",
+      "full_name": "opensanctions/nomenklatura",
+      "open_prs": 3,
+      "merged_prs_since_2026_03_01": 60,
+      "open_issues_only": 5,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "4.14.0",
+        "published_at": "2026-08-23T18:22:30Z"
+      }
+    },
+    {
+      "repo": "dedupeio/dedupe-examples",
+      "source_url": "https://api.github.com/repos/dedupeio/dedupe-examples",
+      "stars": 417,
+      "forks": 213,
+      "open_issues_and_prs": 15,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2014-04-02T13:04:28Z",
+      "pushed_at": "2024-08-10T00:15:53Z",
+      "updated_at": "2026-06-01T07:14:37Z",
+      "default_branch": "main",
+      "license": "MIT",
+      "description": ":id: Examples for using the dedupe library",
+      "homepage": "",
+      "full_name": "dedupeio/dedupe-examples",
+      "open_prs": 5,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 10,
+      "has_commit_since_2025_09": false,
+      "latest_release": {
+        "tag": "0.5",
+        "published_at": "2014-04-11T15:54:05Z"
+      }
+    },
+    {
+      "repo": "dedupeio/csvdedupe",
+      "source_url": "https://api.github.com/repos/dedupeio/csvdedupe",
+      "stars": 433,
+      "forks": 81,
+      "open_issues_and_prs": 25,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2013-07-11T14:23:33Z",
+      "pushed_at": "2020-03-31T20:36:59Z",
+      "updated_at": "2026-09-06T00:53:35Z",
+      "default_branch": "master",
+      "license": "NOASSERTION",
+      "description": ":id: Command line tool for deduplicating CSV files",
+      "homepage": "",
+      "full_name": "dedupeio/csvdedupe",
+      "open_prs": 3,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 22,
+      "has_commit_since_2025_09": false,
+      "latest_release": null
+    },
+    {
+      "repo": "Valires/fastLink",
+      "source_url": "https://api.github.com/repos/Valires/fastLink",
+      "_http_error": 404,
+      "_url": "https://api.github.com/repos/Valires/fastLink"
+    },
+    {
+      "repo": "djvanderlaan/reclin2",
+      "source_url": "https://api.github.com/repos/djvanderlaan/reclin2",
+      "stars": 52,
+      "forks": 4,
+      "open_issues_and_prs": 3,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2020-09-14T14:53:04Z",
+      "pushed_at": "2026-01-08T14:38:31Z",
+      "updated_at": "2026-08-06T01:02:54Z",
+      "default_branch": "master",
+      "license": "GPL-3.0",
+      "description": "Record Linkage Toolkit for R",
+      "homepage": "",
+      "full_name": "djvanderlaan/reclin2",
+      "open_prs": 0,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 3,
+      "has_commit_since_2025_09": true,
+      "latest_release": null
+    },
+    {
+      "repo": "rapidfuzz/RapidFuzz",
+      "source_url": "https://api.github.com/repos/rapidfuzz/RapidFuzz",
+      "stars": 4112,
+      "forks": 171,
+      "open_issues_and_prs": 30,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2020-02-29T14:41:44Z",
+      "pushed_at": "2026-08-30T18:15:40Z",
+      "updated_at": "2026-09-05T18:31:07Z",
+      "default_branch": "main",
+      "license": "MIT",
+      "description": "Rapid fuzzy string matching in Python using various string metrics",
+      "homepage": "https://rapidfuzz.github.io/RapidFuzz/",
+      "full_name": "rapidfuzz/RapidFuzz",
+      "open_prs": 2,
+      "merged_prs_since_2026_03_01": 18,
+      "open_issues_only": 28,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "v3.14.6-1",
+        "published_at": "2026-08-30T18:15:41Z"
+      }
+    },
+    {
+      "repo": "jamesturk/jellyfish",
+      "source_url": "https://api.github.com/repos/jamesturk/jellyfish",
+      "stars": 2232,
+      "forks": 169,
+      "open_issues_and_prs": 7,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2010-07-09T20:41:11Z",
+      "pushed_at": "2026-07-24T01:48:03Z",
+      "updated_at": "2026-09-05T12:54:38Z",
+      "default_branch": "main",
+      "license": "MIT",
+      "description": "\ud83e\udebc a python library for doing approximate and phonetic matching of strings.",
+      "homepage": "https://jpt.sh/projects/jellyfish/",
+      "full_name": "jamesturk/jellyfish",
+      "open_prs": 3,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 0,
+      "has_commit_since_2025_09": true,
+      "latest_release": null
+    },
+    {
+      "repo": "datamade/probablepeople",
+      "source_url": "https://api.github.com/repos/datamade/probablepeople",
+      "stars": 622,
+      "forks": 75,
+      "open_issues_and_prs": 67,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2014-11-06T16:31:00Z",
+      "pushed_at": "2025-05-15T19:57:08Z",
+      "updated_at": "2026-08-21T17:54:57Z",
+      "default_branch": "main",
+      "license": "MIT",
+      "description": ":family: a python library for parsing unstructured western names into name components.",
+      "homepage": "http://parserator.datamade.us/probablepeople",
+      "full_name": "datamade/probablepeople",
+      "open_prs": 4,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 63,
+      "has_commit_since_2025_09": false,
+      "latest_release": null
+    },
+    {
+      "repo": "datamade/usaddress",
+      "source_url": "https://api.github.com/repos/datamade/usaddress",
+      "stars": 1637,
+      "forks": 308,
+      "open_issues_and_prs": 174,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2014-07-17T19:22:46Z",
+      "pushed_at": "2025-08-07T14:51:41Z",
+      "updated_at": "2026-09-06T16:15:57Z",
+      "default_branch": "main",
+      "license": "MIT",
+      "description": ":us: a python library for parsing unstructured United States address strings into address components",
+      "homepage": "https://parserator.us/usaddress",
+      "full_name": "datamade/usaddress",
+      "open_prs": 4,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 170,
+      "has_commit_since_2025_09": false,
+      "latest_release": null
+    },
+    {
+      "repo": "openvenues/libpostal",
+      "source_url": "https://api.github.com/repos/openvenues/libpostal",
+      "stars": 4883,
+      "forks": 470,
+      "open_issues_and_prs": 299,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2015-03-03T00:21:31Z",
+      "pushed_at": "2026-05-13T11:06:02Z",
+      "updated_at": "2026-09-06T16:15:18Z",
+      "default_branch": "master",
+      "license": "MIT",
+      "description": "A C library for parsing/normalizing street addresses around the world. Powered by statistical NLP and open geo data.",
+      "homepage": "",
+      "full_name": "openvenues/libpostal",
+      "open_prs": 18,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 281,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "v1.1",
+        "published_at": "2018-05-09T18:37:43Z"
+      }
+    },
+    {
+      "repo": "duckdb/duckdb",
+      "source_url": "https://api.github.com/repos/duckdb/duckdb",
+      "stars": 41042,
+      "forks": 3728,
+      "open_issues_and_prs": 864,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2018-06-26T15:04:45Z",
+      "pushed_at": "2026-09-07T06:18:57Z",
+      "updated_at": "2026-09-07T06:19:02Z",
+      "default_branch": "v2.0-cyanoptera",
+      "license": "MIT",
+      "description": "DuckDB is an analytical in-process SQL database management system",
+      "homepage": "http://www.duckdb.org",
+      "full_name": "duckdb/duckdb",
+      "open_prs": 282,
+      "merged_prs_since_2026_03_01": 2371,
+      "open_issues_only": 582,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "v1.5.5",
+        "published_at": "2026-07-22T10:51:50Z"
+      }
+    },
+    {
+      "repo": "Tamr/tamr-client",
+      "source_url": "https://api.github.com/repos/Tamr/tamr-client",
+      "_http_error": 404,
+      "_url": "https://api.github.com/repos/Tamr/tamr-client"
+    }
+  ]
+}

@@ -1,0 +1,36 @@
+{
+  "recordlinkage_version": "0.16",
+  "sets": {
+    "febrl3": {
+      "task": "deduplication (one table)",
+      "records": 5000,
+      "true_entities": 2000,
+      "true_pairs": 6538,
+      "possible_pairs": 12497500,
+      "cluster_sizes": {
+        "1": 835,
+        "2": 368,
+        "3": 256,
+        "4": 212,
+        "5": 161,
+        "6": 168
+      },
+      "sha256_16": "1969a10d70637a5a"
+    },
+    "febrl4": {
+      "task": "linkage (two tables)",
+      "records_a": 5000,
+      "records_b": 5000,
+      "true_pairs": 5000,
+      "possible_pairs": 25000000,
+      "sha256_16_a": "a5a05f30655ee574",
+      "sha256_16_b": "fcc06d1a971058f2"
+    },
+    "febrl1": {
+      "records": 1000,
+      "true_pairs": 500,
+      "true_entities": 500,
+      "sha256_16": "ff3aac45ef1d3001"
+    }
+  }
+}

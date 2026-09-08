@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/home/ivanadamin/gt/research/crew/ivan/harness/1-194-entity-resolution-record-linkage/probes/probe_dedupe.py", line 165, in <module>
+    main()
+  File "/home/ivanadamin/gt/research/crew/ivan/harness/1-194-entity-resolution-record-linkage/probes/probe_dedupe.py", line 79, in main
+    deduper.prepare_training(data)
+  File "/home/ivanadamin/gt/research/crew/ivan/harness/1-194-entity-resolution-record-linkage/.venvs/dedupe-3.12-btrees64/lib/python3.12/site-packages/dedupe/api.py", line 1408, in prepare_training
+    self.active_learner = labeler.DedupeDisagreementLearner(
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ivanadamin/gt/research/crew/ivan/harness/1-194-entity-resolution-record-linkage/.venvs/dedupe-3.12-btrees64/lib/python3.12/site-packages/dedupe/labeler.py", line 444, in __init__
+    self.blocker = DedupeBlockLearner(candidate_predicates, data, index_include)
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ivanadamin/gt/research/crew/ivan/harness/1-194-entity-resolution-record-linkage/.venvs/dedupe-3.12-btrees64/lib/python3.12/site-packages/dedupe/labeler.py", line 236, in __init__
+    self.block_learner = training.DedupeBlockLearner(
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ivanadamin/gt/research/crew/ivan/harness/1-194-entity-resolution-record-linkage/.venvs/dedupe-3.12-btrees64/lib/python3.12/site-packages/dedupe/training.py", line 142, in __init__
+    self.comparison_cover = self.coveredPairs(self.blocker, sampled_records)
+                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/ivanadamin/gt/research/crew/ivan/harness/1-194-entity-resolution-record-linkage/.venvs/dedupe-3.12-btrees64/lib/python3.12/site-packages/dedupe/training.py", line 177, in coveredPairs
+    pairs = frozenset(
+            ^^^^^^^^^^
+MemoryError

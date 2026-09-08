@@ -1,0 +1,182 @@
+{
+  "probe": "dedupe",
+  "version": "3.0.3",
+  "btrees_pinned": "6.4 \u2014 6.5 removed byValue() and breaks dedupe at blocking time",
+  "dataset": "febrl1",
+  "capabilities": {
+    "blocks": true,
+    "scores": true,
+    "decides": true,
+    "clusters": true,
+    "canonicalises": true
+  },
+  "capability_note": "The only candidate measured that canonicalises, and the only one whose clustering is hierarchical rather than connected components. Both partitions are reported.",
+  "training": {
+    "style": "active learning, oracle-answered from ground truth",
+    "labels_supplied": 40,
+    "of_which_matches": 28,
+    "seconds": 9.378,
+    "caveat": "a perfect oracle is a ceiling on the human loop"
+  },
+  "scoring": {
+    "pairs_scored": 1475,
+    "seconds": 0.432,
+    "possible_pairs": 499500,
+    "reduction_ratio": 0.997047,
+    "blocking_recall": 0.998
+  },
+  "peak_rss_mib": 524.4,
+  "address_space_cap_mib": 6144,
+  "results": [
+    {
+      "threshold": 0.3,
+      "cluster_seconds": 0.064,
+      "pairwise": {
+        "tp": 498,
+        "fp": 0,
+        "fn": 2,
+        "precision": 1.0,
+        "recall": 0.996,
+        "f1": 0.998,
+        "predicted_pairs": 498,
+        "true_pairs": 500
+      },
+      "cluster_dedupe_hierarchical": {
+        "true_entities": 500,
+        "predicted_entities": 502,
+        "exact_entities_recovered": 498,
+        "exact_recovery_rate": 0.996,
+        "adjusted_rand_index": 0.998,
+        "records_scored": 1000
+      },
+      "cluster_naive_connected_components": {
+        "true_entities": 500,
+        "predicted_entities": 501,
+        "exact_entities_recovered": 496,
+        "exact_recovery_rate": 0.992,
+        "adjusted_rand_index": 0.994,
+        "records_scored": 1000
+      }
+    },
+    {
+      "threshold": 0.5,
+      "cluster_seconds": 0.039,
+      "pairwise": {
+        "tp": 493,
+        "fp": 0,
+        "fn": 7,
+        "precision": 1.0,
+        "recall": 0.986,
+        "f1": 0.993,
+        "predicted_pairs": 493,
+        "true_pairs": 500
+      },
+      "cluster_dedupe_hierarchical": {
+        "true_entities": 500,
+        "predicted_entities": 507,
+        "exact_entities_recovered": 493,
+        "exact_recovery_rate": 0.986,
+        "adjusted_rand_index": 0.9929,
+        "records_scored": 1000
+      },
+      "cluster_naive_connected_components": {
+        "true_entities": 500,
+        "predicted_entities": 507,
+        "exact_entities_recovered": 493,
+        "exact_recovery_rate": 0.986,
+        "adjusted_rand_index": 0.9929,
+        "records_scored": 1000
+      }
+    },
+    {
+      "threshold": 0.7,
+      "cluster_seconds": 0.042,
+      "pairwise": {
+        "tp": 485,
+        "fp": 0,
+        "fn": 15,
+        "precision": 1.0,
+        "recall": 0.97,
+        "f1": 0.9848,
+        "predicted_pairs": 485,
+        "true_pairs": 500
+      },
+      "cluster_dedupe_hierarchical": {
+        "true_entities": 500,
+        "predicted_entities": 515,
+        "exact_entities_recovered": 485,
+        "exact_recovery_rate": 0.97,
+        "adjusted_rand_index": 0.9848,
+        "records_scored": 1000
+      },
+      "cluster_naive_connected_components": {
+        "true_entities": 500,
+        "predicted_entities": 515,
+        "exact_entities_recovered": 485,
+        "exact_recovery_rate": 0.97,
+        "adjusted_rand_index": 0.9848,
+        "records_scored": 1000
+      }
+    },
+    {
+      "threshold": 0.9,
+      "cluster_seconds": 0.03,
+      "pairwise": {
+        "tp": 470,
+        "fp": 0,
+        "fn": 30,
+        "precision": 1.0,
+        "recall": 0.94,
+        "f1": 0.9691,
+        "predicted_pairs": 470,
+        "true_pairs": 500
+      },
+      "cluster_dedupe_hierarchical": {
+        "true_entities": 500,
+        "predicted_entities": 530,
+        "exact_entities_recovered": 470,
+        "exact_recovery_rate": 0.94,
+        "adjusted_rand_index": 0.969,
+        "records_scored": 1000
+      },
+      "cluster_naive_connected_components": {
+        "true_entities": 500,
+        "predicted_entities": 530,
+        "exact_entities_recovered": 470,
+        "exact_recovery_rate": 0.94,
+        "adjusted_rand_index": 0.969,
+        "records_scored": 1000
+      }
+    }
+  ],
+  "canonicalisation_example": {
+    "cluster_records": [
+      {
+        "rec_id": "rec-0-dup-0",
+        "given_name": "thomas",
+        "surname": "rokobaro",
+        "date_of_birth": null,
+        "suburb": "lawrence",
+        "postcode": "2272",
+        "address_1": "herschell circuit"
+      },
+      {
+        "rec_id": "rec-0-org",
+        "given_name": "flynn",
+        "surname": "rokobaro",
+        "date_of_birth": "19720812",
+        "suburb": "lawrence",
+        "postcode": "2227",
+        "address_1": "herschell circuit"
+      }
+    ],
+    "canonical": {
+      "given_name": "thomas",
+      "surname": "rokobaro",
+      "date_of_birth": "19720812",
+      "suburb": "lawrence",
+      "postcode": "2272",
+      "address_1": "herschell circuit"
+    }
+  }
+}

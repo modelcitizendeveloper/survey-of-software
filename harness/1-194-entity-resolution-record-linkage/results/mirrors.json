@@ -1,0 +1,92 @@
+{
+  "recordlinkage": {
+    "with_mirrors": 1153018,
+    "without_mirrors": 1151777,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "splink": {
+    "with_mirrors": 948850,
+    "without_mirrors": 945285,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "dedupe": {
+    "with_mirrors": 73369,
+    "without_mirrors": 43063,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "zingg": {
+    "with_mirrors": 2054,
+    "without_mirrors": 1836,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "pyjedai": {
+    "with_mirrors": 1274,
+    "without_mirrors": 861,
+    "window": "2026-08-21 .. 2026-09-06"
+  },
+  "string-grouper": {
+    "with_mirrors": 47799,
+    "without_mirrors": 47358,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "polyfuzz": {
+    "with_mirrors": 36660,
+    "without_mirrors": 36338,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "nomenklatura": {
+    "with_mirrors": 35403,
+    "without_mirrors": 27588,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "senzing-core": {
+    "with_mirrors": 5586,
+    "without_mirrors": 5303,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "csvmatch": {
+    "with_mirrors": 6159,
+    "without_mirrors": 5199,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "name-matching": {
+    "with_mirrors": 43431,
+    "without_mirrors": 43039,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "datasketch": {
+    "with_mirrors": 5123760,
+    "without_mirrors": 5093566,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "rapidfuzz": {
+    "with_mirrors": 144660506,
+    "without_mirrors": 143276794,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "dedupe-variable-datetime": {
+    "with_mirrors": 46242,
+    "without_mirrors": 45571,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "fuzzymatcher": {
+    "with_mirrors": 8630,
+    "without_mirrors": 8428,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "py-entitymatching": {
+    "with_mirrors": 1870,
+    "without_mirrors": 1486,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "pandas-dedupe": {
+    "with_mirrors": 4666,
+    "without_mirrors": 4414,
+    "window": "2026-08-23 .. 2026-09-06"
+  },
+  "spark-matcher": {
+    "with_mirrors": 862,
+    "without_mirrors": 403,
+    "window": "2026-08-23 .. 2026-09-06"
+  }
+}

@@ -1,0 +1,190 @@
+{
+  "probe": "duckdb",
+  "duckdb_version": "1.5.5",
+  "dataset": "febrl1",
+  "blocking_variant": "prefix",
+  "results": [
+    {
+      "candidate": "SQL baseline B1 \u2014 exact match on normalized key",
+      "capabilities": {
+        "blocks": true,
+        "scores": false,
+        "decides": true,
+        "clusters": true,
+        "canonicalises": false
+      },
+      "capability_note": "Blocking, deciding and clustering are the same GROUP BY. There is no score, so there is no threshold to tune and no way to trade precision for recall.",
+      "seconds": 0.001,
+      "pairwise": {
+        "tp": 219,
+        "fp": 0,
+        "fn": 281,
+        "precision": 1.0,
+        "recall": 0.438,
+        "f1": 0.6092,
+        "predicted_pairs": 219,
+        "true_pairs": 500
+      },
+      "cluster": {
+        "true_entities": 500,
+        "predicted_entities": 781,
+        "exact_entities_recovered": 219,
+        "exact_recovery_rate": 0.438,
+        "adjusted_rand_index": 0.6089,
+        "records_scored": 1000
+      }
+    },
+    {
+      "candidate": "SQL baseline B2 \u2014 blocked jaro-winkler join, threshold 0.8",
+      "capabilities": {
+        "blocks": true,
+        "scores": true,
+        "decides": true,
+        "clusters": true,
+        "canonicalises": false
+      },
+      "capability_note": "Every step is written by the caller. The threshold is a constant chosen by looking at a histogram; nothing estimated it.",
+      "threshold": 0.8,
+      "seconds": 0.028,
+      "blocking": {
+        "candidate_pairs": 589,
+        "possible_pairs": 499500,
+        "reduction_ratio": 0.998821,
+        "blocking_recall": 0.974,
+        "seconds": 0.023
+      },
+      "pairwise": {
+        "tp": 368,
+        "fp": 7,
+        "fn": 132,
+        "precision": 0.9813,
+        "recall": 0.736,
+        "f1": 0.8411,
+        "predicted_pairs": 375,
+        "true_pairs": 500
+      },
+      "cluster": {
+        "true_entities": 500,
+        "predicted_entities": 627,
+        "exact_entities_recovered": 360,
+        "exact_recovery_rate": 0.72,
+        "adjusted_rand_index": 0.8315,
+        "records_scored": 1000
+      }
+    },
+    {
+      "candidate": "SQL baseline B2 \u2014 blocked jaro-winkler join, threshold 0.85",
+      "capabilities": {
+        "blocks": true,
+        "scores": true,
+        "decides": true,
+        "clusters": true,
+        "canonicalises": false
+      },
+      "capability_note": "Every step is written by the caller. The threshold is a constant chosen by looking at a histogram; nothing estimated it.",
+      "threshold": 0.85,
+      "seconds": 0.024,
+      "blocking": {
+        "candidate_pairs": 589,
+        "possible_pairs": 499500,
+        "reduction_ratio": 0.998821,
+        "blocking_recall": 0.974,
+        "seconds": 0.022
+      },
+      "pairwise": {
+        "tp": 342,
+        "fp": 0,
+        "fn": 158,
+        "precision": 1.0,
+        "recall": 0.684,
+        "f1": 0.8124,
+        "predicted_pairs": 342,
+        "true_pairs": 500
+      },
+      "cluster": {
+        "true_entities": 500,
+        "predicted_entities": 658,
+        "exact_entities_recovered": 342,
+        "exact_recovery_rate": 0.684,
+        "adjusted_rand_index": 0.8122,
+        "records_scored": 1000
+      }
+    },
+    {
+      "candidate": "SQL baseline B2 \u2014 blocked jaro-winkler join, threshold 0.88",
+      "capabilities": {
+        "blocks": true,
+        "scores": true,
+        "decides": true,
+        "clusters": true,
+        "canonicalises": false
+      },
+      "capability_note": "Every step is written by the caller. The threshold is a constant chosen by looking at a histogram; nothing estimated it.",
+      "threshold": 0.88,
+      "seconds": 0.029,
+      "blocking": {
+        "candidate_pairs": 589,
+        "possible_pairs": 499500,
+        "reduction_ratio": 0.998821,
+        "blocking_recall": 0.974,
+        "seconds": 0.026
+      },
+      "pairwise": {
+        "tp": 324,
+        "fp": 0,
+        "fn": 176,
+        "precision": 1.0,
+        "recall": 0.648,
+        "f1": 0.7864,
+        "predicted_pairs": 324,
+        "true_pairs": 500
+      },
+      "cluster": {
+        "true_entities": 500,
+        "predicted_entities": 676,
+        "exact_entities_recovered": 324,
+        "exact_recovery_rate": 0.648,
+        "adjusted_rand_index": 0.7862,
+        "records_scored": 1000
+      }
+    },
+    {
+      "candidate": "SQL baseline B2 \u2014 blocked jaro-winkler join, threshold 0.92",
+      "capabilities": {
+        "blocks": true,
+        "scores": true,
+        "decides": true,
+        "clusters": true,
+        "canonicalises": false
+      },
+      "capability_note": "Every step is written by the caller. The threshold is a constant chosen by looking at a histogram; nothing estimated it.",
+      "threshold": 0.92,
+      "seconds": 0.026,
+      "blocking": {
+        "candidate_pairs": 589,
+        "possible_pairs": 499500,
+        "reduction_ratio": 0.998821,
+        "blocking_recall": 0.974,
+        "seconds": 0.023
+      },
+      "pairwise": {
+        "tp": 303,
+        "fp": 0,
+        "fn": 197,
+        "precision": 1.0,
+        "recall": 0.606,
+        "f1": 0.7547,
+        "predicted_pairs": 303,
+        "true_pairs": 500
+      },
+      "cluster": {
+        "true_entities": 500,
+        "predicted_entities": 697,
+        "exact_entities_recovered": 303,
+        "exact_recovery_rate": 0.606,
+        "adjusted_rand_index": 0.7545,
+        "records_scored": 1000
+      }
+    }
+  ]
+}

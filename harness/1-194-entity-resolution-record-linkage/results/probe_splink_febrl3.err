@@ -1,0 +1,71 @@
+Probability two random records match is estimated to be  0.000344.
+This means that amongst all possible pairwise record comparisons, one in 2,903.02 are expected to match.  With 12,497,500 total possible comparisons, we expect a total of around 4,305.00 matching pairs
+----- Estimating u probabilities using random sampling -----
+
+Estimated u probabilities using random sampling
+
+Your model is not yet fully trained. Missing estimates for:
+    - given_name (no m values are trained).
+    - surname (no m values are trained).
+    - date_of_birth (no m values are trained).
+    - suburb (no m values are trained).
+    - postcode (no m values are trained).
+    - address_1 (no m values are trained).
+
+----- Starting EM training session -----
+
+Estimating the m probabilities of the model by blocking on:
+l."date_of_birth" = r."date_of_birth"
+
+Parameter estimates will be made for the following comparison(s):
+    - given_name
+    - surname
+    - suburb
+    - postcode
+    - address_1
+
+Parameter estimates cannot be made for the following comparison(s) since they are used in the blocking rules: 
+    - date_of_birth
+
+Iteration 1: Largest change in params was -0.433 in the m_probability of address_1, level `Exact match on address_1`
+Iteration 2: Largest change in params was 0.0319 in the m_probability of surname, level `All other comparisons`
+Iteration 3: Largest change in params was -0.00124 in the m_probability of postcode, level `Exact match on postcode`
+Iteration 4: Largest change in params was 7.51e-05 in the m_probability of postcode, level `All other comparisons`
+
+EM converged after 4 iterations
+
+Your model is not yet fully trained. Missing estimates for:
+    - date_of_birth (no m values are trained).
+
+----- Starting EM training session -----
+
+Estimating the m probabilities of the model by blocking on:
+(l."surname" = r."surname") AND (l."given_name" = r."given_name")
+
+Parameter estimates will be made for the following comparison(s):
+    - date_of_birth
+    - suburb
+    - postcode
+    - address_1
+
+Parameter estimates cannot be made for the following comparison(s) since they are used in the blocking rules: 
+    - given_name
+    - surname
+
+Iteration 1: Largest change in params was 0.0714 in the m_probability of date_of_birth, level `All other comparisons`
+Iteration 2: Largest change in params was 0.0011 in probability_two_random_records_match
+Iteration 3: Largest change in params was 2.12e-05 in probability_two_random_records_match
+
+EM converged after 3 iterations
+
+Your model is fully trained. All comparisons have at least one estimate for their m and u values
+Blocking time: 0.01 seconds
+Predict time: 0.12 seconds
+Completed iteration 1, num edges remaining to process: 410
+Completed iteration 2, num edges remaining to process: 0
+Completed iteration 1, num edges remaining to process: 410
+Completed iteration 2, num edges remaining to process: 0
+Completed iteration 1, num edges remaining to process: 424
+Completed iteration 2, num edges remaining to process: 0
+Completed iteration 1, num edges remaining to process: 482
+Completed iteration 2, num edges remaining to process: 0

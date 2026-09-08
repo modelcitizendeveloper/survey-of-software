@@ -1,0 +1,112 @@
+{
+  "probe": "recordlinkage",
+  "version": "0.16",
+  "dataset": "febrl3",
+  "blocking_variant": "prefix",
+  "capabilities": {
+    "blocks": true,
+    "scores": true,
+    "decides": true,
+    "clusters": false,
+    "canonicalises": false
+  },
+  "capability_note": "Returns a pandas MultiIndex of matched pairs. There is no clustering step in the library; the partition below was produced by the probe taking connected components, which is what a caller does and is where a single false pair welds two entities together.",
+  "blocking": {
+    "candidate_pairs": 20860,
+    "possible_pairs": 12497500,
+    "reduction_ratio": 0.998331,
+    "blocking_recall": 0.9668,
+    "seconds": 0.044
+  },
+  "compare_seconds": 0.11,
+  "results": [
+    {
+      "classifier": "ECMClassifier (unsupervised Fellegi-Sunter, binarize=0.85)",
+      "seconds": 0.106,
+      "pairwise": {
+        "tp": 6234,
+        "fp": 15,
+        "fn": 304,
+        "precision": 0.9976,
+        "recall": 0.9535,
+        "f1": 0.9751,
+        "predicted_pairs": 6249,
+        "true_pairs": 6538
+      },
+      "cluster_via_caller_connected_components": {
+        "true_entities": 2000,
+        "predicted_entities": 2042,
+        "exact_entities_recovered": 1940,
+        "exact_recovery_rate": 0.97,
+        "adjusted_rand_index": 0.9843,
+        "records_scored": 5000
+      }
+    },
+    {
+      "classifier": "sum of comparison vector >= 4.0 (no model)",
+      "seconds": null,
+      "pairwise": {
+        "tp": 5727,
+        "fp": 0,
+        "fn": 811,
+        "precision": 1.0,
+        "recall": 0.876,
+        "f1": 0.9339,
+        "predicted_pairs": 5727,
+        "true_pairs": 6538
+      },
+      "cluster_via_caller_connected_components": {
+        "true_entities": 2000,
+        "predicted_entities": 2157,
+        "exact_entities_recovered": 1850,
+        "exact_recovery_rate": 0.925,
+        "adjusted_rand_index": 0.9611,
+        "records_scored": 5000
+      }
+    },
+    {
+      "classifier": "sum of comparison vector >= 4.5 (no model)",
+      "seconds": null,
+      "pairwise": {
+        "tp": 5134,
+        "fp": 0,
+        "fn": 1404,
+        "precision": 1.0,
+        "recall": 0.7853,
+        "f1": 0.8797,
+        "predicted_pairs": 5134,
+        "true_pairs": 6538
+      },
+      "cluster_via_caller_connected_components": {
+        "true_entities": 2000,
+        "predicted_entities": 2325,
+        "exact_entities_recovered": 1716,
+        "exact_recovery_rate": 0.858,
+        "adjusted_rand_index": 0.9175,
+        "records_scored": 5000
+      }
+    },
+    {
+      "classifier": "sum of comparison vector >= 5.0 (no model)",
+      "seconds": null,
+      "pairwise": {
+        "tp": 3587,
+        "fp": 0,
+        "fn": 2951,
+        "precision": 1.0,
+        "recall": 0.5486,
+        "f1": 0.7085,
+        "predicted_pairs": 3587,
+        "true_pairs": 6538
+      },
+      "cluster_via_caller_connected_components": {
+        "true_entities": 2000,
+        "predicted_entities": 2842,
+        "exact_entities_recovered": 1397,
+        "exact_recovery_rate": 0.6985,
+        "adjusted_rand_index": 0.7649,
+        "records_scored": 5000
+      }
+    }
+  ]
+}

@@ -1,0 +1,1359 @@
+{
+  "fetched_at": "2026-09-07T06:40:59Z",
+  "pypi": [
+    {
+      "package": "blockingpy",
+      "source_url": "https://pypi.org/pypi/blockingpy/json",
+      "version": "0.2.8",
+      "license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": "<3.13,>=3.10",
+      "requires_dist": [
+        "blockingpy-core>=0.2.8",
+        "faiss-cpu>=1.7.4"
+      ],
+      "summary": "Blocking records for record linkage and data deduplication based on ANN algorithms.",
+      "home_page": null,
+      "project_urls": {
+        "Documentation": "https://blockingpy.readthedocs.io/en/latest/",
+        "Funding": "https://www.ncn.gov.pl",
+        "Issues": "https://github.com/ncn-foreigners/BlockingPy/issues",
+        "Repository": "https://github.com/ncn-foreigners/BlockingPy"
+      },
+      "latest_upload": "2025-10-10T11:25:23.980056Z",
+      "first_upload": "2024-12-06T15:44:47.934675Z",
+      "release_count": 20,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "py-stringmatching",
+      "source_url": "https://pypi.org/pypi/py-stringmatching/json",
+      "version": "0.4.7",
+      "license": "BSD",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "requires_python": ">=3.7",
+      "requires_dist": [
+        "numpy<2.0,>=1.7.0"
+      ],
+      "summary": "Python library for string matching.",
+      "home_page": null,
+      "project_urls": {
+        "Homepage": "https://sites.google.com/site/anhaidgroup/projects/magellan/py_stringmatching"
+      },
+      "latest_upload": "2026-02-20T18:21:20.883461Z",
+      "first_upload": "2016-07-06T19:59:55.165882Z",
+      "release_count": 12,
+      "wheel_tags": [
+        "macosx_11_0_arm64",
+        "macosx_15_0_arm64",
+        "manylinux2014_aarch64.manylinux_2_17_aarch64.manylinux_2_28_aarch64",
+        "manylinux2014_x86_64.manylinux_2_17_x86_64.manylinux_2_28_x86_64",
+        "musllinux_1_2_aarch64",
+        "musllinux_1_2_x86_64",
+        "win32",
+        "win_amd64"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "er-evaluation",
+      "source_url": "https://pypi.org/pypi/er-evaluation/json",
+      "version": "2.3.0",
+      "license": "GNU Affero General Public License v3",
+      "license_classifiers": [],
+      "requires_python": ">=3.6",
+      "requires_dist": [
+        "pandas",
+        "numpy",
+        "scipy",
+        "plotly",
+        "igraph",
+        "scikit-learn",
+        "pyarrow",
+        "urllib3",
+        "requests",
+        "pandas ; extra == 'test'",
+        "numpy ; extra == 'test'",
+        "scipy ; extra == 'test'",
+        "plotly ; extra == 'test'",
+        "igraph ; extra == 'test'",
+        "scikit-learn ; extra == 'test'",
+        "pyarrow ; extra == 'test'",
+        "urllib3 ; extra == 'test'",
+        "requests ; extra == 'test'",
+        "pytest >=3 ; extra == 'test'",
+        "testbook ; extra == 'test'",
+        "jupyter ; extra == 'test'",
+        "pyhamcrest ; extra == 'test'",
+        "wheel ; extra == 'test'"
+      ],
+      "summary": "An End-to-End Evaluation Framework for Entity Resolution Systems.",
+      "home_page": "https://github.com/OlivierBinette/er_evaluation",
+      "project_urls": {
+        "Homepage": "https://github.com/OlivierBinette/er_evaluation"
+      },
+      "latest_upload": "2023-11-30T19:41:04.450717Z",
+      "first_upload": "2022-11-23T15:17:15.699107Z",
+      "release_count": 9,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "deezymatch",
+      "source_url": "https://pypi.org/pypi/deezymatch/json",
+      "version": "1.3.4",
+      "license": "MIT License",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.9",
+      "requires_dist": null,
+      "summary": "A Flexible Deep Learning Approach to Fuzzy String Matching and Candidate Ranking",
+      "home_page": "https://github.com/Living-with-machines/DeezyMatch",
+      "project_urls": {
+        "Download": "https://github.com/Living-with-machines/DeezyMatch/archive/master.zip",
+        "Homepage": "https://github.com/Living-with-machines/DeezyMatch"
+      },
+      "latest_upload": "2022-09-20T14:29:47.111850Z",
+      "first_upload": "2020-07-12T16:21:22.167628Z",
+      "release_count": 12,
+      "wheel_tags": [],
+      "has_sdist_only": true,
+      "yanked": false
+    },
+    {
+      "package": "stringcompare",
+      "source_url": "https://pypi.org/pypi/stringcompare/json",
+      "version": "0.1.11",
+      "license": ".",
+      "license_classifiers": [
+        "License :: Other/Proprietary License"
+      ],
+      "requires_python": ">=3.8,<4.0",
+      "requires_dist": [
+        "click (>=8.0.1,<9.0.0)",
+        "matplotlib (>=3.4.2,<4.0.0)"
+      ],
+      "summary": "This package contains functions for comparing strings, finding substrings (the first occurrence of the desired string) ",
+      "home_page": "",
+      "project_urls": null,
+      "latest_upload": "2021-05-25T09:46:56.781932Z",
+      "first_upload": "2021-05-23T21:12:30.055339Z",
+      "release_count": 5,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "nominally",
+      "source_url": "https://pypi.org/pypi/nominally/json",
+      "version": "1.1.0",
+      "license": "AGPL-3.0-or-later",
+      "license_classifiers": [
+        "License :: OSI Approved :: GNU Affero General Public License v3 or later (AGPLv3+)"
+      ],
+      "requires_python": "",
+      "requires_dist": [
+        "unidecode (==1.2)"
+      ],
+      "summary": "A maximum-strength name parser for record linkage.",
+      "home_page": "https://github.com/vaneseltine/nominally",
+      "project_urls": {
+        "Documentation": "https://nominally.readthedocs.io/en/stable/",
+        "Examples": "https://github.com/vaneseltine/nominally-examples/",
+        "Homepage": "https://github.com/vaneseltine/nominally",
+        "Issue Tracker": "https://github.com/vaneseltine/nominally/issues"
+      },
+      "latest_upload": "2021-05-19T23:00:45.076482Z",
+      "first_upload": "2019-09-08T00:38:12.870866Z",
+      "release_count": 16,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "nameparser",
+      "source_url": "https://pypi.org/pypi/nameparser/json",
+      "version": "2.2.0",
+      "license": "LGPL",
+      "license_classifiers": [
+        "License :: OSI Approved :: GNU Library or Lesser General Public License (LGPL)"
+      ],
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "namedivider-python>=0.4; extra == \"ja\""
+      ],
+      "summary": "A simple Python module for parsing human names into their individual components.",
+      "home_page": null,
+      "project_urls": null,
+      "latest_upload": "2026-09-01T04:53:05.707719Z",
+      "first_upload": "2012-01-13T04:20:05.804374Z",
+      "release_count": 61,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "matchflow",
+      "source_url": "https://pypi.org/pypi/matchflow/json",
+      "_http_error": 404,
+      "_url": "https://pypi.org/pypi/matchflow/json"
+    },
+    {
+      "package": "delex",
+      "source_url": "https://pypi.org/pypi/delex/json",
+      "_http_error": 404,
+      "_url": "https://pypi.org/pypi/delex/json"
+    },
+    {
+      "package": "fingerprints",
+      "source_url": "https://pypi.org/pypi/fingerprints/json",
+      "version": "1.3.1",
+      "license": "The MIT License (MIT)\n        \n        Copyright (c) 2025 OpenSanctions Datenbanken GmbH\n        Copyright (c) 2018 Journalism Development Network, Inc.\n        Copyright (c) 2016 Friedrich Lindenberg\n        \n        Permission is hereby granted, free of charge, to any person obtaining a copy of\n        this software and associated documentation files (the \"Software\"), to deal in\n        the Software without restriction, including without limitation the rights to\n        use, copy, modify, merge, publish, distribute, sublicense, and/or sell copies of\n        the Software, and to permit persons to whom the Software is furnished to do so,\n        subject to the following conditions:\n        \n        The above copyright notice and this permission notice shall be included in all\n        copies or substantial portions of the Software.\n        \n        THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS\n        FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR\n        COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY, WHETHER\n        IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT OF OR IN\n        CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "normality<4.0.0,>=3.0.1",
+        "build; extra == \"dev\"",
+        "bump2version; extra == \"dev\"",
+        "coverage>=4.1; extra == \"dev\"",
+        "mypy; extra == \"dev\"",
+        "pytest; extra == \"dev\"",
+        "pytest-cov; extra == \"dev\"",
+        "pyyaml<7.0.0,>=5.0.0; extra == \"dev\"",
+        "ruff; extra == \"dev\"",
+        "types-pyyaml; extra == \"dev\""
+      ],
+      "summary": "A library to generate entity fingerprints.",
+      "home_page": null,
+      "project_urls": {
+        "Documentation": "https://github.com/opensanctions/fingerprints/",
+        "Issues": "https://github.com/opensanctions/fingerprints/issues",
+        "Repository": "https://github.com/opensanctions/fingerprints.git"
+      },
+      "latest_upload": "2025-08-01T12:32:07.084176Z",
+      "first_upload": "2016-04-26T11:10:15.443786Z",
+      "release_count": 32,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "rigour",
+      "source_url": "https://pypi.org/pypi/rigour/json",
+      "version": "2.4.1",
+      "license": "",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "pyyaml<7.0.0,>=5.0.0",
+        "normality<4.0.0,>=3.0.1",
+        "prefixdate<1.0.0,>=0.5.0",
+        "orjson<4.0.0,>=3.0.0",
+        "python-stdnum<3.0.0,>=2.0",
+        "jinja2<4.0.0,>=3.1.0",
+        "pip>=10.0.0; extra == \"dev\"",
+        "bump2version; extra == \"dev\"",
+        "wheel>=0.29.0; extra == \"dev\"",
+        "ruamel-yaml; extra == \"dev\"",
+        "ruff<0.17.0,>=0.16.0; extra == \"dev\"",
+        "build; extra == \"dev\"",
+        "twine; extra == \"dev\"",
+        "mypy; extra == \"dev\"",
+        "pytest; extra == \"dev\"",
+        "pytest-cov; extra == \"dev\"",
+        "types-pyyaml; extra == \"dev\"",
+        "types-setuptools; extra == \"dev\"",
+        "coverage>=4.1; extra == \"dev\"",
+        "pillow; extra == \"docs\"",
+        "cairosvg; extra == \"docs\"",
+        "mkdocs; extra == \"docs\"",
+        "mkdocstrings[python]; extra == \"docs\"",
+        "mkdocs-material; extra == \"docs\""
+      ],
+      "summary": "Financial crime domain data validation and normalization library.",
+      "home_page": null,
+      "project_urls": {
+        "Documentation": "https://rigour.followthemoney.tech/",
+        "Issues": "https://github.com/opensanctions/rigour/issues",
+        "Repository": "https://github.com/opensanctions/rigour.git"
+      },
+      "latest_upload": "2026-09-03T15:26:43.521887Z",
+      "first_upload": "2023-11-16T15:28:05.835900Z",
+      "release_count": 112,
+      "wheel_tags": [
+        "macosx_10_12_x86_64",
+        "macosx_11_0_arm64",
+        "manylinux_2_17_aarch64.manylinux2014_aarch64",
+        "manylinux_2_17_x86_64.manylinux2014_x86_64",
+        "musllinux_1_2_aarch64",
+        "musllinux_1_2_x86_64",
+        "win_amd64"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "pyspark",
+      "source_url": "https://pypi.org/pypi/pyspark/json",
+      "version": "4.2.0",
+      "license": "Apache-2.0",
+      "license_classifiers": [],
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "py4j<0.10.9.10,>=0.10.9.7",
+        "numpy>=1.21; extra == \"ml\"",
+        "numpy>=1.21; extra == \"mllib\"",
+        "pandas>=2.2.0; extra == \"sql\"",
+        "pyarrow>=18.0.0; extra == \"sql\"",
+        "numpy>=1.21; extra == \"sql\"",
+        "pandas>=2.2.0; extra == \"pandas-on-spark\"",
+        "pyarrow>=18.0.0; extra == \"pandas-on-spark\"",
+        "numpy>=1.21; extra == \"pandas-on-spark\"",
+        "pandas>=2.2.0; extra == \"connect\"",
+        "pyarrow>=18.0.0; extra == \"connect\"",
+        "grpcio>=1.76.0; extra == \"connect\"",
+        "grpcio-status>=1.76.0; extra == \"connect\"",
+        "googleapis-common-protos>=1.71.0; extra == \"connect\"",
+        "zstandard>=0.25.0; extra == \"connect\"",
+        "numpy>=1.21; extra == \"connect\"",
+        "pandas>=2.2.0; extra == \"pipelines\"",
+        "pyarrow>=18.0.0; extra == \"pipelines\"",
+        "numpy>=1.21; extra == \"pipelines\"",
+        "grpcio>=1.76.0; extra == \"pipelines\"",
+        "grpcio-status>=1.76.0; extra == \"pipelines\"",
+        "googleapis-common-protos>=1.71.0; extra == \"pipelines\"",
+        "zstandard>=0.25.0; extra == \"pipelines\"",
+        "pyyaml>=3.11; extra == \"pipelines\""
+      ],
+      "summary": "Apache Spark Python API",
+      "home_page": "https://github.com/apache/spark/tree/master/python",
+      "project_urls": {
+        "Homepage": "https://github.com/apache/spark/tree/master/python"
+      },
+      "latest_upload": "2026-07-16T08:52:04.494882Z",
+      "first_upload": "2017-07-12T18:27:40.183113Z",
+      "release_count": 74,
+      "wheel_tags": [],
+      "has_sdist_only": true,
+      "yanked": false
+    },
+    {
+      "package": "polars",
+      "source_url": "https://pypi.org/pypi/polars/json",
+      "version": "1.44.1",
+      "license": "Copyright (c) 2025 Ritchie Vink\n        Copyright (c) 2024 (Some portions) NVIDIA CORPORATION & AFFILIATES. All rights reserved.\n        \n        Permission is hereby granted, free of charge, to any person obtaining a copy\n        of this software and associated documentation files (the \"Software\"), to deal\n        in the Software without restriction, including without limitation the rights\n        to use, copy, modify, merge, publish, distribute, sublicense, and/or sell\n        copies of the Software, and to permit persons to whom the Software is\n        furnished to do so, subject to the following conditions:\n        \n        The above copyright notice and this permission notice shall be included in all\n        copies or substantial portions of the Software.\n        \n        THE SOFTWARE IS PROVIDED \"AS IS\", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR\n        IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,\n        FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE\n        AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER\n        LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,\n        OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE\n        SOFTWARE.\n        ",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.10",
+      "requires_dist": [
+        "polars-runtime-32==1.44.1",
+        "polars-runtime-64==1.44.1; extra == \"rt64\"",
+        "polars-runtime-compat==1.44.1; extra == \"rtcompat\"",
+        "polars_cloud>=0.9.0; extra == \"polars-cloud\"",
+        "numpy>=1.16.0; extra == \"numpy\"",
+        "pandas; extra == \"pandas\"",
+        "polars[pyarrow]; extra == \"pandas\"",
+        "pyarrow>=7.0.0; extra == \"pyarrow\"",
+        "pydantic; extra == \"pydantic\"",
+        "fastexcel>=0.9; extra == \"calamine\"",
+        "openpyxl>=3.0.0; extra == \"openpyxl\"",
+        "xlsx2csv>=0.8.0; extra == \"xlsx2csv\"",
+        "xlsxwriter; extra == \"xlsxwriter\"",
+        "polars[calamine,openpyxl,xlsx2csv,xlsxwriter]; extra == \"excel\"",
+        "adbc-driver-manager[dbapi]; extra == \"adbc\"",
+        "adbc-driver-sqlite[dbapi]; extra == \"adbc\"",
+        "connectorx>=0.3.2; extra == \"connectorx\"",
+        "sqlalchemy; extra == \"sqlalchemy\"",
+        "polars[pandas]; extra == \"sqlalchemy\"",
+        "polars[adbc,connectorx,sqlalchemy]; extra == \"database\"",
+        "fsspec; extra == \"fsspec\"",
+        "deltalake!=1.5.*,>=1.0.0; extra == \"deltalake\"",
+        "pyiceberg>=0.9.0; extra == \"iceberg\"",
+        "gevent; extra == \"async\"",
+        "cloudpickle; extra == \"cloudpickle\"",
+        "matplotlib; extra == \"graph\"",
+        "altair>=5.4.0; extra == \"plot\"",
+        "great-tables>=0.8.0; extra == \"style\"",
+        "tzdata; platform_system == \"Windows\" and extra == \"timezone\"",
+        "cudf-polars-cu12; extra == \"gpu\"",
+        "polars[async,cloudpickle,database,deltalake,excel,fsspec,graph,iceberg,numpy,pandas,plot,pyarrow,pydantic,style,timezone]; extra == \"all\""
+      ],
+      "summary": "Blazingly fast DataFrame library",
+      "home_page": null,
+      "project_urls": {
+        "Changelog": "https://github.com/pola-rs/polars/releases",
+        "Documentation": "https://docs.pola.rs/api/python/stable/reference/index.html",
+        "Homepage": "https://www.pola.rs/",
+        "Repository": "https://github.com/pola-rs/polars"
+      },
+      "latest_upload": "2026-09-02T11:43:56.574303Z",
+      "first_upload": "2021-03-15T08:46:37.576964Z",
+      "release_count": 432,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "recordlinkage-py",
+      "source_url": "https://pypi.org/pypi/recordlinkage-py/json",
+      "_http_error": 404,
+      "_url": "https://pypi.org/pypi/recordlinkage-py/json"
+    },
+    {
+      "package": "splink3",
+      "source_url": "https://pypi.org/pypi/splink3/json",
+      "_http_error": 404,
+      "_url": "https://pypi.org/pypi/splink3/json"
+    },
+    {
+      "package": "tilores",
+      "source_url": "https://pypi.org/pypi/tilores/json",
+      "_http_error": 404,
+      "_url": "https://pypi.org/pypi/tilores/json"
+    },
+    {
+      "package": "zingg-enterprise",
+      "source_url": "https://pypi.org/pypi/zingg-enterprise/json",
+      "_http_error": 404,
+      "_url": "https://pypi.org/pypi/zingg-enterprise/json"
+    },
+    {
+      "package": "great-expectations",
+      "source_url": "https://pypi.org/pypi/great-expectations/json",
+      "version": "1.22.0",
+      "license": "Apache-2.0",
+      "license_classifiers": [
+        "License :: OSI Approved :: Apache Software License"
+      ],
+      "requires_python": "<3.14,>=3.10",
+      "requires_dist": [
+        "altair<7.0.0,>=5.0.0",
+        "cryptography>=3.2",
+        "jinja2>=3",
+        "jsonschema>=2.5.1",
+        "marshmallow>=3.18.0",
+        "mistune>=0.8.4",
+        "numpy>=1.22.4; python_version >= \"3.10\"",
+        "numpy>=1.26.0; python_version >= \"3.12\"",
+        "numpy>=2.1.0; python_version >= \"3.13\"",
+        "packaging",
+        "pandas>=1.3.0; python_version >= \"3.10\"",
+        "pandas>=2.2.3; python_version >= \"3.13\"",
+        "pandas>=1.3.0; python_version >= \"3.12\"",
+        "pydantic>=1.10.7",
+        "pyparsing!=3.2.4,>=2.4",
+        "python-dateutil>=2.8.1",
+        "requests>=2.20",
+        "ruamel.yaml>=0.16",
+        "scipy>=1.6.0",
+        "tqdm>=4.59.0",
+        "typing-extensions>=4.1.0",
+        "tzlocal>=1.2",
+        "psycopg2-binary>=2.7.6; extra == \"redshift\"",
+        "sqlalchemy-redshift>=0.8.8; extra == \"redshift\"",
+        "sqlalchemy>=1.4.0; extra == \"redshift\"",
+        "feather-format>=0.4.1; extra == \"arrow\"",
+        "pyarrow>=14; python_version >= \"3.12\" and extra == \"arrow\"",
+        "pyarrow; python_version < \"3.12\" and extra == \"arrow\"",
+        "trino!=0.316.0,>=0.310.0; extra == \"trino\"",
+        "sqlalchemy>=1.4.0; extra == \"trino\"",
+        "psycopg2-binary>=2.7.6; extra == \"postgresql\"",
+        "sqlalchemy>=1.4.0; extra == \"postgresql\"",
+        "openpyxl>=3.0.7; extra == \"excel\"",
+        "xlrd<2.0.0,>=1.1.0; extra == \"excel\"",
+        "azure-identity>=1.10.0; extra == \"azure\"",
+        "azure-keyvault-secrets>=4.0.0; extra == \"azure\"",
+        "azure-storage-blob>=12.5.0; extra == \"azure\"",
+        "singlestoredb>=1.0.0; extra == \"singlestore\"",
+        "sqlalchemy-singlestoredb>=1.2.1; extra == \"singlestore\"",
+        "orjson>=3.9.7; extra == \"cloud\"",
+        "pact-python<4,>=3.1.0; extra == \"cloud\"",
+        "databricks-sqlalchemy>=1.0.0; extra == \"databricks\"",
+        "sqlalchemy>=1.4.0; extra == \"databricks\"",
+        "pyspark<4.2,>=2.3.2; extra == \"spark\"",
+        "googleapis-common-protos>=1.56.4; extra == \"spark-connect\"",
+        "grpcio>=1.48.1; extra == \"spark-connect\"",
+        "grpcio-status>=1.48.1; extra == \"spark-connect\"",
+        "zstandard>=0.25.0; extra == \"spark-connect\"",
+        "pyodbc>=4.0.30; extra == \"sql-server\"",
+        "sqlalchemy>=1.4.0; extra == \"sql-server\"",
+        "clickhouse-sqlalchemy>=0.2.2; python_version < \"3.12\" and extra == \"clickhouse\"",
+        "clickhouse-sqlalchemy>=0.3.0; python_version >= \"3.12\" and extra == \"clickhouse\"",
+        "sqlalchemy<2.0.0; extra == \"clickhouse\"",
+        "sqlalchemy-vertica-python>=0.5.10; extra == \"vertica\"",
+        "sqlalchemy>=1.4.0; extra == \"vertica\"",
+        "pyathena[SQLAlchemy]>=2.0.0; extra == \"athena\"",
+        "sqlalchemy>=1.4.0; extra == \"athena\"",
+        "PyMySQL>=1.1.1; extra == \"mysql\"",
+        "sqlalchemy>=1.4.0; extra == \"mysql\"",
+        "google-cloud-storage>=2.10.0; python_version >= \"3.11\" and extra == \"gcs\"",
+        "google-cloud-storage>=1.28.0; python_version < \"3.11\" and extra == \"gcs\"",
+        "pypd==1.1.0; extra == \"pagerduty\"",
+        "pyodbc>=4.0.30; extra == \"dremio\"",
+        "sqlalchemy-dremio==1.2.1; extra == \"dremio\"",
+        "sqlalchemy>=1.4.0; extra == \"dremio\"",
+        "psycopg2-binary>=2.7.6; extra == \"gx-redshift\"",
+        "sqlalchemy-redshift>=0.8.8; extra == \"gx-redshift\"",
+        "sqlalchemy>=1.4.0; extra == \"gx-redshift\"",
+        "teradatasqlalchemy==17.0.0.5; extra == \"teradata\"",
+        "sqlalchemy<2.0.0; extra == \"teradata\"",
+        "pyarrow>=14; python_version >= \"3.12\" and extra == \"snowflake\"",
+        "snowflake-connector-python>=3.5.0; extra == \"snowflake\"",
+        "snowflake-sqlalchemy!=1.7.0,>=1.2.3; extra == \"snowflake\"",
+        "sqlalchemy>=1.4.0; extra == \"snowflake\"",
+        "gcsfs>=0.5.1; extra == \"bigquery\"",
+        "google-cloud-bigquery>=3.3.6; extra == \"bigquery\"",
+        "google-cloud-bigquery-storage>=2.20.0; extra == \"bigquery\"",
+        "google-cloud-secret-manager>=1.0.0; extra == \"bigquery\"",
+        "google-cloud-storage>=2.10.0; python_version >= \"3.11\" and extra == \"bigquery\"",
+        "google-cloud-storage>=1.28.0; python_version < \"3.11\" and extra == \"bigquery\"",
+        "pandas_gbq>=0.26.1; extra == \"bigquery\"",
+        "sqlalchemy-bigquery>=1.3.0; extra == \"bigquery\"",
+        "sqlalchemy>=1.4.0; extra == \"bigquery\"",
+        "PyHive>=0.6.5; extra == \"hive\"",
+        "thrift>=0.16.0; extra == \"hive\"",
+        "thrift-sasl>=0.4.3; extra == \"hive\"",
+        "sqlalchemy>=1.4.0; extra == \"hive\"",
+        "boto3>=1.17.106; extra == \"test\"",
+        "coverage[toml]>=7.5.1; extra == \"test\"",
+        "flaky>=3.7.0; extra == \"test\"",
+        "flask>=1.0.0; extra == \"test\"",
+        "freezegun>=0.3.15; extra == \"test\"",
+        "moto[s3,sns]<5.0,>=4.2.13; extra == \"test\"",
+        "pact-python<4,>=3.1.0; extra == \"test\"",
+        "pyfakefs>=4.5.1; extra == \"test\"",
+        "pytest>=8.2.1; extra == \"test\"",
+        "pytest-benchmark>=3.4.1; extra == \"test\"",
+        "pytest-cov>=5.0.0; extra == \"test\"",
+        "pytest-icdiff>=0.9.0; extra == \"test\"",
+        "pytest-mock>=3.14.0; extra == \"test\"",
+        "pytest-order>=1.2.1; extra == \"test\"",
+        "pytest-random-order>=1.1.1; extra == \"test\"",
+        "pytest-split>=0.9.0; extra == \"test\"",
+        "pytest-timeout>=2.3.1; extra == \"test\"",
+        "pytest-xdist>=3.6.1; extra == \"test\"",
+        "requirements-parser>=0.9.0; extra == \"test\"",
+        "responses!=0.25.5,>=0.23.1; extra == \"test\"",
+        "setuptools>=70.0.0; extra == \"test\"",
+        "sqlalchemy>=1.4.0; extra == \"test\"",
+        "adr-tools-python==1.0.3; extra == \"test\"",
+        "invoke==3.0.0; extra == \"test\"",
+        "mypy==1.19.0; extra == \"test\"",
+        "pre-commit>=2.21.0; extra == \"test\"",
+        "ruff==0.14.9; extra == \"test\"",
+        "tomli>=2.0.1; extra == \"test\"",
+        "datasets>=4.1.0; extra == \"test\"",
+        "docstring-parser==0.16; extra == \"test\"",
+        "pdf2image>=1.17.0; extra == \"test\"",
+        "pytesseract>=0.3.13; extra == \"test\"",
+        "feather-format>=0.4.1; extra == \"test\"",
+        "pyarrow>=14; python_version >= \"3.12\" and extra == \"test\"",
+        "pyarrow; python_version < \"3.12\" and extra == \"test\"",
+        "boto3>=1.17.106; extra == \"aws-secrets\"",
+        "azure-identity>=1.10.0; extra == \"azure-secrets\"",
+        "azure-keyvault-secrets>=4.0.0; extra == \"azure-secrets\"",
+        "azure-storage-blob>=12.5.0; extra == \"azure-secrets\"",
+        "pyodbc>=4.0.30; extra == \"fabric\"",
+        "sqlalchemy>=1.4.0; extra == \"fabric\"",
+        "gcsfs>=0.5.1; extra == \"gcp\"",
+        "google-cloud-bigquery>=3.3.6; extra == \"gcp\"",
+        "google-cloud-bigquery-storage>=2.20.0; extra == \"gcp\"",
+        "google-cloud-secret-manager>=1.0.0; extra == \"gcp\"",
+        "google-cloud-storage>=2.10.0; python_version >= \"3.11\" and extra == \"gcp\"",
+        "google-cloud-storage>=1.28.0; python_version < \"3.11\" and extra == \"gcp\"",
+        "pandas_gbq>=0.26.1; extra == \"gcp\"",
+        "sqlalchemy-bigquery>=1.3.0; extra == \"gcp\"",
+        "sqlalchemy>=1.4.0; extra == \"gcp\"",
+        "boto3>=1.17.106; extra == \"s3\""
+      ],
+      "summary": "Always know what to expect from your data.",
+      "home_page": "https://greatexpectations.io",
+      "project_urls": {
+        "Download": "https://github.com/great-expectations/great_expectations",
+        "Homepage": "https://greatexpectations.io"
+      },
+      "latest_upload": "2026-08-31T12:53:00.809468Z",
+      "first_upload": "2017-12-22T17:22:36.952709Z",
+      "release_count": 366,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "ftfy",
+      "source_url": "https://pypi.org/pypi/ftfy/json",
+      "version": "6.3.1",
+      "license": "Apache-2.0",
+      "license_classifiers": [],
+      "requires_python": ">=3.9",
+      "requires_dist": [
+        "wcwidth"
+      ],
+      "summary": "Fixes mojibake and other problems with Unicode, after the fact",
+      "home_page": null,
+      "project_urls": {
+        "Blog": "https://posts.arborelia.net",
+        "Changelog": "https://github.com/rspeer/python-ftfy/blob/main/CHANGELOG.md",
+        "Documentation": "https://ftfy.readthedocs.io/en/latest/",
+        "Homepage": "https://ftfy.readthedocs.io/en/latest/",
+        "Issues": "https://github.com/rspeer/python-ftfy/issues/",
+        "Repository": "https://github.com/rspeer/python-ftfy"
+      },
+      "latest_upload": "2024-10-26T00:50:35.149078Z",
+      "first_upload": "2012-08-24T19:24:04.788937Z",
+      "release_count": 55,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "pyjanitor",
+      "source_url": "https://pypi.org/pypi/pyjanitor/json",
+      "version": "0.32.27",
+      "license": "MIT",
+      "license_classifiers": [
+        "License :: OSI Approved :: MIT License"
+      ],
+      "requires_python": ">=3.11",
+      "requires_dist": [
+        "pandas>=3.0.0",
+        "natsort<9,>=8.4.0",
+        "pandas-flavor<0.9,>=0.8.1",
+        "multipledispatch",
+        "scipy",
+        "janitor-rs<0.7,>=0.6.1",
+        "pip-tools; extra == \"dev\"",
+        "pre-commit; extra == \"dev\"",
+        "isort>=4.3.18; extra == \"dev\"",
+        "black>=19.3b0; extra == \"dev\"",
+        "darglint; extra == \"dev\"",
+        "flake8; extra == \"dev\"",
+        "mkdocs; extra == \"docs\"",
+        "polars; extra == \"docs\"",
+        "mkdocs-material; extra == \"docs\"",
+        "mkdocstrings>=0.19.0; extra == \"docs\"",
+        "mkdocstrings-python; extra == \"docs\"",
+        "ipython>7.31.1; extra == \"docs\"",
+        "biopython; extra == \"docs\"",
+        "tqdm; extra == \"docs\"",
+        "unyt; extra == \"docs\"",
+        "pyspark; extra == \"docs\"",
+        "pytest-cov; extra == \"test\"",
+        "pytest-xdist; extra == \"test\"",
+        "pytest>=3.4.2; extra == \"test\"",
+        "hypothesis>=4.4.0; extra == \"test\"",
+        "interrogate; extra == \"test\"",
+        "pandas-vet; extra == \"test\"",
+        "polars; extra == \"test\"",
+        "py>=1.10.0; extra == \"test\"",
+        "biopython; extra == \"biology\"",
+        "tqdm; extra == \"chemistry\"",
+        "unyt; extra == \"engineering\"",
+        "pyspark; extra == \"spark\"",
+        "pip-tools; extra == \"all\"",
+        "pre-commit; extra == \"all\"",
+        "isort>=4.3.18; extra == \"all\"",
+        "black>=19.3b0; extra == \"all\"",
+        "darglint; extra == \"all\"",
+        "flake8; extra == \"all\"",
+        "mkdocs; extra == \"all\"",
+        "polars; extra == \"all\"",
+        "mkdocs-material; extra == \"all\"",
+        "mkdocstrings>=0.19.0; extra == \"all\"",
+        "mkdocstrings-python; extra == \"all\"",
+        "ipython>7.31.1; extra == \"all\"",
+        "biopython; extra == \"all\"",
+        "tqdm; extra == \"all\"",
+        "unyt; extra == \"all\"",
+        "pyspark; extra == \"all\"",
+        "pytest-cov; extra == \"all\"",
+        "pytest-xdist; extra == \"all\"",
+        "pytest>=3.4.2; extra == \"all\"",
+        "hypothesis>=4.4.0; extra == \"all\"",
+        "interrogate; extra == \"all\"",
+        "pandas-vet; extra == \"all\"",
+        "py>=1.10.0; extra == \"all\""
+      ],
+      "summary": "Tools for cleaning pandas DataFrames",
+      "home_page": null,
+      "project_urls": {
+        "Bug Tracker": "https://github.com/pyjanitor-devs/pyjanitor/issues",
+        "Documentation": "https://pyjanitor-devs.github.io/pyjanitor",
+        "Homepage": "https://github.com/pyjanitor-devs/pyjanitor",
+        "Repository": "https://github.com/pyjanitor-devs/pyjanitor"
+      },
+      "latest_upload": "2026-09-03T13:19:08.219467Z",
+      "first_upload": "2018-03-29T11:52:40.811088Z",
+      "release_count": 94,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "metaphone",
+      "source_url": "https://pypi.org/pypi/metaphone/json",
+      "version": "0.6",
+      "license": "BSD",
+      "license_classifiers": [],
+      "requires_python": null,
+      "requires_dist": null,
+      "summary": "A Python implementation of the metaphone and double metaphone algorithms.",
+      "home_page": "https://github.com/oubiwann/metaphone",
+      "project_urls": {
+        "Download": "UNKNOWN",
+        "Homepage": "https://github.com/oubiwann/metaphone"
+      },
+      "latest_upload": "2016-08-24T14:37:29.687986Z",
+      "first_upload": "2012-07-22T08:35:35.313145Z",
+      "release_count": 2,
+      "wheel_tags": [],
+      "has_sdist_only": true,
+      "yanked": false
+    },
+    {
+      "package": "abydos",
+      "source_url": "https://pypi.org/pypi/abydos/json",
+      "version": "0.5.0",
+      "license": "GPLv3+",
+      "license_classifiers": [
+        "License :: OSI Approved :: GNU General Public License v3 or later (GPLv3+)"
+      ],
+      "requires_python": "~=3.5",
+      "requires_dist": [
+        "numpy",
+        "deprecation"
+      ],
+      "summary": "Abydos NLP/IR library",
+      "home_page": "https://github.com/chrislit/abydos",
+      "project_urls": {
+        "Download": "https://github.com/chrislit/abydos/archive/master.zip",
+        "Homepage": "https://github.com/chrislit/abydos"
+      },
+      "latest_upload": "2020-01-11T00:00:29.052897Z",
+      "first_upload": "2015-05-13T05:09:52.483459Z",
+      "release_count": 9,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "pylev",
+      "source_url": "https://pypi.org/pypi/pylev/json",
+      "version": "1.4.0",
+      "license": "",
+      "license_classifiers": [
+        "License :: OSI Approved :: BSD License"
+      ],
+      "requires_python": "",
+      "requires_dist": null,
+      "summary": "A pure Python Levenshtein implementation that's not freaking GPL'd.",
+      "home_page": "http://github.com/toastdriven/pylev",
+      "project_urls": {
+        "Homepage": "http://github.com/toastdriven/pylev"
+      },
+      "latest_upload": "2021-05-30T20:07:59.989585Z",
+      "first_upload": "2012-12-13T04:49:16.126700Z",
+      "release_count": 7,
+      "wheel_tags": [
+        "any"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    },
+    {
+      "package": "editdistance",
+      "source_url": "https://pypi.org/pypi/editdistance/json",
+      "version": "0.8.1",
+      "license": "MIT",
+      "license_classifiers": [],
+      "requires_python": ">=3.8",
+      "requires_dist": null,
+      "summary": "Fast implementation of the edit distance (Levenshtein distance)",
+      "home_page": "",
+      "project_urls": {
+        "Documentation": "https://github.com/roy-ht/editdistance",
+        "Homepage": "https://github.com/roy-ht/editdistance",
+        "Repository": "https://github.com/roy-ht/editdistance"
+      },
+      "latest_upload": "2024-02-10T07:44:53.914747Z",
+      "first_upload": "2013-09-13T09:07:32.793067Z",
+      "release_count": 13,
+      "wheel_tags": [
+        "macosx_10_9_universal2",
+        "macosx_10_9_x86_64",
+        "macosx_11_0_arm64",
+        "manylinux_2_17_aarch64.manylinux2014_aarch64",
+        "manylinux_2_17_x86_64.manylinux2014_x86_64",
+        "manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686",
+        "manylinux_2_5_x86_64.manylinux1_x86_64.manylinux_2_17_x86_64.manylinux2014_x86_64",
+        "musllinux_1_1_aarch64",
+        "musllinux_1_1_i686",
+        "musllinux_1_1_x86_64",
+        "win32",
+        "win_amd64"
+      ],
+      "has_sdist_only": false,
+      "yanked": false
+    }
+  ],
+  "downloads": [
+    {
+      "package": "blockingpy",
+      "source_url": "https://pypistats.org/api/packages/blockingpy/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/blockingpy/recent"
+      }
+    },
+    {
+      "package": "py-stringmatching",
+      "source_url": "https://pypistats.org/api/packages/py-stringmatching/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/py-stringmatching/recent"
+      }
+    },
+    {
+      "package": "er-evaluation",
+      "source_url": "https://pypistats.org/api/packages/er-evaluation/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/er-evaluation/recent"
+      }
+    },
+    {
+      "package": "deezymatch",
+      "source_url": "https://pypistats.org/api/packages/deezymatch/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/deezymatch/recent"
+      }
+    },
+    {
+      "package": "stringcompare",
+      "source_url": "https://pypistats.org/api/packages/stringcompare/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/stringcompare/recent"
+      }
+    },
+    {
+      "package": "nominally",
+      "source_url": "https://pypistats.org/api/packages/nominally/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/nominally/recent"
+      }
+    },
+    {
+      "package": "nameparser",
+      "source_url": "https://pypistats.org/api/packages/nameparser/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/nameparser/recent"
+      }
+    },
+    {
+      "package": "matchflow",
+      "source_url": "https://pypistats.org/api/packages/matchflow/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/matchflow/recent"
+      }
+    },
+    {
+      "package": "delex",
+      "source_url": "https://pypistats.org/api/packages/delex/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/delex/recent"
+      }
+    },
+    {
+      "package": "fingerprints",
+      "source_url": "https://pypistats.org/api/packages/fingerprints/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/fingerprints/recent"
+      }
+    },
+    {
+      "package": "rigour",
+      "source_url": "https://pypistats.org/api/packages/rigour/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/rigour/recent"
+      }
+    },
+    {
+      "package": "pyspark",
+      "source_url": "https://pypistats.org/api/packages/pyspark/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/pyspark/recent"
+      }
+    },
+    {
+      "package": "polars",
+      "source_url": "https://pypistats.org/api/packages/polars/recent",
+      "data": {
+        "last_day": 1007168,
+        "last_month": 64060490,
+        "last_week": 12493025
+      }
+    },
+    {
+      "package": "recordlinkage-py",
+      "source_url": "https://pypistats.org/api/packages/recordlinkage-py/recent",
+      "data": {
+        "_http_error": 404,
+        "_url": "https://pypistats.org/api/packages/recordlinkage-py/recent"
+      }
+    },
+    {
+      "package": "splink3",
+      "source_url": "https://pypistats.org/api/packages/splink3/recent",
+      "data": {
+        "_http_error": 404,
+        "_url": "https://pypistats.org/api/packages/splink3/recent"
+      }
+    },
+    {
+      "package": "tilores",
+      "source_url": "https://pypistats.org/api/packages/tilores/recent",
+      "data": {
+        "_http_error": 404,
+        "_url": "https://pypistats.org/api/packages/tilores/recent"
+      }
+    },
+    {
+      "package": "zingg-enterprise",
+      "source_url": "https://pypistats.org/api/packages/zingg-enterprise/recent",
+      "data": {
+        "_http_error": 404,
+        "_url": "https://pypistats.org/api/packages/zingg-enterprise/recent"
+      }
+    },
+    {
+      "package": "great-expectations",
+      "source_url": "https://pypistats.org/api/packages/great-expectations/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/great-expectations/recent"
+      }
+    },
+    {
+      "package": "ftfy",
+      "source_url": "https://pypistats.org/api/packages/ftfy/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/ftfy/recent"
+      }
+    },
+    {
+      "package": "pyjanitor",
+      "source_url": "https://pypistats.org/api/packages/pyjanitor/recent",
+      "data": {
+        "last_day": 2927,
+        "last_month": 231258,
+        "last_week": 44348
+      }
+    },
+    {
+      "package": "metaphone",
+      "source_url": "https://pypistats.org/api/packages/metaphone/recent",
+      "data": {
+        "last_day": 14290,
+        "last_month": 673909,
+        "last_week": 155047
+      }
+    },
+    {
+      "package": "abydos",
+      "source_url": "https://pypistats.org/api/packages/abydos/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/abydos/recent"
+      }
+    },
+    {
+      "package": "pylev",
+      "source_url": "https://pypistats.org/api/packages/pylev/recent",
+      "data": {
+        "_http_error": 429,
+        "_url": "https://pypistats.org/api/packages/pylev/recent"
+      }
+    },
+    {
+      "package": "editdistance",
+      "source_url": "https://pypistats.org/api/packages/editdistance/recent",
+      "data": {
+        "last_day": 35949,
+        "last_month": 2758745,
+        "last_week": 565510
+      }
+    }
+  ],
+  "github": [
+    {
+      "repo": "ncn-foreigners/BlockingPy",
+      "source_url": "https://api.github.com/repos/ncn-foreigners/BlockingPy",
+      "stars": 21,
+      "forks": 2,
+      "open_issues_and_prs": 1,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2024-10-11T13:59:23Z",
+      "pushed_at": "2026-03-09T13:18:30Z",
+      "updated_at": "2026-07-17T12:15:18Z",
+      "default_branch": "main",
+      "license": "MIT",
+      "description": "Blocking records for record linkage and data deduplication based on ANN algorithms in Python.",
+      "homepage": "https://blockingpy.readthedocs.io/en/latest/",
+      "full_name": "ncn-foreigners/BlockingPy",
+      "open_prs": 0,
+      "merged_prs_since_2026_03_01": 1,
+      "open_issues_only": 1,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "v0.2.8",
+        "published_at": "2025-10-10T11:24:27Z"
+      }
+    },
+    {
+      "repo": "anhaidgroup/py_stringmatching",
+      "source_url": "https://api.github.com/repos/anhaidgroup/py_stringmatching",
+      "stars": 144,
+      "forks": 19,
+      "open_issues_and_prs": 29,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2016-03-09T22:55:11Z",
+      "pushed_at": "2026-02-18T19:11:11Z",
+      "updated_at": "2026-05-01T21:42:36Z",
+      "default_branch": "master",
+      "license": "BSD-3-Clause",
+      "description": "A comprehensive and scalable set of string tokenizers and similarity measures in Python",
+      "homepage": "https://sites.google.com/site/anhaidgroup/projects/py_stringmatching",
+      "full_name": "anhaidgroup/py_stringmatching",
+      "open_prs": 4,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 25,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "v0.4.7",
+        "published_at": "2026-02-18T19:11:11Z"
+      }
+    },
+    {
+      "repo": "OlivierBinette/ER-Evaluation",
+      "source_url": "https://api.github.com/repos/OlivierBinette/ER-Evaluation",
+      "stars": 38,
+      "forks": 11,
+      "open_issues_and_prs": 4,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2022-10-27T14:36:35Z",
+      "pushed_at": "2023-12-03T16:40:21Z",
+      "updated_at": "2026-07-17T12:18:55Z",
+      "default_branch": "main",
+      "license": "AGPL-3.0",
+      "description": "An End-to-End Evaluation Framework for Entity Resolution Systems",
+      "homepage": "https://er-evaluation.readthedocs.io/en/latest",
+      "full_name": "OlivierBinette/er-evaluation",
+      "open_prs": 1,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 3,
+      "has_commit_since_2025_09": false,
+      "latest_release": {
+        "tag": "v2.3.0",
+        "published_at": "2023-11-30T19:40:09Z"
+      }
+    },
+    {
+      "repo": "Living-with-machines/DeezyMatch",
+      "source_url": "https://api.github.com/repos/Living-with-machines/DeezyMatch",
+      "stars": 151,
+      "forks": 34,
+      "open_issues_and_prs": 30,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2020-05-06T15:12:51Z",
+      "pushed_at": "2024-10-16T14:52:18Z",
+      "updated_at": "2026-08-19T16:48:17Z",
+      "default_branch": "main",
+      "license": "NOASSERTION",
+      "description": "A Flexible Deep Learning Approach to Fuzzy String Matching",
+      "homepage": "https://living-with-machines.github.io/DeezyMatch/",
+      "full_name": "Living-with-machines/DeezyMatch",
+      "open_prs": 0,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 30,
+      "has_commit_since_2025_09": false,
+      "latest_release": {
+        "tag": "v1.3.4",
+        "published_at": "2022-09-20T14:28:19Z"
+      }
+    },
+    {
+      "repo": "OlivierBinette/StringCompare",
+      "source_url": "https://api.github.com/repos/OlivierBinette/StringCompare",
+      "stars": 21,
+      "forks": 2,
+      "open_issues_and_prs": 13,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2022-01-15T14:53:56Z",
+      "pushed_at": "2025-09-21T21:04:12Z",
+      "updated_at": "2026-07-17T12:21:03Z",
+      "default_branch": "dev",
+      "license": null,
+      "description": "Efficient String Comparison Functions and Fuzzy String Matching",
+      "homepage": "https://olivierbinette.github.io/StringCompare/",
+      "full_name": "OlivierBinette/StringCompare",
+      "open_prs": 1,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 12,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "0.1.0",
+        "published_at": "2022-04-05T21:12:35Z"
+      }
+    },
+    {
+      "repo": "OlivierBinette/Awesome-Entity-Resolution",
+      "source_url": "https://api.github.com/repos/OlivierBinette/Awesome-Entity-Resolution",
+      "stars": 137,
+      "forks": 16,
+      "open_issues_and_prs": 5,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2023-10-23T22:13:41Z",
+      "pushed_at": "2026-03-24T16:23:58Z",
+      "updated_at": "2026-09-02T20:07:54Z",
+      "default_branch": "main",
+      "license": "NOASSERTION",
+      "description": "List of entity resolution software and resources.",
+      "homepage": "",
+      "full_name": "OlivierBinette/Awesome-Entity-Resolution",
+      "open_prs": 5,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 0,
+      "has_commit_since_2025_09": true,
+      "latest_release": null
+    },
+    {
+      "repo": "vaneseltine/nominally",
+      "source_url": "https://api.github.com/repos/vaneseltine/nominally",
+      "stars": 41,
+      "forks": 1,
+      "open_issues_and_prs": 6,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2019-09-04T01:11:23Z",
+      "pushed_at": "2025-09-03T22:47:55Z",
+      "updated_at": "2026-08-04T11:14:58Z",
+      "default_branch": "master",
+      "license": "AGPL-3.0",
+      "description": "A maximum-strength name parser for record linkage.",
+      "homepage": "",
+      "full_name": "vaneseltine/nominally",
+      "open_prs": 2,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 4,
+      "has_commit_since_2025_09": true,
+      "latest_release": null
+    },
+    {
+      "repo": "derek73/python-nameparser",
+      "source_url": "https://api.github.com/repos/derek73/python-nameparser",
+      "stars": 715,
+      "forks": 113,
+      "open_issues_and_prs": 31,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2014-04-02T03:31:21Z",
+      "pushed_at": "2026-09-07T06:12:13Z",
+      "updated_at": "2026-09-07T02:45:30Z",
+      "default_branch": "master",
+      "license": "NOASSERTION",
+      "description": "A simple Python module for parsing human names into their individual components ",
+      "homepage": "http://nameparser.readthedocs.org",
+      "full_name": "derek73/python-nameparser",
+      "open_prs": 1,
+      "merged_prs_since_2026_03_01": 193,
+      "open_issues_only": 30,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "v2.2.0",
+        "published_at": "2026-09-01T04:51:30Z"
+      }
+    },
+    {
+      "repo": "opensanctions/rigour",
+      "source_url": "https://api.github.com/repos/opensanctions/rigour",
+      "stars": 67,
+      "forks": 18,
+      "open_issues_and_prs": 18,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2023-11-16T13:30:10Z",
+      "pushed_at": "2026-09-03T15:16:32Z",
+      "updated_at": "2026-09-03T15:16:49Z",
+      "default_branch": "main",
+      "license": "MIT",
+      "description": "Data cleaning and validation functions for names, languages, identifiers, etc.",
+      "homepage": "http://rigour.followthemoney.tech/",
+      "full_name": "opensanctions/rigour",
+      "open_prs": 5,
+      "merged_prs_since_2026_03_01": 76,
+      "open_issues_only": 13,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "v2.4.1",
+        "published_at": "2026-09-03T15:18:06Z"
+      }
+    },
+    {
+      "repo": "alephdata/fingerprints",
+      "source_url": "https://api.github.com/repos/alephdata/fingerprints",
+      "stars": 150,
+      "forks": 17,
+      "open_issues_and_prs": 3,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2016-04-26T10:58:54Z",
+      "pushed_at": "2025-11-24T22:15:00Z",
+      "updated_at": "2026-04-08T16:40:51Z",
+      "default_branch": "main",
+      "license": "MIT",
+      "description": "Now included in rigour",
+      "homepage": "https://opensanctions.github.io/rigour/names/",
+      "full_name": "opensanctions/fingerprints",
+      "open_prs": {
+        "_http_error": 422,
+        "_url": "https://api.github.com/search/issues?q=repo:alephdata/fingerprints+type:pr+state:open&per_page=1"
+      },
+      "merged_prs_since_2026_03_01": {
+        "_http_error": 422,
+        "_url": "https://api.github.com/search/issues?q=repo:alephdata/fingerprints+type:pr+is:merged+merged:%3E2026-03-01&per_page=1"
+      },
+      "open_issues_only": {
+        "_http_error": 422,
+        "_url": "https://api.github.com/search/issues?q=repo:alephdata/fingerprints+type:issue+state:open&per_page=1"
+      },
+      "has_commit_since_2025_09": false,
+      "latest_release": null
+    },
+    {
+      "repo": "chrisjsewell/matchflow",
+      "source_url": "https://api.github.com/repos/chrisjsewell/matchflow",
+      "_http_error": 404,
+      "_url": "https://api.github.com/repos/chrisjsewell/matchflow"
+    },
+    {
+      "repo": "resolve-io/delex",
+      "source_url": "https://api.github.com/repos/resolve-io/delex",
+      "_http_error": 404,
+      "_url": "https://api.github.com/repos/resolve-io/delex"
+    },
+    {
+      "repo": "moj-analytical-services/splink_demos",
+      "source_url": "https://api.github.com/repos/moj-analytical-services/splink_demos",
+      "_http_error": 404,
+      "_url": "https://api.github.com/repos/moj-analytical-services/splink_demos"
+    },
+    {
+      "repo": "cleanlab/cleanlab",
+      "source_url": "https://api.github.com/repos/cleanlab/cleanlab",
+      "stars": 11644,
+      "forks": 923,
+      "open_issues_and_prs": 124,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2018-05-11T01:55:21Z",
+      "pushed_at": "2026-01-13T17:39:04Z",
+      "updated_at": "2026-09-07T05:15:41Z",
+      "default_branch": "master",
+      "license": "Apache-2.0",
+      "description": "Cleanlab's open-source library is the standard data-centric AI package for data quality and machine learning with messy, real-world data and labels.",
+      "homepage": "https://cleanlab.ai",
+      "full_name": "cleanlab/cleanlab",
+      "open_prs": 48,
+      "merged_prs_since_2026_03_01": 0,
+      "open_issues_only": 76,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "v2.9.0",
+        "published_at": "2026-01-13T17:39:04Z"
+      }
+    },
+    {
+      "repo": "Senzing/senzing",
+      "source_url": "https://api.github.com/repos/Senzing/senzing",
+      "_http_error": 404,
+      "_url": "https://api.github.com/repos/Senzing/senzing"
+    },
+    {
+      "repo": "senzing-garage/sz-sdk-python-core",
+      "source_url": "https://api.github.com/repos/senzing-garage/sz-sdk-python-core",
+      "stars": 1,
+      "forks": 0,
+      "open_issues_and_prs": 11,
+      "archived": false,
+      "disabled": false,
+      "created_at": "2023-10-11T17:51:49Z",
+      "pushed_at": "2026-09-07T01:49:06Z",
+      "updated_at": "2026-09-07T01:47:14Z",
+      "default_branch": "main",
+      "license": "Apache-2.0",
+      "description": "[Development] Forthcoming major revision of Senzing Python SDK",
+      "homepage": "",
+      "full_name": "senzing-garage/sz-sdk-python-core",
+      "open_prs": 2,
+      "merged_prs_since_2026_03_01": 92,
+      "open_issues_only": 9,
+      "has_commit_since_2025_09": true,
+      "latest_release": {
+        "tag": "1.0.3",
+        "published_at": "2025-10-02T20:49:28Z"
+      }
+    }
+  ]
+}

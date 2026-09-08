@@ -1,0 +1,11 @@
+{
+  "probe": "dedupe",
+  "dataset": "febrl3",
+  "version": "3.0.3",
+  "btrees": "6.4",
+  "outcome": "MemoryError",
+  "address_space_cap_mib": 6144,
+  "where": "dedupe/training.py:177 coveredPairs, during train() predicate learning",
+  "note": "Library defaults for prepare_training (sample_size=1500, blocked_proportion=0.9); 40 active-learning rounds answered from ground truth. An earlier UNCAPPED run on the same input reached 7.9 GiB resident and was killed to protect the machine. Splink completes the same dataset in 2.24s total inside a 191 MiB environment.",
+  "traceback_file": "results/dedupe_febrl3_memoryerror.txt"
+}

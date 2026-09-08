@@ -1,0 +1,145 @@
+{
+  "probe": "splink",
+  "version": "4.0.17",
+  "backend": "DuckDBAPI (in-process)",
+  "dataset": "febrl3",
+  "blocking_variant": "exact",
+  "capabilities": {
+    "blocks": true,
+    "scores": true,
+    "decides": true,
+    "clusters": true,
+    "canonicalises": false
+  },
+  "capability_note": "Trained with no labelled pairs. Clustering is the library's own step, run at each threshold; the naive connected-components partition over the same accepted pairs is reported beside it.",
+  "training_seconds": 1.947,
+  "predict_seconds": 0.145,
+  "blocking": {
+    "candidate_pairs": 18508,
+    "possible_pairs": 12497500,
+    "reduction_ratio": 0.998519,
+    "blocking_recall": 0.9405
+  },
+  "results": [
+    {
+      "threshold_match_probability": 0.5,
+      "cluster_seconds": 0.089,
+      "pairwise": {
+        "tp": 6084,
+        "fp": 4,
+        "fn": 454,
+        "precision": 0.9993,
+        "recall": 0.9306,
+        "f1": 0.9637,
+        "predicted_pairs": 6088,
+        "true_pairs": 6538
+      },
+      "cluster_splink_own": {
+        "true_entities": 2000,
+        "predicted_entities": 2079,
+        "exact_entities_recovered": 1917,
+        "exact_recovery_rate": 0.9585,
+        "adjusted_rand_index": 0.979,
+        "records_scored": 5000
+      },
+      "cluster_naive_connected_components": {
+        "true_entities": 2000,
+        "predicted_entities": 2079,
+        "exact_entities_recovered": 1917,
+        "exact_recovery_rate": 0.9585,
+        "adjusted_rand_index": 0.979,
+        "records_scored": 5000
+      }
+    },
+    {
+      "threshold_match_probability": 0.9,
+      "cluster_seconds": 0.093,
+      "pairwise": {
+        "tp": 6080,
+        "fp": 1,
+        "fn": 458,
+        "precision": 0.9998,
+        "recall": 0.9299,
+        "f1": 0.9636,
+        "predicted_pairs": 6081,
+        "true_pairs": 6538
+      },
+      "cluster_splink_own": {
+        "true_entities": 2000,
+        "predicted_entities": 2080,
+        "exact_entities_recovered": 1919,
+        "exact_recovery_rate": 0.9595,
+        "adjusted_rand_index": 0.9794,
+        "records_scored": 5000
+      },
+      "cluster_naive_connected_components": {
+        "true_entities": 2000,
+        "predicted_entities": 2080,
+        "exact_entities_recovered": 1919,
+        "exact_recovery_rate": 0.9595,
+        "adjusted_rand_index": 0.9794,
+        "records_scored": 5000
+      }
+    },
+    {
+      "threshold_match_probability": 0.95,
+      "cluster_seconds": 0.2,
+      "pairwise": {
+        "tp": 6078,
+        "fp": 0,
+        "fn": 460,
+        "precision": 1.0,
+        "recall": 0.9296,
+        "f1": 0.9635,
+        "predicted_pairs": 6078,
+        "true_pairs": 6538
+      },
+      "cluster_splink_own": {
+        "true_entities": 2000,
+        "predicted_entities": 2082,
+        "exact_entities_recovered": 1920,
+        "exact_recovery_rate": 0.96,
+        "adjusted_rand_index": 0.9791,
+        "records_scored": 5000
+      },
+      "cluster_naive_connected_components": {
+        "true_entities": 2000,
+        "predicted_entities": 2082,
+        "exact_entities_recovered": 1920,
+        "exact_recovery_rate": 0.96,
+        "adjusted_rand_index": 0.9791,
+        "records_scored": 5000
+      }
+    },
+    {
+      "threshold_match_probability": 0.99,
+      "cluster_seconds": 0.092,
+      "pairwise": {
+        "tp": 6048,
+        "fp": 0,
+        "fn": 490,
+        "precision": 1.0,
+        "recall": 0.9251,
+        "f1": 0.9611,
+        "predicted_pairs": 6048,
+        "true_pairs": 6538
+      },
+      "cluster_splink_own": {
+        "true_entities": 2000,
+        "predicted_entities": 2086,
+        "exact_entities_recovered": 1917,
+        "exact_recovery_rate": 0.9585,
+        "adjusted_rand_index": 0.9782,
+        "records_scored": 5000
+      },
+      "cluster_naive_connected_components": {
+        "true_entities": 2000,
+        "predicted_entities": 2086,
+        "exact_entities_recovered": 1917,
+        "exact_recovery_rate": 0.9585,
+        "adjusted_rand_index": 0.9782,
+        "records_scored": 5000
+      }
+    }
+  ]
+}
