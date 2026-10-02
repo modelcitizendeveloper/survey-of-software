@@ -1,0 +1,487 @@
+{
+  "fixture": "fixtures/hostile.csv",
+  "hazards": {
+    "zero_padded_id": {
+      "row_id": "3",
+      "column": "zero_padded_id",
+      "in_file": "00071",
+      "want": "00071",
+      "note": "zero-padded identifier; integer inference drops the padding and the value is silently wrong"
+    },
+    "mixed_numeric": {
+      "row_id": "7",
+      "column": "amount",
+      "in_file": "n/a",
+      "want": "n/a",
+      "note": "one non-numeric value in an otherwise numeric column; forces object dtype or coercion to null"
+    },
+    "empty_cell": {
+      "row_id": "11",
+      "column": "amount",
+      "in_file": "",
+      "want": "",
+      "note": "empty cell \u2014 'not supplied'"
+    },
+    "literal_na": {
+      "row_id": "12",
+      "column": "amount",
+      "in_file": "NA",
+      "want": "NA",
+      "note": "the literal string NA \u2014 'recorded as unknown', a different fact from an empty cell"
+    },
+    "thousands_sep": {
+      "row_id": "15",
+      "column": "amount",
+      "in_file": "1,234.00",
+      "want": "1,234.00",
+      "note": "thousands separator inside a quoted field; parses as text unless told otherwise"
+    },
+    "quoted_delimiter": {
+      "row_id": "19",
+      "column": "name",
+      "in_file": "Smith, John",
+      "want": "Smith, John",
+      "note": "the delimiter inside a quoted field \u2014 the case hand-rolled split(',') gets wrong"
+    },
+    "embedded_newline": {
+      "row_id": "23",
+      "column": "note_text",
+      "in_file": "line one\nline two",
+      "want": "line one\nline two",
+      "note": "a newline inside a quoted field; a line-oriented reader loses the row boundary"
+    },
+    "date_iso": {
+      "row_id": "27",
+      "column": "when",
+      "in_file": "2026-03-04",
+      "want": "2026-03-04",
+      "note": "ISO date"
+    },
+    "date_us": {
+      "row_id": "28",
+      "column": "when",
+      "in_file": "03/04/2026",
+      "want": "03/04/2026",
+      "note": "ambiguous US/EU date \u2014 4 March or 3 April"
+    },
+    "date_written": {
+      "row_id": "29",
+      "column": "when",
+      "in_file": "4 Mar 2026",
+      "want": "4 Mar 2026",
+      "note": "written date, third format in one file"
+    },
+    "leading_plus": {
+      "row_id": "33",
+      "column": "contact",
+      "in_file": "+44 20 7946 0958",
+      "want": "+44 20 7946 0958",
+      "note": "phone number with a leading plus; some readers strip it or read it as a formula"
+    },
+    "excel_formula": {
+      "row_id": "37",
+      "column": "note_text",
+      "in_file": "=1+1",
+      "want": "=1+1",
+      "note": "a cell that looks like a formula in text; the CSV injection shape"
+    }
+  },
+  "readers": {
+    "stdlib csv": {
+      "records_returned": 10001,
+      "distinct_row_ids": 10001,
+      "score": 12,
+      "of": 12,
+      "cells": {
+        "zero_padded_id": {
+          "got": "00071",
+          "correct": true
+        },
+        "mixed_numeric": {
+          "got": "n/a",
+          "correct": true
+        },
+        "empty_cell": {
+          "got": "",
+          "correct": true
+        },
+        "literal_na": {
+          "got": "NA",
+          "correct": true
+        },
+        "thousands_sep": {
+          "got": "1,234.00",
+          "correct": true
+        },
+        "quoted_delimiter": {
+          "got": "Smith, John",
+          "correct": true
+        },
+        "embedded_newline": {
+          "got": "line one\nline two",
+          "correct": true
+        },
+        "date_iso": {
+          "got": "2026-03-04",
+          "correct": true
+        },
+        "date_us": {
+          "got": "03/04/2026",
+          "correct": true
+        },
+        "date_written": {
+          "got": "4 Mar 2026",
+          "correct": true
+        },
+        "leading_plus": {
+          "got": "+44 20 7946 0958",
+          "correct": true
+        },
+        "excel_formula": {
+          "got": "=1+1",
+          "correct": true
+        }
+      }
+    },
+    "pandas (defaults)": {
+      "records_returned": 10001,
+      "distinct_row_ids": 10001,
+      "score": 9,
+      "of": 12,
+      "cells": {
+        "zero_padded_id": {
+          "got": "71",
+          "correct": false
+        },
+        "mixed_numeric": {
+          "got": "",
+          "correct": false
+        },
+        "empty_cell": {
+          "got": "",
+          "correct": true
+        },
+        "literal_na": {
+          "got": "",
+          "correct": false
+        },
+        "thousands_sep": {
+          "got": "1,234.00",
+          "correct": true
+        },
+        "quoted_delimiter": {
+          "got": "Smith, John",
+          "correct": true
+        },
+        "embedded_newline": {
+          "got": "line one\nline two",
+          "correct": true
+        },
+        "date_iso": {
+          "got": "2026-03-04",
+          "correct": true
+        },
+        "date_us": {
+          "got": "03/04/2026",
+          "correct": true
+        },
+        "date_written": {
+          "got": "4 Mar 2026",
+          "correct": true
+        },
+        "leading_plus": {
+          "got": "+44 20 7946 0958",
+          "correct": true
+        },
+        "excel_formula": {
+          "got": "=1+1",
+          "correct": true
+        }
+      }
+    },
+    "pandas (dtype=str)": {
+      "records_returned": 10001,
+      "distinct_row_ids": 10001,
+      "score": 12,
+      "of": 12,
+      "cells": {
+        "zero_padded_id": {
+          "got": "00071",
+          "correct": true
+        },
+        "mixed_numeric": {
+          "got": "n/a",
+          "correct": true
+        },
+        "empty_cell": {
+          "got": "",
+          "correct": true
+        },
+        "literal_na": {
+          "got": "NA",
+          "correct": true
+        },
+        "thousands_sep": {
+          "got": "1,234.00",
+          "correct": true
+        },
+        "quoted_delimiter": {
+          "got": "Smith, John",
+          "correct": true
+        },
+        "embedded_newline": {
+          "got": "line one\nline two",
+          "correct": true
+        },
+        "date_iso": {
+          "got": "2026-03-04",
+          "correct": true
+        },
+        "date_us": {
+          "got": "03/04/2026",
+          "correct": true
+        },
+        "date_written": {
+          "got": "4 Mar 2026",
+          "correct": true
+        },
+        "leading_plus": {
+          "got": "+44 20 7946 0958",
+          "correct": true
+        },
+        "excel_formula": {
+          "got": "=1+1",
+          "correct": true
+        }
+      }
+    },
+    "polars (defaults)": {
+      "records_returned": 10001,
+      "distinct_row_ids": 10001,
+      "score": 11,
+      "of": 12,
+      "cells": {
+        "zero_padded_id": {
+          "got": "71",
+          "correct": false
+        },
+        "mixed_numeric": {
+          "got": "n/a",
+          "correct": true
+        },
+        "empty_cell": {
+          "got": "",
+          "correct": true
+        },
+        "literal_na": {
+          "got": "NA",
+          "correct": true
+        },
+        "thousands_sep": {
+          "got": "1,234.00",
+          "correct": true
+        },
+        "quoted_delimiter": {
+          "got": "Smith, John",
+          "correct": true
+        },
+        "embedded_newline": {
+          "got": "line one\nline two",
+          "correct": true
+        },
+        "date_iso": {
+          "got": "2026-03-04",
+          "correct": true
+        },
+        "date_us": {
+          "got": "03/04/2026",
+          "correct": true
+        },
+        "date_written": {
+          "got": "4 Mar 2026",
+          "correct": true
+        },
+        "leading_plus": {
+          "got": "+44 20 7946 0958",
+          "correct": true
+        },
+        "excel_formula": {
+          "got": "=1+1",
+          "correct": true
+        }
+      }
+    },
+    "polars (infer_schema=False)": {
+      "records_returned": 10001,
+      "distinct_row_ids": 10001,
+      "score": 12,
+      "of": 12,
+      "cells": {
+        "zero_padded_id": {
+          "got": "00071",
+          "correct": true
+        },
+        "mixed_numeric": {
+          "got": "n/a",
+          "correct": true
+        },
+        "empty_cell": {
+          "got": "",
+          "correct": true
+        },
+        "literal_na": {
+          "got": "NA",
+          "correct": true
+        },
+        "thousands_sep": {
+          "got": "1,234.00",
+          "correct": true
+        },
+        "quoted_delimiter": {
+          "got": "Smith, John",
+          "correct": true
+        },
+        "embedded_newline": {
+          "got": "line one\nline two",
+          "correct": true
+        },
+        "date_iso": {
+          "got": "2026-03-04",
+          "correct": true
+        },
+        "date_us": {
+          "got": "03/04/2026",
+          "correct": true
+        },
+        "date_written": {
+          "got": "4 Mar 2026",
+          "correct": true
+        },
+        "leading_plus": {
+          "got": "+44 20 7946 0958",
+          "correct": true
+        },
+        "excel_formula": {
+          "got": "=1+1",
+          "correct": true
+        }
+      }
+    },
+    "duckdb (lenient)": {
+      "records_returned": 10001,
+      "distinct_row_ids": 10001,
+      "score": 12,
+      "of": 12,
+      "cells": {
+        "zero_padded_id": {
+          "got": "00071",
+          "correct": true
+        },
+        "mixed_numeric": {
+          "got": "n/a",
+          "correct": true
+        },
+        "empty_cell": {
+          "got": "",
+          "correct": true
+        },
+        "literal_na": {
+          "got": "NA",
+          "correct": true
+        },
+        "thousands_sep": {
+          "got": "1,234.00",
+          "correct": true
+        },
+        "quoted_delimiter": {
+          "got": "Smith, John",
+          "correct": true
+        },
+        "embedded_newline": {
+          "got": "line one\nline two",
+          "correct": true
+        },
+        "date_iso": {
+          "got": "2026-03-04",
+          "correct": true
+        },
+        "date_us": {
+          "got": "03/04/2026",
+          "correct": true
+        },
+        "date_written": {
+          "got": "4 Mar 2026",
+          "correct": true
+        },
+        "leading_plus": {
+          "got": "+44 20 7946 0958",
+          "correct": true
+        },
+        "excel_formula": {
+          "got": "=1+1",
+          "correct": true
+        }
+      }
+    },
+    "petl": {
+      "records_returned": 10001,
+      "distinct_row_ids": 10001,
+      "score": 12,
+      "of": 12,
+      "cells": {
+        "zero_padded_id": {
+          "got": "00071",
+          "correct": true
+        },
+        "mixed_numeric": {
+          "got": "n/a",
+          "correct": true
+        },
+        "empty_cell": {
+          "got": "",
+          "correct": true
+        },
+        "literal_na": {
+          "got": "NA",
+          "correct": true
+        },
+        "thousands_sep": {
+          "got": "1,234.00",
+          "correct": true
+        },
+        "quoted_delimiter": {
+          "got": "Smith, John",
+          "correct": true
+        },
+        "embedded_newline": {
+          "got": "line one\nline two",
+          "correct": true
+        },
+        "date_iso": {
+          "got": "2026-03-04",
+          "correct": true
+        },
+        "date_us": {
+          "got": "03/04/2026",
+          "correct": true
+        },
+        "date_written": {
+          "got": "4 Mar 2026",
+          "correct": true
+        },
+        "leading_plus": {
+          "got": "+44 20 7946 0958",
+          "correct": true
+        },
+        "excel_formula": {
+          "got": "=1+1",
+          "correct": true
+        }
+      }
+    }
+  },
+  "errors": {
+    "duckdb (read_csv_auto)": "InvalidInputException: Invalid Input Error: Error when sniffing file \"fixtures/hostile.csv\".\nIt was not possible to automatically detect the CSV parsing dialect\nThe search space used was:\nDelimiter Candidates: ',', '|', ';', '\t'\nQuote/Escape Candidates: ['(no quote)','(no escape)'],['\"','(no escape)'],['\"','\"'],['\"','''],['\"','\\'],[''','(no escape)'],[''','''],[''','\"'],[''','\\']\nComment Candidates: '\\0', '#'\nEncoding: utf-8\nPossible fixes:\n* Disable the parser's strict mode (strict_mode=false) to allow reading rows that do not comply with the CSV standard.\n* Make sure you are using the correct file encoding. If not, set it (e.g., encoding = 'utf-16').\n* Set delimiter (e.g., delim=',')\n* Set quote (e.g., quote='\"')\n* Set escape (e.g., escape='\"')\n* Set comment (e.g., comment='#')\n* Set skip (skip=${n}) to skip ${n} lines at the top of the file\n* Enable ignore errors (ignore_errors=true) to ignore potential errors\n* Enable null padding (null_padding=true) to pad missing columns with NULL values\n* Check you are using the correct file compression, otherwise set it (e.g., compression = 'zstd')\n* Be sure that the maximum line size is set to an appropriate value, otherwise set it (e.g., max_line_size=10000000)\n\n\nLINE 1: SELECT * FROM read_csv_auto('fixtures/hostile.csv')\n                      ^",
+    "duckdb (all_varchar)": "InvalidInputException: Invalid Input Error: Error when sniffing file \"fixtures/hostile.csv\".\nIt was not possible to automatically detect the CSV parsing dialect\nThe search space used was:\nDelimiter Candidates: ',', '|', ';', '\t'\nQuote/Escape Candidates: ['(no quote)','(no escape)'],['\"','(no escape)'],['\"','\"'],['\"','''],['\"','\\'],[''','(no escape)'],[''','''],[''','\"'],[''','\\']\nComment Candidates: '\\0', '#'\nEncoding: utf-8\nPossible fixes:\n* Disable the parser's strict mode (strict_mode=false) to allow reading rows that do not comply with the CSV standard.\n* Make sure you are using the correct file encoding. If not, set it (e.g., encoding = 'utf-16').\n* Set delimiter (e.g., delim=',')\n* Set quote (e.g., quote='\"')\n* Set escape (e.g., escape='\"')\n* Set comment (e.g., comment='#')\n* Set skip (skip=${n}) to skip ${n} lines at the top of the file\n* Enable null padding (null_padding=true) to pad missing columns with NULL values\n* Check you are using the correct file compression, otherwise set it (e.g., compression = 'zstd')\n* Be sure that the maximum line size is set to an appropriate value, otherwise set it (e.g., max_line_size=10000000)\n\n\nLINE 1: SELECT * FROM read_csv('fixtures/hostile.csv', all_varchar=true, header...\n                      ^"
+  }
+}

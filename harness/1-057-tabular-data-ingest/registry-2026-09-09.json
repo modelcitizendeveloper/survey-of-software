@@ -1,0 +1,182 @@
+{
+  "accessed": "2026-09-09",
+  "sources": {
+    "pypi": "https://pypi.org/pypi/<pkg>/json",
+    "github": "https://api.github.com/repos/<owner>/<repo>",
+    "downloads": "https://pypistats.org/api/packages/<pkg>/recent (last_month)",
+    "openpyxl_repo": "https://foss.heptapod.net/api/v4/projects/openpyxl%2Fopenpyxl"
+  },
+  "libraries": {
+    "pandas": {
+      "version": "3.0.5",
+      "released": "2026-07-22",
+      "requires_python": ">=3.11",
+      "license": "BSD-3-Clause",
+      "repo": "pandas-dev/pandas",
+      "stars": 49709,
+      "open_issues": 2738,
+      "pushed": "2026-09-09",
+      "created": "2010-08-24",
+      "downloads_month": 637058384
+    },
+    "polars": {
+      "version": "1.44.2",
+      "released": "2026-09-09",
+      "requires_python": ">=3.10",
+      "license": "MIT",
+      "repo": "pola-rs/polars",
+      "stars": 39695,
+      "open_issues": 2868,
+      "pushed": "2026-09-09",
+      "created": "2020-05-13",
+      "downloads_month": 63340166
+    },
+    "pyarrow": {
+      "version": "25.0.1",
+      "released": "2026-08-10",
+      "requires_python": ">=3.10",
+      "license": "Apache-2.0",
+      "repo": "apache/arrow",
+      "stars": 17095,
+      "open_issues": 2590,
+      "pushed": "2026-09-09",
+      "created": "2016-02-17",
+      "downloads_month": 381794791
+    },
+    "duckdb": {
+      "version": "1.5.5",
+      "released": "2026-07-22",
+      "requires_python": ">=3.10",
+      "license": "MIT",
+      "repo": "duckdb/duckdb",
+      "stars": 41105,
+      "open_issues": 868,
+      "pushed": "2026-09-09",
+      "created": "2018-06-26",
+      "downloads_month": 60787626
+    },
+    "openpyxl": {
+      "version": "3.1.5",
+      "released": "2024-06-28",
+      "requires_python": ">=3.8",
+      "license": "MIT",
+      "repo": "foss.heptapod.net/openpyxl/openpyxl",
+      "stars": null,
+      "pushed": "2025-10-01",
+      "project_last_activity": "2026-08-31",
+      "downloads_month": 309869897,
+      "note": "Not on GitHub (Mercurial on Heptapod), so star-count comparisons omit it. Default-branch commits: two on 2025-10-01, previous 2024-06-28. project last_activity_at reflects tracker traffic, not code."
+    },
+    "python-calamine": {
+      "version": "0.8.2",
+      "released": "2026-07-13",
+      "requires_python": ">=3.10",
+      "license": "MIT",
+      "repo": "dimastbk/python-calamine",
+      "stars": 497,
+      "open_issues": 17,
+      "pushed": "2026-09-07",
+      "created": "2021-08-29",
+      "downloads_month": 6600453
+    },
+    "xlsxwriter": {
+      "version": "3.2.9",
+      "released": "2025-09-16",
+      "requires_python": ">=3.8",
+      "license": "BSD-2-Clause",
+      "repo": "jmcnamara/XlsxWriter",
+      "stars": 3971,
+      "open_issues": 30,
+      "pushed": "2026-08-04",
+      "created": "2013-01-04",
+      "downloads_month": 92651992
+    },
+    "pandera": {
+      "version": "0.33.1",
+      "released": "2026-09-01",
+      "requires_python": ">=3.10",
+      "license": "MIT",
+      "repo": "unionai-oss/pandera",
+      "stars": 4451,
+      "open_issues": 421,
+      "pushed": "2026-09-09",
+      "created": "2018-11-01",
+      "downloads_month": 8833282
+    },
+    "great-expectations": {
+      "version": "1.22.0",
+      "released": "2026-08-31",
+      "requires_python": ">=3.10,<3.14",
+      "license": "Apache-2.0",
+      "repo": "great-expectations/great_expectations",
+      "stars": 11778,
+      "open_issues": 41,
+      "pushed": "2026-09-09",
+      "created": "2017-09-11",
+      "downloads_month": 23048049
+    },
+    "frictionless": {
+      "version": "5.19.0",
+      "released": "2026-04-13",
+      "requires_python": ">=3.8",
+      "license": "MIT",
+      "repo": "frictionlessdata/frictionless-py",
+      "stars": 842,
+      "open_issues": 240,
+      "pushed": "2026-08-27",
+      "created": "2014-12-23",
+      "downloads_month": 665456
+    },
+    "csvkit": {
+      "version": "2.2.0",
+      "released": "2025-12-15",
+      "license": "MIT",
+      "repo": "wireservice/csvkit",
+      "stars": 6411,
+      "open_issues": 41,
+      "pushed": "2026-08-03",
+      "created": "2011-04-01",
+      "downloads_month": 278889
+    },
+    "petl": {
+      "version": "1.7.25",
+      "released": "2026-09-09",
+      "license": "MIT",
+      "repo": "petl-developers/petl",
+      "stars": 1317,
+      "open_issues": 84,
+      "pushed": "2026-09-09",
+      "created": "2011-08-19",
+      "downloads_month": 780935
+    },
+    "dlt": {
+      "version": "1.30.0",
+      "released": "2026-08-11",
+      "requires_python": ">=3.10,<3.15",
+      "license": "Apache-2.0",
+      "repo": "dlt-hub/dlt",
+      "stars": 5837,
+      "open_issues": 427,
+      "pushed": "2026-09-09",
+      "created": "2022-01-26",
+      "downloads_month": 5998650
+    },
+    "tablib": {
+      "version": "3.10.0",
+      "released": "2026-07-31",
+      "requires_python": ">=3.10",
+      "license": "MIT",
+      "repo": "jazzband/tablib",
+      "stars": 4756,
+      "open_issues": 54,
+      "pushed": "2026-07-31",
+      "created": "2011-03-28",
+      "downloads_month": 5148468
+    },
+    "odfpy": {
+      "version": "1.4.1",
+      "released": "2020-01-18",
+      "downloads_month": null
+    }
+  }
+}

@@ -1,0 +1,122 @@
+{
+  "rounds": 3,
+  "timing": {
+    "5k": {
+      "openpyxl": {
+        "seconds": 0.2168,
+        "rows": 5001,
+        "peak_rss_mb": 59.2
+      },
+      "openpyxl (read_only)": {
+        "seconds": 0.1616,
+        "rows": 5001,
+        "peak_rss_mb": 40.7
+      },
+      "python-calamine": {
+        "seconds": 0.0144,
+        "rows": 5001,
+        "peak_rss_mb": 17.6
+      },
+      "pandas via openpyxl": {
+        "seconds": 0.2137,
+        "rows": 5001,
+        "peak_rss_mb": 112.4
+      },
+      "pandas via calamine": {
+        "seconds": 0.0266,
+        "rows": 5001,
+        "peak_rss_mb": 113.4
+      }
+    },
+    "50k": {
+      "openpyxl": {
+        "seconds": 2.5832,
+        "rows": 50001,
+        "peak_rss_mb": 262.6
+      },
+      "openpyxl (read_only)": {
+        "seconds": 1.676,
+        "rows": 50001,
+        "peak_rss_mb": 77.0
+      },
+      "python-calamine": {
+        "seconds": 0.168,
+        "rows": 50001,
+        "peak_rss_mb": 75.8
+      },
+      "pandas via openpyxl": {
+        "seconds": 1.9949,
+        "rows": 50001,
+        "peak_rss_mb": 155.9
+      },
+      "pandas via calamine": {
+        "seconds": 0.2694,
+        "rows": 50001,
+        "peak_rss_mb": 187.6
+      }
+    }
+  },
+  "hazards": {
+    "openpyxl": {
+      "a1_merged_header": "Quarterly export \u2014 do not edit",
+      "header_row_2": [
+        "row_id",
+        "zero_padded_id",
+        "name"
+      ],
+      "zero_padded_row3": "00071",
+      "date_cell": "2026-01-15 00:00:00",
+      "sheet_names": [
+        "notes",
+        "data"
+      ]
+    },
+    "python-calamine": {
+      "a1_merged_header": "Quarterly export \u2014 do not edit",
+      "header_row_2": [
+        "row_id",
+        "zero_padded_id",
+        "name"
+      ],
+      "zero_padded_row3": "00071",
+      "date_cell": "2026-01-15",
+      "sheet_names": [
+        "notes",
+        "data"
+      ]
+    },
+    "pandas via openpyxl": {
+      "a1_merged_header": "Quarterly export \u2014 do not edit",
+      "header_row_2": [
+        "row_id",
+        "zero_padded_id",
+        "name"
+      ],
+      "zero_padded_row3": "00071",
+      "date_cell": "2026-01-15 00:00:00"
+    },
+    "pandas via calamine": {
+      "a1_merged_header": "Quarterly export \u2014 do not edit",
+      "header_row_2": [
+        "row_id",
+        "zero_padded_id",
+        "name"
+      ],
+      "zero_padded_row3": "00071",
+      "date_cell": "2026-01-15 00:00:00"
+    },
+    "sheet 0 BY INDEX (the hazard)": {
+      "first_cell": "This sheet is not the data. A reader that takes sheet 0 by",
+      "shape": [
+        2,
+        1
+      ],
+      "sheet_0_name": "notes"
+    },
+    "pandas default engine": {
+      "a1_merged_header": "Quarterly export \u2014 do not edit",
+      "zero_padded_row3": "00071",
+      "engine_used": "not reported by pandas; this is whatever it chose"
+    }
+  }
+}

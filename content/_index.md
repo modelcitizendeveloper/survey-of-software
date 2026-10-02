@@ -131,7 +131,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.050-059: Compression & Encoding
 
-**Completed: 3/10**
+**Completed: 4/10**
 
 - ✅ [**1.050** Compression](/survey/1-050) - zlib, brotli, zstd benchmarks
 - **1.051** Image Compression - WebP, AVIF, JPEG XL
@@ -140,7 +140,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - **1.054** Base Encoding - base64, base58, base32
 - ✅ [**1.055** Binary Serialization](/survey/1-055) - msgpack, protobuf, flatbuffers
 - ✅ [**1.056** JSON Libraries](/survey/1-056) - orjson, ujson, rapidjson
-- **1.057** CSV Parsing - Performance comparison
+- ✅ [**1.057** Tabular Data Ingest](/survey/1-057) - CSV and spreadsheets into an existing schema
 - **1.058** XML Processing - lxml vs ElementTree vs xmltodict
 - **1.059** YAML Libraries - PyYAML vs ruamel.yaml
 
@@ -509,9 +509,9 @@ a time as each is completed.
 
 ## Research Status
 
-**Total Defined**: 272 research slots
-**Completed**: 180 pieces (66%)
-**Remaining**: 92 pieces
+**Total Defined**: 273 research slots
+**Completed**: 182 pieces (67%)
+**Remaining**: 91 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 

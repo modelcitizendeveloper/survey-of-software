@@ -1,0 +1,206 @@
+{
+  "sizes": {
+    "10k": {
+      "stdlib csv": {
+        "seconds": 0.0132,
+        "rows": 10000,
+        "checksum": 108894,
+        "peak_rss_mb": 23.7
+      },
+      "pandas (defaults)": {
+        "seconds": 0.0104,
+        "rows": 10000,
+        "checksum": 108894,
+        "peak_rss_mb": 115.7
+      },
+      "pandas (dtype=str)": {
+        "seconds": 0.0151,
+        "rows": 10000,
+        "checksum": 108894,
+        "peak_rss_mb": 113.0
+      },
+      "polars (defaults)": {
+        "seconds": 0.0018,
+        "rows": 10000,
+        "checksum": 108894,
+        "peak_rss_mb": 58.1
+      },
+      "polars (infer_schema=False)": {
+        "seconds": 0.0017,
+        "rows": 10000,
+        "checksum": 108894,
+        "peak_rss_mb": 57.3
+      },
+      "polars (scan + collect)": {
+        "seconds": 0.003,
+        "rows": 10000,
+        "checksum": 108894,
+        "peak_rss_mb": 67.3
+      },
+      "duckdb": {
+        "seconds": 0.0362,
+        "rows": 10000,
+        "checksum": 108894,
+        "peak_rss_mb": 61.3
+      },
+      "petl (streaming)": {
+        "seconds": 0.0152,
+        "rows": 10000,
+        "checksum": 108894,
+        "peak_rss_mb": 23.1
+      },
+      "stdlib csv (streaming)": {
+        "seconds": 0.0127,
+        "rows": 10000,
+        "checksum": 108894,
+        "peak_rss_mb": 11.2
+      }
+    },
+    "100k": {
+      "stdlib csv": {
+        "seconds": 0.1582,
+        "rows": 100000,
+        "checksum": 1188895,
+        "peak_rss_mb": 150.2
+      },
+      "pandas (defaults)": {
+        "seconds": 0.1162,
+        "rows": 100000,
+        "checksum": 1188895,
+        "peak_rss_mb": 191.4
+      },
+      "pandas (dtype=str)": {
+        "seconds": 0.1447,
+        "rows": 100000,
+        "checksum": 1188895,
+        "peak_rss_mb": 188.0
+      },
+      "polars (defaults)": {
+        "seconds": 0.0042,
+        "rows": 100000,
+        "checksum": 1188895,
+        "peak_rss_mb": 95.0
+      },
+      "polars (infer_schema=False)": {
+        "seconds": 0.0053,
+        "rows": 100000,
+        "checksum": 1188895,
+        "peak_rss_mb": 107.3
+      },
+      "polars (scan + collect)": {
+        "seconds": 0.008,
+        "rows": 100000,
+        "checksum": 1188895,
+        "peak_rss_mb": 136.3
+      },
+      "duckdb": {
+        "seconds": 0.0589,
+        "rows": 100000,
+        "checksum": 1188895,
+        "peak_rss_mb": 68.1
+      },
+      "petl (streaming)": {
+        "seconds": 0.1623,
+        "rows": 100000,
+        "checksum": 1188895,
+        "peak_rss_mb": 23.1
+      },
+      "stdlib csv (streaming)": {
+        "seconds": 0.1365,
+        "rows": 100000,
+        "checksum": 1188895,
+        "peak_rss_mb": 11.2
+      }
+    },
+    "1M": {
+      "stdlib csv": {
+        "seconds": 1.8869,
+        "rows": 1000000,
+        "checksum": 12888896,
+        "peak_rss_mb": 1406.2
+      },
+      "pandas (defaults)": {
+        "seconds": 1.1036,
+        "rows": 1000000,
+        "checksum": 12888896,
+        "peak_rss_mb": 592.5
+      },
+      "pandas (dtype=str)": {
+        "seconds": 1.394,
+        "rows": 1000000,
+        "checksum": 12888896,
+        "peak_rss_mb": 520.0
+      },
+      "polars (defaults)": {
+        "seconds": 0.0431,
+        "rows": 1000000,
+        "checksum": 12888896,
+        "peak_rss_mb": 380.0
+      },
+      "polars (infer_schema=False)": {
+        "seconds": 0.025,
+        "rows": 1000000,
+        "checksum": 12888896,
+        "peak_rss_mb": 469.2
+      },
+      "polars (scan + collect)": {
+        "seconds": 0.0503,
+        "rows": 1000000,
+        "checksum": 12888896,
+        "peak_rss_mb": 517.8
+      },
+      "duckdb": {
+        "seconds": 0.1096,
+        "rows": 1000000,
+        "checksum": 12888896,
+        "peak_rss_mb": 140.4
+      },
+      "petl (streaming)": {
+        "seconds": 1.4695,
+        "rows": 1000000,
+        "checksum": 12888896,
+        "peak_rss_mb": 23.1
+      },
+      "stdlib csv (streaming)": {
+        "seconds": 1.2711,
+        "rows": 1000000,
+        "checksum": 12888896,
+        "peak_rss_mb": 11.2
+      }
+    }
+  },
+  "rounds_per_size": {
+    "10k": 5,
+    "100k": 5,
+    "1M": 3
+  },
+  "fair": {
+    "10k": {
+      "identical_work": true,
+      "distinct_results": [
+        [
+          10000,
+          108894
+        ]
+      ]
+    },
+    "100k": {
+      "identical_work": true,
+      "distinct_results": [
+        [
+          100000,
+          1188895
+        ]
+      ]
+    },
+    "1M": {
+      "identical_work": true,
+      "distinct_results": [
+        [
+          1000000,
+          12888896
+        ]
+      ]
+    }
+  }
+}

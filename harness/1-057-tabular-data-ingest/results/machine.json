@@ -1,0 +1,21 @@
+{
+  "measured": "2026-09-09",
+  "machine": "aarch64, Linux",
+  "kernel": "6.6.87.2-microsoft-standard-WSL2",
+  "python": "3.12.3",
+  "cpu_count": 8,
+  "note": "aarch64 under WSL2 on a laptop. Compiled readers (polars, duckdb, calamine, pyarrow) and interpreted CPython are compiled differently for aarch64 and x86_64, so a compiled-vs-interpreted RATIO measured here does not share an axis with one measured on x86. Figures may be compared with each other and with nothing else.",
+  "pins": {
+    "pandas": "3.0.5",
+    "polars": "1.44.2",
+    "duckdb": "1.5.5",
+    "openpyxl": "3.1.5",
+    "python-calamine": "0.8.2",
+    "pandera": "0.33.1",
+    "pydantic": "2.13.5",
+    "petl": "1.7.25",
+    "pyarrow": "25.0.1",
+    "XlsxWriter": "3.2.9"
+  },
+  "mem_total_gb": 12.2
+}

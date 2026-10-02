@@ -1,0 +1,284 @@
+{
+  "rows": 20000,
+  "levels": {
+    "1%": {
+      "pandera (lazy)": {
+        "seconds": 0.362,
+        "n_failed": 400,
+        "sample": [
+          {
+            "row": 99,
+            "column": "amount",
+            "why": "coerce_dtype('float64')",
+            "value": "NOT_A_NUMBER"
+          },
+          {
+            "row": 199,
+            "column": "amount",
+            "why": "coerce_dtype('float64')",
+            "value": "NOT_A_NUMBER"
+          },
+          {
+            "row": 299,
+            "column": "amount",
+            "why": "coerce_dtype('float64')",
+            "value": "NOT_A_NUMBER"
+          }
+        ],
+        "peak_rss_mb": 131.0,
+        "identifies": {
+          "row": true,
+          "column": true,
+          "why": true
+        }
+      },
+      "duckdb (store_rejects)": {
+        "seconds": 0.155,
+        "n_failed": 200,
+        "sample": [
+          {
+            "row": 101,
+            "column": "amount",
+            "why": "CAST: Error when converting column \"amount\". Could not convert string \"NOT_A_NUMBER\" to 'DOUBLE'",
+            "value": "\n100,Person 100,NOT_A_NUMBER,2026-01-15"
+          },
+          {
+            "row": 201,
+            "column": "amount",
+            "why": "CAST: Error when converting column \"amount\". Could not convert string \"NOT_A_NUMBER\" to 'DOUBLE'",
+            "value": "\n200,Person 200,NOT_A_NUMBER,2026-01-15"
+          },
+          {
+            "row": 301,
+            "column": "amount",
+            "why": "CAST: Error when converting column \"amount\". Could not convert string \"NOT_A_NUMBER\" to 'DOUBLE'",
+            "value": "\n300,Person 300,NOT_A_NUMBER,2026-01-15"
+          }
+        ],
+        "peak_rss_mb": 64.8,
+        "identifies": {
+          "row": true,
+          "column": true,
+          "why": true
+        }
+      },
+      "stdlib csv + pydantic": {
+        "seconds": 0.0894,
+        "n_failed": 200,
+        "sample": [
+          {
+            "row": 101,
+            "column": "amount",
+            "why": "Input should be a valid number, unable to parse string as a number",
+            "value": "NOT_A_NUMBER"
+          },
+          {
+            "row": 201,
+            "column": "amount",
+            "why": "Input should be a valid number, unable to parse string as a number",
+            "value": "NOT_A_NUMBER"
+          },
+          {
+            "row": 301,
+            "column": "amount",
+            "why": "Input should be a valid number, unable to parse string as a number",
+            "value": "NOT_A_NUMBER"
+          }
+        ],
+        "peak_rss_mb": 23.4,
+        "identifies": {
+          "row": true,
+          "column": true,
+          "why": true
+        }
+      },
+      "_expected_bad_rows": 200
+    },
+    "10%": {
+      "pandera (lazy)": {
+        "seconds": 0.3424,
+        "n_failed": 4000,
+        "sample": [
+          {
+            "row": 9,
+            "column": "amount",
+            "why": "coerce_dtype('float64')",
+            "value": "NOT_A_NUMBER"
+          },
+          {
+            "row": 19,
+            "column": "amount",
+            "why": "coerce_dtype('float64')",
+            "value": "NOT_A_NUMBER"
+          },
+          {
+            "row": 29,
+            "column": "amount",
+            "why": "coerce_dtype('float64')",
+            "value": "NOT_A_NUMBER"
+          }
+        ],
+        "peak_rss_mb": 131.7,
+        "identifies": {
+          "row": true,
+          "column": true,
+          "why": true
+        }
+      },
+      "duckdb (store_rejects)": {
+        "seconds": 0.1016,
+        "n_failed": 2000,
+        "sample": [
+          {
+            "row": 11,
+            "column": "amount",
+            "why": "CAST: Error when converting column \"amount\". Could not convert string \"NOT_A_NUMBER\" to 'DOUBLE'",
+            "value": "\n10,Person 10,NOT_A_NUMBER,2026-01-15"
+          },
+          {
+            "row": 21,
+            "column": "amount",
+            "why": "CAST: Error when converting column \"amount\". Could not convert string \"NOT_A_NUMBER\" to 'DOUBLE'",
+            "value": "\n20,Person 20,NOT_A_NUMBER,2026-01-15"
+          },
+          {
+            "row": 31,
+            "column": "amount",
+            "why": "CAST: Error when converting column \"amount\". Could not convert string \"NOT_A_NUMBER\" to 'DOUBLE'",
+            "value": "\n30,Person 30,NOT_A_NUMBER,2026-01-15"
+          }
+        ],
+        "peak_rss_mb": 66.1,
+        "identifies": {
+          "row": true,
+          "column": true,
+          "why": true
+        }
+      },
+      "stdlib csv + pydantic": {
+        "seconds": 0.0999,
+        "n_failed": 2000,
+        "sample": [
+          {
+            "row": 11,
+            "column": "amount",
+            "why": "Input should be a valid number, unable to parse string as a number",
+            "value": "NOT_A_NUMBER"
+          },
+          {
+            "row": 21,
+            "column": "amount",
+            "why": "Input should be a valid number, unable to parse string as a number",
+            "value": "NOT_A_NUMBER"
+          },
+          {
+            "row": 31,
+            "column": "amount",
+            "why": "Input should be a valid number, unable to parse string as a number",
+            "value": "NOT_A_NUMBER"
+          }
+        ],
+        "peak_rss_mb": 24.1,
+        "identifies": {
+          "row": true,
+          "column": true,
+          "why": true
+        }
+      },
+      "_expected_bad_rows": 2000
+    },
+    "50%": {
+      "pandera (lazy)": {
+        "seconds": 0.4275,
+        "n_failed": 20000,
+        "sample": [
+          {
+            "row": 1,
+            "column": "amount",
+            "why": "coerce_dtype('float64')",
+            "value": "NOT_A_NUMBER"
+          },
+          {
+            "row": 3,
+            "column": "amount",
+            "why": "coerce_dtype('float64')",
+            "value": "NOT_A_NUMBER"
+          },
+          {
+            "row": 5,
+            "column": "amount",
+            "why": "coerce_dtype('float64')",
+            "value": "NOT_A_NUMBER"
+          }
+        ],
+        "peak_rss_mb": 142.7,
+        "identifies": {
+          "row": true,
+          "column": true,
+          "why": true
+        }
+      },
+      "duckdb (store_rejects)": {
+        "seconds": 0.1232,
+        "n_failed": 10000,
+        "sample": [
+          {
+            "row": 3,
+            "column": "amount",
+            "why": "CAST: Error when converting column \"amount\". Could not convert string \"NOT_A_NUMBER\" to 'DOUBLE'",
+            "value": "\n2,Person 2,NOT_A_NUMBER,2026-01-15"
+          },
+          {
+            "row": 5,
+            "column": "amount",
+            "why": "CAST: Error when converting column \"amount\". Could not convert string \"NOT_A_NUMBER\" to 'DOUBLE'",
+            "value": "\n4,Person 4,NOT_A_NUMBER,2026-01-15"
+          },
+          {
+            "row": 7,
+            "column": "amount",
+            "why": "CAST: Error when converting column \"amount\". Could not convert string \"NOT_A_NUMBER\" to 'DOUBLE'",
+            "value": "\n6,Person 6,NOT_A_NUMBER,2026-01-15"
+          }
+        ],
+        "peak_rss_mb": 75.8,
+        "identifies": {
+          "row": true,
+          "column": true,
+          "why": true
+        }
+      },
+      "stdlib csv + pydantic": {
+        "seconds": 0.1097,
+        "n_failed": 10000,
+        "sample": [
+          {
+            "row": 3,
+            "column": "amount",
+            "why": "Input should be a valid number, unable to parse string as a number",
+            "value": "NOT_A_NUMBER"
+          },
+          {
+            "row": 5,
+            "column": "amount",
+            "why": "Input should be a valid number, unable to parse string as a number",
+            "value": "NOT_A_NUMBER"
+          },
+          {
+            "row": 7,
+            "column": "amount",
+            "why": "Input should be a valid number, unable to parse string as a number",
+            "value": "NOT_A_NUMBER"
+          }
+        ],
+        "peak_rss_mb": 27.2,
+        "identifies": {
+          "row": true,
+          "column": true,
+          "why": true
+        }
+      },
+      "_expected_bad_rows": 10000
+    }
+  }
+}

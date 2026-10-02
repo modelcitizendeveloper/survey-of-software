@@ -1,0 +1,132 @@
+{
+  "python": "Python 3.12.3 (main, Jun 19 2026, 12:46:00) [GCC 13.3.0]",
+  "rounds": 7,
+  "method": "one isolated uv venv per library; whole site-packages tree weighed",
+  "libraries": {
+    "stdlib csv": {
+      "spec": "ships with CPython",
+      "install_bytes": 0,
+      "distributions": [],
+      "dependency_count": 0,
+      "import_ms_min_of_7": 1.73
+    },
+    "pandas": {
+      "spec": "pandas==3.0.5",
+      "install_bytes": 97053537,
+      "site_packages_bytes": 97058801,
+      "distributions": [
+        "numpy",
+        "pandas",
+        "python_dateutil",
+        "six"
+      ],
+      "dependency_count": 3,
+      "import_ms_min_of_7": 141.79
+    },
+    "polars": {
+      "spec": "polars==1.44.2",
+      "install_bytes": 176142917,
+      "site_packages_bytes": 176148181,
+      "distributions": [
+        "polars",
+        "polars_runtime_32"
+      ],
+      "dependency_count": 1,
+      "import_ms_min_of_7": 67.68
+    },
+    "duckdb": {
+      "spec": "duckdb==1.5.5",
+      "install_bytes": 55095185,
+      "site_packages_bytes": 55100449,
+      "distributions": [
+        "duckdb"
+      ],
+      "dependency_count": 0,
+      "import_ms_min_of_7": 45.61
+    },
+    "openpyxl": {
+      "spec": "openpyxl==3.1.5",
+      "install_bytes": 923403,
+      "site_packages_bytes": 928667,
+      "distributions": [
+        "et_xmlfile",
+        "openpyxl"
+      ],
+      "dependency_count": 1,
+      "import_ms_min_of_7": 44.97
+    },
+    "python-calamine": {
+      "spec": "python-calamine==0.8.2",
+      "install_bytes": 2312758,
+      "site_packages_bytes": 2318022,
+      "distributions": [
+        "python_calamine"
+      ],
+      "dependency_count": 0,
+      "import_ms_min_of_7": 0.5
+    },
+    "pandera": {
+      "spec": "pandera==0.33.1",
+      "install_bytes": 9323389,
+      "site_packages_bytes": 9328653,
+      "distributions": [
+        "annotated_types",
+        "mypy_extensions",
+        "packaging",
+        "pandera",
+        "pydantic",
+        "pydantic_core",
+        "typeguard",
+        "typing_extensions",
+        "typing_inspect",
+        "typing_inspection"
+      ],
+      "dependency_count": 9,
+      "import_ms_min_of_7": 22.8
+    },
+    "pydantic": {
+      "spec": "pydantic==2.13.5",
+      "install_bytes": 6727248,
+      "site_packages_bytes": 6732512,
+      "distributions": [
+        "annotated_types",
+        "pydantic",
+        "pydantic_core",
+        "typing_extensions",
+        "typing_inspection"
+      ],
+      "dependency_count": 4,
+      "import_ms_min_of_7": 20.09
+    },
+    "petl": {
+      "spec": "petl==1.7.25",
+      "install_bytes": 1118212,
+      "site_packages_bytes": 1123476,
+      "distributions": [
+        "petl"
+      ],
+      "dependency_count": 0,
+      "import_ms_min_of_7": 36.82
+    },
+    "pyarrow": {
+      "spec": "pyarrow==25.0.1",
+      "install_bytes": 142961056,
+      "site_packages_bytes": 142966320,
+      "distributions": [
+        "pyarrow"
+      ],
+      "dependency_count": 0,
+      "import_ms_min_of_7": 19.53
+    },
+    "xlsxwriter": {
+      "spec": "XlsxWriter==3.2.9",
+      "install_bytes": 850143,
+      "site_packages_bytes": 855407,
+      "distributions": [
+        "xlsxwriter"
+      ],
+      "dependency_count": 0,
+      "import_ms_min_of_7": 20.81
+    }
+  }
+}
