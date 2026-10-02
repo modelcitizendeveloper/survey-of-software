@@ -405,7 +405,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.200-219: LLM & AI Stack
 
-**Completed: 15/16**
+**Completed: 16/17**
 
 - ✅ [**1.200** LLM Orchestration](/survey/1-200) - LangChain, LlamaIndex, RAG
 - ✅ [**1.201** LLM Agent Frameworks - AutoGen, CrewAI, MetaGPT](/survey/1-201)
@@ -423,6 +423,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.215** LLM Provider Proxies & Routers](/survey/1-215) - LiteLLM, OpenRouter, Portkey, Bifrost, Cloudflare AI Gateway
 - ✅ [**1.216** Agentic Browser Automation](/survey/1-216) - browser-use, Stagehand, Skyvern, Chrome DevTools MCP, Playwright MCP, Browserbase, Steel
 - ✅ [**1.217** MCP Server Implementation](/survey/1-217) - official mcp SDK, FastMCP, FastAPI-MCP, raw JSON-RPC
+- ✅ [**1.219** AI Pull-Request Review](/survey/1-219) - CodeRabbit, Greptile, Bugbot, Qodo/PR-Agent, Copilot, Claude Code review, Kodus, cubic
 
 ---
 
