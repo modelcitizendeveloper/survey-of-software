@@ -69,6 +69,11 @@ CLAUDE.md
 # a time, so the nine unfinished 2.xxx stubs and anything held cannot ride along:
 # the series has 14 directories and only 4 completed surveys.
 #
+# WHAT QUALIFIES (Ivan, 2026-10-05): a 2.xxx survey publishes only when it DESCRIBES
+# an existing standard. A survey whose central finding is that no standard exists maps
+# white space, not a standard, and stays internal. 2.078 Client-Side AI Handoff was
+# withdrawn on this rule 2026-10-05 after a month on the allowlist.
+#
 # NOTE: this file is the real enforcement, not publish_to_public.sh's
 # --include='1-*.md' glob. A survey whose metadata.yaml claims a hold is not
 # actually held unless publication: matches HELD_PUBLICATION_VALUES in
@@ -77,6 +82,5 @@ CLAUDE.md
 content/survey/2-*.md
 !content/survey/2-074.md
 !content/survey/2-074-1.md
-!content/survey/2-078.md
 !content/survey/2-083.md
 content/survey/3-*.md

@@ -507,15 +507,14 @@ a time as each is completed.
 
 - ✅ [**2.074** MCP Protocol](/survey/2-074) - Model Context Protocol: the tool edge most AI frameworks now standardize on
 - ✅ [**2.074.1** MCP Authorization for Remote Servers](/survey/2-074-1) - How a remote MCP server becomes an OAuth 2.1 resource server, and what you run to issue the tokens
-- ✅ [**2.078** Client-Side AI Handoff (BYOAI Patterns)](/survey/2-078) - How a web page hands a task to the user's own AI — and gets the answer back
 - ✅ [**2.083** AI Agent Gateways](/survey/2-083) - MCP federation and A2A routing: Agent Gateway, IBM ContextForge, Kong, Envoy
 
 ---
 
 ## Research Status
 
-**Total Defined**: 279 research slots
-**Completed**: 187 pieces (67%)
+**Total Defined**: 278 research slots
+**Completed**: 186 pieces (67%)
 **Remaining**: 91 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
