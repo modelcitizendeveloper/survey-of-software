@@ -148,7 +148,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.060-069: Cryptography, Networking & Security
 
-**Completed: 11/11**
+**Completed: 12/12**
 
 - ✅ [**1.060** Cryptographic Libraries](/survey/1-060) - cryptography vs PyNaCl
 - ✅ [**1.061** Hashing](/survey/1-061) - hashlib, xxhash, blake3
@@ -159,6 +159,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.066** Onion Routing / Anonymous Transport](/survey/1-066) - Tor stem API, I2P SAM bridge, Nym mixnet
 - ✅ [**1.067** WebSocket Libraries](/survey/1-067) - websockets, aiohttp WS, ws, Socket.IO, µWebSockets
   - ✅ [**1.067.1** Python HTTP Clients](/survey/1-067-1)
+  - ✅ [**1.067.2** Real-Time Broadcast & Pub/Sub Servers](/survey/1-067-2) - Centrifugo, Socket.IO, Mercure, Phoenix Channels, NATS, Reverb
 - ✅ [**1.068** API Proxy / MITM Frameworks](/survey/1-068) - mitmproxy, Envoy, Traefik, transparent interception
 - ✅ [**1.069** Mobile Secure Storage / Keychain](/survey/1-069) - iOS Keychain, Android Keystore, react-native-keychain
 
@@ -242,7 +243,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.110-119: User Interface & Frontend
 
-**Completed: 16/19**
+**Completed: 17/20**
 
 - ✅ [**1.110** Frontend Frameworks](/survey/1-110) - React, Vue, Svelte, Angular
   - **1.110.1** React Meta-Frameworks - Next.js, Remix, Gatsby
@@ -260,6 +261,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.115** Form & Validation - React Hook Form, Zod, Yup](/survey/1-115)
 - ✅ [**1.116** Data Visualization Libraries - D3.js, Chart.js, Recharts](/survey/1-116)
 - ✅ [**1.117** Animation](/survey/1-117) - Framer Motion, GSAP, React Spring, Lottie
+- ✅ [**1.118** Browser Offline Storage & Service Workers](/survey/1-118) - Workbox, Dexie, idb, localForage, RxDB, PouchDB, SQLite WASM, OPFS
 - ✅ [**1.119** Mobile Frameworks](/survey/1-119) - React Native, Flutter, .NET MAUI, Ionic
   - ✅ [**1.119.1** NFC Libraries](/survey/1-119-1) - iOS CoreNFC, Android NDEF, react-native-nfc-manager, Web NFC
   - ✅ [**1.119.2** Push Notification Libraries](/survey/1-119-2) - ntfy, Gotify, UnifiedPush, expo-notifications, Web Push/VAPID
@@ -374,9 +376,10 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.180-189: Database Libraries
 
-**Completed: 11/11**
+**Completed: 12/12**
 
 - ✅ [**1.180** Python ORMs](/survey/1-180) - SQLAlchemy, Django ORM, SQLModel, Tortoise ORM
+  - ✅ [**1.180.1** Python Database Drivers](/survey/1-180-1) - psycopg 3, psycopg2, asyncpg, pg8000, PyMySQL, mysqlclient, asyncmy, aiosqlite
 - ✅ [**1.181** Database Migration](/survey/1-181) - Alembic, Django migrations, Flyway
 - ✅ [**1.182** Database Diff & Schema Comparison](/survey/1-182) - Atlas, skeema, migra
 - ✅ [**1.183** Database Testing](/survey/1-183) - pytest fixtures, testcontainers, factory_boy
@@ -461,11 +464,12 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.240-249: Infrastructure & Platform Engineering
 
-**Completed: 4/4**
+**Completed: 5/5**
 
 - ✅ [**1.240** Container Networking & Service Mesh](/survey/1-240) - Cilium, Calico, Istio, Linkerd, Envoy, Flannel, Consul Connect
 - ✅ [**1.241** Python Web Frameworks](/survey/1-241)
 - ✅ [**1.242** ASGI & WSGI Application Servers](/survey/1-242)
+- ✅ [**1.243** Configuration & Secrets Loading (Python)](/survey/1-243) - python-dotenv, pydantic-settings, Dynaconf, environs, decouple, Hydra/OmegaConf
 - ✅ [**1.245** Rule & Policy Evaluation Engines](/survey/1-245)
 
 ---
@@ -510,8 +514,8 @@ a time as each is completed.
 
 ## Research Status
 
-**Total Defined**: 273 research slots
-**Completed**: 182 pieces (67%)
+**Total Defined**: 279 research slots
+**Completed**: 187 pieces (67%)
 **Remaining**: 91 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
