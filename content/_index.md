@@ -243,7 +243,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.110-119: User Interface & Frontend
 
-**Completed: 17/20**
+**Completed: 18/21**
 
 - ✅ [**1.110** Frontend Frameworks](/survey/1-110) - React, Vue, Svelte, Angular
   - **1.110.1** React Meta-Frameworks - Next.js, Remix, Gatsby
@@ -262,6 +262,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.116** Data Visualization Libraries - D3.js, Chart.js, Recharts](/survey/1-116)
 - ✅ [**1.117** Animation](/survey/1-117) - Framer Motion, GSAP, React Spring, Lottie
 - ✅ [**1.118** Browser Offline Storage & Service Workers](/survey/1-118) - Workbox, Dexie, idb, localForage, RxDB, PouchDB, SQLite WASM, OPFS
+  - ✅ [**1.118.1** Local-First Sync & CRDT Libraries](/survey/1-118-1) - Yjs, Automerge, Loro, ElectricSQL, PowerSync, Zero, Replicache, Jazz, InstantDB
 - ✅ [**1.119** Mobile Frameworks](/survey/1-119) - React Native, Flutter, .NET MAUI, Ionic
   - ✅ [**1.119.1** NFC Libraries](/survey/1-119-1) - iOS CoreNFC, Android NDEF, react-native-nfc-manager, Web NFC
   - ✅ [**1.119.2** Push Notification Libraries](/survey/1-119-2) - ntfy, Gotify, UnifiedPush, expo-notifications, Web Push/VAPID
@@ -514,7 +515,7 @@ a time as each is completed.
 ## Research Status
 
 **Total Defined**: 278 research slots
-**Completed**: 186 pieces (67%)
+**Completed**: 187 pieces (67%)
 **Remaining**: 91 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
