@@ -414,7 +414,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.200-219: LLM & AI Stack
 
-**Completed: 17/20**
+**Completed: 16/19**
 
 - ✅ [**1.200** LLM Orchestration](/survey/1-200) - LangChain, LlamaIndex, RAG
 - ✅ [**1.201** LLM Agent Frameworks - AutoGen, CrewAI, MetaGPT](/survey/1-201)
@@ -429,7 +429,6 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.210** Multilingual & CJK LLMs](/survey/1-210) - BLOOM, XLM-RoBERTa, mBERT, ERNIE
 - ✅ [**1.211** CJK Embedding Models](/survey/1-211) - M3E, text2vec-chinese, LaBSE, multilingual-e5
 - ✅ [**1.212** AI Coding Agent Harnesses](/survey/1-212) - Claude Code, Codex CLI, OpenCode, Aider, Pi, Goose
-  - **1.212.1** Agent Orchestration Systems
 - **1.213** _Reserved_ - Agent Skill & Workflow Frameworks (proposed)
 - **1.214** _Reserved_ - MCP Client Tooling / Runtimes (proposed)
 - ✅ [**1.215** LLM Provider Proxies & Routers](/survey/1-215) - LiteLLM, OpenRouter, Portkey, Bifrost, Cloudflare AI Gateway
@@ -526,8 +525,8 @@ a time as each is completed.
 
 ## Research Status
 
-**Total Defined**: 310 research slots
-**Completed**: 185 pieces (60%)
+**Total Defined**: 309 research slots
+**Completed**: 184 pieces (60%)
 **Remaining**: 125 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
