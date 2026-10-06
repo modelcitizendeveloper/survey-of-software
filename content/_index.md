@@ -247,7 +247,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.110-119: User Interface & Frontend
 
-**Completed: 18/22**
+**Completed: 18/21**
 
 - ✅ [**1.110** Frontend Frameworks](/survey/1-110) - React, Vue, Svelte, Angular
   - **1.110.1** React Meta-Frameworks - Next.js, Remix, Gatsby
@@ -263,7 +263,6 @@ description: "Software library research across sorting, search, NLP, ML, fronten
   - ✅ [**1.113.1** Data Grids](/survey/1-113-1)
 - ✅ [**1.114** Build Tools - Vite, Webpack, Turbopack, esbuild](/survey/1-114)
 - ✅ [**1.115** Form & Validation - React Hook Form, Zod, Yup](/survey/1-115)
-  - **1.115.1** Schema-Driven Form Generation
 - ✅ [**1.116** Data Visualization Libraries - D3.js, Chart.js, Recharts](/survey/1-116)
 - ✅ [**1.117** Animation](/survey/1-117) - Framer Motion, GSAP, React Spring, Lottie
 - ✅ [**1.118** Browser Offline Storage & Service Workers](/survey/1-118) - Workbox, Dexie, idb, localForage, RxDB, PouchDB, SQLite WASM, OPFS
@@ -525,9 +524,9 @@ a time as each is completed.
 
 ## Research Status
 
-**Total Defined**: 309 research slots
+**Total Defined**: 308 research slots
 **Completed**: 184 pieces (60%)
-**Remaining**: 125 pieces
+**Remaining**: 124 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
