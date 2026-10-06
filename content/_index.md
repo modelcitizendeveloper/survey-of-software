@@ -167,7 +167,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.070-079: Machine Learning Algorithms
 
-**Completed: 5/11**
+**Completed: 5/15**
 
 - ✅ [**1.070** Machine Learning Libraries (General-Purpose)](/survey/1-070) - scikit-learn, statsmodels, PyCaret, imbalanced-learn, mlxtend
   - **1.070.1** Clustering - scikit-learn vs hdbscan vs fastcluster
@@ -176,6 +176,10 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.073** Time Series Forecasting](/survey/1-073) - Prophet, Darts, statsmodels
 - ✅ [**1.074** Gradient Boosting](/survey/1-074) - XGBoost, LightGBM, CatBoost
 - ✅ [**1.075** Deep Learning Frameworks](/survey/1-075) - PyTorch, TensorFlow, JAX, MXNet
+  - **1.075.1** Core DL frameworks (PyTorch, TensorFlow)
+  - **1.075.2** CNN architectures (ResNet, EfficientNet)
+  - **1.075.3** RNN/Transformer (LSTM, BERT, GPT)
+  - **1.075.4** Generative models (GANs, Diffusion)
 - **1.076** Reinforcement Learning - Stable Baselines, Ray RLlib
 - **1.077** AutoML - auto-sklearn vs TPOT vs H2O
 - **1.078** Feature Engineering - Featuretools, tsfresh
@@ -243,7 +247,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.110-119: User Interface & Frontend
 
-**Completed: 18/21**
+**Completed: 18/22**
 
 - ✅ [**1.110** Frontend Frameworks](/survey/1-110) - React, Vue, Svelte, Angular
   - **1.110.1** React Meta-Frameworks - Next.js, Remix, Gatsby
@@ -259,6 +263,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
   - ✅ [**1.113.1** Data Grids](/survey/1-113-1)
 - ✅ [**1.114** Build Tools - Vite, Webpack, Turbopack, esbuild](/survey/1-114)
 - ✅ [**1.115** Form & Validation - React Hook Form, Zod, Yup](/survey/1-115)
+  - **1.115.1** Schema-Driven Form Generation
 - ✅ [**1.116** Data Visualization Libraries - D3.js, Chart.js, Recharts](/survey/1-116)
 - ✅ [**1.117** Animation](/survey/1-117) - Framer Motion, GSAP, React Spring, Lottie
 - ✅ [**1.118** Browser Offline Storage & Service Workers](/survey/1-118) - Workbox, Dexie, idb, localForage, RxDB, PouchDB, SQLite WASM, OPFS
@@ -347,7 +352,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.160-169: Character-Based Writing Systems (CJK)
 
-**Completed: 7/7**
+**Completed: 7/10**
 
 - ✅ [**1.160** Character Databases](/survey/1-160) - Unihan, CHISE, IDS, CJKVI
 - ✅ [**1.161** Radical & Component Analysis](/survey/1-161) - Character decomposition, semantic components
@@ -362,7 +367,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.170-179: Translation & Alignment
 
-**Completed: 5/7**
+**Completed: 5/10**
 
 - ✅ [**1.170** Machine Translation APIs](/survey/1-170) - DeepL, Google Translate, Azure Translator, Amazon Translate
 - ✅ [**1.171** Sentence Alignment](/survey/1-171) - Hunalign, Bleualign, vecalign
@@ -396,20 +401,20 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.190-199: Knowledge & Content Engineering
 
-**Completed: 1/5**
+**Completed: 1/10**
 
 - **1.190** Knowledge Graph Construction - Building concept maps from extracted text
 - **1.191** Corpus Analysis & Text Mining - Large document collection analysis
 - **1.192** Book/Publishing Pipeline - Pandoc, Bookdown, manuscript-to-print
 - **1.193** Digital Asset Management - Organizing large timestamped media collections
 - ✅ [**1.194** Entity Resolution & Record Linkage](/survey/1-194)
-- **1.194-1.199** _Available for future use_
+- **1.195-1.199** _Available for future use_
 
 ---
 
 ## 1.200-219: LLM & AI Stack
 
-**Completed: 16/17**
+**Completed: 17/20**
 
 - ✅ [**1.200** LLM Orchestration](/survey/1-200) - LangChain, LlamaIndex, RAG
 - ✅ [**1.201** LLM Agent Frameworks - AutoGen, CrewAI, MetaGPT](/survey/1-201)
@@ -424,6 +429,9 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.210** Multilingual & CJK LLMs](/survey/1-210) - BLOOM, XLM-RoBERTa, mBERT, ERNIE
 - ✅ [**1.211** CJK Embedding Models](/survey/1-211) - M3E, text2vec-chinese, LaBSE, multilingual-e5
 - ✅ [**1.212** AI Coding Agent Harnesses](/survey/1-212) - Claude Code, Codex CLI, OpenCode, Aider, Pi, Goose
+  - **1.212.1** Agent Orchestration Systems
+- **1.213** _Reserved_ - Agent Skill & Workflow Frameworks (proposed)
+- **1.214** _Reserved_ - MCP Client Tooling / Runtimes (proposed)
 - ✅ [**1.215** LLM Provider Proxies & Routers](/survey/1-215) - LiteLLM, OpenRouter, Portkey, Bifrost, Cloudflare AI Gateway
 - ✅ [**1.216** Agentic Browser Automation](/survey/1-216) - browser-use, Stagehand, Skyvern, Chrome DevTools MCP, Playwright MCP, Browserbase, Steel
 - ✅ [**1.217** MCP Server Implementation](/survey/1-217) - official mcp SDK, FastMCP, FastAPI-MCP, raw JSON-RPC
@@ -433,7 +441,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.220-229: Calendar & Scheduling
 
-**Completed: 8/8**
+**Completed: 8/10**
 
 - ✅ [**1.220** CalDAV/iCalendar](/survey/1-220) - icalendar, caldav, vobject
 - ✅ [**1.221** JavaScript Calendar UI](/survey/1-221) - FullCalendar, Schedule-X, EventCalendar, tui.calendar
@@ -443,12 +451,14 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.225** Meeting Scheduling](/survey/1-225) - cal.com, Rallly, Easy!Appointments, CalDAV scheduling
 - ✅ [**1.226** Calendar Visualization](/survey/1-226) - frappe-gantt, vis-timeline, cal-heatmap, echarts
 - ✅ [**1.227** Calendar Internationalization](/survey/1-227) - Hijri, Jalali, Hebrew, CJK, ICU4X, CLDR
+- **1.228** Calendar Import/Export - ICS, CSV conversion
+- **1.229** Calendar Widgets - Embeddable components
 
 ---
 
 ## 1.230-239: Social Networks & Messaging
 
-**Completed: 2/10**
+**Completed: 2/9**
 
 - ✅ [**1.230** Open Social Networks](/survey/1-230) - ActivityPub, AT Protocol, Matrix, Nostr
 - **1.231** AT Protocol/Bluesky - Decentralized social graph
@@ -457,7 +467,6 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.234** Bot SDK Frameworks](/survey/1-234) - matrix-nio, discord.py, python-telegram-bot
 - **1.235** Social Media APIs - Twitter, Reddit, Mastodon
 - **1.236** Chat Webhooks - Slack, Discord, Teams
-- **1.237** Push Notifications - FCM, APNs, WebPush
 - **1.238** RSS/Atom Feeds - feedparser, aggregation
 - **1.239** Social Graph Analysis - Follow relationships, communities
 
@@ -465,19 +474,21 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.240-249: Infrastructure & Platform Engineering
 
-**Completed: 5/5**
+**Completed: 5/10**
 
 - ✅ [**1.240** Container Networking & Service Mesh](/survey/1-240) - Cilium, Calico, Istio, Linkerd, Envoy, Flannel, Consul Connect
 - ✅ [**1.241** Python Web Frameworks](/survey/1-241)
 - ✅ [**1.242** ASGI & WSGI Application Servers](/survey/1-242)
 - ✅ [**1.243** Configuration & Secrets Loading (Python)](/survey/1-243) - python-dotenv, pydantic-settings, Dynaconf, environs, decouple, Hydra/OmegaConf
+- **1.244** Python CLI Frameworks & Terminal UI
 - ✅ [**1.245** Rule & Policy Evaluation Engines](/survey/1-245)
+- **1.246-1.249** _Available for future use_
 
 ---
 
 ## 1.250-259: Developer Tooling & Code Quality
 
-**Completed: 5/5**
+**Completed: 5/10**
 
 - ✅ [**1.250** Linters & Static Analysis](/survey/1-250) - Ruff, Pylint, Flake8, Bandit, Semgrep, ESLint, oxlint, Biome
 - ✅ [**1.251** Type Checkers](/survey/1-251) - mypy, pyright, ty, TypeScript, Flow
@@ -490,13 +501,14 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 
 ## 1.300-309: Civic & Government Data
 
-**Completed: 4/5**
+**Completed: 4/10**
 
 - ✅ [**1.300** Public Finance Modeling](/survey/1-300) - Revenue forecasting, budget planning, fiscal analysis
 - ✅ [**1.301** Government Data Access](/survey/1-301) - Open data APIs, FOIA tools, data.gov integration
 - ✅ [**1.302** Budget Document Parsing](/survey/1-302) - PDF extraction, financial statement analysis
+- **1.303** _Available for future use_
 - ✅ [**1.304** Procurement & Contracts](/survey/1-304) - Vendor analysis, contract tracking
-- **1.303**, **1.305-1.309** _Available for future use_
+- **1.305-1.309** _Available for future use_
 
 ---
 
@@ -514,9 +526,9 @@ a time as each is completed.
 
 ## Research Status
 
-**Total Defined**: 278 research slots
-**Completed**: 187 pieces (67%)
-**Remaining**: 91 pieces
+**Total Defined**: 310 research slots
+**Completed**: 185 pieces (60%)
+**Remaining**: 125 pieces
 
 **Navigation**: Use the sidebar to browse completed research, or select a category above.
 
