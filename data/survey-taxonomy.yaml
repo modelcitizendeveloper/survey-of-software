@@ -1066,6 +1066,64 @@ sections:
         published: true
       - code: "1.255-1.259"
         future: true
+  - range: "1.260-269"
+    title: Music Theory, Notation & Practice
+    entries:
+      - code: "1.260"
+        title: Music Theory & Symbolic Music
+        subtitle: music21, Tonal, mingus, teoria, partitura
+      - code: "1.261"
+        title: Score Notation & Engraving
+        subtitle: LilyPond, Verovio, VexFlow, OpenSheetMusicDisplay, abcjs, alphaTab
+      - code: "1.262"
+        title: Chord Charts, Lead Sheets & Tablature
+        subtitle: ChordPro, ChordSheetJS, iReal Pro format parsers, PyGuitarPro, chord-diagram and fretboard renderers
+      - code: "1.263"
+        title: Pitch Detection & Tuning
+        subtitle: CREPE, pYIN, aubio, SPICE, pitchfinder, YIN/MPM/SWIPE implementations
+      - code: "1.264"
+        title: Beat Tracking, Tempo & Musical Time Sync
+        subtitle: madmom, BeatNet, librosa.beat, Ableton Link, Web Audio clock scheduling
+      - code: "1.265"
+        title: Automatic Music Transcription
+        subtitle: basic-pitch, Omnizart, MT3, piano-transcription-inference
+      - code: "1.266"
+        title: Music Source Separation
+        subtitle: Demucs, Spleeter, Open-Unmix, Ultimate Vocal Remover
+      - code: "1.267"
+        title: Ear Training, Solfege & Instrument Practice Software
+        subtitle: GNU Solfege, sight-reading generators, PianoBooster, Neothesia, fretboard trainers
+      - code: "1.268-1.269"
+        future: true
+  - range: "1.270-279"
+    title: Music Production, MIDI & Synthesis
+    entries:
+      - code: "1.270"
+        title: MIDI Libraries & Protocol Stacks
+        subtitle: mido, python-rtmidi, pretty_midi, JZZ, webmidi.js, Web MIDI, MIDI 2.0 / UMP
+      - code: "1.271"
+        title: Software Synthesis & Sound Design Engines
+        subtitle: SuperCollider, Csound, Pure Data, FAUST, Tone.js, pyo, FluidSynth, ChucK
+      - code: "1.272"
+        title: Audio Plugin Formats & Hosting
+        subtitle: VST3, AU, LV2, CLAP, JUCE, iPlug2, DawDreamer, Carla
+      - code: "1.273"
+        title: Open-Source DAWs & Sequencers
+        subtitle: Ardour, LMMS, Zrythm, Qtractor, Tenacity, Tracktion Engine
+      - code: "1.274"
+        title: DAW Scripting & Control Surfaces
+        subtitle: ReaScript, Ableton Live API, AbletonOSC, pylive, python-osc, Open Stage Control
+      - code: "1.275"
+        title: Algorithmic Composition & Live Coding
+        subtitle: Sonic Pi, TidalCycles, Strudel, FoxDot, abjad, isobar, SCAMP
+      - code: "1.276"
+        title: Generative Music Models
+        subtitle: Magenta / note-seq, MusicGen (AudioCraft), Stable Audio Open, YuE, ACE-Step
+      - code: "1.277"
+        title: Music Identification, Fingerprinting & Metadata
+        subtitle: Chromaprint / AcoustID, dejavu, musicbrainzngs, mutagen, beets
+      - code: "1.278-1.279"
+        future: true
   - range: "1.300-309"
     title: Civic & Government Data
     entries:
