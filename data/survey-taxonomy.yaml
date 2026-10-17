@@ -1093,7 +1093,10 @@ sections:
       - code: "1.267"
         title: Ear Training, Solfege & Instrument Practice Software
         subtitle: GNU Solfege, sight-reading generators, PianoBooster, Neothesia, fretboard trainers
-      - code: "1.268-1.269"
+      - code: "1.268"
+        title: Sung-Pitch Assessment & Singing Trainers
+        subtitle: UltraStar Deluxe, Performous, Vocaluxe, Nootka, sing-back solfege graders
+      - code: "1.269"
         future: true
   - range: "1.270-279"
     title: Music Production, MIDI & Synthesis
