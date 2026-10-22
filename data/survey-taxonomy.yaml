@@ -212,8 +212,8 @@ sections:
         subtitle: pygtrie, datrie, marisa-trie
         published: true
       - code: "1.043"
-        title: Heaps & Priority Queues
-        subtitle: Binary heap, Fibonacci heap
+        title: "Queues: Heaps, Priority & Task"
+        subtitle: Binary heap, priority queue, task queues
         children:
           - code: "1.043.1"
             title: Task Queues
@@ -456,8 +456,8 @@ sections:
         title: Recommendation Systems
         subtitle: Surprise, LightFM, Implicit
       - code: "1.098"
-        title: Voting & Consensus
-        subtitle: Social choice algorithms
+        title: Voting & Social Choice
+        subtitle: Ranked choice, Condorcet, social choice algorithms
       - code: "1.099"
         title: Distributed Algorithms
         subtitle: Raft, Paxos implementations

@@ -118,7 +118,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - ✅ [**1.040** Collections](/survey/1-040) - sortedcontainers, blist, pyrsistent
 - **1.041** Probabilistic Structures - Bloom filters, count-min sketch
 - ✅ [**1.042** Tries](/survey/1-042) - pygtrie, datrie, marisa-trie
-- **1.043** Heaps & Priority Queues - Binary heap, Fibonacci heap
+- **1.043** Queues: Heaps, Priority & Task - Binary heap, priority queue, task queues
   - ✅ [**1.043.1** Task Queues](/survey/1-043-1) - Celery, RQ, Huey, Dramatiq
 - **1.044** Specialized Trees - Union-Find, Interval tree, Segment tree
 - **1.045** Specialized Buffers - Circular buffer, ring buffer
@@ -222,7 +222,7 @@ description: "Software library research across sorting, search, NLP, ML, fronten
 - **1.095** Game Theory & Auctions - Nashpy, game theory solvers
 - ✅ [**1.096** Scheduling](/survey/1-096) - APScheduler, schedule, Airflow
 - **1.097** Recommendation Systems - Surprise, LightFM, Implicit
-- **1.098** Voting & Consensus - Social choice algorithms
+- **1.098** Voting & Social Choice - Ranked choice, Condorcet, social choice algorithms
 - **1.099** Distributed Algorithms - Raft, Paxos implementations
 
 ---
