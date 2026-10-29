@@ -374,6 +374,9 @@ sections:
             title: QR Code Generation
             subtitle: qrcode, segno, pyqrcode
             published: true
+          - code: "1.080.2"
+            title: Image Format Codecs
+            subtitle: pillow-heif, libheif, libvips, imagecodecs
       - code: "1.081"
         title: Convex Hull
         subtitle: Graham scan, Jarvis march
@@ -497,8 +500,8 @@ sections:
             subtitle: "pyannote, NeMo, who's talking"
             published: true
       - code: "1.107"
-        title: OCR Libraries
-        subtitle: Tesseract, EasyOCR
+        title: PDF Text Extraction & OCR
+        subtitle: poppler, pdfminer.six, PyMuPDF, pikepdf, OCRmyPDF, Tesseract
       - code: "1.108"
         title: Spell Checking
         subtitle: SymSpell, LanguageTool
