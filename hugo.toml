@@ -6,6 +6,10 @@ copyright = '© 2026 Ivan Schneider · <a href="https://modelcitizendeveloper.co
 
 # Book theme specific config
 [params]
+  # Default social preview image (og:image / twitter:image) for every page without its own.
+  # LinkedIn showed a blank card for the site with none set (2026-11-12).
+  images = ["images/og-survey-of-software.png"]
+
   # Buttondown newsletter handle — the account name in the subscribe URL
   # (https://buttondown.com/<handle>). Drives the capture form in
   # layouts/partials/newsletter-cta.html, which renders NOTHING while this is
