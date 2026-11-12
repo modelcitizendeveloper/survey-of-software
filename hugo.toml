@@ -16,6 +16,13 @@ copyright = '© 2026 Ivan Schneider · <a href="https://modelcitizendeveloper.co
   # Convention City Dispatch handle. Those lists stay separate on purpose.
   buttondownUsername = "model-citizen-developer"
 
+  # Cloudflare Web Analytics site token (bead re-zh2). Drives the beacon in
+  # layouts/_partials/docs/inject/body.html, which renders NOTHING while this is
+  # empty. Get it from dash.cloudflare.com -> Analytics & Logs -> Web Analytics ->
+  # Add a site -> research.modelcitizendeveloper.com -> manual (JS snippet) setup;
+  # paste only the token value. Not a secret: it ships in every page's HTML.
+  cloudflareBeaconToken = ""
+
   # Show page navigation and menu
   BookShowPageHeader = true
   BookMenuHeader = true

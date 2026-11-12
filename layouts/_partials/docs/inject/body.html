@@ -1,0 +1,23 @@
+{{/*
+  Cloudflare Web Analytics beacon (bead re-zh2).
+
+  The one thing it adds that sos-pulse cannot get: page-view REFERRERS (Google vs
+  AI assistants vs social vs LinkedIn). The Cloudflare zone API does not expose
+  referrers on the free plan; the RUM beacon does. It also counts only browsers
+  that run JavaScript, which is a second, independent reader count to check the
+  stylesheet heuristic in scripts/sos-pulse against.
+
+  Renders NOTHING while params.cloudflareBeaconToken is unset, so the site is
+  always safe to deploy (same pattern as buttondownUsername). The token is not a
+  secret: it is printed in every page's HTML by design.
+
+  Use EITHER this snippet OR the dashboard's "automatic setup" on the proxied
+  zone, never both, or every page-view is counted twice.
+
+  Coverage: every page rendered through layouts/_default/baseof.html (home, trunk
+  pages, all survey leaves). Not covered: the /survey/ redirect stub (meta-refresh,
+  no reader lands there) and hand-written HTML under static/ (workshop, sortie).
+*/}}
+{{- with site.Params.cloudflareBeaconToken -}}
+<script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{{ dict "token" . | jsonify }}'></script>
+{{- end -}}
